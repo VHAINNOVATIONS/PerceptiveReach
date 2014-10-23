@@ -1,4 +1,4 @@
 Database
 ========
 
-This folder contains the database design files.
+This folder contains the (MS SQL) database design files.
