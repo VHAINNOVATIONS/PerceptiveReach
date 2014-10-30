@@ -14,6 +14,13 @@ var config = {
 var express = require('express');
 var app = express();
 
+app.use(function(req, res, next) {
+res.setHeader("Access-Control-Allow-Origin", "*");
+return next();
+});
+
+app.use(express.static(__dirname +'/html'));
+
 console.log("Registering endpoint: /");
 app.get('/', function(req, res){
     res.send('hello ROOT world');
@@ -45,7 +52,7 @@ app.get('/score', function(req, res){
                 console.log("Row#: " + i + " Last Name: " + recordset[i].lastname + " Firt Name: " + recordset[i].firstname); 
             } */
 
-            res.send(recordset);
+            res.json(recordset);
         });
 
     });
@@ -179,5 +186,4 @@ app.get('/user', function(req, res){
     res.send('user is ' + req.param("id"));
 }); 
 
- 
 app.listen(3000);
