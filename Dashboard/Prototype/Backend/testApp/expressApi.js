@@ -28,12 +28,15 @@ app.get('/', function(req, res){
  
 console.log("Registering endpoint: /score");
 app.get('/score', function(req, res){
+    res.header("content-type: application/json");
+    var data = [];
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
-        if (err) { 
-        console.log("Database connection failed!"); 
-        return; 
+        if (err) {
+            data = "Error: Database connection failed!";
+            console.log("Database connection failed!"); 
+            return; 
         }
 
         // Query
@@ -41,31 +44,33 @@ app.get('/score', function(req, res){
         request.query('SELECT Score, count(*) as Total FROM AnalyticsOutput group by score', function(err, recordset) {
             // ... error checks
             if (err) { 
+            data = "Error: Database connection failed!";
             console.log("Query failed!"); 
             return; 
             }
 
             console.log(recordset.length);
+            for (var i = 0; i < recordset.length; i++) {
+                data.push({
+                    key: recordset[i].Score, 
+                    y: recordset[i].Total
+                });
+            }   
 
-            /*for (var i = 0; i < recordset.length; i++) 
-            { 
-                console.log("Row#: " + i + " Last Name: " + recordset[i].lastname + " Firt Name: " + recordset[i].firstname); 
-            } */
-
-            res.json(recordset);
+            res.send(data);
         });
 
     });
-    
-    
-    //res.send(recordset);
 });
 
 app.get('/branch', function(req, res){
+    res.header("content-type: application/json");
+    var data = [];
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
-        if (err) { 
+        if (err) {
+        data = "Error: Database connection failed!";
         console.log("Database connection failed!"); 
         return; 
         }
@@ -79,14 +84,14 @@ app.get('/branch', function(req, res){
             return; 
             }
 
-            console.log(recordset.length);
+            for (var i = 0; i < recordset.length; i++) {
+                data.push({
+                    key: recordset[i].Branch, 
+                    y: recordset[i].Total
+                });
+            }   
 
-            /*for (var i = 0; i < recordset.length; i++) 
-            { 
-                console.log("Row#: " + i + " Last Name: " + recordset[i].lastname + " Firt Name: " + recordset[i].firstname); 
-            } */
-
-            res.send(recordset);
+            res.send(data);
         });
 
     });
@@ -96,10 +101,13 @@ app.get('/branch', function(req, res){
 });
 
 app.get('/attempts', function(req, res){
+    res.header("content-type: application/json");
+    var data = [];
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
         if (err) { 
+        data = "Error: Database connection failed!";
         console.log("Database connection failed!"); 
         return; 
         }
@@ -115,12 +123,14 @@ app.get('/attempts', function(req, res){
 
             console.log(recordset.length);
 
-            /*for (var i = 0; i < recordset.length; i++) 
-            { 
-                console.log("Row#: " + i + " Last Name: " + recordset[i].lastname + " Firt Name: " + recordset[i].firstname); 
-            } */
+            for (var i = 0; i < recordset.length; i++) {
+                data.push({
+                    key: recordset[i].Score, 
+                    values: recordset[i].Attempts
+                });
+            }   
 
-            res.send(recordset);
+            res.send(data);
         });
 
     });
@@ -130,6 +140,8 @@ app.get('/attempts', function(req, res){
 });
 
 app.get('/veteransByState', function(req, res){
+    res.header("content-type: application/json");
+    var data = [];
 
     var state = req.param("id");
     var query = '';
@@ -144,6 +156,7 @@ app.get('/veteransByState', function(req, res){
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
         if (err) { 
+        data = "Error: Database connection failed!";
         console.log("Database connection failed!"); 
         return; 
         }
@@ -174,6 +187,7 @@ app.get('/veteransByState', function(req, res){
 
 console.log("Registering endpoint: /jsonendpoint");
 app.get('/jsonendpoint', function(req, res){
+    res.header("content-type: application/json");
     res.json({
         "mykey" : "myvalue",
         "testy" : "something",
@@ -183,6 +197,7 @@ app.get('/jsonendpoint', function(req, res){
 
 console.log("Registering endpoint: /user/:id");
 app.get('/user', function(req, res){
+    res.header("content-type: application/json");
     res.send('user is ' + req.param("id"));
 }); 
 
