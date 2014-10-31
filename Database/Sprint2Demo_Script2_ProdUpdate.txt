@@ -1,0 +1,31 @@
+alter VIEW [dbo].[vwSPAN_Client]
+AS
+ SELECT p.*, 
+  s.PatientSource, s.ClientType, s.CompassionateCare, s.OEFOIFCombVet, s.VAEnrolled, s.CurrentlyVAMCCareManaged, s.LeadCM, s.SeriouslyIllInjured, 
+  s.EnteredInSPANDate, s.EnteredInSPANBy, s.EditedInSPANDate, s.EditedInSPANBy,
+  s.Hist_Major_Amputation, s.Hist_Major_Blindness, s.Hist_Major_Burns, s.Hist_Major_SpinalCordInjury, s.Hist_PolytraumaAdmission, s.Hist_ConfirmedTBI, 
+  s.LastTreated, s.DischargeTreatingSpecialty, s.DischargeDate, s.DischargeTo, s.LastMissedAppt, s.ClinicCategory, s.AppointmentDate, s.Hist_PTSD, 
+  s.Hist_Depression, s.Hist_AlcoholAbuse, s.Hist_DrugAbuse, s.Hist_Bipolar, s.Hist_Schizophrenia, s.OtherMedical_ShortDesc, s.OtherMedical_LongDesc, 
+  s.ClientActive, s.HighRisk, s.DtIdentifiedAsHighRisk, s.DtHighRiskLastModified, s.WasHighRiskAddedToCPRS, s.DtHighRiskAddedToCPRS, s.DtHighRiskFlagModinCPRS, 
+  s.MailContactPlan, s.ClientAddress, s.Street, s.AptNo, s.City, s.ClientState, s.ZipCode, s.PrimarySPCCoOrd, s.PrimaryVAMC, s.SecondaryVAMC,
+  s.SafetyPlanCurrent, s.DateSafetyPlanComporUpdated, s.WhySafetyPlanNotCurrent, s.NoSafetyPlanOther, s.ContactPlan, s.TreatmentPlan, 
+  s.ClientPhonePrimary, s.MilitaryEra
+ FROM
+ (SELECT SDR_ID, SourceID as PatientID, FirstName, LastName, MiddleName, SSN, BirthDate, Gender 
+ FROM Person 
+ WHERE CreatedBy = 'SPAN_IMPORT'
+ UNION 
+ SELECT SDR_ID, SourceID, FirstName, LastName, MiddleName, SSN, BirthDate, Gender 
+ FROM PersonConsolidate 
+ WHERE CreatedBy = 'SPAN_IMPORT') p
+ INNER JOIN SPAN_ClinicalFactors s ON p.PatientID = s.PatientID
+
+GO
+
+EXEC sp_rename 'dbo.VAMC_xRef', 'Ref_VAMC_xRef';
+
+ALTER TABLE MatchMap ADD MatchMapID integer IDENTITY(1, 1)
+go
+
+ALTER TABLE MatchMap ADD CONSTRAINT PK_MatchMap PRIMARY KEY CLUSTERED(MatchMapID)
+go
