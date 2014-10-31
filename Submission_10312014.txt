@@ -1,0 +1,172 @@
+commit a2726928aadf3e61fb8b1c82847574a7ef565ad3
+Author: pbradley25 <paul.bradley@us.pwc.com>
+Date:   Fri Oct 31 19:07:01 2014 -0400
+
+    Updated SDD
+
+commit 45fd504f0bb7c1da49883a3a9fdfadeba57debac
+Author: Paul Bradley <paul.bradley@us.pwc.com>
+Date:   Fri Oct 31 19:02:30 2014 -0400
+
+    Updated SDD
+
+commit 2106b16c5874c19f25e3b9ef75274c088fc63b30
+Merge: 2e2a56c 032ce40
+Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+Date:   Fri Oct 31 10:05:00 2014 -0400
+
+    Merge branch 'master' of https://github.com/VHAINNOVATIONS/PerceptiveReach
+
+commit 2e2a56c371895d8c6bb35fae7a7162c2ebac2b46
+Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+Date:   Fri Oct 31 09:59:38 2014 -0400
+
+    checking in updated dashboard with new template
+
+commit 032ce40e875fd42b553aca83e57e5b4fa7698d88
+Author: rsnelling <robert.snelling@va.gov>
+Date:   Fri Oct 31 08:55:22 2014 -0500
+
+    Frontend Changes and modifications
+    
+    The following changes/modifications are all related to our first
+    prototype.
+
+commit 9e921a17eccb416714c6b9e39f560bfafaea938a
+Merge: cf11302 079b445
+Author: rsnelling <robert.snelling@va.gov>
+Date:   Fri Oct 31 08:47:51 2014 -0500
+
+    Merge branch 'master' of https://github.com/VHAINNOVATIONS/PerceptiveReach
+
+commit cf113028caa8120fce11d0aed5247dccf3afba7e
+Author: rsnelling <robert.snelling@va.gov>
+Date:   Fri Oct 31 08:47:39 2014 -0500
+
+    Backend Server Updates
+
+commit 079b445dc9a2081969063c30074758acb4f7cdcb
+Author: unknown <wbalshem010@WBALSHEM01046.us.nam.ad.pwcinternal.com>
+Date:   Fri Oct 31 09:38:51 2014 -0400
+
+    Sprint 2 demo
+
+commit 1d7714a3b8f0d4bc788e015b93546dc9af453226
+Merge: ab4413e 9753fec
+Author: rsnelling <robert.snelling@va.gov>
+Date:   Fri Oct 31 01:22:06 2014 -0500
+
+    Merge branch 'master' of https://github.com/VHAINNOVATIONS/PerceptiveReach
+
+commit ab4413e387929870f6dc1197c24dc5195315e248
+Author: rsnelling <robert.snelling@va.gov>
+Date:   Fri Oct 31 01:21:51 2014 -0500
+
+    Updates to the Backend Api's
+
+commit 9753fec1e44c8841c3598a44e8108d210a7ea64a
+Author: Chandrakala.Gattu <cgattu@raygroupintl.com>
+Date:   Thu Oct 30 18:21:46 2014 -0400
+
+    MTP
+
+commit 5951c825dcab467f11017c9f36c6eced111b5d05
+Merge: 8f9f63d a62b56b
+Author: rsnelling <robert.snelling@va.gov>
+Date:   Thu Oct 30 12:57:09 2014 -0500
+
+    Merge branch 'master' of https://github.com/VHAINNOVATIONS/PerceptiveReach
+
+commit 8f9f63d66b8f5fce35503b39717ad4f82b46f747
+Author: rsnelling <robert.snelling@va.gov>
+Date:   Thu Oct 30 12:57:04 2014 -0500
+
+    Backend changes for API & Chart.html
+
+commit a62b56bdcea4e968411a34503b541f64abcda724
+Author: Chandrakala.Gattu <cgattu@raygroupintl.com>
+Date:   Thu Oct 30 11:50:56 2014 -0400
+
+    Updated MTP
+
+commit 8266c62921cb787a867469162e9408830732a069
+Author: Chandrakala.Gattu <cgattu@raygroupintl.com>
+Date:   Wed Oct 29 09:31:16 2014 -0400
+
+    Draft Test case document
+
+commit 0cfc387bb77e422c10fa0db0f3afb66728b440da
+Author: Chandrakala.Gattu <cgattu@raygroupintl.com>
+Date:   Wed Oct 29 09:26:27 2014 -0400
+
+    Updated MTP
+
+commit fb62c007436f6779d605ce6ca902d468912e8b72
+Author: rsnelling <robert.snelling@va.gov>
+Date:   Wed Oct 29 02:38:02 2014 -0500
+
+    SDD Updates - Added Basic Dashboard Architecture
+
+commit 24082db32cd0b07462be5abd2a4f5046cc889d16
+Author: rsnelling <robert.snelling@va.gov>
+Date:   Tue Oct 28 13:29:45 2014 -0500
+
+    Backend API's Modified for State's Data
+
+commit f5a6aafa526b8f538b9e27b2f158a033b470e27e
+Author: rsnelling <robert.snelling@va.gov>
+Date:   Tue Oct 28 08:34:03 2014 -0500
+
+    SDD Updates from Kris
+
+commit 55112fe5bbf24989c78652498673086c76860067
+Merge: 043a16e d3c7c6f
+Author: unknown <wbalshem010@WBALSHEM01046.us.nam.ad.pwcinternal.com>
+Date:   Mon Oct 27 08:59:03 2014 -0400
+
+    Merge branch 'master' of https://github.com/vhainnovations/PerceptiveReach
+
+commit 043a16ebeb664babac92c0d824a528c00662a9ff
+Author: unknown <wbalshem010@WBALSHEM01046.us.nam.ad.pwcinternal.com>
+Date:   Mon Oct 27 08:58:37 2014 -0400
+
+    updated SDD
+
+commit d3c7c6fb8b954ed007bd2366cf0d9e1b0a036b13
+Author: pbradley25 <paul.bradley@us.pwc.com>
+Date:   Thu Oct 23 11:50:53 2014 -0400
+
+    Deleting test XML file
+
+commit 03e422fefebcc7138048a6330cbda51cdf29c701
+Merge: 18d52f1 aaeb5e2
+Author: pbradley25 <paul.bradley@us.pwc.com>
+Date:   Thu Oct 23 09:15:53 2014 -0400
+
+    Merge branch 'master' of https://github.com/VHAINNOVATIONS/PerceptiveReach
+
+commit 18d52f117cf41938b839202a024852aa1c39e715
+Author: pbradley25 <paul.bradley@us.pwc.com>
+Date:   Thu Oct 23 09:15:42 2014 -0400
+
+    XML test file
+
+commit aaeb5e2463b024ffdc9f372d74d16dd5e49c669a
+Author: Paul Bradley <paul.bradley@us.pwc.com>
+Date:   Wed Oct 22 20:33:52 2014 -0400
+
+    Added MS SQL note
+
+commit 5c2343cd5c004e8bcc60dc71912dc39a129f3661
+Author: Chandrakala.Gattu <cgattu@raygroupintl.com>
+Date:   Mon Oct 20 15:17:57 2014 -0400
+
+    Deleted a test file
+
+commit 95e1f76036a0c75c6089d7327eabd14044910372
+Author: Chandrakala.Gattu <cgattu@raygroupintl.com>
+Date:   Mon Oct 20 13:50:39 2014 -0400
+
+    Test Test
+    
+    Test document
