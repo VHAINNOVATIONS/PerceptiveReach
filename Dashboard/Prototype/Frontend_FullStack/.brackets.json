@@ -1,0 +1,6 @@
+{
+    "jscodehints.detectedExclusions": [
+        "C:/projects/full-stack/client/bower_components/angular-sanitize/angular-sanitize.js",
+        "C:/projects/full-stack/client/bower_components/angular-sanitize/angular-sanitize.min.js"
+    ]
+}
