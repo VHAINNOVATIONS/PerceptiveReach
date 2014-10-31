@@ -1,10 +1,10 @@
 var sql = require('mssql');
 
 var config = {
-    user: 'sa',
-    password: 'agile_123',
-    server: '54.225.232.25', // You can use 'localhost\\instance' to connect to named instance
-    database: 'Reach',
+    user: 'XXXXXX',
+    password: 'XXXXXX',
+    server: 'XXX.XXX.XXX.XXX', // You can use 'localhost\\instance' to connect to named instance
+    database: 'Database',
 
     options: {
         encrypt: false // Use this if you're on Windows Azure
@@ -103,6 +103,8 @@ app.get('/branch', function(req, res){
 app.get('/attempts', function(req, res){
     res.header("content-type: application/json");
     var data = [];
+    var attempts = [];
+    var actual = [];
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
@@ -114,7 +116,7 @@ app.get('/attempts', function(req, res){
 
         // Query
         var request = new sql.Request(connection); // or: var request = connection.request();
-        request.query('select Score, sum(noattempts) as Attempts, count(*) as TOTAL FROM AnalyticsOutput where PTSD = 1 group by score', function(err, recordset) {
+        request.query('select Score, sum(noattempts) as Attempts, count(*) as Actual FROM AnalyticsOutput where PTSD = 1 group by score', function(err, recordset) {
             // ... error checks
             if (err) { 
             console.log("Query failed!"); 
@@ -124,11 +126,29 @@ app.get('/attempts', function(req, res){
             console.log(recordset.length);
 
             for (var i = 0; i < recordset.length; i++) {
-                data.push({
-                    key: recordset[i].Score, 
-                    values: recordset[i].Attempts
-                });
-            }   
+                attempts.push([
+                    recordset[i].Score, 
+                    recordset[i].Attempts                    
+                ]);
+            }
+            data.push({
+                "key": "ATTEMPTS",
+                "values": attempts
+            });   
+
+
+            for (var i = 0; i < recordset.length; i++) {
+                actual.push([
+                    recordset[i].Score, 
+                    recordset[i].Actual                    
+                ]);
+            }
+            data.push({
+                "key": "ACTUAL",
+                "values": actual
+            });   
+
+
 
             res.send(data);
         });
