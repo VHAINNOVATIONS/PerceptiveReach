@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en" ng-app="Dashboard">
 <head>
-  <meta charset="UTF-8">
+	<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Dashboard</title>
+	<title>Dashboard</title>
 
   <!-- build:less lib/bootstrap/css/bootstrap.css -->
   <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
@@ -14,7 +14,7 @@
   <!-- endbuild --> 
   <!-- build:css lib/font-awesome/css/font-awesome.css -->
   <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css">
-  <!-- endbuild -->  
+  <!-- endbuild -->
 
   <!-- build:less css/dashboard/dashboard.css -->
   <link rel="stylesheet" type="text/css" href="less/dashboard/variables.less">
@@ -76,22 +76,22 @@
       <ul class="sidebar">
         <li class="sidebar-main">
           <a href="#" ng-click="toggleSidebar()">
-            Perceptive Reach Dashboard
+            Perceptive Reach
             <span class="menu-icon glyphicon glyphicon-transfer"></span>
           </a>
         </li>
         <li class="sidebar-title"><span>NAVIGATION</span></li>
         <li class="sidebar-list">
-          <a href="#">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
+          <a href="#">Home <span class="menu-icon fa fa-tachometer"></span></a>
         </li>
         <li class="sidebar-list">
-          <a href="#/tables">Tables <span class="menu-icon fa fa-table"></span></a>
+          <a href="#/scores">Risk Score <span class="menu-icon fa fa-cogs"></span></a>
         </li>
         <li class="sidebar-list">
-          <a href="#">Servers <span class="menu-icon fa fa-tasks"></span></a>
+          <a href="#">Monitors <span class="menu-icon fa fa-tasks"></span></a>
         </li>
         <li class="sidebar-list">
-          <a href="#">Settings <span class="menu-icon fa fa-cogs"></span></a>
+          <a href="#">Branch Data <span class="menu-icon fa fa-crosshairs"></span></a>
         </li>
         <li class="sidebar-title separator"><span>QUICK LINKS</span></li>
         <li class="sidebar-list">
@@ -100,8 +100,8 @@
       </ul>
       <div class="sidebar-footer">
         <div class="col-xs-4">
-          <a href="https://github.com/Ehesp/Responsive-Dashboard" target="_blank">
-            Github
+          <a href="#" target="_blank">
+            Home
           </a>
         </div>
         <div class="col-xs-4">
@@ -200,15 +200,15 @@
       </div>
     </div>-->
 
-    <div class="row">
+    <div class="row" ng-controller="AlertsCtrl">
       <div class="col-lg-3 col-md-6 col-xs-12">
         <div class="widget">
           <div class="widget-body">
             <div class="widget-icon green pull-left">
-              <i class="fa fa-users"></i>
+              <i class="fa fa-fighter-jet"></i>
             </div>
             <div class="widget-content pull-left">
-              <div class="title">196</div>
+              <div class="title">{{branchData[0].y}}</div>
               <div class="comment">AirForce</div>
             </div>
             <div class="clearfix"></div>
@@ -219,10 +219,10 @@
         <div class="widget">
           <div class="widget-body">
             <div class="widget-icon red pull-left">
-              <i class="fa fa-tasks"></i>
+              <i class="fa fa-star"></i>
             </div>
             <div class="widget-content pull-left">
-              <div class="title">171</div>
+              <div class="title">{{branchData[1].y}}</div>
               <div class="comment">Army</div>
             </div>
             <div class="clearfix"></div>
@@ -233,90 +233,37 @@
         <div class="widget">
           <div class="widget-body">
             <div class="widget-icon orange pull-left">
-              <i class="fa fa-sitemap"></i>
+              <i class="fa fa-bolt"></i>
             </div>
             <div class="widget-content pull-left">
-              <div class="title">183</div>
+              <div class="title">{{branchData[2].y}}</div>
+              <div class="comment">Marine Corps</div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+      <div class="spacer visible-xs"></div>
+      <div class="col-lg-3 col-md-6 col-xs-12">
+        <div class="widget">
+          <div class="widget-body">
+            <div class="widget-icon blue pull-left">
+              <i class="fa fa-sheid"></i>
+            </div>
+            <div class="widget-content pull-left">
+              <div class="title">{{branchData[3].y}}</div>
               <div class="comment">Navy</div>
             </div>
             <div class="clearfix"></div>
           </div>
         </div>
       </div>
-      <!--<div class="spacer visible-xs"></div>
-      <div class="col-lg-3 col-md-6 col-xs-12">
-        <div class="widget">
-          <div class="widget-body">
-            <div class="widget-icon blue pull-left">
-              <i class="fa fa-support"></i>
-            </div>
-            <div class="widget-content pull-left">
-              <div class="title">62</div>
-              <div class="comment">Tickets</div>
-            </div>
-            <div class="clearfix"></div>
-          </div>
-        </div>
-      </div>-->
     </div>
-    <!-- <div class="row">
-      <div class="col-lg-6">
-        <div class="widget">
-          <div class="widget-header">
-            <i class="fa fa-tasks"></i> Servers
-            <a href="#" class="pull-right">Manage</a>
-          </div>
-          <div class="widget-body medium no-padding">
-            <div class="table-responsive">
-              <table class="table">
-                <tbody>
-                  <tr><td>RDVMPC001</td><td>238.103.133.37</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDVMPC002</td><td>68.66.63.170</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDVMPC003</td><td>76.117.212.33</td><td><span tooltip="Server Down!" class="text-danger"><i class="fa fa-warning"></i></span></td></tr>
-                  <tr><td>RDPHPC001</td><td>91.88.224.5</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDESX001</td><td>197.188.15.93</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDESX002</td><td>168.85.154.251</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDESX003</td><td>209.25.191.61</td><td><span tooltip="Server Down!" class="text-danger"><i class="fa fa-warning"></i></span></td></tr>
-                  <tr><td>RDESX004</td><td>252.37.192.235</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDTerminal01</td><td>139.71.18.207</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDTerminal02</td><td>136.80.122.212</td><td><span tooltip="Could not connect!" class="text-warning"><i class="fa fa-flash"></i></span></td></tr>
-                  <tr><td>RDDomainCont01</td><td>196.80.245.33</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="widget">
-          <div class="widget-header">
-            <i class="fa fa-users"></i> Users
-            <input type="text" placeholder="Search" class="form-control input-sm pull-right" />
-            <div class="clearfix"></div>
-          </div>
-          <div class="widget-body medium no-padding">
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                  <tr><th class="text-center">ID</th><th>Username</th><th>Role</th><th>Account</th></tr>
-                </thead>
-                <tbody>
-                  <tr><td class="text-center">1</td><td>Joe Bloggs</td><td>Super Admin</td><td>AZ23045</td></tr>
-                  <tr><td class="text-center">2</td><td>Timothy Hernandez</td><td>Admin</td><td>AU24783</td></tr>
-                  <tr><td class="text-center">3</td><td>Joe Bickham</td><td>User</td><td>AM23781</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <div class="row">
       <div class="col-lg-6">
         <div class="widget">
           <div class="widget-header">
-            <i class="fa fa-cog fa-spin"></i> Loading Directive
-            <a href="http://tobiasahlin.com/spinkit/" target="_blank" class="pull-right">SpinKit</a>
+            <i class="fa fa-cog fa-spin"></i>  Breakdown of Scores
           </div>
           <div class="widget-body">
             <!-- Check out the Angular Directive inside bootstrap.js! -->
@@ -330,7 +277,7 @@
                 x="xFunction()"
                 y="yFunction()"
                 showLabels="true">
-                <svg></svg>
+                <svg height="250"></svg>
               </nvd3-pie-chart>
             </div>
           </div>
@@ -339,26 +286,25 @@
       <div class="col-lg-6">
         <div class="widget">
           <div class="widget-header">
-            <i class="fa fa-cog fa-spin"></i> Loading Directive
-            <a href="http://tobiasahlin.com/spinkit/" target="_blank" class="pull-right">SpinKit</a>
+            <i class="fa fa-cog fa-spin"></i> Suicide: Attempts vs Completions by Score
           </div>
           <div class="widget-body">
             <!-- Check out the Angular Directive inside bootstrap.js! -->
             <!--<rd-loading></rd-loading> -->
-            <div ng-controller="ExampleCtrl">
-              <nvd3-line-chart
-                data="exampleData"
-                xAxisTickFormat="xAxisTickFormatFunction()"
-                yAxisTickFormat="yAxisTickFormatFunction()"
-                width="550"
-                height="350"
-                showXAxis="true"
-                showYAxis="true"
-                useInteractiveGuideline="true"                
-                interactive="true"
-                tooltips="true">
-                <svg></svg>
-              </nvd3-line-chart>
+            <div ng-controller="AttemptsCtrl">
+              <nvd3-discrete-bar-chart
+                  data="attemptsData"
+                  id="toolTipExample"
+                  showXAxis="true"
+                  showYAxis="true"
+                  width="550"
+                  height="350"
+                  xAxisTickFormat="xAxisTickFormatFunction()"
+                  showValues="true"
+                  tooltips="true"
+                  tooltipcontent="toolTipContentFunction()">
+                    <svg></svg>
+              </nvd3-discrete-bar-chart>
             </div>
           </div>
         </div>
@@ -367,31 +313,27 @@
     <!-- End Main Content -->
   </script>
 
-  <script type="text/ng-template" id="tables.html">
+  <script type="text/ng-template" id="scores.html">
     <div class="row">
       <div class="col-lg-6">
         <div class="widget">
           <div class="widget-header">
-            <i class="fa fa-tasks"></i> Servers
-            <a href="#" class="pull-right">Manage</a>
+            <i class="fa fa-cog fa-spin"></i>  Breakdown of Scores
           </div>
-          <div class="widget-body medium no-padding">
-            <div class="table-responsive">
-              <table class="table">
-                <tbody>
-                  <tr><td>RDVMPC001</td><td>238.103.133.37</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDVMPC002</td><td>68.66.63.170</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDVMPC003</td><td>76.117.212.33</td><td><span tooltip="Server Down!" class="text-danger"><i class="fa fa-warning"></i></span></td></tr>
-                  <tr><td>RDPHPC001</td><td>91.88.224.5</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDESX001</td><td>197.188.15.93</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDESX002</td><td>168.85.154.251</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDESX003</td><td>209.25.191.61</td><td><span tooltip="Server Down!" class="text-danger"><i class="fa fa-warning"></i></span></td></tr>
-                  <tr><td>RDESX004</td><td>252.37.192.235</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDTerminal01</td><td>139.71.18.207</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDTerminal02</td><td>136.80.122.212</td><td><span tooltip="Could not connect!" class="text-warning"><i class="fa fa-flash"></i></span></td></tr>
-                  <tr><td>RDDomainCont01</td><td>196.80.245.33</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                </tbody>
-              </table>
+          <div class="widget-body">
+            <!-- Check out the Angular Directive inside bootstrap.js! -->
+            <!--<rd-loading></rd-loading> -->
+            <div ng-controller="ScoreChartCtrl">
+              <nvd3-pie-chart
+                data="scoreChart"
+                id="scoreChart2"
+                width="550"
+                height="350"
+                x="xFunction()"
+                y="yFunction()"
+                showLabels="true">
+                <svg height="250"></svg>
+              </nvd3-pie-chart>
             </div>
           </div>
         </div>
@@ -399,31 +341,31 @@
       <div class="col-lg-6">
         <div class="widget">
           <div class="widget-header">
-            <i class="fa fa-tasks"></i> Striped Servers
-            <a href="#" class="pull-right">Manage</a>
+            <i class="fa fa-cog fa-spin"></i> Suicide: Attempts vs Actuals by Score
           </div>
-          <div class="widget-body medium no-padding">
-            <div class="table-responsive table-striped">
-              <table class="table">
-                <tbody>
-                  <tr><td>RDVMPC001</td><td>238.103.133.37</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDVMPC002</td><td>68.66.63.170</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDVMPC003</td><td>76.117.212.33</td><td><span tooltip="Server Down!" class="text-danger"><i class="fa fa-warning"></i></span></td></tr>
-                  <tr><td>RDPHPC001</td><td>91.88.224.5</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDESX001</td><td>197.188.15.93</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDESX002</td><td>168.85.154.251</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDESX003</td><td>209.25.191.61</td><td><span tooltip="Server Down!" class="text-danger"><i class="fa fa-warning"></i></span></td></tr>
-                  <tr><td>RDESX004</td><td>252.37.192.235</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDTerminal01</td><td>139.71.18.207</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                  <tr><td>RDTerminal02</td><td>136.80.122.212</td><td><span tooltip="Could not connect!" class="text-warning"><i class="fa fa-flash"></i></span></td></tr>
-                  <tr><td>RDDomainCont01</td><td>196.80.245.33</td><td><span class="text-success"><i class="fa fa-check"></i></span></td></tr>
-                </tbody>
-              </table>
+          <div class="widget-body">
+            <!-- Check out the Angular Directive inside bootstrap.js! -->
+            <!--<rd-loading></rd-loading> -->
+            <div ng-controller="AttemptsCtrl">
+              <nvd3-discrete-bar-chart
+                  data="attemptsData"
+                  id="toolTipExample"
+                  showXAxis="true"
+                  showYAxis="true"
+                  width="550"
+                  height="350"
+                  xAxisTickFormat="xAxisTickFormatFunction()"
+                  showValues="true"
+                  tooltips="true"
+                  tooltipcontent="toolTipContentFunction()">
+                    <svg></svg>
+              </nvd3-discrete-bar-chart>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </script>
 </body>
 </html>

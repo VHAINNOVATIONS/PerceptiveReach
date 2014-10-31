@@ -15,8 +15,8 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider',
             url: '/',
             templateUrl: 'dashboard.html'
         })
-        .state('tables', {
-            url: '/tables', 
-            templateUrl: 'tables.html'
+        .state('scores', {
+            url: '/scores', 
+            templateUrl: 'scores.html'
         });
 }]);
