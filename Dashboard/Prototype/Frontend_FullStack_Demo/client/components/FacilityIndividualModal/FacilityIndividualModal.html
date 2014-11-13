@@ -1,0 +1,107 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" data-ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  <h4 ng-if="modal.title" ng-bind="modal.title" class="modal-title"></h4>
+</div>
+<div class="modal-body">
+  <p ng-if="modal.text" ng-bind="modal.text"></p>
+  <div ng-if="modal.html" ng-bind-html="modal.html"></div>
+    <div>
+        <aside style="min-height: 363px; background: #f4f4f4; width: 120px; position: absolute;">
+            <section class="content-header" id="header">
+                <p> <b>Current High Risk Veterans</b></p>
+            </section>
+            <section class="sidebar">
+                <ul class="list-group">
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">95-100 <span class="badge">42</span></button></li>
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">80-94 <span class="badge">55</span></button></li>
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">50-79 <span class="badge">100</span></button></li>
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">25-49 <span class="badge">150</span></button></li>
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">0-24  <span class="badge">42</span></button></li>
+                </ul>    
+            </section>
+        </aside>
+        <aside style="min-height: 363px; background: #f4f4f4; margin-left: 120px">
+            <section class="content-header" id="header">
+                <div id="veteranTable">
+                    <table cellpadding="0" cellspacing="0" border="0" class="" id="example" width="100%" data-data-tables></table>
+                </div>
+            </section>
+        </aside> 
+        <aside style="min-height: 200px; background: #f4f4f4;">
+            <section class="content-header">
+                <div id="facilityInfo">
+                </div>
+                <div id="veteranView">
+                    <aside style="min-height: 263px; background: #f4f4f4; width : 20%; float: left;">
+                        <section class="content-header" >
+                            <p> 
+                                <b>Risk Factors: </b>
+                                <br><br>Indicator1
+                                <br>Indicator2
+                                <br>Indicator3
+                                <br>Indicator4
+                                <br>Indicator5
+                            </p>   
+                        </section>
+                    </aside>
+                    <aside style="min-height: 263px; background: #f4f4f4; width : 40%; display:inline-block;">
+                        <section class="content-header" >
+                            <p>
+                                <b>Contact Information: </b>
+                                <br><br>Name:
+                                <br>Last 4 of SSN:
+                                <br>Phone:
+                                <br>Alternative Phone:
+                                <br>Address:
+                                <br>City:
+                                <br>State:
+                                <br>Zip:
+                                <br><br><br>Date First Identified At-Risk:
+                            </p>
+                        </section>
+                    </aside> 
+                    <aside style="min-height: 263px; background: #f4f4f4; float:right; width: 40%;">
+                        <section class="content-header" >
+                            <p>
+                                <b>Emergency Contact Information: </b>
+                                <br><br>Emergency Contact Name:
+                                <br>Relationship to Veteran:                                
+                                <br>Address:
+                                <br>City:
+                                <br>State:
+                                <br>Zip:
+                                <br>Phone:
+                                <br>Alternative Phone:
+                            </p>
+                        </section>
+                    </aside>
+                    <aside style="min-height: 263px; background: #f4f4f4;">
+                        <section class="content-header" >
+                            <p>
+                                <b>Veteran Details: </b>
+                                <br><br>Rural or Urban Location:
+                                <br>Local Medical Center:                                
+                                <br>VISN:
+                                <br>Age:
+                                <br>Gender:
+                                <br>Ethnicity:
+                            </p>
+                        </section>
+                    </aside>
+                </div>
+            </section>
+        </aside>
+    </div>
+    
+    
+        
+    <p>This is a test!!!</p>
+</div>
+<div class="modal-footer">
+  <button ng-repeat="button in modal.buttons" ng-class="button.classes" ng-click="button.click($event)" ng-bind="button.text" class="btn"></button>
+</div>
+<style>
+    .app-modal-window .modal-dialog{
+    width: 700px;
+}
+</style>

@@ -1,0 +1,188 @@
+<div class="modal-header">
+  <button ng-if="modal.dismissable" type="button" ng-click="$dismiss()" class="close">&times;</button>
+  <h4 ng-if="modal.title" ng-bind="modal.title" class="modal-title"></h4>
+</div>
+<div class="modal-body">
+  <p ng-if="modal.text" ng-bind="modal.text"></p>
+  <div ng-if="modal.html" ng-bind-html="modal.html"></div>
+    <div>
+        <aside style="min-height: 363px; background: #f4f4f4; width: 120px; position: absolute;">
+            <section class="content-header" id="header">
+                <p> <b>Current High Risk Veterans</b></p>
+            </section>
+            <section class="sidebar">
+                <ul class="list-group">
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">95-100 <span class="badge">42</span></button></li>
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">80-94 <span class="badge">55</span></button></li>
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">50-79 <span class="badge">100</span></button></li>
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">25-49 <span class="badge">150</span></button></li>
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">0-24  <span class="badge">42</span></button></li>
+                </ul>    
+            </section>
+        </aside>
+        <aside style="min-height: 363px; background: #f4f4f4; margin-left: 120px">
+            <section class="content-header" id="header">
+                <div id="veteranTable"></div>
+            </section>
+        </aside> 
+        <aside style="min-height: 200px; background: #f4f4f4;">
+            <section class="content-header">
+                <div id="facilityInfo">
+                </div>
+                <div id="veteranView">
+                    <aside style="min-height: 263px; background: #f4f4f4; width : 20%; float: left;">
+                        <section class="content-header" >
+                            <p> 
+                                <b>Risk Factors: </b>
+                                <br><br>Indicator1
+                                <br>Indicator2
+                                <br>Indicator3
+                                <br>Indicator4
+                                <br>Indicator5
+                            </p>   
+                        </section>
+                    </aside>
+                    <aside style="min-height: 263px; background: #f4f4f4; width : 40%; display:inline-block;">
+                        <section class="content-header" >
+                            <p>
+                                <b>Contact Information: </b>
+                                <br><br>Name:
+                                <br>Last 4 of SSN:
+                                <br>Phone:
+                                <br>Alternative Phone:
+                                <br>Address:
+                                <br>City:
+                                <br>State:
+                                <br>Zip:
+                                <br><br><br>Date First Identified At-Risk:
+                            </p>
+                        </section>
+                    </aside> 
+                    <aside style="min-height: 263px; background: #f4f4f4; float:right; width: 40%;">
+                        <section class="content-header" >
+                            <p>
+                                <b>Emergency Contact Information: </b>
+                                <br><br>Emergency Contact Name:
+                                <br>Relationship to Veteran:                                
+                                <br>Address:
+                                <br>City:
+                                <br>State:
+                                <br>Zip:
+                                <br>Phone:
+                                <br>Alternative Phone:
+                            </p>
+                        </section>
+                    </aside>
+                    <aside style="min-height: 263px; background: #f4f4f4;">
+                        <section class="content-header" >
+                            <p>
+                                <b>Veteran Details: </b>
+                                <br><br>Rural or Urban Location:
+                                <br>Local Medical Center:                                
+                                <br>VISN:
+                                <br>Age:
+                                <br>Gender:
+                                <br>Ethnicity:
+                            </p>
+                        </section>
+                    </aside>
+                </div>
+            </section>
+        </aside>
+    </div>
+    
+    
+        
+    <p>This is a test!!!</p>
+</div>
+<div class="modal-footer">
+  <button ng-repeat="button in modal.buttons" ng-class="button.classes" ng-click="button.click($event)" ng-bind="button.text" class="btn"></button>
+</div>
+
+<script type="text/javascript">
+        var dataSet = [
+    ['Trident','Internet Explorer 4.0','Win 95+','4','X','10-20-2009'],
+    ['Trident','Internet Explorer 5.0','Win 95+','5','C','10-20-2009'],
+    ['Trident','Internet Explorer 5.5','Win 95+','5.5','A','10-20-2009'],
+    ['Trident','Internet Explorer 6','Win 98+','6','A','10-20-2009'],
+    ['Trident','Internet Explorer 7','Win XP SP2+','7','A','10-20-2009'],
+    ['Trident','AOL browser (AOL desktop)','Win XP','6','A','10-20-2009'],
+    ['Gecko','Firefox 1.0','Win 98+ / OSX.2+','1.7','A','10-20-2009'],
+    ['Gecko','Firefox 1.5','Win 98+ / OSX.2+','1.8','A','10-20-2009'],
+    ['Gecko','Firefox 2.0','Win 98+ / OSX.2+','1.8','A','10-20-2009'],
+    ['Gecko','Firefox 3.0','Win 2k+ / OSX.3+','1.9','A','10-20-2009'],
+    ['Gecko','Camino 1.0','OSX.2+','1.8','A','10-20-2009'],
+    ['Gecko','Camino 1.5','OSX.3+','1.8','A','10-20-2009'],
+    ['Gecko','Netscape 7.2','Win 95+ / Mac OS 8.6-9.2','1.7','A','10-20-2009'],
+    ['Gecko','Netscape Browser 8','Win 98SE+','1.7','A','10-20-2009'],
+    ['Gecko','Netscape Navigator 9','Win 98+ / OSX.2+','1.8','A','10-20-2009'],
+    ['Gecko','Mozilla 1.0','Win 95+ / OSX.1+',1,'A','10-20-2009'],
+    ['Gecko','Mozilla 1.1','Win 95+ / OSX.1+',1.1,'A','10-20-2009'],
+    ['Gecko','Mozilla 1.2','Win 95+ / OSX.1+',1.2,'A','10-20-2009'],
+    ['Gecko','Mozilla 1.3','Win 95+ / OSX.1+',1.3,'A'],
+    ['Gecko','Mozilla 1.4','Win 95+ / OSX.1+',1.4,'A'],
+    ['Gecko','Mozilla 1.5','Win 95+ / OSX.1+',1.5,'A'],
+    ['Gecko','Mozilla 1.6','Win 95+ / OSX.1+',1.6,'A'],
+    ['Gecko','Mozilla 1.7','Win 98+ / OSX.1+',1.7,'A'],
+    ['Gecko','Mozilla 1.8','Win 98+ / OSX.1+',1.8,'A'],
+    ['Gecko','Seamonkey 1.1','Win 98+ / OSX.2+','1.8','A'],
+    ['Gecko','Epiphany 2.20','Gnome','1.8','A'],
+    ['Webkit','Safari 1.2','OSX.3','125.5','A'],
+    ['Webkit','Safari 1.3','OSX.3','312.8','A'],
+    ['Webkit','Safari 2.0','OSX.4+','419.3','A'],
+    ['Webkit','Safari 3.0','OSX.4+','522.1','A'],
+    ['Webkit','OmniWeb 5.5','OSX.4+','420','A'],
+    ['Webkit','iPod Touch / iPhone','iPod','420.1','A'],
+    ['Webkit','S60','S60','413','A'],
+    ['Presto','Opera 7.0','Win 95+ / OSX.1+','-','A'],
+    ['Presto','Opera 7.5','Win 95+ / OSX.2+','-','A'],
+    ['Presto','Opera 8.0','Win 95+ / OSX.2+','-','A'],
+    ['Presto','Opera 8.5','Win 95+ / OSX.2+','-','A'],
+    ['Presto','Opera 9.0','Win 95+ / OSX.3+','-','A'],
+    ['Presto','Opera 9.2','Win 88+ / OSX.3+','-','A'],
+    ['Presto','Opera 9.5','Win 88+ / OSX.3+','-','A'],
+    ['Presto','Opera for Wii','Wii','-','A'],
+    ['Presto','Nokia N800','N800','-','A'],
+    ['Presto','Nintendo DS browser','Nintendo DS','8.5','C/A<sup>1</sup>'],
+    ['KHTML','Konqureror 3.1','KDE 3.1','3.1','C'],
+    ['KHTML','Konqureror 3.3','KDE 3.3','3.3','A'],
+    ['KHTML','Konqureror 3.5','KDE 3.5','3.5','A'],
+    ['Tasman','Internet Explorer 4.5','Mac OS 8-9','-','X'],
+    ['Tasman','Internet Explorer 5.1','Mac OS 7.6-9','1','C'],
+    ['Tasman','Internet Explorer 5.2','Mac OS 8-X','1','C'],
+    ['Misc','NetFront 3.1','Embedded devices','-','C'],
+    ['Misc','NetFront 3.4','Embedded devices','-','A'],
+    ['Misc','Dillo 0.8','Embedded devices','-','X'],
+    ['Misc','Links','Text only','-','X'],
+    ['Misc','Lynx','Text only','-','X'],
+    ['Misc','IE Mobile','Windows Mobile 6','-','C'],
+    ['Misc','PSP browser','PSP','-','C'],
+    ['Other browsers','All others','-','-','U']
+];
+ 
+$(document).ready(function() {
+    $('#veteranTable').html( '<table cellpadding="0" cellspacing="0" border="0" class="" id="example" width="100%"></table>' );
+ 
+    $('#example').dataTable( {
+        "data": dataSet,
+        "scrollY":        "200px",
+        "scrollCollapse": true,
+        "paging":         false,
+        "columns": [
+            { "title": "Veteran Name" },
+            { "title": "Veteran SSN" },
+            { "title": "Veteran Phone" },
+            { "title": "Date First identified as High Risk", "class": "center" },
+            { "title": "Date Record Last Updated", "class": "center" },
+            { "title": "Last VA Clinician Visit", "class": "center" }
+        ]
+    } );
+    
+    //$('#veteranView').hide();
+    //$('#facilityInfo').show();
+    $('#facilityInfo').hide();
+} );
+    
+    
+    
+</script>
