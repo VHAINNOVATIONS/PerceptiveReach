@@ -1,10 +1,10 @@
 var sql = require('mssql');
 
 var config = {
-    user: 'XXXXXX',
-    password: 'XXXXXX',
-    server: 'XXX.XXX.XXX.XXX', // You can use 'localhost\\instance' to connect to named instance
-    database: 'Database',
+    user: 'sa',
+    password: 'agile_123',
+    server: '54.225.232.25', // You can use 'localhost\\instance' to connect to named instance
+    database: 'Reach',
 
     options: {
         encrypt: false // Use this if you're on Windows Azure
@@ -204,6 +204,199 @@ app.get('/veteransByState', function(req, res){
     
     //res.send(recordset);
 });
+
+app.get('/veterans', function(req, res){
+    res.header("content-type: application/json");
+    var data = [];
+
+    var id = req.param("id");
+    var query = '';
+    if (id) {
+        console.log("Registering endpoint: /veterans/:id is " + id);
+        query = "SELECT *, vamc.vamc FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE vet.ReachID = " + id;
+        console.log("Query: " + query);
+    } else {
+        res.send("ERROR: Veteran ID is required.");
+        console.log("ERROR: Veteran ID is required."); 
+    }
+
+    var connection = new sql.Connection(config, function(err) {
+        // ... error checks
+        if (err || !query) { 
+        data = "Error: Database connection failed!";
+        console.log("Database connection failed!"); 
+        return; 
+        }
+
+        // Query
+        var request = new sql.Request(connection); // or: var request = connection.request();
+        request.query(query, function(err, recordset) {
+            // ... error checks
+            if (err) { 
+            console.log("Query failed!"); 
+            return; 
+            }
+
+            console.log(recordset.length);
+
+            res.send(recordset);
+        });
+
+    });
+    
+});
+
+app.get('/veteransByVAMC', function(req, res){
+    res.header("content-type: application/json");
+    var data = [];
+
+    var id = req.param("id");
+    var score = req.param("score");
+    var query = '';
+    query = "SELECT FirstName, MiddleName, LastName, SSN, DateIdentifiedRisk, "; 
+    query += "ReachID, vamc.VAMC FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE ";
+    if (id) {
+        console.log("Registering endpoint: /veteransByVAMC/:id is " + id);
+        query += "vamc.vamcID = " + id;
+        if (score) {
+            console.log("Registering endpoint: /veteransByVAMC/:score is " + score);
+            query += "AND vet.Score >= " + score;
+        }
+    } else {
+        res.send("ERROR: VAMC ID is required.");
+        console.log("ERROR: VAMC ID is required."); 
+    }
+
+    var connection = new sql.Connection(config, function(err) {
+        // ... error checks
+        if (err || !id) { 
+        data = "Error: Database connection failed!";
+        console.log("Database connection failed!"); 
+        return; 
+        }
+
+        // Query
+        var request = new sql.Request(connection); // or: var request = connection.request();
+        request.query(query, function(err, recordset) {
+            // ... error checks
+            if (err) { 
+            console.log("Query failed!"); 
+            return; 
+            }
+
+            console.log(recordset.length);
+
+            res.send(recordset);
+        });
+
+    });
+    
+});
+
+app.get('/scoreSummaryByVISN', function(req, res){
+    res.header("content-type: application/json");
+    var data = [];
+
+    var id = req.param("id");
+    var query = '';
+    if (id) {
+        console.log("Registering endpoint: /scoreSummaryByVISN/:id is " + id);
+        query = "SELECT sum(CASE when Score >= 95 then 1 else 0 END) as ExtremeRisk, ";
+        query += "sum(CASE when Score < 95 and Score >= 80 then 1 else 0 END) as HighRisk, ";
+        query += "sum(CASE when Score < 80 and Score >= 50 then 1 else 0 END) as MediumRisk, ";
+        query += "sum(CASE when Score < 50 then 1 else 0 END) as LowRisk "
+        query += "FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID ";
+        query += "WHERE vamc.VISN =  " + id;
+        console.log("Query: " + query);
+    } else {
+        console.log("ERROR: VISN ID is required."); 
+        res.end("ERROR: VISN ID is required.");
+
+    }
+
+    var connection = new sql.Connection(config, function(err) {
+        // ... error checks
+        if (err || !query) { 
+        data = "Error: Database connection failed!";
+        console.log("Database connection failed!"); 
+        return; 
+        }
+
+        // Query
+        var request = new sql.Request(connection); // or: var request = connection.request();
+        request.query(query, function(err, recordset) {
+            // ... error checks
+            if (err) { 
+            console.log("Query failed!"); 
+            return; 
+            }
+
+            console.log(recordset.length);
+
+            res.send(recordset);
+        });
+
+    });
+    
+});
+
+app.get('/totalRiskbyVAMC', function(req, res){
+    res.header("content-type: application/json");
+    var data = [];
+
+    var id = req.param("id");
+    if (!id) {
+        id = 1;
+    }
+    var query = '';
+    if (id) {
+        console.log("Registering endpoint: /scoreSummaryByVISN/:id is " + id);
+        query = "SELECT count(*) as TotalHighRisk_National, sum(cast(CriminalRecord as int)) as PTSD, ";
+        query += "cast(cast(sum(cast(CriminalRecord as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as PTSD_PCT, ";
+        query += "sum(cast(HistSubstanceAbuse as int)) as SubstanceAbuseHistory, ";
+        query += "cast(cast(sum(cast(HistSubstanceAbuse as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as SubstanceAbuseHistory_PCT, ";
+        query += "sum(cast(PreviousPsychiatricHospitalization as int)) as Hospitilized, ";
+        query += "cast(cast(sum(cast(PreviousPsychiatricHospitalization as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as Hospitilized_PCT, ";
+        query += "sum(cast(PreviousSuicideAttempts as int)) as PreviousAttempts, ";
+        query += "cast(cast(sum(cast(PreviousSuicideAttempts as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as PreviousAttempts_PCT, ";
+        query += "sum(cast(DiagnosedTBI as int)) as DiagnosedTBI, ";
+        query += "cast(cast(sum(cast(DiagnosedTBI as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as DiagnosedTBI_PCT ";
+        query += "FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID ";
+        query += "WHERE vet.Score >= 0";
+        query += "AND vamc.VISN = " + id;
+        console.log("Query: " + query);
+    } else {
+        console.log("ERROR: VISN ID is required."); 
+        res.end("ERROR: VISN ID is required.");
+
+    }
+
+    var connection = new sql.Connection(config, function(err) {
+        // ... error checks
+        if (err || !query) { 
+        data = "Error: Database connection failed!";
+        console.log("Database connection failed!"); 
+        return; 
+        }
+
+        // Query
+        var request = new sql.Request(connection); // or: var request = connection.request();
+        request.query(query, function(err, recordset) {
+            // ... error checks
+            if (err) { 
+            console.log("Query failed!"); 
+            return; 
+            }
+
+            console.log(recordset.length);
+
+            res.send(recordset);
+        });
+
+    });
+    
+});
+
 
 console.log("Registering endpoint: /jsonendpoint");
 app.get('/jsonendpoint', function(req, res){
