@@ -72,6 +72,7 @@ angular.module('perceptiveReachApp')
     ['Other browsers','All others','-','-','U']
 ];
   })
+  .controller('AttemptsCtrl', ['$scope', '$http', AttemptsCtrl])
   .directive('dataTables', function(){
     var linker = function(scope,element, attr){
         console.log(scope.dataSet);
@@ -96,3 +97,28 @@ angular.module('perceptiveReachApp')
         link: linker
     }
   });
+
+  function AttemptsCtrl($scope, $http){
+    
+    console.log("ScoreData: TEST");
+    $http.get('http://localhost:3000/totalRiskbyVAMC').success(function(data) {
+        console.log("attemptsData:" + JSON.stringify(data));
+        $scope.attemptsData = data;
+            
+    });
+
+    $scope.xAxisTickFormatFunction = function(){
+        return function(d){
+            console.log("xAxis:" + d);
+            return d;
+        }
+    }
+
+    $scope.toolTipContentFunction = function(){
+        return function(key, x, y, e, graph) {
+                return  '<h3>' + key + '</h3>' +
+                '<p>' +  y + ' for ' + x + '</p>'
+        }
+    }
+
+}

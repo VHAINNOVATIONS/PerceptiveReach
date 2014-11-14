@@ -92,7 +92,32 @@
             </section>
         </aside>
     </div>
-    
+    <div class="col-lg-6">
+        <div class="widget">
+          <div class="widget-header">
+            <i class="fa fa-cog fa-spin"></i> Risk Scores by VAMC
+          </div>
+          <div class="widget-body">
+            <!-- Check out the Angular Directive inside bootstrap.js! -->
+            <!--<rd-loading></rd-loading> -->
+            <div ng-controller="AttemptsCtrl">
+              <nvd3-discrete-bar-chart
+                  data="attemptsData"
+                  id="toolTipExample"
+                  showXAxis="true"
+                  showYAxis="true"
+                  width="550"
+                  height="350"
+                  xAxisTickFormat="xAxisTickFormatFunction()"
+                  showValues="true"
+                  tooltips="true"
+                  tooltipcontent="toolTipContentFunction()">
+                    <svg></svg>
+              </nvd3-discrete-bar-chart>
+            </div>
+          </div>
+        </div>
+      </div>
     
         
     <p>This is a test!!!</p>
