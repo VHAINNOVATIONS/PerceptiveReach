@@ -254,7 +254,7 @@ app.get('/veteransByVAMC', function(req, res){
     var score = req.param("score");
     var query = '';
     query = "SELECT FirstName, MiddleName, LastName, SSN, DateIdentifiedRisk, "; 
-    query += "ReachID FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE ";
+    query += "ReachID, vamc.VAMC FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE ";
     if (id) {
         console.log("Registering endpoint: /veteransByVAMC/:id is " + id);
         query += "vamc.vamcID = " + id;
