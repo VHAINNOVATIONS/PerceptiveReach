@@ -1,124 +1,131 @@
 'use strict';
 
 angular.module('perceptiveReachApp')
-  .controller('FacilityIndividualModalCtrl', function ($scope, $modalInstance, data) {
+  .controller('FacilityIndividualModalCtrl', function ($scope, $modalInstance,$http, data) {
         $scope.modalOptions = data.options;
-        //console.log($scope.modalOptions);
-        //$scope.veteranView.hide();
+        $scope.dataSet;
         $scope.modalOptions.ok = function (result) {
             $modalInstance.close(result);
         };
         $scope.modalOptions.close = function (result) {
             $modalInstance.dismiss('cancel');
         };
-    
-        $scope.dataSet = [
-    ['Trident','Internet Explorer 4.0','Win 95+','4','X','10-20-2009'],
-    ['Trident','Internet Explorer 5.0','Win 95+','5','C','10-20-2009'],
-    ['Trident','Internet Explorer 5.5','Win 95+','5.5','A','10-20-2009'],
-    ['Trident','Internet Explorer 6','Win 98+','6','A','10-20-2009'],
-    ['Trident','Internet Explorer 7','Win XP SP2+','7','A','10-20-2009'],
-    ['Trident','AOL browser (AOL desktop)','Win XP','6','A','10-20-2009'],
-    ['Gecko','Firefox 1.0','Win 98+ / OSX.2+','1.7','A','10-20-2009'],
-    ['Gecko','Firefox 1.5','Win 98+ / OSX.2+','1.8','A','10-20-2009'],
-    ['Gecko','Firefox 2.0','Win 98+ / OSX.2+','1.8','A','10-20-2009'],
-    ['Gecko','Firefox 3.0','Win 2k+ / OSX.3+','1.9','A','10-20-2009'],
-    ['Gecko','Camino 1.0','OSX.2+','1.8','A','10-20-2009'],
-    ['Gecko','Camino 1.5','OSX.3+','1.8','A','10-20-2009'],
-    ['Gecko','Netscape 7.2','Win 95+ / Mac OS 8.6-9.2','1.7','A','10-20-2009'],
-    ['Gecko','Netscape Browser 8','Win 98SE+','1.7','A','10-20-2009'],
-    ['Gecko','Netscape Navigator 9','Win 98+ / OSX.2+','1.8','A','10-20-2009'],
-    ['Gecko','Mozilla 1.0','Win 95+ / OSX.1+',1,'A','10-20-2009'],
-    ['Gecko','Mozilla 1.1','Win 95+ / OSX.1+',1.1,'A','10-20-2009'],
-    ['Gecko','Mozilla 1.2','Win 95+ / OSX.1+',1.2,'A','10-20-2009'],
-    ['Gecko','Mozilla 1.3','Win 95+ / OSX.1+',1.3,'A'],
-    ['Gecko','Mozilla 1.4','Win 95+ / OSX.1+',1.4,'A'],
-    ['Gecko','Mozilla 1.5','Win 95+ / OSX.1+',1.5,'A'],
-    ['Gecko','Mozilla 1.6','Win 95+ / OSX.1+',1.6,'A'],
-    ['Gecko','Mozilla 1.7','Win 98+ / OSX.1+',1.7,'A'],
-    ['Gecko','Mozilla 1.8','Win 98+ / OSX.1+',1.8,'A'],
-    ['Gecko','Seamonkey 1.1','Win 98+ / OSX.2+','1.8','A'],
-    ['Gecko','Epiphany 2.20','Gnome','1.8','A'],
-    ['Webkit','Safari 1.2','OSX.3','125.5','A'],
-    ['Webkit','Safari 1.3','OSX.3','312.8','A'],
-    ['Webkit','Safari 2.0','OSX.4+','419.3','A'],
-    ['Webkit','Safari 3.0','OSX.4+','522.1','A'],
-    ['Webkit','OmniWeb 5.5','OSX.4+','420','A'],
-    ['Webkit','iPod Touch / iPhone','iPod','420.1','A'],
-    ['Webkit','S60','S60','413','A'],
-    ['Presto','Opera 7.0','Win 95+ / OSX.1+','-','A'],
-    ['Presto','Opera 7.5','Win 95+ / OSX.2+','-','A'],
-    ['Presto','Opera 8.0','Win 95+ / OSX.2+','-','A'],
-    ['Presto','Opera 8.5','Win 95+ / OSX.2+','-','A'],
-    ['Presto','Opera 9.0','Win 95+ / OSX.3+','-','A'],
-    ['Presto','Opera 9.2','Win 88+ / OSX.3+','-','A'],
-    ['Presto','Opera 9.5','Win 88+ / OSX.3+','-','A'],
-    ['Presto','Opera for Wii','Wii','-','A'],
-    ['Presto','Nokia N800','N800','-','A'],
-    ['Presto','Nintendo DS browser','Nintendo DS','8.5','C/A<sup>1</sup>'],
-    ['KHTML','Konqureror 3.1','KDE 3.1','3.1','C'],
-    ['KHTML','Konqureror 3.3','KDE 3.3','3.3','A'],
-    ['KHTML','Konqureror 3.5','KDE 3.5','3.5','A'],
-    ['Tasman','Internet Explorer 4.5','Mac OS 8-9','-','X'],
-    ['Tasman','Internet Explorer 5.1','Mac OS 7.6-9','1','C'],
-    ['Tasman','Internet Explorer 5.2','Mac OS 8-X','1','C'],
-    ['Misc','NetFront 3.1','Embedded devices','-','C'],
-    ['Misc','NetFront 3.4','Embedded devices','-','A'],
-    ['Misc','Dillo 0.8','Embedded devices','-','X'],
-    ['Misc','Links','Text only','-','X'],
-    ['Misc','Lynx','Text only','-','X'],
-    ['Misc','IE Mobile','Windows Mobile 6','-','C'],
-    ['Misc','PSP browser','PSP','-','C'],
-    ['Other browsers','All others','-','-','U']
-];
+        
+        var VAMC_Id = data.id; //VA Medical Facility ID
+        function getVeteranByVAMC (id){
+            $http.get('http://localhost:3000/veteransByVAMC?id='+ id).success(function(veteransByVAMC) {
+            //console.log(veteransByVAMC);
+                var output = [];
+                var vamc = "";
+                for (var veteran in veteransByVAMC) {
+                    vamc = veteransByVAMC[0].VAMC
+                    //console.log("branchName: " + veteransByBranch[branchCount].key + " count: " + veteransByBranch[branchCount].y);
+                    //output[veteransByBranch[branchCount].key.replace(/\s/g,'')]=veteransByBranch[branchCount].y;
+                    var record = [];
+                    var fullName = veteransByVAMC[veteran].LastName + ", " +veteransByVAMC[veteran].FirstName + " " + veteransByVAMC[veteran].MiddleName; 
+                    record.push(String(fullName));
+                    record.push(String(veteransByVAMC[veteran].SSN));
+                    record.push(String(veteransByVAMC[veteran].Phone));
+                    record.push(String(veteransByVAMC[veteran].DateIdentifiedRisk));
+                    record.push(String(veteransByVAMC[veteran].ReachID));                
+                    output.push(record);
+                }
+                $scope.VAMC = vamc;
+                console.log($scope.VAMC);
+                $scope.dataSet = output;
+                console.log($scope.dataSet);
+                //return output;
+            });
+        }
+        function getHighRiskByVAMC (id){
+            $http.get('http://localhost:3000/scoreSummaryByVAMCID?id='+ id).success(function(risksByVAMC) {
+                console.log(risksByVAMC);
+                var objectRisk = risksByVAMC[0];
+                console.log(objectRisk);
+                //console.log(objectRisk.ExtremeRisk);
+                //return objectRisk;
+                $scope.risks = objectRisk;
+                //console.log($scope.dataSet);
+            });
+        }
+        $scope.getVeteran = function getVeteranData (id){
+            $http.get('http://localhost:3000/veterans?id='+ id).success(function(veteranByID) {
+                console.log(veteranByID);
+                var objectVeteran = veteranByID[0];
+                console.log(objectVeteran);
+                //console.log(objectRisk.ExtremeRisk);
+                //return objectRisk;
+                $scope.veteran = objectVeteran;
+                //console.log($scope.dataSet);
+            });
+        }
+    //var VAMC_Id = 1; //VA Medical Facility ID
+    //var Vet_Id = 127; //Veteran Reach ID
+    getVeteranByVAMC(VAMC_Id);//FacilityIndividualService.getVeteranByVAMC(1); 
+    getHighRiskByVAMC(VAMC_Id);
+    //getVeteranData(Vet_Id);
+    //$scope.getVeteran(Vet_Id);
+    console.log($scope.risks);
   })
-  .controller('AttemptsCtrl', ['$scope', '$http', AttemptsCtrl])
   .directive('dataTables', function(){
     var linker = function(scope,element, attr){
-        console.log(scope.dataSet);
-        console.log(element);
-        $(element).dataTable( {
-            "data": scope.dataSet,
-            "scrollY":        "200px",
-            "scrollCollapse": true,
-            "paging":         false,
-            "columns": [
-                { "title": "Veteran Name" },
-                { "title": "Veteran SSN" },
-                { "title": "Veteran Phone" },
-                { "title": "Date First identified as High Risk", "class": "center" },
-                { "title": "Date Record Last Updated", "class": "center" },
-                { "title": "Last VA Clinician Visit", "class": "center" }
-            ]
-        });    
+        var unwatch = scope.$watch('dataSet', function(v){
+            if(v){
+                unwatch();
+                var dataTableVet = $(element).dataTable( {
+                    "data": scope.dataSet,
+                    "scrollY":        "200px",
+                    "scrollCollapse": true,
+                    "paging":         false,
+                    "columns": [
+                        { "title": "Veteran Name" },
+                        { "title": "Veteran SSN" },
+                        { "title": "Veteran Phone" },
+                        { "title": "Date First identified as High Risk", "class": "center" },
+                        { "title": "Veteran Reach ID", "class": "center" }
+                        //{ "title": "Last VA Clinician Visit", "class": "center" }
+                    ],
+                    dom: 'T<"clear">lfrtip',
+                    tableTools: {
+                        "sRowSelect": "single"
+                    }
+                });
+                $('#example tbody').on( 'click', 'tr', function (event) {
+                    //console.log( dataTableVet.row( this ).data() );
+                    if($(this).hasClass('selected')){
+                        $(this).removeClass('selected');
+                        $('#veteranView').hide();
+                        $('#facilityInfo').show();
+                    }
+                    else{
+                        dataTableVet.$('tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                        $('#veteranView').show();
+                        $('#facilityInfo').hide();
+                        scope.getVeteran(event.currentTarget.cells[4].innerText);
+                    }
+                    
+                    console.log(event.currentTarget.cells[4].innerText);
+                } );
+            }
+            
+        });
+        //console.log(scope);
+        //console.log(element);
+        
+        
+        /*scope.$watch('scope.dataSet', handleModelUpdates, true);
+
+            function handleModelUpdates(newData) {
+                var data = newData || null;
+                if (data) {
+                    dataTable.fnClearTable();
+                    dataTable.fnAddData(data);
+                }
+            }*/
     };
     return {
         restrict:'EAC',
         link: linker
     }
   });
-
-  function AttemptsCtrl($scope, $http){
-    
-    console.log("ScoreData: TEST");
-    $http.get('http://localhost:3000/totalRiskbyVAMC').success(function(data) {
-        console.log("attemptsData:" + JSON.stringify(data));
-        $scope.attemptsData = data;
-            
-    });
-
-    $scope.xAxisTickFormatFunction = function(){
-        return function(d){
-            console.log("xAxis:" + d);
-            return d;
-        }
-    }
-
-    $scope.toolTipContentFunction = function(){
-        return function(key, x, y, e, graph) {
-                return  '<h3>' + key + '</h3>' +
-                '<p>' +  y + ' for ' + x + '</p>'
-        }
-    }
-
-}

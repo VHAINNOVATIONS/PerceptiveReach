@@ -1,26 +1,26 @@
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" data-ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  <h2>VA Medical Center: {{VAMC}}</h2><button type="button" class="close" data-dismiss="modal" data-ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
   <h4 ng-if="modal.title" ng-bind="modal.title" class="modal-title"></h4>
 </div>
 <div class="modal-body">
   <p ng-if="modal.text" ng-bind="modal.text"></p>
   <div ng-if="modal.html" ng-bind-html="modal.html"></div>
     <div>
-        <aside style="min-height: 363px; background: #f4f4f4; width: 120px; position: absolute;">
+        <aside style="min-height: 363px; background: #f4f4f4; width: 170px; position: absolute;">
             <section class="content-header" id="header">
                 <p> <b>Current High Risk Veterans</b></p>
             </section>
             <section class="sidebar">
                 <ul class="list-group">
-                    <li class="list-group-item"><button class="btn btn-primary" type="button">95-100 <span class="badge">42</span></button></li>
-                    <li class="list-group-item"><button class="btn btn-primary" type="button">80-94 <span class="badge">55</span></button></li>
-                    <li class="list-group-item"><button class="btn btn-primary" type="button">50-79 <span class="badge">100</span></button></li>
-                    <li class="list-group-item"><button class="btn btn-primary" type="button">25-49 <span class="badge">150</span></button></li>
-                    <li class="list-group-item"><button class="btn btn-primary" type="button">0-24  <span class="badge">42</span></button></li>
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">Extreme(95-100) <span class="badge">{{risks.ExtremeRisk}}</span></button></li>
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">High(80-94) <span class="badge">{{risks.HighRisk}}</span></button></li>
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">Medium(50-79) <span class="badge">{{risks.MediumRisk}}</span></button></li>
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">Low(0-49) <span class="badge">{{risks.LowRisk}}</span></button></li>
+                    <!--<li class="list-group-item"><button class="btn btn-primary" type="button">Facility View</button></li>-->
                 </ul>    
             </section>
         </aside>
-        <aside style="min-height: 363px; background: #f4f4f4; margin-left: 120px">
+        <aside style="min-height: 363px; background: #f4f4f4; margin-left: 170px">
             <section class="content-header" id="header">
                 <div id="veteranTable">
                     <table cellpadding="0" cellspacing="0" border="0" class="" id="example" width="100%" data-data-tables></table>
@@ -31,47 +31,48 @@
             <section class="content-header">
                 <div id="facilityInfo">
                 </div>
-                <div id="veteranView">
-                    <aside style="min-height: 263px; background: #f4f4f4; width : 20%; float: left;">
+                <div id="veteranView" style="display:none">
+                    <aside style="min-height: 263px; background: #f4f4f4; width : 33%; float: left;">
                         <section class="content-header" >
                             <p> 
-                                <b>Risk Factors: </b>
-                                <br><br>Indicator1
-                                <br>Indicator2
-                                <br>Indicator3
-                                <br>Indicator4
-                                <br>Indicator5
+                                <b>Risk Factors (True/False): </b>
+                                <br><br>Criminal Record: {{veteran.CriminalRecord}}
+                                <br>Criminal Record: {{veteran.CriminalRecord}}
+                                <br>History of Substance Abuse: {{veteran.HistSubstanceAbuse}}
+                                <br>Previous Psychiatric Hospitalization: {{veteran.PreviousPsychiatricHospitalization}}
+                                <br>Previous Attempts: {{veteran.PreviousSuicideAttempts}}
+                                <br>Diagnosed TBI: {{veteran.DiagnosedTBI}}
                             </p>   
                         </section>
                     </aside>
-                    <aside style="min-height: 263px; background: #f4f4f4; width : 40%; display:inline-block;">
+                    <aside style="min-height: 263px; background: #f4f4f4; width : 33%; display:inline-block;">
                         <section class="content-header" >
                             <p>
                                 <b>Contact Information: </b>
-                                <br><br>Name:
-                                <br>Last 4 of SSN:
-                                <br>Phone:
-                                <br>Alternative Phone:
-                                <br>Address:
-                                <br>City:
-                                <br>State:
-                                <br>Zip:
-                                <br><br><br>Date First Identified At-Risk:
+                                <br><br>Name: {{veteran.FirstName}} {{veteran.MiddleName}} {{veteran.LastName}} 
+                                <br>Last 4 of SSN: {{veteran.SSN}} 
+                                <br>Phone: {{veteran.Phone}} 
+                                <br>Alternative Phone: {{veteran.AltPhone}} 
+                                <br>Address: {{veteran.Address}} 
+                                <br>City: {{veteran.City}} 
+                                <br>State: {{veteran.State}} 
+                                <br>Zip: {{veteran.Zip}} 
+                                <br><br><br>Date First Identified At-Risk: {{veteran.DateIdentifiedRisk}} 
                             </p>
                         </section>
                     </aside> 
-                    <aside style="min-height: 263px; background: #f4f4f4; float:right; width: 40%;">
+                    <aside style="min-height: 263px; background: #f4f4f4; float:right; width: 33%;">
                         <section class="content-header" >
                             <p>
                                 <b>Emergency Contact Information: </b>
-                                <br><br>Emergency Contact Name:
-                                <br>Relationship to Veteran:                                
-                                <br>Address:
-                                <br>City:
-                                <br>State:
-                                <br>Zip:
-                                <br>Phone:
-                                <br>Alternative Phone:
+                                <br><br>Emergency Contact Name: {{veteran.EmergencyContact}} 
+                                <br>Relationship to Veteran: {{veteran.Relationship}}                                 
+                                <br>Address: {{veteran.EC_Address}} 
+                                <br>City: {{veteran.EC_City}} 
+                                <br>State: {{veteran.EC_State}} 
+                                <br>Zip: {{veteran.EC_Zip}} 
+                                <br>Phone: {{veteran.EC_Phone}} 
+                                <br>Alternative Phone: {{veteran.EC_AltPhone}} 
                             </p>
                         </section>
                     </aside>
@@ -79,12 +80,12 @@
                         <section class="content-header" >
                             <p>
                                 <b>Veteran Details: </b>
-                                <br><br>Rural or Urban Location:
-                                <br>Local Medical Center:                                
-                                <br>VISN:
-                                <br>Age:
-                                <br>Gender:
-                                <br>Ethnicity:
+                                <br><br>Urban Location?: {{veteran.UrbanArea}} 
+                                <br>Local Medical Center: {{veteran.vamc}}     
+                                <br>VISN: {{veteran.VISN}} 
+                                <br>Age: {{veteran.Age}} 
+                                <br>Gender: {{veteran.Gender}} 
+                                <br>Ethnicity: {{veteran.Race}} 
                             </p>
                         </section>
                     </aside>
@@ -92,41 +93,12 @@
             </section>
         </aside>
     </div>
-    <div class="col-lg-6">
-        <div class="widget">
-          <div class="widget-header">
-            <i class="fa fa-cog fa-spin"></i> Risk Scores by VAMC
-          </div>
-          <div class="widget-body">
-            <!-- Check out the Angular Directive inside bootstrap.js! -->
-            <!--<rd-loading></rd-loading> -->
-            <div ng-controller="AttemptsCtrl">
-              <nvd3-discrete-bar-chart
-                  data="attemptsData"
-                  id="toolTipExample"
-                  showXAxis="true"
-                  showYAxis="true"
-                  width="550"
-                  height="350"
-                  xAxisTickFormat="xAxisTickFormatFunction()"
-                  showValues="true"
-                  tooltips="true"
-                  tooltipcontent="toolTipContentFunction()">
-                    <svg></svg>
-              </nvd3-discrete-bar-chart>
-            </div>
-          </div>
-        </div>
-      </div>
-    
-        
-    <p>This is a test!!!</p>
 </div>
 <div class="modal-footer">
   <button ng-repeat="button in modal.buttons" ng-class="button.classes" ng-click="button.click($event)" ng-bind="button.text" class="btn"></button>
 </div>
 <style>
     .app-modal-window .modal-dialog{
-    width: 700px;
+    width: 720px;
 }
 </style>

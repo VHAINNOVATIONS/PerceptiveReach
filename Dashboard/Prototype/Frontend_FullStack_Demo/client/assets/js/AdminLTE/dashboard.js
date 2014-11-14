@@ -88,7 +88,179 @@ $(function() {
                 el.html(el.html() + ': ' + visitorsData[code] + ' new visitors');
         }
     });
+    //drill down map by HighMaps
+    var data = Highcharts.geojson(Highcharts.maps['countries/us/us-all']),
+        // Some responsiveness
+        small = $('#container').width() < 400;
 
+    // Set drilldown pointers
+    $.each(data, function (i) {
+        this.drilldown = this.properties['hc-key'];
+        this.value = i; // Non-random bogus data
+    });
+
+    // Instanciate the map
+    $('#container').highcharts('Map', {
+        chart : {
+            events: {
+                drilldown: function (e) {
+
+                    if (!e.seriesOptions) {
+                        var chart = this,
+                            mapKey = 'countries/us/' + e.point.drilldown + '-all',
+                            // Handle error, the timeout is cleared on success
+                            fail = setTimeout(function () {
+                                if (!Highcharts.maps[mapKey]) {
+                                    chart.showLoading('<i class="icon-frown"></i> Failed loading ' + e.point.name);
+
+                                    fail = setTimeout(function () {
+                                        chart.hideLoading();
+                                    }, 1000);
+                                }
+                            }, 3000);
+
+                        // Show the spinner
+                        chart.showLoading('<i class="icon-spinner icon-spin icon-3x"></i>'); // Font Awesome spinner
+
+                        // Load the drilldown map
+                        $.getScript('http://code.highcharts.com/mapdata/' + mapKey + '.js', function () {
+
+                            data = Highcharts.geojson(Highcharts.maps[mapKey]);
+
+                            // Set a non-random bogus value
+                            $.each(data, function (i) {
+                                this.value = i;
+                            });
+
+                            // Hide loading and add series
+                            chart.hideLoading();
+                            clearTimeout(fail);
+                            chart.addSeriesAsDrilldown(e.point, {
+                                name: e.point.name,
+                                data: data,
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.name}'
+                                }
+                            });
+                        });
+                    }
+
+
+                    this.setTitle(null, { text: e.point.name });
+                },
+                drillup: function () {
+                    this.setTitle(null, { text: 'USA' });
+                }
+            }
+        },
+
+        title : {
+            text : 'Highcharts Map Drilldown'
+        },
+
+        subtitle: {
+            text: 'USA',
+            floating: true,
+            align: 'right',
+            y: 50,
+            style: {
+                fontSize: '16px'
+            }
+        },
+
+        legend: small ? {} : {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+
+        colorAxis: {
+            min: 0,
+            minColor: '#E6E7E8',
+            maxColor: '#005645'
+        },
+
+        mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+
+        plotOptions: {
+            map: {
+                states: {
+                    hover: {
+                        color: '#EEDD66'
+                    }
+                }
+            }
+        },
+
+        series : [{
+            data : data,
+            name: 'USA',
+            dataLabels: {
+                enabled: true,
+                format: '{point.properties.postal-code}'
+            }
+        }],
+
+        drilldown: {
+            //series: drilldownSeries,
+            activeDataLabelStyle: {
+                color: 'white',
+                textDecoration: 'none'
+            },
+            drillUpButton: {
+                relativeTo: 'spacingBox',
+                position: {
+                    x: 0,
+                    y: 60
+                }
+            }
+        }
+    });
+    //drill map by jvectormap
+    /*new jvm.MultiMap({
+        container: $('#drill-map'),
+        maxLevel: 1,
+        main: {
+            map: 'us_mill_en'
+        },
+        mapUrlByCode: function(code, multiMap){
+            return '/js/us-counties/jquery-jvectormap-data-'+
+                code.toLowerCase()+'-'+
+                multiMap.defaultProjection+'-en.js';
+        }
+    });*/
+    /*$('#drill-map').vectorMap({
+        map: 'us_mill_en',
+        backgroundColor: "transparent",
+        regionStyle: {
+            initial: {
+                fill: '#e4e4e4',
+                "fill-opacity": 1,
+                stroke: 'none',
+                "stroke-width": 0,
+                "stroke-opacity": 1
+            }
+        },
+        series: {
+            regions: [{
+                    values: visitorsData,
+                    scale: ["#92c1dc", "#ebf4f9"],
+                    normalizeFunction: 'polynomial'
+                }]
+        },
+        onRegionLabelShow: function(e, el, code) {
+            if (typeof visitorsData[code] != "undefined")
+                el.html(el.html() + ': ' + visitorsData[code] + ' new visitors');
+        }
+    });*/
+    
+    //$('#drill-map').vectorMap({map: 'us_mill_en'});
     //Sparkline charts
     var myvalues = [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021];
     $('#sparkline-1').sparkline(myvalues, {
