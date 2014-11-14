@@ -1,0 +1,95 @@
+-- *** National View ***
+
+SELECT count(*) as TotalHighRisk_National,
+ sum(cast(CriminalRecord as int)) as HasArrestRecord, 
+  cast(cast(sum(cast(CriminalRecord as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as HasArrestRecord_PCT,
+ sum(cast(HistSubstanceAbuse as int)) as SubstanceAbuseHistory, 
+  cast(cast(sum(cast(HistSubstanceAbuse as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as SubstanceAbuseHistory_PCT,
+ sum(cast(PreviousPsychiatricHospitalization as int)) as Hospitilized, 
+  cast(cast(sum(cast(PreviousPsychiatricHospitalization as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as Hospitilized_PCT,
+ sum(cast(PreviousSuicideAttempts as int)) as PreviousAttempts, 
+  cast(cast(sum(cast(PreviousSuicideAttempts as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as PreviousAttempts_PCT,
+ sum(cast(DiagnosedTBI as int)) as DiagnosedTBI, 
+  cast(cast(sum(cast(DiagnosedTBI as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as DiagnosedTBI_PCT
+FROM VeteranRisk
+WHERE Score >= 80
+
+
+-- *** VISN View ***
+
+SELECT count(*) as TotalHighRisk_National,
+ sum(cast(CriminalRecord as int)) as HasArrestRecord, 
+  cast(cast(sum(cast(CriminalRecord as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as HasArrestRecord_PCT,
+ sum(cast(HistSubstanceAbuse as int)) as SubstanceAbuseHistory, 
+  cast(cast(sum(cast(HistSubstanceAbuse as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as SubstanceAbuseHistory_PCT,
+ sum(cast(PreviousPsychiatricHospitalization as int)) as Hospitilized, 
+  cast(cast(sum(cast(PreviousPsychiatricHospitalization as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as Hospitilized_PCT,
+ sum(cast(PreviousSuicideAttempts as int)) as PreviousAttempts, 
+  cast(cast(sum(cast(PreviousSuicideAttempts as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as PreviousAttempts_PCT,
+ sum(cast(DiagnosedTBI as int)) as DiagnosedTBI, 
+  cast(cast(sum(cast(DiagnosedTBI as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as DiagnosedTBI_PCT
+FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID
+WHERE vet.Score >= 80
+AND vamc.VISN = @VISN
+
+-- *** State View ***
+
+SELECT count(*) as TotalHighRisk_National,
+ sum(cast(CriminalRecord as int)) as HasArrestRecord, 
+  cast(cast(sum(cast(CriminalRecord as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as HasArrestRecord_PCT,
+ sum(cast(HistSubstanceAbuse as int)) as SubstanceAbuseHistory, 
+  cast(cast(sum(cast(HistSubstanceAbuse as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as SubstanceAbuseHistory_PCT,
+ sum(cast(PreviousPsychiatricHospitalization as int)) as Hospitilized, 
+  cast(cast(sum(cast(PreviousPsychiatricHospitalization as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as Hospitilized_PCT,
+ sum(cast(PreviousSuicideAttempts as int)) as PreviousAttempts, 
+  cast(cast(sum(cast(PreviousSuicideAttempts as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as PreviousAttempts_PCT,
+ sum(cast(DiagnosedTBI as int)) as DiagnosedTBI, 
+  cast(cast(sum(cast(DiagnosedTBI as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as DiagnosedTBI_PCT
+FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID
+WHERE vet.Score >= 80
+AND vamc.StateAbbr = @State
+
+-- *** Region View ***
+
+SELECT count(*) as TotalHighRisk_National,
+ sum(cast(CriminalRecord as int)) as HasArrestRecord, 
+  cast(cast(sum(cast(CriminalRecord as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as HasArrestRecord_PCT,
+ sum(cast(HistSubstanceAbuse as int)) as SubstanceAbuseHistory, 
+  cast(cast(sum(cast(HistSubstanceAbuse as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as SubstanceAbuseHistory_PCT,
+ sum(cast(PreviousPsychiatricHospitalization as int)) as Hospitilized, 
+  cast(cast(sum(cast(PreviousPsychiatricHospitalization as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as Hospitilized_PCT,
+ sum(cast(PreviousSuicideAttempts as int)) as PreviousAttempts, 
+  cast(cast(sum(cast(PreviousSuicideAttempts as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as PreviousAttempts_PCT,
+ sum(cast(DiagnosedTBI as int)) as DiagnosedTBI, 
+  cast(cast(sum(cast(DiagnosedTBI as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as DiagnosedTBI_PCT
+FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID
+ INNER JOIN Ref_State s ON vamc.StateAbbr = s.StateAbbr
+WHERE vet.Score >= 80
+AND s.RegionID = @Region
+
+-- *** Facility View ***
+
+-- roll up
+
+SELECT 
+ sum(CASE when Score >= 95 then 1 else 0 END) as ExtremeRisk, 
+ sum(CASE when Score < 95 and Score >= 80 then 1 else 0 END) as HighRisk,
+ sum(CASE when Score < 80 and Score >= 50 then 1 else 0 END) as MediumRisk,
+ sum(CASE when Score < 50 then 1 else 0 END) as LowRisk
+FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID
+WHERE vamc.vamc = @VAMC
+
+-- high risk vet list
+
+SELECT 
+ FirstName, MiddleName, LastName, SSN, DateIdentifiedRisk
+FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID
+WHERE vet.Score >= 80
+AND vamc.vamc = @VAMC
+
+-- *** individual View ***
+
+SELECT 
+ *, vamc.vamc
+FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID
+WHERE vet.ReachID = @ID
