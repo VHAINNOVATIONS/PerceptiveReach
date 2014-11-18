@@ -3,11 +3,6 @@
 angular.module('perceptiveReachApp')
   .controller('MainCtrl', function ($scope, $http, modalService) {
     $scope.awesomeThings = [];
-    //Modal.open();
-    //$('#veteranTable').DataTable();
-    //console.log(JSON.stringify(Modal));
-    //console.log(Modal);
-    //loadVeteranTable();
     
     $http.get('http://localhost:3000/veteransByState').success(function(veteransInStates) {
       var vetsByState = convertToRightStateObj(veteransInStates);
@@ -29,9 +24,7 @@ angular.module('perceptiveReachApp')
     });
     
     function facilityIndividualView (id) {
-
-        var custName = 'Andal'//$scope.customer.firstName + ' ' + $scope.customer.lastName;
-
+        //var custName = 'Andal'//$scope.customer.firstName + ' ' + $scope.customer.lastName;
         var optionsChoice = {};
         var modalOptions = {
             //closeButtonText: 'Cancel',
