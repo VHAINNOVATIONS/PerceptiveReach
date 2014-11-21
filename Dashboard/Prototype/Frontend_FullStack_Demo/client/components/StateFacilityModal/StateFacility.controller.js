@@ -99,12 +99,12 @@ angular.module('perceptiveReachApp')
                     "scrollCollapse": true,
                     "paging":         false,
                     "columns": [
-                        { "title": "VAMCID" },
-                        { "title": "VAMC" },
+                        { "title": "VAMC ID" },
+                        { "title": "VA Medical Center" },
                         { "title": "STA3N" },
-                        { "title": "NetworkName", "class": "center" },
-                        { "title": "RegionServed", "class": "center" },
-                        { "title": "Vet_Cnt_Fac", "class": "center" }
+                        { "title": "Network Name", "class": "center" },
+                        { "title": "Region Served", "class": "center" },
+                        { "title": "Veteran Count in Facility", "class": "center" }
                         //{ "title": "Last VA Clinician Visit", "class": "center" }
                     ],
                     dom: 'T<"clear">lfrtip',

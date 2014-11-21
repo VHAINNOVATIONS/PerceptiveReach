@@ -205,6 +205,53 @@ app.get('/veteransByState', function(req, res){
     //res.send(recordset);
 });
 
+app.get('/FacilitiesStateCount', function(req, res){
+    res.header("content-type: application/json");
+    var data = [];
+
+    /*var state = req.param("id");
+    var query = '';
+    if (state) {
+        console.log("Registering endpoint: /FacilitiesStateCount/:id is " + state);
+        query = "SELECT Branch, count(*) as Total FROM AnalyticsOutput WHERE St = '" + state + "' group by branch";
+        console.log("Query: " + query);
+    } else {
+        query = "SELECT St as State, count(*) as Total FROM AnalyticsOutput group by St";
+    }*/
+	query = "SELECT StateAbbr as State, count(*) as Total FROM Ref_VAMC group by StateAbbr";
+
+    var connection = new sql.Connection(config, function(err) {
+        // ... error checks
+        if (err) { 
+        data = "Error: Database connection failed!";
+        console.log("Database connection failed!"); 
+        return; 
+        }
+
+        // Query
+        var request = new sql.Request(connection); // or: var request = connection.request();
+        request.query(query, function(err, recordset) {
+            // ... error checks
+            if (err) { 
+            console.log("Query failed!"); 
+            return; 
+            }
+
+            console.log(recordset.length);
+
+            /*for (var i = 0; i < recordset.length; i++) 
+            { 
+                console.log("Row#: " + i + " Last Name: " + recordset[i].lastname + " Firt Name: " + recordset[i].firstname); 
+            } */
+
+            res.send(recordset);
+        });
+
+    });
+    
+    //res.send(recordset);
+});
+
 app.get('/veterans', function(req, res){
     res.header("content-type: application/json");
     var data = [];

@@ -4,14 +4,14 @@ angular.module('perceptiveReachApp')
   .controller('MainCtrl', function ($scope, $http, modalService) {
     $scope.awesomeThings = [];
     
-    $http.get('http://localhost:3000/veteransByState').success(function(veteransInStates) {
-      var vetsByState = convertToRightStateObj(veteransInStates);
-      $scope.vetsInState = vetsByState;
+    $http.get('http://localhost:3000/FacilitiesStateCount').success(function(FacilitiesStateCount) {
+      var facByState = convertToRightStateObj(FacilitiesStateCount);
+      $scope.vetsInState = facByState;
       // Instanciate the map
       $('#map').vectorMap({
           map: 'us_mill_en',  
           onRegionTipShow: function(e, el, code){
-              el.html(el.html()+' (Veterans - '+vetsByState[code]+')');
+              el.html(el.html()+' (Facilities - '+facByState[code]+')');
               //$scope.vetsByBranch = getUpdatedBranchNumbers($http, code);               
           },
           onRegionClick: function(event, code){
@@ -88,7 +88,7 @@ angular.module('perceptiveReachApp')
     });
     
     
-    function convertToRightStateObj(veteranByState) {
+    function convertToRightStateObj(facilityByState) {
     var states = {
     'Alabama': 'AL',
     'Alaska': 'AK',
@@ -154,12 +154,15 @@ angular.module('perceptiveReachApp')
     var output = {};
     
     //loop through vets by state and populate correct state codes and values 
-    for (var stateCombo in veteranByState) {
+    /*for (var stateCombo in veteranByState) {
         for (var stateName in states) {
             //console.log("stateNme: " + stateName + "  stateCombo: " + stateCombo);
            output["US-" + states[veteranByState[stateCombo].State]]=veteranByState[stateCombo].Total;
             //console.log(output);
         }
+    }*/
+    for (var stateCombo in facilityByState) {
+        output["US-" + facilityByState[stateCombo].State]=facilityByState[stateCombo].Total;    
     }
     return output;
 };
