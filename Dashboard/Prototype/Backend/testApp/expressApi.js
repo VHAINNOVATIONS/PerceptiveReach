@@ -482,6 +482,8 @@ app.get('/facilityByState', function(req, res){
 app.get('/totalRiskbyVAMC', function(req, res){
     res.header("content-type: application/json");
     var data = [];
+    var numRisks = [];
+    var pctRisks = [];
 
     var id = req.param("id");
     if (!id) {
@@ -489,7 +491,7 @@ app.get('/totalRiskbyVAMC', function(req, res){
     }
     var query = '';
     if (id) {
-        console.log("Registering endpoint: /scoreSummaryByVISN/:id is " + id);
+        console.log("Registering endpoint: /totalRiskbyVAMC/:id is " + id);
         query = "SELECT count(*) as TotalHighRisk_National, sum(cast(CriminalRecord as int)) as PTSD, ";
         query += "cast(cast(sum(cast(CriminalRecord as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as PTSD_PCT, ";
         query += "sum(cast(HistSubstanceAbuse as int)) as SubstanceAbuseHistory, ";
@@ -528,8 +530,34 @@ app.get('/totalRiskbyVAMC', function(req, res){
             }
 
             console.log(recordset.length);
+            for (var i = 0; i < recordset.length; i++) {
+                numRisks.push([
+                    "PTSD", 
+                    recordset[i].PTSD                    
+                ]);
+                numRisks.push([
+                    "Substance Abuse History", 
+                    recordset[i].SubstanceAbuseHistory                    
+                ]);
+                numRisks.push([
+                    "Hospitilized", 
+                    recordset[i].Hospitilized                    
+                ]);
+                numRisks.push([
+                    "Previous Attempts", 
+                    recordset[i].PreviousAttempts                    
+                ]);
+                numRisks.push([
+                    "Diagnosed TBI", 
+                    recordset[i].DiagnosedTBI                    
+                ]);
+            }
+            data.push({
+                "key": "RISKS",
+                "values": numRisks
+            });
 
-            res.send(recordset);
+            res.send(data);
         });
 
     });

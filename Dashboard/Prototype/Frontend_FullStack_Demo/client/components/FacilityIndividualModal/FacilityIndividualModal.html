@@ -30,6 +30,30 @@
         <aside style="min-height: 200px; background: #f4f4f4;">
             <section class="content-header">
                 <div id="facilityInfo">
+                    <div class="widget">
+                      <div class="widget-header">
+                        <i class="fa fa-cog fa-spin"></i> Number of Risks
+                      </div>
+                      <div class="widget-body">
+                        <!-- Check out the Angular Directive inside bootstrap.js! -->
+                        <!--<rd-loading></rd-loading> -->
+                        <!-- div ng-controller="FacilityIndividualModalCtrl" -->
+                          <nvd3-discrete-bar-chart
+                              data="totalRisksbyVAMC"
+                              id="toolTipExample"
+                              showXAxis="true"
+                              showYAxis="true"
+                              width="550"
+                              height="350"
+                              xAxisTickFormat="xAxisTickFormatFunction()"
+                              showValues="true"
+                              tooltips="true"
+                              tooltipcontent="toolTipContentFunction()">
+                                <svg></svg>
+                          </nvd3-discrete-bar-chart>
+                        <!--/div -->
+                      </div>
+                    </div>
                 </div>
                 <div id="veteranView" style="display:none">
                     <aside style="min-height: 263px; background: #f4f4f4; width : 33%; float: left;">
