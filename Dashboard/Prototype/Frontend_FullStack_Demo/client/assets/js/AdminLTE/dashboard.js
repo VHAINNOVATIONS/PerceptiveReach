@@ -349,7 +349,7 @@ $(function() {
     });
 
     //Donut Chart
-    var donut = new Morris.Donut({
+    /*var donut = new Morris.Donut({
         element: 'sales-chart',
         resize: true,
         colors: ["#3c8dbc", "#f56954", "#00a65a"],
@@ -359,7 +359,7 @@ $(function() {
             {label: "Mail-Order Sales", value: 20}
         ],
         hideHover: 'auto'
-    });
+    });*/
     /*Bar chart
     var bar = new Morris.Bar({
         element: 'bar-chart',

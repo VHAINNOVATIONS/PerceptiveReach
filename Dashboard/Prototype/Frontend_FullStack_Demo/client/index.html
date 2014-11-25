@@ -43,7 +43,7 @@
     </head>
     <body ng-app="perceptiveReachApp" class="skin-blue">
         <!-- Add your site or application content here -->
-        <div ui-view=""></div>
+        <!--<div ui-view=""></div>-->
         
         <!-- header logo: style can be found in header.less -->
         <header class="header">
@@ -506,9 +506,14 @@
                         </div><!-- ./col -->
                     </div><!-- /.row -->
                     
-                    <div class="row" id="map" style="width: 900px; height: 600px; margin:0 auto;">                    
-                    <!-- andal -->                        
+                    <div ui-view="">
+                    <div class="row" > <!-- andal -->
+                        <div id="map" style="width: 70%; height: 600px; float: left"></div>
+                        <div id="nationalTable" style="float:right; width:30%">
+                            <table cellpadding="0" cellspacing="0" border="0" class="" id="exampleNational" width="100%" data-data-tables-national></table>
+                        </div>                        
                     </div><!-- /.row -->
+                    </div>    
                     <!--<div id="container" class = "row" style="height: 500px; min-width: 310px; max-width: 800px; margin: 0 auto"></div>-->
                     
                     <!-- Main row -->
