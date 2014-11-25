@@ -536,7 +536,7 @@ app.get('/totalRiskbyVAMC', function(req, res){
                     recordset[i].PTSD                    
                 ]);
                 numRisks.push([
-                    "Substance Abuse History", 
+                    "Substance Abuse", 
                     recordset[i].SubstanceAbuseHistory                    
                 ]);
                 numRisks.push([

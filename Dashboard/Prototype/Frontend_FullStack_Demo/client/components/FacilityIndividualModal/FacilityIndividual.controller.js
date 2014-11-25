@@ -56,8 +56,8 @@ angular.module('perceptiveReachApp')
             $scope.toolTipContentFunction = function(){
                 return function(key, x, y, e, graph) {
                         console.log("key:" + key);
-                        return  '<h3>' + key + '</h3>' +
-                        '<p>' +  y + ' for ' + x + '</p>';
+                        return  '<h3>' + x + '</h3>' +
+                        '<p>' +  y  + '</p>';
                 }
             }
         }
