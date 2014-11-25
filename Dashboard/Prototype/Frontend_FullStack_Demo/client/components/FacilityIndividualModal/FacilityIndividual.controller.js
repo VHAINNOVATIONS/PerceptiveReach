@@ -37,6 +37,30 @@ angular.module('perceptiveReachApp')
                 //return output;
             });
         }
+        function getTotalRiskbyVAMC (id){
+            $http.get('http://localhost:3000/totalRiskbyVAMC?id='+ id).success(function(totalRisksbyVAMC) {
+            //console.log(totalRisksbyVAMC);
+
+                console.log("totalRisksbyVAMC:" + JSON.stringify(totalRisksbyVAMC));
+                $scope.totalRisksbyVAMC = totalRisksbyVAMC;
+                        
+            });
+
+            $scope.xAxisTickFormatFunction = function(){
+                return function(d){
+                    console.log("xAxis:" + d);
+                    return d;
+                }
+            }
+
+            $scope.toolTipContentFunction = function(){
+                return function(key, x, y, e, graph) {
+                        console.log("key:" + key);
+                        return  '<h3>' + x + '</h3>' +
+                        '<p>' +  y  + '</p>';
+                }
+            }
+        }
         function getHighRiskByVAMC (id){
             $http.get('http://localhost:3000/scoreSummaryByVAMCID?id='+ id).success(function(risksByVAMC) {
                 console.log(risksByVAMC);
@@ -63,9 +87,10 @@ angular.module('perceptiveReachApp')
     //var Vet_Id = 127; //Veteran Reach ID
     getVeteranByVAMC(VAMC_Id);//FacilityIndividualService.getVeteranByVAMC(1); 
     getHighRiskByVAMC(VAMC_Id);
+    getTotalRiskbyVAMC(VAMC_Id);
     //getVeteranData(Vet_Id);
     //$scope.getVeteran(Vet_Id);
-    console.log($scope.risks);
+    //console.log($scope.risks);
   })
   .directive('dataTables', function(){
     var linker = function(scope,element, attr){
