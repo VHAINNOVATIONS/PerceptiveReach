@@ -205,6 +205,53 @@ app.get('/veteransByState', function(req, res){
     //res.send(recordset);
 });
 
+app.get('/FacilitiesStateCount', function(req, res){
+    res.header("content-type: application/json");
+    var data = [];
+
+    /*var state = req.param("id");
+    var query = '';
+    if (state) {
+        console.log("Registering endpoint: /FacilitiesStateCount/:id is " + state);
+        query = "SELECT Branch, count(*) as Total FROM AnalyticsOutput WHERE St = '" + state + "' group by branch";
+        console.log("Query: " + query);
+    } else {
+        query = "SELECT St as State, count(*) as Total FROM AnalyticsOutput group by St";
+    }*/
+	query = "SELECT StateAbbr as State, count(*) as Total FROM Ref_VAMC group by StateAbbr";
+
+    var connection = new sql.Connection(config, function(err) {
+        // ... error checks
+        if (err) { 
+        data = "Error: Database connection failed!";
+        console.log("Database connection failed!"); 
+        return; 
+        }
+
+        // Query
+        var request = new sql.Request(connection); // or: var request = connection.request();
+        request.query(query, function(err, recordset) {
+            // ... error checks
+            if (err) { 
+            console.log("Query failed!"); 
+            return; 
+            }
+
+            console.log(recordset.length);
+
+            /*for (var i = 0; i < recordset.length; i++) 
+            { 
+                console.log("Row#: " + i + " Last Name: " + recordset[i].lastname + " Firt Name: " + recordset[i].firstname); 
+            } */
+
+            res.send(recordset);
+        });
+
+    });
+    
+    //res.send(recordset);
+});
+
 app.get('/veterans', function(req, res){
     res.header("content-type: application/json");
     var data = [];
@@ -253,7 +300,7 @@ app.get('/veteransByVAMC', function(req, res){
     var id = req.param("id");
     var score = req.param("score");
     var query = '';
-    query = "SELECT FirstName, MiddleName, LastName, SSN, DateIdentifiedRisk, "; 
+    query = "SELECT FirstName, MiddleName, LastName, SSN, Phone, DateIdentifiedRisk, "; 
     query += "ReachID, vamc.VAMC FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE ";
     if (id) {
         console.log("Registering endpoint: /veteransByVAMC/:id is " + id);
@@ -340,9 +387,103 @@ app.get('/scoreSummaryByVISN', function(req, res){
     
 });
 
+app.get('/scoreSummaryByVAMCID', function(req, res){
+    res.header("content-type: application/json");
+    var data = [];
+
+    var id = req.param("id");
+    var query = '';
+    if (id) {
+        console.log("Registering endpoint: /scoreSummaryByVAMCID/:id is " + id);
+        query = "SELECT sum(CASE when Score >= 95 then 1 else 0 END) as ExtremeRisk, ";
+        query += "sum(CASE when Score < 95 and Score >= 80 then 1 else 0 END) as HighRisk, ";
+        query += "sum(CASE when Score < 80 and Score >= 50 then 1 else 0 END) as MediumRisk, ";
+        query += "sum(CASE when Score < 50 then 1 else 0 END) as LowRisk "
+        query += "FROM VeteranRisk ";
+        query += "WHERE VAMC =  " + id;
+        console.log("Query: " + query);
+    } else {
+        console.log("ERROR: VISN ID is required."); 
+        res.end("ERROR: VISN ID is required.");
+
+    }
+
+    var connection = new sql.Connection(config, function(err) {
+        // ... error checks
+        if (err || !query) { 
+        data = "Error: Database connection failed!";
+        console.log("Database connection failed!"); 
+        return; 
+        }
+
+        // Query
+        var request = new sql.Request(connection); // or: var request = connection.request();
+        request.query(query, function(err, recordset) {
+            // ... error checks
+            if (err) { 
+            console.log("Query failed!"); 
+            return; 
+            }
+
+            console.log(recordset.length);
+
+            res.send(recordset);
+        });
+
+    });
+    
+});
+
+app.get('/facilityByState', function(req, res){
+    res.header("content-type: application/json");
+    var data = [];
+
+    var id = req.param("id");
+    var query = '';
+    if (id) {
+        console.log("Registering endpoint: /facilityByState/:id is " + id);
+        query = "SELECT VAMCID, vamc.VAMC, STA3N, visn.NetworkName, visn.RegionServed, COUNT(vet.ReachID) as Veteran_Count_at_facility ";
+        query += "FROM Ref_VAMC vamc INNER JOIN Ref_VISN visn ON vamc.VISN = visn.VISN INNER JOIN VeteranRisk vet ON vamc.VAMCID = vet.VAMC ";
+        query += "WHERE vamc.StateAbbr =  " + id;
+		query += "GROUP by VAMCID, vamc.VAMC, STA3N, visn.NetworkName, visn.RegionServed";
+        console.log("Query: " + query);
+    } else {
+        console.log("ERROR: VISN ID is required."); 
+        res.end("ERROR: VISN ID is required.");
+
+    }
+
+    var connection = new sql.Connection(config, function(err) {
+        // ... error checks
+        if (err || !query) { 
+        data = "Error: Database connection failed!";
+        console.log("Database connection failed!"); 
+        return; 
+        }
+
+        // Query
+        var request = new sql.Request(connection); // or: var request = connection.request();
+        request.query(query, function(err, recordset) {
+            // ... error checks
+            if (err) { 
+            console.log("Query failed!"); 
+            return; 
+            }
+
+            console.log(recordset.length);
+
+            res.send(recordset);
+        });
+
+    });
+    
+});
+
 app.get('/totalRiskbyVAMC', function(req, res){
     res.header("content-type: application/json");
     var data = [];
+    var numRisks = [];
+    var pctRisks = [];
 
     var id = req.param("id");
     if (!id) {
@@ -350,7 +491,7 @@ app.get('/totalRiskbyVAMC', function(req, res){
     }
     var query = '';
     if (id) {
-        console.log("Registering endpoint: /scoreSummaryByVISN/:id is " + id);
+        console.log("Registering endpoint: /totalRiskbyVAMC/:id is " + id);
         query = "SELECT count(*) as TotalHighRisk_National, sum(cast(CriminalRecord as int)) as PTSD, ";
         query += "cast(cast(sum(cast(CriminalRecord as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as PTSD_PCT, ";
         query += "sum(cast(HistSubstanceAbuse as int)) as SubstanceAbuseHistory, ";
@@ -389,6 +530,101 @@ app.get('/totalRiskbyVAMC', function(req, res){
             }
 
             console.log(recordset.length);
+            for (var i = 0; i < recordset.length; i++) {
+                numRisks.push([
+                    "PTSD", 
+                    recordset[i].PTSD                    
+                ]);
+                numRisks.push([
+                    "Substance Abuse", 
+                    recordset[i].SubstanceAbuseHistory                    
+                ]);
+                numRisks.push([
+                    "Hospitilized", 
+                    recordset[i].Hospitilized                    
+                ]);
+                numRisks.push([
+                    "Previous Attempts", 
+                    recordset[i].PreviousAttempts                    
+                ]);
+                numRisks.push([
+                    "Diagnosed TBI", 
+                    recordset[i].DiagnosedTBI                    
+                ]);
+            }
+            data.push({
+                "key": "RISKS",
+                "values": numRisks
+            });
+
+            res.send(data);
+        });
+
+    });
+    
+});
+
+app.get('/totalRiskByState', function(req, res){
+    res.header("content-type: application/json");
+    var data = [];
+
+    var id = req.param("id");
+    /*if (!id) {
+        id = 1;
+    }*/
+    var query = '';
+    if (id) {
+        console.log("Registering endpoint: /totalRiskByState/:id is " + id);
+        query = "SELECT count(*) as TotalHighRisk_National, sum(cast(CriminalRecord as int)) as PTSD, ";
+        query += "cast(cast(sum(cast(CriminalRecord as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as PTSD_PCT, ";
+        query += "sum(cast(HistSubstanceAbuse as int)) as SubstanceAbuseHistory, ";
+        query += "cast(cast(sum(cast(HistSubstanceAbuse as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as SubstanceAbuseHistory_PCT, ";
+        query += "sum(cast(PreviousPsychiatricHospitalization as int)) as Hospitilized, ";
+        query += "cast(cast(sum(cast(PreviousPsychiatricHospitalization as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as Hospitilized_PCT, ";
+        query += "sum(cast(PreviousSuicideAttempts as int)) as PreviousAttempts, ";
+        query += "cast(cast(sum(cast(PreviousSuicideAttempts as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as PreviousAttempts_PCT, ";
+        query += "sum(cast(DiagnosedTBI as int)) as DiagnosedTBI, ";
+        query += "cast(cast(sum(cast(DiagnosedTBI as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as DiagnosedTBI_PCT ";
+        query += "FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID ";
+        query += "WHERE vet.Score >= 0";
+        query += "AND vet.State = " + id;
+        console.log("Query: " + query);
+    } else {
+        console.log("Registering endpoint: /totalRiskByState/");
+        query = "SELECT count(*) as TotalHighRisk_National, sum(cast(CriminalRecord as int)) as PTSD, ";
+        query += "cast(cast(sum(cast(CriminalRecord as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as PTSD_PCT, ";
+        query += "sum(cast(HistSubstanceAbuse as int)) as SubstanceAbuseHistory, ";
+        query += "cast(cast(sum(cast(HistSubstanceAbuse as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as SubstanceAbuseHistory_PCT, ";
+        query += "sum(cast(PreviousPsychiatricHospitalization as int)) as Hospitilized, ";
+        query += "cast(cast(sum(cast(PreviousPsychiatricHospitalization as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as Hospitilized_PCT, ";
+        query += "sum(cast(PreviousSuicideAttempts as int)) as PreviousAttempts, ";
+        query += "cast(cast(sum(cast(PreviousSuicideAttempts as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as PreviousAttempts_PCT, ";
+        query += "sum(cast(DiagnosedTBI as int)) as DiagnosedTBI, ";
+        query += "cast(cast(sum(cast(DiagnosedTBI as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as DiagnosedTBI_PCT ";
+        query += "FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID ";
+        query += "WHERE vet.Score >= 0";
+        //query += "AND vet.State = " + id;
+        console.log("Query: " + query);
+    }
+
+    var connection = new sql.Connection(config, function(err) {
+        // ... error checks
+        if (err || !query) { 
+        data = "Error: Database connection failed!";
+        console.log("Database connection failed!"); 
+        return; 
+        }
+
+        // Query
+        var request = new sql.Request(connection); // or: var request = connection.request();
+        request.query(query, function(err, recordset) {
+            // ... error checks
+            if (err) { 
+            console.log("Query failed!"); 
+            return; 
+            }
+
+            console.log(recordset.length);
 
             res.send(recordset);
         });
@@ -396,7 +632,6 @@ app.get('/totalRiskbyVAMC', function(req, res){
     });
     
 });
-
 
 console.log("Registering endpoint: /jsonendpoint");
 app.get('/jsonendpoint', function(req, res){

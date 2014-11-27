@@ -3,159 +3,368 @@
 angular.module('perceptiveReachApp')
   .controller('MainCtrl', function ($scope, $http, modalService) {
     $scope.awesomeThings = [];
-    //Modal.open();
-    //$('#veteranTable').DataTable();
-    //console.log(JSON.stringify(Modal));
-    //console.log(Modal);
-    //loadVeteranTable();
-
-    function deleteCustomer () {
+    $scope.dataSetTable = [];
+    var nationalData = [];
+    
+    $http.get('http://localhost:3000/FacilitiesStateCount').success(function(FacilitiesStateCount) {
+      var facByState = convertToRightStateObj(FacilitiesStateCount);
+      $scope.vetsInState = facByState;
+      // Instanciate the map
+      $('#map').vectorMap({
+          map: 'us_mill_en',  
+          onRegionTipShow: function(e, el, code){
+              el.html(el.html()+' (Facilities - '+facByState[code]+')');
+              //$scope.vetsByBranch = getUpdatedBranchNumbers($http, code); 
+              updateTotalRiskTableByState(String(code).replace("US-",""));
+              //$scope.dataTableNational.fnDraw();
+          },
+          onRegionClick: function(event, code){
+            stateView(String(code).replace("US-",""));  
+          },
+          onRegionOut: function(e, code){
+            //$scope.vetsByBranch = masterBranchValues;
+              var count = 0;
+              for(var element in nationalData){
+                $scope.dataTableNational.fnUpdate(nationalData[element],element); 
+              }
+          }
+      });
+    });
+    
+    $http.get('http://localhost:3000/totalRiskByState').success(function(risksAtNational) {
+    //console.log(veteransByVAMC);
+        var output = [];
+        var vamc = "";
+        for (var risk in risksAtNational) {
+            //vamc = veteransByVAMC[0].VAMC
+            //console.log("branchName: " + veteransByBranch[branchCount].key + " count: " + veteransByBranch[branchCount].y);
+            //output[veteransByBranch[branchCount].key.replace(/\s/g,'')]=veteransByBranch[branchCount].y;
+            var record = [];
+            record.push("PTSD");
+            record.push(String(risksAtNational[risk].PTSD));
+            record.push(String(risksAtNational[risk].PTSD_PCT) + "%");
+            output.push(record);
+            record = [];
+            record.push("Substance Abuse");
+            record.push(String(risksAtNational[risk].SubstanceAbuseHistory));
+            record.push(String(risksAtNational[risk].SubstanceAbuseHistory_PCT) + "%");
+            output.push(record);
+            record = [];
+            record.push("Previous Hospitalization");
+            record.push(String(risksAtNational[risk].Hospitilized));
+            record.push(String(risksAtNational[risk].Hospitilized_PCT) + "%");
+            output.push(record);
+            record = [];
+            record.push("Previous Attempt(s)");
+            record.push(String(risksAtNational[risk].PreviousAttempts));
+            record.push(String(risksAtNational[risk].PreviousAttempts_PCT) + "%");
+            output.push(record);
+            record = [];
+            record.push("TBI Diagnosis");
+            record.push(String(risksAtNational[risk].DiagnosedTBI));
+            record.push(String(risksAtNational[risk].DiagnosedTBI_PCT) + "%");
+            output.push(record);
+            record = [];
+            record.push("Total High-Risk Veteran Population");
+            record.push(String(risksAtNational[risk].TotalHighRisk_National));
+            record.push("100%");
+            output.push(record);
+            record = [];            
+        }
+        //$scope.VAMC = vamc;
+        //console.log($scope.VAMC);
+        $scope.dataSetTable = output;
+        nationalData = output;
+        console.log($scope.dataSetTable);
+        console.log($scope);
+        
+        $scope.dataTableNational = $('#exampleNational').dataTable( {
+                    "data": $scope.dataSetTable,
+                    "scrollY":        "300px",
+                    "scrollCollapse": false,
+                    "paging":         false,
+                    "bFilter":         false,
+                    "info":         false,
+                    "columns": [
+                        { "title": "Factor*" },
+                        { "title": "Count**" },
+                        //{ "title": "STA3N" },
+                        { "title": "Percentage (Count / Total High Risk Population)***", "class": "center" }
+                        //{ "title": "Region Served", "class": "center" },
+                        //{ "title": "Veteran Count in Facility", "class": "center" }
+                        //{ "title": "Last VA Clinician Visit", "class": "center" }
+                    ],
+                    dom: 'T<"clear">lfrtip',
+                    tableTools: {
+                        "sRowSelect": "single"
+                    }
+                });
+        //return output;
+    });
+    
+    function updateTotalRiskTableByState (state){
+        $http.get('http://localhost:3000/totalRiskByState?id=%27'+ state + '%27').success(function(risksAtNational) {
+        //console.log(veteransByVAMC);
+            var output = [];
+            var vamc = "";
+            for (var risk in risksAtNational) {
+                //vamc = veteransByVAMC[0].VAMC
+                //console.log("branchName: " + veteransByBranch[branchCount].key + " count: " + veteransByBranch[branchCount].y);
+                //output[veteransByBranch[branchCount].key.replace(/\s/g,'')]=veteransByBranch[branchCount].y;
+                var record = [];
+                record.push("PTSD");
+                record.push(String(risksAtNational[risk].PTSD));
+                record.push(String(risksAtNational[risk].PTSD_PCT) + "%");
+                output.push(record);
+                $scope.dataTableNational.fnUpdate(record,0);
+                record = [];
+                record.push("Substance Abuse");
+                record.push(String(risksAtNational[risk].SubstanceAbuseHistory));
+                record.push(String(risksAtNational[risk].SubstanceAbuseHistory_PCT) + "%");
+                output.push(record);
+                $scope.dataTableNational.fnUpdate(record,1);
+                record = [];
+                record.push("Previous Hospitalization");
+                record.push(String(risksAtNational[risk].Hospitilized));
+                record.push(String(risksAtNational[risk].Hospitilized_PCT) + "%");
+                output.push(record);
+                $scope.dataTableNational.fnUpdate(record,2);
+                record = [];
+                record.push("Previous Attempt(s)");
+                record.push(String(risksAtNational[risk].PreviousAttempts));
+                record.push(String(risksAtNational[risk].PreviousAttempts_PCT) + "%");
+                output.push(record);
+                $scope.dataTableNational.fnUpdate(record,3);
+                record = [];
+                record.push("TBI Diagnosis");
+                record.push(String(risksAtNational[risk].DiagnosedTBI));
+                record.push(String(risksAtNational[risk].DiagnosedTBI_PCT) + "%");
+                output.push(record);
+                $scope.dataTableNational.fnUpdate(record,4);
+                record = [];
+                record.push("Total High-Risk Veteran Population");
+                record.push(String(risksAtNational[risk].TotalHighRisk_National));
+                record.push("100%");
+                output.push(record);
+                $scope.dataTableNational.fnUpdate(record,5);
+                record = [];            
+            }
+            //$scope.VAMC = vamc;
+            //console.log($scope.VAMC);
+            //$scope.dataSetTable = output;
+            //console.log($scope.dataSetTable);
+            //console.log($scope);
+        });
+    }
+    
+    function getFacilityByState (id){
+        $http.get('http://localhost:3000/facilityByState?id=%27'+ id + '%27').success(function(facilitiesByState) {
+        //console.log(veteransByVAMC);
+            var output = [];
+            var vamc = "";
+            for (var facility in facilitiesByState) {
+                //vamc = veteransByVAMC[0].VAMC
+                //console.log("branchName: " + veteransByBranch[branchCount].key + " count: " + veteransByBranch[branchCount].y);
+                //output[veteransByBranch[branchCount].key.replace(/\s/g,'')]=veteransByBranch[branchCount].y;
+                var record = [];
+                //var fullName = veteransByVAMC[veteran].LastName + ", " +veteransByVAMC[veteran].FirstName + " " + veteransByVAMC[veteran].MiddleName; 
+                record.push(String(facilitiesByState[facility].VAMCID));
+                record.push(String(facilitiesByState[facility].VAMC));
+                record.push(String(facilitiesByState[facility].STA3N));
+                record.push(String(facilitiesByState[facility].NetworkName));
+                record.push(String(facilitiesByState[facility].RegionServed));   
+                record.push(String(facilitiesByState[facility].Veteran_Count_at_facility));
+                output.push(record);
+            }
+            //$scope.VAMC = vamc;
+            //console.log($scope.VAMC);
+            $scope.dataSet = output;
+            console.log($scope.dataSet);
+            //return output;
+        });
+    }
+    
+    
+    function stateView (id) {
 
         var custName = 'Andal'//$scope.customer.firstName + ' ' + $scope.customer.lastName;
 
         var optionsChoice = {};
         var modalOptions = {
             closeButtonText: 'Cancel',
-            actionButtonText: 'Delete Customer',
-            headerText: 'Delete ' + custName + '?',
-            bodyText: 'Are you sure you want to delete this customer?'
+            actionButtonText: 'Ok',
+            headerText: 'State Facility View - ' + id
+            //bodyText: 'Are you sure you want to delete this customer?'
         };
         var modalDefaults = {
             backdrop: true,
             keyboard: true,
             modalFade: true,
-            controller: 'FacilityIndividualModalCtrl',
+            controller: 'StateFacilityModalCtrl',
             resolve:{
                 data: function () {
-                    return {options: optionsChoice};
+                    return {options: modalOptions, id:id};
                 }
             },
             windowClass: 'app-modal-window',
-            templateUrl: 'components/FacilityIndividualModal/FacilityIndividualModal.html'
+            templateUrl: 'components/StateFacilityModal/StateFacilityModal.html'
         };
-        modalService.showModal(modalDefaults, {}).then(function (result) {
+        modalService.showModal(modalDefaults, modalOptions).then(function (result) {
            
         });
     }
-    deleteCustomer();
-    
-    function loadVeteranTable(){
-        $scope.dataSet = [
-    ['Trident','Internet Explorer 4.0','Win 95+','4','X','10-20-2009'],
-    ['Trident','Internet Explorer 5.0','Win 95+','5','C','10-20-2009'],
-    ['Trident','Internet Explorer 5.5','Win 95+','5.5','A','10-20-2009'],
-    ['Trident','Internet Explorer 6','Win 98+','6','A','10-20-2009'],
-    ['Trident','Internet Explorer 7','Win XP SP2+','7','A','10-20-2009'],
-    ['Trident','AOL browser (AOL desktop)','Win XP','6','A','10-20-2009'],
-    ['Gecko','Firefox 1.0','Win 98+ / OSX.2+','1.7','A','10-20-2009'],
-    ['Gecko','Firefox 1.5','Win 98+ / OSX.2+','1.8','A','10-20-2009'],
-    ['Gecko','Firefox 2.0','Win 98+ / OSX.2+','1.8','A','10-20-2009'],
-    ['Gecko','Firefox 3.0','Win 2k+ / OSX.3+','1.9','A','10-20-2009'],
-    ['Gecko','Camino 1.0','OSX.2+','1.8','A','10-20-2009'],
-    ['Gecko','Camino 1.5','OSX.3+','1.8','A','10-20-2009'],
-    ['Gecko','Netscape 7.2','Win 95+ / Mac OS 8.6-9.2','1.7','A','10-20-2009'],
-    ['Gecko','Netscape Browser 8','Win 98SE+','1.7','A','10-20-2009'],
-    ['Gecko','Netscape Navigator 9','Win 98+ / OSX.2+','1.8','A','10-20-2009'],
-    ['Gecko','Mozilla 1.0','Win 95+ / OSX.1+',1,'A','10-20-2009'],
-    ['Gecko','Mozilla 1.1','Win 95+ / OSX.1+',1.1,'A','10-20-2009'],
-    ['Gecko','Mozilla 1.2','Win 95+ / OSX.1+',1.2,'A','10-20-2009'],
-    ['Gecko','Mozilla 1.3','Win 95+ / OSX.1+',1.3,'A'],
-    ['Gecko','Mozilla 1.4','Win 95+ / OSX.1+',1.4,'A'],
-    ['Gecko','Mozilla 1.5','Win 95+ / OSX.1+',1.5,'A'],
-    ['Gecko','Mozilla 1.6','Win 95+ / OSX.1+',1.6,'A'],
-    ['Gecko','Mozilla 1.7','Win 98+ / OSX.1+',1.7,'A'],
-    ['Gecko','Mozilla 1.8','Win 98+ / OSX.1+',1.8,'A'],
-    ['Gecko','Seamonkey 1.1','Win 98+ / OSX.2+','1.8','A'],
-    ['Gecko','Epiphany 2.20','Gnome','1.8','A'],
-    ['Webkit','Safari 1.2','OSX.3','125.5','A'],
-    ['Webkit','Safari 1.3','OSX.3','312.8','A'],
-    ['Webkit','Safari 2.0','OSX.4+','419.3','A'],
-    ['Webkit','Safari 3.0','OSX.4+','522.1','A'],
-    ['Webkit','OmniWeb 5.5','OSX.4+','420','A'],
-    ['Webkit','iPod Touch / iPhone','iPod','420.1','A'],
-    ['Webkit','S60','S60','413','A'],
-    ['Presto','Opera 7.0','Win 95+ / OSX.1+','-','A'],
-    ['Presto','Opera 7.5','Win 95+ / OSX.2+','-','A'],
-    ['Presto','Opera 8.0','Win 95+ / OSX.2+','-','A'],
-    ['Presto','Opera 8.5','Win 95+ / OSX.2+','-','A'],
-    ['Presto','Opera 9.0','Win 95+ / OSX.3+','-','A'],
-    ['Presto','Opera 9.2','Win 88+ / OSX.3+','-','A'],
-    ['Presto','Opera 9.5','Win 88+ / OSX.3+','-','A'],
-    ['Presto','Opera for Wii','Wii','-','A'],
-    ['Presto','Nokia N800','N800','-','A'],
-    ['Presto','Nintendo DS browser','Nintendo DS','8.5','C/A<sup>1</sup>'],
-    ['KHTML','Konqureror 3.1','KDE 3.1','3.1','C'],
-    ['KHTML','Konqureror 3.3','KDE 3.3','3.3','A'],
-    ['KHTML','Konqureror 3.5','KDE 3.5','3.5','A'],
-    ['Tasman','Internet Explorer 4.5','Mac OS 8-9','-','X'],
-    ['Tasman','Internet Explorer 5.1','Mac OS 7.6-9','1','C'],
-    ['Tasman','Internet Explorer 5.2','Mac OS 8-X','1','C'],
-    ['Misc','NetFront 3.1','Embedded devices','-','C'],
-    ['Misc','NetFront 3.4','Embedded devices','-','A'],
-    ['Misc','Dillo 0.8','Embedded devices','-','X'],
-    ['Misc','Links','Text only','-','X'],
-    ['Misc','Lynx','Text only','-','X'],
-    ['Misc','IE Mobile','Windows Mobile 6','-','C'],
-    ['Misc','PSP browser','PSP','-','C'],
-    ['Other browsers','All others','-','-','U']
-];
- 
-    $('#veteranTable').html( '<table cellpadding="0" cellspacing="0" border="0" class="" id="example" width="100%"></table>' );
- 
-    $('#example').dataTable( {
-        "data": dataSet,
-        "scrollY":        "200px",
-        "scrollCollapse": true,
-        "paging":         false,
-        "columns": [
-            { "title": "Veteran Name" },
-            { "title": "Veteran SSN" },
-            { "title": "Veteran Phone" },
-            { "title": "Date First identified as High Risk", "class": "center" },
-            { "title": "Date Record Last Updated", "class": "center" },
-            { "title": "Last VA Clinician Visit", "class": "center" }
-        ]
-    } );
-    
-    //$('#veteranView').hide();
-    //$('#facilityInfo').show();
-    $('#facilityInfo').hide();
-    $('#veteranView').hide(); 
-    console.log('Loaded everything...');    
-    }
-    
-    //$scope.openModal();
-    //Modal.openModal();
-    //$('head').append('<link rel="stylesheet" href="assets/css/AdminLTE.css" type="text/css" />');
-    //$('body').append('<script src="assets/js/AdminLTE/app.js" type="text/javascript"></script>');    
-    //$('body').append('<script src="assets/js/AdminLTE/demo.js" type="text/javascript"></script>');
-    //$('body').append('<script src="assets/js/AdminLTE/dashboard.js" type="text/javascript"></script>');
+    //stateView("TX");
     
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
     });
+    
+    
+    function convertToRightStateObj(facilityByState) {
+    var states = {
+    'Alabama': 'AL',
+    'Alaska': 'AK',
+    'American Samoa': 'AS',
+    'Arizona': 'AZ',
+    'Arkansas': 'AR',
+    'California': 'CA',
+    'Colorado': 'CO',
+    'Connecticut': 'CT',
+    'Delaware': 'DE',
+    'District Of Columbia': 'DC',
+    'Federated States Of Micronesia': 'FM',
+    'Florida': 'FL',
+    'Georgia': 'GA',
+    'Guam': 'GU',
+    'Hawaii': 'HI',
+    'Idaho': 'ID',
+    'Illinois': 'IL',
+    'Indiana': 'IN',
+    'Iowa': 'IA',
+    'Kansas': 'KS',
+    'Kentucky': 'KY',
+    'Louisiana': 'LA',
+    'Maine': 'ME',
+    'Marshall Islands': 'MH',
+    'Maryland': 'MD',
+    'Massachusetts': 'MA',
+    'Michigan': 'MI',
+    'Minnesota': 'MN',
+    'Mississippi': 'MS',
+    'Missouri': 'MO',
+    'Montana': 'MT',
+    'Nebraska': 'NE',
+    'Nevada': 'NV',
+    'New Hampshire': 'NH',
+    'New Jersey': 'NJ',
+    'New Mexico': 'NM',
+    'New York': 'NY',
+    'North Carolina': 'NC',
+    'North Dakota': 'ND',
+    'Northern Mariana Islands': 'MP',
+    'Ohio': 'OH',
+    'Oklahoma': 'OK',
+    'Oregon': 'OR',
+    'Palau': 'PW',
+    'Pennsylvania': 'PA',
+    'Puerto Rico': 'PR',
+    'Rhode Island': 'RI',
+    'South Carolina': 'SC',
+    'South Dakota': 'SD',
+    'Tennessee': 'TN',
+    'Texas': 'TX',
+    'Utah': 'UT',
+    'Vermont': 'VT',
+    'Virgin Islands': 'VI',
+    'Virginia': 'VA',
+    'Washington': 'WA',
+    'West Virginia': 'WV',
+    'Wisconsin': 'WI',
+    'Wyoming': 'WY'
+    };
+    
+    var output = {};
+    
+    //loop through vets by state and populate correct state codes and values 
+    /*for (var stateCombo in veteranByState) {
+        for (var stateName in states) {
+            //console.log("stateNme: " + stateName + "  stateCombo: " + stateCombo);
+           output["US-" + states[veteranByState[stateCombo].State]]=veteranByState[stateCombo].Total;
+            //console.log(output);
+        }
+    }*/
+    for (var stateCombo in facilityByState) {
+        output["US-" + facilityByState[stateCombo].State]=facilityByState[stateCombo].Total;    
+    }
+    return output;
+}
 
   })
-  /*.directive('dataTables', function(){
+  .directive('dataTablesNational', function(){    
     var linker = function(scope,element, attr){
-        console.log(scope.dataSet);
-        element.dataTable( {
-            "data": scope.dataSet,
-            "scrollY":        "200px",
-            "scrollCollapse": true,
-            "paging":         false,
-            "columns": [
-                { "title": "Veteran Name" },
-                { "title": "Veteran SSN" },
-                { "title": "Veteran Phone" },
-                { "title": "Date First identified as High Risk", "class": "center" },
-                { "title": "Date Record Last Updated", "class": "center" },
-                { "title": "Last VA Clinician Visit", "class": "center" }
-            ]
-        });    
+        console.log("inside dataTableNational Directive");
+        console.log(scope.dataSetTable);
+        /*var unwatch = scope.$watch('dataSetTable', function(v){
+            if(v){
+                console.log("inside watch dataTableNational Directive");
+                console.log(scope.dataSetTable);
+                unwatch();
+                var dataTableNational = $(element).dataTable( {
+                    "data": scope.dataSetTable,
+                    "scrollY":        "200px",
+                    "scrollCollapse": true,
+                    "paging":         false,
+                    "columns": [
+                        { "title": "Factor*" },
+                        { "title": "Count**" },
+                        //{ "title": "STA3N" },
+                        { "title": "Percentage (Count / Total High Risk Population)***", "class": "center" }
+                        //{ "title": "Region Served", "class": "center" },
+                        //{ "title": "Veteran Count in Facility", "class": "center" }
+                        //{ "title": "Last VA Clinician Visit", "class": "center" }
+                    ],
+                    dom: 'T<"clear">lfrtip',
+                    tableTools: {
+                        "sRowSelect": "single"
+                    }
+                });
+                $('#exampleNational tbody').on( 'click', 'tr', function (event) {
+                    //console.log( dataTableVet.row( this ).data() );
+                    if($(this).hasClass('selected')){
+                        $(this).removeClass('selected');
+                        //$('#veteranView').hide();
+                        //$('#facilityInfo').show();
+                    }
+                    else{
+                        dataTableNational.$('tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                        //$('#veteranView').show();
+                        //$('#facilityInfo').hide();
+                        //scope.getVeteran(event.currentTarget.cells[0].innerText); //Launch different service
+                        console.log(event.currentTarget.cells[0].innerText);
+                        scope.facilitySelected = event.currentTarget.cells[0].innerText;
+                    }
+                    
+                    //console.log(event.currentTarget.cells[4].innerText);
+                });
+            }
+        });*/
+        //console.log(scope);
+        //console.log(element);
+        
+        
+        /*scope.$watch('scope.dataSet', handleModelUpdates, true);
+
+            function handleModelUpdates(newData) {
+                var data = newData || null;
+                if (data) {
+                    dataTable.fnClearTable();
+                    dataTable.fnAddData(data);
+                }
+            }*/
     };
     return {
         restrict:'EAC',
         link: linker
     }
-  });*/
+  });
