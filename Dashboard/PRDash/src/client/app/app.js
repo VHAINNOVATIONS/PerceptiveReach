@@ -13,4 +13,6 @@ angular.module('perceptiveReachApp', [
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
+
+    
   });
