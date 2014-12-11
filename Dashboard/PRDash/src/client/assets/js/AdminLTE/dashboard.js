@@ -64,7 +64,7 @@ $(function() {
         "RU": 3000 //Russia
     };
     //World map by jvectormap
-    $('#world-map').vectorMap({
+    /*$('#world-map').vectorMap({
         map: 'world_mill_en',
         backgroundColor: "transparent",
         regionStyle: {
@@ -87,7 +87,7 @@ $(function() {
             if (typeof visitorsData[code] != "undefined")
                 el.html(el.html() + ': ' + visitorsData[code] + ' new visitors');
         }
-    });
+    });*/
     //drill down map by HighMaps
     var data = Highcharts.geojson(Highcharts.maps['countries/us/us-all']),
         // Some responsiveness
@@ -297,7 +297,7 @@ $(function() {
 
     /* Morris.js Charts */
     // Sales chart
-    var area = new Morris.Area({
+    /*var area = new Morris.Area({
         element: 'revenue-chart',
         resize: true,
         data: [
@@ -346,7 +346,7 @@ $(function() {
         gridLineColor: "#efefef",
         gridTextFamily: "Open Sans",
         gridTextSize: 10
-    });
+    });*/
 
     //Donut Chart
     /*var donut = new Morris.Donut({
