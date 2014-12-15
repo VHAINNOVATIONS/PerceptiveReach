@@ -93,7 +93,7 @@ $(function() {
     });
 
     /* Sidebar tree view */
-    $(".sidebar .treeview").tree();
+    //$(".sidebar .treeview").tree(); //AF not needed
 
     /* 
      * Make sure that the sidebar is streched full height
@@ -133,10 +133,10 @@ $(function() {
      * iCheck plugin in.
      * You can find the documentation at http://fronteed.com/iCheck/
      */
-    $("input[type='checkbox']:not(.simple), input[type='radio']:not(.simple)").iCheck({
+    /*$("input[type='checkbox']:not(.simple), input[type='radio']:not(.simple)").iCheck({
         checkboxClass: 'icheckbox_minimal',
         radioClass: 'iradio_minimal'
-    });
+    });*/ //AF - not needed
 
 });
 function fix_sidebar() {
@@ -731,9 +731,12 @@ $(window).load(function() {
         i = h[k](function() {
             a.each(function() {
                 var n = $(this), m = n.width(), l = n.height(), o = $.data(this, d);
-                if (m !== o.w || l !== o.h) {
-                    n.trigger(j, [o.w = m, o.h = l])
+                if (o !== undefined){
+                    if (m !== o.w || l !== o.h) {
+                        n.trigger(j, [o.w = m, o.h = l])
+                    }
                 }
+                
             });
             g()
         }, e[b])
