@@ -41,7 +41,7 @@ angular.module('perceptiveReachApp')
         };
     
         function getFacilityByState (id){
-            $http.get('http://localhost:3000/facilityByState?id=%27'+ id + '%27').success(function(facilitiesByState) {
+            $http.get('/api/facilitiesByState?id=%27'+ id + '%27').success(function(facilitiesByState) {
             //console.log(veteransByVAMC);
                 var output = [];
                 var vamc = "";
@@ -69,7 +69,7 @@ angular.module('perceptiveReachApp')
         getFacilityByState (String(data.id));
     
         function getHighRiskByVAMC (id){
-            $http.get('http://localhost:3000/scoreSummaryByVAMCID?id='+ id).success(function(risksByVAMC) {
+            $http.get('/api/scoreSummaryByVAMCID?id='+ id).success(function(risksByVAMC) {
                 console.log(risksByVAMC);
                 var objectRisk = risksByVAMC[0];
                 console.log(objectRisk);

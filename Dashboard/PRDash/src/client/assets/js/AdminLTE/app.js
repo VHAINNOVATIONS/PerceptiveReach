@@ -735,8 +735,7 @@ $(window).load(function() {
                     if (m !== o.w || l !== o.h) {
                         n.trigger(j, [o.w = m, o.h = l])
                     }
-                }
-                
+                }                
             });
             g()
         }, e[b])
