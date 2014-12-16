@@ -34,7 +34,7 @@ describe('Controller: MainCtrl', function () {
     $httpBackend.flush();
     scope.setupMap(facilitiesCount);
 
-    expect($('#map').html() == '').toBe(false);
+    expect($('#map122').html() == '').toBe(false);
     //expect(scope.setupMap(facilitiesCount)).toBe(true);
     //expect(scope.awesomeThings.length).toBe(4);
   });
