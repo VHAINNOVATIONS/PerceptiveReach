@@ -21,20 +21,21 @@ exports.index = function(req, res) {
     var dbc = require('../../config/db_connection/development.js');
     var config = dbc.config;
 
-    var id = req.param("id");
+    var un = req.param("UserName");
+    var pw = req.param("Password");
+
     var query = '';
-    if (id) {
-        console.log("Registering endpoint: /scoreSummaryByVAMCID/:id is " + id);
-        query = "SELECT sum(CASE when Score >= 95 then 1 else 0 END) as ExtremeRisk, ";
-        query += "sum(CASE when Score < 95 and Score >= 80 then 1 else 0 END) as HighRisk, ";
-        query += "sum(CASE when Score < 80 and Score >= 50 then 1 else 0 END) as MediumRisk, ";
-        query += "sum(CASE when Score < 50 then 1 else 0 END) as LowRisk "
-        query += "FROM VeteranRisk ";
-        query += "WHERE VAMC =  " + id;
+    if (un || pw) {
+        console.log("Registering endpoint: /userLogin/:un is " + un);
+        query = "SELECT u.FirstName, u.LastName, r.RoleCode, v.VAMCID, v.VAMC, v.VISN ";
+        query += "FROM prsystem.Users u INNER JOIN prsystem.UserRole r ON u.UserRole = r.RoleID ";
+        query += "INNER JOIN dbo.Ref_VAMC v ON u.UserLocation = v.VAMCID ";
+        query += "WHERE UserName =  '" + un + "'";
+        query += "AND UserPassword =  '" + pw + "'";
         console.log("Query: " + query);
     } else {
-        console.log("ERROR: VISN ID is required."); 
-        res.end("ERROR: VISN ID is required.");
+        console.log("ERROR: User Name and Password are required."); 
+        res.send("ERROR: User Name and Password are required.");
 
     }
 
@@ -50,13 +51,13 @@ exports.index = function(req, res) {
         var request = new sql.Request(connection); // or: var request = connection.request();
         request.query(query, function(err, recordset) {
             // ... error checks
+            if (recordset.length < 1){res.send("Invalid User Name and/or Password"); return;}
             if (err) { 
             console.log("Query failed!"); 
             return; 
             }
 
             console.log(recordset.length);
-
             res.send(recordset);
         });
 
