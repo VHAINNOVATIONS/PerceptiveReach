@@ -6,7 +6,7 @@ angular.module('perceptiveReachApp')
     $scope.dataSetTable = [];
     var nationalData = [];
     
-    $http.get('http://localhost:3000/FacilitiesStateCount').success(function(FacilitiesStateCount) {
+    $http.get('/api/facilitiesStateCount').success(function(FacilitiesStateCount) {
         $scope.setupMap(FacilitiesStateCount); 
     });
     
@@ -42,7 +42,7 @@ angular.module('perceptiveReachApp')
         return success;*/
     }
 
-    $http.get('http://localhost:3000/totalRiskByState').success(function(risksAtNational) {
+    $http.get('/api/totalRiskByState').success(function(risksAtNational) {
     //console.log(veteransByVAMC);
         $scope.setupRiskDataTable(risksAtNational);
     });
@@ -117,7 +117,7 @@ angular.module('perceptiveReachApp')
     }
 
     $scope.updateTotalRiskTableByState = function (state){
-        $http.get('http://localhost:3000/totalRiskByState?id=%27'+ state + '%27').success(function(risksAtNational) {
+        $http.get('/api/totalRiskByState?id=%27'+ state + '%27').success(function(risksAtNational) {
         //console.log(veteransByVAMC);
             $scope.buildTotalRiskTableByState(risksAtNational);
             //$scope.VAMC = vamc;
@@ -175,7 +175,7 @@ angular.module('perceptiveReachApp')
     }
 
     $scope.getFacilityByState  = function (id){
-        $http.get('http://localhost:3000/facilityByState?id=%27'+ id + '%27').success(function(facilitiesByState) {
+        $http.get('/api/facilitiesByState?id=%27'+ id + '%27').success(function(facilitiesByState) {
         //console.log(veteransByVAMC);
             $scope.buildFacilityByState(facilitiesByState);
             
