@@ -7,7 +7,11 @@ angular.module('perceptiveReachApp')
     var nationalData = [];
     
     $http.get('http://localhost:3000/FacilitiesStateCount').success(function(FacilitiesStateCount) {
-      var facByState = convertToRightStateObj(FacilitiesStateCount);
+        $scope.setupMap(FacilitiesStateCount); 
+    });
+    
+    $scope.setupMap = function (FacilitiesStateCount){
+        var facByState = $scope.convertToRightStateObj(FacilitiesStateCount);
       $scope.vetsInState = facByState;
       // Instanciate the map
       $('#map').vectorMap({
@@ -15,11 +19,11 @@ angular.module('perceptiveReachApp')
           onRegionTipShow: function(e, el, code){
               el.html(el.html()+' (Facilities - '+facByState[code]+')');
               //$scope.vetsByBranch = getUpdatedBranchNumbers($http, code); 
-              updateTotalRiskTableByState(String(code).replace("US-",""));
+              $scope.updateTotalRiskTableByState(String(code).replace("US-",""));
               //$scope.dataTableNational.fnDraw();
           },
           onRegionClick: function(event, code){
-            stateView(String(code).replace("US-",""));  
+            $scope.stateView(String(code).replace("US-",""));  
           },
           onRegionOut: function(e, code){
             //$scope.vetsByBranch = masterBranchValues;
@@ -29,10 +33,21 @@ angular.module('perceptiveReachApp')
               }
           }
       });
-    });
-    
+
+      /*if( $('#map').length)
+        success = true;
+      else
+        success = false;
+
+        return success;*/
+    }
+
     $http.get('http://localhost:3000/totalRiskByState').success(function(risksAtNational) {
     //console.log(veteransByVAMC);
+        $scope.setupRiskDataTable(risksAtNational);
+    });
+    
+    $scope.setupRiskDataTable = function (risksAtNational){
         var output = [];
         var vamc = "";
         for (var risk in risksAtNational) {
@@ -99,13 +114,21 @@ angular.module('perceptiveReachApp')
                         "sRowSelect": "single"
                     }
                 });
-        //return output;
-    });
-    
-    function updateTotalRiskTableByState (state){
+    }
+
+    $scope.updateTotalRiskTableByState = function (state){
         $http.get('http://localhost:3000/totalRiskByState?id=%27'+ state + '%27').success(function(risksAtNational) {
         //console.log(veteransByVAMC);
-            var output = [];
+            $scope.buildTotalRiskTableByState(risksAtNational);
+            //$scope.VAMC = vamc;
+            //console.log($scope.VAMC);
+            //$scope.dataSetTable = output;
+            //console.log($scope.dataSetTable);
+            //console.log($scope);
+        });
+    }
+    $scope.buildTotalRiskTableByState = function (risksAtNational){
+        var output = [];
             var vamc = "";
             for (var risk in risksAtNational) {
                 //vamc = veteransByVAMC[0].VAMC
@@ -149,18 +172,18 @@ angular.module('perceptiveReachApp')
                 $scope.dataTableNational.fnUpdate(record,5);
                 record = [];            
             }
-            //$scope.VAMC = vamc;
-            //console.log($scope.VAMC);
-            //$scope.dataSetTable = output;
-            //console.log($scope.dataSetTable);
-            //console.log($scope);
-        });
     }
-    
-    function getFacilityByState (id){
+
+    $scope.getFacilityByState  = function (id){
         $http.get('http://localhost:3000/facilityByState?id=%27'+ id + '%27').success(function(facilitiesByState) {
         //console.log(veteransByVAMC);
-            var output = [];
+            $scope.buildFacilityByState(facilitiesByState);
+            
+            //return output;
+        });
+    }
+    $scope.buildFacilityByState  = function (facilitiesByState){
+        var output = [];
             var vamc = "";
             for (var facility in facilitiesByState) {
                 //vamc = veteransByVAMC[0].VAMC
@@ -179,13 +202,10 @@ angular.module('perceptiveReachApp')
             //$scope.VAMC = vamc;
             //console.log($scope.VAMC);
             $scope.dataSet = output;
-            console.log($scope.dataSet);
-            //return output;
-        });
+            console.log($scope.dataSet);    
     }
     
-    
-    function stateView (id) {
+    $scope.stateView = function (id) {
 
         var custName = 'Andal'//$scope.customer.firstName + ' ' + $scope.customer.lastName;
 
@@ -220,7 +240,7 @@ angular.module('perceptiveReachApp')
     });
     
     
-    function convertToRightStateObj(facilityByState) {
+    $scope.convertToRightStateObj = function (facilityByState) {
     var states = {
     'Alabama': 'AL',
     'Alaska': 'AK',
