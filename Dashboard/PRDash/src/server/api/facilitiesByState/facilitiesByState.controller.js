@@ -27,7 +27,7 @@ exports.index = function(req, res) {
         console.log("Registering endpoint: /facilityByState/:id is " + id);
         query = "SELECT VAMCID, vamc.VAMC, STA3N, visn.NetworkName, visn.RegionServed, COUNT(vet.ReachID) as Veteran_Count_at_facility ";
         query += "FROM Ref_VAMC vamc INNER JOIN Ref_VISN visn ON vamc.VISN = visn.VISN INNER JOIN VeteranRisk vet ON vamc.VAMCID = vet.VAMC ";
-        query += "WHERE vamc.StateAbbr =  " + id;
+        query += "WHERE vamc.StateAbbr =  " + "'" + id+ "'";
         query += "GROUP by VAMCID, vamc.VAMC, STA3N, visn.NetworkName, visn.RegionServed";
         console.log("Query: " + query);
     } else {

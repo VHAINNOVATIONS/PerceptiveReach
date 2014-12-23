@@ -1,0 +1,27 @@
+<link rel="stylesheet" type="text/css" href="riskWidget.css" media="screen" />
+<div class="widget" ng-controller="RiskWidgetCtrl">
+	<div class="widget-header">
+		<i class="fa fa-cog fa-spin"></i> {{widgetTitle3}}
+	</div>
+	<div class="widget-body">
+		<p>{{widgetDesc}}</p>
+		<ul class="risksTotals">
+			<li>
+				<div class="col-md-7">Extreme Risk</div>
+				<div class="col-md-5">scoreSummaryByVAMC.ExtremeRisk</div>
+			</li>
+			<li>
+				<div class="col-md-7">High Risk</div>
+				<div class="col-md-5">scoreSummaryByVAMC.HighRisk</div>
+			</li>
+			<li>
+				<div class="col-md-7">Medium Risk</div>
+				<div class="col-md-5">scoreSummaryByVAMC.MediumRisk</div>
+			</li>
+			<li>
+				<div class="col-md-7">Low Risk</div>
+				<div class="col-md-5">scoreSummaryByVAMC.LowRisk</div>
+			</li>
+		</ul>
+	</div>
+</div>
