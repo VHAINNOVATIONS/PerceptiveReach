@@ -207,15 +207,15 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="glyphicon glyphicon-user"></i>
-                                <span>Jane Doe <i class="caret"></i></span>
+                                <span>{{currentUser.data.FirstName }}  {{currentUser.data.LastName }}<i class="caret"></i></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
                                     <img src="/assets/images/avatar3.png" class="img-circle" alt="User Image" />
                                     <p>
-                                        Jane Doe - Web Developer
-                                        <small>Member since Nov. 2012</small>
+                                        {{currentUser.data.FirstName }}  {{currentUser.data.LastName }} - {{currentUser.data.UserRole }}
+                                        <small>{{currentUser.data.UserLocation }}</small>
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
@@ -256,7 +256,7 @@
                             <img src="/assets/images/avatar3.png" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
-                            <p>Hello, Jane</p>
+                            <p>Hello, {{currentUser.data.FirstName }}</p>
 
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
