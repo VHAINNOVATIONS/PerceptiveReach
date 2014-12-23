@@ -5,6 +5,7 @@ angular.module('perceptiveReachApp')
     $scope.awesomeThings = [];
     $scope.dataSetTable = [];
     $scope.currentUser = Auth.getCurrentUser();
+    var store = "";
     var nationalData = [];
 
      $scope.widgetTitle1 = "Bar Chart Widget: Total Risks by VAMC";
