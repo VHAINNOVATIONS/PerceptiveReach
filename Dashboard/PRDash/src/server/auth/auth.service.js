@@ -20,12 +20,14 @@ function isAuthenticated() {
       // allow access_token to be passed through query parameter as well
       if(req.query && req.query.hasOwnProperty('access_token')) {
         req.headers.authorization = 'Bearer ' + req.query.access_token;
+        //console.log("request access token: " + req.query.access_token);
       }
       validateJwt(req, res, next);
     })
     // Attach user to request
     .use(function(req, res, next) {
-      User.findById(req.user._id, function (err, user) {
+      console.log(req);
+      User.findById(req.user.UserID, function (err, user) {
         if (err) return next(err);
         if (!user) return res.send(401);
 
@@ -57,7 +59,7 @@ function hasRole(roleRequired) {
  * Returns a jwt token signed by the app secret
  */
 function signToken(id) {
-  return jwt.sign({ _id: id }, config.secrets.session, { expiresInMinutes: 60*5 });
+  return jwt.sign({ UserID: id }, config.secrets.session, { expiresInMinutes: 60*5 });
 }
 
 /**

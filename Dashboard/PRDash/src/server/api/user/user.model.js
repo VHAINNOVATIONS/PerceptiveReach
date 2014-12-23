@@ -189,7 +189,14 @@ User.prototype.validatePresenceOf = function(value) {
   }
 
   User.findById = function(id, callback){
-    
+    console.log("findById: " + id);
+    /*this.findBy({UserID: id},function(err, data) {
+        //console.log(err);
+        //console.log("This is data: " + data[0]);
+        if (err) return callback(null, null);
+        if (data == null) return callback(err,null);
+        callback(null, new User(data[0]));
+      });  */
   }
   User.findOne = function(param, callback){
     //if(param.UserName){

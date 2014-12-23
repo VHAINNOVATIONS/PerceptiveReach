@@ -115,16 +115,26 @@ angular.module('perceptiveReachApp')
        * Waits for currentUser to resolve before checking if user is logged in
        */
       isLoggedInAsync: function(cb) {
-        if(currentUser.hasOwnProperty('$promise')) {
+        /*if(currentUser.hasOwnProperty('$promise') && $cookieStore.get('token')) {
           currentUser.$promise.then(function() {
             cb(true);
           }).catch(function() {
             cb(false);
           });
-        } else if(currentUser.hasOwnProperty('role')) {
+        } else if(currentUser.hasOwnProperty('role') && $cookieStore.get('token')) {
           cb(true);
         } else {
           cb(false);
+        }*/
+
+        if(!currentUser || !$cookieStore.get('token')) {
+          cb(false);        
+        } else if(!currentUser || $cookieStore.get('token')) {
+          cb(true);
+        } else if(!currentUser.data.UserRole || $cookieStore.get('token')) {
+          cb(false);
+        } else {
+          cb(true);
         }
       },
 
@@ -134,7 +144,7 @@ angular.module('perceptiveReachApp')
        * @return {Boolean}
        */
       isAdmin: function() {
-        return currentUser.role === 'admin';
+        return currentUser.data.role === 'admin';
       },
 
       /**

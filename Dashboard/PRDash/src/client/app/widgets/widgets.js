@@ -4,6 +4,7 @@ angular.module('perceptiveReachApp')
       .state('widgets', {
         url: '/widgets',
         templateUrl: 'app/widgets/widgets.html',
-        controller: 'WidgetCtrl'
+        controller: 'WidgetCtrl',
+        authenticate: true
       });
   });
