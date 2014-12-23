@@ -69,7 +69,7 @@ angular.module('perceptiveReachApp')
         getFacilityByState (String(data.id));
     
         function getHighRiskByVAMC (id){
-            $http.get('/api/scoreSummaryByVAMCID?id='+ id).success(function(risksByVAMC) {
+            $http.get('/api/scoreSummaryByVAMC?id='+ id).success(function(risksByVAMC) {
                 console.log(risksByVAMC);
                 var objectRisk = risksByVAMC[0];
                 console.log(objectRisk);

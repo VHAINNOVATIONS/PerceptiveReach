@@ -1,0 +1,31 @@
+.riskTotals {
+ 	border: 1px black solid;
+  
+ }
+ .riskTotals ul {
+  list-style: none;
+  padding: 5px;
+  color: white;
+ }
+ .riskTotals li {
+  background: rgb(39, 118, 236);
+  border: 1px white solid;
+  height: 30px;
+  border-radius: 5px;
+
+}
+.riskTotals .col-md-9 {
+  
+}
+.riskTotals .col-md-3 {
+  background: rgb(240, 33, 33);
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px #000000;
+  margin-top: 4px;
+  margin-left: -4px;
+
+}
+.riskTotals p {
+  text-align: center;
+  font-weight: bold;
+}
