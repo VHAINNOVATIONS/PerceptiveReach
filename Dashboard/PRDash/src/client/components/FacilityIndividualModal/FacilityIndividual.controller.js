@@ -62,7 +62,7 @@ angular.module('perceptiveReachApp')
             }
         }
         function getHighRiskByVAMC (id){
-            $http.get('/api/scoreSummaryByVAMCID?id='+ id).success(function(risksByVAMC) {
+            $http.get('/api/scoreSummaryByVAMC?id='+ id).success(function(risksByVAMC) {
                 console.log(risksByVAMC);
                 var objectRisk = risksByVAMC[0];
                 console.log(objectRisk);
@@ -73,7 +73,7 @@ angular.module('perceptiveReachApp')
             });
         }
         $scope.getVeteran = function getVeteranData (id){
-            $http.get('/api/veterans?id='+ id).success(function(veteranByID) {
+            $http.get('/api/veteranDetails?id='+ id).success(function(veteranByID) {
                 console.log(veteranByID);
                 var objectVeteran = veteranByID[0];
                 console.log(objectVeteran);
