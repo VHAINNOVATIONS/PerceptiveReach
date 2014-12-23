@@ -1,11 +1,13 @@
 'use strict';
 
 angular.module('perceptiveReachApp')
-  .controller('MainCtrl', function ($scope, $http, modalService) {
+  .controller('MainCtrl', function ($scope, $http, modalService, Auth) {
     $scope.awesomeThings = [];
     $scope.dataSetTable = [];
+    $scope.currentUser = Auth.getCurrentUser();
     var nationalData = [];
     
+    console.log($scope.currentUser);
     $http.get('/api/facilitiesStateCount').success(function(FacilitiesStateCount) {
         $scope.setupMap(FacilitiesStateCount); 
     });
