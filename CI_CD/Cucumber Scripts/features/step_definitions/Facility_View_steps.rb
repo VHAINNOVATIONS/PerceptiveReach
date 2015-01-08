@@ -1,10 +1,10 @@
 ##
 Given(/^I am on (.+)$/) do |url|
-<<<<<<< HEAD
+
   visit ('http://localhost:9000/') #open firefox and go to PR dashboard
-=======
+
   visit ('http://localhost:7001/') #open firefox and go to PR dashboard
->>>>>>> 17f5db02307231da2da35d9bc153dd3462fef330
+
 end
 
 When(/^I click on Arizona$/) do
@@ -66,9 +66,9 @@ Then(/^I should see the Individual Veteran info in detail having "(.*?)"$/) do |
   expect(page).to have_content(arg1) 
 end
 # #map > div > svg > g:nth-child(2) > path:nth-child(6)
-<<<<<<< HEAD
+
 # data-code = "US-TX"
-=======
+
 # data-code = "US-TX"
 
 
@@ -86,4 +86,4 @@ Then(/^I should see  "(.*?)"$/) do |arg1|
   expect(page).to have_content(arg1) 
 end
 
->>>>>>> 17f5db02307231da2da35d9bc153dd3462fef330
+
