@@ -29,6 +29,7 @@ module.exports = function(config) {
       //'client/app/**/*.html',
       //'client/components/**/*.html',
       //'client/assets/js/**/*.js'
+
       'client/bower_components/jquery/dist/jquery.js',
       'client/bower_components/angular/angular.js',
       'client/bower_components/angular-mocks/angular-mocks.js',
@@ -36,6 +37,7 @@ module.exports = function(config) {
       'client/bower_components/angular-cookies/angular-cookies.js',
       'client/bower_components/angular-sanitize/angular-sanitize.js',
       'client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+      'client/bower_components/angular-socket-io/socket.js',
       'client/bower_components/lodash/dist/lodash.compat.js',
       'client/bower_components/angular-ui-router/release/angular-ui-router.js',
       'client/bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js',
