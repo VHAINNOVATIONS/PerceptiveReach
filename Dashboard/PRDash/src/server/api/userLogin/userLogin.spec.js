@@ -8,7 +8,7 @@ describe('GET /api/userLogin', function() {
 
   it('should respond with JSON array', function(done) {
     request(app)
-      .get('/api/userLogin')
+      .get('/api/userLogin?UserName=msmith&Password=Password1')
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {

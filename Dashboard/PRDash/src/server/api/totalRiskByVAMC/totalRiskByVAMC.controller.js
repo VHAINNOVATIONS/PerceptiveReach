@@ -25,9 +25,9 @@ exports.index = function(req, res) {
     var pctRisks = [];
 
     var id = req.param("id");
-    if (!id) {
+    /*if (!id) {
         id = 1;
-    }
+    }*/
     var query = '';
     if (id) {
         console.log("Registering endpoint: /totalRiskbyVAMC/:id is " + id);
