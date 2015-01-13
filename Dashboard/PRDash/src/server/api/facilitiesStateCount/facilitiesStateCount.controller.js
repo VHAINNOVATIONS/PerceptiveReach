@@ -41,6 +41,7 @@ exports.index = function(req, res) {
             }
 
             console.log(recordset.length);
+
             res.send(recordset);
         });
 

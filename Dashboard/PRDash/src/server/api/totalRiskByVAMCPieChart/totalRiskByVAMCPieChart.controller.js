@@ -24,12 +24,12 @@ exports.index = function(req, res) {
     var pctRisks = [];
 
     var id = req.param("id");
-    if (!id) {
+    /*if (!id) {
         id = 1;
-    }
+    }*/
     var query = '';
     if (id) {
-        console.log("Registering endpoint: /totalRiskbyVAMC/:id is " + id);
+        console.log("Registering endpoint: /totalRiskbyVAMCPieChart/:id is " + id);
         query = "SELECT count(*) as TotalHighRisk_National, sum(cast(CriminalRecord as int)) as PTSD, ";
         query += "cast(cast(sum(cast(CriminalRecord as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as PTSD_PCT, ";
         query += "sum(cast(HistSubstanceAbuse as int)) as SubstanceAbuseHistory, ";
