@@ -35,12 +35,14 @@
         <!-- build:css({.tmp,client}) app/app.css -->
             <link rel="stylesheet" href="app/app.css">
             <!-- injector:css -->
+            <link rel="stylesheet" href="app/admin/admin.css">
             <link rel="stylesheet" href="app/app.css">
             <link rel="stylesheet" href="app/main/main.css">
             <link rel="stylesheet" href="app/widgets/widgets.css">
             <link rel="stylesheet" href="components/FacilityIndividualModal/FacilityIndividualModal.css">
             <link rel="stylesheet" href="components/modal-old/old-modal.css">
             <link rel="stylesheet" href="components/modal/modal.css">
+            <link rel="stylesheet" href="components/riskWidget/riskWidget.css">
             <!-- endinjector -->
         <!-- endbuild -->
     </head>
@@ -49,7 +51,7 @@
         <div ui-view=""></div>
         
         
-        <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
         <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>-->
         
         <!-- add new calendar event modal -->
@@ -61,6 +63,7 @@
             <script src="bower_components/angular-cookies/angular-cookies.js"></script>
             <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
             <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+            <script src="bower_components/angular-socket-io/socket.js"></script>
             <script src="bower_components/lodash/dist/lodash.compat.js"></script>
             <script src="bower_components/d3/d3.js"></script>
             <script src="bower_components/nvd3/nv.d3.js"></script>
@@ -73,6 +76,12 @@
         <!-- build:js({.tmp,client}) app/app.js -->
         <script src="app/app.js"></script>
           <!-- injector:js -->
+          <script src="app/account/account.js"></script>
+          <script src="app/account/login/login.controller.js"></script>
+          <script src="app/account/settings/settings.controller.js"></script>
+          <script src="app/account/signup/signup.controller.js"></script>
+          <script src="app/admin/admin.controller.js"></script>
+          <script src="app/admin/admin.js"></script>
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
           <script src="app/widgets/widgets.controller.js"></script>
@@ -80,11 +89,17 @@
           <script src="components/FacilityIndividualModal/FacilityIndividual.controller.js"></script>
           <script src="components/FacilityIndividualModal/FacilityIndividual.service.js"></script>
           <script src="components/StateFacilityModal/StateFacility.controller.js"></script>
+          <script src="components/TotalRiskbyVAMC/TotalRiskbyVAMC .controller.js"></script>
+          <script src="components/auth/auth.service.js"></script>
+          <script src="components/auth/user.service.js"></script>
           <script src="components/modal-old/old-modal.service.js"></script>
           <script src="components/modal/modal.controller.js"></script>
           <script src="components/modal/modal.service.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
           <script src="components/navigation/navigation.controller.js"></script>
+          <script src="components/riskWidget/riskWidget.controller.js"></script>
+          <script src="components/sidebar/sidebar.controller.js"></script>
+          <script src="components/socket/socket.service.js"></script>
           <!-- endinjector -->
         <!-- endbuild -->
         
