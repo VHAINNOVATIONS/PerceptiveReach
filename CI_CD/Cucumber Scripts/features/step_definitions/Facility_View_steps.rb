@@ -1,10 +1,6 @@
 ##
 Given(/^I am on (.+)$/) do |url|
-
-  visit ('http://localhost:9000/') #open firefox and go to PR dashboard
-
-  visit ('http://localhost:7001/') #open firefox and go to PR dashboard
-
+  visit ('http://localhost:7003/') #open firefox and go to PR dashboard
 end
 
 When(/^I click on Arizona$/) do
@@ -66,9 +62,6 @@ Then(/^I should see the Individual Veteran info in detail having "(.*?)"$/) do |
   expect(page).to have_content(arg1) 
 end
 # #map > div > svg > g:nth-child(2) > path:nth-child(6)
-
-# data-code = "US-TX"
-
 # data-code = "US-TX"
 
 
@@ -76,7 +69,7 @@ end
 When(/^I click on Widgets$/) do
   #pending # express the regexp above with the code you wish you had
   sleep(3)
-  page.find(:xpath,"./html/body/div[1]/div/aside[1]/section/ul/li[2]/a").click
+  page.find(:xpath,"/html/body/div[1]/div[2]/div/aside/section/ul/li[2]/a/span").click
   
 end
 
@@ -86,4 +79,141 @@ Then(/^I should see  "(.*?)"$/) do |arg1|
   expect(page).to have_content(arg1) 
 end
 
+Given(/^I navigate to the http:\/\/localhost:(\d+)\/$/) do |arg1|
+  visit ('http://localhost:7003/')
+  
+end
 
+When(/^I enter email field "(.*?)" as "(.*?)"$/) do |arg1, arg2|
+  fill_in('email',:with=>'msmith')
+end
+
+When(/^I enter password field "(.*?)" as "(.*?)"$/) do |arg1, arg2|
+  #pending # express the regexp above with the code you wish you had
+  fill_in('password',:with=>'Password1')
+end
+
+
+When(/^I click on login "(.*?)" button$/) do |arg1|
+  #pending # express the regexp above with the code you wish you had
+  sleep(3)
+  click_button('Login')
+end
+
+#widget steps
+
+Then(/^I hover on PTSD "(.*?)" bar in barchart to see the tool tip as "(.*?)"$/) do |arg1, arg2|
+   # pending # express the regexp above with the code you wish you had
+  el = find('#widget1 > svg > g > g > g.nv-barsWrap > g > g > g > g > g:nth-child(1)')
+ #e1=page.find(:xpath ,".//*[@id='widget1']/svg/g/g/g[3]/g/g/g/g/g[5]")
+ page.driver.browser.action.move_to(el.native).perform
+ sleep(5)
+ #page.find(:xpath ,"//*[@id='widget1']/svg/g/g/g[3]/g/g/g/g/g[1]/rect").trigger(:mouseover)
+ #page.should have_content "PTSD 245"
+ expect(page).to have_content(arg2)
+end
+
+
+Then(/^I hover on Substance Abuse "(.*?)" bar in barchart to see the tool tip as "(.*?)"$/) do |arg1, arg2|
+  el = find('#widget1 > svg > g > g > g.nv-barsWrap > g > g > g > g > g:nth-child(2)')
+  page.driver.browser.action.move_to(el.native).perform
+  sleep(5)
+  expect(page).to have_content(arg2)
+end
+
+#Then(/^I hover on Hospitilized "(.*?)" bar in barchart to see the tool tip as "(.*?)"$/) do |arg1, arg2|
+  #el = find('#widget1 > svg > g > g > g.nv-barsWrap > g > g > g > g > g:nth-child(3) > rect')
+ # el = find('#widget1 > svg > g > g > g.nv-x.nv-axis > g > g > g:nth-child(3)',:visible => false)
+  #widget1 > svg > g > g > g.nv-x.nv-axis > g > g > g:nth-child(3)
+  #page.driver.browser.action.move_to(el.native).perform
+  #sleep(5)
+  #expect(page).to have_content(arg2)
+ #page.should_have('#widget1 > svg > g > g > g.nv-x.nv-axis > g > g > g:nth-child(3) > text',:visible=>false,:text => arg2)
+ #find('#widget1 > svg > g > g > g.nv-barsWrap > g > g > g > g > g:nth-child(3) > rect')['title'].should == arg2
+  #e2="xyz"
+  #puts e2
+  #if(e2 == arg2)
+  #puts true
+  #else
+  #puts false
+  #end
+  
+  
+#end
+Then(/^I hover on Hospitilized "(.*?)" bar in barchart to see Hospitilized information$/) do |arg1|
+  #pending # express the regexp above with the code you wish you had
+  el = find('#widget1 > svg > g > g > g.nv-x.nv-axis > g > g > g:nth-child(3)',:visible => false)
+  page.driver.browser.action.move_to(el.native).perform
+  sleep(3)
+end
+
+Then(/^I see the tool tip as "(.*?)"$/) do |arg1|
+  #pending # express the regexp above with the code you wish you had
+  #expect(page).to have_content(arg1)
+  find('#widget1 > svg > g > g > g.nv-x.nv-axis > g > g > g:nth-child(3) > text',:visible => false)['title'].should == arg1
+end
+Then(/^I hover on Previous Attempts "(.*?)" bar in barchart to see Previous attempts information$/) do |arg1|
+  el = find('#widget1 > svg > g > g > g.nv-barsWrap > g > g > g > g > g:nth-child(4)',:visible => false)
+ # el = page.find('#widget1 > svg > g > g > g.nv-barsWrap > g > g > g > g > g:nth-child(4)')
+  page.driver.browser.action.move_to(el.native).perform
+  sleep(3)
+  #expect(page).to have_content(arg2)
+end
+
+Then(/^I hover on Diagnosed TBI "(.*?)" bar in barchart to see Diagnosed TBI information$/) do |arg1|
+  el = find('#widget1 > svg > g > g > g.nv-barsWrap > g > g > g > g > g:nth-child(5)',:visible => false)
+  page.driver.browser.action.move_to(el.native).perform
+  sleep(3)
+  #expect(page).to have_content(arg2)
+end
+
+
+Then(/^I should see the login page for SPC User "(.*?)"$/) do |arg1|
+  #pending # express the regexp above with the code you wish you had
+  expect(page).to have_content(arg1)
+end
+
+Then(/^I click on the User "(.*?)"$/) do |arg1|
+  #pending # express the regexp above with the code you wish you had
+  sleep(5)
+  page.find(:xpath,"/html/body/div[1]/div[1]/header/nav/div/ul/li[4]/a/span").click
+end
+
+
+
+#pie chart widget steps
+
+Then(/^I hover on PTSD "(.*?)" sector in piechart to see the tool tip as "(.*?)"$/) do |arg1, arg2|
+   el = find('#widget2 > svg > g > g > g.nv-pieWrap > g > g > g.nv-pie > g:nth-child(1) > path')
+  page.driver.browser.action.move_to(el.native).perform
+  sleep(3)
+  expect(page).to have_content(arg2)
+end
+
+Then(/^I hover on Substance Abuse "(.*?)" sector in piechart to see Substance Abuse information$/) do |arg1|
+   el = find('#widget2 > svg > g > g > g.nv-pieWrap > g > g > g.nv-pie > g:nth-child(2) > path',:visible => false)
+  page.driver.browser.action.move_to(el.native).perform
+  sleep(3)
+  #expect(page).to have_content(arg2)
+end
+
+Then(/^I hover on Hospitilized "(.*?)" sector in piechart to see Hospitilized information$/) do |arg1|
+   el = find('#widget2 > svg > g > g > g.nv-pieWrap > g > g > g.nv-pie > g:nth-child(3) > path',:visible => false)
+  page.driver.browser.action.move_to(el.native).perform
+  sleep(3)
+  #expect(page).to have_content(arg2)
+end
+
+Then(/^I hover on Previous Attempts "(.*?)" sector in piechart to see the tool tip as "(.*?)"$/) do |arg1, arg2|
+   el = find('#widget2 > svg > g > g > g.nv-pieWrap > g > g > g.nv-pie > g:nth-child(4) > path')
+  page.driver.browser.action.move_to(el.native).perform
+  sleep(3)
+  expect(page).to have_content(arg2)
+end
+
+Then(/^I hover on Diagnosed TBI "(.*?)" sector in piechart to see the tool tip as "(.*?)"$/) do |arg1, arg2|
+   el = find('#widget2 > svg > g > g > g.nv-pieWrap > g > g > g.nv-pie > g:nth-child(5) > path')
+  page.driver.browser.action.move_to(el.native).perform
+  sleep(3)
+  expect(page).to have_content(arg2)
+end
