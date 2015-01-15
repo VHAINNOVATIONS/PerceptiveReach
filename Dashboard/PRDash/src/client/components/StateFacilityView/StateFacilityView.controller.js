@@ -57,7 +57,7 @@ angular.module('perceptiveReachApp')
         };
     
         function getFacilityByState (id){
-            $http.get('/api/facilitiesByState?id=%27'+ id + '%27').success(function(facilitiesByState) {
+            $http.get('/api/facilitiesByState?id='+ id).success(function(facilitiesByState) {
             //console.log(veteransByVAMC);
                 var output = [];
                 var vamc = "";
