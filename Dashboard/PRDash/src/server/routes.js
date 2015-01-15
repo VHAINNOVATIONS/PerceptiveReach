@@ -20,6 +20,8 @@ module.exports = function(app) {
   app.use('/api/totalRiskByVAMCPieChart', require('./api/totalRiskByVAMCPieChart'));
   app.use('/api/totalRiskByState', require('./api/totalRiskByState'));
   app.use('/api/userLogin', require('./api/userLogin'));
+  app.use('/api/getRiskFactors', require('./api/getRiskFactors'));
+  app.use('/api/getRiskFactorGuidelines', require('./api/getRiskFactorGuidelines'));
 
   app.use('/auth', require('./auth'));
   app.use('/api/user', require('./api/user'));
