@@ -9,7 +9,7 @@ angular.module('perceptiveReachApp')
         
         function getScoreSummaryByVAMC (id){
             $http.get('/api/scoreSummaryByVAMC?id='+ id).success(function(scoreSummaryByVAMC) {
-            //console.log(scoreSummaryByVAMC);
+            console.log(scoreSummaryByVAMC);
 
                 console.log("RiskWidgetCtrl scoreSummaryByVAMC:" + JSON.stringify(scoreSummaryByVAMC));
                 
