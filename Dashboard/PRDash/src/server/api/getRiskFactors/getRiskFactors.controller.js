@@ -20,10 +20,19 @@ exports.index = function(req, res) {
 
     var dbc = require('../../config/db_connection/development.js');
     var config = dbc.config;
-
+    var id = req.param("id");
     var query = '';
-    query = "SELECT * FROM RiskFactors";
-    console.log("Query: " + query); 
+
+    if (id) {
+            console.log("Registering endpoint: /RiskFactors/:id is " + id);
+            query = "SELECT * FROM RiskFactors ";
+            query += "WHERE RiskFactorCode = '" + id + "'";
+            console.log("Query: " + query);
+        } else {
+            console.log("Registering endpoint: /RiskFactors/");
+            query = "SELECT * FROM RiskFactors";
+            console.log("Query: " + query);
+        }
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
