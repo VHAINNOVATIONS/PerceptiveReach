@@ -21,20 +21,9 @@ exports.index = function(req, res) {
     var dbc = require('../../config/db_connection/development.js');
     var config = dbc.config;
 
-    var id = req.param("id");
     var query = '';
-    if (id) {
-        console.log("Registering endpoint: /facilityByState/:id is " + id);
-        query = "SELECT VAMCID, vamc.VAMC, STA3N, visn.NetworkName, visn.RegionServed, COUNT(vet.ReachID) as Veteran_Count_at_facility ";
-        query += "FROM Ref_VAMC vamc INNER JOIN Ref_VISN visn ON vamc.VISN = visn.VISN INNER JOIN VeteranRisk vet ON vamc.VAMCID = vet.VAMC ";
-        query += "WHERE vamc.StateAbbr =  '" + id +"'";
-        query += "GROUP by VAMCID, vamc.VAMC, STA3N, visn.NetworkName, visn.RegionServed";
-        console.log("Query: " + query);
-    } else {
-        console.log("ERROR: State Abbreviation is required."); 
-        res.send("ERROR: State Abbreviation is required.");
-
-    }
+    query = "SELECT * FROM RiskFactors";
+    console.log("Query: " + query); 
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
@@ -49,7 +38,7 @@ exports.index = function(req, res) {
         request.query(query, function(err, recordset) {
             // ... error checks
             if (err) { 
-            console.log("Query failed!"); 
+            console.log("Query failed! " + err); 
             return; 
             }
 
