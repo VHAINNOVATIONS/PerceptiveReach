@@ -8,4 +8,7 @@ Capybara.default_driver = :selenium_chrome
   Capybara::Selenium::Driver.new(app, :browser => :chrome)
 end
 
+Before do |scenario|
+page.driver.browser.manage.window.maximize
+end
 Capybara.javascript_driver = :chrome

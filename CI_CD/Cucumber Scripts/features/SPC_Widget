@@ -1,0 +1,20 @@
+Feature: As a SPC I want see the Data visualizations such as bar and pie chanrts on the Widget Page
+	
+	@Widget
+    Scenario: I open a web browser and use http://localhost:7003/ to see bar and pie charts on Widgets page
+
+	Given I am on http://localhost:7003/
+	When I enter email field "email" as "msmmith"
+	And I enter password field "Password" as "Password1"
+	And I click on login "Login" button
+	And I click on Widgets
+Then I hover on PTSD "PTSD" bar in barchart to see the tool tip as "PTSD"
+And  I hover on Substance Abuse "Substance Abuse" bar in barchart to see the tool tip as "Substance Abuse"	
+And  I hover on Hospitilized "Hospitilized" bar in barchart to see Hospitilized information
+ And  I hover on Previous Attempts "Previous Attempts" bar in barchart to see Previous attempts information
+And  I hover on Diagnosed TBI "Diagnosed TBI" bar in barchart to see Diagnosed TBI information
+And  I hover on PTSD "PTSD" sector in piechart to see the tool tip as "PTSD"
+And  I hover on Substance Abuse "Substance Abuse" sector in piechart to see Substance Abuse information	
+And  I hover on Hospitilized "Hospitilized" sector in piechart to see Hospitilized information
+And  I hover on Previous Attempts "Previous Attempts" sector in piechart to see the tool tip as "Previous Attempts"
+And  I hover on Diagnosed TBI "Diagnosed TBI" sector in piechart to see the tool tip as "Diagnosed TBI"
