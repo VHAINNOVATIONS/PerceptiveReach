@@ -1,7 +1,12 @@
 'use strict';
 
 angular.module('perceptiveReachApp')
-  .controller('MainCtrl', function ($scope, $http, modalService, Auth) {
+  .controller('MainCtrl', function ($scope, $http, modalService, Auth, $compile, $rootScope) {
+    $scope.showStateView = {value: false};
+    $rootScope.hideMainView = false;
+    $rootScope.hideStateView = false;
+    $rootScope.hideFacilityView = true;
+    $rootScope.hideIndividualView = true;
     $scope.awesomeThings = [];
     $scope.dataSetTable = [];
     $scope.currentUser = Auth.getCurrentUser();
@@ -24,17 +29,34 @@ angular.module('perceptiveReachApp')
               $scope.updateTotalRiskTableByState(String(code).replace("US-",""));
               //$scope.dataTableNational.fnDraw();
           },
-          onRegionClick: function(event, code){
+          /*onRegionClick: function(event, code){
+            console.log("Click event on State - " + String(code));
             $scope.stateView(String(code).replace("US-",""));  
+            console.log("ShowStateView = " + $scope.showStateView);
+          },*/
+          onRegionOver: function (e, code) {
+            $(this).on('click', function () {
+                $scope.stateView(String(code).replace("US-",""));  
+                console.log("ShowStateView = " + $scope.showStateView);   
+            });
           },
           onRegionOut: function(e, code){
             //$scope.vetsByBranch = masterBranchValues;
+            $(this).unbind('click');
               var count = 0;
               for(var element in nationalData){
                 $scope.dataTableNational.fnUpdate(nationalData[element],element); 
               }
           }
       });
+
+      $scope.checkStateView = function() {
+        if ($scope.showStateView.value == true) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 
       /*if( $('#map').length)
         success = true;
@@ -177,7 +199,7 @@ angular.module('perceptiveReachApp')
     }
 
     $scope.getFacilityByState  = function (id){
-        $http.get('/api/facilitiesByState?id=%27'+ id + '%27').success(function(facilitiesByState) {
+        $http.get('/api/facilitiesByState?id='+ id).success(function(facilitiesByState) {
         //console.log(veteransByVAMC);
             $scope.buildFacilityByState(facilitiesByState);
             
@@ -231,9 +253,18 @@ angular.module('perceptiveReachApp')
             windowClass: 'app-modal-window',
             templateUrl: 'components/StateFacilityModal/StateFacilityModal.html'
         };
-        modalService.showModal(modalDefaults, modalOptions).then(function (result) {
+        //modalService.showModal(modalDefaults, modalOptions).then(function (result) {
+        $scope.stateID = id;        
+        //$('#mainView').hide();
+        $rootScope.hideMainView = true;
+        $scope.showStateView.value = true;
+        $compile($('#individContainer').html("<div ng-include=\"'components/IndividualView/IndividualView.html'\"></div>"))($scope);
+        //var fnLink = $compile($('#individContainer'));
+        //fnLink($scope);
+        $scope.$apply();
+        //$('#individView').show();
            
-        });
+        //});
     }
     //stateView("TX");
     

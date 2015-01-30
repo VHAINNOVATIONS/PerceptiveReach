@@ -1,0 +1,228 @@
+
+    <div ng-controller='FacilityIndividualViewCtrl'>
+        <div ng-hide="hideFacilityView">
+        <h2>VA Medical Center: {{VAMC}}</h2>
+        <aside style="min-height: 363px; background: #f4f4f4; width: 170px; position: absolute;">
+            <section class="content-header" id="header">
+                <p> <b>Current High Risk Veterans</b></p>
+            </section>
+            <section class="sidebar">
+                <ul class="list-group">
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">Extreme(95-100) <span class="badge">{{risks.ExtremeRisk}}</span></button></li>
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">High(80-94) <span class="badge">{{risks.HighRisk}}</span></button></li>
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">Medium(50-79) <span class="badge">{{risks.MediumRisk}}</span></button></li>
+                    <li class="list-group-item"><button class="btn btn-primary" type="button">Low(0-49) <span class="badge">{{risks.LowRisk}}</span></button></li>
+                    <!--<li class="list-group-item"><button class="btn btn-primary" type="button">Facility View</button></li>-->
+                </ul>                   
+            </section>
+        </aside>
+        <aside style="min-height: 363px; background: #f4f4f4; margin-left: 170px">
+            <section class="content-header" id="header">
+                <div id="veteranTable">
+                    <table cellpadding="0" cellspacing="0" border="0" class="" id="sampleVet" width="100%" data-data-tables-vet></table>
+                </div>
+                <div>
+                    <button type="button" class="btn" data-ng-click="backToStateView()" >Back</button>
+                    <button class="btn btn-primary" type="button" data-ng-click="viewVeteranDetails()" style="margin-left:1em" ng-hide="hideVetDetBtn">Veteran Details</button>
+                </div>
+            </section>
+        </aside> 
+        <aside style="min-height: 200px; background: #f4f4f4;">
+            <section class="content-header">
+                <div id="facilityInfo">
+                    <div class="widget">
+                      <div class="widget-header">
+                        <i class="fa fa-cog fa-spin"></i> Number of Risks by Type
+                      </div>
+                      <div class="widget-body">
+                        <!-- Check out the Angular Directive inside bootstrap.js! -->
+                        <!--<rd-loading></rd-loading> -->
+                        <!-- div ng-controller="FacilityIndividualModalCtrl" -->
+                          <nvd3-discrete-bar-chart
+                              data="totalRisksbyVAMC"
+                              id="toolTipExample"
+                              showXAxis="true"
+                              showYAxis="true"
+                              width="700"
+                              height="350"
+                              xAxisTickFormat="xAxisTickFormatFunction()"
+                              showValues="true"
+                              tooltips="true"
+                              tooltipcontent="toolTipContentFunction()">
+                                <svg></svg>
+                          </nvd3-discrete-bar-chart>
+                        <!--/div -->
+                      </div>
+                    </div>
+                </div>
+                <div id="veteranView" style="display:none">
+                    <aside style="min-height: 263px; background: #f4f4f4; width : 33%; float: left;">
+                        <section class="content-header" >
+                            <p> 
+                                <b>Risk Factors (True/False): </b>
+                                <br><br><b>Criminal Record:</b><br><span style="margin-left:1em">{{veteran.CriminalRecord}}</span>
+                                <br><b>History of Substance Abuse:</b><br><span style="margin-left:1em"> {{veteran.HistSubstanceAbuse}}</span>
+                                <br><b>Previous Psyc Hospitalization:</b><br><span style="margin-left:1em"> {{veteran.PreviousPsychiatricHospitalization}}</span>
+                                <br><b>Previous Attempts:</b><br><span style="margin-left:1em"> {{veteran.PreviousSuicideAttempts}}</span>
+                                <br><b>Diagnosed TBI:</b><br><span style="margin-left:1em"> {{veteran.DiagnosedTBI}}</span>
+                            </p>   
+                        </section>
+                    </aside>
+                    <aside style="min-height: 263px; background: #f4f4f4; width : 33%; display:inline-block;">
+                        <section class="content-header" >
+                            <p>
+                                <b>Contact Information: </b>
+                                <br><br><b>Name:</b><br><span style="margin-left:1em"> {{veteran.FirstName}} {{veteran.MiddleName}} {{veteran.LastName}} </span>
+                                <br><b>Last 4 of SSN:</b><br><span style="margin-left:1em"> {{veteran.SSN}} </span>
+                                <br><b>Phone:</b><br><span style="margin-left:1em"> {{veteran.Phone}} </span>
+                                <br><b>Alternative Phone:</b><br><span style="margin-left:1em"> {{veteran.AltPhone}} </span>
+                                <br><b>Address:</b><br><span style="margin-left:1em"> {{veteran.Address}} </span>
+                                <br><b>City:</b><br><span style="margin-left:1em"> {{veteran.City}} </span>
+                                <br><b>State:</b><br><span style="margin-left:1em"> {{veteran.State}} </span>
+                                <br><b>Zip:</b><br><span style="margin-left:1em"> {{veteran.Zip}} </span>
+                                <br><br><br><b>Date First Identified At-Risk:</b><br><span style="margin-left:1em"> {{veteran.DateIdentifiedRisk}} </span>
+                            </p>
+                        </section>
+                    </aside> 
+                    <aside style="min-height: 263px; background: #f4f4f4; float:right; width: 33%;">
+                        <section class="content-header" >
+                            <p>
+                                <b>Emergency Contact Information: </b>
+                                <br><br><b>Emergency Contact Name:</b><br><span style="margin-left:1em"> {{veteran.EmergencyContact}} </span>
+                                <br><b>Relationship to Veteran:</b><br><span style="margin-left:1em"> {{veteran.Relationship}}  </span>                               
+                                <br><b>Address:</b><br><span style="margin-left:1em"> {{veteran.EC_Address}} </span>
+                                <br><b>City:</b><br> <span style="margin-left:1em">{{veteran.EC_City}} </span>
+                                <br><b>State:</b><br><span style="margin-left:1em"> {{veteran.EC_State}}</span> 
+                                <br><b>Zip:</b><br><span style="margin-left:1em"> {{veteran.EC_Zip}} </span>
+                                <br><b>Phone:</b><br><span style="margin-left:1em"> {{veteran.EC_Phone}} </span>
+                                <br><b>Alternative Phone:</b><br><span style="margin-left:1em"> {{veteran.EC_AltPhone}} </span>
+                            </p>
+                        </section>
+                    </aside>
+                    <aside style="min-height: 263px; background: #f4f4f4;">
+                        <section class="content-header" >
+                            <p>
+                                <b>Veteran Details: </b>
+                                <br><br><b>Urban Location?:</b><br><span style="margin-left:1em"> {{veteran.UrbanArea}}</span> 
+                                <br><b>Local Medical Center:</b><br><span style="margin-left:1em"> {{veteran.vamc}}</span>     
+                                <br><b>VISN:</b><br><span style="margin-left:1em"> {{veteran.VISN}} </span>
+                                <br><b>Age:</b><br><span style="margin-left:1em"> {{veteran.Age}}</span> 
+                                <br><b>Gender:</b><br><span style="margin-left:1em"> {{veteran.Gender}} </span>
+                                <br><b>Ethnicity:</b><br><span style="margin-left:1em"> {{veteran.Race}} </span>
+                            </p>
+                        </section>
+                    </aside>
+                </div>
+            </section>
+        </aside>
+        </div>
+        <div ng-hide="hideIndividualView">
+            <h2 ALIGN=CENTER><b>Individual Veteran View: {{veteran.LastName}}, {{veteran.FirstName}}</b> </h2><br>
+            <table class="veteran" style="width:33%; float:left;">
+                <tr>
+                    <th colspan="2" bgcolor="#C3BBBB"><b>Veteran Contact Information</b></th>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>{{veteran.LastName}}, {{veteran.FirstName}} {{veteran.MiddleName}}</td>
+                </tr>
+                <tr>
+                    <td>Last 4 of SSN</td>
+                    <td>{{veteran.SSN}}</td>
+                </tr>
+                <tr>
+                    <td>Phone</td>
+                    <td>{{veteran.Phone}}</td>
+                </tr>
+                <tr>
+                    <td>Alternate Phone</td>
+                    <td>{{veteran.AltPhone}}</td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td>{{veteran.Address}}</td>
+                </tr>
+                <tr>
+                    <td>City</td>
+                    <td>{{veteran.City}}</td>
+                </tr>
+                <tr>
+                    <td>State</td>
+                    <td>{{veteran.State}}</td>
+                </tr>
+                <tr>
+                    <td>Zip</td>
+                    <td>{{veteran.Zip}}</td>
+                </tr>
+            </table>
+
+            <table class="veteran" style="width:33%;margin-left: 15cm;">
+                <tr>
+                    <th colspan="2" bgcolor="#C3BBBB"><b>Emergency Contact Information</b></th>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>{{veteran.EmergencyContact}}</td>
+                </tr>
+                <tr>
+                    <td>Relationship to Veteran</td>
+                    <td>{{veteran.Relationship}}</td>
+                </tr>
+                <tr>
+                    <td>Phone</td>
+                    <td>{{veteran.EC_Phone}}</td>
+                </tr>
+                <tr>
+                    <td>Alternate Phone</td>
+                    <td>{{veteran.EC_AltPhone}}</td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td>{{veteran.EC_Address}}</td>
+                </tr>
+                <tr>
+                    <td>City</td>
+                    <td>{{veteran.EC_City}}</td>
+                </tr>
+                <tr>
+                    <td>State</td>
+                    <td>{{veteran.EC_State}}</td>
+                </tr>
+                <tr>
+                    <td>Zip</td>
+                    <td>{{veteran.EC_Zip}}</td>
+                </tr>
+            </table>
+            <div>
+                <p>
+                    <br><br><b>Veteran Details: </b>
+                    <br><br><b>Urban Location?:</b><span style="margin-left:1em"> {{veteran.UrbanArea}}</span> 
+                    <br><b>Local Medical Center:</b><span style="margin-left:1em"> {{veteran.vamc}}</span>     
+                    <br><b>VISN:</b><span style="margin-left:1em"> {{veteran.VISN}} </span>
+                    <br><b>Age:</b><span style="margin-left:1em"> {{veteran.Age}}</span> 
+                    <br><b>Gender:</b><span style="margin-left:1em"> {{veteran.Gender}} </span>
+                    <br><b>Ethnicity:</b><span style="margin-left:1em"> {{veteran.Race}} </span>
+                </p>
+            </div>
+            <div style="margin-top:1cm">
+                <button class="btn btn-primary" type="button" data-ng-click="" style="margin-left:1em; padding: 12px 24px">Local Facility <br> Resources</button>
+                <button class="btn btn-primary" type="button" data-ng-click="" style="margin-left:5em; padding: 12px 24px">VA / DoD Clinical <br>Practice Guidelines </button>
+                <button class="btn btn-primary" type="button" data-ng-click="" style="margin-left:5em; padding: 12px 24px">Diagnosis <br>Information</button>
+                <button class="btn btn-primary" type="button" data-ng-click="" style="margin-left:5em; padding: 12px 24px">Forms and <br>Assessments</button>
+                <button class="btn btn-primary" type="button" data-ng-click="" style="margin-left:5em; padding: 12px 24px">SPC <br>Sharepoint</button>
+            </div>
+            <div style="text-align: center; padding: 45px">
+                <button style="padding: 12px 24px" type="button" class="btn" data-ng-click="backToFacilityView()" >Back</button>
+                <button style="padding: 12px 24px" type="button" class="btn btn-primary" data-ng-click="goToHome()">Go to Map</button>
+            </div>
+        </div>        
+    </div>
+<!--<div class="modal-footer">
+  <button ng-repeat="button in modal.buttons" ng-class="button.classes" ng-click="button.click($event)" ng-bind="button.text" class="btn"></button>
+</div>-->
+<style>
+.veteran th, .veteran td, .veteran tr{
+    border: 1px solid black;
+    border-collapse: collapse;   
+}
+</style>

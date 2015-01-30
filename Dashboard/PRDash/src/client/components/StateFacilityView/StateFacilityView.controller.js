@@ -1,10 +1,12 @@
 'use strict';
 
 angular.module('perceptiveReachApp')
-  .controller('StateFacilityModalCtrl', function ($scope, $modalInstance,$http, data, modalService) {
-        $scope.modalOptions = data.options;
+  .controller('StateFacilityViewCtrl', function ($scope, $http,$rootScope,$compile) {
+        //$scope.modalOptions = //data.options;
         $scope.dataSet;
-        $scope.modalOptions.ok = function (result) {
+        $scope.headerText = 'State Facility View - ' + $scope.stateID;
+        $scope.hideStateNextBtn = true;
+        /*$scope.modalOptions.ok = function (result) {
             $modalInstance.close(result);
             function facilityIndividualView (id) {
 
@@ -35,9 +37,23 @@ angular.module('perceptiveReachApp')
                 });
             }
             facilityIndividualView ($scope.facilitySelected);
+        };*/
+        $scope.back = function () {
+            //$modalInstance.dismiss('cancel');
+            //console.log("Current StateFaclilityView Hide value  - "+ $rootScope.hideMainView);
+            //$scope.hideMainView = false;
+            $rootScope.hideMainView =false;
+            //console.log("StateFaclilityView Hide value  - "+ $rootScope.hideMainView);
         };
-        $scope.modalOptions.close = function (result) {
-            $modalInstance.dismiss('cancel');
+        $scope.next = function () {
+            $rootScope.hideStateView =true;
+            $("#individualView").html("<div ng-include=\"'components/FacilityIndividualView/FacilityIndividualView.html'\"></div>")
+            //$("<div ng-include=\"'components/FacilityIndividualView/FacilityIndividualView.html'\"></div>").appendTo("#stateFacilityView")
+            //$compile($("#stateFacilityView"))($scope);
+            $compile($("#individualView"))($scope);
+            //$scope.$apply();
+            $rootScope.hideFacilityView =false;
+            //console.log("StateFaclilityView Hide value  - "+ $rootScope.hideMainView);
         };
     
         function getFacilityByState (id){
@@ -66,7 +82,8 @@ angular.module('perceptiveReachApp')
                 //return output;
             });
         }
-        getFacilityByState (String(data.id));
+        //getFacilityByState (String(data.id));
+        getFacilityByState ($scope.stateID);
     
         function getHighRiskByVAMC (id){
             $http.get('/api/scoreSummaryByVAMC?id='+ id).success(function(risksByVAMC) {
@@ -88,7 +105,7 @@ angular.module('perceptiveReachApp')
     //$scope.getVeteran(Vet_Id);
     //console.log($scope.risks);
   })
-  .directive('dataTablesFacility', function(){
+  .directive('dataTablesFacilityView', function(){
     var linker = function(scope,element, attr){
         var unwatch = scope.$watch('dataSet', function(v){
             if(v){
@@ -112,12 +129,13 @@ angular.module('perceptiveReachApp')
                         "sRowSelect": "single"
                     }
                 });
-                $('#exampleFacility tbody').on( 'click', 'tr', function (event) {
+                $('#sampleFacility tbody').on( 'click', 'tr', function (event) {
                     //console.log( dataTableVet.row( this ).data() );
                     if($(this).hasClass('selected')){
                         $(this).removeClass('selected');
                         //$('#veteranView').hide();
                         //$('#facilityInfo').show();
+                        scope.hideStateNextBtn = true;
                     }
                     else{
                         dataTableState.$('tr.selected').removeClass('selected');
@@ -127,8 +145,9 @@ angular.module('perceptiveReachApp')
                         //scope.getVeteran(event.currentTarget.cells[0].innerText); //Launch different service
                         console.log(event.currentTarget.cells[0].innerText);
                         scope.facilitySelected = event.currentTarget.cells[0].innerText;
+                        scope.hideStateNextBtn = false;
                     }
-                    
+                    scope.$apply();
                     //console.log(event.currentTarget.cells[4].innerText);
                 } );
             }

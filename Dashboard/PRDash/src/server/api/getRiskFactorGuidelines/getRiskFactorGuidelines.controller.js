@@ -15,24 +15,37 @@ var sql = require('mssql');
 
 // Get list of things
 exports.index = function(req, res) {
-   res.header("content-type: application/json");
+    res.header("content-type: application/json");
     var data = [];
 
     var dbc = require('../../config/db_connection/development.js');
     var config = dbc.config;
 
-    var query = "SELECT StateAbbr as State, count(*) as Total FROM Ref_VAMC group by StateAbbr";
+    var id = req.param("id");
+    var query = '';
+    if (id) {
+        console.log("Registering endpoint: /getRiskFactorGuidelines/:id is " + id);
+        query = "SELECT Priority, Guideline ";
+        query += "FROM RiskFactorGuidelines ";
+        query += "WHERE RiskFactorCode =  '" + id +"' ";
+        query += "ORDER by priority";
+        console.log("Query: " + query);
+    } else {
+        console.log("ERROR: Risk Factor Code is required."); 
+        res.end("ERROR: Risk Factor Code is required.");
+
+    }
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
-        if (err) { 
+        if (err || !query) { 
         data = "Error: Database connection failed!";
         console.log("Database connection failed!"); 
         return; 
         }
 
         // Query
-        var request = new sql.Request(connection); 
+        var request = new sql.Request(connection); // or: var request = connection.request();
         request.query(query, function(err, recordset) {
             // ... error checks
             if (err) { 
