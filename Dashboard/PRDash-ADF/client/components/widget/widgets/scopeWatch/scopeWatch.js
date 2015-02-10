@@ -16,17 +16,15 @@
 
 'use strict';
 
-angular.module('app', [
-    'ngRoute',
-    'ui.dashboard',
-    'ui.widgets',
-    'ui.models',
-    'btford.markdown'
-  ])
-  .config(function ($routeProvider, $locationProvider, $httpProvider) {
-    $routeProvider
-      .otherwise('/');
-
-    $locationProvider.html5Mode(true);
-    //$httpProvider.interceptors.push('authInterceptor');    
+angular.module('ui.widgets')
+  .directive('wtScopeWatch', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/scopeWatch/scopeWatch.html',
+      scope: {
+        scopeValue: '=value',
+        valueClass: '@valueClass'
+      }
+    };
   });

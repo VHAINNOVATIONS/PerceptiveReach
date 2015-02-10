@@ -10,7 +10,7 @@ module.exports = function (grunt) {
 
   // Load grunt tasks automatically, when needed
   require('jit-grunt')(grunt, {
-    express: 'grunt-express-server',    
+    express: 'grunt-express-server',
     injector: 'grunt-asset-injector',
     ngtemplates: 'grunt-angular-templates'
   });
@@ -34,6 +34,13 @@ module.exports = function (grunt) {
         },
         src: ['client/components/adf/template/*.html'],
         dest: 'client/components/adf/template/dashboard.js'
+      },
+      widget: {
+        options: {
+          module: 'ui.widgets'
+        },
+        src: ['client/components/widget/widgets/{,*/}*.html'],
+        dest: 'client/components/widget/widgets/widget_template.js'
       }
     },
     express: {
@@ -66,9 +73,9 @@ module.exports = function (grunt) {
         reporter: 'spec'
       },
       src: ['server/**/*.spec.js']
-    },    
+    },
     concat: {
-      dist: {
+      dashboard: {
         src: [
           'client/components/adf/src/directives/dashboard.js',
           'client/components/adf/src/directives/*.js',
@@ -77,6 +84,14 @@ module.exports = function (grunt) {
           'client/components/adf/template/dashboard.js'
         ],
         dest: 'client/dist/angular-ui-dashboard.js'
+      },
+      widget: {
+        src: [
+          'client/components/widget/modules.js',
+          'client/components/widget/**/*.js',
+          'client/components/widget/widgets/widget_template.js'
+        ],
+        dest: 'client/dist/perceptive-reach-widgets.js'
       }
     },
     watch: {
@@ -90,16 +105,13 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>',
           base: [
             '.',
-            'client',
-            'dist'
+            'client'
           ]
         },
         files: [
           'client/{,*/}*.html',
           'client/{,*/}*.css',
-          'client/{,*/}*.js',
-          'dist/*.css',
-          'dist/*.js'
+          'client/{,*/}*.js'
         ]
       }
     },
@@ -107,7 +119,7 @@ module.exports = function (grunt) {
       server: {
         url: 'http://localhost:<%= express.options.port %>'
       }
-    },    
+    },
     jshint: {
       options: {
         jshintrc: '.jshintrc'
@@ -163,8 +175,7 @@ module.exports = function (grunt) {
           open: true,
           base: [
             '.',
-            'client',
-            'dist'
+            'client'
           ]
         }
       }
@@ -200,10 +211,10 @@ module.exports = function (grunt) {
                '!{.tmp,<%= yeoman.client %>}/app/app.js',
                '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.spec.js',
                '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js']
-            ]
+          ]
         }
       },
-
+      
       // Inject component css into index.html
       css: {
         options: {
@@ -221,7 +232,7 @@ module.exports = function (grunt) {
           ]
         }
       }
-    },    
+    }
   });
 
 // Used for delaying livereload until after server has restarted

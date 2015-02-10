@@ -16,17 +16,22 @@
 
 'use strict';
 
-angular.module('app', [
-    'ngRoute',
-    'ui.dashboard',
-    'ui.widgets',
-    'ui.models',
-    'btford.markdown'
-  ])
-  .config(function ($routeProvider, $locationProvider, $httpProvider) {
-    $routeProvider
-      .otherwise('/');
+angular.module('ui.widgets')
+  .directive('wtRandom', function ($interval) {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/random/random.html',
+      link: function postLink(scope) {
+        function update() {
+          scope.number = Math.floor(Math.random() * 100);
+        }
 
-    $locationProvider.html5Mode(true);
-    //$httpProvider.interceptors.push('authInterceptor');    
+        var promise = $interval(update, 500);
+
+        scope.$on('$destroy', function () {
+          $interval.cancel(promise);
+        });
+      }
+    };
   });
