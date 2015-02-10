@@ -1,10 +1,32 @@
 'use strict';
 
 module.exports = function (grunt) {
+  var localConfig;
+  try {
+    localConfig = require('./server/config/local.env');
+  } catch(e) {
+    localConfig = {};
+  }
+
+  // Load grunt tasks automatically, when needed
+  require('jit-grunt')(grunt, {
+    express: 'grunt-express-server',
+    injector: 'grunt-asset-injector',
+    ngtemplates: 'grunt-angular-templates'
+  });
+
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
 
   grunt.initConfig({
+    // Project Settings
+    pkg: grunt.file.readJSON('package.json'),
+    yeoman: {
+      // configurable paths
+      client: require('./bower.json').appPath || 'client',
+      dist: 'dist'
+    },
+
     ngtemplates: {
       dashboard: {
         options: {
@@ -12,6 +34,29 @@ module.exports = function (grunt) {
         },
         src: ['client/components/adf/template/*.html'],
         dest: 'client/components/adf/template/dashboard.js'
+      },
+      widget: {
+        options: {
+          module: 'ui.widgets'
+        },
+        src: ['client/components/widget/widgets/{,*/}*.html'],
+        dest: 'client/components/widget/widgets/widget_template.js'
+      }
+    },
+    express: {
+      options: {
+        port: process.env.PORT || 9000
+      },
+      dev: {
+        options: {
+          script: 'server/app.js',
+          debug: true
+        }
+      },
+      prod: {
+        options: {
+          script: 'dist/server/app.js'
+        }
       }
     },
     karma: {
@@ -23,8 +68,14 @@ module.exports = function (grunt) {
         configFile: 'karma.conf.js'
       }
     },
+    mochaTest: {
+      options: {
+        reporter: 'spec'
+      },
+      src: ['server/**/*.spec.js']
+    },
     concat: {
-      dist: {
+      dashboard: {
         src: [
           'client/components/adf/src/directives/dashboard.js',
           'client/components/adf/src/directives/*.js',
@@ -32,7 +83,15 @@ module.exports = function (grunt) {
           'client/components/adf/src/controllers/*.js',
           'client/components/adf/template/dashboard.js'
         ],
-        dest: 'dist/angular-ui-dashboard.js'
+        dest: 'client/dist/angular-ui-dashboard.js'
+      },
+      widget: {
+        src: [
+          'client/components/widget/modules.js',
+          'client/components/widget/**/*.js',
+          'client/components/widget/widgets/widget_template.js'
+        ],
+        dest: 'client/dist/perceptive-reach-widgets.js'
       }
     },
     watch: {
@@ -43,15 +102,22 @@ module.exports = function (grunt) {
       tasks: ['ngtemplates', 'concat', 'copy:dist'],
       livereload: {
         options: {
-          livereload: '<%= connect.options.livereload %>'
+          livereload: '<%= connect.options.livereload %>',
+          base: [
+            '.',
+            'client'
+          ]
         },
         files: [
           'client/{,*/}*.html',
           'client/{,*/}*.css',
-          'client/{,*/}*.js',
-          'dist/*.css',
-          'dist/*.js'
+          'client/{,*/}*.js'
         ]
+      }
+    },
+    open: {
+      server: {
+        url: 'http://localhost:<%= express.options.port %>'
       }
     },
     jshint: {
@@ -69,7 +135,7 @@ module.exports = function (grunt) {
           expand: true,
           flatten: true,
           src: ['client/components/adf/src/angular-ui-dashboard.css'],
-          dest: 'dist'
+          dest: 'client/dist'
         }]
       }
     },
@@ -77,14 +143,26 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           src: [
-            'dist/*'
+            'client/dist/*'
           ]
         }]
       },
       templates: {
         src: ['<%= ngtemplates.dashboard.dest %>']
-      }
+      },
+      server: '.tmp'
     },
+    env: {
+      test: {
+        NODE_ENV: 'test'
+      },
+      prod: {
+        NODE_ENV: 'production'
+      },
+      all: localConfig
+    },
+
+    // Original Server for Client 
     connect: {
       options: {
         port:9000,
@@ -97,19 +175,157 @@ module.exports = function (grunt) {
           open: true,
           base: [
             '.',
-            'client',
-            'dist'
+            'client'
+          ]
+        }
+      }
+    },
+
+    // Automatically inject Bower components into the app
+    wiredep: {
+      target: {
+        src: '<%= yeoman.client %>/index.html',
+        ignorePath: '<%= yeoman.client %>/',
+        exclude: [/bootstrap-sass-official/, /bootstrap.js/, '/json3/', '/es5-shim/', /bootstrap.css/, /font-awesome.css/ ]
+      }
+    },
+
+    injector: {
+      options: {
+
+      },
+      // Inject application script files into index.html (doesn't include bower)
+      scripts: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('/client/', '');
+            filePath = filePath.replace('/.tmp/', '');
+            return '<script src="' + filePath + '"></script>';
+          },
+          starttag: '<!-- injector:js -->',
+          endtag: '<!-- endinjector -->'
+        },
+        files: {
+          '<%= yeoman.client %>/index.html': [
+              ['{.tmp,<%= yeoman.client %>}/{app,components}/**/*.js',
+               '!{.tmp,<%= yeoman.client %>}/app/app.js',
+               '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.spec.js',
+               '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js']
+          ]
+        }
+      },
+      
+      // Inject component css into index.html
+      css: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('/client/', '');
+            filePath = filePath.replace('/.tmp/', '');
+            return '<link rel="stylesheet" href="' + filePath + '">';
+          },
+          starttag: '<!-- injector:css -->',
+          endtag: '<!-- endinjector -->'
+        },
+        files: {
+          '<%= yeoman.client %>/index.html': [
+            '<%= yeoman.client %>/{app,components}/**/*.css'
           ]
         }
       }
     }
   });
 
-  grunt.registerTask('test', [
-    'jshint',
-    'ngtemplates',
-    'karma:unit'
-  ]);
+// Used for delaying livereload until after server has restarted
+  grunt.registerTask('wait', function () {
+    grunt.log.ok('Waiting for server reload...');
+
+    var done = this.async();
+
+    setTimeout(function () {
+      grunt.log.writeln('Done waiting!');
+      done();
+    }, 1500);
+  });
+
+  grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
+    this.async();
+  });
+
+  grunt.registerTask('test', function(target) {
+    if (target === 'server') {
+      return grunt.task.run([
+        'env:all',
+        'env:test',
+        'mochaTest'
+      ]);
+    }
+
+    else if (target === 'client') {
+      return grunt.task.run([
+        'clean:server',
+        'env:all',
+        //'injector:sass', 
+        //'concurrent:test',
+        'injector',
+        'jshint',
+        'ngtemplates',
+        //'autoprefixer',
+        'karma:unit'
+      ]);
+    }
+
+    /* else if (target === 'e2e') {
+      return grunt.task.run([
+        'clean:server',
+        'env:all',
+        'env:test',
+        //'injector:sass', 
+        //'concurrent:test',
+        'injector',
+        'wiredep',
+        //'autoprefixer',
+        'express:dev',
+        //'protractor'
+      ]);
+    } */
+
+    else grunt.task.run([
+      'test:server',
+      'test:client'
+    ]);
+  });  
+
+  grunt.registerTask('serve', function (target) {
+    if (target === 'dist') {
+      return grunt.task.run(['build', 'env:all', 'env:prod', 'express:prod', 'wait', 'open', 'express-keepalive']);
+    }
+
+    if (target === 'debug') {
+      return grunt.task.run([
+        'clean:dist',
+        'env:all', 
+        'wiredep',
+      ]);
+    }
+
+    grunt.task.run([
+      'clean:dist',
+      'concat',
+      'copy:dist',
+      'env:all',  
+      'injector',
+      'wiredep',
+      'express:dev',
+      'wait',
+      'open', 
+      'watch'
+    ]);
+  });
+
+  grunt.registerTask('server', function () {
+    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
+    grunt.task.run(['serve']);
+  });
 
   grunt.registerTask('test_auto', [
     'jshint',
@@ -117,6 +333,7 @@ module.exports = function (grunt) {
     'karma:auto'
   ]);
 
+  // The original server task
   grunt.registerTask('client', [
     'connect:livereload',
     'watch'

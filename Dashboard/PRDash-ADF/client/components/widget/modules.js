@@ -14,19 +14,6 @@
  * limitations under the License.
  */
 
-'use strict';
-
-angular.module('app', [
-    'ngRoute',
-    'ui.dashboard',
-    'ui.widgets',
-    'ui.models',
-    'btford.markdown'
-  ])
-  .config(function ($routeProvider, $locationProvider, $httpProvider) {
-    $routeProvider
-      .otherwise('/');
-
-    $locationProvider.html5Mode(true);
-    //$httpProvider.interceptors.push('authInterceptor');    
-  });
+angular.module('ui.widgets', ['datatorrent.mlhrTable', 'nvd3ChartDirectives']);
+angular.module('ui.websocket', ['ui.visibility', 'ui.notify']);
+angular.module('ui.models', ['ui.visibility', 'ui.websocket']);

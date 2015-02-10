@@ -16,17 +16,22 @@
 
 'use strict';
 
-angular.module('app', [
-    'ngRoute',
-    'ui.dashboard',
-    'ui.widgets',
-    'ui.models',
-    'btford.markdown'
-  ])
-  .config(function ($routeProvider, $locationProvider, $httpProvider) {
-    $routeProvider
-      .otherwise('/');
+angular.module('ui.widgets')
+  .directive('wtHistoricalChart', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/historicalChart/historicalChart.html',
+      scope: {
+        chart: '='
+      },
+      controller: function ($scope) {
+        $scope.mode = 'MINUTES';
 
-    $locationProvider.html5Mode(true);
-    //$httpProvider.interceptors.push('authInterceptor');    
+        $scope.changeMode = function (mode) {
+          $scope.mode = mode;
+          $scope.$emit('modeChanged', mode);
+        };
+      }
+    };
   });
