@@ -11,20 +11,8 @@ Feature: As a SPC I want customize my widget page
 	And I click on save button
 	Then I should see the widget 1 title change to "Example"
 	
-		@NationalWidget
-    Scenario: I open a web browser and use http://localhost:9001/ to see customize National View Widgets page
-
-	Given I am on http://localhost:9001/
-	When I click on "National View"
-	Then I should see the "widget 21" on page for National view
-	
-			@IndividualWidget
-    Scenario: I open a web browser and use http://localhost:9001/ to see customize National View Widgets page
-
-	Given I am on http://localhost:9001/
-	When I click on individual "Individual View"
-	Then I should see the widget "Widget" on page for Individual view
-	
+		
+			
 	@DeleteWidgetPR-1165
 	
 	Scenario: I open a web browser and use http://localhost:9001/ to see customize Widgets page to delete a widget from widgets page
@@ -33,22 +21,4 @@ Feature: As a SPC I want customize my widget page
 	When I click on delete of widget 1 
 	And I click on save changes
 	Then i should not see the widget Widget 1
-	
-	
-	@DragwidgetsPR-1161
-	
-	Scenario: I open a web browser and use http://localhost:9001/ to see customize Widgets page to drag a widget to change its position
-	
-	Given I am on http://localhost:9001/
-	When I click on widget 1 and move it to different widget position
-	And I click on save changes
-	Then i should not see Widget 1 in a different position
-	
-	
-	@shrinkwidgets
-	Scenario: I open a web browser and use http://localhost:9001/ to see customize Widgets page to shrink/increase to change its size
-	
-	Given I am on http://localhost:9001/
-	When I click on widget 1 and decrease its size
-	And I click on save changes
-	Then i should not see Widget 1 in a different size
+    
