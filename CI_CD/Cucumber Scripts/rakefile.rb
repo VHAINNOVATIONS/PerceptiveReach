@@ -8,30 +8,21 @@ Cucumber::Rake::Task.new(:features) do |t|
 	t.cucumber_opts = "features --format json --out report.json"
 end
 
-Cucumber::Rake::Task.new(:Facility_view_ohio) do |t|
-	t.profile='Facility'
-	#t.cucumber_opts = "features -f html --out=report/report.html"
-	t.cucumber_opts = "--tags @Ohio features --format json --out report.json"
-	#t.cucumber_opts = "--tags @Ohio"
-end
-
 Cucumber::Rake::Task.new(:SPC_Widget) do |t|
-	t.profile='Widget'
+	t.profile = 'Widget'
 	#t.cucumber_opts = "features -f html --out=report/report.html"
-	t.cucumber_opts = "--tags @Widget features --format json --out report.json "
-	#t.cucumber_opts = "--tags @Widget"
-	
+	t.cucumber_opts = "features --format json --out report.json"
 end
 
-Cucumber::Rake::Task.new(:SPC_Login) do |t|
-	t.profile='Login'
+Cucumber::Rake::Task.new(:SPC_Widget_delete) do |t|
+	t.profile = 'DeleteWidget'
 	#t.cucumber_opts = "features -f html --out=report/report.html"
-	t.cucumber_opts = "--tags @SPC_User_msmith features --format json --out report.json --profile Login"
-	#t.cucumber_opts = "--tags @SPC_User_msmith"
-	
+	t.cucumber_opts = "--tags @DeleteWidgetPR-1165 features --format json --out report.json"
 end
+
 
 task :Facility=> :Facility_view_ohio
 task :Widget=> :SPC_Widget
+task :DeleteWidget=> :SPC_Widget_delete
 task :Login=> :SPC_Login
 task :default => :features
