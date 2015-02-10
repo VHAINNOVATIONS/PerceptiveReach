@@ -8,7 +8,7 @@ Cucumber::Rake::Task.new(:features) do |t|
 	t.cucumber_opts = "features --format json --out report.json"
 end
 
-Cucumber::Rake::Task.new(:SPC_Widgets) do |t|
+Cucumber::Rake::Task.new(:SPC_Widget) do |t|
 	t.profile = 'Widget'
 	#t.cucumber_opts = "features -f html --out=report/report.html"
 	t.cucumber_opts = " --tags @EditWidgetPR-1165 features --format json --out report.json"
@@ -22,7 +22,7 @@ end
 
 
 task :Facility=> :Facility_view_ohio
-task :Widget=> :SPC_Widgets
+task :Widget=> :SPC_Widget
 task :DeleteWidget=> :SPC_Widget_delete
 task :Login=> :SPC_Login
 task :default => :features
