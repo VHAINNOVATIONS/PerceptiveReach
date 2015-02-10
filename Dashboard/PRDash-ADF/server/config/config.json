@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "sa",
+    "password": "agile_123",
+    "host": "54.225.232.25", 
+    "database": "Reach",
+    "dialect": "mssql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
