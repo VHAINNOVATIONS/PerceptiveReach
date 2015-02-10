@@ -6,4 +6,4 @@ Login:  --no-source --format pretty --tags ~@not_ready
 
 Widget:  --no-source --format pretty --tags ~@not_ready
 
-DeleteWidget:  --no-source --format pretty --tags ~@not_ready
+
