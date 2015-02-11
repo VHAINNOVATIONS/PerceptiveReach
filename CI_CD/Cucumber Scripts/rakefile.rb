@@ -31,6 +31,9 @@ Cucumber::Rake::Task.new(:StateViewWidgets) do |t|
 	#t.cucumber_opts = "features -f html --out=report/report.html"
 	t.cucumber_opts = "features --format json --out report.json"
 end
+
 task :default => :features
 task :Widget=> :SPC_Widget
 task :DeleteWidget=> :SPC_Widget_delete
+task :Navigate_Views=> :Navigate_Views
+task :StateViewWidgets=> :StateViewWidgets

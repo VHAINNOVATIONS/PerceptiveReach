@@ -2,15 +2,15 @@ Given(/^I navigate to the http:\/\/localhost:(\d+)\/$/) do |arg1|
    visit ('http://localhost:7003')  # express the regexp above with the code you wish you had
 end
 
-When(/^the webpage loads$/) do
+When(/^the webpage loads/) do
   expect(page).to have_content('National View') # express the regexp above with the code you wish you had
 end
 
-Then(/^I see the National View$/) do
+Then(/^I see the National View/) do
  expect(page).to have_content('National View') # express the regexp above with the code you wish you had
 end
 
-Then(/^I click the National View$/) do
+Then(/^I click the National View/) do
   page.find(:xpath, "/html/body/div[2]/div/ul/li[1]/a/span[1]").click# express the regexp above with the code you wish you had
 end
 
