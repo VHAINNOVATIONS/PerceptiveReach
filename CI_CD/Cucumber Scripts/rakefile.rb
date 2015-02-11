@@ -21,15 +21,15 @@ Cucumber::Rake::Task.new(:SPC_Widget_delete) do |t|
 end
 
 Cucumber::Rake::Task.new(:Navigate_Views) do |t|
-	t.profile = 'Navigate_Views'
+	t.profile = 'default'
 	#t.cucumber_opts = "features -f html --out=report/report.html"
 	t.cucumber_opts = "--tags @NavigateViewsPR-1191 features --format json --out report.json"
 end
 
 Cucumber::Rake::Task.new(:StateViewWidgets) do |t|
-	t.profile = 'StateViewWidgets'
+	t.profile = 'default'
 	#t.cucumber_opts = "features -f html --out=report/report.html"
-	t.cucumber_opts = "--tags @StateViewWidgetsPR-1191 features --format json --out report.json"
+	t.cucumber_opts = "features --format json --out report.json"
 end
 task :default => :features
 task :Widget=> :SPC_Widget
