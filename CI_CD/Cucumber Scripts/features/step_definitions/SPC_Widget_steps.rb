@@ -1,6 +1,6 @@
 Given(/^I am on http:\/\/localhost:(\d+)\/$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
-  visit ('http://localhost:9001/client/index.html')
+  visit ('http://localhost:7003')
 end
 
 When(/^I click on edit of widget (\d+)$/) do |arg1|
@@ -36,6 +36,8 @@ end
 
 When(/^I click on individual "(.*?)"$/) do |arg1|
   page.find(:xpath,"html/body/div[2]/div/ul/li[4]/a/span[1]").click
+  
+  
 end
 
 Then(/^I should see the widget "(.*?)" on page for Individual view$/) do |arg1|
@@ -79,8 +81,8 @@ When(/^I click on save changes$/) do
   page.find(:xpath,"html/body/div[2]/div/div/div/div[1]/button[2]").click
 end
 
-Then(/^i should not see the widget Widget (\d+)$/) do |arg1|
+
+Then(/^i should not see the widget "(.*?)"$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
-  
   expect(page).to have_no_content(arg1)
 end
