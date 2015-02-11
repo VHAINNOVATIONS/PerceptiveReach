@@ -32,15 +32,15 @@ module.exports = function (grunt) {
         options: {
           module: 'ui.dashboard'
         },
-        src: ['client/components/adf/template/*.html'],
-        dest: 'client/components/adf/template/dashboard.js'
+        src: ['<%= yeoman.client %>/components/adf/template/*.html'],
+        dest: '<%= yeoman.client %>/components/adf/template/dashboard.js'
       },
       widget: {
         options: {
           module: 'ui.widgets'
         },
-        src: ['client/components/widget/widgets/{,*/}*.html'],
-        dest: 'client/components/widget/widgets/widget_template.js'
+        src: ['<%= yeoman.client %>/components/widget/widgets/{,*/}*.html'],
+        dest: '<%= yeoman.client %>/components/widget/widgets/widget_template.js'
       }
     },
     express: {
@@ -77,27 +77,27 @@ module.exports = function (grunt) {
     concat: {
       dashboard: {
         src: [
-          'client/components/adf/src/directives/dashboard.js',
-          'client/components/adf/src/directives/*.js',
-          'client/components/adf/src/models/*.js',
-          'client/components/adf/src/controllers/*.js',
-          'client/components/adf/template/dashboard.js'
+          '<%= yeoman.client %>/components/adf/src/directives/dashboard.js',
+          '<%= yeoman.client %>/components/adf/src/directives/*.js',
+          '<%= yeoman.client %>/components/adf/src/models/*.js',
+          '<%= yeoman.client %>/components/adf/src/controllers/*.js',
+          '<%= yeoman.client %>/components/adf/template/dashboard.js'
         ],
-        dest: 'client/dist/angular-ui-dashboard.js'
+        dest: '<%= yeoman.client %>/dist/angular-ui-dashboard.js'
       },
       widget: {
         src: [
-          'client/components/widget/modules.js',
-          'client/components/widget/**/*.js',
-          'client/components/widget/widgets/widget_template.js'
+          '<%= yeoman.client %>/components/widget/modules.js',
+          '<%= yeoman.client %>/components/widget/**/*.js',
+          '<%= yeoman.client %>/components/widget/widgets/widget_template.js'
         ],
-        dest: 'client/dist/perceptive-reach-widgets.js'
+        dest: '<%= yeoman.client %>/dist/perceptive-reach-widgets.js'
       }
     },
     watch: {
       files: [
-        'client/components/adf/src/**/*.*',
-        'client/components/adf/template/*.html'
+        '<%= yeoman.client %>/components/adf/src/**/*.*',
+        '<%= yeoman.client %>/components/adf/template/*.html'
       ],
       tasks: ['ngtemplates', 'concat', 'copy:dist'],
       livereload: {
@@ -109,9 +109,11 @@ module.exports = function (grunt) {
           ]
         },
         files: [
-          'client/{,*/}*.html',
-          'client/{,*/}*.css',
-          'client/{,*/}*.js'
+          '<%= yeoman.client %>/{,*/}*.html',
+          '<%= yeoman.client %>/{,*/}*.css',
+          '<%= yeoman.client %>/{,*/}*.js',
+          'dist/*.css',
+          'dist/*.js'
         ]
       }
     },
@@ -119,16 +121,8 @@ module.exports = function (grunt) {
       server: {
         url: 'http://localhost:<%= express.options.port %>'
       }
-    },
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      all: [
-        'Gruntfile.js',
-        'client/components/adf/src/{,*/}*.js'
-      ]
-    },
+    },    
+
     copy: {
       dist: {
         files: [{
@@ -139,6 +133,44 @@ module.exports = function (grunt) {
         }]
       }
     },
+
+    // Make sure code styles are up to par and there are no obvious mistakes
+    jshint: {
+      options: {
+        jshintrc: '<%= yeoman.client %>/.jshintrc',
+        reporter: require('jshint-stylish')
+      },
+      server: {
+        options: {
+          jshintrc: 'server/.jshintrc'
+        },
+        src: [
+          'server/**/*.js',
+          '!server/**/*.spec.js'
+        ]
+      },
+      serverTest: {
+        options: {
+          jshintrc: 'server/.jshintrc-spec'
+        },
+        src: ['server/**/*.spec.js']
+      },
+      all: [
+        'Gruntfile.js',
+        '<%= yeoman.client %>/components/adf/src/{,*/}*.js',
+        '<%= yeoman.client %>/{app,components}/**/*.js',
+        '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
+        '!<%= yeoman.client %>/{app,components}/**/*.mock.js'
+      ],
+      test: {
+        src: [
+          '<%= yeoman.client %>/{app,components}/**/*.spec.js',
+          '<%= yeoman.client %>/{app,components}/**/*.mock.js'
+        ]
+      }
+    },
+
+    // Empties folder for fresh start
     clean: {
       dist: {
         files: [{
@@ -186,7 +218,9 @@ module.exports = function (grunt) {
       target: {
         src: '<%= yeoman.client %>/index.html',
         ignorePath: '<%= yeoman.client %>/',
-        exclude: [/bootstrap-sass-official/, /bootstrap.js/, '/json3/', '/es5-shim/', /bootstrap.css/, /font-awesome.css/ ]
+        dependencies: true,
+        devDependencies: true,
+        exclude: [/bootstrap-sass-official/, '/json3/', '/es5-shim/', /font-awesome.css/ ]
       }
     },
 
@@ -207,11 +241,13 @@ module.exports = function (grunt) {
         },
         files: {
           '<%= yeoman.client %>/index.html': [
-              ['{.tmp,<%= yeoman.client %>}/{app,components}/**/*.js',
+              ['{.tmp,<%= yeoman.client %>}/{app,dist,components}/**/*.js',
                '!{.tmp,<%= yeoman.client %>}/app/app.js',
                '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.spec.js',
-               '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js']
-          ]
+               '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js',
+               '!{.tmp,<%= yeoman.client %>}/components/adf/**/*.js',
+               '!{.tmp,<%= yeoman.client %>}/components/widget/**/*.js']
+            ]
         }
       },
       
@@ -228,7 +264,9 @@ module.exports = function (grunt) {
         },
         files: {
           '<%= yeoman.client %>/index.html': [
-            '<%= yeoman.client %>/{app,components}/**/*.css'
+            ['<%= yeoman.client %>/{app,dist,components}/**/*.css',
+            '!<%= yeoman.client %>/app/app.css',
+            '!<%= yeoman.client %>/components/adf/**/*.css']
           ]
         }
       }
@@ -267,27 +305,19 @@ module.exports = function (grunt) {
         //'injector:sass', 
         //'concurrent:test',
         'injector',
-        'jshint',
         'ngtemplates',
         //'autoprefixer',
         'karma:unit'
       ]);
     }
 
-    /* else if (target === 'e2e') {
+    else if (target === 'developer') {
       return grunt.task.run([
-        'clean:server',
-        'env:all',
-        'env:test',
-        //'injector:sass', 
-        //'concurrent:test',
-        'injector',
-        'wiredep',
-        //'autoprefixer',
-        'express:dev',
-        //'protractor'
+        'test:server',
+        'test:client',
+        'jshint'
       ]);
-    } */
+    }
 
     else grunt.task.run([
       'test:server',
@@ -333,19 +363,21 @@ module.exports = function (grunt) {
     'karma:auto'
   ]);
 
-  // The original server task
+  // The original http server task
   grunt.registerTask('client', [
     'connect:livereload',
     'watch'
   ]);
 
-  grunt.registerTask('default', [
-    'clean:dist',
+  grunt.registerTask('default', function () {
+    /* 'clean:dist',
     'jshint',
     'ngtemplates',
     'karma:unit',
     'concat',
     'copy:dist',
-    'clean:templates'
-  ]);
+    'clean:templates' */
+    grunt.log.warn('The `default` task has been deprecated. Use `grunt serve` to start a server.');
+    grunt.task.run(['serve']);
+  });
 };
