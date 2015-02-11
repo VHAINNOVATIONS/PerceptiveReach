@@ -2,7 +2,7 @@ Given(/^I navigate to the http:\/\/localhost:(\d+)\/$/) do |arg1|
 visit ('http://localhost:7003') # express the regexp above with the code you wish you had
 end
 
-When(/^the webpage loads$/) do
+When(/^the webpage loads/) do
   expect(page).to have_content('State View')  # express the regexp above with the code you wish you had
 end
 
