@@ -1,0 +1,503 @@
+[
+  {
+    "keyword": "Feature",
+    "name": "Navigate Views of Dashboard PR-1191",
+    "line": 1,
+    "description": "",
+    "id": "navigate-views-of-dashboard-pr-1191",
+    "uri": "features\\Navigate_Views.feature",
+    "elements": [
+      {
+        "keyword": "Scenario",
+        "name": "I open a web browser and see the prototype dashboard and click the navigation tabs",
+        "line": 4,
+        "description": "",
+        "tags": [
+          {
+            "name": "@NavigateViewsPR-1191",
+            "line": 3
+          }
+        ],
+        "id": "navigate-views-of-dashboard-pr-1191;i-open-a-web-browser-and-see-the-prototype-dashboard-and-click-the-navigation-tabs",
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "name": "I navigate to the \"http://localhost:7003\"",
+            "line": 6,
+            "match": {
+              "arguments": [
+                {
+                  "offset": 19,
+                  "val": "http://localhost:7003"
+                }
+              ],
+              "location": "features/step_definitions/NavigateViews_steps.rb:1"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4214445000
+            }
+          },
+          {
+            "keyword": "Then ",
+            "name": "I see the National View",
+            "line": 8,
+            "match": {
+              "location": "features/step_definitions/NavigateViews_steps.rb:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 100021000
+            }
+          },
+          {
+            "keyword": "And ",
+            "name": "I click the National View",
+            "line": 9,
+            "match": {
+              "location": "features/step_definitions/NavigateViews_steps.rb:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 100009000
+            }
+          },
+          {
+            "keyword": "Then ",
+            "name": "I see the State View",
+            "line": 10,
+            "match": {
+              "location": "features/step_definitions/NavigateViews_steps.rb:17"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 102010000
+            }
+          },
+          {
+            "keyword": "And ",
+            "name": "I click the State View",
+            "line": 11,
+            "match": {
+              "location": "features/step_definitions/NavigateViews_steps.rb:21"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 133024000
+            }
+          },
+          {
+            "keyword": "Then ",
+            "name": "I see the Facility View",
+            "line": 12,
+            "match": {
+              "location": "features/step_definitions/NavigateViews_steps.rb:25"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 101001000
+            }
+          },
+          {
+            "keyword": "And ",
+            "name": "I click the Facility View",
+            "line": 13,
+            "match": {
+              "location": "features/step_definitions/NavigateViews_steps.rb:29"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 124013000
+            }
+          },
+          {
+            "keyword": "Then ",
+            "name": "I see the Individual View",
+            "line": 14,
+            "match": {
+              "location": "features/step_definitions/NavigateViews_steps.rb:33"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 101017000
+            }
+          },
+          {
+            "keyword": "And ",
+            "name": "I click the Individual View",
+            "line": 15,
+            "match": {
+              "location": "features/step_definitions/NavigateViews_steps.rb:37"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 163013000
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "keyword": "Feature",
+    "name": "As a SPC I want customize my widget page PR-1165",
+    "line": 1,
+    "description": "",
+    "id": "as-a-spc-i-want-customize-my-widget-page-pr-1165",
+    "uri": "features\\SPC_Widget.feature",
+    "elements": [
+      {
+        "keyword": "Scenario",
+        "name": "I open a web browser and use http://localhost:7003/ to see customize National View Widgets page to edit a widget's title",
+        "line": 4,
+        "description": "",
+        "tags": [
+          {
+            "name": "@EditWidgetPR-1165",
+            "line": 3
+          }
+        ],
+        "id": "as-a-spc-i-want-customize-my-widget-page-pr-1165;i-open-a-web-browser-and-use-http://localhost:7003/-to-see-customize-national-view-widgets-page-to-edit-a-widget's-title",
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "name": "I am on http://localhost:7003/",
+            "line": 6,
+            "match": {
+              "arguments": [
+                {
+                  "offset": 25,
+                  "val": "7003"
+                }
+              ],
+              "location": "features/step_definitions/SPC_Widget_steps.rb:1"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2622284000
+            }
+          },
+          {
+            "keyword": "When ",
+            "name": "I click on individual view of \"Individual View\"",
+            "line": 7,
+            "match": {
+              "arguments": [
+                {
+                  "offset": 31,
+                  "val": "Individual View"
+                }
+              ],
+              "location": "features/step_definitions/SPC_Widget_steps.rb:49"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 134005000
+            }
+          },
+          {
+            "keyword": "And ",
+            "name": "I click on edit of \"Widget 1\"",
+            "line": 8,
+            "match": {
+              "arguments": [
+                {
+                  "offset": 20,
+                  "val": "Widget 1"
+                }
+              ],
+              "location": "features/step_definitions/SPC_Widget_steps.rb:53"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 114016000
+            }
+          },
+          {
+            "keyword": "And ",
+            "name": "I change the title on pop-up to \"Example\"",
+            "line": 9,
+            "match": {
+              "arguments": [
+                {
+                  "offset": 33,
+                  "val": "Example"
+                }
+              ],
+              "location": "features/step_definitions/SPC_Widget_steps.rb:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 262019000
+            }
+          },
+          {
+            "keyword": "And ",
+            "name": "I click on \"OK\" button",
+            "line": 10,
+            "match": {
+              "arguments": [
+                {
+                  "offset": 12,
+                  "val": "OK"
+                }
+              ],
+              "location": "features/step_definitions/SPC_Widget_steps.rb:58"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 116016000
+            }
+          },
+          {
+            "keyword": "And ",
+            "name": "I click on save button",
+            "line": 11,
+            "match": {
+              "location": "features/step_definitions/SPC_Widget_steps.rb:66"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 334039000
+            }
+          },
+          {
+            "keyword": "Then ",
+            "name": "I should see the widget 1 title change to \"Example\"",
+            "line": 12,
+            "match": {
+              "arguments": [
+                {
+                  "offset": 24,
+                  "val": "1"
+                },
+                {
+                  "offset": 43,
+                  "val": "Example"
+                }
+              ],
+              "location": "features/step_definitions/SPC_Widget_steps.rb:21"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 159013000
+            }
+          }
+        ]
+      },
+      {
+        "keyword": "Scenario",
+        "name": "I open a web browser and use http://localhost:7003/ to see customize Widgets page to delete a widget from widgets page",
+        "line": 18,
+        "description": "",
+        "tags": [
+          {
+            "name": "@DeleteWidgetPR-1165",
+            "line": 16
+          }
+        ],
+        "id": "as-a-spc-i-want-customize-my-widget-page-pr-1165;i-open-a-web-browser-and-use-http://localhost:7003/-to-see-customize-widgets-page-to-delete-a-widget-from-widgets-page",
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "name": "I am on http://localhost:7003/",
+            "line": 20,
+            "match": {
+              "arguments": [
+                {
+                  "offset": 25,
+                  "val": "7003"
+                }
+              ],
+              "location": "features/step_definitions/SPC_Widget_steps.rb:1"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2583273000
+            }
+          },
+          {
+            "keyword": "When ",
+            "name": "I click on delete of widget 1",
+            "line": 21,
+            "match": {
+              "arguments": [
+                {
+                  "offset": 28,
+                  "val": "1"
+                }
+              ],
+              "location": "features/step_definitions/SPC_Widget_steps.rb:73"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2100221000
+            }
+          },
+          {
+            "keyword": "And ",
+            "name": "I click on save changes",
+            "line": 22,
+            "match": {
+              "location": "features/step_definitions/SPC_Widget_steps.rb:78"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2088213999
+            }
+          },
+          {
+            "keyword": "Then ",
+            "name": "i should not see the widget \"Widget 1\"",
+            "line": 23,
+            "match": {
+              "arguments": [
+                {
+                  "offset": 29,
+                  "val": "Widget 1"
+                }
+              ],
+              "location": "features/step_definitions/SPC_Widget_steps.rb:85"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 126020000
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "keyword": "Feature",
+    "name": "Navigate and clear the widgets in the State View PR-1191",
+    "line": 1,
+    "description": "",
+    "id": "navigate-and-clear-the-widgets-in-the-state-view-pr-1191",
+    "uri": "features\\StateViewWidgets.feature",
+    "elements": [
+      {
+        "keyword": "Scenario",
+        "name": "I open the State View and navigate the widgets",
+        "line": 5,
+        "description": "",
+        "tags": [
+          {
+            "name": "@StateViewWidgetsPR-1191",
+            "line": 3
+          }
+        ],
+        "id": "navigate-and-clear-the-widgets-in-the-state-view-pr-1191;i-open-the-state-view-and-navigate-the-widgets",
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "name": "I navigate to the \"http://localhost:7003\"",
+            "line": 7,
+            "match": {
+              "arguments": [
+                {
+                  "offset": 19,
+                  "val": "http://localhost:7003"
+                }
+              ],
+              "location": "features/step_definitions/NavigateViews_steps.rb:1"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2716262000
+            }
+          },
+          {
+            "keyword": "Then ",
+            "name": "I expect to see the widgets in the State View",
+            "line": 9,
+            "match": {
+              "location": "features/step_definitions/NavigateStateViewWidgets_steps.rb:2"
+            },
+            "result": {
+              "status": "failed",
+              "error_message": "expected to find text \"Widget 1\" in \"Perceptive Reach Home Description: This view showcases the home dashboard layouts National View State View Facility View Individual View Add a Widget Default Widgets all saved Clear Widget 2 time Time 5:31:39 PM Widget 3 datamodel Value 84 Widget 4 random Value 0.5412017852067947 Widget 5 time Time 5:31:39 PM\" (RSpec::Expectations::ExpectationNotMetError)\n./features/step_definitions/NavigateStateViewWidgets_steps.rb:3:in `/^I expect to see the widgets in the State View$/'\nfeatures\\StateViewWidgets.feature:9:in `Then I expect to see the widgets in the State View'",
+              "duration": 20042148000
+            }
+          },
+          {
+            "keyword": "And ",
+            "name": "I click Default Widget",
+            "line": 10,
+            "match": {
+              "location": "features/step_definitions/NavigateStateViewWidgets_steps.rb:10"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 1003000
+            }
+          },
+          {
+            "keyword": "Then ",
+            "name": "I see the default widgets",
+            "line": 11,
+            "match": {
+              "location": "features/step_definitions/NavigateStateViewWidgets_steps.rb:14"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "And ",
+            "name": "I click Clear",
+            "line": 12,
+            "match": {
+              "location": "features/step_definitions/NavigateStateViewWidgets_steps.rb:22"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 999000
+            }
+          },
+          {
+            "keyword": "Then ",
+            "name": "I expect to see all widgets have been cleared",
+            "line": 13,
+            "match": {
+              "location": "features/step_definitions/NavigateStateViewWidgets_steps.rb:26"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "And ",
+            "name": "I click save changes",
+            "line": 14,
+            "match": {
+              "location": "features/step_definitions/NavigateStateViewWidgets_steps.rb:30"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "Then ",
+            "name": "I expect to see the Widgets in the order I placed them",
+            "line": 15,
+            "match": {
+              "location": "features/step_definitions/NavigateStateViewWidgets_steps.rb:34"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 1000000
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

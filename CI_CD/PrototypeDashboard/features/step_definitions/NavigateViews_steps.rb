@@ -1,10 +1,10 @@
-Given(/^I navigate to the http:\/\/localhost:(\d+)\/$/) do |arg1|
-   visit ('http://localhost:7003')  # express the regexp above with the code you wish you had
+Given(/^I navigate to the "(.*?)"$/) do |arg1|
+   visit ('http://localhost:7003')
+   expect(page).to have_content('National View')
+   expect(page).to have_content('State View')
 end
 
-When(/^the webpage loads/) do
-  expect(page).to have_content('National View') # express the regexp above with the code you wish you had
-end
+
 
 Then(/^I see the National View/) do
  expect(page).to have_content('National View') # express the regexp above with the code you wish you had
