@@ -1,6 +1,6 @@
 Feature: Navigate and clear the widgets in the State View
 
-@StateViewWidgets@PR-1191
+@StateViewWidgetsPR-1191
 
 Scenario: I open the State View and navigate the widgets
 

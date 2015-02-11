@@ -20,9 +20,17 @@ Cucumber::Rake::Task.new(:SPC_Widget_delete) do |t|
 	t.cucumber_opts = "--tags @DeleteWidgetPR-1165 features --format json --out report.json"
 end
 
+Cucumber::Rake::Task.new(:Navigate_Views) do |t|
+	t.profile = 'Navigate_Views'
+	#t.cucumber_opts = "features -f html --out=report/report.html"
+	t.cucumber_opts = "--tags @NavigateViewsPR-1191 features --format json --out report.json"
+end
 
-task :Facility=> :Facility_view_ohio
+Cucumber::Rake::Task.new(:StateViewWidgets) do |t|
+	t.profile = 'StateViewWidgets'
+	#t.cucumber_opts = "features -f html --out=report/report.html"
+	t.cucumber_opts = "--tags @StateViewWidgetsPR-1191 features --format json --out report.json"
+end
+task :default => :features
 task :Widget=> :SPC_Widget
 task :DeleteWidget=> :SPC_Widget_delete
-task :Login=> :SPC_Login
-task :default => :features
