@@ -12,11 +12,15 @@
     <base href="/">
    <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
+      <link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />
+      <link rel="stylesheet" href="bower_components/pines-notify/pnotify.core.css" />
+      <link rel="stylesheet" href="bower_components/pines-notify/pnotify.buttons.css" />
+      <link rel="stylesheet" href="bower_components/pines-notify/pnotify.history.css" />
+      <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
       <!-- endbower -->
     <!-- endbuild -->
     
     <!-- build:css(.) styles/stylesheet.min.css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="app/app.css">
       <!-- injector:css -->
       <link rel="stylesheet" href="dist/angular-ui-dashboard.css">
@@ -64,9 +68,23 @@
       <script src="bower_components/jquery-ui/jquery-ui.js"></script>
       <script src="bower_components/angular-ui-sortable/sortable.js"></script>
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
-      <script src="bower_components/angular-route/angular-route.js"></script>
-      <script src="bower_components/angular-mocks/angular-mocks.js"></script>
       <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+      <script src="bower_components/malhar-angular-table/dist/mlhr-table.js"></script>
+      <script src="bower_components/angular-route/angular-route.js"></script>
+      <script src="bower_components/d3/d3.js"></script>
+      <script src="bower_components/nvd3/nv.d3.js"></script>
+      <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
+      <script src="bower_components/visibilityjs/lib/visibility.core.js"></script>
+      <script src="bower_components/visibilityjs/lib/visibility.timers.js"></script>
+      <script src="bower_components/pines-notify/pnotify.core.js"></script>
+      <script src="bower_components/pines-notify/pnotify.buttons.js"></script>
+      <script src="bower_components/pines-notify/pnotify.callbacks.js"></script>
+      <script src="bower_components/pines-notify/pnotify.confirm.js"></script>
+      <script src="bower_components/pines-notify/pnotify.desktop.js"></script>
+      <script src="bower_components/pines-notify/pnotify.history.js"></script>
+      <script src="bower_components/pines-notify/pnotify.nonblock.js"></script>
+      <script src="bower_components/angular-pines-notify/src/pnotify.js"></script>
+      <script src="bower_components/angular-mocks/angular-mocks.js"></script>
       <script src="bower_components/showdown/src/showdown.js"></script>
       <script src="bower_components/angular-markdown-directive/markdown.js"></script>
       <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
@@ -82,9 +100,8 @@
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
-          <script src="components/widgets/data_model/dataModel.js"></script>
-          <script src="components/widgets/directives/directives.js"></script>
           <script src="dist/angular-ui-dashboard.js"></script>
+          <script src="dist/perceptive-reach-widgets.js"></script>
           <!-- endinjector -->
 <!-- endbuild -->
 

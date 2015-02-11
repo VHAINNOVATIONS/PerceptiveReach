@@ -10,7 +10,7 @@ module.exports = function (grunt) {
 
   // Load grunt tasks automatically, when needed
   require('jit-grunt')(grunt, {
-    express: 'grunt-express-server',    
+    express: 'grunt-express-server',
     injector: 'grunt-asset-injector',
     ngtemplates: 'grunt-angular-templates'
   });
@@ -34,6 +34,13 @@ module.exports = function (grunt) {
         },
         src: ['<%= yeoman.client %>/components/adf/template/*.html'],
         dest: '<%= yeoman.client %>/components/adf/template/dashboard.js'
+      },
+      widget: {
+        options: {
+          module: 'ui.widgets'
+        },
+        src: ['<%= yeoman.client %>/components/widget/widgets/{,*/}*.html'],
+        dest: '<%= yeoman.client %>/components/widget/widgets/widget_template.js'
       }
     },
     express: {
@@ -66,9 +73,9 @@ module.exports = function (grunt) {
         reporter: 'spec'
       },
       src: ['server/**/*.spec.js']
-    },    
+    },
     concat: {
-      dist: {
+      dashboard: {
         src: [
           '<%= yeoman.client %>/components/adf/src/directives/dashboard.js',
           '<%= yeoman.client %>/components/adf/src/directives/*.js',
@@ -77,6 +84,14 @@ module.exports = function (grunt) {
           '<%= yeoman.client %>/components/adf/template/dashboard.js'
         ],
         dest: '<%= yeoman.client %>/dist/angular-ui-dashboard.js'
+      },
+      widget: {
+        src: [
+          '<%= yeoman.client %>/components/widget/modules.js',
+          '<%= yeoman.client %>/components/widget/**/*.js',
+          '<%= yeoman.client %>/components/widget/widgets/widget_template.js'
+        ],
+        dest: '<%= yeoman.client %>/dist/perceptive-reach-widgets.js'
       }
     },
     watch: {
@@ -90,8 +105,7 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>',
           base: [
             '.',
-            'client',
-            'dist'
+            'client'
           ]
         },
         files: [
@@ -108,7 +122,7 @@ module.exports = function (grunt) {
         url: 'http://localhost:<%= express.options.port %>'
       }
     },    
-    
+
     copy: {
       dist: {
         files: [{
@@ -193,8 +207,7 @@ module.exports = function (grunt) {
           open: true,
           base: [
             '.',
-            'client',
-            'dist'
+            'client'
           ]
         }
       }
@@ -232,11 +245,12 @@ module.exports = function (grunt) {
                '!{.tmp,<%= yeoman.client %>}/app/app.js',
                '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.spec.js',
                '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js',
-               '!{.tmp,<%= yeoman.client %>}/components/adf/**/*.js']
+               '!{.tmp,<%= yeoman.client %>}/components/adf/**/*.js',
+               '!{.tmp,<%= yeoman.client %>}/components/widget/**/*.js']
             ]
         }
       },
-
+      
       // Inject component css into index.html
       css: {
         options: {
@@ -256,7 +270,7 @@ module.exports = function (grunt) {
           ]
         }
       }
-    },    
+    }
   });
 
 // Used for delaying livereload until after server has restarted

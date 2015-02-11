@@ -16,17 +16,20 @@
 
 'use strict';
 
-angular.module('app', [
-    'ngRoute',
-    'ui.dashboard',
-    'ui.widgets',
-    'ui.models',
-    'btford.markdown'
-  ])
-  .config(function ($routeProvider, $locationProvider, $httpProvider) {
-    $routeProvider
-      .otherwise('/');
+describe('main test', function () {
+  var $compile, $rootScope;
 
-    $locationProvider.html5Mode(true);
-    //$httpProvider.interceptors.push('authInterceptor');    
+  beforeEach(module('ui.widgets'));
+  beforeEach(inject(function(_$compile_, _$rootScope_) {
+    $compile = _$compile_;
+    $rootScope = _$rootScope_;
+    $rootScope.myData = [];
+  }));
+
+  it('should have topN directive', function() {
+    var element = angular.element('<div wt-top-n data="myData"></div>');
+    $compile(element)($rootScope);
+    $rootScope.$digest();
+    expect(element.hasClass('top-n')).toBe(true);
   });
+});
