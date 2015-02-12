@@ -97,7 +97,9 @@ module.exports = function (grunt) {
     watch: {
       files: [
         '<%= yeoman.client %>/components/adf/src/**/*.*',
-        '<%= yeoman.client %>/components/adf/template/*.html'
+        '<%= yeoman.client %>/components/adf/template/*.html',
+        '<%= yeoman.client %>/components/widget/**/*.*',
+        '<%= yeoman.client %>/components/**/*.*'
       ],
       tasks: ['ngtemplates', 'concat', 'copy:dist'],
       livereload: {
