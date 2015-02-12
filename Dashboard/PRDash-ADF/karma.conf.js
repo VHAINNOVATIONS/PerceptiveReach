@@ -25,15 +25,30 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'client/bower_components/jquery/jquery.js',
+      'client/bower_components/jquery-ui/jquery-ui.js',
       'client/bower_components/lodash/dist/lodash.js',
-      'client/bower_components/angular/angular.js',
+      'client/bower_components/angular/angular.js',      
       'client/bower_components/angular-mocks/angular-mocks.js',
+      'client/bower_components/malhar-angular-table/dist/mlhr-table.js',
+      'client/bower_components/angular-ui-sortable/sortable.js',
+      'client/bower_components/angular-sanitize/angular-sanitize.js',
+      'client/bower_components/angular-mousewheel/mousewheel.js',
+      'client/bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.min.js',
+      'client/bower_components/pines-notify/pnotify.core.js',
+      'client/bower_components/angular-pines-notify/src/pnotify.js',
+      'client/bower_components/visibilityjs/lib/visibility.core.js',      
       'client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'client/components/adf/src/directives/dashboard.js',
       'client/components/adf/src/directives/*.js',
       'client/components/adf/src/models/*.js',
       'client/components/adf/src/controllers/*.js',
       'client/components/adf/template/*.js',
+      'client/components/widget/vendor/{,*/}*.js',
+      'client/components/widget/modules.js',
+      'client/components/widget/service/{,*/}*.js',
+      'client/components/widget/widgets/{,*/}*.js',
+      'client/components/widget/models/{,*/}*.js',
+      'client/components/widget/widgets/widget_template.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'
     ],
@@ -66,6 +81,11 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: false
+    singleRun: true,
+    reporters: ['dots', 'junit'],
+    
+    junitReporter : {
+      outputFile: 'test-results.xml'
+    }
   });
 };
