@@ -1,0 +1,15 @@
+ALTER TABLE VeteranRisk ADD DiagnosedDepressionLast12 bit
+ALTER TABLE VeteranRisk ADD Migraines bit
+ALTER TABLE VeteranRisk ADD Type2Diabetes bit
+ALTER TABLE VeteranRisk ADD PTSD bit
+ALTER TABLE VeteranRisk ADD Married bit
+ALTER TABLE VeteranRisk ADD AlcoholUseDisorder bit
+ALTER TABLE VeteranRisk ADD PrescribedAntiDepressant bit
+ALTER TABLE VeteranRisk ADD SleepDisorder bit
+ALTER TABLE VeteranRisk ADD PrescribedPainMeds bit
+ALTER TABLE VeteranRisk ADD PrescribedPsychiatricMeds bit
+ALTER TABLE VeteranRisk ADD Homelessness bit
+ALTER TABLE VeteranRisk ADD MoreThan5ERVisitsLast12 bit
+ALTER TABLE VeteranRisk ADD Obesity bit
+ALTER TABLE VeteranRisk ADD HIV bit
+ALTER TABLE VeteranRisk ADD VHAPsychiatricInPatientLast12 bit

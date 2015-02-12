@@ -19,6 +19,8 @@
 angular.module('app', [
     'ngRoute',
     'ui.dashboard',
+    'ui.widgets',
+    'ui.models',
     'btford.markdown'
   ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
