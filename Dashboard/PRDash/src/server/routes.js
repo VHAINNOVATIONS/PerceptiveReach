@@ -27,8 +27,11 @@ module.exports = function(app) {
   app.use('/api/user', require('./api/user'));
   
   // All undefined asset or api routes should return a 404
-  app.route('/:url(api|auth|components|app|bower_components|assets)/*')
+  app.route('/:url(api|auth|components|app|bower_components|assets|dist)/*')
    .get(errors[404]);
+
+  console.log('Express config.root %d, appPath %s', url, app.get('appPath'));
+
 
   // All other routes should redirect to the index.html
   app.route('/*')

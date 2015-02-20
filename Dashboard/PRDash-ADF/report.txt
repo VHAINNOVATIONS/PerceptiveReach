@@ -1,0 +1,28 @@
+[4mRunning "clean:dist" (clean) task[24m
+
+[4mRunning "jshint:all" (jshint) task[24m
+[32m>> [39m12 files lint free.
+
+[4mRunning "ngtemplates:dashboard" (ngtemplates) task[24m
+File [36mclient\components\adf\template\dashboard.js[39m created.
+
+[4mRunning "karma:unit" (karma) task[24m
+[32mINFO [karma]: [39mKarma v0.12.31 server started at http://localhost:8080/
+[32mINFO [launcher]: [39mStarting browser PhantomJS
+[33mWARN [watcher]: [39mPattern "c:/projects/PRDash-ADF/test/mock/**/*.js" does not match any file.
+[32mINFO [PhantomJS 1.9.8 (Windows 7)]: [39mConnected on socket p4a_f5JcCOQ-qd0xO9-p with id 41187331
+................................................................................
+................................................................................
+.............................
+PhantomJS 1.9.8 (Windows 7): Executed 189 of 189[32m SUCCESS[39m (2.964 secs / 3.004 secs)
+
+[4mRunning "concat:dist" (concat) task[24m
+File "dist/angular-ui-dashboard.js" created.
+
+[4mRunning "copy:dist" (copy) task[24m
+Copied [36m1[39m files
+
+[4mRunning "clean:templates" (clean) task[24m
+Cleaning client/components/adf/template/dashboard.js...[32mOK[39m
+
+[32mDone, without errors.[39m

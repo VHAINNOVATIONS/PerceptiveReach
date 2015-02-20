@@ -100,13 +100,15 @@
                     </div><!-- /.row -->
                     
                     <!--<div ui-view="">-->
-                    <div class="row" > <!-- andal -->
+                    <div id="mainView" class="row" ng-hide="hideMainView"> <!-- andal -->
                         <div id="map" style="width: 70%; height: 600px; float: left"></div>
                         <div id="nationalTable" style="float:right; width:30%">
                             <table cellpadding="0" cellspacing="0" border="0" class="" id="exampleNational" width="100%" data-data-tables-national></table>
                         </div>                        
                     </div><!-- /.row -->
-                        
+                    <div id="individContainer" ng-hide="!hideMainView"></div>
+                   <!--<div ng-if="showStateView.value"><div id="individView" ng-include="'components/IndividualView/IndividualView.html'"></div> </div>-->
+                     <!--<div id="individView" ng-include="'components/IndividualView/IndividualView.html'"/> -->
                     <!--<div id="container" class = "row" style="height: 500px; min-width: 310px; max-width: 800px; margin: 0 auto"></div>-->
                     
                     <!-- Main row -->
