@@ -29,7 +29,7 @@ exports.index = function(req, res) {
     res.header("content-type: application/json");
     var data = [];
     //var config = require('../../config/db_connection/development.config');
-    var dbc = require('../../config/db_connection/development.js');
+    var dbc = require('../../config/db_connection/production.js');
     var config = dbc.config;
     var id = req.param("id");
     var query = '';

@@ -54,11 +54,8 @@ angular.module('ui.models')
               record.push(String(veteransByVAMC[veteran].RiskLevel));                
               output.push(record);
           }
-          //$scope.VAMC = vamc;
-          //console.log($scope.VAMC);
-          //$scope.dataSetVet = output;
-          //console.log($scope.dataSetVet);
           output.sort(function(a,b) {return (a.RiskLevel > b.RiskLevel) ? 1 : ((b.RiskLevel > a.RiskLevel) ? -1 : 0);} );
+          var columnHeaders = [];
           data = output;
           console.log(data);
           this.updateScope(data);

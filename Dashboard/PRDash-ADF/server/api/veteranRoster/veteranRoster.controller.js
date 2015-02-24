@@ -37,7 +37,7 @@ exports.index = function(req, res) {
             query += "AND vet.Score >= " + score;
         }
         query += " ORDER BY RiskLevel ASC";
-        
+
     } else {
         query += " FROM VeteranRisk "
                 + "WHERE (RiskLevel = 1 or RiskLevel=2) "
