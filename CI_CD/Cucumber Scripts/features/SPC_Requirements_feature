@@ -56,24 +56,24 @@ Given I navigate to the http://localhost:7003/
 When I click on widgets
 Then I should see widget with menu showing veterans positive for certain attributes
 
-Feature: As a SPC User I want to view a graphic in a widget that allows me to see basic information related to a VA facility
+Feature: As a SPC User I want to view a graphic in a widget that allows me to see basic information related to a VA facility PR-882
 Scenario Outline: I open a web browser and see the SPC navigation page
 Given I navigate to the http://localhost:7003/
 When I click on  "State Facility View - OH"
-And I cick on VA facility VAMC ID 9
+And I click on VA facility VAMC ID 9
 Then I should see graphic widget for basic facility information
 
-Feature: As a SPC User  I want to see a widget that allows me to view a "roster" (or list) of Veterans that have been identified by the application as high risk
+Feature: As a SPC User  I want to see a widget that allows me to view a "roster" (or list) of Veterans that have been identified by the application as high risk PR-876
 Scenario Outline: I open a web browser and see the SPC navigation page
 Given I navigate to the http://localhost:7003/
 When I click on widgets
 Then should see widget with roster of Veterans that have been identified by the application as high risk
 
 
-Feature: As a SPC Clinician, I want to view a form that lists all of the data elements I can update in a patient's record
+Feature: As a SPC Clinician, I want to view a form that lists all of the data elements I can update in a patient's record PR-600
 Scenario Outline: I open a web browser and see the SPC navigation page
 Given I navigate to the http://localhost:7003/
-I login as a Clinicain 
+I login as a Clinician 
 Then I should see form that lists all of the data elements I can update in a patient's record
 
 

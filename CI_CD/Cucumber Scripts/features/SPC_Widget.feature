@@ -20,4 +20,4 @@ Feature: As a SPC I want customize my widget page
 	Given I am on http://localhost:7003/
 	When I click on delete of widget 1 
 	And I click on save changes
-	Then i should not see the widget "Widget 1"
+	Then I should not see the widget "Widget 1"
