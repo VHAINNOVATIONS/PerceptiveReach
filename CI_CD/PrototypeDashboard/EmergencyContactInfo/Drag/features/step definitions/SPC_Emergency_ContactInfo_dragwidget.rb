@@ -3,7 +3,7 @@ Given(/^I am on http:\/\/localhost:(\d+)\/$/) do |arg1|
 end
 
 When(/^I click on Individual view$/) do
-   .find(:xpath, "/html/body/div[2]/div/ul/li[4]/a/span[1]").click# express the regexp above with the code you wish you had
+   page.find(:xpath, "/html/body/div[2]/div/ul/li[4]/a/span[1]").click# express the regexp above with the code you wish you had
 end
 
 Then(/^I should see the widget with list of Veterans$/) do
