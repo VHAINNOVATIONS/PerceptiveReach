@@ -338,6 +338,123 @@ angular.module('ui.models')
     return RandomTimeSeriesDataModel;
   });
 /*
+ * Copyright (c) 2015 Perceptive Reach License ALL Rights Reserved.
+ *
+ * Not sure what license goes here yet.
+ */
+
+'use strict';
+
+angular.module('ui.models')  
+    .factory('TotalRisksDataModel', function ($http, WidgetDataModel) {
+    function TotalRisksDataModel() {
+    }
+
+    TotalRisksDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    TotalRisksDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(TotalRisksDataModel.prototype, {
+      init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
+
+        this.updateScope([]);
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/totalRiskByVAMCPieChart?id='+ this.vamc)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      updateVAMC: function (vamc) {
+        this.dataModelOptions = this.dataModelOptions ? this.dataModelOptions : {};
+        this.dataModelOptions.vamc = vamc;
+        this.vamc = vamc;
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return TotalRisksDataModel;
+  })
+.factory('ContactBaseDataModel', function ($http, WidgetDataModel) {
+    function ContactBaseDataModel() {
+    }
+
+    ContactBaseDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    ContactBaseDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(ContactBaseDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        //this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
+
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/vetContactData')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return ContactBaseDataModel;
+  })
+.factory('ContactEmergencyDataModel', function ($http, WidgetDataModel) {
+    function ContactEmergencyDataModel() {
+    }
+
+    ContactEmergencyDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    ContactEmergencyDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(ContactEmergencyDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        //this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
+
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/vetEmergencyData')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return ContactEmergencyDataModel;
+  });
+/*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -1263,6 +1380,35 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
+  .directive('wtContact', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/contact/contact.html',
+      scope: {
+        data: '=data'
+      }     
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
   .directive('wtFluid', function () {
     return {
       restrict: 'A',
@@ -2051,6 +2197,32 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/contact/contact.html",
+    "<div>\r" +
+    "\n" +
+    "    <div>\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data.firstName}} {{data.lastName}}<br>\r" +
+    "\n" +
+    "    \t<b>Last 4 of SSN:</b> {{data.ssn}}<br>\r" +
+    "\n" +
+    "    \t<b>Phone:</b> {{data.phone}}<br>\r" +
+    "\n" +
+    "    \t<b>Alternate Phone:</b> {{data.altPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data.address}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data.city}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data.state}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data.zipCode}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/fluid/fluid.html",
     "<div class=\"demo-widget-fluid\">\r" +
     "\n" +
@@ -2203,7 +2375,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    x=\"xFunction()\"\r" +
     "\n" +
-    "    y=\"yFunction()\">\r" +
+    "    y=\"yFunction()\"\r" +
+    "\n" +
+    "    nodata=\"Loading Data...\">\r" +
     "\n" +
     "</nvd3-pie-chart>\r" +
     "\n" +

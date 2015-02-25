@@ -32,6 +32,32 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/contact/contact.html",
+    "<div>\r" +
+    "\n" +
+    "    <div>\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data.firstName}} {{data.lastName}}<br>\r" +
+    "\n" +
+    "    \t<b>Last 4 of SSN:</b> {{data.ssn}}<br>\r" +
+    "\n" +
+    "    \t<b>Phone:</b> {{data.phone}}<br>\r" +
+    "\n" +
+    "    \t<b>Alternate Phone:</b> {{data.altPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data.address}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data.city}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data.state}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data.zipCode}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/fluid/fluid.html",
     "<div class=\"demo-widget-fluid\">\r" +
     "\n" +
@@ -184,7 +210,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    x=\"xFunction()\"\r" +
     "\n" +
-    "    y=\"yFunction()\">\r" +
+    "    y=\"yFunction()\"\r" +
+    "\n" +
+    "    nodata=\"Loading Data...\">\r" +
     "\n" +
     "</nvd3-pie-chart>\r" +
     "\n" +

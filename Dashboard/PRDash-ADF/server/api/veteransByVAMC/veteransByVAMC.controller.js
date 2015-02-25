@@ -25,8 +25,9 @@ exports.index = function(req, res) {
     var score = req.param("score");
     var query = '';
     query = "SELECT FirstName, MiddleName, LastName, SSN, Phone, DateIdentifiedRisk, "; 
-    query += "ReachID, vamc.VAMC FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE ";
-    if (id) {
+    query += "ReachID, vamc.VAMC, CASE when Score >= 99 then Emergent when Score >= 95 and < 99 then High END, ";
+    query += "2014-11-18T00:00:00.000Z as DateUpdated FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE "; 
+        if (id) {
         console.log("Registering endpoint: /veteransByVAMC/:id is " + id);
         query += "vamc.vamcID = " + id;
         if (score) {
