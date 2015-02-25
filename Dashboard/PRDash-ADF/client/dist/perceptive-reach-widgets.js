@@ -37,6 +37,65 @@ angular.module('ui.models', ['ui.visibility', 'ui.websocket']);
 'use strict';
 
 angular.module('ui.models')
+  .factory('VeteranRosterDataModel', function ($http, WidgetDataModel) {
+    function VeteranRosterDataModel() {
+    }
+
+    VeteranRosterDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    VeteranRosterDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(VeteranRosterDataModel.prototype, {
+      init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
+
+        this.updateScope([]);
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/veteranRoster?id=' + this.vamc)
+        .success(function(veteransByVAMC) {
+          var output = [];
+          var vamc = "";
+          for (var veteran in veteransByVAMC) {
+              vamc = veteransByVAMC[0].VAMC
+              //console.log("branchName: " + veteransByBranch[branchCount].key + " count: " + veteransByBranch[branchCount].y);
+              //output[veteransByBranch[branchCount].key.replace(/\s/g,'')]=veteransByBranch[branchCount].y;
+              var record = [];
+              var fullName = veteransByVAMC[veteran].LastName + ", " +veteransByVAMC[veteran].FirstName + " " + veteransByVAMC[veteran].MiddleName; 
+              record.push(String(fullName));
+              record.push(String(veteransByVAMC[veteran].SSN));
+              record.push(String(veteransByVAMC[veteran].Phone));
+              record.push(String(veteransByVAMC[veteran].DateIdentifiedRisk));
+              record.push(String(veteransByVAMC[veteran].RiskLevel));                
+              output.push(record);
+          }
+          output.sort(function(a,b) {return (a.RiskLevel > b.RiskLevel) ? 1 : ((b.RiskLevel > a.RiskLevel) ? -1 : 0);} );
+          var columnHeaders = [];
+          data = output;
+          console.log(data);
+          this.updateScope(data);
+        }.bind(this));
+      },
+
+      updateVAMC: function (vamc) {
+        this.dataModelOptions = this.dataModelOptions ? this.dataModelOptions : {};
+        this.dataModelOptions.vamc = vamc;
+        this.vamc = vamc;
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+        //$http.cancel(this.intervalPromise);
+      }
+    });
+
+    return VeteranRosterDataModel;
+  })
   .factory('RandomBaseDataModel', function (WidgetDataModel, Visibility) {
     function RandomBaseDataModel() {
     }
@@ -336,6 +395,123 @@ angular.module('ui.models')
     };
 
     return RandomTimeSeriesDataModel;
+  });
+/*
+ * Copyright (c) 2015 Perceptive Reach License ALL Rights Reserved.
+ *
+ * Not sure what license goes here yet.
+ */
+
+'use strict';
+
+angular.module('ui.models')  
+    .factory('TotalRisksDataModel', function ($http, WidgetDataModel) {
+    function TotalRisksDataModel() {
+    }
+
+    TotalRisksDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    TotalRisksDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(TotalRisksDataModel.prototype, {
+      init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
+
+        this.updateScope([]);
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/totalRiskByVAMCPieChart?id='+ this.vamc)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      updateVAMC: function (vamc) {
+        this.dataModelOptions = this.dataModelOptions ? this.dataModelOptions : {};
+        this.dataModelOptions.vamc = vamc;
+        this.vamc = vamc;
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return TotalRisksDataModel;
+  })
+.factory('ContactBaseDataModel', function ($http, WidgetDataModel) {
+    function ContactBaseDataModel() {
+    }
+
+    ContactBaseDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    ContactBaseDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(ContactBaseDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        //this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
+
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/vetContactData')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return ContactBaseDataModel;
+  })
+.factory('ContactEmergencyDataModel', function ($http, WidgetDataModel) {
+    function ContactEmergencyDataModel() {
+    }
+
+    ContactEmergencyDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    ContactEmergencyDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(ContactEmergencyDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        //this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
+
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/vetEmergencyData')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return ContactEmergencyDataModel;
   });
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
@@ -1263,6 +1439,35 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
+  .directive('wtContact', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/contact/contact.html',
+      scope: {
+        data: '=data'
+      }     
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
   .directive('wtFluid', function () {
     return {
       restrict: 'A',
@@ -2017,6 +2222,80 @@ angular.module('ui.widgets')
       }
     };
   });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtVeteranRosterTable', function () {
+    return {
+      restrict: 'EAC',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/veteranRosterTable/veteranRosterTable.html',
+      link: function postLink(scope, element, attr) {
+        var unwatch = scope.$watch('widgetData', function(v){
+          console.log("inside Veteran Roster Table watch");
+          console.log(v);
+          console.log(scope.widgetData);
+            if(v != null && v.length >0){
+                unwatch();
+                var dataTableVet = $(element).children().dataTable( {
+                    "data": scope.widgetData,
+                    "scrollY":        "200px",
+                    "scrollCollapse": true,
+                    "paging":         false,
+                    "columns": [
+                        { "title": "Veteran Name" },
+                        { "title": "Veteran SSN" },
+                        { "title": "Veteran Phone" },
+                        { "title": "Date First identified", "class": "center" },
+                        { "title": "Statistical Risk Level", "class": "center" }
+                        //{ "title": "Last VA Clinician Visit", "class": "center" }
+                    ],
+                    dom: 'T<"clear">lfrtip',
+                    tableTools: {
+                        "sRowSelect": "single"
+                    }
+                });
+                $('#sampleVet tbody').on( 'click', 'tr', function (event) {
+                    //console.log( dataTableVet.row( this ).data() );
+                    if($(this).hasClass('selected')){
+                        $(this).removeClass('selected');
+                        //scope.hideVetDetBtn = true;
+                        //$('#veteranView').hide();
+                        //$('#facilityInfo').show();
+                    }
+                    else{
+                        dataTableVet.$('tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                        //scope.hideVetDetBtn = false;
+                        //$('#veteranView').show();
+                        //$('#facilityInfo').hide();
+                        //scope.getVeteran(event.currentTarget.cells[4].innerText);
+                    }
+                    scope.$apply();
+                    console.log(event.currentTarget.cells[4].innerText);
+                } );
+            }
+            
+        });
+      }
+    };
+  });
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("client/components/widget/widgets/barChart/barChart.html",
@@ -2047,6 +2326,32 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "            tooltips=\"false\">\r" +
     "\n" +
     "    </nvd3-multi-bar-chart>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/contact/contact.html",
+    "<div>\r" +
+    "\n" +
+    "    <div>\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data.firstName}} {{data.lastName}}<br>\r" +
+    "\n" +
+    "    \t<b>Last 4 of SSN:</b> {{data.ssn}}<br>\r" +
+    "\n" +
+    "    \t<b>Phone:</b> {{data.phone}}<br>\r" +
+    "\n" +
+    "    \t<b>Alternate Phone:</b> {{data.altPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data.address}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data.city}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data.state}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data.zipCode}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
     "\n" +
     "</div>"
   );
@@ -2203,7 +2508,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    x=\"xFunction()\"\r" +
     "\n" +
-    "    y=\"yFunction()\">\r" +
+    "    y=\"yFunction()\"\r" +
+    "\n" +
+    "    nodata=\"Loading Data...\">\r" +
     "\n" +
     "</nvd3-pie-chart>\r" +
     "\n" +
@@ -2274,6 +2581,14 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "      rows=\"items\">\r" +
     "\n" +
     "    </mlhr-table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/veteranRosterTable/veteranRosterTable.html",
+    "<div>\r" +
+    "\n" +
+    "    <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"\" id=\"sampleVet\" width=\"100%\"></table>\r" +
     "\n" +
     "</div>"
   );

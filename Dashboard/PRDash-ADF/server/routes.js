@@ -14,6 +14,7 @@ module.exports = function(app) {
   app.use('/api/facilitiesStateCount', require('./api/facilitiesStateCount'));
   app.use('/api/veteranDetails', require('./api/veteranDetails'));
   app.use('/api/veteransByVAMC', require('./api/veteransByVAMC'));
+  app.use('/api/veteranRoster', require('./api/veteranRoster'));
   app.use('/api/scoreSummaryByVAMC', require('./api/scoreSummaryByVAMC'));
   app.use('/api/facilitiesByState', require('./api/facilitiesByState'));
   app.use('/api/totalRiskByVAMC', require('./api/totalRiskByVAMC'));
@@ -22,6 +23,10 @@ module.exports = function(app) {
   app.use('/api/userLogin', require('./api/userLogin'));
   app.use('/api/getRiskFactors', require('./api/getRiskFactors'));
   app.use('/api/getRiskFactorGuidelines', require('./api/getRiskFactorGuidelines'));
+
+  app.use('/api/vetContactData', require('./api/vetContactData'));
+  app.use('/api/vetEmergencyData', require('./api/vetEmergencyData'));
+
 
   app.use('/auth', require('./auth'));
   app.use('/api/user', require('./api/user'));
