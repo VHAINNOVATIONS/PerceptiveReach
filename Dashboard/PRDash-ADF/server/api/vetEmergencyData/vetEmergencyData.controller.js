@@ -10,13 +10,50 @@
 'use strict';
 
 var _ = require('lodash');
+var sql = require('mssql');
 
 // Get list of things
 exports.index = function(req, res) {
+    res.header("content-type: application/json");
+    var data = [];
 
-  res.header("content-type: application/json");
+    var dbc = require('../../config/db_connection/development.js');
+    var config = dbc.config;
 
-  var data ='{"firstName" : "Mother", "lastName" : "Smith", "phone" : "5559876543", "altPhone" : "5558765432", "address" : "234 Pleasant St. Apt.456", "city" : "New York", "state" : "New York", "zipCode" : "11011"}';
+    var id = req.param("id");
+    var query = '';
+    if (id) {
+        console.log("Registering endpoint: /vetEmergencyData/:id is " + id);
+        query = "SELECT * FROM EmergencyContact ";
+        query += "WHERE ReachID =  " + id;
+        console.log("Query: " + query);
+    } else {
+        console.log("ERROR: State Abbreviation is required."); 
+        res.send("ERROR: State Abbreviation is required.");
+    }
 
-  res.send(JSON.parse(data));
+    var connection = new sql.Connection(config, function(err) {
+        // ... error checks
+        if (err || !query) { 
+        data = "Error: Database connection failed!";
+        console.log("Database connection failed! " + err); 
+        return; 
+        }
+
+        // Query
+        var request = new sql.Request(connection); // or: var request = connection.request();
+        request.query(query, function(err, recordset) {
+            // ... error checks
+            if (err) { 
+            console.log("Query failed! " + err); 
+            return; 
+            }
+
+            console.log(recordset.length);
+
+            res.send(recordset);
+        });
+
+    });
+    
 };
