@@ -14,6 +14,7 @@ module.exports = function(app) {
   app.use('/api/facilitiesStateCount', require('./api/facilitiesStateCount'));
   app.use('/api/veteranDetails', require('./api/veteranDetails'));
   app.use('/api/veteransByVAMC', require('./api/veteransByVAMC'));
+  app.use('/api/veteranRoster', require('./api/veteranRoster'));
   app.use('/api/scoreSummaryByVAMC', require('./api/scoreSummaryByVAMC'));
   app.use('/api/facilitiesByState', require('./api/facilitiesByState'));
   app.use('/api/totalRiskByVAMC', require('./api/totalRiskByVAMC'));

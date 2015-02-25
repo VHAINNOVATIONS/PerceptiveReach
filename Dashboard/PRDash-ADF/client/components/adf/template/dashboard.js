@@ -160,7 +160,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                <li ng-repeat=\"widget in widgetDefs\">\r" +
     "\n" +
-    "                  <a href=\"#\" ng-click=\"addWidgetInternal($event, widget);\" class=\"dropdown-toggle\"><span class=\"label label-primary\">{{widget.name}}</span></a>\r" +
+    "                    <button ng-click=\"addWidgetInternal($event, widget);\" type=\"button\" class=\"btn btn-primary ng-scope ng-binding\">{{widget.name}}</button>  \r" +
     "\n" +
     "                </li>\r" +
     "\n" +
