@@ -2,7 +2,7 @@
 
 angular.module('app')
   .factory('widgetDefinitions', function(RandomDataModel,RandomTopNDataModel, RandomTimeSeriesDataModel,
-                                    RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel, RandomMetricsTimeSeriesDataModel) {
+                                    RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel, RandomMetricsTimeSeriesDataModel, VeteranRosterDataModel) {
     return [
       {
         name: 'time',
@@ -27,6 +27,19 @@ angular.module('app')
         },
         style: {
           width: '34%'
+        }
+      },
+      {
+        name: 'datatable',
+        directive: 'wt-veteran-roster-table',
+        dataAttrName: 'data',
+        dataModelType: VeteranRosterDataModel,
+        title: 'Veteran Roster by VAMC',
+        dataModelOptions: {
+          vamc: 1
+        },
+        style: {
+          width: '50%'
         }
       },
       {
@@ -104,6 +117,7 @@ angular.module('app')
     { name: 'time' },
       { name: 'random' },
       { name: 'datamodel' },
+      { name: 'datatable' },
       { name: 'Metrics Chart' },
       { name: 'NVD3 Line Chart' },
       { name: 'Line Chart' },
