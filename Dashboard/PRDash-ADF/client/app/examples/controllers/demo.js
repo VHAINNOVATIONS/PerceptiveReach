@@ -152,7 +152,6 @@ angular.module('app')
     ];
   })
   .value('defaultWidgets', [
-      { name: 'piechart' },
       { name: 'datatable' },
       { name: 'contact' },
       { name: 'emergency' } 
