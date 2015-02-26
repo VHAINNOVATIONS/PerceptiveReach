@@ -69,10 +69,13 @@ angular.module('app')
       },
       {
         name: 'emergency',
-        directive: 'wt-contact',
+        directive: 'wt-emergency-contact',
         dataAttrName: 'data',
         dataModelType: ContactEmergencyDataModel,
         title: 'Emergency Contact Information',
+        dataModelOptions: {
+          reachID: 16
+        },
         style: {
           width: '25%'
         }
@@ -149,13 +152,11 @@ angular.module('app')
     ];
   })
   .value('defaultWidgets', [
-    { name: 'time' },
-      { name: 'random' },
-      { name: 'datamodel' },
       { name: 'piechart' },
-      { name: 'contact' },
-      { name: 'emergency' }, 
       { name: 'datatable' },
+      { name: 'contact' },
+      { name: 'emergency' } 
+      /*,
       { name: 'Metrics Chart' },
       { name: 'NVD3 Line Chart' },
       { name: 'Line Chart' },
@@ -163,7 +164,7 @@ angular.module('app')
       { name: 'topN' },
       { name: 'gauge' },
       { name: 'fluid' } 
-    /*{ name: 'random' },
+    { name: 'random' },
     { name: 'time' },
     { name: 'datamodel' },
     {

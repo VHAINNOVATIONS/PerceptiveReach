@@ -91,7 +91,9 @@ angular.module('ui.models')
     angular.extend(ContactEmergencyDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        //this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
+        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        console.log("ContactEmergencyDataModel reachID: " + this.reachID); 
+
 
         this.updateScope('-');
         this.getData();
@@ -101,9 +103,10 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/vetEmergencyData')
+        $http.get('/api/vetEmergencyData?id='+ this.reachID)
         .success(function(dataset) {
                 data = dataset;
+                console.log("ContactEmergencyDataModel  data:" + data); 
                 this.updateScope(data);
             }.bind(this));
       },

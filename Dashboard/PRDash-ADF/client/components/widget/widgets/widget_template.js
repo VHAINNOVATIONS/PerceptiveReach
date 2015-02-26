@@ -58,6 +58,34 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/emergencyContact/emergencyContact.html",
+    "<div>\r" +
+    "\n" +
+    "    <div>\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data[0].NameOfContact}}<br>\r" +
+    "\n" +
+    "    \t<b>Phone:</b> {{data[0].Phone}}<br>\r" +
+    "\n" +
+    "    \t<b>Alternate Phone:</b> {{data[0].PhoneWork}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].StreetAddress1}}<br>\r" +
+    "\n" +
+    "        <b>Address:</b> {{data[0].StreetAddress2}}<br>\r" +
+    "\n" +
+    "        <b>Address:</b> {{data[0].StreetAddress3}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data[0].City}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data[0].State}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data[0].Zip}}-{{data[0].Zip4}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/fluid/fluid.html",
     "<div class=\"demo-widget-fluid\">\r" +
     "\n" +
@@ -292,7 +320,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"\" id=\"sampleVet\" width=\"100%\"></table>\r" +
     "\n" +
-    "</div>"
+    "</div>y"
   );
 
 }]);

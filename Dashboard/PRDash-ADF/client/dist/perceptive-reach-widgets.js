@@ -489,7 +489,9 @@ angular.module('ui.models')
     angular.extend(ContactEmergencyDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        //this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
+        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        console.log("ContactEmergencyDataModel reachID: " + this.reachID); 
+
 
         this.updateScope('-');
         this.getData();
@@ -499,9 +501,10 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/vetEmergencyData')
+        $http.get('/api/vetEmergencyData?id='+ this.reachID)
         .success(function(dataset) {
                 data = dataset;
+                console.log("ContactEmergencyDataModel  data:" + data); 
                 this.updateScope(data);
             }.bind(this));
       },
@@ -1468,6 +1471,35 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
+  .directive('wtEmergencyContact', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/emergencyContact/emergencyContact.html',
+      scope: {
+        data: '=data'
+      }     
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
   .directive('wtFluid', function () {
     return {
       restrict: 'A',
@@ -2356,6 +2388,34 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/emergencyContact/emergencyContact.html",
+    "<div>\r" +
+    "\n" +
+    "    <div>\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data[0].NameOfContact}}<br>\r" +
+    "\n" +
+    "    \t<b>Phone:</b> {{data[0].Phone}}<br>\r" +
+    "\n" +
+    "    \t<b>Alternate Phone:</b> {{data[0].PhoneWork}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].StreetAddress1}}<br>\r" +
+    "\n" +
+    "        <b>Address:</b> {{data[0].StreetAddress2}}<br>\r" +
+    "\n" +
+    "        <b>Address:</b> {{data[0].StreetAddress3}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data[0].City}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data[0].State}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data[0].Zip}}-{{data[0].Zip4}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/fluid/fluid.html",
     "<div class=\"demo-widget-fluid\">\r" +
     "\n" +
@@ -2590,7 +2650,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"\" id=\"sampleVet\" width=\"100%\"></table>\r" +
     "\n" +
-    "</div>"
+    "</div>y"
   );
 
 }]);
