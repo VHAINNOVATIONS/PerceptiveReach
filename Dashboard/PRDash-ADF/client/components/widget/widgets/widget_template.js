@@ -259,4 +259,12 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/veteranRosterTable/veteranRosterTable.html",
+    "<div>\r" +
+    "\n" +
+    "    <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"\" id=\"sampleVet\" width=\"100%\"></table>\r" +
+    "\n" +
+    "</div>"
+  );
+
 }]);

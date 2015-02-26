@@ -18,7 +18,7 @@ exports.index = function(req, res) {
     res.header("content-type: application/json");
     var data = [];
 
-    var dbc = require('../../config/db_connection/development.js');
+    var dbc = require('../../config/db_connection/production.js');
     var config = dbc.config;
 
     var id = req.param("id");
