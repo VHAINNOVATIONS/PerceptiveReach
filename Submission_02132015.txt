@@ -1,0 +1,274 @@
+* commit 508baac1a60224efaca6fba529192076f6030235 (HEAD, origin/master, origin/HEAD, master)
+| Author: Paul Bradley <paul.bradley@us.pwc.com>
+| Date:   Fri Feb 13 12:52:01 2015 -0500
+| 
+|     Design Documents Update
+|    
+*   commit 11163a0e52a62134212d5acf85bd09ed2bdfb689
+|\  Merge: f537455 e688541
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Thu Feb 12 16:03:33 2015 -0600
+| | 
+| |     Merge branch 'master' of https://github.com/VHAINNOVATIONS/PerceptiveReach
+| |   
+| * commit e6885411fe78ce56cb799533ec3953b79b2de4df
+| | Author: Paul Bradley <paul.bradley@us.pwc.com>
+| | Date:   Fri Jan 30 15:33:55 2015 -0500
+| | 
+| |     Remove all logs
+| |   
+| * commit bd751c4950960142b76606574283595c264b0c05
+|   Author: Paul Bradley <paul.bradley@us.pwc.com>
+|   Date:   Fri Jan 30 15:30:59 2015 -0500
+|   
+|       Sprint 8 submission log
+|  
+* commit f5374554d0503ff74de4e9e1cd3ad6a9f8bb22f4
+| Merge: e376629 21b7125
+| Author: Robert Snelling <robert.snelling@us.pwc.com>
+| Date:   Thu Feb 12 16:02:40 2015 -0600
+| 
+|     Merge branch 'stable'
+|  
+* commit 21b71253f8d181c87a7e48f89cfe6cbcf85347fd (origin/stable)
+| Merge: 0049e28 7bd9046
+| Author: Robert Snelling <robert.snelling@us.pwc.com>
+| Date:   Thu Feb 12 16:01:32 2015 -0600
+| 
+|     Merge branch 'test' into stable
+|    
+*   commit 7bd904609b177d89251c56102bbccd0277706b81 (origin/test)
+|\  Merge: 098b9aa 9550ea2
+| | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | Date:   Thu Feb 12 09:16:20 2015 -0500
+| | 
+| |     Merge commit '9550ea28a62554832f78e0bec703772d00bb1f59' into HEAD
+| |   
+| * commit 9550ea28a62554832f78e0bec703772d00bb1f59 (origin/dev)
+| | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | Date:   Thu Feb 12 00:12:16 2015 -0500
+| | 
+| |     Integrated new widgets
+| |     
+| |     Integrated widgets from Widget library into New Dashboard
+| |   
+* | commit 098b9aac91457cdfeb2656aa6eb17f6d5471faf5
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Wed Feb 11 17:39:50 2015 -0500
+| | 
+| |     updated structure and files to resolve issues with defaults
+| |   
+* | commit 415d4b89a8945e8db314f859b8c44272ef6b5906
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Wed Feb 11 16:46:20 2015 -0500
+| | 
+| |     moved files around
+| |   
+* | commit c636d4efbf72df701904418333327d04815227a4
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Wed Feb 11 16:13:12 2015 -0500
+| | 
+| |     moved and update files
+| |   
+* | commit c18b721badfd7341054aa8c23314cd5a381acce2
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Wed Feb 11 16:10:00 2015 -0500
+| | 
+| |     updated files
+| |   
+* | commit 08e0415c279f172ed3f94b45a5a64a4ff4b7e793
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Wed Feb 11 16:06:22 2015 -0500
+| | 
+| |     edit step
+| |   
+* | commit a7e5c5242d88967ae0b13b7d03a73f319cab0e51
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Wed Feb 11 16:02:47 2015 -0500
+| | 
+| |     update rake and steps
+| |     
+| |     update rake and steps
+| |   
+* | commit 41991c9b802e63aa67a5c450eef989a1add72f85
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Wed Feb 11 15:53:51 2015 -0500
+| | 
+| |     updated rake file and feature file
+| |     
+| |     updated rake file and feature file
+| |   
+* | commit 91847ae53f14aee64757942c957dcc85f5e41471
+| | Author: radinaivanova <radina.ivanova@us.pwc.com>
+| | Date:   Wed Feb 11 15:45:16 2015 -0500
+| | 
+| |     Added new tests to repository
+| |     
+| |     Navigating State View Widgets
+| |     Navigating Views in the dashboard
+| |     
+* |   commit e1c154b33d7e7cbe7c76d1ae828741aff5ee5c90
+|\ \  Merge: 6d4ca93 0579b94
+| |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| |   Date:   Wed Feb 11 15:02:05 2015 -0500
+| |   
+| |       Merge commit '0579b949430b1529672566f0d355c98dc861e213' into HEAD
+| |   
+| * commit 0579b949430b1529672566f0d355c98dc861e213
+| | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | Date:   Wed Feb 11 15:01:14 2015 -0500
+| | 
+| |     Updating package and karma files for CI
+| |   
+| * commit d567cc0c8f6a4b577852a59033f328d1eb77c1f8
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Wed Feb 11 13:33:40 2015 -0600
+| | 
+| |     Node Package Updates for Test & Web.config
+| |     
+| *   commit 9322a8f08657090bbee53945cc24e18c020c4176
+| |\  Merge: ad08c7a 299ab1d
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Wed Feb 11 00:34:16 2015 -0600
+| | | 
+| | |     Merge remote-tracking branch 'origin/dev' into dev
+| | |     
+| | |     Conflicts:
+| | |     	Dashboard/PRDash-ADF/Gruntfile.js
+| | |     	Dashboard/PRDash-ADF/client/index.html
+| | |    
+| * | commit ad08c7ab67eb5888298084f246bd40232ed04cab
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Tue Feb 10 19:06:36 2015 -0600
+| | | 
+| | |     Gruntfile & Associated Files Updated
+| | |    
+* | | commit 6d4ca937884d036cde4d484835e8d826242667be
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Wed Feb 11 10:30:41 2015 -0500
+| | | 
+| | |     Updates steps
+| | |    
+* | | commit 2cb32207584e8bec2678fa56cc21338c84981043
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Wed Feb 11 10:09:51 2015 -0500
+| | | 
+| | |     Updated env.rb
+| | |    
+* | | commit a7e42c47539ca8670b530029cbf3c762fe1df0d1
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Feb 10 15:47:06 2015 -0500
+| | | 
+| | |     Rename SPC_Widgets to SPC_Widget.feature
+| | |    
+* | | commit b3392934effa36097304890e57d5c275d5f5e7ba
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Feb 10 15:37:43 2015 -0500
+| | | 
+| | |     test
+| | |     
+| | |     Updated feature files
+| | |    
+* | | commit 3ff316ee8d2a2a0cdeb6ac44f9b5a2727268f358
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Tue Feb 10 15:27:33 2015 -0500
+| | | 
+| | |     removed wip files
+| | |    
+* | | commit 632f829489c8c1c5d96655720943ed5cb7ff00f4
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Feb 10 15:22:34 2015 -0500
+| | | 
+| | |     Update SPC_Widgets
+| | |    
+* | | commit 207d452b89d6e9a4196ab0919335041860a7d5bb
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Feb 10 11:49:41 2015 -0500
+| | | 
+| | |     Update rakefile.rb
+| | |    
+* | | commit e3c617a63e1840fa30e61a459dfab5a02198cc57
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Feb 10 11:44:24 2015 -0500
+| | | 
+| | |     Update rakefile.rb
+| | |    
+* | | commit 36673afa3617b61e0687b9177f2e08ededd3e02d
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Feb 10 11:39:42 2015 -0500
+| | | 
+| | |     Update SPC_Widgets
+| | |      
+* | |   commit 12db08f61c4acad555025fd6176a2760702d5ec9
+|\ \ \  Merge: 45ca2aa 299ab1d
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| |/|   Date:   Tue Feb 10 11:29:29 2015 -0500
+| | |   
+| | |       Merge commit '299ab1d16e32065303f0005c4cb805d4fd51028e' into HEAD
+| | |    
+| * | commit 299ab1d16e32065303f0005c4cb805d4fd51028e
+| |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| |   Date:   Tue Feb 10 10:43:36 2015 -0500
+| |   
+| |       New Dashboard Framework and Server Integration
+| |   
+| * commit a5b9122cae79b427d8bace4851a61831910dd4a5
+|   Author: Robert Snelling <robert.snelling@us.pwc.com>
+|   Date:   Tue Feb 10 00:23:24 2015 -0600
+|   
+|       Server Integrations
+|       
+|       Express Server integrations completed and Gruntfile updates, including
+|       injector, wiredep, mocha.
+|  
+* commit 45ca2aaa13a26e3e5653cfe3d10896d8c134eba9
+| Author: cgattu <chandrakala.gattu@us.pwc.com>
+| Date:   Tue Feb 10 11:27:02 2015 -0500
+| 
+|     Update cucumber.yml
+|  
+* commit 75976546e73eb0fef739dae61bacfb3e35a84a62
+| Author: cgattu <chandrakala.gattu@us.pwc.com>
+| Date:   Tue Feb 10 10:42:02 2015 -0500
+| 
+|     Update rakefile.rb
+|  
+* commit a03e6b5543c651b385f8738a2ab2465b5e758b1d
+| Author: cgattu <chandrakala.gattu@us.pwc.com>
+| Date:   Tue Feb 10 10:40:38 2015 -0500
+| 
+|     Update cucumber.yml
+|  
+* commit 9cbeaa2489a38ed5d300a2f53126f8d2c0fc1c23
+| Author: cgattu <chandrakala.gattu@us.pwc.com>
+| Date:   Tue Feb 10 10:39:06 2015 -0500
+| 
+|     Update rakefile.rb
+|  
+* commit 0731c388a974e227b469d3cb87674878873d1472
+| Author: cgattu <chandrakala.gattu@us.pwc.com>
+| Date:   Tue Feb 10 10:37:21 2015 -0500
+| 
+|     Update and rename Facility_View_steps.rb to SPC_Widget_steps.rb
+|  
+* commit e5b538280ee974b165cd4c0b7c0d758ed2ed5f0e
+| Author: cgattu <chandrakala.gattu@us.pwc.com>
+| Date:   Sun Feb 8 09:53:32 2015 -0500
+| 
+|     Create SPC_Widgets
+|  
+* commit 6575e87cd2c2764f33356fa0306b3b22808ca419
+| Author: aqspwc <andrew.q.smith@us.pwc.com>
+| Date:   Fri Feb 6 14:04:42 2015 -0500
+| 
+|     modify rake file and added yml for prototype scripts to run in jenkins
+|     
+|     modify rake file and added yml for prototype scripts to run in jenkins
+|  
+* commit 749b10566caf40493fb28b355b3f1e4bf6ff1f54
+  Author: aqspwc <andrew.q.smith@us.pwc.com>
+  Date:   Fri Feb 6 13:34:10 2015 -0500
+  
+      prototype scripts
+      
+      wip prototype scripts
