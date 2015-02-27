@@ -10,7 +10,6 @@
 'use strict';
 
 var _ = require('lodash');
-
 var sql = require('mssql');
 
 // Get list of things
@@ -18,32 +17,26 @@ exports.index = function(req, res) {
     res.header("content-type: application/json");
     var data = [];
 
-    var dbc = require('../../config/db_connection/production.js');
+    var dbc = require('../../config/db_connection/development.js');
     var config = dbc.config;
 
     var id = req.param("id");
-    var score = req.param("score");
     var query = '';
-    query = "SELECT FirstName, MiddleName, LastName, SSN, Phone, DateIdentifiedRisk, "; 
-    query += "ReachID, vamc.VAMC, CASE when Score >= 99 then Emergent when Score >= 95 and < 99 then High END, ";
-    query += "2014-11-18T00:00:00.000Z as DateUpdated FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE "; 
-        if (id) {
-        console.log("Registering endpoint: /veteransByVAMC/:id is " + id);
-        query += "vamc.vamcID = " + id;
-        if (score) {
-            console.log("Registering endpoint: /veteransByVAMC/:score is " + score);
-            query += "AND vet.Score >= " + score;
-        }
+    if (id) {
+        console.log("Registering endpoint: /vetEmergencyData/:id is " + id);
+        query = "SELECT * FROM EmergencyContact ";
+        query += "WHERE ReachID =  " + id;
+        console.log("Query: " + query);
     } else {
-        res.send("ERROR: VAMC ID is required.");
-        console.log("ERROR: VAMC ID is required."); 
+        console.log("ERROR: State Abbreviation is required."); 
+        res.send("ERROR: State Abbreviation is required.");
     }
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
-        if (err || !id) { 
+        if (err || !query) { 
         data = "Error: Database connection failed!";
-        console.log("Database connection failed!"); 
+        console.log("Database connection failed! " + err); 
         return; 
         }
 
@@ -52,7 +45,7 @@ exports.index = function(req, res) {
         request.query(query, function(err, recordset) {
             // ... error checks
             if (err) { 
-            console.log("Query failed!"); 
+            console.log("Query failed! " + err); 
             return; 
             }
 
