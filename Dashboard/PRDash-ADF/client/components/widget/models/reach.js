@@ -92,8 +92,6 @@ angular.module('ui.models')
        init: function () {
         var dataModelOptions = this.dataModelOptions;
         this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
-        console.log("ContactEmergencyDataModel reachID: " + this.reachID); 
-
 
         this.updateScope('-');
         this.getData();
@@ -106,7 +104,6 @@ angular.module('ui.models')
         $http.get('/api/vetEmergencyData?id='+ this.reachID)
         .success(function(dataset) {
                 data = dataset;
-                console.log("ContactEmergencyDataModel  data:" + data); 
                 this.updateScope(data);
             }.bind(this));
       },

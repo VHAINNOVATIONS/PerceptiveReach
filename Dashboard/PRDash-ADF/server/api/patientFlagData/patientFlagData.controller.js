@@ -15,7 +15,7 @@ var _ = require('lodash');
 exports.index = function(req, res) {
   res.header("content-type: application/json");
 
-  var data ='[{"firstName" : "Jane", "lastName" : "Smith", "ssn" : "6273", "phone" : "5559876543", "altPhone" : "5558765432", "address" : "234 Pleasant St. Apt.456", "city" : "New York", "state" : "New York", "zipCode" : "11011"}]';
+  var data = '[{"ReachID": 1, "Catatory": 1, "Active": 1, "FlagID": 1, "FlagDesc": "Suicide High Risk"}, {"ReachID": 1, "Catatory": 1, "Active": 0, "FlagID": 2, "FlagDesc": "Behavioral"}, {"ReachID": 1, "Catatory": 2, "Active": 1, "FlagID": 44, "FlagDesc": "Flag 44"}, {"ReachID": 1, "Catatory": 2, "Active": 0, "FlagID": 33, "FlagDesc": "Flag 33"}, {"ReachID": 1, "Catatory": 2, "Active": 1, "FlagID": 22, "FlagDesc": "Flag 22"}]';
 
   res.send(JSON.parse(data));
 };
