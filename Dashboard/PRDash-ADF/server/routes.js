@@ -25,6 +25,12 @@ module.exports = function(app) {
   app.use('/api/getRiskFactorGuidelines', require('./api/getRiskFactorGuidelines'));
   app.use('/api/getListOfVAMC', require('./api/getListOfVAMC'));
 
+  app.use('/api/vetContactData', require('./api/vetContactData'));
+  app.use('/api/vetEmergencyData', require('./api/vetEmergencyData'));
+  app.use('/api/patientFlagData', require('./api/patientFlagData'));
+  app.use('/api/medicationData', require('./api/medicationData'));
+
+
   app.use('/auth', require('./auth'));
   app.use('/api/user', require('./api/user'));
   

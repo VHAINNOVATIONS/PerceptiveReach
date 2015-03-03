@@ -2,7 +2,9 @@
 
 angular.module('app')
   .factory('widgetDefinitions', function(RandomDataModel,RandomTopNDataModel, RandomTimeSeriesDataModel,
-                                    RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel, RandomMetricsTimeSeriesDataModel, VeteranRosterDataModel) {
+                                    RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel, 
+                                    RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
+                                    ContactBaseDataModel, ContactEmergencyDataModel, VeteranRosterDataModel) {
     return [
       {
         name: 'time',
@@ -30,6 +32,19 @@ angular.module('app')
         }
       },
       {
+        name: 'piechart',
+        directive: 'wt-pie-chart',
+        dataAttrName: 'data',
+        dataModelType: TotalRisksDataModel,
+        title: 'Total Risks by VAMC',
+        dataModelOptions: {
+          vamc: 1
+        },
+        style: {
+          width: '25%'
+        }
+      },
+      {
         name: 'datatable',
         directive: 'wt-veteran-roster-table',
         settingsModalOptions: {
@@ -51,6 +66,29 @@ angular.module('app')
         },
         style: {
           width: '50%'
+        }
+      },
+      {
+        name: 'contact',
+        directive: 'wt-contact',
+        dataAttrName: 'data',
+        dataModelType: ContactBaseDataModel,
+        title: 'Veteran Contact',
+        style: {
+          width: '25%'
+        }
+      },
+      {
+        name: 'emergency',
+        directive: 'wt-emergency-contact',
+        dataAttrName: 'data',
+        dataModelType: ContactEmergencyDataModel,
+        title: 'Emergency Contact Information',
+        dataModelOptions: {
+          reachID: 16
+        },
+        style: {
+          width: '25%'
         }
       },
       {
@@ -125,18 +163,18 @@ angular.module('app')
     ];
   })
   .value('defaultWidgets', [
-    { name: 'time' },
-      { name: 'random' },
-      { name: 'datamodel' },
       { name: 'datatable' },
+      { name: 'contact' },
+      { name: 'emergency' } 
+      /*,
       { name: 'Metrics Chart' },
       { name: 'NVD3 Line Chart' },
       { name: 'Line Chart' },
       { name: 'Bar Chart' },
       { name: 'topN' },
       { name: 'gauge' },
-      { name: 'fluid' }
-    /*{ name: 'random' },
+      { name: 'fluid' } 
+    { name: 'random' },
     { name: 'time' },
     { name: 'datamodel' },
     {
