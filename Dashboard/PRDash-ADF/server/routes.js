@@ -23,6 +23,7 @@ module.exports = function(app) {
   app.use('/api/userLogin', require('./api/userLogin'));
   app.use('/api/getRiskFactors', require('./api/getRiskFactors'));
   app.use('/api/getRiskFactorGuidelines', require('./api/getRiskFactorGuidelines'));
+  app.use('/api/getListOfVAMC', require('./api/getListOfVAMC'));
 
   app.use('/auth', require('./auth'));
   app.use('/api/user', require('./api/user'));
