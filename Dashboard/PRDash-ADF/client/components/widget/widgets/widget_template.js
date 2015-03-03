@@ -37,21 +37,21 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <div>\r" +
     "\n" +
-    "    \t<b>Name:</b> {{data.firstName}} {{data.lastName}}<br>\r" +
+    "    \t<b>Name:</b> {{data[0].firstName}} {{data[0].lastName}}<br>\r" +
     "\n" +
-    "    \t<b>Last 4 of SSN:</b> {{data.ssn}}<br>\r" +
+    "    \t<b>Last 4 of SSN:</b> {{data[0].ssn}}<br>\r" +
     "\n" +
-    "    \t<b>Phone:</b> {{data.phone}}<br>\r" +
+    "    \t<b>Phone:</b> {{data[0].phone}}<br>\r" +
     "\n" +
-    "    \t<b>Alternate Phone:</b> {{data.altPhone}}<br>\r" +
+    "    \t<b>Alternate Phone:</b> {{data[0].altPhone}}<br>\r" +
     "\n" +
-    "    \t<b>Address:</b> {{data.address}}<br>\r" +
+    "    \t<b>Address:</b> {{data[0].address}}<br>\r" +
     "\n" +
-    "    \t<b>City:</b> {{data.city}}<br>\r" +
+    "    \t<b>City:</b> {{data[0].city}}<br>\r" +
     "\n" +
-    "    \t<b>State:</b> {{data.state}}<br>\r" +
+    "    \t<b>State:</b> {{data[0].state}}<br>\r" +
     "\n" +
-    "    \t<b>Zip Code:</b> {{data.zipCode}}<br>\r" +
+    "    \t<b>Zip Code:</b> {{data[0].zipCode}}<br>\r" +
     "\n" +
     "    </div>\r" +
     "\n" +
