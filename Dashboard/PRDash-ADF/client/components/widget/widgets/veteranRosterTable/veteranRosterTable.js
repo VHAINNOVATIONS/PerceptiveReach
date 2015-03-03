@@ -24,13 +24,14 @@ angular.module('ui.widgets')
       templateUrl: 'client/components/widget/widgets/veteranRosterTable/veteranRosterTable.html',
       link: function postLink(scope, element, attr) {
         var unwatch = scope.$watch('widgetData', function(v){
-          console.log("inside Veteran Roster Table watch");
+          console.log("inside veteran roster directive before check");
           console.log(v);
-          console.log(scope.widgetData);
             if(v != null && v.length >0){
                 unwatch();
+                console.log("inside veteran roster directive after check is positive");
+                console.log(scope.widgetData);
                 var dataTableVet = $(element).children().dataTable( {
-                    "data": scope.widgetData,
+                    "data": scope.widgetData[1],
                     "scrollY":        "200px",
                     "scrollCollapse": true,
                     "paging":         false,

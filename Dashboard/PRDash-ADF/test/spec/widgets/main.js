@@ -32,4 +32,11 @@ describe('main test', function () {
     $rootScope.$digest();
     expect(element.hasClass('top-n')).toBe(true);
   });
+
+  it('should have veteran roster table directive', function() {
+    var element = angular.element('<div wt-veteran-roster-table data="myData"></div>');
+    $compile(element)($rootScope);
+    $rootScope.$digest();
+    expect(element.children().hasClass('dataTables')).toBe(true);
+  });
 });

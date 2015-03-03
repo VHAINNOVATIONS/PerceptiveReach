@@ -43,8 +43,6 @@ angular.module('ui.models')
           var vamc = "";
           for (var veteran in veteransByVAMC) {
               vamc = veteransByVAMC[0].VAMC
-              //console.log("branchName: " + veteransByBranch[branchCount].key + " count: " + veteransByBranch[branchCount].y);
-              //output[veteransByBranch[branchCount].key.replace(/\s/g,'')]=veteransByBranch[branchCount].y;
               var record = [];
               var fullName = veteransByVAMC[veteran].LastName + ", " +veteransByVAMC[veteran].FirstName + " " + veteransByVAMC[veteran].MiddleName; 
               record.push(String(fullName));
@@ -56,7 +54,7 @@ angular.module('ui.models')
           }
           output.sort(function(a,b) {return (a.RiskLevel > b.RiskLevel) ? 1 : ((b.RiskLevel > a.RiskLevel) ? -1 : 0);} );
           var columnHeaders = [];
-          data = output;
+          data = [this.vamc, output];//{vamc : this.vamc, roster : output};
           console.log(data);
           this.updateScope(data);
         }.bind(this));

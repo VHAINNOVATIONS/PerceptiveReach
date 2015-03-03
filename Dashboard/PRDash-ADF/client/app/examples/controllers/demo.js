@@ -47,6 +47,17 @@ angular.module('app')
       {
         name: 'datatable',
         directive: 'wt-veteran-roster-table',
+        settingsModalOptions: {
+        templateUrl: 'client/components/widget/widgets/veteranRosterTable/veteranRosterTableWidgetSettingsTemplate.html',
+        controller: 'VeteranRosterTableWidgetSettingsCtrl'
+        },
+        /*onSettingsClose: function(resultFromModal, widgetModel, dashboardScope) {
+          // do something to update widgetModel, like the default implementation:
+          jQuery.extend(true, widget, result);
+        },
+        onSettingsDismiss: function(reasonForDismissal, dashboardScope) {
+          // probably do nothing here, since the user pressed cancel
+        },*/
         dataAttrName: 'data',
         dataModelType: VeteranRosterDataModel,
         title: 'Veteran Roster by VAMC',

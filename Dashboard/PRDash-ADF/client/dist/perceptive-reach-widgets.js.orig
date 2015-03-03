@@ -2589,32 +2589,19 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/pieChart/pieChart.html",
-    "<div>\r" +
-    "\n" +
-    "<nvd3-pie-chart\r" +
-    "\n" +
-    "    data=\"data\"\r" +
-    "\n" +
-    "    showLegend=\"true\"\r" +
-    "\n" +
-    "    width=\"300\" height=\"300\"\r" +
-    "\n" +
-    "    showlabels=\"true\"\r" +
-    "\n" +
-    "    labelType=\"percent\"\r" +
-    "\n" +
-    "    interactive=\"true\"\r" +
-    "\n" +
-    "    x=\"xFunction()\"\r" +
-    "\n" +
-    "    y=\"yFunction()\"\r" +
-    "\n" +
-    "    nodata=\"Loading Data...\">\r" +
-    "\n" +
-    "</nvd3-pie-chart>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n"
+    "<div>\n" +
+    "<nvd3-pie-chart\n" +
+    "    data=\"data\"\n" +
+    "    showLegend=\"true\"\n" +
+    "    width=\"300\" height=\"300\"\n" +
+    "    showlabels=\"true\"\n" +
+    "    labelType=\"percent\"\n" +
+    "    interactive=\"true\"\n" +
+    "    x=\"xFunction()\"\n" +
+    "    y=\"yFunction()\"\n" +
+    "    nodata=\"Loading Data...\">\n" +
+    "</nvd3-pie-chart>\n" +
+    "</div>"
   );
 
   $templateCache.put("client/components/widget/widgets/random/random.html",
