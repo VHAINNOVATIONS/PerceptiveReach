@@ -511,6 +511,72 @@ angular.module('ui.models')
     });
 
     return ContactEmergencyDataModel;
+  }).factory('PatientFlagDataModel', function ($http, WidgetDataModel) {
+    function PatientFlagDataModel() {
+    }
+
+    PatientFlagDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    PatientFlagDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(PatientFlagDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/patientFlagData')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return PatientFlagDataModel;
+  }).factory('MedicationDataModel', function ($http, WidgetDataModel) {
+    function MedicationDataModel() {
+    }
+
+    MedicationDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    MedicationDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(MedicationDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/medicationData')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return MedicationDataModel;
   });
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
