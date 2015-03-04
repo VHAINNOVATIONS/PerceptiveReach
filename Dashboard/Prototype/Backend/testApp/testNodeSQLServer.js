@@ -26,10 +26,12 @@ app.get('/', function(req, res){
     res.send('hello ROOT world');
 });
  
-console.log("Registering endpoint: /score");
-app.get('/score', function(req, res){
+console.log("Registering endpoint: /getListOfVAMC");
+app.get('/getListOfVAMC', function(req, res){
     res.header("content-type: application/json");
     var data = [];
+    var query = '';
+    query = "SELECT VAMCID, VAMC FROM Ref_VAMC";
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
@@ -41,23 +43,16 @@ app.get('/score', function(req, res){
 
         // Query
         var request = new sql.Request(connection); // or: var request = connection.request();
-        request.query('SELECT Score, count(*) as Total FROM AnalyticsOutput group by score', function(err, recordset) {
+        request.query(query, function(err, recordset) {
             // ... error checks
             if (err) { 
-            data = "Error: Database connection failed!";
-            console.log("Query failed!"); 
+            console.log("Query failed! -- " + query); 
             return; 
             }
 
             console.log(recordset.length);
-            for (var i = 0; i < recordset.length; i++) {
-                data.push({
-                    key: recordset[i].Score, 
-                    y: recordset[i].Total
-                });
-            }   
 
-            res.send(data);
+            res.send(recordset);
         });
 
     });
