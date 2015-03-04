@@ -49,7 +49,8 @@ angular.module('ui.models')
               record.push(String(veteransByVAMC[veteran].SSN));
               record.push(String(veteransByVAMC[veteran].Phone));
               record.push(String(veteransByVAMC[veteran].DateIdentifiedRisk));
-              record.push(String(veteransByVAMC[veteran].RiskLevel));                
+              record.push(String(veteransByVAMC[veteran].RiskLevel)); 
+              record.push(String(veteransByVAMC[veteran].OutreachStatus));                
               output.push(record);
           }
           output.sort(function(a,b) {return (a.RiskLevel > b.RiskLevel) ? 1 : ((b.RiskLevel > a.RiskLevel) ? -1 : 0);} );

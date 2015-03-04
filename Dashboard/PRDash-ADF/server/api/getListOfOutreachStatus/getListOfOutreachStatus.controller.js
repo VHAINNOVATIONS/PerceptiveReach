@@ -21,30 +21,12 @@ exports.index = function(req, res) {
     var dbc = require('../../config/db_connection/development.js');
     var config = dbc.config;
 
-    var id = req.param("id");
-    var score = req.param("score");
+    //var id = req.param("id");
+    //var score = req.param("score");
     var query = '';
-    query = "SELECT ReachID, FirstName, MiddleName, LastName, SSN, Phone, DateIdentifiedRisk, CASE WHEN RiskLevel = 1 THEN 'Emergent' WHEN RiskLevel = 2 THEN 'High' END 'RiskLevel', OutreachStatus"; 
+    query = "SELECT * FROM Ref_OutreachStatus"; 
     //query += "ReachID, vamc.VAMC FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE ";
-    if (id) {
-        console.log("Registering endpoint: /veteranRoster/:id is " + id);
-        //query += "vamc.vamcID = " + id;
-        query += ", vamc.VAMC " 
-                + "FROM  VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID "
-                + "WHERE (RiskLevel = 1 or RiskLevel=2) and vamc.vamcID = " + id;
-        if (score) {
-            console.log("Registering endpoint: /veteranRoster/:score is " + score);
-            query += "AND vet.Score >= " + score;
-        }
-        query += " ORDER BY RiskLevel ASC";
-
-    } else {
-        query += " FROM VeteranRisk "
-                + "WHERE (RiskLevel = 1 or RiskLevel=2) "
-                + "ORDER BY RiskLevel ASC";
-        //res.send("ERROR: VAMC ID is required.");
-        //console.log("ERROR: VAMC ID is required."); 
-    }
+    console.log("Registering endpoint: /getListOfOutreachStatus");
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
