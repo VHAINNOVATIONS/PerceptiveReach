@@ -40,7 +40,8 @@ angular.module('ui.widgets')
                         { "title": "Veteran SSN" },
                         { "title": "Veteran Phone" },
                         { "title": "Date First identified", "class": "center" },
-                        { "title": "Statistical Risk Level", "class": "center" }
+                        { "title": "Statistical Risk Level", "class": "center" },
+                        { "title": "Outreach Status", "class": "center" }
                         //{ "title": "Last VA Clinician Visit", "class": "center" }
                     ],
                     dom: 'T<"clear">lfrtip',

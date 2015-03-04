@@ -69,7 +69,8 @@ angular.module('ui.models')
               record.push(String(veteransByVAMC[veteran].SSN));
               record.push(String(veteransByVAMC[veteran].Phone));
               record.push(String(veteransByVAMC[veteran].DateIdentifiedRisk));
-              record.push(String(veteransByVAMC[veteran].RiskLevel));                
+              record.push(String(veteransByVAMC[veteran].RiskLevel)); 
+              record.push(String(veteransByVAMC[veteran].OutreachStatus));                
               output.push(record);
           }
           output.sort(function(a,b) {return (a.RiskLevel > b.RiskLevel) ? 1 : ((b.RiskLevel > a.RiskLevel) ? -1 : 0);} );
@@ -2357,7 +2358,8 @@ angular.module('ui.widgets')
                         { "title": "Veteran SSN" },
                         { "title": "Veteran Phone" },
                         { "title": "Date First identified", "class": "center" },
-                        { "title": "Statistical Risk Level", "class": "center" }
+                        { "title": "Statistical Risk Level", "class": "center" },
+                        { "title": "Outreach Status", "class": "center" }
                         //{ "title": "Last VA Clinician Visit", "class": "center" }
                     ],
                     dom: 'T<"clear">lfrtip',
