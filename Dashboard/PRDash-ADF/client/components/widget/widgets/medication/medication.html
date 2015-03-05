@@ -1,0 +1,17 @@
+<div>
+    <input type="radio" ng-model="scope.show" value="0">  Inactive 
+    <input type="radio" ng-model="scope.show" ng-value="1"> Active 
+    <input type="radio" ng-model="scope.show" value=""> All 
+    <button ng-click="tableParams.sorting({})" class="btn btn-default pull-right">Clear sorting</button>
+
+    <table ng-table="tableParams" class="table">
+        <tr ng-repeat="meds in $data | filter : show " ng-class="{ 'emphasis': meds.Active === 1 }">
+            <td data-title="'Medication'"sortable="Name">
+                {{meds.Name}}
+            </td>
+            <td data-title="'Dosage'">
+                {{meds.Dosage}}
+            </td>
+        </tr>
+    </table>
+</div>
