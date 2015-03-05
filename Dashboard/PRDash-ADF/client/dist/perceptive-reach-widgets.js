@@ -1918,7 +1918,7 @@ angular.module('ui.widgets')
             $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
         }
     });
-}););
+});
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
