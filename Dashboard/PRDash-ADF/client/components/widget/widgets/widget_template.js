@@ -129,6 +129,42 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/medication/medication.html",
+    "<div ng-controller=\"MedCtrl\">\r" +
+    "\n" +
+    "    <input type=\"radio\" ng-model=\"scope.show\" value=\"0\">  Inactive \r" +
+    "\n" +
+    "    <input type=\"radio\" ng-model=\"scope.show\" ng-value=\"1\"> Active \r" +
+    "\n" +
+    "    <input type=\"radio\" ng-model=\"scope.show\" value=\"\"> All \r" +
+    "\n" +
+    "    <button ng-click=\"tableParams.sorting({})\" class=\"btn btn-default pull-right\">Clear sorting</button>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "    <table ng-table=\"tableParams\" class=\"table\">\r" +
+    "\n" +
+    "        <tr ng-repeat=\"meds in $data | filter : show \" ng-class=\"{ 'emphasis': meds.Active === 1 }\">\r" +
+    "\n" +
+    "            <td data-title=\"'Medication'\"sortable=\"Name\">\r" +
+    "\n" +
+    "                {{meds.Name}}\r" +
+    "\n" +
+    "            </td>\r" +
+    "\n" +
+    "            <td data-title=\"'Dosage'\">\r" +
+    "\n" +
+    "                {{meds.Dosage}}\r" +
+    "\n" +
+    "            </td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "    </table>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/metricsChart/metricsChart.html",
     "<div class=\"bar-chart\">\r" +
     "\n" +
