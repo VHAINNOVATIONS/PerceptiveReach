@@ -27,7 +27,7 @@ angular.module('ui.widgets')
       }     
     };
   })
-  .controller('DemoCtrl', function($scope, $filter, ngTableParams) { //['ngTable']
+  .controller('MedCtrl', function($scope, $filter, ngTableParams) { //['ngTable']
     var show = "";
     var data = [
   {
