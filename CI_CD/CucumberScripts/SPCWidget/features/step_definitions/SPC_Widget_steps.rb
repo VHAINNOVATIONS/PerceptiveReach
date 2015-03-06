@@ -36,8 +36,6 @@ end
 
 When(/^I click on individual view/) do 
   page.find(:xpath,"html/body/div[2]/div/ul/li[4]/a/span[1]").click
-  
-  
 end
 
 Then(/^I should see the widget "(.*?)" on page for Individual view$/) do |arg1|

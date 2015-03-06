@@ -1,9 +1,1 @@
 default:  --no-source --format pretty --tags ~@not_ready
-
-Facility:  --no-source --format pretty --tags ~@not_ready
-
-Login:  --no-source --format pretty --tags ~@not_ready
-
-Widget:  --no-source --format pretty --tags ~@not_ready
-
-
