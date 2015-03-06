@@ -35,8 +35,10 @@ end
 
 
 When(/^I click on individual view/) do 
-  page.find(:xpath,"html/body/div[2]/div/ul/li[4]/a/span[1]").click
+  title="Individual View"
+  page.find(:xpath, "//span[contains(text(),'#{title}')]").click 
 end
+
 
 Then(/^I should see the widget "(.*?)" on page for Individual view$/) do |arg1|
   expect(page).to have_content(arg1)
@@ -45,7 +47,8 @@ end
 
 #edit widget
 When(/^I click on individual view of "(.*?)"$/) do |arg1|
-  page.find(:xpath,"html/body/div[2]/div/ul/li[4]/a/span[1]").click
+  title="Individual View"
+  page.find(:xpath, "//span[contains(text(),'#{title}')]").click 
 end
 
 When(/^I click on edit of "(.*?)"$/) do |arg1|
