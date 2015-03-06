@@ -1,4 +1,4 @@
-Feature: As a SPC I want to see a Veteran's list(roster)
+Feature: As a Dashboard User, I want to see a widget that allows me to view a "roster" (or list) of Veterans that have been identified by the application as high risk. 
 @Veteran_roster_lsit_PR_1301
 Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's list(roster)
   Given I am on http://localhost:7003/
