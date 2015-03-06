@@ -34,7 +34,7 @@ Then(/^I should see the "(.*?)" on page for National view$/) do |arg1|
 end
 
 
-When(/^I click on individual "(.*?)"$/) do |arg1|
+When(/^I click on individual view/) do 
   page.find(:xpath,"html/body/div[2]/div/ul/li[4]/a/span[1]").click
   
   
