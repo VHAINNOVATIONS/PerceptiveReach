@@ -132,29 +132,17 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
     "<div ng-controller=\"MedCtrl\">\r" +
     "\n" +
-    "    <input type=\"radio\" ng-model=\"scope.show\" value=\"0\">  Inactive \r" +
-    "\n" +
-    "    <input type=\"radio\" ng-model=\"scope.show\" ng-value=\"1\"> Active \r" +
-    "\n" +
-    "    <input type=\"radio\" ng-model=\"scope.show\" value=\"\"> All \r" +
-    "\n" +
     "    <button ng-click=\"tableParams.sorting({})\" class=\"btn btn-default pull-right\">Clear sorting</button>\r" +
     "\n" +
     "\r" +
     "\n" +
-    "    <table ng-table=\"tableParams\" class=\"table\">\r" +
+    "    <table ng-table=\"tableParams\" show-filter=\"true\" class=\"table\">\r" +
     "\n" +
-    "        <tr ng-repeat=\"meds in $data | filter : show \" ng-class=\"{ 'emphasis': meds.Active === 1 }\">\r" +
+    "        <tr ng-repeat=\"meds in $data | filter : show \">\r" +
     "\n" +
-    "            <td data-title=\"'Medication'\"sortable=\"Name\">\r" +
+    "            <td data-title=\"'Medication'\"sortable=\"Name\" filter=\"{ 'Name': 'text' }\">\r" +
     "\n" +
     "                {{meds.Name}}\r" +
-    "\n" +
-    "            </td>\r" +
-    "\n" +
-    "            <td data-title=\"'Dosage'\">\r" +
-    "\n" +
-    "                {{meds.Dosage}}\r" +
     "\n" +
     "            </td>\r" +
     "\n" +
@@ -251,6 +239,22 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "            tooltips=\"true\">\r" +
     "\n" +
     "    </nvd3-line-chart>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
+    "<div class=\"patient-flags\">\r" +
+    "\n" +
+    "    <mlhr-table \r" +
+    "\n" +
+    "      options=\"tableOptions\"\r" +
+    "\n" +
+    "      columns=\"columns\" \r" +
+    "\n" +
+    "      rows=\"items\">\r" +
+    "\n" +
+    "    </mlhr-table>\r" +
     "\n" +
     "</div>"
   );

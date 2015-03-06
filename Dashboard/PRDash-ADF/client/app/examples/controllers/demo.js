@@ -4,7 +4,8 @@ angular.module('app')
   .factory('widgetDefinitions', function(RandomDataModel,RandomTopNDataModel, RandomTimeSeriesDataModel,
                                     RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel, 
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
-                                    ContactBaseDataModel, ContactEmergencyDataModel, VeteranRosterDataModel) {
+                                    ContactBaseDataModel, ContactEmergencyDataModel, VeteranRosterDataModel,
+                                    PatientFlagDataModel, MedicationDataModel) {
     return [
       {
         name: 'time',
@@ -67,6 +68,20 @@ angular.module('app')
         style: {
           width: '50%'
         }
+      },
+      {
+        name: 'patientFlags',
+        directive: 'wt-patient-flags',
+        dataAttrName: 'data',
+        title: 'Patient Flags',
+        dataModelType: PatientFlagDataModel
+      },
+      {
+        name: 'medications',
+        directive: 'wt-medications',
+        dataAttrName: 'data',
+        title: 'Medications',
+        dataModelType: MedicationDataModel
       },
       {
         name: 'contact',
