@@ -24,6 +24,7 @@ describe('main test', function () {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $rootScope.myData = [];
+    $rootScope.widgetData = [1,[["VeteranLast, VeteranFirst M","000020688","8005550784","2004-01-07T00:00:00.00Z","High","<select class='form-control'><option value=''></option><option value=1>Not Contacted</option><option value=2>Outreach Initiated</option><option value=3>Outreach Attempted - No Response</option><option value=4>Services Refused</option><option value=5>No Additional Outreach Required</option></select>"]]];
   }));
 
   it('should have topN directive', function() {
@@ -34,9 +35,9 @@ describe('main test', function () {
   });
 
   it('should have veteran roster table directive', function() {
-    var element = angular.element('<div wt-veteran-roster-table data="myData"></div>');
+    var element = angular.element('<div wt-veteran-roster-table data="widgetData"></div>');
     $compile(element)($rootScope);
     $rootScope.$digest();
-    expect(element.children().hasClass('dataTables')).toBe(true);
+    expect(element.children().hasClass('dataTables_wrapper')).toBe(true);
   });
 });
