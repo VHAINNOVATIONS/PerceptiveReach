@@ -1819,106 +1819,35 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtMedications', function () {
+  .directive('wtMedication', function ($filter, ngTableParams) {
     return {
       restrict: 'A',
       replace: true,
-      templateUrl: 'client/components/widget/widgets/medications/medications.html',
+      templateUrl: 'client/components/widget/widgets/medication/medication.html',
       scope: {
-        data: '=data'
-      }     
+        data: '=',
+        controller: '='
+      },
+      controller: function ($scope) { //['ngTable']
+        console.log("data: " + data);
+
+        $scope.tableParams = new ngTableParams({
+            page: 1,            // show first page
+            count: 5           // count per page
+        }, {
+            total: data.length, // length of data
+            getData: function($defer, params) {
+                // use build-in angular filter
+                var orderedData = params.sorting() ?
+                        $filter('orderBy')(data, params.orderBy()) :
+                        data;
+
+                $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+          }
+        });
+      }    
     };
-  })
-  .controller('MedCtrl', function($scope, $filter, ngTableParams) { //['ngTable']
-    var show = "";
-    var data = [
-  {
-    "ReachID": 1,
-    "Active": 1,
-    "RxID": 1,
-    "Name": "Prescription 1",
-    "Dosage": "100mg"
-  },
-  {
-    "ReachID": 1,
-    "Active": 0,
-    "RxID": 2,
-    "Name": "Prescription 2",
-    "Dosage": "200mg"
-  },
-  {
-    "ReachID": 1,
-    "Active": 1,
-    "RxID": 3,
-    "Name": "Prescription 3",
-    "Dosage": "300mg"
-  },
-  {
-    "ReachID": 1,
-    "Active": 1,
-    "RxID": 4,
-    "Name": "Prescription 4",
-    "Dosage": "400mg"
-  },
-  {
-    "ReachID": 1,
-    "Active": 0,
-    "RxID": 5,
-    "Name": "Prescription 5",
-    "Dosage": "500mg"
-  },
-  {
-    "ReachID": 1,
-    "Active": 1,
-    "RxID": 1,
-    "Name": "Prescription 1",
-    "Dosage": "100mg"
-  },
-  {
-    "ReachID": 1,
-    "Active": 0,
-    "RxID": 2,
-    "Name": "Prescription 2",
-    "Dosage": "200mg"
-  },
-  {
-    "ReachID": 1,
-    "Active": 1,
-    "RxID": 3,
-    "Name": "Prescription 3",
-    "Dosage": "300mg"
-  },
-  {
-    "ReachID": 1,
-    "Active": 1,
-    "RxID": 4,
-    "Name": "Prescription 4",
-    "Dosage": "400mg"
-  },
-  {
-    "ReachID": 1,
-    "Active": 0,
-    "RxID": 5,
-    "Name": "Prescription 5",
-    "Dosage": "500mg"
-  }
-];
-
-    $scope.tableParams = new ngTableParams({
-        page: 1,            // show first page
-        count: 5           // count per page
-    }, {
-        total: data.length, // length of data
-        getData: function($defer, params) {
-            // use build-in angular filter
-            var orderedData = params.sorting() ?
-                    $filter('orderBy')(data, params.orderBy()) :
-                    data;
-
-            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        }
-    });
-});
+  });
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -2212,6 +2141,56 @@ angular.module('ui.widgets')
             var end = timeseries[timeseries.length - 1].timestamp;
             scope.start = start;
             scope.end = end;
+          }
+        });
+      }
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtPatientFlags', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/patientFlags/patientFlags.html',
+      scope: {
+        data: '='
+      },
+      controller: function ($scope) {
+        $scope.tableOptions = {
+          loading: true,
+          noRowsText: 'No Flags Found',
+          loadingText: 'Load...',
+          initialSorts: [
+            { id: 'Category', dir: '+' }
+          ]
+        };
+        $scope.columns = [
+          { id: 'FlagDesc', key: 'FlagDesc', label: 'Flag', sort: 'string', filter: 'like'},
+          { id: 'Category', key: 'Category', label: 'Cat', sort: 'number'}
+        ];
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.items = data;
           }
         });
       }
@@ -2712,29 +2691,17 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
     "<div ng-controller=\"MedCtrl\">\r" +
     "\n" +
-    "    <input type=\"radio\" ng-model=\"scope.show\" value=\"0\">  Inactive \r" +
-    "\n" +
-    "    <input type=\"radio\" ng-model=\"scope.show\" ng-value=\"1\"> Active \r" +
-    "\n" +
-    "    <input type=\"radio\" ng-model=\"scope.show\" value=\"\"> All \r" +
-    "\n" +
     "    <button ng-click=\"tableParams.sorting({})\" class=\"btn btn-default pull-right\">Clear sorting</button>\r" +
     "\n" +
     "\r" +
     "\n" +
-    "    <table ng-table=\"tableParams\" class=\"table\">\r" +
+    "    <table ng-table=\"tableParams\" show-filter=\"true\" class=\"table\">\r" +
     "\n" +
-    "        <tr ng-repeat=\"meds in $data | filter : show \" ng-class=\"{ 'emphasis': meds.Active === 1 }\">\r" +
+    "        <tr ng-repeat=\"meds in $data | filter : show \">\r" +
     "\n" +
-    "            <td data-title=\"'Medication'\"sortable=\"Name\">\r" +
+    "            <td data-title=\"'Medication'\"sortable=\"Name\" filter=\"{ 'Name': 'text' }\">\r" +
     "\n" +
     "                {{meds.Name}}\r" +
-    "\n" +
-    "            </td>\r" +
-    "\n" +
-    "            <td data-title=\"'Dosage'\">\r" +
-    "\n" +
-    "                {{meds.Dosage}}\r" +
     "\n" +
     "            </td>\r" +
     "\n" +
@@ -2831,6 +2798,22 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "            tooltips=\"true\">\r" +
     "\n" +
     "    </nvd3-line-chart>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
+    "<div class=\"patient-flags\">\r" +
+    "\n" +
+    "    <mlhr-table \r" +
+    "\n" +
+    "      options=\"tableOptions\"\r" +
+    "\n" +
+    "      columns=\"columns\" \r" +
+    "\n" +
+    "      rows=\"items\">\r" +
+    "\n" +
+    "    </mlhr-table>\r" +
     "\n" +
     "</div>"
   );
