@@ -10,6 +10,5 @@ end
 
 Before do |scenario|
 page.driver.browser.manage.window.maximize
-page.driver.browser.reset
 end
 Capybara.javascript_driver = :chrome
