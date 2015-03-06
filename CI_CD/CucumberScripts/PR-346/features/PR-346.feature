@@ -1,7 +1,7 @@
 Feature: As a SPC Outreach provider I want view the direct message that highlights high risk veterans so that I can 
 provide out reach services-PR-346
 
-Scenario Outline:  I open a web browser and see the SPC navigation page
+Scenario:  I open a web browser and see the SPC navigation page
 Given I navigate to the http://localhost:7003/
 When I Click on notifications 
 Then I should see high risk veteran notification

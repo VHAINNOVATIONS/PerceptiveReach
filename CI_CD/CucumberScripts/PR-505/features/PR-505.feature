@@ -1,6 +1,6 @@
 Feature: As an Outreach Provider, I want to view a Direct Message when a Veteran experiences a high risk trigger or event, so I can provide outreach services to them. - PR-505
 
-Scenario Outline: I open a web browser and see the SPC page and a notification of a Direct Message
+Scenario: I open a web browser and see the SPC page and a notification of a Direct Message
 Given I navigate to the http://localhost:7003/
 When I Click on notifications 
 Then I should see high risk veteran notification

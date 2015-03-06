@@ -1,7 +1,7 @@
 Feature: As a SPC I  want to view newly identified at-risk Veterans during a specific time frame-PR_352
 #At-Risk Feature
 
-Scenario Outline: I open a web browser and see the SPC navigation page
+Scenario: I open a web browser and see the SPC navigation page
 Given I navigate to the http://localhost:7003/
 Then I should see the navigation menu
 When I click on  "State Facility View - OH"
