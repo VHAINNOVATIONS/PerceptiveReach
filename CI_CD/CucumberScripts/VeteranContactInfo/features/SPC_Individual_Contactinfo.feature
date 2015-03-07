@@ -14,7 +14,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
   Given I am on http://localhost:7003/
   When I click on Individual view 
   Then I should see the widget with list of Veterans "Veterans list"
-  When I click on Individual veteran "James smith"
+  When I click on Individual veteran "Jane smith"
   Then I should see veteran contact information "veteran contact information"
   And I should see  SSN "Last 4 of SSN" in veteran contact information
   And I should see AP "Alternate Phone" in veteran contact information
