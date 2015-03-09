@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-angular.module('ui.widgets', ['datatorrent.mlhrTable', 'nvd3ChartDirectives']);
+angular.module('ui.widgets', ['datatorrent.mlhrTable', 'nvd3ChartDirectives', 'ngTable']);
 angular.module('ui.websocket', ['ui.visibility', 'ui.notify']);
 angular.module('ui.models', ['ui.visibility', 'ui.websocket']);
 
@@ -1819,35 +1819,37 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtMedication', function ($filter, ngTableParams) {
+  .directive('wtMedication', function () {
     return {
       restrict: 'A',
       replace: true,
       templateUrl: 'client/components/widget/widgets/medication/medication.html',
       scope: {
         data: '=',
-        controller: '='
       },
-      controller: function ($scope) { //['ngTable']
-        console.log("data: " + data);
-
+     controller: function ($scope, $filter, ngTableParams) { //['ngTable']
+        var data = $scope.data;
+        
         $scope.tableParams = new ngTableParams({
-            page: 1,            // show first page
-            count: 5           // count per page
-        }, {
-            total: data.length, // length of data
-            getData: function($defer, params) {
-                // use build-in angular filter
-                var orderedData = params.sorting() ?
-                        $filter('orderBy')(data, params.orderBy()) :
-                        data;
+        page: 1,            // show first page
+        count: 5,          // count per page
+        sorting: {
+            name: 'asc'     // initial sorting
+        }
+      }, {
+        total: data.length, // length of data
+        getData: function($defer, params) {
+            // use build-in angular filter
+            var orderedData = params.sorting() ?
+                    $filter('orderBy')(data, params.orderBy()) :
+                    data;
 
-                $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-          }
-        });
-      }    
-    };
-  });
+            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        }
+      });
+    }
+  };
+});
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -2689,7 +2691,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
-    "<div ng-controller=\"MedCtrl\">\r" +
+    "<div>\r" +
     "\n" +
     "    <button ng-click=\"tableParams.sorting({})\" class=\"btn btn-default pull-right\">Clear sorting</button>\r" +
     "\n" +
@@ -2697,9 +2699,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <table ng-table=\"tableParams\" show-filter=\"true\" class=\"table\">\r" +
     "\n" +
-    "        <tr ng-repeat=\"meds in $data | filter : show \">\r" +
+    "        <tr ng-repeat=\"meds in data\">\r" +
     "\n" +
-    "            <td data-title=\"'Medication'\"sortable=\"Name\" filter=\"{ 'Name': 'text' }\">\r" +
+    "            <td data-title=\"'Medication'\" sortable=\"Name\" filter=\"{ 'Name': 'text' }\">\r" +
     "\n" +
     "                {{meds.Name}}\r" +
     "\n" +
@@ -2920,7 +2922,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"\" id=\"sampleVet\" width=\"100%\"></table>\r" +
     "\n" +
-    "</div>y"
+    "</div>"
   );
 
   $templateCache.put("client/components/widget/widgets/veteranRosterTable/veteranRosterTableWidgetSettingsTemplate.html",

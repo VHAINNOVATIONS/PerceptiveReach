@@ -17,32 +17,34 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtMedication', function ($filter, ngTableParams) {
+  .directive('wtMedication', function () {
     return {
       restrict: 'A',
       replace: true,
       templateUrl: 'client/components/widget/widgets/medication/medication.html',
       scope: {
         data: '=',
-        controller: '='
       },
-      controller: function ($scope) { //['ngTable']
-        console.log("data: " + data);
-
+     controller: function ($scope, $filter, ngTableParams) { //['ngTable']
+        var data = $scope.data;
+        
         $scope.tableParams = new ngTableParams({
-            page: 1,            // show first page
-            count: 5           // count per page
-        }, {
-            total: data.length, // length of data
-            getData: function($defer, params) {
-                // use build-in angular filter
-                var orderedData = params.sorting() ?
-                        $filter('orderBy')(data, params.orderBy()) :
-                        data;
+        page: 1,            // show first page
+        count: 5,          // count per page
+        sorting: {
+            name: 'asc'     // initial sorting
+        }
+      }, {
+        total: data.length, // length of data
+        getData: function($defer, params) {
+            // use build-in angular filter
+            var orderedData = params.sorting() ?
+                    $filter('orderBy')(data, params.orderBy()) :
+                    data;
 
-                $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-          }
-        });
-      }    
-    };
-  });
+            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        }
+      });
+    }
+  };
+});

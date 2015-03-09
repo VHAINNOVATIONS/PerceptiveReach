@@ -77,11 +77,14 @@ angular.module('app')
         dataModelType: PatientFlagDataModel
       },
       {
-        name: 'medications',
-        directive: 'wt-medications',
+        name: 'medication',
+        directive: 'wt-medication',
         dataAttrName: 'data',
-        title: 'Medications',
-        dataModelType: MedicationDataModel
+        title: 'Medication',
+        dataModelType: MedicationDataModel,
+        style: {
+          width: '15%'
+        }
       },
       {
         name: 'contact',
@@ -178,9 +181,10 @@ angular.module('app')
     ];
   })
   .value('defaultWidgets', [
-      { name: 'datatable' },
+      {name: 'medication'},
       { name: 'contact' },
-      { name: 'emergency' } 
+      { name: 'emergency' }, 
+      { name: 'datatable' }
       /*,
       { name: 'Metrics Chart' },
       { name: 'NVD3 Line Chart' },

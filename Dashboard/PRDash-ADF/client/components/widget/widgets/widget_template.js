@@ -130,7 +130,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
-    "<div ng-controller=\"MedCtrl\">\r" +
+    "<div>\r" +
     "\n" +
     "    <button ng-click=\"tableParams.sorting({})\" class=\"btn btn-default pull-right\">Clear sorting</button>\r" +
     "\n" +
@@ -138,9 +138,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <table ng-table=\"tableParams\" show-filter=\"true\" class=\"table\">\r" +
     "\n" +
-    "        <tr ng-repeat=\"meds in $data | filter : show \">\r" +
+    "        <tr ng-repeat=\"meds in data\">\r" +
     "\n" +
-    "            <td data-title=\"'Medication'\"sortable=\"Name\" filter=\"{ 'Name': 'text' }\">\r" +
+    "            <td data-title=\"'Medication'\" sortable=\"Name\" filter=\"{ 'Name': 'text' }\">\r" +
     "\n" +
     "                {{meds.Name}}\r" +
     "\n" +
