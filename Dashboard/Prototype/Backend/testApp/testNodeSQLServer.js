@@ -1,15 +1,19 @@
 var sql = require('mssql');
 
 var config = {
+  // Reach database connection params
+ 
     user: 'sa',
     password: 'agile_123',
-    server: '54.225.232.25', // You can use 'localhost\\instance' to connect to named instance
+    server: 'wbalshem01046', // You can use 'localhost\\instance' to connect to named instance
+    driver: 'msnodesql',
     database: 'Reach',
-
+    //connectionString: "Driver={SQL Server Native Client 11.0};Server=#{server};Database=#{database};Uid=#{user};Pwd=#{password};Trusted_Connection={true}",
+    connectionString: "Driver={SQL Server Native Client 11.0};Server=#{server};Database=#{database};Trusted_Connection=yes",
     options: {
         encrypt: false // Use this if you're on Windows Azure
     }
-}
+};
 
 var express = require('express');
 var app = express();
@@ -26,19 +30,27 @@ app.get('/', function(req, res){
     res.send('hello ROOT world');
 });
  
-console.log("Registering endpoint: /getListOfVAMC");
-app.get('/getListOfVAMC', function(req, res){
+console.log("Registering endpoint: /vetEmergencyData");
+app.get('/vetEmergencyData', function(req, res){
     res.header("content-type: application/json");
-    var data = [];
+    var id = req.param("id");
     var query = '';
-    query = "SELECT VAMCID, VAMC FROM Ref_VAMC";
+    if (id) {
+        console.log("Registering endpoint: /vetEmergencyData/:id is " + id);
+        query = "SELECT * FROM EmergencyContact ";
+        query += "WHERE ReachID =  " + id;
+        console.log("Query: " + query);
+    } else {
+        console.log("ERROR: State Abbreviation is required."); 
+        res.send("ERROR: State Abbreviation is required.");
+    }
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
-        if (err) {
-            data = "Error: Database connection failed!";
-            console.log("Database connection failed!"); 
-            return; 
+        if (err || !query) { 
+        data = "Error: Database connection failed!";
+        console.log("Database connection failed! " + err); 
+        return; 
         }
 
         // Query
@@ -46,7 +58,7 @@ app.get('/getListOfVAMC', function(req, res){
         request.query(query, function(err, recordset) {
             // ... error checks
             if (err) { 
-            console.log("Query failed! -- " + query); 
+            console.log("Query failed! " + err); 
             return; 
             }
 
