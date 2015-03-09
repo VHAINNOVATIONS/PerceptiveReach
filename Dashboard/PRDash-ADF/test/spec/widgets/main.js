@@ -20,6 +20,7 @@ describe('main test', function () {
   var $compile, $rootScope;
 
   beforeEach(module('ui.widgets'));
+  beforeEach(module('ngTable'));
   beforeEach(inject(function(_$compile_, _$rootScope_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
@@ -40,4 +41,12 @@ describe('main test', function () {
     $rootScope.$digest();
     expect(element.children().hasClass('dataTables_wrapper')).toBe(true);
   });
+
+  it('should have medication directive', function() {
+    var element = angular.element('<div wt-medication data="widgetData"></div>');
+    $compile(element)($rootScope);
+    $rootScope.$digest();
+    expect(element.children().hasClass('ng-table')).toBe(true);
+  });
 });
+
