@@ -30,9 +30,9 @@ end
 
 
 #detail_widget_PR-1406
-When(/^I click on Individual Veteran View$/) do
-  (/^I click on the "(.*?)"$/) do |view|
-title=viewpage.find(:xpath, "//span[contains(text(),'#{title}')]").click 
+When(/^I click on Individual Veteran View$/) do |view|
+  title=view
+  page.find(:xpath, "//span[contains(text(),'#{title}')]").click 
 end
  # express the regexp above with the code you wish you had
 end
