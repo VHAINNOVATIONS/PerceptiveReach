@@ -2,9 +2,9 @@ Given(/^I am on http:\/\/localhost:(\d+)\/$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
   visit ('http://localhost:7003')
 end
-
-When(/^I click on the "(.*?)"$/) do |view|
-  title=view
+#When(/^I click on  "(.*?)"$/) do |arg1|
+When(/^I click on  "(.*?)"$/) do |view|
+  title = view
   page.find(:xpath, "//span[contains(text(),'#{title}')]").click 
 end
 
