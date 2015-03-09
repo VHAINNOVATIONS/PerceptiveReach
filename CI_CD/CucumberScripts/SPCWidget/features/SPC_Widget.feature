@@ -4,7 +4,7 @@ Feature: As a SPC I want customize my widget page
     Scenario: I open a web browser and use http://localhost:7003/ to see customize National View Widgets page to edit a widget's title
 
 	Given I am on http://localhost:7003/
-	When I click on individual view
+	When I click on  "Individual View"
 	And I click on edit of "Widget 1" 
 	And I change the title on pop-up to "Example"
 	And I click on "OK" button

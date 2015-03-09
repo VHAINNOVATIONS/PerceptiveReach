@@ -3,17 +3,25 @@ Given(/^I am on http:\/\/localhost:(\d+)\/$/) do |arg1|
   visit ('http://localhost:7003')
 end
 
-When(/^I click on edit of widget (\d+)$/) do |arg1|
-  #pending # express the regexp above with the code you wish you had
-  page.find(:xpath, "html/body/div[2]/div/div/div/div[2]/div[1]/div/div[1]/h3/span[4]").click
+When(/^I click on the "(.*?)"$/) do |view|
+  title=view
+  page.find(:xpath, "//span[contains(text(),'#{title}')]").click 
 end
 
-When(/^I change the title on pop\-up to "(.*?)"$/) do |arg1|
+And(/^I click on edit of "(.*?)" $/) do |widgetname|
+  title = widgetname
+  page.find(:xpath, "//span[normalize-space(text())='#{title}']/following-sibling::span[3]").click
+end
+#span[2] = close
+#span[3]= edit/settings
+
+
+And(/^I change the title on pop\-up to "(.*?)"$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
   fill_in('widgetTitle',:with=>'Example')
 end
 
-When(/^I click on ok button$/) do
+And(/^I click on ok button$/) do
   #pending # express the regexp above with the code you wish you had
   page.find(:xpath,"html/body/div[4]/div/div/div[3]/button[2]").click
 end
@@ -24,9 +32,7 @@ Then(/^I should see the widget (\d+) title change to "(.*?)"$/) do |arg1, arg2|
 end
 
 
-When(/^I click on "(.*?)"$/) do |arg1|
-  page.find(:xpath,"html/body/div[2]/div/ul/li[1]/a/span[1]").click
-end
+
 
 Then(/^I should see the "(.*?)" on page for National view$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
