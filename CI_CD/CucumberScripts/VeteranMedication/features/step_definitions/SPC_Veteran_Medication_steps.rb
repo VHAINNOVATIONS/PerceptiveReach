@@ -34,3 +34,11 @@ end
 Then(/^I should see list of all medications$/) do
   expect(page).to have_content(arg1)
 end
+
+Then(/^I should see the  widget with list of Medications widget "(.*?)"$/) do |arg1|
+  expect(page).to have_content(arg1)
+end
+
+Then(/^I should see "(.*?)"$/) do |arg1|
+  expect(page).to have_content(arg1)
+end

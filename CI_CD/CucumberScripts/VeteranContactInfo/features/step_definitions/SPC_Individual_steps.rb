@@ -5,7 +5,7 @@ Given(/^I am on http:\/\/localhost:(\d+)\/$/) do |arg1|
 end
 
 When(/^I click on Individual view$/) do
-  page.find(:xpath,"html/body/div[2]/div/ul/li[4]/a/span[1]").click
+  page.find(:xpath, "//span[contains(text(),'Individual View')]").click
 end
 
 Then(/^I should see the widget with list of Veterans "(.*?)"$/) do |arg1|
@@ -41,5 +41,10 @@ Then(/^I should see state "(.*?)" in veteran contact information$/) do |arg1|
 end
 
 Then(/^I should see zcode "(.*?)" in veteran contact information$/) do |arg1|
+  expect(page).to have_content(arg1)
+end
+
+
+Then(/^I should see Individual veteran "(.*?)"$/) do |arg1|
   expect(page).to have_content(arg1)
 end

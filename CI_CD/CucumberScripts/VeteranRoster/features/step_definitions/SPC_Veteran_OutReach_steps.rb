@@ -4,18 +4,7 @@ Given(/^I am on http:\/\/localhost:(\d+)\/$/) do |arg1|
 end
 
 When(/^I click on Individual "(.*?)" view$/) do |arg1|
- #page.find.span(:text,'Individual View').click
  #page.find('span',:text=> 'Individual View').click
- #title='Individual View'
-#page.findElement(By.xpath("(//span[:text=title])")).click();
-
-
-#title = "Individual View"
-#within( find(:xpath, "//span[normalize-space(text())='#{title}']/following-sibling::form") ) do
-    #click_link 'publish'
-#end
-#end
-#page.find('span',:text=> 'Individual View').click
 page.find(:xpath, "//span[contains(text(),'Individual View')]").click
 end
 
