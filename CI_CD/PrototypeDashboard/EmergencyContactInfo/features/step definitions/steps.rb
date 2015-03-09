@@ -8,8 +8,9 @@ When(/^I Click on "(.*?)"$/) do |view|
   page.find(:xpath, "//span[contains(text(),'#{title}')]").click 
 end
 
-When(/^I click on Individual view$/) do
-  page.find(:xpath, "/html/body/div[2]/div/ul/li[4]/a/span[1]").click # express the regexp above with the code you wish you had
+When(/^I click on "(.*?)"$/) do |view|
+  title = view
+  page.find(:xpath, "//span[contains(text(),'#{title}')]").click 
 end
 
 Then(/^I should see the widget with list of Veterans$/) do
@@ -26,10 +27,6 @@ end
 
 When(/^I click on close on the "(.*?)" widget$/) do |arg1|
    # express the regexp above with the code you wish you had
-end
-
-When(/^I click on save changes$/) do
-  pending # express the regexp above with the code you wish you had
 end
 
 Then(/^I should not see the widget "(.*?)" widget$/) do |arg1|
@@ -300,10 +297,6 @@ Then(/^I should not see the widget "(.*?)"$/) do |arg1|
   pending # express the regexp above with the code you wish you had
 end
 
-When(/^I click on Individual "(.*?)" view$/) do |arg1|
- page.find('span',:text=> 'Individual View').click
-end
-
 When(/^I click on a veteran "(.*?)"$/) do |arg1|
   page.fin('td',:text=> '000261537').click
 end
@@ -377,9 +370,11 @@ Then(/^I see the Individual View$/) do
   expect(page).to have_content('Individual View') # express the regexp above with the code you wish you had
 end
 
-Then(/^I click the Individual View$/) do
-  page.find(:xpath, "/html/body/div[2]/div/ul/li[4]/a/span[1]").click# express the regexp above with the code you wish you had
+Then(/^I click the "(.*?)"$/) do |view|
+  title = view
+  page.find(:xpath, "//span[contains(text(),'#{title}')]").click 
 end
+
 Then(/^I should see the widget with roster of high risk Veterans "(.*?)"$/) do |
 arg1|
   #pending # express the regexp above with the code you wish you had
@@ -450,9 +445,6 @@ Then(/^I should see high risk veteran contact information for "(.*?)"$/) do |arg
   #pending # express the regexp above with the code you wish you had
      expect(page).to have_content(arg1)
 end 
-When(/^I click on Individual view$/) do
-  page.find(:xpath, "//span[contains(text(),'Individual View')]").click
-end
 
 Then(/^I should see the widget with list of Veterans "(.*?)"$/) do |arg1|
   expect(page).to have_content(arg1)
@@ -495,21 +487,6 @@ Then(/^I should see Individual veteran "(.*?)"$/) do |arg1|
   expect(page).to have_content(arg1)
 end
 
-When(/^I click on Individual "(.*?)" view$/) do |arg1|
- #page.find.span(:text,'Individual View').click
- #page.find('span',:text=> 'Individual View').click
- #title='Individual View'
-#page.findElement(By.xpath("(//span[:text=title])")).click();
-
-
-#title = "Individual View"
-#within( find(:xpath, "//span[normalize-space(text())='#{title}']/following-sibling::form") ) do
-    #click_link 'publish'
-#end
-#end
-#page.find('span',:text=> 'Individual View').click
-page.find(:xpath, "//span[contains(text(),'Individual View')]").click
-end
 
 Then(/^I should see the roster widget with list of Veterans "(.*?)"$/) do |arg1|
 
