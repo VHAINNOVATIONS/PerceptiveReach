@@ -38,13 +38,14 @@ Then I select Veteran's Patient Risk Flags
 Then I should see the widget "Veteran's Patient Risk Flags"
 And I should see active flags displayed on the screen
 And I should see inactive flags displayed on the screen
-Then I toggle among the active flags
-And I 
-Then I toggle among the inactive flags
-And I 
-Then I toggle among Class I flags
-And I 
-Then I toggle among Class II flags
-And I 
+Then I toggle on the active flags 
+And I just see active flags
+Then I toggle on the inactive flags 
+And I see just inactive flags
+Then I toggle on Class I flags 
+And I see just Class I flags
+Then I toggle among Class II flags 
+And Isee just Class II flags 
+
 
 
