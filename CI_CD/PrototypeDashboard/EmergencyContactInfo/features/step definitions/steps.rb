@@ -619,3 +619,65 @@ Then(/^i should not see the widget "(.*?)"$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
   expect(page).to have_no_content(arg1)
 end
+
+When(/^I click on Individual view$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should be able to drag the "(.*?)" widget to anywhere on the page$/) do
+ |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+
+When(/^I click on Individual "(.*?)" view$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I click on Add a Widget$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I select Veteran's Patient Risk Flags$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should see active flags displayed on the screen$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should see inactive flags displayed on the screen$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I toggle on the active flags$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I just see active flags$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I toggle on the inactive flags$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I see just inactive flags$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I toggle on Class I flags$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I see just Class I flags$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I toggle among Class II flags$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^Isee just Class II flags$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
