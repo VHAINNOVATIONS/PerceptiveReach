@@ -29,23 +29,23 @@ When(/^I click on "(.*?)" button$/) do |buttonname|
 end
 
 Then(/^I should see the "(.*?)" widget$/) do |pagecontent|
-  expect(page).to have_content'#{pagecontent}'
+  expect(page).to have_content(pagecontent)
 end
 
 Then(/^I should not see the "(.*?)" widget$/) do |pagecontent|
-  expect(page).to have_no_content'#{pagecontent}'
+  expect(page).to have_no_content(pagecontent)
 end
 
 And(/^I should see "(.*?)"$/) do |pagecontent|
-  expect(page).to have_no_content'#{pagecontent}'
+  expect(page).to have_no_content(pagecontent)
 end
-#do we need column
+
 And(/^I should see "(.*?)" column$/) do |pagecontent|
-  expect(page).to have_content'#{pagecontent}'
+  expect(page).to have_content(pagecontent)
 end
 
 And(/^I should see "(.*?)" widget$/) do |pagecontent|
-  expect(page).to have_no_content'#{pagecontent}'
+  expect(page).to have_no_content(pagecontent)
 end
 
 Then(/^I should see my default widgets$/) do
