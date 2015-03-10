@@ -48,10 +48,6 @@ And(/^I should see "(.*?)" widget$/) do |pagecontent|
   expect(page).to have_no_content'#{pagecontent}'
 end
 
-When(/^I click on "(.*?)"$/) do |link|
-  page.find(:xpath, "//span[contains(text(),'#{link}')]")
-end
-
 Then(/^I should see my default widgets$/) do
   #sql query get the default widgets for the user profile
   expect(page).to have_no_content'Veteran Roster by VAMC'
