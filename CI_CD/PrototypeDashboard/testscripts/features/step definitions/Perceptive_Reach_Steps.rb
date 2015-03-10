@@ -23,16 +23,16 @@ When(/^I click on edit on the "(.*?)" widget$/) do |widgetname|
   page.find(:xpath, "//span[normalize-space(text())='#{title}']/following-sibling::span[3]").click #find widget and click edit button
 end
 
-When(/^I click on "(.*?)" button$/) do |button|
-   click_button('#{button}') # need to add code to deal with save changes (1) + add a widget
+When(/^I click on "(.*?)" button$/) do |buttonname|
+   find(:button, '*=#{buttonname}').click # need to add code to deal with save changes (1) + add a widget
 end
 
-Then(/^I should see the "(.*?)" widget$/) do |widgetname|
-  expect(page).to have_content'#{widgetname}'
+Then(/^I should see the "(.*?)" widget$/) do |pagecontent|
+  expect(page).to have_content'#{pagecontent}'
 end
 
-Then(/^I should not see the "(.*?)" widget$/) do |widgetname|
-  expect(page).to have_no_content'#{widgetname}'
+Then(/^I should not see the "(.*?)" widget$/) do |pagecontent|
+  expect(page).to have_no_content'#{pagecontent}'
 end
 
 And(/^I should see "(.*?)"$/) do |pagecontent|
