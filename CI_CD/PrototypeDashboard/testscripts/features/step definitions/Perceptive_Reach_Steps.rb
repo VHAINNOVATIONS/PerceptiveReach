@@ -52,3 +52,7 @@ Then(/^I should see my default widgets$/) do
   #sql query get the default widgets for the user profile
   expect(page).to have_content'Veteran Roster by VAMC'
 end
+
+And(/^I add the "(.*?)" widget$/) do |widgetname|
+  find_button(widgetname).click 
+end

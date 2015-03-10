@@ -4,7 +4,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
   Given I navigate to the http://localhost:7003/
   When I click on "Individual View" 
   Then I should see "Veteran Roster by VAMC" widget
-  And I should see Individual veteran "Jane Smith"
+  And I should see "Jane Smith"
   Then I click on "Jane Smith"
   Then I should see "Veteran Contact" widget
   

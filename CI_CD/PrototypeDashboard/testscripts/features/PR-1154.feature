@@ -3,6 +3,7 @@ Feature: As a Dashboard User, I want to view a Veteran's cover sheet information
 Scenario: I open a web browser and see the Individual Veteran View and the Veteran's cover sheet information
 Given I navigate to the http://localhost:7003/
 When I click on "Individual View"
+And I add the "Veterans Cover Sheet Information" widget
 Then I should see the "Veteran's cover sheet Information" widget
 And I should see "medications"
 And I should see "appointments"
