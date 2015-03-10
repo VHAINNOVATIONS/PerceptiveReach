@@ -4,7 +4,7 @@ Feature: As a Dashboard user, I want to see a Veteran's emergency contact inform
 Scenario: I open a web browser and use http://localhost:7003/ to delete/close the Emergency Contact Information widget.
 
   Given I navigate to the http://localhost:7003/
-  When I click on Individual view 
+  When I click on "Individual View" 
   Then I should see the widget with list of Veterans
   When I click on a Veteran's name " Jon Doe"
   Then I see Veteran emergency contact information "Emergency Contact Information"
@@ -16,7 +16,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to delete/close th
 
   Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's contact information of emergency contact address, emergency contact number, emergency contact alternate number,City, State and Zip code, and emergency contact relationship
   Given I navigate to the http://localhost:7003/
-  When I click on Individual view 
+  When I click on "Individual View ""
   Then I should see the widget with list of Veterans
   When I click on individual Veteran
   Then I see Veteran emergency contact information "Emergency Contact Information"
@@ -33,7 +33,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to delete/close th
 Scenario: I open a web browser and use http://localhost:7003/ to drag the Emergency Contact Information widget.
 
   Given I navigate to the http://localhost:7003/
-  When I click on Individual view 
+  When I click on "Individual View" 
   Then I should see the widget with list of Veterans
   When I click on a Veteran's name " Jon Doe"
   Then I see Veteran emergency contact information "Emergency Contact Information"
@@ -43,7 +43,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to drag the Emerge
  @Info_PR-1268
 Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's emergency contact information
   Given I navigate to the http://localhost:7003/
-  When I click on Individual view 
+  When I click on "Individual View"
   Then I should see the widget with list of Veterans
   When I click on a Veteran's name " Jon Doe"
   Then I see Veteran emergency contact information "Emergency Contact Information"
