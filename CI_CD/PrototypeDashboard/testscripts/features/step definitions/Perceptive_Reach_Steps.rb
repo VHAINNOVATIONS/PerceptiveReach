@@ -546,11 +546,6 @@ Then(/^I should see the widget (\d+) title change to "(.*?)"$/) do |arg1, arg2|
   expect(page).to have_content(arg2)
 end
 
-
-When(/^I click on "(.*?)"$/) do |arg1|
-  page.find(:xpath,"html/body/div[2]/div/ul/li[1]/a/span[1]").click
-end
-
 Then(/^I should see the "(.*?)" on page for National view$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
   expect(page).to have_content(arg1)
