@@ -49,6 +49,15 @@ angular.module('ui.widgets')
                         "sRowSelect": "single"
                     }
                 });
+                $('select').selectmenu({
+                  select: function( event, ui ) {
+                    // Write back selection to the Veteran Risk table for the veteran
+                    console.log(ui);
+                    console.log(ui.item.element.context.parentElement.id.replace("vet_",""));
+                    scope.widget.dataModel.saveOutreachData(ui.item.index, ui.item.element.context.parentElement.id.replace("vet_",""));                    
+                  }
+                });
+
                 $('#sampleVet tbody').on( 'click', 'tr', function (event) {
                     //console.log( dataTableVet.row( this ).data() );
                     if($(this).hasClass('selected')){

@@ -62,7 +62,7 @@ angular.module('ui.models')
                   temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusName + "</option>";
                 options += temp;
               }
-              var select = "<select class='form-control'><option value=''></option>"+ options+ "</select>";
+              var select = "<select class='form-control' style='width: 180px;' id='vet_" + veteransByVAMC[veteran].ReachID + "'><option value=''></option>"+ options+ "</select>";
               record.push(String(select));
                               
               output.push(record);
@@ -75,6 +75,12 @@ angular.module('ui.models')
         }.bind(this));
       },
 
+      saveOutreachData: function (outreachStatus, veteranID) {
+        $http.put('/api/veteranRoster?vetReachID=' + veteranID, {'outreachStatus': outreachStatus})
+        .success(function(data) {
+          alert(data);
+        });  
+      },
       updateVAMC: function (vamc) {
         this.dataModelOptions = this.dataModelOptions ? this.dataModelOptions : {};
         this.dataModelOptions.vamc = vamc;
