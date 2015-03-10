@@ -23,25 +23,24 @@ When(/^I click on edit on the "(.*?)" widget$/) do |widgetname|
   page.find(:xpath, "//span[normalize-space(text())='#{title}']/following-sibling::span[3]").click #find widget and click edit button
 end
 
-When(/^I click on save changes$/) do
-   click_button("save changes") # express the regexp above with the code you wish you had
-end
 When(/^I click on "(.*?)" button$/) do |button|
-   click_button('#{button}') # express the regexp above with the code you wish you had
+   click_button('#{button}') # need to add code to deal with save changes (1) + add a widget
 end
 
 Then(/^I should see the "(.*?)" widget$/) do |widgetname|
-  title = widgetname
-  expect(page).to have_content'#{title}'
+  expect(page).to have_content'#{widgetname}'
 end
 
 Then(/^I should not see the "(.*?)" widget$/) do |widgetname|
-  title = widgetname
-  expect(page).to have_no_content'#{title}'
+  expect(page).to have_no_content'#{widgetname}'
 end
 
 And(/^I should see "(.*?)"$/) do |pagecontent|
   expect(page).to have_no_content'#{pagecontent}'
+end
+#do we need column
+And(/^I should see "(.*?)" column$/) do |pagecontent|
+  expect(page).to have_content'#{pagecontent}'
 end
 
 And(/^I should see "(.*?)" widget$/) do |pagecontent|
@@ -50,7 +49,7 @@ end
 
 Then(/^I should see my default widgets$/) do
   #sql query get the default widgets for the user profile
-  expect(page).to have_no_content'Veteran Roster by VAMC'
+  expect(page).to have_content'Veteran Roster by VAMC'
 end
 
 #Ambiguous match for When/Then - commenting out Then
