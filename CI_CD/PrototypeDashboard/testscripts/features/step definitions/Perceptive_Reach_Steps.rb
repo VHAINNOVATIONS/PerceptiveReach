@@ -27,6 +27,16 @@ When(/^I click on save changes$/) do
    click_button("save changes") # express the regexp above with the code you wish you had
 end
 
+Then(/^I should see the "(.*?)" widget$/) do |widgetname|
+  title = widgetname
+  expect(page).to have_content'#{title}'
+end
+
+Then(/^I should not see the "(.*?)" widget$/) do |widgetname|
+  title = widgetname
+  expect(page).to have_no_content'#{title}'
+end
+
 #Ambiguous match for When/Then - commenting out Then
 #Then(/^I click the "(.*?)"$/) do |view|
 #  title = view

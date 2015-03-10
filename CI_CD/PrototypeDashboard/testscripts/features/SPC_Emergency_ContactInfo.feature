@@ -5,7 +5,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to delete/close th
 
   Given I navigate to the http://localhost:7003/
   When I click on "Individual View" 
-  Then I should see the widget with list of Veterans
+  Then I should see the widget with list of Veteranss
   When I click on a Veteran's name " Jon Doe"
   Then I see Veteran emergency contact information "Emergency Contact Information"
   When I click on close on the "Emergency Contact Information" widget
@@ -16,7 +16,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to delete/close th
 
   Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's contact information of emergency contact address, emergency contact number, emergency contact alternate number,City, State and Zip code, and emergency contact relationship
   Given I navigate to the http://localhost:7003/
-  When I click on "Individual View ""
+  When I click on "Individual Views"
   Then I should see the widget with list of Veterans
   When I click on individual Veteran
   Then I see Veteran emergency contact information "Emergency Contact Information"

@@ -5,9 +5,9 @@ Feature: As a SPC I want customize my widget page
 
 	Given I navigate to the http://localhost:7003/
 	When I click on "Individual View"
-	And I click on edit of "Widget 2" 
+	And I click on edit on the "Widget 2" widget 
 	When I click on  "Individual View"
-	And I click on edit of "Widget 1" 
+	And I click on edit on the "Widget 1" widget
 	And I change the title on pop-up to "Example"
 	And I click on "OK" button
 	And I click on save button
@@ -21,6 +21,6 @@ Feature: As a SPC I want customize my widget page
 	
 	Given I navigate to the http://localhost:7003/
 	When I click on "Individual View"
-	And I click on delete of "Medication"
+	And I click on close on the "Medication" widget
 	And I click on save changes
 	Then I should not see the widget "Medication"
