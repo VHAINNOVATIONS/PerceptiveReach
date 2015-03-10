@@ -333,11 +333,6 @@ Then(/^I should see "(.*?)"$/) do |arg1|
   expect(page).to have_content(arg1)
 end
 
-Given(/^I navigate to the "(.*?)"$/) do |arg1|
-   visit ('http://localhost:7003')  # express the regexp above with the code you wish you had
-   expect(page).to have_content 'Description'
-end
-
 When(/^the webpage loads$/) do
   expect(page).to have_content('National View') # express the regexp above with the code you wish you had
 end
@@ -529,11 +524,6 @@ end
 Then(/^I should see no additional outreach "(.*?)" in the outreach status column$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
   expect(page).to have_content(arg1)
-end
-Given(/^I am on http:\/\/localhost:(\d+)\/$/) do |arg1|
-  #pending # express the regexp above with the code you wish you had
-  visit ('http://localhost:7003')
-  expect(page).to have_content 'Description'
 end
 
 When(/^I click on edit of widget (\d+)$/) do |arg1|

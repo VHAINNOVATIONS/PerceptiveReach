@@ -3,7 +3,7 @@ Feature: As a SPC I want customize my widget page
 	@EditWidgetPR-1317
     Scenario: I open a web browser and use http://localhost:7003/ to see customize National View Widgets page to edit a widget's title
 
-	Given I am on http://localhost:7003/
+	Given I navigate to the http://localhost:7003/
 	When I click on individual view of "Individual View"
 	And I click on edit of "Widget 2" 
 	When I click on  "Individual View"
@@ -19,7 +19,7 @@ Feature: As a SPC I want customize my widget page
 	
 	Scenario: I open a web browser and use http://localhost:7003/ to see customize Widgets page to delete a widget from widgets page
 	
-	Given I am on http://localhost:7003/
+	Given I navigate to the http://localhost:7003/
 	When I click on individual view of "Individual View"
 	And I click on delete of "Medication"
 	And I click on save changes

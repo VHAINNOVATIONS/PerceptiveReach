@@ -1,7 +1,7 @@
 Feature: As a SPC I want to see a Veteran's contact information so that I can contact
 @Contact_information_PR_1267
 Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's contact information
-  Given I am on http://localhost:7003/
+  Given I navigate to the http://localhost:7003/
   When I click on Individual view 
   Then I should see the widget with list of Veterans "Veteran Roster by VAMC"
   And I should see Individual veteran "Jane Smith"
@@ -11,7 +11,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
   Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's contact information of Name, Last 4 of SSN, Phone, Alternate Phone, Address, City, State and Zip code
   
   
-  Given I am on http://localhost:7003/
+  Given I navigate to the http://localhost:7003/
   When I click on Individual view 
   Then I should see the widget with list of Veterans "Veteran Roster by VAMC"
   And I should see veteran contact information "Veteran Contact"

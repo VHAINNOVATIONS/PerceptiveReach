@@ -2,7 +2,7 @@ Feature: As a Dashboard user, I want the ability to update a Veteran's outreach 
 	
 	@Veteran_Outreach_StatusPR_1380
 Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's Outreach Status in veteran roaster widget
-  Given I am on http://localhost:7003/
+  Given I navigate to the http://localhost:7003/
   When I click on Individual "Individual" view 
   Then I should see the roster widget with list of Veterans "Veteran Roster by VAMC"
   And I should see a column "Outreach Status" in  the veterans roster widget
