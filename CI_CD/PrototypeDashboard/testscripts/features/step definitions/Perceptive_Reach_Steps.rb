@@ -8,6 +8,11 @@ When(/^I click on "(.*?)"$/) do |view|
   page.find(:xpath, "//span[contains(text(),'#{title}')]").click 
 end
 
+When(/^I Click on "(.*?)"$/) do |view|
+  title = view
+  page.find(:xpath, "//span[contains(text(),'#{title}')]").click 
+end
+
 Then(/^I click the "(.*?)"$/) do |view|
   title = view
   page.find(:xpath, "//span[contains(text(),'#{title}')]").click 
