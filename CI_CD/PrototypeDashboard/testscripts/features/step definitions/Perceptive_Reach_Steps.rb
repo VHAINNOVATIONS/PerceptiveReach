@@ -24,7 +24,8 @@ When(/^I click on edit on the "(.*?)" widget$/) do |widgetname|
 end
 
 When(/^I click on "(.*?)" button$/) do |buttonname|
-   find(:button, '*=#{buttonname}').click # need to add code to deal with save changes (1) + add a widget
+  find_button(buttonname).click 
+  #click_button(buttonname) exact match
 end
 
 Then(/^I should see the "(.*?)" widget$/) do |pagecontent|
