@@ -401,7 +401,7 @@ angular.module('ui.models')
                   temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusName + "</option>";
                 options += temp;
               }
-              var select = "<select class='form-control'><option value=''></option>"+ options+ "</select>";
+              var select = "<select class='form-control' style='width: 180px;' id='vet_" + veteransByVAMC[veteran].ReachID + "'><option value=''></option>"+ options+ "</select>";
               record.push(String(select));
                               
               output.push(record);
@@ -414,6 +414,12 @@ angular.module('ui.models')
         }.bind(this));
       },
 
+      saveOutreachData: function (outreachStatus, veteranID) {
+        $http.put('/api/veteranRoster?vetReachID=' + veteranID, {'outreachStatus': outreachStatus})
+        .success(function(data) {
+          alert(data);
+        });  
+      },
       updateVAMC: function (vamc) {
         this.dataModelOptions = this.dataModelOptions ? this.dataModelOptions : {};
         this.dataModelOptions.vamc = vamc;
@@ -2167,56 +2173,6 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtPatientFlags', function () {
-    return {
-      restrict: 'A',
-      replace: true,
-      templateUrl: 'client/components/widget/widgets/patientFlags/patientFlags.html',
-      scope: {
-        data: '='
-      },
-      controller: function ($scope) {
-        $scope.tableOptions = {
-          loading: true,
-          noRowsText: 'No Flags Found',
-          loadingText: 'Load...',
-          initialSorts: [
-            { id: 'Category', dir: '+' }
-          ]
-        };
-        $scope.columns = [
-          { id: 'FlagDesc', key: 'FlagDesc', label: 'Flag', sort: 'string', filter: 'like'},
-          { id: 'Category', key: 'Category', label: 'Cat', sort: 'number'}
-        ];
-      },
-      link: function postLink(scope) {
-        scope.$watch('data', function (data) {
-          if (data) {
-            scope.items = data;
-          }
-        });
-      }
-    };
-  });
-/*
- * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-angular.module('ui.widgets')
   .directive('wtPieChart', function () {
     return {
       restrict: 'A',
@@ -2491,6 +2447,15 @@ angular.module('ui.widgets')
                         "sRowSelect": "single"
                     }
                 });
+                $('select').selectmenu({
+                  select: function( event, ui ) {
+                    // Write back selection to the Veteran Risk table for the veteran
+                    console.log(ui);
+                    console.log(ui.item.element.context.parentElement.id.replace("vet_",""));
+                    scope.widget.dataModel.saveOutreachData(ui.item.index, ui.item.element.context.parentElement.id.replace("vet_",""));                    
+                  }
+                });
+
                 $('#sampleVet tbody').on( 'click', 'tr', function (event) {
                     //console.log( dataTableVet.row( this ).data() );
                     if($(this).hasClass('selected')){
