@@ -5,7 +5,7 @@ end
 
 When(/^I click on "(.*?)"$/) do |view|
   title = view
-  page.find(:xpath, "//span[contains(text(),'#{title}')]").click 
+  page.find(:xpath, "//span[contains(text(),'#{title}')]").click #find and click National/State/Facility/Individual View tabe
 end
 
 When(/^I Click on "(.*?)"$/) do |view|
@@ -26,6 +26,9 @@ end
 When(/^I click on save changes$/) do
    click_button("save changes") # express the regexp above with the code you wish you had
 end
+When(/^I click on "(.*?)" button$/) do |button|
+   click_button('#{button}') # express the regexp above with the code you wish you had
+end
 
 Then(/^I should see the "(.*?)" widget$/) do |widgetname|
   title = widgetname
@@ -35,6 +38,23 @@ end
 Then(/^I should not see the "(.*?)" widget$/) do |widgetname|
   title = widgetname
   expect(page).to have_no_content'#{title}'
+end
+
+And(/^I should see "(.*?)"$/) do |pagecontent|
+  expect(page).to have_no_content'#{pagecontent}'
+end
+
+And(/^I should see "(.*?)" widget$/) do |pagecontent|
+  expect(page).to have_no_content'#{pagecontent}'
+end
+
+When(/^I click on "(.*?)"$/) do |link|
+  page.find(:xpath, "//span[contains(text(),'#{link}')]")
+end
+
+Then(/^I should see my default widgets$/) do
+  #sql query get the default widgets for the user profile
+  expect(page).to have_no_content'Veteran Roster by VAMC'
 end
 
 #Ambiguous match for When/Then - commenting out Then

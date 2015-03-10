@@ -2,10 +2,11 @@ Feature: As a SPC I want to see a Veteran's contact information so that I can co
 @Contact_information_PR_1267
 Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's contact information
   Given I navigate to the http://localhost:7003/
-  When I click on "Individual View"
-  Then I should see the widget with list of Veterans "Veteran Roster by VAMC"
+  When I click on "Individual View" 
+  Then I should see "Veteran Roster by VAMC" widget
   And I should see Individual veteran "Jane Smith"
-  Then I should see veteran contact information "Veteran Contact"
+  Then I click on "Jane Smith"
+  Then I should see "Veteran Contact" widget
   
   @Detail_information_PR_1267
   Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's contact information of Name, Last 4 of SSN, Phone, Alternate Phone, Address, City, State and Zip code
@@ -13,8 +14,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
   
   Given I navigate to the http://localhost:7003/
   When I click on "Individual View"
-  Then I should see the widget with list of Veterans "Veteran Roster by VAMC"
-  And I should see veteran contact information "Veteran Contact"
+  Then I should see "Veteran Roster by VAMC" widget
   And I should see  SSN "Last 4 of SSN" in veteran contact information
   And I should see AP "Alternate Phone" in veteran contact information
   And I should see Address "Address" in veteran contact information
