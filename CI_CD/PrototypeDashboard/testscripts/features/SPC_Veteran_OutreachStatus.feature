@@ -4,6 +4,9 @@ Feature: As a Dashboard user, I want the ability to update a Veteran's outreach 
 Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's Outreach Status in veteran roaster widget
   Given I navigate to the http://localhost:7003/
   When I click on "Individual View" 
+  And I click on "Clear" button
+  And I click the Add a Widget button
+  And I click on "datatable" button
   Then I should see the "Veteran Roster by VAMC" widget
   And I should see "Outreach Status" column
   And I should see "Not Contacted" option in the dropdown
