@@ -51,6 +51,7 @@ end
 
 And(/^I should see "(.*?)" column$/) do |pagecontent|
   expect(page).to have_content(pagecontent)
+  page.save_screenshot('screenshot.png')
 end
 
 Then(/^I should see my default widgets$/) do
