@@ -20,6 +20,7 @@ describe('main test', function () {
   var $compile, $rootScope;
 
   beforeEach(module('ui.widgets'));
+  beforeEach(module('ngTable'));
   beforeEach(inject(function(_$compile_, _$rootScope_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
@@ -41,18 +42,11 @@ describe('main test', function () {
     expect(element.children().hasClass('dataTables_wrapper')).toBe(true);
   });
 
-  /*it('should have medication directive', function() {
+  it('should have medication directive', function() {
     var element = angular.element('<div wt-medication data="widgetData"></div>');
     $compile(element)($rootScope);
     $rootScope.$digest();
-    expect(element.children().hasClass('mlhr-table-wrapper')).toBe(true);
+    expect(element.children().hasClass('ng-table')).toBe(true);
   });
-
-  it('should have patient flag directive', function() {
-    var element = angular.element('<div wt-patient-flag data="widgetData"></div>');
-    $compile(element)($rootScope);
-    $rootScope.$digest();
-    expect(element.children().hasClass('mlhr-table-wrapper')).toBe(true);
-  });*/
 });
 

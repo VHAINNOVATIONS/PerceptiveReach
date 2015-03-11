@@ -1607,7 +1607,9 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <span class=\"dropdown\" on-toggle=\"toggled(open)\">\r" +
     "\n" +
-    "              <button type=\"button\" class=\"btn btn-primary dropdown-toggle\" data-toggle=\"dropdown\" ng-disabled=\"disabled\">Add a Widget<span class=\"caret\"></span>\r" +
+    "              <button type=\"button\" class=\"btn btn-primary dropdown-toggle\" data-toggle=\"dropdown\" ng-disabled=\"disabled\">\r" +
+    "\n" +
+    "                Add a Widget <span class=\"caret\"></span>\r" +
     "\n" +
     "              </button>\r" +
     "\n" +

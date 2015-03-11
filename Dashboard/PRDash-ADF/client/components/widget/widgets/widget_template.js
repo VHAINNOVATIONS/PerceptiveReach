@@ -130,17 +130,25 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
-    "<div class=\"medication\">\r" +
+    "<div>\r" +
     "\n" +
-    "    <mlhr-table \r" +
+    "    <button ng-click=\"tableParams.sorting({})\" class=\"btn btn-default pull-right\">Clear sorting</button>\r" +
     "\n" +
-    "      options=\"tableOptions\"\r" +
+    "\r" +
     "\n" +
-    "      columns=\"columns\" \r" +
+    "    <table ng-table=\"tableParams\" show-filter=\"true\" class=\"table\">\r" +
     "\n" +
-    "      rows=\"items\">\r" +
+    "        <tr ng-repeat=\"meds in data\">\r" +
     "\n" +
-    "    </mlhr-table>\r" +
+    "            <td data-title=\"'Medication'\" sortable=\"Name\" filter=\"{ 'Name': 'text' }\">\r" +
+    "\n" +
+    "                {{meds.Name}}\r" +
+    "\n" +
+    "            </td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "    </table>\r" +
     "\n" +
     "</div>"
   );
@@ -237,12 +245,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
     "<div class=\"patient-flags\">\r" +
-    "\n" +
-    "\t<!-- <input type=\"radio\" ng-model=\"searchTerms\" value=\"0\">  Inactive \r" +
-    "\n" +
-    "    <input type=\"radio\" ng-model=\"searchTerms\" value=\"1\"> Active \r" +
-    "\n" +
-    "    <input type=\"radio\" ng-model=\"searchTerms\" value=\"\"> All  -->\r" +
     "\n" +
     "    <mlhr-table \r" +
     "\n" +

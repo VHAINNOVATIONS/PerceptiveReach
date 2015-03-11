@@ -1,7 +1,11 @@
-<div class="medication">
-    <mlhr-table 
-      options="tableOptions"
-      columns="columns" 
-      rows="items">
-    </mlhr-table>
+<div>
+    <button ng-click="tableParams.sorting({})" class="btn btn-default pull-right">Clear sorting</button>
+
+    <table ng-table="tableParams" show-filter="true" class="table">
+        <tr ng-repeat="meds in data">
+            <td data-title="'Medication'" sortable="Name" filter="{ 'Name': 'text' }">
+                {{meds.Name}}
+            </td>
+        </tr>
+    </table>
 </div>

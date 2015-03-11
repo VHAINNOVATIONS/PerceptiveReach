@@ -242,10 +242,10 @@ angular.module('ui.models')
         this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
 
         this.updateScope('-');
-        this.getAPI();
+        this.getData();
       },
 
-      getAPI: function () {
+      getData: function () {
         var that = this;
         var data = [];
 
