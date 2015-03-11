@@ -11,8 +11,7 @@ end
 Before do |scenario|
 	page.driver.browser.manage.delete_all_cookies
 	#page.driver.browser.manage.window.maximize
-	target_size = Selenium::WebDriver::Dimension.new(1024, 768)
-	page.driver.broswer.manage.window.size = target_size
+	page.driver.browser.manage.window.resize_to(1024, 768)
 end
 
 Capybara.javascript_driver = :chrome
