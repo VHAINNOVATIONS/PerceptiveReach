@@ -83,7 +83,7 @@ angular.module('app')
         title: 'Medication',
         dataModelType: MedicationDataModel,
         style: {
-          width: '15%'
+          width: '20%'
         }
       },
       {
@@ -182,6 +182,7 @@ angular.module('app')
   })
   .value('defaultWidgets', [
       {name: 'medication'},
+      { name: 'patientFlags'},
       { name: 'contact' },
       { name: 'emergency' }, 
       { name: 'datatable' }

@@ -581,10 +581,10 @@ angular.module('ui.models')
         this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
 
         this.updateScope('-');
-        this.getData();
+        this.getAPI();
       },
 
-      getData: function () {
+      getAPI: function () {
         var that = this;
         var data = [];
 
@@ -1827,29 +1827,28 @@ angular.module('ui.widgets')
       scope: {
         data: '=',
       },
-     controller: function ($scope, $filter, ngTableParams) { //['ngTable']
-        var data = $scope.data;
-        
-        $scope.tableParams = new ngTableParams({
-        page: 1,            // show first page
-        count: 5,          // count per page
-        sorting: {
-            name: 'asc'     // initial sorting
-        }
-      }, {
-        total: data.length, // length of data
-        getData: function($defer, params) {
-            // use build-in angular filter
-            var orderedData = params.sorting() ?
-                    $filter('orderBy')(data, params.orderBy()) :
-                    data;
-
-            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        }
-      });
-    }
-  };
-});
+      controller: function ($scope) {
+        $scope.tableOptions = {
+          loading: true,
+          noRowsText: 'No Medications Found',
+          loadingText: 'Load...',
+          initialSorts: [
+            { id: 'Name', dir: '+' }
+          ]
+        };
+        $scope.columns = [
+          { id: 'Name', key: 'Name', label: 'Medication', sort: 'string', filter: 'like', width: '200px'},
+        ];
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.items = data;
+          }
+        });
+      }
+    };
+  });
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -2185,8 +2184,8 @@ angular.module('ui.widgets')
           ]
         };
         $scope.columns = [
-          { id: 'FlagDesc', key: 'FlagDesc', label: 'Flag', sort: 'string', filter: 'like'},
-          { id: 'Category', key: 'Category', label: 'Cat', sort: 'number'}
+          { id: 'FlagDesc', key: 'FlagDesc', label: 'Flag', sort: 'string', filter: 'like', width: '200px'},
+          { id: 'Category', key: 'Category', label: 'Cat', sort: 'number', filter: 'number', width: 'auto'}
         ];
       },
       link: function postLink(scope) {
@@ -2691,25 +2690,17 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
-    "<div>\r" +
+    "<div class=\"medication\">\r" +
     "\n" +
-    "    <button ng-click=\"tableParams.sorting({})\" class=\"btn btn-default pull-right\">Clear sorting</button>\r" +
+    "    <mlhr-table \r" +
     "\n" +
-    "\r" +
+    "      options=\"tableOptions\"\r" +
     "\n" +
-    "    <table ng-table=\"tableParams\" show-filter=\"true\" class=\"table\">\r" +
+    "      columns=\"columns\" \r" +
     "\n" +
-    "        <tr ng-repeat=\"meds in data\">\r" +
+    "      rows=\"items\">\r" +
     "\n" +
-    "            <td data-title=\"'Medication'\" sortable=\"Name\" filter=\"{ 'Name': 'text' }\">\r" +
-    "\n" +
-    "                {{meds.Name}}\r" +
-    "\n" +
-    "            </td>\r" +
-    "\n" +
-    "        </tr>\r" +
-    "\n" +
-    "    </table>\r" +
+    "    </mlhr-table>\r" +
     "\n" +
     "</div>"
   );
@@ -2806,6 +2797,12 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
     "<div class=\"patient-flags\">\r" +
+    "\n" +
+    "\t<!-- <input type=\"radio\" ng-model=\"searchTerms\" value=\"0\">  Inactive \r" +
+    "\n" +
+    "    <input type=\"radio\" ng-model=\"searchTerms\" value=\"1\"> Active \r" +
+    "\n" +
+    "    <input type=\"radio\" ng-model=\"searchTerms\" value=\"\"> All  -->\r" +
     "\n" +
     "    <mlhr-table \r" +
     "\n" +

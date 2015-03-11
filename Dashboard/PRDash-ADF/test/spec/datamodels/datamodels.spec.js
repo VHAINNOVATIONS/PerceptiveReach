@@ -46,7 +46,7 @@ describe('PerceptiveReach DataModels', function () {
 
 	  describe('getData method', function() {
 	    it('check the existence of getData method', function() {
-	      expect(typeof m.getData).toEqual('function');
+	      expect(typeof m.getAPI).toEqual('function');
 	    });
 
 	  });

@@ -1,0 +1,93 @@
+[
+  {
+    "ReachID": 1,
+    "Active": 1,
+    "RxID": 1,
+    "Name": "MPrescription 1",
+    "Dosage": "100mg"
+  },
+  {
+    "ReachID": 1,
+    "Active": 0,
+    "RxID": 2,
+    "Name": "BPrescription 2",
+    "Dosage": "200mg"
+  },
+  {
+    "ReachID": 1,
+    "Active": 1,
+    "RxID": 3,
+    "Name": "RPrescription 3",
+    "Dosage": "300mg"
+  },
+  {
+    "ReachID": 1,
+    "Active": 1,
+    "RxID": 4,
+    "Name": "PPrescription 4",
+    "Dosage": "400mg"
+  },
+  {
+    "ReachID": 1,
+    "Active": 0,
+    "RxID": 5,
+    "Name": "BPrescription 5",
+    "Dosage": "500mg"
+  },
+  {
+    "ReachID": 1,
+    "Active": 1,
+    "RxID": 6,
+    "Name": "XPrescription 6",
+    "Dosage": "100mg"
+  },
+  {
+    "ReachID": 1,
+    "Active": 0,
+    "RxID": 7,
+    "Name": "KPrescription 7",
+    "Dosage": "200mg"
+  },
+  {
+    "ReachID": 1,
+    "Active": 1,
+    "RxID": 8,
+    "Name": "JPrescription 8",
+    "Dosage": "300mg"
+  },
+  {
+    "ReachID": 1,
+    "Active": 1,
+    "RxID": 9,
+    "Name": "QPrescription 9",
+    "Dosage": "400mg"
+  },
+  {
+    "ReachID": 1,
+    "Active": 0,
+    "RxID": 10,
+    "Name": "8Prescription 10",
+    "Dosage": "500mg"
+  },
+  {
+    "ReachID": 1,
+    "Active": 1,
+    "RxID": 11,
+    "Name": "OPrescription 11",
+    "Dosage": "300mg"
+  },
+  {
+    "ReachID": 1,
+    "Active": 1,
+    "RxID": 12,
+    "Name": "APrescription 12",
+    "Dosage": "400mg"
+  },
+  {
+    "ReachID": 1,
+    "Active": 0,
+    "RxID": 13,
+    "Name": "13Prescription 13",
+    "Dosage": "500mg"
+  }
+]

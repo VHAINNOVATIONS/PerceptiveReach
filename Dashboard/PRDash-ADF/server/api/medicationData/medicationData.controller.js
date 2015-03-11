@@ -11,11 +11,27 @@
 
 var _ = require('lodash');
 
+// When the Real API get's implemented remove all lines between //removeBegin & //removeEnd
+
+//removeBegin
+var fs = require('fs');
+var path = require('path');
+var filePath = path.normalize('server/api/medicationData/');
+var fileName = "medication.json";
+//removeEnd
+
 // Get list of things
 exports.index = function(req, res) {
   res.header("content-type: application/json");
-  console.log("----MedicationDataAPI");
-  var data = '[{"ReachID": 1, "Active": 1, "RxID": 1, "Name": "Prescription 1", "Dosage": "100mg"}, {"ReachID": 1, "Active": 0, "RxID": 2, "Name": "Prescription 2","Dosage": "200mg"}, {"ReachID": 1, "Active": 1, "RxID": 3, "Name": "Prescription 3","Dosage": "300mg"}, {"ReachID": 1, "Active": 1, "RxID": 4, "Name": "Prescription 4","Dosage": "400mg"}, {"ReachID": 1, "Active": 0, "RxID": 5, "Name": "Prescription 5","Dosage": "500mg"}, {"ReachID": 1, "Active": 0, "RxID": 6, "Name": "Prescription 6","Dosage": "500mg"}]';
+  //console.log("----MedicationDataAPI");
 
+//removeBegin
+  var data = fs.readFileSync(filePath + fileName, 'utf8');
   res.send(JSON.parse(data));
+//removeEnd
+
+//Begin Real SQL Server API Code
+
+
+//End Real SQL Server API Code
 };
