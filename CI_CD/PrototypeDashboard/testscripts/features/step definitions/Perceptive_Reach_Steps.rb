@@ -28,6 +28,11 @@ When(/^I click on "(.*?)" button$/) do |buttonname|
   #click_button(buttonname) exact match
 end
 
+Then(/^I click the Add a Widget button$/) do
+  find_button('Add a Widget').click 
+  find_button('Add a Widget').click 
+end
+
 Then(/^I should see the "(.*?)" widget$/) do |pagecontent|
   expect(page).to have_content(pagecontent)
 end
