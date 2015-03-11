@@ -5,5 +5,5 @@ Given I navigate to the http://localhost:7003/
 When I click on "Individual View"
 Then I click on "Add a Widget" button
 And I add the "time" widget
-And I click "save changes" button
+And I click on "save changes" button
 Then I should see "time" widget

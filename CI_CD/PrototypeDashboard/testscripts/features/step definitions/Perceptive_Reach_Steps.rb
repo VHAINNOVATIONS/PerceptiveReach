@@ -28,6 +28,10 @@ When(/^I click on "(.*?)" button$/) do |buttonname|
   #click_button(buttonname) exact match
 end
 
+And(/^I add the "(.*?)" widget$/) do |widgetname|
+  find_button(widgetname).click 
+end
+
 Then(/^I should see the "(.*?)" widget$/) do |pagecontent|
   expect(page).to have_content(pagecontent)
 end
@@ -170,14 +174,6 @@ Then(/^I login as a Clinician$/) do
 end
 
 Then(/^I should see form that lists all of the data elements I can update in a patient's record$/) do
-  pending # express the regexp above with the code you wish you had
-end
-
-When(/^I click "(.*?)" button$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
-end
-
-Then(/^I click on the "(.*?)"$/) do |arg1|
   pending # express the regexp above with the code you wish you had
 end
 
