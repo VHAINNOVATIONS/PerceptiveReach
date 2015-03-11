@@ -5,7 +5,7 @@ Feature: As a SPC I want customize my widget page
 
 	Given I navigate to the http://localhost:7003/
 	When I click on "Individual View"
-	And I click on edit on "Medication" widget
+	And I click on edit on the "Medication" widget
 	And I change the title to "Prescriptions" on the pop-up
 	And I click on "OK" button
 	And I click on "save changes" button

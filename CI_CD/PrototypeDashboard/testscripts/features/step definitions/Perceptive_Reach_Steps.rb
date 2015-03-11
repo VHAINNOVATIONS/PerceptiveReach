@@ -58,7 +58,7 @@ And(/^I add the "(.*?)" widget$/) do |widgetname|
 end
 
 And(/^I change the title to "(.*?)" on the pop\-up$/) do |widgetname|
-  fill_in('widgetTitle',:with=>'widgetname')
+  fill_in('widgetTitle',:with=>widgetname)
 end
 
 #pending steps
