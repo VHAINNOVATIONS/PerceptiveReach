@@ -63,9 +63,8 @@ And(/^I change the title to "(.*?)" on the pop\-up$/) do |widgetname|
 end
 
 And(/^I should see "(.*?)" option in the dropdown$/) do |dropdownoption|
-  #vet_652427-menu vet_652427-menu
-  page.find(:xpath, "//ul[@id='vet_652427-menu']")
-  #find_field('vet_652427-button').should have_content(dropdownoption)
+  page.find(:xpath, "//*[@id='vet_652427-button']/span[1]").click #click the dropdown - vet_#-button need to figure param for #value
+  expect(page).to have_content(dropdownoption)
 end
 
 #pending steps
@@ -154,10 +153,6 @@ Then(/^I select the data attributes$/) do
 end
 
 Then(/^I should see the groups of at\-risk Veterans filtered by data attributes$/) do
-  pending # express the regexp above with the code you wish you had
-end
-
-Then(/^I click "(.*?)" button$/) do |arg1|
   pending # express the regexp above with the code you wish you had
 end
 
