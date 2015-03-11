@@ -41,12 +41,10 @@ Then(/^I should not see the "(.*?)" widget$/) do |pagecontent|
 end
 
 And(/^I should see "(.*?)"$/) do |pagecontent|
-  page.find(pagecontent)
-  #expect(page).to have_content(pagecontent)
+  expect(page).to have_content(pagecontent)
 end
 
 And(/^I should see "(.*?)" column$/) do |pagecontent|
-  #page.find(pagecontent)
   expect(page).to have_content(pagecontent)
 end
 
