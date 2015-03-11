@@ -61,6 +61,12 @@ And(/^I change the title to "(.*?)" on the pop\-up$/) do |widgetname|
   fill_in('widgetTitle',:with=>widgetname)
 end
 
+And(/^I should see "(.*?)" option in the dropdown$/) do |dropdownoption|
+  #vet_652427-menu vet_652427-menu
+  page.find(:xpath, "//ul[@id='vet_652427-menu']")
+  #find_field('vet_652427-button').should have_content(dropdownoption)
+end
+
 #pending steps
 Then(/^I should see search function for Veteran's health record$/) do
   pending # express the regexp above with the code you wish you had
@@ -239,10 +245,6 @@ Then(/^I should see service refused "(.*?)" in the outreach status column$/) do 
 end
 
 Then(/^I should see no additional outreach "(.*?)" in the outreach status column$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
-end
-
-Then(/^I should see "(.*?)" in the outreach status dropdown$/) do |arg1|
   pending # express the regexp above with the code you wish you had
 end
 
