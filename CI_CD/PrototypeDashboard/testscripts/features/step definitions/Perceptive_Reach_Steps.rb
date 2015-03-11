@@ -6,11 +6,13 @@ end
 When(/^I click on "(.*?)"$/) do |view|
   title = view
   page.find(:xpath, "//span[contains(text(),'#{title}')]").click #find and click National/State/Facility/Individual View tabe
+  page.save_screenshot('screenshot1.png')
 end
 
 When(/^I Click on "(.*?)"$/) do |view|
   title = view
   page.find(:xpath, "//span[contains(text(),'#{title}')]").click #find and click National/State/Facility/Individual View tabe
+  page.save_screenshot('screenshot2.png')
 end
 
 When(/^I click on close on the "(.*?)" widget$/) do |widgetname|
@@ -50,7 +52,7 @@ And(/^I should see "(.*?)"$/) do |pagecontent|
 end
 
 And(/^I should see "(.*?)" column$/) do |pagecontent|
-  page.save_screenshot('screenshot.png')
+  page.save_screenshot('screenshot3.png')
   expect(page).to have_content(pagecontent)
 end
 
