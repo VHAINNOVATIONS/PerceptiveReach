@@ -5,13 +5,11 @@ Feature: As a SPC I want customize my widget page
 
 	Given I navigate to the http://localhost:7003/
 	When I click on "Individual View"
-	And I click on edit on "Widget 2" widget 
-	When I click on  "Individual View"
-	And I click on edit on "Widget 1" widget
-	And I change the title on pop-up to "Example"
+	And I click on edit on "Medication" widget
+	And I change the title to "Prescriptions" on the pop-up
 	And I click on "OK" button
-	And I click on save button
-	Then I should see the widget 1 title change to "Example"
+	And I click on "save changes" button
+	Then I should see the "Prescriptions" widget
 	
 		
 			

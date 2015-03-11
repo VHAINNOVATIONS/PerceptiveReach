@@ -57,6 +57,10 @@ And(/^I add the "(.*?)" widget$/) do |widgetname|
   find_button(widgetname).click 
 end
 
+And(/^I change the title to "(.*?)" on the pop\-up$/) do |widgetname|
+  fill_in('widgetTitle',:with=>'widgetname')
+end
+
 #pending steps
 Then(/^I should see search function for Veteran's health record$/) do
   pending # express the regexp above with the code you wish you had
@@ -246,9 +250,6 @@ When(/^I click on edit on "(.*?)" widget$/) do |arg1|
   pending # express the regexp above with the code you wish you had
 end
 
-When(/^I change the title on pop\-up to "(.*?)"$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
-end
 
 When(/^I click on save button$/) do
   pending # express the regexp above with the code you wish you had

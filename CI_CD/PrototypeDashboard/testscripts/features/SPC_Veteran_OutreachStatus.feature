@@ -5,9 +5,9 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
   Given I navigate to the http://localhost:7003/
   When I click on "Individual View" 
   Then I should see the "Veteran Roster by VAMC" widget
-  And I should see a column "Outreach Status" in  the veterans roster widget
-  And I should see not contacted "Not Contacted" in the outreach status dropdown
-  And I should see outreach initiated "Outreach Initiated" in the outreach status column
-  And I should see outreach attempted "Outreach Attempted" in the outreach status column
-  And I should see service refused "Services Refused" in the outreach status column
-  And I should see no additional outreach "No Additional Outreach Required" in the outreach status column
+  And I should see "Outreach Status" column
+  And I should see "Not Contacted" in the outreach status dropdown
+  And I should see "Outreach Initiated" in the outreach status column
+  And I should see "Outreach Attempted" in the outreach status column
+  And I should see "Services Refused" in the outreach status column
+  And I should see "No Additional Outreach Required" in the outreach status column
