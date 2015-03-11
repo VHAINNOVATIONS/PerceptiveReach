@@ -19,6 +19,6 @@ Feature: As a SPC I want customize my widget page
 	
 	Given I navigate to the http://localhost:7003/
 	When I click on "Individual View"
-	And I click on close on the "Medication" widget
+	And I click on close on the "Prescriptions" widget
 	And I click on "save changes" button
-	Then I should not see the "Medication" widget
+	Then I should not see the "Prescriptions" widget
