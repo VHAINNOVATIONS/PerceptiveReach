@@ -66,7 +66,7 @@ angular.module('app')
           vamc: 1
         },
         style: {
-          width: '50%'
+          width: '55%'
         }
       },
       {

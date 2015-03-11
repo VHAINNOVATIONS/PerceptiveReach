@@ -11,6 +11,7 @@
 
 var _ = require('lodash');
 var sql = require('mssql');
+var dataFormatter = require('../../components/formatUtil/formatUtil.service.js');
 
 // Get list of things
 exports.index = function(req, res) {
@@ -50,8 +51,14 @@ exports.index = function(req, res) {
             }
 
             console.log(recordset.length);
-
-            res.send(recordset);
+            var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
+            //console.log(jsonRecordSet);
+            for (var record in jsonRecordSet) {
+                jsonRecordSet[record].Phone = dataFormatter.formatData(jsonRecordSet[record].Phone);
+                jsonRecordSet[record].PhoneWork = dataFormatter.formatData(jsonRecordSet[record].PhoneWork);
+            }
+            res.send(jsonRecordSet);
+            //res.send(recordset);
         });
 
     });
