@@ -17,26 +17,27 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtMedication', function () {
+  .directive('wtPatientFlags', function () {
     return {
       restrict: 'A',
       replace: true,
-      templateUrl: 'client/components/widget/widgets/medication/medication.html',
+      templateUrl: 'client/components/widget/widgets/patientFlags/patientFlags.html',
       scope: {
-        data: '=',
+        data: '='
       },
       controller: function ($scope) {
         $scope.tableOptions = {
           loading: true,
-          noRowsText: 'No Medications Found',
+          noRowsText: 'No Flags Found',
           loadingText: 'Load...',
           bodyHeight: 200,
-          /*initialSorts: [
-            { id: 'Name', dir: '+' }
-          ]*/
+          initialSorts: [
+            { id: 'Category', dir: '+' }
+          ]
         };
         $scope.columns = [
-          { id: 'Name', key: 'Name', label: 'Medication', sort: 'string', filter: 'like', width: '200px'},
+          { id: 'FlagDesc', key: 'FlagDesc', label: 'Flag', sort: 'string', filter: 'like', width: '200px'},
+          { id: 'Category', key: 'Category', label: 'Cat', sort: 'number', filter: 'number', width: '10px'}
         ];
       },
       link: function postLink(scope) {
@@ -45,6 +46,8 @@ angular.module('ui.widgets')
             scope.items = data;
           }
         });
+
+        scope.updateCategory
       }
     };
   });
