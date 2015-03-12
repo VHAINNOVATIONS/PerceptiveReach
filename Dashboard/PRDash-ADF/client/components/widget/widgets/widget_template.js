@@ -32,6 +32,60 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/contact/contact.html",
+    "<div>\r" +
+    "\n" +
+    "    <div>\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data[0].firstName}} {{data[0].lastName}}<br>\r" +
+    "\n" +
+    "    \t<b>Last 4 of SSN:</b> {{data[0].ssn}}<br>\r" +
+    "\n" +
+    "    \t<b>Phone:</b> {{data[0].phone}}<br>\r" +
+    "\n" +
+    "    \t<b>Alternate Phone:</b> {{data[0].altPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].address}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data[0].city}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data[0].state}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data[0].zipCode}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/emergencyContact/emergencyContact.html",
+    "<div>\r" +
+    "\n" +
+    "    <div>\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data[0].NameOfContact}}<br>\r" +
+    "\n" +
+    "    \t<b>Phone:</b> {{data[0].Phone}}<br>\r" +
+    "\n" +
+    "    \t<b>Alternate Phone:</b> {{data[0].PhoneWork}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].StreetAddress1}}<br>\r" +
+    "\n" +
+    "        <b>Address:</b> {{data[0].StreetAddress2}}<br>\r" +
+    "\n" +
+    "        <b>Address:</b> {{data[0].StreetAddress3}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data[0].City}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data[0].State}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data[0].Zip}}-{{data[0].Zip4}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/fluid/fluid.html",
     "<div class=\"demo-widget-fluid\">\r" +
     "\n" +
@@ -71,6 +125,22 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "    </div>\r" +
     "\n" +
     "    <div wt-line-chart chart=\"chart\"></div>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/medication/medication.html",
+    "<div class=\"medication\">\r" +
+    "\n" +
+    "    <mlhr-table \r" +
+    "\n" +
+    "      options=\"tableOptions\"\r" +
+    "\n" +
+    "      columns=\"columns\" \r" +
+    "\n" +
+    "      rows=\"items\">\r" +
+    "\n" +
+    "    </mlhr-table>\r" +
     "\n" +
     "</div>"
   );
@@ -165,6 +235,22 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
+    "<div class=\"patient-flags\">\r" +
+    "\n" +
+    "    <mlhr-table \r" +
+    "\n" +
+    "      options=\"tableOptions\"\r" +
+    "\n" +
+    "      columns=\"columns\" \r" +
+    "\n" +
+    "      rows=\"items\">\r" +
+    "\n" +
+    "    </mlhr-table>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/pieChart/pieChart.html",
     "<div>\r" +
     "\n" +
@@ -184,11 +270,14 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    x=\"xFunction()\"\r" +
     "\n" +
-    "    y=\"yFunction()\">\r" +
+    "    y=\"yFunction()\"\r" +
+    "\n" +
+    "    nodata=\"Loading Data...\">\r" +
     "\n" +
     "</nvd3-pie-chart>\r" +
     "\n" +
-    "</div>"
+    "</div>\r" +
+    "\n"
   );
 
   $templateCache.put("client/components/widget/widgets/random/random.html",
@@ -263,6 +352,66 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "<div>\r" +
     "\n" +
     "    <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"\" id=\"sampleVet\" width=\"100%\"></table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/veteranRosterTable/veteranRosterTableWidgetSettingsTemplate.html",
+    "<div class=\"modal-header\">\r" +
+    "\n" +
+    "    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
+    "\n" +
+    "  <h3>Widget Options <small>{{widget.title}}</small></h3>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "<div class=\"modal-body\">\r" +
+    "\n" +
+    "    <form name=\"form\" novalidate class=\"form-horizontal\">\r" +
+    "\n" +
+    "        <div class=\"form-group\">\r" +
+    "\n" +
+    "            <label for=\"widgetTitle\" class=\"col-sm-2 control-label\">Title</label>\r" +
+    "\n" +
+    "            <div class=\"col-sm-10\">\r" +
+    "\n" +
+    "                <input type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <label for=\"widgetVAMC\" class=\"col-sm-2 control-label\">VAMC</label>\r" +
+    "\n" +
+    "            <div class=\"col-sm-10\">\r" +
+    "\n" +
+    "                <select class=\"form-control\" ng-model=\"result.dataModel.vamc\">\r" +
+    "\n" +
+    "                    <option ng-repeat=\"vamc in listOfVAMC\" value=\"{{vamc.VAMCID}}\">{{vamc.VAMC}}</option>\r" +
+    "\n" +
+    "                </select>\r" +
+    "\n" +
+    "                <!--<input type=\"text\" class=\"form-control\" name=\"widgetVAMC\" ng-model=\"result.dataModel.vamc\">-->\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div ng-if=\"widget.settingsModalOptions.partialTemplateUrl\"\r" +
+    "\n" +
+    "             ng-include=\"widget.settingsModalOptions.partialTemplateUrl\"></div>\r" +
+    "\n" +
+    "    </form>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "<div class=\"modal-footer\">\r" +
+    "\n" +
+    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
+    "\n" +
+    "    <button type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
     "\n" +
     "</div>"
   );

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-angular.module('ui.widgets', ['datatorrent.mlhrTable', 'nvd3ChartDirectives']);
+angular.module('ui.widgets', ['datatorrent.mlhrTable', 'nvd3ChartDirectives', 'ngTable']);
 angular.module('ui.websocket', ['ui.visibility', 'ui.notify']);
 angular.module('ui.models', ['ui.visibility', 'ui.websocket']);
 
@@ -37,68 +37,6 @@ angular.module('ui.models', ['ui.visibility', 'ui.websocket']);
 'use strict';
 
 angular.module('ui.models')
-  .factory('VeteranRosterDataModel', function ($http, WidgetDataModel) {
-    function VeteranRosterDataModel() {
-    }
-
-    VeteranRosterDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    VeteranRosterDataModel.prototype.constructor = WidgetDataModel;
-
-    angular.extend(VeteranRosterDataModel.prototype, {
-      init: function () {
-        var dataModelOptions = this.dataModelOptions;
-        this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
-
-        this.updateScope([]);
-        this.getData();
-      },
-
-      getData: function () {
-        var that = this;
-        var data = [];
-
-        $http.get('/api/veteranRoster?id=' + this.vamc)
-        .success(function(veteransByVAMC) {
-          var output = [];
-          var vamc = "";
-          for (var veteran in veteransByVAMC) {
-              vamc = veteransByVAMC[0].VAMC
-              //console.log("branchName: " + veteransByBranch[branchCount].key + " count: " + veteransByBranch[branchCount].y);
-              //output[veteransByBranch[branchCount].key.replace(/\s/g,'')]=veteransByBranch[branchCount].y;
-              var record = [];
-              var fullName = veteransByVAMC[veteran].LastName + ", " +veteransByVAMC[veteran].FirstName + " " + veteransByVAMC[veteran].MiddleName; 
-              record.push(String(fullName));
-              record.push(String(veteransByVAMC[veteran].SSN));
-              record.push(String(veteransByVAMC[veteran].Phone));
-              record.push(String(veteransByVAMC[veteran].DateIdentifiedRisk));
-              record.push(String(veteransByVAMC[veteran].RiskLevel));                
-              output.push(record);
-          }
-          //$scope.VAMC = vamc;
-          //console.log($scope.VAMC);
-          //$scope.dataSetVet = output;
-          //console.log($scope.dataSetVet);
-          output.sort(function(a,b) {return (a.RiskLevel > b.RiskLevel) ? 1 : ((b.RiskLevel > a.RiskLevel) ? -1 : 0);} );
-          data = output;
-          console.log(data);
-          this.updateScope(data);
-        }.bind(this));
-      },
-
-      updateVAMC: function (vamc) {
-        this.dataModelOptions = this.dataModelOptions ? this.dataModelOptions : {};
-        this.dataModelOptions.vamc = vamc;
-        this.vamc = vamc;
-      },
-
-      destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
-        //$http.cancel(this.intervalPromise);
-      }
-    });
-
-    return VeteranRosterDataModel;
-  })
   .factory('RandomBaseDataModel', function (WidgetDataModel, Visibility) {
     function RandomBaseDataModel() {
     }
@@ -398,6 +336,277 @@ angular.module('ui.models')
     };
 
     return RandomTimeSeriesDataModel;
+  });
+/*
+ * Copyright (c) 2015 Perceptive Reach License ALL Rights Reserved.
+ *
+ * Not sure what license goes here yet.
+ */
+
+'use strict';
+
+angular.module('ui.models')
+  .factory('VeteranRosterDataModel', function ($http, WidgetDataModel) {
+    function VeteranRosterDataModel() {
+    }
+
+    VeteranRosterDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    VeteranRosterDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(VeteranRosterDataModel.prototype, {
+      init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
+
+        this.updateScope([]);
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        var outreachStatus = null;
+
+        $http.get('/api/getListOfOutreachStatus')
+        .success(function(listOfOutreachStatus) {
+          outreachStatus = listOfOutreachStatus;
+        }.bind(this));
+
+        $http.get('/api/veteranRoster?id=' + this.vamc)
+        .success(function(veteransByVAMC) {
+          var output = [];
+          var vamc = "";
+          
+          while(outreachStatus == null){} // wait until outreachStatus is not null
+
+          console.log("outreachStatus -  ");
+          console.log(outreachStatus);  
+          for (var veteran in veteransByVAMC) {
+              vamc = veteransByVAMC[0].VAMC
+              var record = [];
+              var fullName = veteransByVAMC[veteran].LastName + ", " +veteransByVAMC[veteran].FirstName + " " + veteransByVAMC[veteran].MiddleName; 
+              record.push(String(fullName));
+              record.push(String(veteransByVAMC[veteran].SSN));
+              record.push(String(veteransByVAMC[veteran].Phone));
+              record.push(String(veteransByVAMC[veteran].DateIdentifiedRisk));
+              record.push(String(veteransByVAMC[veteran].RiskLevel)); 
+              //record.push(String(veteransByVAMC[veteran].OutreachStatus));
+              var options = "";
+              var temp = "";
+              var selected = " selected='selected'";
+              for(var outreachStat in outreachStatus){
+                if(veteransByVAMC[veteran].OutreachStatus == outreachStatus[outreachStat].OutReachStatusID)
+                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + selected + ">" + outreachStatus[outreachStat].StatusName + "</option>";
+                else
+                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusName + "</option>";
+                options += temp;
+              }
+              var select = "<select class='form-control' style='width: 180px;' id='vet_" + veteransByVAMC[veteran].ReachID + "'><option value=''></option>"+ options+ "</select>";
+              record.push(String(select));
+                              
+              output.push(record);
+          }
+          output.sort(function(a,b) {return (a.RiskLevel > b.RiskLevel) ? 1 : ((b.RiskLevel > a.RiskLevel) ? -1 : 0);} );
+          var columnHeaders = [];
+          data = [this.vamc, output, outreachStatus];//{vamc : this.vamc, roster : output};
+          console.log(data);
+          this.updateScope(data);
+        }.bind(this));
+      },
+
+      saveOutreachData: function (outreachStatus, veteranID) {
+        $http.put('/api/veteranRoster?vetReachID=' + veteranID, {'outreachStatus': outreachStatus})
+        .success(function(data) {
+          alert(data);
+        });  
+      },
+      updateVAMC: function (vamc) {
+        this.dataModelOptions = this.dataModelOptions ? this.dataModelOptions : {};
+        this.dataModelOptions.vamc = vamc;
+        this.vamc = vamc;
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+        //$http.cancel(this.intervalPromise);
+      }
+    });
+
+    return VeteranRosterDataModel;
+  })      
+  .factory('TotalRisksDataModel', function ($http, WidgetDataModel) {
+    function TotalRisksDataModel() {
+    }
+
+    TotalRisksDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    TotalRisksDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(TotalRisksDataModel.prototype, {
+      init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
+
+        this.updateScope([]);
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/totalRiskByVAMCPieChart?id='+ this.vamc)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      updateVAMC: function (vamc) {
+        this.dataModelOptions = this.dataModelOptions ? this.dataModelOptions : {};
+        this.dataModelOptions.vamc = vamc;
+        this.vamc = vamc;
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return TotalRisksDataModel;
+  })
+.factory('ContactBaseDataModel', function ($http, WidgetDataModel) {
+    function ContactBaseDataModel() {
+    }
+
+    ContactBaseDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    ContactBaseDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(ContactBaseDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        //this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
+
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/vetContactData')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return ContactBaseDataModel;
+  })
+.factory('ContactEmergencyDataModel', function ($http, WidgetDataModel) {
+    function ContactEmergencyDataModel() {
+    }
+
+    ContactEmergencyDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    ContactEmergencyDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(ContactEmergencyDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/vetEmergencyData?id='+ this.reachID)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return ContactEmergencyDataModel;
+  }).factory('PatientFlagDataModel', function ($http, WidgetDataModel) {
+    function PatientFlagDataModel() {
+    }
+
+    PatientFlagDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    PatientFlagDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(PatientFlagDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/patientFlagData')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return PatientFlagDataModel;
+  }).factory('MedicationDataModel', function ($http, WidgetDataModel) {
+    function MedicationDataModel() {
+    }
+
+    MedicationDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    MedicationDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(MedicationDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/medicationData')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return MedicationDataModel;
   });
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
@@ -1325,6 +1534,64 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
+  .directive('wtContact', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/contact/contact.html',
+      scope: {
+        data: '=data'
+      }     
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtEmergencyContact', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/emergencyContact/emergencyContact.html',
+      scope: {
+        data: '=data'
+      }     
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
   .directive('wtFluid', function () {
     return {
       restrict: 'A',
@@ -1534,6 +1801,56 @@ angular.module('ui.widgets')
 
           if (chart.data) {
             draw(chart);
+          }
+        });
+      }
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtMedication', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/medication/medication.html',
+      scope: {
+        data: '=',
+      },
+      controller: function ($scope) {
+        $scope.tableOptions = {
+          loading: true,
+          noRowsText: 'No Medications Found',
+          loadingText: 'Load...',
+          bodyHeight: 200,
+          /*initialSorts: [
+            { id: 'Name', dir: '+' }
+          ]*/
+        };
+        $scope.columns = [
+          { id: 'Name', key: 'Name', label: 'Medication', sort: 'string', filter: 'like', width: '200px'},
+        ];
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.items = data;
           }
         });
       }
@@ -1856,6 +2173,59 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
+  .directive('wtPatientFlags', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/patientFlags/patientFlags.html',
+      scope: {
+        data: '='
+      },
+      controller: function ($scope) {
+        $scope.tableOptions = {
+          loading: true,
+          noRowsText: 'No Flags Found',
+          loadingText: 'Load...',
+          bodyHeight: 200,
+          initialSorts: [
+            { id: 'Category', dir: '+' }
+          ]
+        };
+        $scope.columns = [
+          { id: 'FlagDesc', key: 'FlagDesc', label: 'Flag', sort: 'string', filter: 'like', width: '200px'},
+          { id: 'Category', key: 'Category', label: 'Cat', sort: 'number', filter: 'number', width: '10px'}
+        ];
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.items = data;
+          }
+        });
+
+        scope.updateCategory
+      }
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
   .directive('wtPieChart', function () {
     return {
       restrict: 'A',
@@ -2105,13 +2475,14 @@ angular.module('ui.widgets')
       templateUrl: 'client/components/widget/widgets/veteranRosterTable/veteranRosterTable.html',
       link: function postLink(scope, element, attr) {
         var unwatch = scope.$watch('widgetData', function(v){
-          console.log("inside Veteran Roster Table watch");
+          console.log("inside veteran roster directive before check");
           console.log(v);
-          console.log(scope.widgetData);
             if(v != null && v.length >0){
                 unwatch();
+                console.log("inside veteran roster directive after check is positive");
+                console.log(scope.widgetData);
                 var dataTableVet = $(element).children().dataTable( {
-                    "data": scope.widgetData,
+                    "data": scope.widgetData[1],
                     "scrollY":        "200px",
                     "scrollCollapse": true,
                     "paging":         false,
@@ -2120,7 +2491,8 @@ angular.module('ui.widgets')
                         { "title": "Veteran SSN" },
                         { "title": "Veteran Phone" },
                         { "title": "Date First identified", "class": "center" },
-                        { "title": "Statistical Risk Level", "class": "center" }
+                        { "title": "Statistical Risk Level", "class": "center" },
+                        { "title": "Outreach Status", "class": "center" }
                         //{ "title": "Last VA Clinician Visit", "class": "center" }
                     ],
                     dom: 'T<"clear">lfrtip',
@@ -2128,6 +2500,15 @@ angular.module('ui.widgets')
                         "sRowSelect": "single"
                     }
                 });
+                $('select').selectmenu({
+                  select: function( event, ui ) {
+                    // Write back selection to the Veteran Risk table for the veteran
+                    console.log(ui);
+                    console.log(ui.item.element.context.parentElement.id.replace("vet_",""));
+                    scope.widget.dataModel.saveOutreachData(ui.item.index, ui.item.element.context.parentElement.id.replace("vet_",""));                    
+                  }
+                });
+
                 $('#sampleVet tbody').on( 'click', 'tr', function (event) {
                     //console.log( dataTableVet.row( this ).data() );
                     if($(this).hasClass('selected')){
@@ -2153,6 +2534,49 @@ angular.module('ui.widgets')
       }
     };
   });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.dashboard')
+  .controller('VeteranRosterTableWidgetSettingsCtrl', ['$scope', '$modalInstance', '$http','widget', function ($scope, $modalInstance, $http, widget) {
+    // add widget to scope
+    $scope.widget = widget;
+
+    // set up result object
+    $scope.result = jQuery.extend(true, {}, widget);
+    console.log($scope.result);
+
+    $http.get('/api/getListOfVAMC')
+        .success(function(listOfVAMC) {
+          $scope.listOfVAMC = listOfVAMC;
+        });
+
+    $scope.ok = function () {      
+      $modalInstance.close($scope.result);
+      $scope.widget.dataModel.updateVAMC($scope.result.dataModel.vamc);
+      $scope.widget.dataModel.getData();
+
+    };
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  }]);
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("client/components/widget/widgets/barChart/barChart.html",
@@ -2183,6 +2607,60 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "            tooltips=\"false\">\r" +
     "\n" +
     "    </nvd3-multi-bar-chart>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/contact/contact.html",
+    "<div>\r" +
+    "\n" +
+    "    <div>\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data[0].firstName}} {{data[0].lastName}}<br>\r" +
+    "\n" +
+    "    \t<b>Last 4 of SSN:</b> {{data[0].ssn}}<br>\r" +
+    "\n" +
+    "    \t<b>Phone:</b> {{data[0].phone}}<br>\r" +
+    "\n" +
+    "    \t<b>Alternate Phone:</b> {{data[0].altPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].address}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data[0].city}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data[0].state}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data[0].zipCode}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/emergencyContact/emergencyContact.html",
+    "<div>\r" +
+    "\n" +
+    "    <div>\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data[0].NameOfContact}}<br>\r" +
+    "\n" +
+    "    \t<b>Phone:</b> {{data[0].Phone}}<br>\r" +
+    "\n" +
+    "    \t<b>Alternate Phone:</b> {{data[0].PhoneWork}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].StreetAddress1}}<br>\r" +
+    "\n" +
+    "        <b>Address:</b> {{data[0].StreetAddress2}}<br>\r" +
+    "\n" +
+    "        <b>Address:</b> {{data[0].StreetAddress3}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data[0].City}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data[0].State}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data[0].Zip}}-{{data[0].Zip4}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
     "\n" +
     "</div>"
   );
@@ -2226,6 +2704,22 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "    </div>\r" +
     "\n" +
     "    <div wt-line-chart chart=\"chart\"></div>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/medication/medication.html",
+    "<div class=\"medication\">\r" +
+    "\n" +
+    "    <mlhr-table \r" +
+    "\n" +
+    "      options=\"tableOptions\"\r" +
+    "\n" +
+    "      columns=\"columns\" \r" +
+    "\n" +
+    "      rows=\"items\">\r" +
+    "\n" +
+    "    </mlhr-table>\r" +
     "\n" +
     "</div>"
   );
@@ -2320,6 +2814,22 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
+    "<div class=\"patient-flags\">\r" +
+    "\n" +
+    "    <mlhr-table \r" +
+    "\n" +
+    "      options=\"tableOptions\"\r" +
+    "\n" +
+    "      columns=\"columns\" \r" +
+    "\n" +
+    "      rows=\"items\">\r" +
+    "\n" +
+    "    </mlhr-table>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/pieChart/pieChart.html",
     "<div>\r" +
     "\n" +
@@ -2339,11 +2849,14 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    x=\"xFunction()\"\r" +
     "\n" +
-    "    y=\"yFunction()\">\r" +
+    "    y=\"yFunction()\"\r" +
+    "\n" +
+    "    nodata=\"Loading Data...\">\r" +
     "\n" +
     "</nvd3-pie-chart>\r" +
     "\n" +
-    "</div>"
+    "</div>\r" +
+    "\n"
   );
 
   $templateCache.put("client/components/widget/widgets/random/random.html",
@@ -2418,6 +2931,66 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "<div>\r" +
     "\n" +
     "    <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"\" id=\"sampleVet\" width=\"100%\"></table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/veteranRosterTable/veteranRosterTableWidgetSettingsTemplate.html",
+    "<div class=\"modal-header\">\r" +
+    "\n" +
+    "    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
+    "\n" +
+    "  <h3>Widget Options <small>{{widget.title}}</small></h3>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "<div class=\"modal-body\">\r" +
+    "\n" +
+    "    <form name=\"form\" novalidate class=\"form-horizontal\">\r" +
+    "\n" +
+    "        <div class=\"form-group\">\r" +
+    "\n" +
+    "            <label for=\"widgetTitle\" class=\"col-sm-2 control-label\">Title</label>\r" +
+    "\n" +
+    "            <div class=\"col-sm-10\">\r" +
+    "\n" +
+    "                <input type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <label for=\"widgetVAMC\" class=\"col-sm-2 control-label\">VAMC</label>\r" +
+    "\n" +
+    "            <div class=\"col-sm-10\">\r" +
+    "\n" +
+    "                <select class=\"form-control\" ng-model=\"result.dataModel.vamc\">\r" +
+    "\n" +
+    "                    <option ng-repeat=\"vamc in listOfVAMC\" value=\"{{vamc.VAMCID}}\">{{vamc.VAMC}}</option>\r" +
+    "\n" +
+    "                </select>\r" +
+    "\n" +
+    "                <!--<input type=\"text\" class=\"form-control\" name=\"widgetVAMC\" ng-model=\"result.dataModel.vamc\">-->\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div ng-if=\"widget.settingsModalOptions.partialTemplateUrl\"\r" +
+    "\n" +
+    "             ng-include=\"widget.settingsModalOptions.partialTemplateUrl\"></div>\r" +
+    "\n" +
+    "    </form>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "<div class=\"modal-footer\">\r" +
+    "\n" +
+    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
+    "\n" +
+    "    <button type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
     "\n" +
     "</div>"
   );
