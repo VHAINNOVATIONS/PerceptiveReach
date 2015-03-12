@@ -18,7 +18,8 @@
     "angularjs-nvd3-directives": "~0.0.7",
     "visibilityjs": "~1.2.1",
     "pines-notify": "~2.0.1",
-    "angular-pines-notify": "~1.0.0"
+    "angular-pines-notify": "~1.0.0",
+    "ng-table": "~0.5.4"
   },
   "devDependencies": {
     "angular-route": "~1.3",
