@@ -24,13 +24,14 @@ angular.module('ui.widgets')
       templateUrl: 'client/components/widget/widgets/veteranRosterTable/veteranRosterTable.html',
       link: function postLink(scope, element, attr) {
         var unwatch = scope.$watch('widgetData', function(v){
-          console.log("inside Veteran Roster Table watch");
+          console.log("inside veteran roster directive before check");
           console.log(v);
-          console.log(scope.widgetData);
             if(v != null && v.length >0){
                 unwatch();
+                console.log("inside veteran roster directive after check is positive");
+                console.log(scope.widgetData);
                 var dataTableVet = $(element).children().dataTable( {
-                    "data": scope.widgetData,
+                    "data": scope.widgetData[1],
                     "scrollY":        "200px",
                     "scrollCollapse": true,
                     "paging":         false,
@@ -39,7 +40,8 @@ angular.module('ui.widgets')
                         { "title": "Veteran SSN" },
                         { "title": "Veteran Phone" },
                         { "title": "Date First identified", "class": "center" },
-                        { "title": "Statistical Risk Level", "class": "center" }
+                        { "title": "Statistical Risk Level", "class": "center" },
+                        { "title": "Outreach Status", "class": "center" }
                         //{ "title": "Last VA Clinician Visit", "class": "center" }
                     ],
                     dom: 'T<"clear">lfrtip',
@@ -47,6 +49,15 @@ angular.module('ui.widgets')
                         "sRowSelect": "single"
                     }
                 });
+                $('select').selectmenu({
+                  select: function( event, ui ) {
+                    // Write back selection to the Veteran Risk table for the veteran
+                    console.log(ui);
+                    console.log(ui.item.element.context.parentElement.id.replace("vet_",""));
+                    scope.widget.dataModel.saveOutreachData(ui.item.index, ui.item.element.context.parentElement.id.replace("vet_",""));                    
+                  }
+                });
+
                 $('#sampleVet tbody').on( 'click', 'tr', function (event) {
                     //console.log( dataTableVet.row( this ).data() );
                     if($(this).hasClass('selected')){

@@ -196,25 +196,6 @@ module.exports = function (grunt) {
       all: localConfig
     },
 
-    // Original Server for Client 
-    connect: {
-      options: {
-        port:9000,
-        // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
-        livereload: 35729
-      },
-      livereload: {
-        options: {
-          open: true,
-          base: [
-            '.',
-            'client'
-          ]
-        }
-      }
-    },
-
     // Automatically inject Bower components into the app
     wiredep: {
       target: {
@@ -340,6 +321,16 @@ module.exports = function (grunt) {
       ]);
     }
 
+    if (target === 'test') {
+      return grunt.task.run([
+        'env:all',  
+        'express:dev',
+        'wait',
+        'open',
+        'express-keepalive'
+      ]);
+    }
+
     grunt.task.run([
       'clean:dist',
       'concat',
@@ -354,6 +345,15 @@ module.exports = function (grunt) {
     ]);
   });
 
+  grunt.registerTask('build', [
+      'clean:dist',
+      'concat',
+      'copy:dist',
+      'env:all',  
+      'injector',
+      'wiredep',
+  ]);
+
   grunt.registerTask('server', function () {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
@@ -363,12 +363,6 @@ module.exports = function (grunt) {
     'jshint',
     'ngtemplates',
     'karma:auto'
-  ]);
-
-  // The original http server task
-  grunt.registerTask('client', [
-    'connect:livereload',
-    'watch'
   ]);
 
   grunt.registerTask('default', function () {

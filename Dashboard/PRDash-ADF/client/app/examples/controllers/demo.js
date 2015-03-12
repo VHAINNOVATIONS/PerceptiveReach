@@ -2,7 +2,10 @@
 
 angular.module('app')
   .factory('widgetDefinitions', function(RandomDataModel,RandomTopNDataModel, RandomTimeSeriesDataModel,
-                                    RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel, RandomMetricsTimeSeriesDataModel, VeteranRosterDataModel) {
+                                    RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel, 
+                                    RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
+                                    ContactBaseDataModel, ContactEmergencyDataModel, VeteranRosterDataModel,
+                                    PatientFlagDataModel, MedicationDataModel) {
     return [
       {
         name: 'time',
@@ -30,8 +33,32 @@ angular.module('app')
         }
       },
       {
+        name: 'piechart',
+        directive: 'wt-pie-chart',
+        dataAttrName: 'data',
+        dataModelType: TotalRisksDataModel,
+        title: 'Total Risks by VAMC',
+        dataModelOptions: {
+          vamc: 1
+        },
+        style: {
+          width: '25%'
+        }
+      },
+      {
         name: 'datatable',
         directive: 'wt-veteran-roster-table',
+        settingsModalOptions: {
+        templateUrl: 'client/components/widget/widgets/veteranRosterTable/veteranRosterTableWidgetSettingsTemplate.html',
+        controller: 'VeteranRosterTableWidgetSettingsCtrl'
+        },
+        /*onSettingsClose: function(resultFromModal, widgetModel, dashboardScope) {
+          // do something to update widgetModel, like the default implementation:
+          jQuery.extend(true, widget, result);
+        },
+        onSettingsDismiss: function(reasonForDismissal, dashboardScope) {
+          // probably do nothing here, since the user pressed cancel
+        },*/
         dataAttrName: 'data',
         dataModelType: VeteranRosterDataModel,
         title: 'Veteran Roster by VAMC',
@@ -39,7 +66,54 @@ angular.module('app')
           vamc: 1
         },
         style: {
-          width: '50%'
+          width: '55%'
+        }
+      },
+      {
+        name: 'patientFlags',
+        directive: 'wt-patient-flags',
+        dataAttrName: 'data',
+        title: 'Patient Flags',
+        dataModelType: PatientFlagDataModel,
+        size: {
+          width: '30%',
+          height: '250px'
+        }
+      },
+      {
+        name: 'medication',
+        directive: 'wt-medication',
+        dataAttrName: 'data',
+        title: 'Medication',
+        dataModelType: MedicationDataModel,
+        size: {
+          width: '20%',
+          height: '250px'
+        }
+      },
+      {
+        name: 'contact',
+        directive: 'wt-contact',
+        dataAttrName: 'data',
+        dataModelType: ContactBaseDataModel,
+        title: 'Veteran Contact',
+        size: {
+          width: '25%',
+          height: '250px'
+        }
+      },
+      {
+        name: 'emergency',
+        directive: 'wt-emergency-contact',
+        dataAttrName: 'data',
+        dataModelType: ContactEmergencyDataModel,
+        title: 'Emergency Contact Information',
+        dataModelOptions: {
+          reachID: 16
+        },
+        size: {
+          width: '25%',
+          height: '250px'
         }
       },
       {
@@ -114,18 +188,20 @@ angular.module('app')
     ];
   })
   .value('defaultWidgets', [
-    { name: 'time' },
-      { name: 'random' },
-      { name: 'datamodel' },
-      { name: 'datatable' },
+      {name: 'medication'},
+      {name: 'patientFlags'},
+      { name: 'contact' },
+      { name: 'emergency' }, 
+      { name: 'datatable' }
+      /*,
       { name: 'Metrics Chart' },
       { name: 'NVD3 Line Chart' },
       { name: 'Line Chart' },
       { name: 'Bar Chart' },
       { name: 'topN' },
       { name: 'gauge' },
-      { name: 'fluid' }
-    /*{ name: 'random' },
+      { name: 'fluid' } 
+    { name: 'random' },
     { name: 'time' },
     { name: 'datamodel' },
     {
