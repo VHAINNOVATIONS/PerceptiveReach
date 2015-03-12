@@ -19,7 +19,9 @@
     "visibilityjs": "~1.2.1",
     "pines-notify": "~2.0.1",
     "angular-pines-notify": "~1.0.0",
-    "ng-table": "~0.5.4"
+    "ng-table": "~0.5.4",
+    "angular-datatables": "~0.4.1",
+    "spin.js": "~2.0.2"
   },
   "devDependencies": {
     "angular-route": "~1.3",

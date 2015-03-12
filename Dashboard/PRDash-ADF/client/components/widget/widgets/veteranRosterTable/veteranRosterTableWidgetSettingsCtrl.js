@@ -20,10 +20,11 @@ angular.module('ui.dashboard')
   .controller('VeteranRosterTableWidgetSettingsCtrl', ['$scope', '$modalInstance', '$http','widget', function ($scope, $modalInstance, $http, widget) {
     // add widget to scope
     $scope.widget = widget;
-
+    console.log(widget);
     // set up result object
     $scope.result = jQuery.extend(true, {}, widget);
     console.log($scope.result);
+
 
     $http.get('/api/getListOfVAMC')
         .success(function(listOfVAMC) {

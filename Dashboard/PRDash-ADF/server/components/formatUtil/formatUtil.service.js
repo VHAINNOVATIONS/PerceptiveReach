@@ -14,7 +14,7 @@ module.exports.formatData = function formatData(data) {
 
   //Check if phone number and format (202)-465-4848
   else if(/^\d+$/.test(data) && data.length == 10){
-    correctData = "(" + data.substr(0, 3) + ")-" + data.substr(3, 3) + "-" + data.substr(6);
+    correctData = "(" + data.substr(0, 3) + ") " + data.substr(3, 3) + "-" + data.substr(6);
   }
 
   //Check if date time and format 11/24/2015 (just date) 2004-02-03T00:00:00.000Z

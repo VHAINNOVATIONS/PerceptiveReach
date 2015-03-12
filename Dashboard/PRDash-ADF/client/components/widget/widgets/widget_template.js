@@ -359,7 +359,53 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/veteranRosterTable/veteranRosterTable.html",
     "<div>\r" +
     "\n" +
-    "    <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"\" id=\"sampleVet\" width=\"100%\"></table>\r" +
+    "\t<div id=\"spinner\" style=\"height: 100px;\"> </div>\r" +
+    "\n" +
+    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\" id=\"sampleVet\" width=\"100%\">\r" +
+    "\n" +
+    "    \t<thead>\r" +
+    "\n" +
+    "        <tr>\r" +
+    "\n" +
+    "        \t<th ng-repeat=\"column in columns\">{{column.Name}}</th>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"veteran in veteranList\">\r" +
+    "\n" +
+    "            <td>{{ veteran.Name }}</td>\r" +
+    "\n" +
+    "            <td>{{ veteran.SSN }}</td>\r" +
+    "\n" +
+    "            <td>{{ veteran.Phone }}</td>\r" +
+    "\n" +
+    "            <td>{{ veteran.DateIdentifiedRisk }}</td>\r" +
+    "\n" +
+    "            <td>{{ veteran.RiskLevel }}</td>\r" +
+    "\n" +
+    "            <td>\r" +
+    "\n" +
+    "            \t<select class='form-control' style='width: 180px;' id=\"vet_{{veteran.ReachID}}\">\r" +
+    "\n" +
+    "            \t\t<option value=''></option>\r" +
+    "\n" +
+    "            \t\t<option ng-repeat=\"outreachStatus in outreachStatusList\" value=\"{{outreachStatus.OutReachStatusID}}\">{{outreachStatus.StatusName}}</option>\r" +
+    "\n" +
+    "            \t</select> \r" +
+    "\n" +
+    "            </td>\r" +
+    "\n" +
+    "            <!--<td>{{ veteran.OutreachStatus }}</td>-->\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
     "\n" +
     "</div>"
   );

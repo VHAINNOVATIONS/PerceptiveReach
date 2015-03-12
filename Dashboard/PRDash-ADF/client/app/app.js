@@ -21,6 +21,8 @@ angular.module('app', [
     'ui.dashboard',
     'ui.widgets',
     'ui.models',
+    'datatables',
+    'datatables.scroller',
     'btford.markdown'
   ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
