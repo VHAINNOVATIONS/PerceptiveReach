@@ -1835,29 +1835,29 @@ angular.module('ui.widgets')
       scope: {
         data: '=',
       },
-     controller: function ($scope, $filter, ngTableParams) { //['ngTable']
-        var data = $scope.data;
-        
-        $scope.tableParams = new ngTableParams({
-        page: 1,            // show first page
-        count: 5,          // count per page
-        sorting: {
-            name: 'asc'     // initial sorting
-        }
-      }, {
-        total: data.length, // length of data
-        getData: function($defer, params) {
-            // use build-in angular filter
-            var orderedData = params.sorting() ?
-                    $filter('orderBy')(data, params.orderBy()) :
-                    data;
-
-            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        }
-      });
-    }
-  };
-});
+      controller: function ($scope) {
+        $scope.tableOptions = {
+          loading: true,
+          noRowsText: 'No Medications Found',
+          loadingText: 'Load...',
+          bodyHeight: 200,
+          /*initialSorts: [
+            { id: 'Name', dir: '+' }
+          ]*/
+        };
+        $scope.columns = [
+          { id: 'Name', key: 'Name', label: 'Medication', sort: 'string', filter: 'like', width: '200px'},
+        ];
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.items = data;
+          }
+        });
+      }
+    };
+  });
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -2153,6 +2153,59 @@ angular.module('ui.widgets')
             scope.end = end;
           }
         });
+      }
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtPatientFlags', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/patientFlags/patientFlags.html',
+      scope: {
+        data: '='
+      },
+      controller: function ($scope) {
+        $scope.tableOptions = {
+          loading: true,
+          noRowsText: 'No Flags Found',
+          loadingText: 'Load...',
+          bodyHeight: 200,
+          initialSorts: [
+            { id: 'Category', dir: '+' }
+          ]
+        };
+        $scope.columns = [
+          { id: 'FlagDesc', key: 'FlagDesc', label: 'Flag', sort: 'string', filter: 'like', width: '200px'},
+          { id: 'Category', key: 'Category', label: 'Cat', sort: 'number', filter: 'number', width: '10px'}
+        ];
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.items = data;
+          }
+        });
+
+        scope.updateCategory
       }
     };
   });
@@ -2745,25 +2798,17 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
-    "<div>\r" +
+    "<div class=\"medication\">\r" +
     "\n" +
-    "    <button ng-click=\"tableParams.sorting({})\" class=\"btn btn-default pull-right\">Clear sorting</button>\r" +
+    "    <mlhr-table \r" +
     "\n" +
-    "\r" +
+    "      options=\"tableOptions\"\r" +
     "\n" +
-    "    <table ng-table=\"tableParams\" show-filter=\"true\" class=\"table\">\r" +
+    "      columns=\"columns\" \r" +
     "\n" +
-    "        <tr ng-repeat=\"meds in data\">\r" +
+    "      rows=\"items\">\r" +
     "\n" +
-    "            <td data-title=\"'Medication'\" sortable=\"Name\" filter=\"{ 'Name': 'text' }\">\r" +
-    "\n" +
-    "                {{meds.Name}}\r" +
-    "\n" +
-    "            </td>\r" +
-    "\n" +
-    "        </tr>\r" +
-    "\n" +
-    "    </table>\r" +
+    "    </mlhr-table>\r" +
     "\n" +
     "</div>"
   );

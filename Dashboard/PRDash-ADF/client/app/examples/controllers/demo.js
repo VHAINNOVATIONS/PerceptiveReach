@@ -74,7 +74,11 @@ angular.module('app')
         directive: 'wt-patient-flags',
         dataAttrName: 'data',
         title: 'Patient Flags',
-        dataModelType: PatientFlagDataModel
+        dataModelType: PatientFlagDataModel,
+        size: {
+          width: '30%',
+          height: '250px'
+        }
       },
       {
         name: 'medication',
@@ -82,8 +86,9 @@ angular.module('app')
         dataAttrName: 'data',
         title: 'Medication',
         dataModelType: MedicationDataModel,
-        style: {
-          width: '15%'
+        size: {
+          width: '20%',
+          height: '250px'
         }
       },
       {
@@ -92,8 +97,9 @@ angular.module('app')
         dataAttrName: 'data',
         dataModelType: ContactBaseDataModel,
         title: 'Veteran Contact',
-        style: {
-          width: '25%'
+        size: {
+          width: '25%',
+          height: '250px'
         }
       },
       {
@@ -105,8 +111,9 @@ angular.module('app')
         dataModelOptions: {
           reachID: 16
         },
-        style: {
-          width: '25%'
+        size: {
+          width: '25%',
+          height: '250px'
         }
       },
       {
@@ -182,6 +189,7 @@ angular.module('app')
   })
   .value('defaultWidgets', [
       {name: 'medication'},
+      {name: 'patientFlags'},
       { name: 'contact' },
       { name: 'emergency' }, 
       { name: 'datatable' }
