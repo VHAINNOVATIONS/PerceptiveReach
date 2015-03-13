@@ -1,0 +1,984 @@
+*   commit f8c8a0ed6a8e7cad836b3fbf6cf9cc718749a931 (HEAD, origin/master, origin/HEAD, master)
+|\  Merge: 13d2b10 4485dcc
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Thu Mar 12 19:37:10 2015 -0400
+| | 
+| |     Merge branch 'master' of https://github.com/VHAINNOVATIONS/PerceptiveReach
+| |   
+| * commit 4485dcc31ac31afc3251d4d85773eb968024e0fc
+|   Author: pbradley25 <paul.bradley@us.pwc.com>
+|   Date:   Fri Feb 27 17:45:53 2015 -0500
+|   
+|       Feb 27 CDP Submission
+|  
+* commit 13d2b108eb7f15ef582c18aeb6f5ebce927b51a2
+| Merge: db95623 b5f1caf
+| Author: Robert Snelling <robert.snelling@us.pwc.com>
+| Date:   Thu Mar 12 19:35:19 2015 -0400
+| 
+|     Merge branch 'stable'
+|    
+*   commit b5f1cafdbe9c7f1b55bb749623a08fd2988b7564 (origin/stable)
+|\  Merge: 9b2d136 51d6c44
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Thu Mar 12 19:33:33 2015 -0400
+| | 
+| |     Merge branch 'test' into stable
+| |     
+| *   commit 51d6c4403aaf3d0a6248ac3da7f52e597b38c559 (origin/test)
+| |\  Merge: 277dda1 58dd66c
+| | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | Date:   Thu Mar 12 10:18:05 2015 -0400
+| | | 
+| | |     Merge commit '58dd66c91235c900d398ca80769c4403b90c470b' into HEAD
+| | |    
+* | | commit 9b2d1365dcfbba98665d882076ef7795d539722c
+|/ /  Merge: 39bbca9 277dda1
+| |   Author: Robert Snelling <robert.snelling@us.pwc.com>
+| |   Date:   Thu Mar 12 09:39:21 2015 -0400
+| |   
+| |       Merge branch 'test' into stable
+| |     
+* |   commit 277dda13591c5ddf5790af2fc733db0817fade82
+|\ \  Merge: f72091a ee7a045
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Thu Mar 12 09:35:57 2015 -0400
+| | | 
+| | |     Merge branch 'test' of https://github.com/VHAINNOVATIONS/PerceptiveReach into test
+| | |    
+| * | commit ee7a0457167ef6eb1e09c9b48efbfdbfb2f9a3da
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Mar 11 16:35:39 2015 -0400
+| | | 
+| | |     commented ot the screen shot code
+| | |    
+| * | commit 19b4bebf848d869616639eb9a88ac6f5aa4a9c5c
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Mar 11 16:30:00 2015 -0400
+| | | 
+| | |     trying workout with screen issue
+| | |    
+| * | commit b7c12fb4a019a9f18b2373cf9dbbb581aedb07b6
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Mar 11 16:02:05 2015 -0400
+| | | 
+| | |     change env back to chrome
+| | |    
+| * | commit aa0e57b4876308eba66f1c33119351d17862dc83
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Mar 11 15:59:26 2015 -0400
+| | | 
+| | |     trying firefox for screengrab
+| | |    
+| * | commit 22ea4baf9f6551a6769091d454a9b57d3769cc19
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Mar 11 15:31:03 2015 -0400
+| | | 
+| | |     update env to bigger resolution
+| | |    
+| * | commit 9f125d8a4bc0f9a98b28bf6b90197334eb53e92b
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Mar 11 15:26:04 2015 -0400
+| | | 
+| | |     modified env window size
+| | |    
+| * | commit 5df8fa35225e6cf4a8ad76d5b7f2a8ca459216b6
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Mar 11 15:25:12 2015 -0400
+| | | 
+| | |     trying selenium window size tricks
+| | |    
+| * | commit 102c85d78bdc384cfbe4a79868b918b6dca6cdf5
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Mar 11 15:09:13 2015 -0400
+| | | 
+| | |     grabbing some screenshots for troubleshooting
+| | |    
+| * | commit 155d612acf209da2b62c03443ceb2926284f4b13
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Mar 11 14:52:37 2015 -0400
+| | | 
+| | |     added screen shot before failure
+| | |    
+| * | commit 08e8cf6e22c7d80d3437a378dac5ed11f6f96c7e
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Mar 11 14:42:08 2015 -0400
+| | | 
+| | |     added a screen shot
+| | |    
+| * | commit 53278e6cc7880b6f536825c17b4b224430c60831
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Mar 11 14:39:12 2015 -0400
+| | | 
+| | |     update env
+| | |    
+| * | commit 5f56b635342357701d49f7c9327329bb65c1cf5c
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Mar 11 14:28:05 2015 -0400
+| | | 
+| | |     update feature to flow with other scenario in feature
+| | |    
+| * | commit 3f1ba09fd64e6da50468cc71b832482d28ef8f7d
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Mar 11 14:07:03 2015 -0400
+| | | 
+| | |     added add a widget click twice step
+| | |      
+| * |   commit 06a1b718a1ed5acb106d0e6d463d3095964eeb42
+| |\ \  Merge: e146ba4 e20ac30
+| | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | Date:   Wed Mar 11 13:59:59 2015 -0400
+| | | | 
+| | | |     Merge commit 'e20ac3060f722c03665ae08fb864ffb7b6d5f338' into HEAD
+| | | |     
+| * | | commit e146ba4ba3bc4df97d2e6f2ae7c769b69fe235fd
+| | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | Date:   Wed Mar 11 13:51:25 2015 -0400
+| | | | 
+| | | |     updated steps
+| | | |     
+| * | | commit 70b7ba44ed9a04e6dbc2dbc51d8d70f028023c58
+| | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | Date:   Wed Mar 11 13:42:54 2015 -0400
+| | | | 
+| | | |     removed extra step
+| | | |     
+| * | | commit be7dbdfcc2e20f3d208571b1c55ec4d17258a89f
+| | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | Date:   Wed Mar 11 13:41:42 2015 -0400
+| | | | 
+| | | |     updated steps and feature
+| | | |     
+| * | | commit 1287ec5b49f73a76fd32f5f04049971517776e1f
+| | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | Date:   Wed Mar 11 13:35:40 2015 -0400
+| | | | 
+| | | |     updated steps
+| | | |     
+| * | | commit e2216d6dc9a2b54bbe635ed9785f006ca0794622
+| | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | Date:   Wed Mar 11 13:16:47 2015 -0400
+| | | | 
+| | | |     updated stepss
+| | | |     
+| * | | commit 374d857b143a6051ba249cad03b69f6c483395d0
+| | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | Date:   Wed Mar 11 13:04:41 2015 -0400
+| | | | 
+| | | |     updated steps
+| | | |     
+| * | | commit 6722bb9854790bd83c4d4aa62fd94c5af10a81ee
+| | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | Date:   Wed Mar 11 13:00:45 2015 -0400
+| | | | 
+| | | |     update emergency contact info order
+| | | |       
+| * | |   commit 9da0768fa9830123fd8c2dd69945b1b55e3c9129
+| |\ \ \  Merge: 2ab57ed 8e0c0a6
+| | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | Date:   Wed Mar 11 12:33:23 2015 -0400
+| | | | | 
+| | | | |     Merge commit '8e0c0a68631b2f9fe40d5ee103041c9ea43729ce' into HEAD
+| | | | |      
+| * | | | commit 2ab57ed7a5eb03333ed4ca6073ee38a10b802a6d
+| | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | Date:   Wed Mar 11 10:40:13 2015 -0400
+| | | | | 
+| | | | |     update feature
+| | | | |      
+| * | | | commit 49e1b0aa77cf1d29599d565f62ad57784da23152
+| | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | Date:   Wed Mar 11 10:39:24 2015 -0400
+| | | | | 
+| | | | |     updated steps
+| | | | |      
+| * | | | commit a16820a9983849dcde97f608f7df7a5840e1c8bd
+| | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | Date:   Wed Mar 11 10:20:02 2015 -0400
+| | | | | 
+| | | | |     updated feature and steps
+| | | | |      
+| * | | | commit 024ee32ec13798b79cf8186e3ed39f2d86d2fc1a
+| | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | Date:   Wed Mar 11 09:53:16 2015 -0400
+| | | | | 
+| | | | |     update features and steps
+| | | | |        
+| * | | |   commit c06688ca416c11fab725aed67fff8092fe7f9d80
+| |\ \ \ \  Merge: ce26047 b6288f4
+| | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | Date:   Wed Mar 11 09:00:01 2015 -0400
+| | | | | | 
+| | | | | |     Merge commit 'b6288f4c903167a4f7ac267fb43ee8756cb0507b' into HEAD
+| | | | | |         
+| * | | | |   commit ce26047a87733e378c0d0f2d2ce6b683f7526114
+| |\ \ \ \ \  Merge: d39e8b3 3eb2b31
+| | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | Date:   Tue Mar 10 23:36:41 2015 -0400
+| | | | | | | 
+| | | | | | |     Merge commit '3eb2b31de7b283aec0a32d68f7affac20181a9ce' into HEAD
+| | | | | | |        
+| * | | | | | commit d39e8b3ec512780a36eefe491ea585c83404bebd
+| | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | Date:   Tue Mar 10 15:51:28 2015 -0400
+| | | | | | | 
+| | | | | | |     added pending steps
+| | | | | | |        
+| * | | | | | commit 0d0e9ff5518621f8eb016350d521d13676470d6e
+| | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | Date:   Tue Mar 10 15:18:20 2015 -0400
+| | | | | | | 
+| | | | | | |     updated steps
+| | | | | | |        
+| * | | | | | commit c8b5c58ab865aae53a3df7c1cef3bee819388431
+| | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | Date:   Tue Mar 10 14:45:19 2015 -0400
+| | | | | | | 
+| | | | | | |     updates
+| | | | | | |        
+| * | | | | | commit 50169818e2e58c6b74c3b9239ca7a94826faf7cf
+| | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | Date:   Tue Mar 10 14:14:35 2015 -0400
+| | | | | | | 
+| | | | | | |     update steps pagecontent variable
+| | | | | | |        
+| * | | | | | commit 69c9e128ead729c3007f66c060eb65fc613c52a4
+| | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | Date:   Tue Mar 10 14:12:02 2015 -0400
+| | | | | | | 
+| | | | | | |     udpate steps
+| | | | | | |        
+| * | | | | | commit 5063a94c39eab0c8fd502784a0353926e19b92f8
+| | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | Date:   Tue Mar 10 14:04:49 2015 -0400
+| | | | | | | 
+| | | | | | |     find and click button
+| | | | | | |        
+| * | | | | | commit 2505d0c7594dd9da7fc532b983e74936cfbfeb51
+| | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | Date:   Tue Mar 10 13:16:00 2015 -0400
+| | | | | | | 
+| | | | | | |     trying to find buttons better
+| | | | | | |        
+| * | | | | | commit 949407f7e0d1b8d3a41bee8bc259ad8646477612
+| | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | Date:   Tue Mar 10 13:00:47 2015 -0400
+| | | | | | | 
+| | | | | | |     updated some steps
+| | | | | | |        
+| * | | | | | commit 090ef1434243b1aa0e0457b3cc945318182eab3d
+| | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | Date:   Tue Mar 10 11:50:01 2015 -0400
+| | | | | | | 
+| | | | | | |     removed extra code
+| | | | | | |        
+| * | | | | | commit e0b35213c20f2f060c1fb4e4e0d210e90913bcaa
+| | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | Date:   Tue Mar 10 11:43:18 2015 -0400
+| | | | | | | 
+| | | | | | |     updated steps and features
+| | | | | | |        
+| * | | | | | commit 9f98e3cdc81b240e3157e185a6e5062ba2176c19
+| | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | Date:   Tue Mar 10 10:55:28 2015 -0400
+| | | | | | | 
+| | | | | | |     update steps and feature
+| | | | | | |        
+| * | | | | | commit 0f6d5aba45e3f7648c1d7c59b03ce10ef3d2759c
+| | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | Date:   Tue Mar 10 10:34:23 2015 -0400
+| | | | | | | 
+| | | | | | |     updated features and steps
+| | | | | | |          
+| * | | | | |   commit eb81ff52725b8c37954f7459e076a286b70d30ba
+| |\ \ \ \ \ \  Merge: 3547bc0 bccd6d3
+| | | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | | Date:   Tue Mar 10 04:38:35 2015 -0400
+| | | | | | | | 
+| | | | | | | |     Merge commit 'bccd6d39a7a7c7a27c236e1d0bdd92349be64ca9' into HEAD
+| | | | | | | |         
+| * | | | | | | commit 3547bc08e8be4ed7079b86a7d0964752d76e2852
+| | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | Date:   Mon Mar 9 21:55:20 2015 -0400
+| | | | | | | | 
+| | | | | | | |     steps
+| | | | | | | |         
+| * | | | | | | commit 0e592eba71dbd387dea281f7f07bc4437705f5f8
+| | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | Date:   Mon Mar 9 21:50:17 2015 -0400
+| | | | | | | | 
+| | | | | | | |     messing with steps
+| | | | | | | |         
+| * | | | | | | commit 1ac92dbed37479458cbff20fe787857b05759cea
+| | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | Date:   Mon Mar 9 21:44:54 2015 -0400
+| | | | | | | | 
+| | | | | | | |     update env.rb
+| | | | | | | |         
+| * | | | | | | commit 7f236aafa7231d478df8c6f519abc41b39668492
+| | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | Date:   Mon Mar 9 21:30:44 2015 -0400
+| | | | | | | | 
+| | | | | | | |     more updates
+| | | | | | | |         
+| * | | | | | | commit 324dfd70675a9f681251049abf4d03ecc02b0364
+| | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | Date:   Mon Mar 9 21:19:47 2015 -0400
+| | | | | | | | 
+| | | | | | | |     more changes and updates
+| | | | | | | |         
+| * | | | | | | commit 22f506823c746d0048d9c7c771fe7f04e37b9bf3
+| | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | Date:   Mon Mar 9 21:04:58 2015 -0400
+| | | | | | | | 
+| | | | | | | |     messing with scripts
+| | | | | | | |         
+| * | | | | | | commit 623ba11f256c1ba9ba61404aaacd6fb5f3771f18
+| | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | Date:   Mon Mar 9 16:11:41 2015 -0400
+| | | | | | | | 
+| | | | | | | |     update steps lib
+| | | | | | | |         
+| * | | | | | | commit 1a8884857ef91bf4185adad0c42a2e88f87597e7
+| | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | Date:   Mon Mar 9 15:55:19 2015 -0400
+| | | | | | | | 
+| | | | | | | |     updated steps
+| | | | | | | |         
+| * | | | | | | commit ccbebf51fce0c9e1e94180ac399d44d95141a405
+| | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | Date:   Mon Mar 9 15:42:09 2015 -0400
+| | | | | | | | 
+| | | | | | | |     working on these steps
+| | | | | | | |         
+| * | | | | | | commit 6b454921a51b17343798c8a96cb1fe851273e3a3
+| | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | Date:   Mon Mar 9 15:35:15 2015 -0400
+| | | | | | | | 
+| | | | | | | |     updated test rake file
+| | | | | | | |         
+| * | | | | | | commit b96f52569b36029a0baa08a4ae15a43fc3bdbbd6
+| | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | Date:   Mon Mar 9 15:33:04 2015 -0400
+| | | | | | | | 
+| | | | | | | |     working out some kinks
+| | | | | | | |           
+| * | | | | | |   commit d5b14b7274a3a4c9399ca5429db455ff6558014e
+| |\ \ \ \ \ \ \  Merge: 71cda4a 5eb5850
+| | | | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | | | Date:   Mon Mar 9 15:19:33 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     Merge commit '5eb5850e0e0e697fab4d51521d3d181574d34aa6' into HEAD
+| | | | | | | | |          
+| * | | | | | | | commit 71cda4ac3599711f017ccb2744b9928503e3a09e
+| | | | | | | | | Author: radinaivanova <radina.ivanova@us.pwc.com>
+| | | | | | | | | Date:   Mon Mar 9 14:13:29 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     Risk Flags
+| | | | | | | | |     
+| | | | | | | | |     Updated tests
+| | | | | | | | |          
+| * | | | | | | | commit 53a0da4b5e80c1f39be8193ad46d9598bed9ad50
+| | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | Date:   Mon Mar 9 13:01:49 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     removed a space
+| | | | | | | | |          
+| * | | | | | | | commit a800e743a142646ba9c2c094e007cd01c731c78e
+| | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | Date:   Mon Mar 9 13:01:03 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     fine tune steps
+| | | | | | | | |          
+| * | | | | | | | commit 073704cbf95868c886eb22dae0013837299d7a8f
+| | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | Date:   Mon Mar 9 13:00:07 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     correction to steps of pr-1151
+| | | | | | | | |          
+| * | | | | | | | commit d6d16590b77367a8683a224a5272871f70d1360c
+| | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | Date:   Mon Mar 9 12:48:06 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     update pr-1151 feature and steps
+| | | | | | | | |          
+| * | | | | | | | commit 36eca5079ab4e50676fc3351c6c5994978de5907
+| | | | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | | | Date:   Mon Mar 9 11:02:48 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     updates to spc widget, indiv contact, vet meds
+| | | | | | | | |          
+| * | | | | | | | commit 50aafb93d38759c97fa29dbb6857286087f27847
+| | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | Date:   Mon Mar 9 10:58:16 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     added an expect to the page load
+| | | | | | | | |          
+| * | | | | | | | commit d4cc72fd53ad312ca80503e0cb7ea6a55ef39807
+| | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | Date:   Mon Mar 9 10:26:30 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     update spc widget steps
+| | | | | | | | |          
+| * | | | | | | | commit 33a2e090cf6841006b29426751f221b1a19c209e
+| | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | Date:   Mon Mar 9 10:10:03 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     changes to spc widget feature and steps
+| | | | | | | | |          
+| * | | | | | | | commit 9b0df6ca84a15a1c953d7cf1f4f0bc1fdf2cda26
+| | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | Date:   Mon Mar 9 10:00:59 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     trying some changes to rake
+| | | | | | | | |          
+| * | | | | | | | commit c96b5b02a3914f83d218b9af50ccf7aae43bca86
+| | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | Date:   Mon Mar 9 09:57:22 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     updated risk flag steps - smash bug
+| | | | | | | | |          
+| * | | | | | | | commit 70982a5cf0baf7da6a521389193c66ca42198592
+| | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | Date:   Mon Mar 9 09:54:56 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     updated risk flag steps
+| | | | | | | | |          
+| * | | | | | | | commit df30a81d465d2fb51412e253af1044420fdeee98
+| | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | Date:   Mon Mar 9 09:53:02 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     trying a mod to the rake file
+| | | | | | | | |          
+| * | | | | | | | commit ed8a380808faee63d9fba290183d847a1108265d
+| | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | Date:   Mon Mar 9 09:39:17 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     update env to include delete all cookies
+| | | | | | | | |          
+| * | | | | | | | commit b00f3371d9ae6984234b9a1e1d53e7a7ba33ec40
+| | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | Date:   Mon Mar 9 08:43:58 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     update risk flags steps and features
+| | | | | | | | |            
+| * | | | | | | |   commit dd1bd1ead95ad2c622ac36a1313236fe7b6289bf
+| |\ \ \ \ \ \ \ \  Merge: f6e08a1 dc68f6e
+| | | | | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | | | | Date:   Sun Mar 8 23:46:59 2015 -0400
+| | | | | | | | | | 
+| | | | | | | | | |     Merge commit 'dc68f6e2763cf18088f10860942fef79a2bb7227' into HEAD
+| | | | | | | | | |           
+| * | | | | | | | | commit f6e08a153eac82ea4c098caa45cdedb68a5c3ece
+| | | | | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 21:06:35 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     updated test cases
+| | | | | | | | | |           
+| * | | | | | | | | commit 4769f489af969231148cceaf65be615776eca53f
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 16:49:52 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     update non working env
+| | | | | | | | | |           
+| * | | | | | | | | commit ef9e09a62c8c7a7a4f25f1b42a10913c80b0ccb5
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 16:34:33 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     change an env file
+| | | | | | | | | |           
+| * | | | | | | | | commit 69ff3d663449812af155e716d12b2a8629ebd348
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 16:29:08 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     updated some code
+| | | | | | | | | |           
+| * | | | | | | | | commit 7961c0be2fb67ad822a037748407945891c18e75
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 16:13:02 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     updated some steps
+| | | | | | | | | |           
+| * | | | | | | | | commit e4190bde9e49629134d3e28577d6cbeadaf64ea7
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 16:08:51 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     lex error
+| | | | | | | | | |           
+| * | | | | | | | | commit 46f7aef995dcb92334d77b222440c0412730370e
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 16:06:57 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     built out folder structure and added basic step
+| | | | | | | | | |           
+| * | | | | | | | | commit a315d90fcce030fc4af46161ebc2afe9fd41c7b2
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 16:02:46 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     few more features
+| | | | | | | | | |           
+| * | | | | | | | | commit bc18b5ff6c2223de538da779b9387a60ea36cde8
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 15:57:34 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     change a folder/file name
+| | | | | | | | | |           
+| * | | | | | | | | commit 9d757f027761a5318dda5dc186227fbaa1d501a3
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 15:55:47 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     cleaned up some code
+| | | | | | | | | |           
+| * | | | | | | | | commit 5d3be053fbb6db1a9f37c8547fed848783aa74cb
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 15:53:21 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     bugs
+| | | | | | | | | |           
+| * | | | | | | | | commit 66c7587ec183419bab8664de71949b424114169d
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 15:48:10 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     smash bugs
+| | | | | | | | | |           
+| * | | | | | | | | commit f1c495d9623ad1e8dff09a429b5f8a7e08181bb1
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 15:46:51 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     smash bugs
+| | | | | | | | | |           
+| * | | | | | | | | commit 3e1a40802662f3f24b22d2aa13ce585d1520a451
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 15:41:56 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     fixed lex error
+| | | | | | | | | |           
+| * | | | | | | | | commit 276fab6cc3f290907b4aa2d574b1cc0d29918326
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 15:39:07 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     lex error
+| | | | | | | | | |           
+| * | | | | | | | | commit e166ba1cdf705adaadf5c009e4d560c4b463bf95
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 15:37:53 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     fixed lex error
+| | | | | | | | | |           
+| * | | | | | | | | commit dca67dc8dd542c82913c40f2fd5d5e54bd47d239
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 15:29:55 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     adding more features
+| | | | | | | | | |           
+| * | | | | | | | | commit c4357b8f774871a8299fa492c92e32e64d14637c
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 15:20:32 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     adding more features
+| | | | | | | | | |           
+| * | | | | | | | | commit e33a13a97e7e70952bbd0bfca4ebd617d03d0ac5
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 14:33:08 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     added feature pr-346
+| | | | | | | | | |           
+| * | | | | | | | | commit 8a62b0f3bf836bc17fc020f6f2683508e324fe7c
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 13:45:08 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     modify files
+| | | | | | | | | |           
+| * | | | | | | | | commit 0ff40e133964d4488172ae1771aac43663602657
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 13:39:09 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     update step defintions
+| | | | | | | | | |           
+| * | | | | | | | | commit 4cf50234108bad03bb6073e2635b6e11185c015f
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 13:35:48 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     emergecny contact info
+| | | | | | | | | |           
+| * | | | | | | | | commit 5d0e684c8354339ba6290b73806c7895f971b4b8
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 13:31:31 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     update env.rb files
+| | | | | | | | | |           
+| * | | | | | | | | commit e204aec5ea489e46c4ad1e4d5ddfbcd2da08944f
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 13:26:45 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     spcwidget remove extra files
+| | | | | | | | | |           
+| * | | | | | | | | commit 612fbf6ec75d49689a14c295a1474a04cdcc4381
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 13:23:27 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     update spcwidget
+| | | | | | | | | |           
+| * | | | | | | | | commit c23d154ea30c650352fff82bc1a239d3e6aae3ae
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 13:17:01 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     add features dir
+| | | | | | | | | |           
+| * | | | | | | | | commit 40b051f3d7f2be05e6c8379cca7caaed1a42164e
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 13:13:30 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     update rake file
+| | | | | | | | | |           
+| * | | | | | | | | commit 93a1ad9bc010c22c3ea7804a617061f7d92353e8
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 13:11:14 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     update rake file
+| | | | | | | | | |           
+| * | | | | | | | | commit c175162603e91a3f19bf975a2381f43fcd32e3f2
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 13:09:50 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     add risk flags
+| | | | | | | | | |           
+| * | | | | | | | | commit 1361327cc97cdda62ddf46b459ebf47e793ee030
+| | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Fri Mar 6 13:08:44 2015 -0500
+| | | | | | | | | | 
+| | | | | | | | | |     change folder structure
+| | | | | | | | | |             
+| * | | | | | | | |   commit 4aa1577221b8f639850a9ef1aeb8aa10b118a74e
+| |\ \ \ \ \ \ \ \ \  Merge: 2795add dd126db
+| | | | | | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | | | | | Date:   Fri Mar 6 13:06:31 2015 -0500
+| | | | | | | | | | | 
+| | | | | | | | | | |     Merge commit 'dd126db1dcbe2554c576f6ef981cb8a165a615b9' into HEAD
+| | | | | | | | | | |            
+| * | | | | | | | | | commit 2795addafc15c695035ad906e4b5d42065891528
+| | | | | | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | | | | | Date:   Fri Mar 6 10:51:29 2015 -0500
+| | | | | | | | | | | 
+| | | | | | | | | | |     Updated Veteran deature
+| | | | | | | | | | |            
+| * | | | | | | | | | commit 2e020752b509e79a0436033c23de5604c8715213
+| | | | | | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | | | | | Date:   Fri Mar 6 10:45:32 2015 -0500
+| | | | | | | | | | | 
+| | | | | | | | | | |     updated requirements
+| | | | | | | | | | |            
+| * | | | | | | | | | commit c97bda5ad63e98702e552ff0d29c20341c53f2cf
+| | | | | | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | | | | | Date:   Fri Mar 6 10:40:38 2015 -0500
+| | | | | | | | | | | 
+| | | | | | | | | | |     Updated feature files
+| | | | | | | | | | |            
+| * | | | | | | | | | commit 9e7c731574e1390a226bd925dc3fcbe7d00a3f81
+| | | | | | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | | | | | Date:   Fri Mar 6 09:43:31 2015 -0500
+| | | | | | | | | | | 
+| | | | | | | | | | |     updated feature files
+| | | | | | | | | | |            
+| * | | | | | | | | | commit 508f5d496f151d6acfedf0b3ce7ca69377b304b9
+| | | | | | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | | | | | Date:   Thu Mar 5 13:11:59 2015 -0500
+| | | | | | | | | | | 
+| | | | | | | | | | |     Veteran Outreach test cases
+| | | | | | | | | | |              
+| * | | | | | | | | |   commit ce9801d2c485d326b9139386661b6b1c271b3bfb
+| |\ \ \ \ \ \ \ \ \ \  Merge: 95d531b 9de1c76
+| | | | | | | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | | | | | | Date:   Thu Mar 5 11:06:18 2015 -0500
+| | | | | | | | | | | | 
+| | | | | | | | | | | |     Merge commit '9de1c765e61bb01bf5e10ef456fad2a0e5794971' into HEAD
+| | | | | | | | | | | |               
+| * | | | | | | | | | |   commit 95d531baf750bf8e96fb371dcd178ee883d12a68
+| |\ \ \ \ \ \ \ \ \ \ \  Merge: 095ae12 1b9e0c9
+| | | | | | | | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | Date:   Thu Mar 5 10:58:08 2015 -0500
+| | | | | | | | | | | | | 
+| | | | | | | | | | | | |     Merge commit '1b9e0c90dd096071ec9eee0792dd751d555edc2a' into HEAD
+| | | | | | | | | | | | |                
+| * | | | | | | | | | | |   commit 095ae12179df38b3161a562b9e13ccc64eaa513e
+| |\ \ \ \ \ \ \ \ \ \ \ \  Merge: 80b21d4 b228efa
+| | | | | | | | | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | Date:   Thu Mar 5 01:00:42 2015 -0500
+| | | | | | | | | | | | | | 
+| | | | | | | | | | | | | |     Merge commit 'b228efa72ab1dec451355525f4da4c81fa9c7705' into HEAD
+| | | | | | | | | | | | | |               
+| * | | | | | | | | | | | | commit 80b21d4a9b3605a605abd6e1dd616d3db0e9faf3
+| | | | | | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | | | | | Date:   Wed Mar 4 22:40:27 2015 -0500
+| | | | | | | | | | | | | | 
+| | | | | | | | | | | | | |     updating folder structure of the scripts
+| | | | | | | | | | | | | |     
+| | | | | | | | | | | | | |     updating folder structure of the scripts
+| | | | | | | | | | | | | |               
+| * | | | | | | | | | | | | commit 4dc42f962de616553d23d63d0c5b8015443fe1b9
+| | | | | | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | | | | | Date:   Wed Mar 4 22:37:28 2015 -0500
+| | | | | | | | | | | | | | 
+| | | | | | | | | | | | | |     update emergency contact info folder structure
+| | | | | | | | | | | | | |     
+| | | | | | | | | | | | | |     update emergency contact info folder structure
+| | | | | | | | | | | | | |                 
+| * | | | | | | | | | | | |   commit 0a32561a862ed2ad76c4f6e6c18555820e5cc9f3
+| |\ \ \ \ \ \ \ \ \ \ \ \ \  Merge: 507fe7c 829891e
+| | | | | | | | | | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | | Date:   Wed Mar 4 20:26:50 2015 -0500
+| | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | |     Merge commit '829891e743da6e5ed31ce1d3cad3e0336209dad5' into HEAD
+| | | | | | | | | | | | | | |                  
+| * | | | | | | | | | | | | |   commit 507fe7c08403fff6f77307cfb19dd3e2a16ad088
+| |\ \ \ \ \ \ \ \ \ \ \ \ \ \  Merge: ecd2389 ffb579c
+| | | | | | | | | | | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | | | Date:   Wed Mar 4 20:20:50 2015 -0500
+| | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | |     Merge commit 'ffb579c33675edb9c6f755d68bd31a6591e0dd83' into HEAD
+| | | | | | | | | | | | | | | |                   
+| * | | | | | | | | | | | | | |   commit ecd23894ea23dcb14719db6323b4eb79f5ff1ea1
+| |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Merge: a3bc9b5 e7f3a7e
+| | | | | | | | | | | | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | | | | Date:   Wed Mar 4 17:08:18 2015 -0500
+| | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | |     Merge commit 'e7f3a7eefde8a05b18987602e98a9df1c08e797f' into HEAD
+| | | | | | | | | | | | | | | | |                    
+| * | | | | | | | | | | | | | | |   commit a3bc9b55c96bf50a0a4ed48c0ed1e6f40ba7430c
+| |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Merge: a1b3f14 002e16a
+| | | | | | | | | | | | | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | | | | | Date:   Wed Mar 4 16:55:23 2015 -0500
+| | | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | | |     Merge commit '002e16a2d0e2098f7f7dd45de78f06796053ba88' into HEAD
+| | | | | | | | | | | | | | | | | |                     
+| * | | | | | | | | | | | | | | | |   commit a1b3f14829d5e8c980a2d3fed4c0ce5d5b18c21e
+| |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Merge: e3a4c35 3ff5ce2
+| | | | | | | | | | | | | | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | | | | | | Date:   Wed Mar 4 03:55:56 2015 -0500
+| | | | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | | | |     Merge commit '3ff5ce219362914272db6746ed32031bc55d6632' into HEAD
+| | | | | | | | | | | | | | | | | | |                      
+| * | | | | | | | | | | | | | | | | |   commit e3a4c353943dba998fa6e83ce70ffe717c5a4ed0
+| |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Merge: 705047a 302e8cd
+| | | | | | | | | | | | | | | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | | | | | | | Date:   Wed Mar 4 02:32:40 2015 -0500
+| | | | | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | | | | |     Merge commit '302e8cdd30ba33ab2ca5f213ab6cbbcf23bac169' into HEAD
+| | | | | | | | | | | | | | | | | | | |                       
+| * | | | | | | | | | | | | | | | | | |   commit 705047a1cbda807bbadbd43bc083d3ac2197d92a
+| |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Merge: 25e2296 0171a86
+| | | | | | | | | | | | | | | | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | | | | | | | | Date:   Tue Mar 3 11:21:01 2015 -0500
+| | | | | | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | | | | | |     Merge commit '0171a86fb7e6a720943fdec186d4201fd030d50d' into HEAD
+| | | | | | | | | | | | | | | | | | | | |                        
+| * | | | | | | | | | | | | | | | | | | |   commit 25e2296ef14975f23f7c6f671b2fd7b70e45f0e6
+| |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Merge: 530b54c 0937c04
+| | | | | | | | | | | | | | | | | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | | | | | | | | | Date:   Tue Mar 3 10:29:16 2015 -0500
+| | | | | | | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | | | | | | |     Merge commit '0937c040cc382db5c332112014fa04b3d571153e' into HEAD
+| | | | | | | | | | | | | | | | | | | | | |                         
+| * | | | | | | | | | | | | | | | | | | | |   commit 530b54ceefa85cc690ae8d3544a0c0df9c98eb4c
+| |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Merge: ec3baea 8bb22dc
+| | | | | | | | | | | | | | | | | | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | | | | | | | | | | Date:   Mon Mar 2 23:21:20 2015 -0500
+| | | | | | | | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | | | | | | | |     Merge commit '8bb22dcab894402f18d8aa5b0e2dbc2165a0a3cc' into HEAD
+| | | | | | | | | | | | | | | | | | | | | | |                        
+| * | | | | | | | | | | | | | | | | | | | | | commit ec3baea2293e904642666edcec24f53f688adeb8
+|  / / / / / / / / / / / / / / / / / / / / /  Merge: aff4346 d3d14cc
+| | | | | | | | | | | | | | | | | | | | | |   Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | | | | | | | | |   Date:   Fri Feb 27 10:30:05 2015 -0500
+| | | | | | | | | | | | | | | | | | | | | |   
+| | | | | | | | | | | | | | | | | | | | | |       Merge commit 'd3d14ccd968038ff9b52ea903ba9f01637424b00' into HEAD
+| | | | | | | | | | | | | | | | | | | | | |                       
+* | | | | | | | | | | | | | | | | | | | | | commit f72091af693cfc6202e1ab718e00dab6240f06d0
+ / / / / / / / / / / / / / / / / / / / / /  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | | | | | | | | | | | | | | | | | |   Date:   Thu Mar 12 09:32:06 2015 -0400
+| | | | | | | | | | | | | | | | | | | | |   
+| | | | | | | | | | | | | | | | | | | | |       Prototyping the Database Connection.
+| | | | | | | | | | | | | | | | | | | | |                          
+| | | | | | | | | | | | | | | | | | | | | *   commit df753932e8ad3eff143f8ea6e615849bbb73c25a (origin/dev)
+| | | | | | | | | | | | | | | | | | | | | |\  Merge: 8dcb085 58dd66c
+| | | | | | | | | | | | | | | | | | | | | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | | | | | | | | | | | | | | | | | |/|   Date:   Thu Mar 12 10:36:06 2015 -0400
+| | | | | | | | | | | | | | | | | | | | | |   
+| | | | | | | | | | | | | | | | | | | | | |       Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | | | | | | | | | | | | | | | | | | | | |                       
+| | | | | | | | | | | | | | | | | | | | * | commit 58dd66c91235c900d398ca80769c4403b90c470b
+| | | | | | | | | | | | | | | | | | | |/ /  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | | | | | | | | | | | | | | | | | |   Date:   Thu Mar 12 10:16:34 2015 -0400
+| | | | | | | | | | | | | | | | | | | | |   
+| | | | | | | | | | | | | | | | | | | | |       Updates to API's for Demo
+| | | | | | | | | | | | | | | | | | | | |                      
+| | | | | | | | | | | | | | | | | | | * | commit e20ac3060f722c03665ae08fb864ffb7b6d5f338
+| | | | | | | | | | | | | | | | | | |/ /  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | | | | | | | | | | | | | | | | |   Date:   Wed Mar 11 13:58:07 2015 -0400
+| | | | | | | | | | | | | | | | | | | |   
+| | | | | | | | | | | | | | | | | | | |       Updated to accommodate server limitation.
+| | | | | | | | | | | | | | | | | | | |                     
+| | | | | | | | | | | | | | | | | | * | commit 8e0c0a68631b2f9fe40d5ee103041c9ea43729ce
+| | | | | | | | | | | | | | | | | |/ /  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | | | | | | | | | | | | | | | |   Date:   Wed Mar 11 12:31:50 2015 -0400
+| | | | | | | | | | | | | | | | | | |   
+| | | | | | | | | | | | | | | | | | |       Updates to Medication and Patient Flag Widgets
+| | | | | | | | | | | | | | | | | | |                      
+| | | | | | | | | | | | | | | | | * |   commit b6288f4c903167a4f7ac267fb43ee8756cb0507b
+| | | | | | | | | | | | | | | | | |\ \  Merge: 03b9562 3eb2b31
+| | | | | | | | | | | | | | | | | |/ /  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | | | | | | | | | | | | | |/| |   Date:   Wed Mar 11 08:58:30 2015 -0400
+| | | | | | | | | | | | | | | | | | |   
+| | | | | | | | | | | | | | | | | | |       Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | | | | | | | | | | | | | | | | | |                    
+| | | | | | | | | | | | | | | | | * | commit 03b9562ed20cb53de925a6213c58c06d4f5e2ebd
+| | | | | | | | | | | | | | | | | | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | | | | | | | | | | | | | | | | Date:   Wed Mar 11 01:20:20 2015 -0400
+| | | | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | | | |     Revert "Updates to Medication & Patient Flag Widgets"
+| | | | | | | | | | | | | | | | | | |     
+| | | | | | | | | | | | | | | | | | |     This reverts commit 983c3383fd410bb568d4b626c3cfcda2da1ca163.
+| | | | | | | | | | | | | | | | | | |                    
+| | | | | | | | | | | | | | | | | * | commit 983c3383fd410bb568d4b626c3cfcda2da1ca163
+| | | | | | | | | | | | | | | |_|/ /  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | | | | | | | | | | | |/| | |   Date:   Wed Mar 11 01:19:31 2015 -0400
+| | | | | | | | | | | | | | | | | |   
+| | | | | | | | | | | | | | | | | |       Updates to Medication & Patient Flag Widgets
+| | | | | | | | | | | | | | | | | |                   
+| | | | | | | | | | | | | | | | | * commit 8dcb0852850864c947723fa25f6b025711910e78
+| | | | | | | | | | | | | | | | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | | | | | | | | | | | | | |   Date:   Thu Mar 12 10:35:35 2015 -0400
+| | | | | | | | | | | | | | | | |   
+| | | | | | | | | | | | | | | | |       Implemented Edit Widget and updated FormatUtility
+| | | | | | | | | | | | | | | | |                  
+| | | | | | | | | | | | | | | | * commit 3eb2b31de7b283aec0a32d68f7affac20181a9ce
+| | | | | | | | | | | | | | | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | | | | | | | | | | | | |   Date:   Tue Mar 10 23:35:05 2015 -0400
+| | | | | | | | | | | | | | | |   
+| | | | | | | | | | | | | | | |       Added Format Utility Service to standardize display for Date, SSN, and Phone Numbers
+| | | | | | | | | | | | | | | |                 
+| | | | | | | | | | | | | | | * commit bccd6d39a7a7c7a27c236e1d0bdd92349be64ca9
+| | | | | | | | | | | | | | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | | | | | | | | | | | |   Date:   Tue Mar 10 04:36:49 2015 -0400
+| | | | | | | | | | | | | | |   
+| | | | | | | | | | | | | | |       Added updates to Veteran Roster Widget. Added Write back to database.
+| | | | | | | | | | | | | | |                
+| | | | | | | | | | | | | | * commit 5eb5850e0e0e697fab4d51521d3d181574d34aa6
+| | | | | | | | | | | | | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | | | | | | | | | | |   Date:   Mon Mar 9 15:17:59 2015 -0400
+| | | | | | | | | | | | | |   
+| | | | | | | | | | | | | |       Prototype API for trial lookup against CDW
+| | | | | | | | | | | | | |               
+| | | | | | | | | | | | | * commit dc68f6e2763cf18088f10860942fef79a2bb7227
+| | | | | | | | | | | | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | | | | | | | | | |   Date:   Sun Mar 8 23:45:17 2015 -0400
+| | | | | | | | | | | | |   
+| | | | | | | | | | | | |       Unit Test and Widget Code for Medication Widget.
+| | | | | | | | | | | | |                
+| | | | | | | | | | | | *   commit dd126db1dcbe2554c576f6ef981cb8a165a615b9
+| | | | | | | | | | | | |\  Merge: 3b6be63 bc7e0c7
+| | | | | | | | | | | | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | | | | | | | | | | | Date:   Fri Mar 6 13:04:21 2015 -0500
+| | | | | | | | | | | | | | 
+| | | | | | | | | | | | | |     Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | | | | | | | | | | | | |               
+| | | | | | | | | | | | | * commit bc7e0c7711e6349be7b2a021663421f4cb363271
+| | | | | | | | | | | | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | | | | | | | | |/|   Date:   Thu Mar 5 22:42:38 2015 -0500
+| | | | | | | | | | | | |   
+| | | | | | | | | | | | |       Further progress on the medication and patientFlag Widgets
+| | | | | | | | | | | | |              
+| | | | | | | | | | | | * commit 3b6be639a901669ac214289532d21b5c83197658
+| | | | | | | | | | | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | | | | | | | | |   Date:   Fri Mar 6 13:04:06 2015 -0500
+| | | | | | | | | | | |   
+| | | | | | | | | | | |       updated tests for Veteran roster Widget
+| | | | | | | | | | | |             
+| | | | | | | | | | | * commit 9de1c765e61bb01bf5e10ef456fad2a0e5794971
+| | | | | | | | | | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | | | | | | | |   Date:   Thu Mar 5 11:04:46 2015 -0500
+| | | | | | | | | | |   
+| | | | | | | | | | |       Medication Widget - Quick Fix
+| | | | | | | | | | |            
+| | | | | | | | | | * commit 1b9e0c90dd096071ec9eee0792dd751d555edc2a
+| | | | | | | | | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | | | | | | |   Date:   Thu Mar 5 10:56:28 2015 -0500
+| | | | | | | | | |   
+| | | | | | | | | |       Medication Widget - Quick Fix
+| | | | | | | | | |           
+| | | | | | | | | * commit b228efa72ab1dec451355525f4da4c81fa9c7705
+| | | | | | | | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | | | | | |   Date:   Thu Mar 5 00:59:03 2015 -0500
+| | | | | | | | |   
+| | | | | | | | |       updated models and directive for Outreach Status dropdown to Veteran Roster Widget
+| | | | | | | | |          
+| | | | | | | | * commit 829891e743da6e5ed31ce1d3cad3e0336209dad5
+| | | | | | | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | | | | |   Date:   Wed Mar 4 20:25:18 2015 -0500
+| | | | | | | |   
+| | | | | | | |       Missed a couple of quick updates - Code not working yet!
+| | | | | | | |         
+| | | | | | | * commit ffb579c33675edb9c6f755d68bd31a6591e0dd83
+| | | | | | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | | | |   Date:   Wed Mar 4 20:19:16 2015 -0500
+| | | | | | |   
+| | | | | | |       Unit test for Flag and Medication Datamodels and  Medication widget code.
+| | | | | | |        
+| | | | | | * commit e7f3a7eefde8a05b18987602e98a9df1c08e797f
+| | | | | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | | |   Date:   Wed Mar 4 17:06:48 2015 -0500
+| | | | | |   
+| | | | | |       Test API for Bill
+| | | | | |       
+| | | | | * commit 002e16a2d0e2098f7f7dd45de78f06796053ba88
+| | | | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | |   Date:   Wed Mar 4 16:53:50 2015 -0500
+| | | | |   
+| | | | |       Test API for Bill under old prototype
+| | | | |        
+| | | | *   commit 3ff5ce219362914272db6746ed32031bc55d6632
+| | | | |\  Merge: 45df451 302e8cd
+| | | | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | |/|   Date:   Wed Mar 4 03:47:02 2015 -0500
+| | | | |   
+| | | | |       Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | | | |      
+| | | * | commit 302e8cdd30ba33ab2ca5f213ab6cbbcf23bac169
+| | |/ /  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | |   Date:   Wed Mar 4 02:30:57 2015 -0500
+| | | |   
+| | | |       Created datamodels for PatientFlag and Medication Widgets along with the tests stubbed out.
+| | | |     
+| | | * commit 45df4511bc5e7d24b2c389217a96d277b2110a29
+| | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | |   Date:   Wed Mar 4 03:46:42 2015 -0500
+| | |   
+| | |       PR-1380 - Outreach Status updates (PR 1501, 1481)
+| | |    
+| | * commit 0171a86fb7e6a720943fdec186d4201fd030d50d
+| |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| |   Date:   Tue Mar 3 11:19:27 2015 -0500
+| |   
+| |       Updates to the Gruntfile to allow for testing.  I've added two new grunt tasks that will enable testing to not use livereload.  The new commands are as follows:
+| |       
+| |       grunt build - this will build the application in preparation for testing when there has been a change within the test branch to code
+| |       grunt serve:test to start the application.
+| |     
+| *   commit 0937c040cc382db5c332112014fa04b3d571153e
+| |\  Merge: 2f19134 8bb22dc
+| |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+|/|   Date:   Tue Mar 3 10:27:09 2015 -0500
+| |   
+| |       merged changes
+| |   
+* | commit 8bb22dcab894402f18d8aa5b0e2dbc2165a0a3cc
+ /  Author: Robert Snelling <robert.snelling@us.pwc.com>
+|   Date:   Mon Mar 2 23:19:40 2015 -0500
+|   
+|       PR-1479 & PR-1492 - Created the Data API for Medications and Flags, and Fixed the vetContactData Test.
+|  
+* commit 2f191340f1c16539e899a12d9fd40db2ff55ea4a
+  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+  Date:   Tue Mar 3 09:04:48 2015 -0500
+  
+      Created prototype Edit Widget functionality
