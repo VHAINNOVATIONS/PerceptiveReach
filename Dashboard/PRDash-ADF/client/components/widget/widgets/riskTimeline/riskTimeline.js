@@ -17,7 +17,7 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wt-risk-timeline', function ($filter) {
+  .directive('wtRiskTimeline', function ($filter) {
     return {
       restrict: 'A',
       replace: true,

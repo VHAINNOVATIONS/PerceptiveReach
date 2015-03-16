@@ -142,7 +142,7 @@ angular.module('app')
       },
        {
         name: 'Risk Timeline',
-        directive: 'wt-nvd3-line-chart',
+        directive: 'wt-risk-timeline',
         dataAttrName: 'data',
         dataModelType: RandomNVD3TimeSeriesDataModel,
         dataModelArgs: {
