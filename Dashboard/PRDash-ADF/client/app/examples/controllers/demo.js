@@ -148,6 +148,7 @@ angular.module('app')
         dataModelArgs: {
           rate: 40
         },
+        title: 'Risk Timeline',
         attrs: {
           'show-time-range': true
         },
