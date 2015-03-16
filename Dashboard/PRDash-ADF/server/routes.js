@@ -30,6 +30,8 @@ module.exports = function(app) {
   app.use('/api/vetEmergencyData', require('./api/vetEmergencyData'));
   app.use('/api/patientFlagData', require('./api/patientFlagData'));
   app.use('/api/medicationData', require('./api/medicationData'));
+  app.use('/api/appointmentData', require('./api/appointmentData'));
+
 
 
   app.use('/auth', require('./auth'));
