@@ -143,11 +143,6 @@ angular.module('app')
        {
         name: 'Risk Timeline',
         directive: 'wt-risk-timeline',
-        //dataAttrName: 'data',
-        ///dataModelType: RandomNVD3TimeSeriesDataModel,
-        dataModelArgs: {
-          rate: 40
-        },
         title: 'Risk Timeline',
         attrs: {
           'show-time-range': true

@@ -1,9 +1,10 @@
 <div class="bar-chart">
     <div style="text-align: right;">
-        <span ng-if="showTimeRange && start && end">{{start|date:'HH:mm:ss'}} - {{end|date:'HH:mm:ss'}}</span>&nbsp;
+        <span ng-if="showTimeRange && start && end">{{start|date:'yyyy-MM-dd'}} - {{end|date:'yyyy-MM-dd'}}</span>&nbsp;
     </div>
     <nvd3-line-chart
             data="data"
+            height="300"
             xAxisTickFormat="xAxisTickFormatFunction()"
             yAxisTickFormat="yAxisTickFormatFunction()"
             x="xFunction()"

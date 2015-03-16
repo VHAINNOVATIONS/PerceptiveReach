@@ -169,10 +169,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/riskTimeline/riskTimeline.html",
     "<div class=\"bar-chart\">\n" +
     "    <div style=\"text-align: right;\">\n" +
-    "        <span ng-if=\"showTimeRange && start && end\">{{start|date:'HH:mm:ss'}} - {{end|date:'HH:mm:ss'}}</span>&nbsp;\n" +
+    "        <span ng-if=\"showTimeRange && start && end\">{{start|date:'yyyy-MM-dd'}} - {{end|date:'yyyy-MM-dd'}}</span>&nbsp;\n" +
     "    </div>\n" +
     "    <nvd3-line-chart\n" +
     "            data=\"data\"\n" +
+    "            height=\"300\"\n" +
     "            xAxisTickFormat=\"xAxisTickFormatFunction()\"\n" +
     "            yAxisTickFormat=\"yAxisTickFormatFunction()\"\n" +
     "            x=\"xFunction()\"\n" +
