@@ -235,6 +235,48 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/riskTimeline/riskTimeline.html",
+    "<div class=\"bar-chart\">\r" +
+    "\n" +
+    "    <div style=\"text-align: right;\">\r" +
+    "\n" +
+    "        <span ng-if=\"showTimeRange && start && end\">{{start|date:'HH:mm:ss'}} - {{end|date:'HH:mm:ss'}}</span>&nbsp;\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <nvd3-line-chart\r" +
+    "\n" +
+    "            data=\"data\"\r" +
+    "\n" +
+    "            xAxisTickFormat=\"xAxisTickFormatFunction()\"\r" +
+    "\n" +
+    "            yAxisTickFormat=\"yAxisTickFormatFunction()\"\r" +
+    "\n" +
+    "            x=\"xFunction()\"\r" +
+    "\n" +
+    "            y=\"yFunction()\"\r" +
+    "\n" +
+    "            showXAxis=\"true\"\r" +
+    "\n" +
+    "            showYAxis=\"true\"\r" +
+    "\n" +
+    "            reduceXTicks=\"true\"\r" +
+    "\n" +
+    "            forcey=\"[0,100]\"\r" +
+    "\n" +
+    "            transitionduration=\"0\"\r" +
+    "\n" +
+    "            useInteractiveGuideline=\"true\"\r" +
+    "\n" +
+    "            showLegend=\"{{showLegend}}\"\r" +
+    "\n" +
+    "            tooltips=\"true\">\r" +
+    "\n" +
+    "    </nvd3-line-chart>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
     "<div class=\"patient-flags\">\r" +
     "\n" +

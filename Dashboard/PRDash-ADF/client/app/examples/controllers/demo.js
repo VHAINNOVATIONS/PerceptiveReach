@@ -137,7 +137,22 @@ angular.module('app')
           'show-time-range': true
         },
         style: {
-          width: '50%'
+          width: '100%'
+        }
+      },
+       {
+        name: 'Risk Timeline',
+        directive: 'wt-nvd3-line-chart',
+        dataAttrName: 'data',
+        dataModelType: RandomNVD3TimeSeriesDataModel,
+        dataModelArgs: {
+          rate: 40
+        },
+        attrs: {
+          'show-time-range': true
+        },
+        style: {
+          width: '100%'
         }
       },
       {
@@ -146,7 +161,8 @@ angular.module('app')
         dataAttrName: 'chart',
         dataModelType: RandomTimeSeriesDataModel,
         style: {
-          width: '50%'
+          width: '50%',
+          height: '250px'
         }
       },
       {
@@ -188,14 +204,14 @@ angular.module('app')
     ];
   })
   .value('defaultWidgets', [
+      {name: 'Risk Timeline'},
       {name: 'medication'},
       {name: 'patientFlags'},
       { name: 'contact' },
-      { name: 'emergency' }, 
-      { name: 'datatable' }
+      {name: 'emergency' }, 
+      {name: 'datatable' }
       /*,
       { name: 'Metrics Chart' },
-      { name: 'NVD3 Line Chart' },
       { name: 'Line Chart' },
       { name: 'Bar Chart' },
       { name: 'topN' },
