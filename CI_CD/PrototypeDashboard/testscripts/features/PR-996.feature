@@ -3,4 +3,4 @@ Feature: As a Dashboard User, I want to be presented "Clinical Decision Support"
   Given I navigate to the http://localhost:7003/ 
   When I click on "Individual view"
   Then I should see the "Veteran Roster by VAMC" widget
-  And I should see the "clinical practice guidelines" widget
+  And I should see "clinical practice guidelines" widget
