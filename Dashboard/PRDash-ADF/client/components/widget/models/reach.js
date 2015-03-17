@@ -46,12 +46,13 @@ angular.module('ui.models')
               vamc = veteransByVAMC[0].VAMC
               var record = [];
               var fullName = veteransByVAMC[veteran].LastName + ", " +veteransByVAMC[veteran].FirstName + " " + veteransByVAMC[veteran].MiddleName; 
-              record.push(String(fullName));
+             /* record.push(String(fullName));
               record.push(String(veteransByVAMC[veteran].SSN));
               record.push(String(veteransByVAMC[veteran].Phone));
               record.push(String(veteransByVAMC[veteran].DateIdentifiedRisk));
-              record.push(String(veteransByVAMC[veteran].RiskLevel)); 
+              record.push(String(veteransByVAMC[veteran].RiskLevel)); */
               //record.push(String(veteransByVAMC[veteran].OutreachStatus));
+              veteransByVAMC[veteran].Name = fullName;
               var options = "";
               var temp = "";
               var selected = " selected='selected'";
@@ -63,13 +64,14 @@ angular.module('ui.models')
                 options += temp;
               }
               var select = "<select class='form-control' style='width: 180px;' id='vet_" + veteransByVAMC[veteran].ReachID + "'><option value=''></option>"+ options+ "</select>";
-              record.push(String(select));
-                              
-              output.push(record);
+              //record.push(String(select));
+              veteransByVAMC[veteran].OutreachStatusSelect = select;                
+              //output.push(veteransByVAMC);
           }
-          output.sort(function(a,b) {return (a.RiskLevel > b.RiskLevel) ? 1 : ((b.RiskLevel > a.RiskLevel) ? -1 : 0);} );
+          //output.sort(function(a,b) {return (a.RiskLevel > b.RiskLevel) ? 1 : ((b.RiskLevel > a.RiskLevel) ? -1 : 0);} );
           var columnHeaders = [];
-          data = [this.vamc, output, outreachStatus];//{vamc : this.vamc, roster : output};
+          //data = [this.vamc, output, outreachStatus];//{vamc : this.vamc, roster : output};
+          data = [this.vamc, veteransByVAMC, outreachStatus];
           console.log(data);
           this.updateScope(data);
         }.bind(this));
@@ -78,7 +80,7 @@ angular.module('ui.models')
       saveOutreachData: function (outreachStatus, veteranID) {
         $http.put('/api/veteranRoster?vetReachID=' + veteranID, {'outreachStatus': outreachStatus})
         .success(function(data) {
-          alert(data);
+          //alert(data);
         });  
       },
       updateVAMC: function (vamc) {

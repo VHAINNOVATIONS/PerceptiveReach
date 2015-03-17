@@ -70,9 +70,9 @@ exports.index = function(req, res) {
             var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
             //console.log(jsonRecordSet);
             for (var veteran in jsonRecordSet) {
-                jsonRecordSet[veteran].SSN = dataFormatter.formatData(jsonRecordSet[veteran].SSN);
-                jsonRecordSet[veteran].Phone = dataFormatter.formatData(jsonRecordSet[veteran].Phone);
-                jsonRecordSet[veteran].DateIdentifiedRisk = dataFormatter.formatData(jsonRecordSet[veteran].DateIdentifiedRisk);
+                jsonRecordSet[veteran].SSN = dataFormatter.formatData(jsonRecordSet[veteran].SSN,"ssn");
+                jsonRecordSet[veteran].Phone = dataFormatter.formatData(jsonRecordSet[veteran].Phone,"phone");
+                jsonRecordSet[veteran].DateIdentifiedRisk = dataFormatter.formatData(jsonRecordSet[veteran].DateIdentifiedRisk,"date");
                 //console.log(jsonRecordSet[veteran].SSN + " " + jsonRecordSet[veteran].Phone + " " + jsonRecordSet[veteran].DateIdentifiedRisk);
             }
             res.send(jsonRecordSet);

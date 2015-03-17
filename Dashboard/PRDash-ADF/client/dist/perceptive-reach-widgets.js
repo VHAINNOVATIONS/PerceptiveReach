@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-angular.module('ui.widgets', ['datatorrent.mlhrTable', 'nvd3ChartDirectives', 'ngTable']);
+angular.module('ui.widgets', ['datatorrent.mlhrTable', 'nvd3ChartDirectives', 'ngTable','datatables','datatables.scroller']);
 angular.module('ui.websocket', ['ui.visibility', 'ui.notify']);
 angular.module('ui.models', ['ui.visibility', 'ui.websocket']);
 
@@ -385,12 +385,13 @@ angular.module('ui.models')
               vamc = veteransByVAMC[0].VAMC
               var record = [];
               var fullName = veteransByVAMC[veteran].LastName + ", " +veteransByVAMC[veteran].FirstName + " " + veteransByVAMC[veteran].MiddleName; 
-              record.push(String(fullName));
+             /* record.push(String(fullName));
               record.push(String(veteransByVAMC[veteran].SSN));
               record.push(String(veteransByVAMC[veteran].Phone));
               record.push(String(veteransByVAMC[veteran].DateIdentifiedRisk));
-              record.push(String(veteransByVAMC[veteran].RiskLevel)); 
+              record.push(String(veteransByVAMC[veteran].RiskLevel)); */
               //record.push(String(veteransByVAMC[veteran].OutreachStatus));
+              veteransByVAMC[veteran].Name = fullName;
               var options = "";
               var temp = "";
               var selected = " selected='selected'";
@@ -402,13 +403,14 @@ angular.module('ui.models')
                 options += temp;
               }
               var select = "<select class='form-control' style='width: 180px;' id='vet_" + veteransByVAMC[veteran].ReachID + "'><option value=''></option>"+ options+ "</select>";
-              record.push(String(select));
-                              
-              output.push(record);
+              //record.push(String(select));
+              veteransByVAMC[veteran].OutreachStatusSelect = select;                
+              //output.push(veteransByVAMC);
           }
-          output.sort(function(a,b) {return (a.RiskLevel > b.RiskLevel) ? 1 : ((b.RiskLevel > a.RiskLevel) ? -1 : 0);} );
+          //output.sort(function(a,b) {return (a.RiskLevel > b.RiskLevel) ? 1 : ((b.RiskLevel > a.RiskLevel) ? -1 : 0);} );
           var columnHeaders = [];
-          data = [this.vamc, output, outreachStatus];//{vamc : this.vamc, roster : output};
+          //data = [this.vamc, output, outreachStatus];//{vamc : this.vamc, roster : output};
+          data = [this.vamc, veteransByVAMC, outreachStatus];
           console.log(data);
           this.updateScope(data);
         }.bind(this));
@@ -417,7 +419,7 @@ angular.module('ui.models')
       saveOutreachData: function (outreachStatus, veteranID) {
         $http.put('/api/veteranRoster?vetReachID=' + veteranID, {'outreachStatus': outreachStatus})
         .success(function(data) {
-          alert(data);
+          //alert(data);
         });  
       },
       updateVAMC: function (vamc) {
@@ -2473,15 +2475,97 @@ angular.module('ui.widgets')
       restrict: 'EAC',
       replace: true,
       templateUrl: 'client/components/widget/widgets/veteranRosterTable/veteranRosterTable.html',
+      
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder, DTInstances) {
+        console.log("inside veteran roster controller");
+        console.log($scope.widgetData);
+        $scope.dtinstance = DTInstances;
+        $scope.veteranList = $scope.widgetData;
+        console.log("dtoptionsbuilder, dtcolumnsdefbuilder, dtinstances");
+        console.log(DTOptionsBuilder);
+        console.log(DTColumnDefBuilder);
+        console.log(DTInstances);
+        $scope.dtOptions = DTOptionsBuilder.newOptions()//.fromSource($scope.widgetData)
+            .withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scorllY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false);
+        $scope.dtColumns = [
+          DTColumnDefBuilder.newColumnDef(0),
+          DTColumnDefBuilder.newColumnDef(1),
+          DTColumnDefBuilder.newColumnDef(2),
+          DTColumnDefBuilder.newColumnDef(3),
+          DTColumnDefBuilder.newColumnDef(4),
+          DTColumnDefBuilder.newColumnDef(5)
+            /*DTColumnBuilder.newColumn('Name').withTitle('Veteran Name'),
+            DTColumnBuilder.newColumn('SSN').withTitle('Veteran SSN'),
+            DTColumnBuilder.newColumn('Phone').withTitle('Veteran Phone'),
+            DTColumnBuilder.newColumn('DateIdentifiedRisk').withTitle('Date First Identified'),
+            DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level'),
+            DTColumnBuilder.newColumn('OutreachStatus').withTitle('Outreach Status')*/
+        ];
+        console.log("dtoptions:  ");
+        console.log($scope.dtOptions);
+        console.log("dtcolumns:  ");
+        console.log($scope.dtColumns);
+        $scope.columns = [
+          {"Name" : "Veteran Name"},
+          {"Name" : "Veteran SSN"},
+          {"Name" : "Veteran Phone"},
+          {"Name" : "Date First Identified"},
+          {"Name" : "Statistical Risk Level"},
+          {"Name" : "Outreach Status"}
+        ];
+      },
       link: function postLink(scope, element, attr) {
-        var unwatch = scope.$watch('widgetData', function(v){
+        console.log("scope::");
+        console.log(scope);
+        
+        //scope.dtrender.showLoading();
+        scope.$watch('widgetData', function(v){
+          var opts = {
+          lines: 13, // The number of lines to draw
+          length: 20, // The length of each line
+          width: 10, // The line thickness
+          radius: 30, // The radius of the inner circle
+          corners: 1, // Corner roundness (0..1)
+          rotate: 0, // The rotation offset
+          direction: 1, // 1: clockwise, -1: counterclockwise
+          color: '#000', // #rgb or #rrggbb or array of colors
+          speed: 1, // Rounds per second
+          trail: 60, // Afterglow percentage
+          shadow: false, // Whether to render a shadow
+          hwaccel: false, // Whether to use hardware acceleration
+          className: 'spinner', // The CSS class to assign to the spinner
+          zIndex: 2e9, // The z-index (defaults to 2000000000)
+          top: '50%', // Top position relative to parent
+          left: '50%' // Left position relative to parent
+        };
+        //var spinner = new Spinner(opts).spin($("#spinner"));
+
           console.log("inside veteran roster directive before check");
-          console.log(v);
+          console.log(v); 
+          
+          //console.log(DTOptionsBuilder);
             if(v != null && v.length >0){
-                unwatch();
+                //unwatch();                
                 console.log("inside veteran roster directive after check is positive");
                 console.log(scope.widgetData);
-                var dataTableVet = $(element).children().dataTable( {
+                //scope.dtInstance.changeData(scope.widgetData[1]);
+                scope.outreachStatusList = scope.widgetData[2];
+                scope.veteranList = scope.widgetData[1];
+                var datamodelList = {};
+                for(var veteran in scope.veteranList){
+                  datamodelList[scope.veteranList[veteran].ReachID] = scope.veteranList[veteran].OutreachStatus; 
+                }
+                scope.dataModelObj = datamodelList;
+                console.log("datamodelobj:::");
+                console.log(scope.dataModelObj);
+                var dataTableVet = $(element).children();
+                //dataTableVet.dataTable();
+                /*var dataTableVet = $(element).children().dataTable( {
                     "data": scope.widgetData[1],
                     "scrollY":        "200px",
                     "scrollCollapse": true,
@@ -2499,35 +2583,46 @@ angular.module('ui.widgets')
                     tableTools: {
                         "sRowSelect": "single"
                     }
-                });
-                $('select').selectmenu({
-                  select: function( event, ui ) {
-                    // Write back selection to the Veteran Risk table for the veteran
-                    console.log(ui);
-                    console.log(ui.item.element.context.parentElement.id.replace("vet_",""));
-                    scope.widget.dataModel.saveOutreachData(ui.item.index, ui.item.element.context.parentElement.id.replace("vet_",""));                    
+                });*/
+
+                scope.dtinstance.getLast().then(function(dtInstance) {
+                  scope.dtInstance = dtInstance;
+                  console.log("before select menu");
+                  for(veteran in scope.veteranList){
+                    //console.log('#vet_' + scope.veteranList[veteran].ReachID);
+                    $('#vet_' + scope.veteranList[veteran].ReachID).val(scope.veteranList[veteran].OutreachStatus);
+                    //datamodelList[scope.veteranList[veteran].ReachID] = scope.veteranList[veteran].OutreachStatus; 
                   }
+                  $('select').selectmenu({
+                          select: function( event, ui ) {
+                            // Write back selection to the Veteran Risk table for the veteran
+                            console.log(ui);
+                            console.log(ui.item.element.context.parentElement.id.replace("vet_",""));
+                            scope.widget.dataModel.saveOutreachData(ui.item.index, ui.item.element.context.parentElement.id.replace("vet_",""));                    
+                          }
+                        });
+                        $('#sampleVet tbody').on( 'click', 'tr', function (event) {
+                            //console.log( dataTableVet.row( this ).data() );
+                            if($(this).hasClass('selected')){
+                                $(this).removeClass('selected');
+                                //scope.hideVetDetBtn = true;
+                                //$('#veteranView').hide();
+                                //$('#facilityInfo').show();
+                            }
+                            else{
+                                $('tr.selected').removeClass('selected');
+                                $(this).addClass('selected');
+                                //scope.hideVetDetBtn = false;
+                                //$('#veteranView').show();
+                                //$('#facilityInfo').hide();
+                                //scope.getVeteran(event.currentTarget.cells[4].innerText);
+                            }
+                            scope.$apply();
+                            console.log(event.currentTarget.cells[4].innerText);
+                        } );
                 });
 
-                $('#sampleVet tbody').on( 'click', 'tr', function (event) {
-                    //console.log( dataTableVet.row( this ).data() );
-                    if($(this).hasClass('selected')){
-                        $(this).removeClass('selected');
-                        //scope.hideVetDetBtn = true;
-                        //$('#veteranView').hide();
-                        //$('#facilityInfo').show();
-                    }
-                    else{
-                        dataTableVet.$('tr.selected').removeClass('selected');
-                        $(this).addClass('selected');
-                        //scope.hideVetDetBtn = false;
-                        //$('#veteranView').show();
-                        //$('#facilityInfo').hide();
-                        //scope.getVeteran(event.currentTarget.cells[4].innerText);
-                    }
-                    scope.$apply();
-                    console.log(event.currentTarget.cells[4].innerText);
-                } );
+                
             }
             
         });
@@ -2556,10 +2651,11 @@ angular.module('ui.dashboard')
   .controller('VeteranRosterTableWidgetSettingsCtrl', ['$scope', '$modalInstance', '$http','widget', function ($scope, $modalInstance, $http, widget) {
     // add widget to scope
     $scope.widget = widget;
-
+    console.log(widget);
     // set up result object
     $scope.result = jQuery.extend(true, {}, widget);
     console.log($scope.result);
+
 
     $http.get('/api/getListOfVAMC')
         .success(function(listOfVAMC) {
@@ -2930,7 +3026,53 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/veteranRosterTable/veteranRosterTable.html",
     "<div>\r" +
     "\n" +
-    "    <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"\" id=\"sampleVet\" width=\"100%\"></table>\r" +
+    "\t<!--<div id=\"spinner\" style=\"height: 100px;\"> </div>-->\r" +
+    "\n" +
+    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\" id=\"sampleVet\" width=\"100%\">\r" +
+    "\n" +
+    "    \t<thead>\r" +
+    "\n" +
+    "        <tr>\r" +
+    "\n" +
+    "        \t<th ng-repeat=\"column in columns\">{{column.Name}}</th>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"veteran in veteranList\">\r" +
+    "\n" +
+    "            <td>{{ veteran.Name }}</td>\r" +
+    "\n" +
+    "            <td>{{ veteran.SSN }}</td>\r" +
+    "\n" +
+    "            <td>{{ veteran.Phone }}</td>\r" +
+    "\n" +
+    "            <td>{{ veteran.DateIdentifiedRisk }}</td>\r" +
+    "\n" +
+    "            <td>{{ veteran.RiskLevel }}</td>\r" +
+    "\n" +
+    "            <td>\r" +
+    "\n" +
+    "            \t<select class='form-control' style='width: 180px;' id=\"vet_{{veteran.ReachID}}\">\r" +
+    "\n" +
+    "            \t\t<option value=''></option>\r" +
+    "\n" +
+    "            \t\t<option ng-repeat=\"outreachStatus in outreachStatusList\" value=\"{{outreachStatus.OutReachStatusID}}\">{{outreachStatus.StatusName}}</option>\r" +
+    "\n" +
+    "            \t</select> \r" +
+    "\n" +
+    "            </td>\r" +
+    "\n" +
+    "            <!--<td>{{ veteran.OutreachStatus }}</td>-->\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
     "\n" +
     "</div>"
   );
