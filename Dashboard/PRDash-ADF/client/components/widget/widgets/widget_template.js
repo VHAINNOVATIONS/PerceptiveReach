@@ -183,9 +183,10 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "            reduceXTicks=\"true\"\n" +
     "            forcey=\"[0,100]\"\n" +
     "            transitionduration=\"0\"\n" +
-    "            useInteractiveGuideline=\"true\"\n" +
     "            showLegend=\"{{showLegend}}\"\n" +
-    "            tooltips=\"true\">\n" +
+    "            interactive=\"true\"\n" +
+    "            tooltips=\"true\"\n" +
+    "            tooltipcontent=\"toolTipContentFunction()\">\n" +
     "    </nvd3-line-chart>\n" +
     "</div>"
   );

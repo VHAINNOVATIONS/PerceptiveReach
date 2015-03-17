@@ -2346,12 +2346,18 @@ angular.module('ui.widgets')
             return d.value;
           };
         };
+        $scope.toolTipContentFunction = function() {
+          return function(key, x, y, e, graph) {
+              return 'Date: ' + x + '<br>' + 'Risk: ' + y + '<br>' + 'Medication: ' + e.point.medication;
+            };
+        };
       },
       link: function postLink(scope, element, attrs) {
         if (!_.has(attrs, 'showTimeRange')) {
           scope.showTimeRange = true;
         }
 
+        var filter = $filter('date');
         var mockValues = [];
         for (var year=2011; year<2015; ++year) {
           for (var month=1; month<12; ++month) {
@@ -2360,8 +2366,10 @@ angular.module('ui.widgets')
             var element = {
               date: new Date(year, month, day),
               value: value,
+              medication: 'Aspirin',
               series: 0
             };
+
             mockValues.push(element);
           }
         }
@@ -2856,9 +2864,10 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "            reduceXTicks=\"true\"\n" +
     "            forcey=\"[0,100]\"\n" +
     "            transitionduration=\"0\"\n" +
-    "            useInteractiveGuideline=\"true\"\n" +
     "            showLegend=\"{{showLegend}}\"\n" +
-    "            tooltips=\"true\">\n" +
+    "            interactive=\"true\"\n" +
+    "            tooltips=\"true\"\n" +
+    "            tooltipcontent=\"toolTipContentFunction()\">\n" +
     "    </nvd3-line-chart>\n" +
     "</div>"
   );
