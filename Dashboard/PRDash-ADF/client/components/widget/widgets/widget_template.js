@@ -351,7 +351,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/veteranRosterTable/veteranRosterTable.html",
     "<div>\r" +
     "\n" +
-    "\t<div id=\"spinner\" style=\"height: 100px;\"> </div>\r" +
+    "\t<!--<div id=\"spinner\" style=\"height: 100px;\"> </div>-->\r" +
     "\n" +
     "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\" id=\"sampleVet\" width=\"100%\">\r" +
     "\n" +

@@ -23,12 +23,15 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/veteranRosterTable/veteranRosterTable.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder, DTInstances, DTRendererService) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder, DTInstances) {
         console.log("inside veteran roster controller");
         console.log($scope.widgetData);
-        $scope.dtrender = DTRendererService;
         $scope.dtinstance = DTInstances;
         $scope.veteranList = $scope.widgetData;
+        console.log("dtoptionsbuilder, dtcolumnsdefbuilder, dtinstances");
+        console.log(DTOptionsBuilder);
+        console.log(DTColumnDefBuilder);
+        console.log(DTInstances);
         $scope.dtOptions = DTOptionsBuilder.newOptions()//.fromSource($scope.widgetData)
             .withDOM('lfrti')
             .withScroller()
@@ -50,6 +53,10 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level'),
             DTColumnBuilder.newColumn('OutreachStatus').withTitle('Outreach Status')*/
         ];
+        console.log("dtoptions:  ");
+        console.log($scope.dtOptions);
+        console.log("dtcolumns:  ");
+        console.log($scope.dtColumns);
         $scope.columns = [
           {"Name" : "Veteran Name"},
           {"Name" : "Veteran SSN"},
@@ -64,7 +71,7 @@ angular.module('ui.widgets')
         console.log(scope);
         
         //scope.dtrender.showLoading();
-        scope.$watch('widget.dataModel.widgetScope.widgetData', function(v){
+        scope.$watch('widgetData', function(v){
           var opts = {
           lines: 13, // The number of lines to draw
           length: 20, // The length of each line
@@ -83,7 +90,7 @@ angular.module('ui.widgets')
           top: '50%', // Top position relative to parent
           left: '50%' // Left position relative to parent
         };
-        var spinner = new Spinner(opts).spin($("#spinner"));
+        //var spinner = new Spinner(opts).spin($("#spinner"));
 
           console.log("inside veteran roster directive before check");
           console.log(v); 
@@ -97,14 +104,14 @@ angular.module('ui.widgets')
                 scope.outreachStatusList = scope.widgetData[2];
                 scope.veteranList = scope.widgetData[1];
                 var datamodelList = {};
-                for(veteran in scope.veteranList){
+                for(var veteran in scope.veteranList){
                   datamodelList[scope.veteranList[veteran].ReachID] = scope.veteranList[veteran].OutreachStatus; 
                 }
                 scope.dataModelObj = datamodelList;
                 console.log("datamodelobj:::");
                 console.log(scope.dataModelObj);
                 var dataTableVet = $(element).children();
-                
+                //dataTableVet.dataTable();
                 /*var dataTableVet = $(element).children().dataTable( {
                     "data": scope.widgetData[1],
                     "scrollY":        "200px",
