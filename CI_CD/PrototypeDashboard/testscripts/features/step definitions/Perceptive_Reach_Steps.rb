@@ -74,6 +74,14 @@ And(/^I should see "(.*?)" option in the dropdown$/) do |dropdownoption|
   expect(page).to have_content(dropdownoption)
 end
 
+Then(/^I put in my VA username$/) do
+  fill_in('Username', :with => 'VA Username') # express the regexp above with the code you wish you had
+end
+
+Then(/^I put in my VA password$/) do
+  fill_in('Password', :with => 'VA Password')# express the regexp above with the code you wish you had
+end
+
 #pending steps
 Then(/^I should see search function for Veteran's health record$/) do
   pending # express the regexp above with the code you wish you had
