@@ -1,4 +1,4 @@
-Feature: As a SPC I want to see a Veteran's contact information so that I can contact
+Feature: As a SPC I want to see a Veteran's contact information so that I can contact PR-1267
 
 @Contact_information_PR_1267
 Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's contact information

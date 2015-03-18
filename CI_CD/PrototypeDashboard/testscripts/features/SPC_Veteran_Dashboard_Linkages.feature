@@ -1,5 +1,5 @@
-Feature: Enable the background communications layer between all components of the dashboard.  Layout tab to Layout tab (i.e.. National to State), Widget to Widget (i.e. Veteran Roster to Supporting Widgets).  
-PR-XXXX 
+Feature: Enable the background communications layer between all components of the dashboard.  Layout tab to Layout tab (i.e.. National to State), Widget to Widget (i.e. Veteran Roster to Supporting Widgets). PR-XXXX 
+
   Scenario: I open a web browser and use http://localhost:7003/ to see the Clinical practice Guideline widget
   Given I navigate to the http://localhost:7003/ 
   When I click on "Facility View"
