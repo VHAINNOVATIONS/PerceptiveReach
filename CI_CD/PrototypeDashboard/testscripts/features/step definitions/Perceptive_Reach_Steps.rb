@@ -3,6 +3,15 @@ Given(/^I navigate to the http:\/\/localhost:(\d+)\/$/) do |arg1|
   expect(page).to have_content 'Description' #load IRDS and wait for some content to appear
 end
 
+When(/^I click on the VAMC dropdown$/) do
+  find(:xpath, "//select[@ng-model='result.dataModel.vamc']").click  
+end
+
+When(/^I choose "(.*?)" as VAMC$/) do |arg1|
+  find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[2]').click
+end
+
+
 When(/^I click on "(.*?)"$/) do |view|
   title = view
   page.find(:xpath, "//span[contains(text(),'#{title}')]").click #find and click National/State/Facility/Individual View tabe
