@@ -8,7 +8,8 @@ When(/^I click on the VAMC dropdown$/) do
 end
 
 When(/^I choose "(.*?)" as VAMC$/) do |arg1|
-  find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[2]').click
+  find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[contains(text(),"(V01) (405) White River Junction, VT")]').click
+  #find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[2]').click
 end
 
 
