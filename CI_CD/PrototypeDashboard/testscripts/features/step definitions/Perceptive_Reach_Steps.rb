@@ -13,6 +13,12 @@ When(/^I choose "(.*?)" as VAMC$/) do |arg1|
 end
 
 
+When(/^I select "(.*?)"$/) do |arg1|
+  #pending # express the regexp above with the code you wish you had
+  find(:xpath, '//*[@id="sampleVet"]/tbody/tr[1]').click
+
+end
+
 When(/^I click on "(.*?)"$/) do |view|
   title = view
   page.find(:xpath, "//span[contains(text(),'#{title}')]").click #find and click National/State/Facility/Individual View tabe
@@ -43,6 +49,12 @@ end
 Then(/^I click the Add a Widget button$/) do
   find_button('Add a Widget').click 
   find_button('Add a Widget').click 
+end
+
+Then(/^I click on the Add a widget button$/) do
+  #pending # express the regexp above with the code you wish you had
+  find_button('Add a Widget').click
+  find_button('Add a Widget').click
 end
 
 Then(/^I should see the "(.*?)" widget$/) do |pagecontent|
