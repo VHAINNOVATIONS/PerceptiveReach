@@ -31,7 +31,7 @@ exports.index = function(req, res) {
         console.log("Registering endpoint: /clinicalDecisionSupport/:guideType is " + guideType);
         //query += "vamc.vamcID = " + id;
         query += select
-                + " WHERE CDSG.GuidelineType = " + guideType;
+                + " WHERE CDSG.GuidelineType = '" + guideType +"'";
         if (riskLevel) {
             console.log("Registering endpoint: /clinicalDecisionSupport/:guideType&riskLevel is " + riskLevel);
             query += " AND CDSG.RiskLevel= " + riskLevel;
@@ -39,7 +39,13 @@ exports.index = function(req, res) {
         query += " ORDER BY CDSG.RiskLevel ASC";
 
     } 
-    
+    else if (riskLevel) {
+        console.log("Registering endpoint: /clinicalDecisionSupport/:riskLevel is " + riskLevel);
+        //query += "vamc.vamcID = " + id;
+        query += select
+              + " WHERE CDSG.RiskLevel = " + riskLevel
+              + " ORDER BY CDSG.RiskLevel ASC";
+    }
     else {
         console.log("Registering endpoint: /clinicalDecisionSupport/:All");
         query += select 
@@ -69,6 +75,7 @@ exports.index = function(req, res) {
             console.log(recordset);
             
             res.send(recordset);
+            //res.send(data);
         });
 
     });

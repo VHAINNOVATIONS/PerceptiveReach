@@ -96,6 +96,59 @@ angular.module('ui.models')
     });
 
     return VeteranRosterDataModel;
+  })
+  .factory('ClinicalDecisionSupportDataModel', function ($http, WidgetDataModel) {
+    function ClinicalDecisionSupportDataModel() {
+    }
+
+    ClinicalDecisionSupportDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    ClinicalDecisionSupportDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(ClinicalDecisionSupportDataModel.prototype, {
+      init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        this.riskLevel = (dataModelOptions && dataModelOptions.riskLevel) ? dataModelOptions.riskLevel : null;
+        this.guidelineType = (dataModelOptions && dataModelOptions.guidelineType) ? dataModelOptions.guidelineType : null;
+
+        this.updateScope([]);
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        var options = "";
+
+        if(this.riskLevel && this.guidelineType)
+          options += '?guideType=' + this.guidelineType + '&riskLevel=' + this.riskLevel;
+        else if(this.riskLevel || this.guidelineType)
+          options += (this.riskLevel) ? '?riskLevel=' + this.riskLevel : '?guideType=' + this.guidelineType;
+        
+        $http.get('/api/clinicalDecisionSupport' + options) // '/api/clinicalDecisionSupport?guideType=%27SRB%27&riskLevel=1'
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      updateRiskLevel: function (riskLevel) {
+        this.dataModelOptions = this.dataModelOptions ? this.dataModelOptions : {};
+        this.dataModelOptions.riskLevel = riskLevel;
+        this.riskLevel = riskLevel;
+      },
+
+      updateGuidelineType: function (guidelineType) {
+        this.dataModelOptions = this.dataModelOptions ? this.dataModelOptions : {};
+        this.dataModelOptions.guidelineType = guidelineType;
+        this.guidelineType = guidelineType;
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return ClinicalDecisionSupportDataModel;
   })      
   .factory('TotalRisksDataModel', function ($http, WidgetDataModel) {
     function TotalRisksDataModel() {
