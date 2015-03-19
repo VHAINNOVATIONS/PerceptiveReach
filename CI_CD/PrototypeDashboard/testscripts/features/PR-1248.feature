@@ -5,6 +5,6 @@ Feature: As a Dashboard user, I want to view the change in a Veteran's pain leve
 
 Scenario: I open a web browser and see the pain level widget 
 Given I navigate to the http://localhost:7003/
-When I click on Individual View
+When I click on "Individual View"
 Then I should see the "Pain Level" widget
 
