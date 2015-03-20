@@ -6,7 +6,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
   When I click on Individual "Individual" view 
   Then I should see the widget with list of Veterans "Veteran Roster by VAMC"
   And I should see the "Veteran problem list" widget
-  And I should see search for a Active problems ""
+  And I should see search for a ""Active problems" 
   And I should see view all "view all"
   And I should see "Search for a Problem" 
   
