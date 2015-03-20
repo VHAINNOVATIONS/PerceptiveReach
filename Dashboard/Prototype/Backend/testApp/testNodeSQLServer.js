@@ -3,7 +3,7 @@ var sql = require('mssql');
 var config = {
   // Reach database connection params
  
-    user: 'xx',
+    user: 'xx', 
     password: 'xxxxxx',
     server: 'xxxxxxxxx', // You can use 'localhost\\instance' to connect to named instance
     driver: 'msnodesql',
