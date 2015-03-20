@@ -32,6 +32,12 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/clinicalDecisionSupport/clinicalDecisionSupport.html",
+    "<div name=\"clinicalDecisionSupport\">\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/contact/contact.html",
     "<div>\r" +
     "\n" +
