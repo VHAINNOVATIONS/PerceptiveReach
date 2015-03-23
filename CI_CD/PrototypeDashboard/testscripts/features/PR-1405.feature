@@ -9,7 +9,7 @@ Then I should see the "Veteran's Medication" widget
 And I should see "Name of Medication"
 And I should see "Dosage"
 And I should see " Active Orders"
-An I should see "Inactive Orders"
+And I should see "Inactive Orders"
 
 @click_btw_appts_PR-1405
 
