@@ -5,7 +5,8 @@ angular.module('app')
                                     RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel, 
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, ContactEmergencyDataModel, VeteranRosterDataModel,
-                                    PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel) {
+                                    PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel,
+                                    AppointmentDataModel) {
     return [
       {
         name: 'time',
@@ -106,6 +107,28 @@ angular.module('app')
         }
       },
       {
+        name: 'appointment',
+        directive: 'wt-appointment',
+        dataAttrName: 'data',
+        title: 'Appointment',
+        dataModelType: AppointmentDataModel,
+        size: {
+          width: '25%',
+          height: '250px'
+        }
+      },
+      {
+        name: 'appointmentUI',
+        directive: 'wt-appointment-u-i',
+        dataAttrName: 'data',
+        title: 'AppointmentUI',
+        dataModelType: AppointmentDataModel,
+        size: {
+          width: '25%',
+          height: '250px'
+        }
+      },
+      {
         name: 'contact',
         directive: 'wt-contact',
         dataAttrName: 'data',
@@ -190,7 +213,7 @@ angular.module('app')
         style: {
           width: '250px'
         }
-      },
+      }, 
       {
         name: 'fluid',
         directive: 'wt-fluid',
@@ -203,6 +226,8 @@ angular.module('app')
   })
   .value('defaultWidgets', [
       {name: 'medication'},
+      {name: 'appointment'},
+      {name: 'appointmentUI'},
       {name: 'patientFlags'},
       { name: 'contact' },
       { name: 'emergency' }, 
