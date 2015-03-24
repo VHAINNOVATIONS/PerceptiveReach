@@ -259,7 +259,8 @@ angular.module('ui.models')
     });
 
     return ContactEmergencyDataModel;
-  }).factory('PatientFlagDataModel', function ($http, WidgetDataModel) {
+  })
+.factory('PatientFlagDataModel', function ($http, WidgetDataModel) {
     function PatientFlagDataModel() {
     }
 
@@ -292,7 +293,8 @@ angular.module('ui.models')
     });
 
     return PatientFlagDataModel;
-  }).factory('MedicationDataModel', function ($http, WidgetDataModel) {
+  })
+.factory('MedicationDataModel', function ($http, WidgetDataModel) {
     function MedicationDataModel() {
     }
 
@@ -325,4 +327,38 @@ angular.module('ui.models')
     });
 
     return MedicationDataModel;
+  })
+.factory('AppointmentDataModel', function ($http, WidgetDataModel) {
+    function AppointmentDataModel() {
+    }
+
+    AppointmentDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    AppointmentDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(AppointmentDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/appointmentData')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return AppointmentDataModel;
   });
