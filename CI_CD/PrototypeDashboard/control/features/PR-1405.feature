@@ -6,7 +6,7 @@ Scenario: I open a web browser and see the Veteran's medication widget
 Given I navigate to the http://localhost:7003/
 When I click on "Individual View"
 Then I should see the "Veteran's Medication" widget
-And I should see "Name of Medication"
+And I should see "Zolofit"
 And I should see "Dosage"
 And I should see " Active Orders"
 And I should see "Inactive Orders"
@@ -17,7 +17,7 @@ Scenario: When I am at the Veteran's medication widget I should be able to click
 
 Given I navigate to the http://localhost:7003/
 When I click on "Individual View"
-Then I should see the "Veteran's Medication" widget
+Then I should see the "Medication" widget
 Then I should be able to click on "Medication Orders"
 And I should see "Active Orders" and "Inactive Orders"
 Then I click on "Active Orders"
