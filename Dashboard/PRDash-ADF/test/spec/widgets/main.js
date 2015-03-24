@@ -64,5 +64,12 @@ describe('main test', function () {
     $rootScope.$digest();
     expect(element.children().hasClass('mlhr-table-wrapper')).toBe(true);
   });
+
+    it('should have appointment directive', function() {
+    var element = angular.element('<div wt-appointment data="widgetData"></div>');
+    $compile(element)($rootScope);
+    $rootScope.$digest();
+    expect(element.children().hasClass('mlhr-table-wrapper')).toBe(true);
+  });
 });
 

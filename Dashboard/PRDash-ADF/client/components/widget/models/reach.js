@@ -348,7 +348,7 @@ angular.module('ui.models')
 
         $http.get('/api/appointmentData')
         .success(function(dataset) {
-                data = dataset;
+                data = dataset; 
                 this.updateScope(data);
             }.bind(this));
       },

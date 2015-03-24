@@ -54,7 +54,7 @@ module.exports = function(config) {
       'client/components/widget/widgets/{,*/}*.js',
       'client/components/widget/models/{,*/}*.js',
       'client/components/widget/widgets/widget_template.js',
-      'client/bower_components/ng-table/dist/ng-table.min.js',
+      'client/bower_components/angular-ui-grid/ui-grid.js',
       'http://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js',
       'client/app/**/*.js',
       'test/mock/**/*.js',

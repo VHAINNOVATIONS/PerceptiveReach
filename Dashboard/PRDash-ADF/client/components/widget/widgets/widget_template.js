@@ -1,5 +1,31 @@
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
+  $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
+    "<div class=\"appointment\">\r" +
+    "\n" +
+    "    <mlhr-table \r" +
+    "\n" +
+    "      options=\"tableOptions\"\r" +
+    "\n" +
+    "      columns=\"columns\" \r" +
+    "\n" +
+    "      rows=\"items\">\r" +
+    "\n" +
+    "    </mlhr-table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/appointmentUI/appointmentUI.html",
+    "<div class=\"appointmentUI\">\r" +
+    "\n" +
+    "\t<button id='toggleFiltering' ng-click=\"toggleFiltering()\" class=\"btn btn-success\">Toggle Filtering</button>\r" +
+    "\n" +
+    "\t<div id=\"grid1\" ui-grid=\"gridOptions\" class=\"grid\"></div>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/barChart/barChart.html",
     "<div class=\"bar-chart\">\r" +
     "\n" +

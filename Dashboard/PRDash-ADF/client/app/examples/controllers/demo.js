@@ -5,7 +5,7 @@ angular.module('app')
                                     RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel, 
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, ContactEmergencyDataModel, VeteranRosterDataModel,
-                                    PatientFlagDataModel, MedicationDataModel) {
+                                    PatientFlagDataModel, MedicationDataModel, AppointmentDataModel) {
     return [
       {
         name: 'time',
@@ -88,6 +88,28 @@ angular.module('app')
         dataModelType: MedicationDataModel,
         size: {
           width: '20%',
+          height: '250px'
+        }
+      },
+      {
+        name: 'appointment',
+        directive: 'wt-appointment',
+        dataAttrName: 'data',
+        title: 'Appointment',
+        dataModelType: AppointmentDataModel,
+        size: {
+          width: '25%',
+          height: '250px'
+        }
+      },
+      {
+        name: 'appointmentUI',
+        directive: 'wt-appointment-u-i',
+        dataAttrName: 'data',
+        title: 'AppointmentUI',
+        dataModelType: AppointmentDataModel,
+        size: {
+          width: '25%',
           height: '250px'
         }
       },
@@ -176,7 +198,7 @@ angular.module('app')
         style: {
           width: '250px'
         }
-      },
+      }, 
       {
         name: 'fluid',
         directive: 'wt-fluid',
@@ -189,11 +211,13 @@ angular.module('app')
   })
   .value('defaultWidgets', [
       {name: 'medication'},
+      {name: 'appointment'},
+      {name: 'appointmentUI'},
       {name: 'patientFlags'},
       { name: 'contact' },
-      { name: 'emergency' }, 
+      { name: 'emergency' }/*, 
       { name: 'datatable' }
-      /*,
+      ,
       { name: 'Metrics Chart' },
       { name: 'NVD3 Line Chart' },
       { name: 'Line Chart' },
