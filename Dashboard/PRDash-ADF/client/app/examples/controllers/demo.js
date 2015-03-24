@@ -5,7 +5,8 @@ angular.module('app')
                                     RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel, 
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, ContactEmergencyDataModel, VeteranRosterDataModel,
-                                    PatientFlagDataModel, MedicationDataModel, AppointmentDataModel) {
+                                    PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel,
+                                    AppointmentDataModel) {
     return [
       {
         name: 'time',
@@ -46,7 +47,21 @@ angular.module('app')
         }
       },
       {
-        name: 'datatable',
+        name: 'ClinicalDecisionSupport',
+        directive: 'wt-clinical-decision-support',
+        dataAttrName: 'data',
+        dataModelType: ClinicalDecisionSupportDataModel,
+        title: 'Clinical Decision Support',
+        dataModelOptions: {
+          riskLevel: 1,
+          guidelineType: 'SRB'
+        },
+        style: {
+          width: '45%'
+        }
+      },
+      {
+        name: 'RosterTable',
         directive: 'wt-veteran-roster-table',
         settingsModalOptions: {
         templateUrl: 'client/components/widget/widgets/veteranRosterTable/veteranRosterTableWidgetSettingsTemplate.html',
@@ -215,9 +230,10 @@ angular.module('app')
       {name: 'appointmentUI'},
       {name: 'patientFlags'},
       { name: 'contact' },
-      { name: 'emergency' }/*, 
-      { name: 'datatable' }
-      ,
+      { name: 'emergency' }, 
+      { name: 'ClinicalDecisionSupport' }, 
+      { name: 'RosterTable' }
+      /*,
       { name: 'Metrics Chart' },
       { name: 'NVD3 Line Chart' },
       { name: 'Line Chart' },

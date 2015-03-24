@@ -18,6 +18,7 @@
 
 angular.module('app', [
     'ngRoute',
+    'ngSanitize',
     'ui.dashboard',
     'ui.widgets',
     'ui.models',

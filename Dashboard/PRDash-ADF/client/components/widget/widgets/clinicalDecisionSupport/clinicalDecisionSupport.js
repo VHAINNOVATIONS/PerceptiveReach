@@ -17,9 +17,9 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtClinicalDecisionSupport', function () {
+  .directive('wtClinicalDecisionSupport', function ($sce) {
     return {
-      restrict: 'A',
+      restrict: 'EAC',
       replace: true,
       templateUrl: 'client/components/widget/widgets/clinicalDecisionSupport/clinicalDecisionSupport.html',
       scope: {
@@ -30,8 +30,25 @@ angular.module('ui.widgets')
       },
       link: function postLink(scope) {
         scope.$watch('data', function (data) {
-          if (data) {
-            //scope.items = data;
+          if (data && data.length != 0) {
+            var cds = data;
+            var deliminiter = "@@";
+            for(var cpgIndex in cds){
+              var featuresList = [];
+              var featuresInitial = "";
+              var featuresHtml = "";
+              var fullHMTL = "";
+              if (cds[cpgIndex].Features.indexOf(deliminiter) != -1){
+                featuresInitial = cds[cpgIndex].Features.split(":")[0].trim() + ":";
+                featuresList = cds[cpgIndex].Features.split(":")[1].trim().split(deliminiter);
+                for(var feature in featuresList){
+                  featuresHtml += (featuresList[feature] != "") ? "<li>" + featuresList[feature] + "</li>" : "";
+                } 
+                fullHMTL = featuresInitial + "<div style='overflow:auto; height:80px; widgth:auto'><ul>" + featuresHtml + "</ul></div>"; 
+                cds[cpgIndex].Features = $sce.trustAsHtml(fullHMTL);
+              }
+            }
+            scope.cpgList = cds;            
           }
         });
       }
