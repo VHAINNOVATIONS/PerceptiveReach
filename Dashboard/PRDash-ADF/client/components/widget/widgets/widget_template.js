@@ -33,7 +33,25 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/clinicalDecisionSupport/clinicalDecisionSupport.html",
-    "<div name=\"clinicalDecisionSupport\">\r" +
+    "<div name=\"clinicalDecisionSupport\" style='overflow:auto; height:450px; widgth:auto'>\r" +
+    "\n" +
+    "\t<div ng-repeat=\"cpg in cpgList\">\r" +
+    "\n" +
+    "\t\t<b>Chronic {{cpg.Risk_Name}}</b>\r" +
+    "\n" +
+    "\t\t<br><b>Features</b>\r" +
+    "\n" +
+    "\t\t<div ng-bind-html=\"cpg.Features\"></div>\r" +
+    "\n" +
+    "\t\t<br><b>Action</b>\r" +
+    "\n" +
+    "\t\t<br>{{cpg.Action}}\r" +
+    "\n" +
+    "\t\t<br><br>For more information visit the full Clinical Practice Guide at <a href=\"{{cpg.GuidelineURL}}\">{{cpg.GuidelineURL}}</a>\r" +
+    "\n" +
+    "\t\t<br><br>For guidance on proactive outreach and intervention strategies visit the Toolkit for Interventions <a href=\"{{cpg.ToolkitURL}}\">{{cpg.ToolkitURL}}</a><br><br>\r" +
+    "\n" +
+    "\t</div>\r" +
     "\n" +
     "</div>"
   );

@@ -1,2 +1,11 @@
-<div name="clinicalDecisionSupport">
+<div name="clinicalDecisionSupport" style='overflow:auto; height:450px; widgth:auto'>
+	<div ng-repeat="cpg in cpgList">
+		<b>Chronic {{cpg.Risk_Name}}</b>
+		<br><b>Features</b>
+		<div ng-bind-html="cpg.Features"></div>
+		<br><b>Action</b>
+		<br>{{cpg.Action}}
+		<br><br>For more information visit the full Clinical Practice Guide at <a href="{{cpg.GuidelineURL}}">{{cpg.GuidelineURL}}</a>
+		<br><br>For guidance on proactive outreach and intervention strategies visit the Toolkit for Interventions <a href="{{cpg.ToolkitURL}}">{{cpg.ToolkitURL}}</a><br><br>
+	</div>
 </div>
