@@ -126,9 +126,11 @@ angular.module('ui.models')
         
         $http.get('/api/clinicalDecisionSupport' + options) // '/api/clinicalDecisionSupport?guideType=%27SRB%27&riskLevel=1'
         .success(function(dataset) {
-                data = dataset;
-                this.updateScope(data);
-            }.bind(this));
+          console.log('inside Clinical decision support success');
+          console.log(dataset);
+          data = dataset;
+          this.updateScope(data);
+        }.bind(this));
       },
 
       updateRiskLevel: function (riskLevel) {
