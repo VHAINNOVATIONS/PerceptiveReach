@@ -5,6 +5,8 @@ Feature: As a Dashboard User, I want to view a Veteran's medications from within
 Scenario: I open a web browser and see the Veteran's medication widget
 Given I navigate to the http://localhost:7003/
 When I click on "Individual View"
+And I click the Add a Widget button
+And I add the "medication" widget
 Then I should see the "Medication" widget
 And I should see "Zoloft"
 And I should see "Dosage"
