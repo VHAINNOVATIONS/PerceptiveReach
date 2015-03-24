@@ -1,4 +1,5 @@
 require 'capybara/cucumber'
+require 'capybara-screenshot/cucumber'
 
 Capybara.default_wait_time = 15
 Capybara.default_driver = :selenium_chrome
