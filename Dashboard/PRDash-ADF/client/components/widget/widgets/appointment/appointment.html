@@ -1,7 +1,18 @@
 <div class="appointment">
-    <mlhr-table 
-      options="tableOptions"
-      columns="columns" 
-      rows="items">
-    </mlhr-table>
+	<table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+        <thead>
+        <tr>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Canceled</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="appt in data">
+            <td>{{ appt.ApptType }}</td>
+            <td>{{ appt.Apptdate }}</td>
+            <td>{{ appt.CancelationType }}</td>
+        </tr>
+        </tbody>
+    </table>
 </div>

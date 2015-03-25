@@ -55,21 +55,24 @@ describe('main test', function () {
     var element = angular.element('<div wt-medication data="widgetData"></div>');
     $compile(element)($rootScope);
     $rootScope.$digest();
-    expect(element.children().hasClass('mlhr-table-wrapper')).toBe(true);
+    expect(element.hasClass('medication')).toBe(true);
+    //expect(element.children().hasClass('dataTables_wrapper')).toBe(true);
   });
 
   it('should have patient flag directive', function() {
     var element = angular.element('<div wt-patient-flags data="widgetData"></div>');
     $compile(element)($rootScope);
     $rootScope.$digest();
-    expect(element.children().hasClass('mlhr-table-wrapper')).toBe(true);
+    expect(element.hasClass('patient-flags')).toBe(true);
+    //expect(element.children().hasClass('dataTables_wrapper')).toBe(true);
   });
 
     it('should have appointment directive', function() {
     var element = angular.element('<div wt-appointment data="widgetData"></div>');
     $compile(element)($rootScope);
     $rootScope.$digest();
-    expect(element.children().hasClass('mlhr-table-wrapper')).toBe(true);
+    expect(element.hasClass('appointment')).toBe(true);
+    //expect(element.hasClass('dataTables_wrapper')).toBe(true);
   });
 });
 

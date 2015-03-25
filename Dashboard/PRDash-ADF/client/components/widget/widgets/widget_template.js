@@ -3,22 +3,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
     "<div class=\"appointment\">\r" +
     "\n" +
-    "    <mlhr-table \r" +
-    "\n" +
-    "      options=\"tableOptions\"\r" +
-    "\n" +
-    "      columns=\"columns\" \r" +
-    "\n" +
-    "      rows=\"items\">\r" +
-    "\n" +
-    "    </mlhr-table>\r" +
-    "\n" +
-    "</div>"
-  );
-
-  $templateCache.put("client/components/widget/widgets/appointmentDT/appointmentDT.html",
-    "<div class=\"appointmentUI\">\r" +
-    "\n" +
     "\t<table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
     "        <thead>\r" +
@@ -50,16 +34,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "        </tbody>\r" +
     "\n" +
     "    </table>\r" +
-    "\n" +
-    "</div>"
-  );
-
-  $templateCache.put("client/components/widget/widgets/appointmentUI/appointmentUI.html",
-    "<div class=\"appointmentUI\">\r" +
-    "\n" +
-    "\t<button id='toggleFiltering' ng-click=\"toggleFiltering()\" class=\"btn btn-success\">Toggle Filtering</button>\r" +
-    "\n" +
-    "\t<div id=\"grid1\" ui-grid=\"gridOptions\" class=\"grid\"></div>\r" +
     "\n" +
     "</div>"
   );
@@ -220,15 +194,29 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
     "<div class=\"medication\">\r" +
     "\n" +
-    "    <mlhr-table \r" +
+    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "      options=\"tableOptions\"\r" +
+    "        <thead>\r" +
     "\n" +
-    "      columns=\"columns\" \r" +
+    "        <tr>\r" +
     "\n" +
-    "      rows=\"items\">\r" +
+    "            <th>Medication</th>\r" +
     "\n" +
-    "    </mlhr-table>\r" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"meds in data\">\r" +
+    "\n" +
+    "            <td>{{ meds.Name }}</td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
     "\n" +
     "</div>"
   );
@@ -326,15 +314,33 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
     "<div class=\"patient-flags\">\r" +
     "\n" +
-    "    <mlhr-table \r" +
+    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "      options=\"tableOptions\"\r" +
+    "        <thead>\r" +
     "\n" +
-    "      columns=\"columns\" \r" +
+    "        <tr>\r" +
     "\n" +
-    "      rows=\"items\">\r" +
+    "            <th>Flag</th>\r" +
     "\n" +
-    "    </mlhr-table>\r" +
+    "            <th>Cat</th>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"flags in data\">\r" +
+    "\n" +
+    "            <td>{{ flags.FlagDesc }}</td>\r" +
+    "\n" +
+    "            <td>{{ flags.Category }}</td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
     "\n" +
     "</div>"
   );

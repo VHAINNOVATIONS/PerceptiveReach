@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-angular.module('ui.widgets', ['datatorrent.mlhrTable', 'nvd3ChartDirectives', 'ui.grid','datatables','datatables.scroller']);
+angular.module('ui.widgets', ['datatorrent.mlhrTable', 'nvd3ChartDirectives', 'datatables','datatables.scroller']);
 angular.module('ui.websocket', ['ui.visibility', 'ui.notify']);
 angular.module('ui.models', ['ui.visibility', 'ui.websocket']);
 
@@ -1627,60 +1627,16 @@ angular.module('ui.widgets')
       scope: {
         data: '=',
       },
-      controller: function ($scope) {
-        $scope.tableOptions = {
-          loading: true,
-          noRowsText: 'No Appointments Found',
-          loadingText: 'Load...',
-          bodyHeight: 200,
-          /*initialSorts: [
-            { id: 'Name', dir: '+' }
-          ]*/
-        };
-        $scope.columns = [
-          { id: 'ApptType', key: 'ApptType', label: 'Type', sort: 'string', filter: 'like', width: '100px'},
-          { id: 'Apptdate', key: 'Apptdate', label: 'Date', sort: 'string', filter: 'like', width: '150px'}
-        ];
-      },
-      link: function postLink(scope) {
-        scope.$watch('data', function (data) {
-          if (data) {
-            scope.items = data;
-          }
-        });
-      }
-    };
-  });
-/*
- * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-angular.module('ui.widgets')
-  .directive('wtAppointmentDT', function () {
-    return {
-      restrict: 'A',
-      replace: true,
-      templateUrl: 'client/components/widget/widgets/appointmentDT/appointmentDT.html',
-      scope: {
-        data: '=',
-      },
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scorllY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false)
+            .withOption('order', [1, 'desc']);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
             DTColumnDefBuilder.newColumnDef(0),
             DTColumnDefBuilder.newColumnDef(1),
@@ -1694,84 +1650,6 @@ angular.module('ui.widgets')
         scope.$watch('data', function (data) {
           if (data) {
             scope.data = data;
-          }
-        });
-      }
-    };
-  });
-/*
- * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-angular.module('ui.widgets')
-  .directive('wtAppointmentUI', function () {
-    return {
-      restrict: 'A',
-      replace: true,
-      templateUrl: 'client/components/widget/widgets/appointmentUI/appointmentUI.html',
-      scope: {
-        data: '=',
-      },
-      controller: function ($scope, uiGridConstants) {
-
-        $scope.gridOptions = {
-          enableFiltering: true,
-          onRegisterApi: function(gridApi){
-            $scope.gridApi = gridApi;
-          },
-          columnDefs: [
-            // data layout: {"ReachID": 1,"ApptType": 1,"Apptdate": "2014-02-03T00:00:00.000Z","CancelationType": "0"}
-            // default
-            { field: 'ApptType', enableFiltering: false },
-            // pre-populated search field
-            { field: 'CancelationType'/*, filter: { 
-                term: '1', 
-                type: uiGridConstants.filter.SELECT, 
-                selectOptions: [ { value: '0', label: 'Success'}, { value: '1', label: 'Canceled' }, { value: '2', label: 'No Show' } ]
-              }, 
-              cellFilter: 'mapCancelationType' */},                               
-            // date filter
-            { field: 'Apptdate'}
-          ]
-        };
-
-        $scope.toggleFiltering = function(){
-          $scope.gridOptions.enableFiltering = !$scope.gridOptions.enableFiltering;
-          $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
-        };
-      }/*.filter('mapCancelationType', function() {
-        var cancelationTypeHash = {
-          0: 'Success'
-          1: 'Canceled',
-          2: 'No Show'
-        };
-
-        return function(input) {
-          if (!input){
-            return '';
-          } else {
-            return cancelationTypeHash[input];
-          }
-        };
-      });*/,
-      link: function postLink(scope) {
-        scope.$watch('data', function (data) {
-          if (data) {
-            scope.gridOptions.data = data;
           }
         });
       }
@@ -2214,24 +2092,26 @@ angular.module('ui.widgets')
       scope: {
         data: '=',
       },
-      controller: function ($scope) {
-        $scope.tableOptions = {
-          loading: true,
-          noRowsText: 'No Medications Found',
-          loadingText: 'Load...',
-          bodyHeight: 200,
-          /*initialSorts: [
-            { id: 'Name', dir: '+' }
-          ]*/
-        };
-        $scope.columns = [
-          { id: 'Name', key: 'Name', label: 'Medication', sort: 'string', filter: 'like', width: '200px'},
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scorllY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0)
         ];
+        /*$resource('data.json').query().$promise.then(function(persons) {
+            vm.persons = persons;
+        });*/
       },
       link: function postLink(scope) {
         scope.$watch('data', function (data) {
           if (data) {
-            scope.items = data;
+            scope.data = data;
           }
         });
       }
@@ -2562,25 +2442,28 @@ angular.module('ui.widgets')
       scope: {
         data: '='
       },
-      controller: function ($scope) {
-        $scope.tableOptions = {
-          loading: true,
-          noRowsText: 'No Flags Found',
-          loadingText: 'Load...',
-          bodyHeight: 200,
-          initialSorts: [
-            { id: 'Category', dir: '+' }
-          ]
-        };
-        $scope.columns = [
-          { id: 'FlagDesc', key: 'FlagDesc', label: 'Flag', sort: 'string', filter: 'like', width: '200px'},
-          { id: 'Category', key: 'Category', label: 'Cat', sort: 'number', filter: 'number', width: '10px'}
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scorllY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false)
+            .withOption('order', [1, 'asc']);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1)
         ];
+        /*$resource('data.json').query().$promise.then(function(persons) {
+            vm.persons = persons;
+        });*/
       },
       link: function postLink(scope) {
         scope.$watch('data', function (data) {
           if (data) {
-            scope.items = data;
+            scope.data = data;
           }
         });
 
@@ -3063,22 +2946,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
     "<div class=\"appointment\">\r" +
     "\n" +
-    "    <mlhr-table \r" +
-    "\n" +
-    "      options=\"tableOptions\"\r" +
-    "\n" +
-    "      columns=\"columns\" \r" +
-    "\n" +
-    "      rows=\"items\">\r" +
-    "\n" +
-    "    </mlhr-table>\r" +
-    "\n" +
-    "</div>"
-  );
-
-  $templateCache.put("client/components/widget/widgets/appointmentDT/appointmentDT.html",
-    "<div class=\"appointmentUI\">\r" +
-    "\n" +
     "\t<table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
     "        <thead>\r" +
@@ -3110,16 +2977,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "        </tbody>\r" +
     "\n" +
     "    </table>\r" +
-    "\n" +
-    "</div>"
-  );
-
-  $templateCache.put("client/components/widget/widgets/appointmentUI/appointmentUI.html",
-    "<div class=\"appointmentUI\">\r" +
-    "\n" +
-    "\t<button id='toggleFiltering' ng-click=\"toggleFiltering()\" class=\"btn btn-success\">Toggle Filtering</button>\r" +
-    "\n" +
-    "\t<div id=\"grid1\" ui-grid=\"gridOptions\" class=\"grid\"></div>\r" +
     "\n" +
     "</div>"
   );
@@ -3280,15 +3137,29 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
     "<div class=\"medication\">\r" +
     "\n" +
-    "    <mlhr-table \r" +
+    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "      options=\"tableOptions\"\r" +
+    "        <thead>\r" +
     "\n" +
-    "      columns=\"columns\" \r" +
+    "        <tr>\r" +
     "\n" +
-    "      rows=\"items\">\r" +
+    "            <th>Medication</th>\r" +
     "\n" +
-    "    </mlhr-table>\r" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"meds in data\">\r" +
+    "\n" +
+    "            <td>{{ meds.Name }}</td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
     "\n" +
     "</div>"
   );
@@ -3386,15 +3257,33 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
     "<div class=\"patient-flags\">\r" +
     "\n" +
-    "    <mlhr-table \r" +
+    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "      options=\"tableOptions\"\r" +
+    "        <thead>\r" +
     "\n" +
-    "      columns=\"columns\" \r" +
+    "        <tr>\r" +
     "\n" +
-    "      rows=\"items\">\r" +
+    "            <th>Flag</th>\r" +
     "\n" +
-    "    </mlhr-table>\r" +
+    "            <th>Cat</th>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"flags in data\">\r" +
+    "\n" +
+    "            <td>{{ flags.FlagDesc }}</td>\r" +
+    "\n" +
+    "            <td>{{ flags.Category }}</td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
     "\n" +
     "</div>"
   );
