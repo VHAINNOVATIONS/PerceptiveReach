@@ -52,7 +52,7 @@ angular.module('app')
         dataModelType: ClinicalDecisionSupportDataModel,
         title: 'Clinical Decision Support',
         dataModelOptions: {
-          riskLevel: 1,
+          //riskLevel: 1,
           guidelineType: 'SRB'
         },
         style: {

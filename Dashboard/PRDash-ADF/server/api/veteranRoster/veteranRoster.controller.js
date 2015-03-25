@@ -25,7 +25,7 @@ exports.index = function(req, res) {
     var id = req.param("id");
     var score = req.param("score");
     var query = '';
-    var select = "SELECT ReachID, FirstName, MiddleName, LastName, SSN, Phone, DateIdentifiedRisk, CASE WHEN RiskLevel = 1 THEN 'Emergent' WHEN RiskLevel = 2 THEN 'High' END 'RiskLevel', OutreachStatus"; 
+    var select = "SELECT ReachID, FirstName, MiddleName, LastName, SSN, Phone, DateIdentifiedRisk, CASE WHEN RiskLevel = 1 THEN 'High' WHEN RiskLevel = 2 THEN 'Medium' END 'RiskLevel', RiskLevel AS RiskLevelID, OutreachStatus"; 
     //query += "ReachID, vamc.VAMC FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE ";
     if (id) {
         console.log("Registering endpoint: /veteranRoster/:id is " + id);
