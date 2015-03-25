@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-angular.module('ui.widgets', ['datatorrent.mlhrTable', 'nvd3ChartDirectives', 'ui.grid','datatables','datatables.scroller']);
+angular.module('ui.widgets', ['datatorrent.mlhrTable', 'nvd3ChartDirectives', 'datatables','datatables.scroller']);
 angular.module('ui.websocket', ['ui.visibility', 'ui.notify']);
 angular.module('ui.models', ['ui.visibility', 'ui.websocket']);
 
@@ -346,20 +346,60 @@ angular.module('ui.models')
 'use strict';
 
 angular.module('ui.models')
-  .factory('VeteranRosterDataModel', function ($http, WidgetDataModel) {
+  .factory('CommonDataModel', function (WidgetDataModel) {
+    function CommonDataModel() {}
+
+    CommonDataModel.prototype = Object.create(WidgetDataModel.prototype);
+
+    CommonDataModel.prototype.setup = function (widget, scope) {
+      WidgetDataModel.prototype.setup.call(this, widget, scope);
+
+      this.dataModelOptions = this.dataModelOptions || {};
+      this.dataModelOptions.common = this.dataModelOptions.common  ||  { data: 'default value' };
+     
+      scope.$on('commonDataChanged', function (event, data) {
+        console.log('Common data changed for: ' + this.widgetScope.widget.title);
+        this.setCommon(data);
+      }.bind(this));
+    };
+
+    CommonDataModel.prototype.setCommon = function (data) {
+      if (data && (!angular.equals(this.dataModelOptions.common, data))) {
+        console.log(this.widgetScope.widget.title + ' data model options changed');
+        this.dataModelOptions.common = data;
+        this.widgetScope.$emit('widgetChanged', this.widgetScope.widget);
+      }
+    };
+
+    return CommonDataModel;
+  })
+  .factory('VeteranRosterDataModel', function ($http, CommonDataModel) {
     function VeteranRosterDataModel() {
     }
 
-    VeteranRosterDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    VeteranRosterDataModel.prototype.constructor = WidgetDataModel;
-
+    //VeteranRosterDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    //VeteranRosterDataModel.prototype.constructor = WidgetDataModel;
+    VeteranRosterDataModel.prototype = Object.create(CommonDataModel.prototype);
     angular.extend(VeteranRosterDataModel.prototype, {
       init: function () {
         var dataModelOptions = this.dataModelOptions;
-        this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
-
-        this.updateScope([]);
-        this.getData();
+        var currentVAMC = null;
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          console.log('Inside Common data changed for : ' + this.widgetScope.widget.title);
+          /*console.log(data);
+          console.log(this.dataModelOptions);*/
+          //CommonDataModel.prototype.setCommon.call(this,data);
+          this.currentVAMC = this.vamc;
+          this.vamc = (dataModelOptions && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : 9;
+          /*console.log('widgetScope');
+          console.log(this.widgetScope);
+          console.log('commonData:');
+          console.log(this.dataModelOptions.common);*/
+          if(this.vamc != this.currentVAMC)
+            this.getData();
+        }.bind(this));
+        //this.updateScope([]);
+        //this.getData();
       },
 
       getData: function () {
@@ -436,18 +476,33 @@ angular.module('ui.models')
 
     return VeteranRosterDataModel;
   })
-  .factory('ClinicalDecisionSupportDataModel', function ($http, WidgetDataModel) {
+  .factory('ClinicalDecisionSupportDataModel', function ($http, CommonDataModel) {
     function ClinicalDecisionSupportDataModel() {
     }
 
-    ClinicalDecisionSupportDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    ClinicalDecisionSupportDataModel.prototype.constructor = WidgetDataModel;
-
+    /*ClinicalDecisionSupportDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    ClinicalDecisionSupportDataModel.prototype.constructor = WidgetDataModel;*/
+    ClinicalDecisionSupportDataModel.prototype = Object.create(CommonDataModel.prototype);
     angular.extend(ClinicalDecisionSupportDataModel.prototype, {
       init: function () {
         var dataModelOptions = this.dataModelOptions;
-        this.riskLevel = (dataModelOptions && dataModelOptions.riskLevel) ? dataModelOptions.riskLevel : null;
-        this.guidelineType = (dataModelOptions && dataModelOptions.guidelineType) ? dataModelOptions.guidelineType : null;
+        var currentRiskLevel = null;
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          console.log('Inside Common data changed for : ' + this.widgetScope.widget.title);
+          /*console.log(data);
+          console.log(this.dataModelOptions);*/
+          //CommonDataModel.prototype.setCommon.call(this,data);
+          this.currentRiskLevel = this.riskLevel;
+          this.riskLevel = (dataModelOptions && dataModelOptions.common.data.veteranObj.RiskLevelID) ? dataModelOptions.common.data.veteranObj.RiskLevelID : null;
+          this.guidelineType = (dataModelOptions && dataModelOptions.guidelineType) ? dataModelOptions.guidelineType : null;
+          /*console.log('widgetScope');
+          console.log(this.widgetScope);
+          console.log('commonData:');
+          console.log(this.dataModelOptions.common);*/
+          if(this.riskLevel != this.currentRiskLevel)
+            this.getData();
+        }.bind(this));
+        
 
         this.updateScope([]);
         this.getData();
@@ -1572,103 +1627,29 @@ angular.module('ui.widgets')
       scope: {
         data: '=',
       },
-      controller: function ($scope) {
-        $scope.tableOptions = {
-          loading: true,
-          noRowsText: 'No Appointments Found',
-          loadingText: 'Load...',
-          bodyHeight: 200,
-          /*initialSorts: [
-            { id: 'Name', dir: '+' }
-          ]*/
-        };
-        $scope.columns = [
-          { id: 'ApptType', key: 'ApptType', label: 'Type', sort: 'string', filter: 'like', width: '100px'},
-          { id: 'Apptdate', key: 'Apptdate', label: 'Date', sort: 'string', filter: 'like', width: '150px'}
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scorllY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false)
+            .withOption('order', [1, 'desc']);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2)
         ];
+        /*$resource('data.json').query().$promise.then(function(persons) {
+            vm.persons = persons;
+        });*/
       },
       link: function postLink(scope) {
         scope.$watch('data', function (data) {
           if (data) {
-            scope.items = data;
-          }
-        });
-      }
-    };
-  });
-/*
- * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-angular.module('ui.widgets')
-  .directive('wtAppointmentUI', function () {
-    return {
-      restrict: 'A',
-      replace: true,
-      templateUrl: 'client/components/widget/widgets/appointmentUI/appointmentUI.html',
-      scope: {
-        data: '=',
-      },
-      controller: function ($scope, uiGridConstants) {
-
-        $scope.gridOptions = {
-          enableFiltering: true,
-          onRegisterApi: function(gridApi){
-            $scope.gridApi = gridApi;
-          },
-          columnDefs: [
-            // data layout: {"ReachID": 1,"ApptType": 1,"Apptdate": "2014-02-03T00:00:00.000Z","CancelationType": "0"}
-            // default
-            { field: 'ApptType', enableFiltering: false },
-            // pre-populated search field
-            { field: 'CancelationType'/*, filter: { 
-                term: '1', 
-                type: uiGridConstants.filter.SELECT, 
-                selectOptions: [ { value: '0', label: 'Success'}, { value: '1', label: 'Canceled' }, { value: '2', label: 'No Show' } ]
-              }, 
-              cellFilter: 'mapCancelationType' */},                               
-            // date filter
-            { field: 'Apptdate'}
-          ]
-        };
-
-        $scope.toggleFiltering = function(){
-          $scope.gridOptions.enableFiltering = !$scope.gridOptions.enableFiltering;
-          $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
-        };
-      }/*.filter('mapCancelationType', function() {
-        var cancelationTypeHash = {
-          0: 'Success'
-          1: 'Canceled',
-          2: 'No Show'
-        };
-
-        return function(input) {
-          if (!input){
-            return '';
-          } else {
-            return cancelationTypeHash[input];
-          }
-        };
-      });*/,
-      link: function postLink(scope) {
-        scope.$watch('data', function (data) {
-          if (data) {
-            scope.gridOptions.data = data;
+            scope.data = data;
           }
         });
       }
@@ -2111,24 +2092,26 @@ angular.module('ui.widgets')
       scope: {
         data: '=',
       },
-      controller: function ($scope) {
-        $scope.tableOptions = {
-          loading: true,
-          noRowsText: 'No Medications Found',
-          loadingText: 'Load...',
-          bodyHeight: 200,
-          /*initialSorts: [
-            { id: 'Name', dir: '+' }
-          ]*/
-        };
-        $scope.columns = [
-          { id: 'Name', key: 'Name', label: 'Medication', sort: 'string', filter: 'like', width: '200px'},
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scorllY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0)
         ];
+        /*$resource('data.json').query().$promise.then(function(persons) {
+            vm.persons = persons;
+        });*/
       },
       link: function postLink(scope) {
         scope.$watch('data', function (data) {
           if (data) {
-            scope.items = data;
+            scope.data = data;
           }
         });
       }
@@ -2459,25 +2442,28 @@ angular.module('ui.widgets')
       scope: {
         data: '='
       },
-      controller: function ($scope) {
-        $scope.tableOptions = {
-          loading: true,
-          noRowsText: 'No Flags Found',
-          loadingText: 'Load...',
-          bodyHeight: 200,
-          initialSorts: [
-            { id: 'Category', dir: '+' }
-          ]
-        };
-        $scope.columns = [
-          { id: 'FlagDesc', key: 'FlagDesc', label: 'Flag', sort: 'string', filter: 'like', width: '200px'},
-          { id: 'Category', key: 'Category', label: 'Cat', sort: 'number', filter: 'number', width: '10px'}
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scorllY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false)
+            .withOption('order', [1, 'asc']);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1)
         ];
+        /*$resource('data.json').query().$promise.then(function(persons) {
+            vm.persons = persons;
+        });*/
       },
       link: function postLink(scope) {
         scope.$watch('data', function (data) {
           if (data) {
-            scope.items = data;
+            scope.data = data;
           }
         });
 
@@ -2825,81 +2811,87 @@ angular.module('ui.widgets')
           console.log(v); 
           
           //console.log(DTOptionsBuilder);
-            if(v != null && v.length >0){
-                //unwatch();                
-                console.log("inside veteran roster directive after check is positive");
-                console.log(scope.widgetData);
-                //scope.dtInstance.changeData(scope.widgetData[1]);
-                scope.outreachStatusList = scope.widgetData[2];
-                scope.veteranList = scope.widgetData[1];
-                var datamodelList = {};
-                for(var veteran in scope.veteranList){
-                  datamodelList[scope.veteranList[veteran].ReachID] = scope.veteranList[veteran].OutreachStatus; 
-                }
-                scope.dataModelObj = datamodelList;
-                console.log("datamodelobj:::");
-                console.log(scope.dataModelObj);
-                var dataTableVet = $(element).children();
-                //dataTableVet.dataTable();
-                /*var dataTableVet = $(element).children().dataTable( {
-                    "data": scope.widgetData[1],
-                    "scrollY":        "200px",
-                    "scrollCollapse": true,
-                    "paging":         false,
-                    "columns": [
-                        { "title": "Veteran Name" },
-                        { "title": "Veteran SSN" },
-                        { "title": "Veteran Phone" },
-                        { "title": "Date First identified", "class": "center" },
-                        { "title": "Statistical Risk Level", "class": "center" },
-                        { "title": "Outreach Status", "class": "center" }
-                        //{ "title": "Last VA Clinician Visit", "class": "center" }
-                    ],
-                    dom: 'T<"clear">lfrtip',
-                    tableTools: {
-                        "sRowSelect": "single"
-                    }
-                });*/
-
-                scope.dtinstance.getLast().then(function(dtInstance) {
-                  scope.dtInstance = dtInstance;
-                  console.log("before select menu");
-                  for(veteran in scope.veteranList){
-                    //console.log('#vet_' + scope.veteranList[veteran].ReachID);
-                    $('#vet_' + scope.veteranList[veteran].ReachID).val(scope.veteranList[veteran].OutreachStatus);
-                    //datamodelList[scope.veteranList[veteran].ReachID] = scope.veteranList[veteran].OutreachStatus; 
-                  }
-                  $('select').selectmenu({
-                          select: function( event, ui ) {
-                            // Write back selection to the Veteran Risk table for the veteran
-                            console.log(ui);
-                            console.log(ui.item.element.context.parentElement.id.replace("vet_",""));
-                            scope.widget.dataModel.saveOutreachData(ui.item.index, ui.item.element.context.parentElement.id.replace("vet_",""));                    
-                          }
-                        });
-                        $('#sampleVet tbody').on( 'click', 'tr', function (event) {
-                            //console.log( dataTableVet.row( this ).data() );
-                            if($(this).hasClass('selected')){
-                                $(this).removeClass('selected');
-                                //scope.hideVetDetBtn = true;
-                                //$('#veteranView').hide();
-                                //$('#facilityInfo').show();
-                            }
-                            else{
-                                $('tr.selected').removeClass('selected');
-                                $(this).addClass('selected');
-                                //scope.hideVetDetBtn = false;
-                                //$('#veteranView').show();
-                                //$('#facilityInfo').hide();
-                                //scope.getVeteran(event.currentTarget.cells[4].innerText);
-                            }
-                            scope.$apply();
-                            console.log(event.currentTarget.cells[4].innerText);
-                        } );
-                });
-
-                
+        if(v != null && v.length >0){
+            //unwatch();                
+            console.log("inside veteran roster directive after check is positive");
+            console.log(scope.widgetData);
+            //scope.dtInstance.changeData(scope.widgetData[1]);
+            scope.outreachStatusList = scope.widgetData[2];
+            scope.veteranList = scope.widgetData[1];
+            var datamodelList = {};
+            for(var veteran in scope.veteranList){
+              datamodelList[scope.veteranList[veteran].ReachID] = scope.veteranList[veteran]; 
             }
+            scope.dataModelObj = datamodelList;
+            console.log("datamodelobj:::");
+            console.log(scope.dataModelObj);
+            var dataTableVet = $(element).children();
+            //dataTableVet.dataTable();
+            /*var dataTableVet = $(element).children().dataTable( {
+                "data": scope.widgetData[1],
+                "scrollY":        "200px",
+                "scrollCollapse": true,
+                "paging":         false,
+                "columns": [
+                    { "title": "Veteran Name" },
+                    { "title": "Veteran SSN" },
+                    { "title": "Veteran Phone" },
+                    { "title": "Date First identified", "class": "center" },
+                    { "title": "Statistical Risk Level", "class": "center" },
+                    { "title": "Outreach Status", "class": "center" }
+                    //{ "title": "Last VA Clinician Visit", "class": "center" }
+                ],
+                dom: 'T<"clear">lfrtip',
+                tableTools: {
+                    "sRowSelect": "single"
+                }
+            });*/
+
+            scope.dtinstance.getLast().then(function(dtInstance) {
+              scope.dtInstance = dtInstance;
+              console.log("before select menu");
+              for(veteran in scope.veteranList){
+                //console.log('#vet_' + scope.veteranList[veteran].ReachID);
+                $('#vet_' + scope.veteranList[veteran].ReachID).val(scope.veteranList[veteran].OutreachStatus);
+                //datamodelList[scope.veteranList[veteran].ReachID] = scope.veteranList[veteran].OutreachStatus; 
+              }
+              $('select').selectmenu({
+                select: function( event, ui ) {
+                  // Write back selection to the Veteran Risk table for the veteran
+                  console.log(ui);
+                  console.log(ui.item.element.context.parentElement.id.replace("vet_",""));
+                  scope.widget.dataModel.saveOutreachData(ui.item.index, ui.item.element.context.parentElement.id.replace("vet_",""));                    
+                }
+              });
+              $('#sampleVet tbody').on( 'click', 'tr', function (event) {
+                  //console.log( dataTableVet.row( this ).data() );
+                  if($(this).hasClass('selected')){
+                      //$(this).removeClass('selected'); // removes selected highlighting
+                      //scope.hideVetDetBtn = true;
+                      //$('#veteranView').hide();
+                      //$('#facilityInfo').show();
+                  }
+                  else{
+                      $('tr.selected').removeClass('selected');
+                      $(this).addClass('selected');
+                      // get common data object
+                      var commonData = scope.widget.dataModelOptions.common;
+                      console.log(commonData);
+                      // update common data object with new veteran object
+                      commonData.data.veteranObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
+                      // broadcast message throughout system
+                      scope.$parent.$broadcast('commonDataChanged', commonData);
+                      //scope.hideVetDetBtn = false;
+                      //$('#veteranView').show();
+                      //$('#facilityInfo').hide();
+                      //scope.getVeteran(event.currentTarget.cells[4].innerText);
+                  }
+                  scope.$apply();
+                  console.log("ReachID selected: " + event.currentTarget.cells[5].firstElementChild.id.replace("vet_",""));//innerText);
+                  console.log(event);
+              } );
+            });                
+        }
             
         });
       }
@@ -2954,25 +2946,37 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
     "<div class=\"appointment\">\r" +
     "\n" +
-    "    <mlhr-table \r" +
+    "\t<table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "      options=\"tableOptions\"\r" +
+    "        <thead>\r" +
     "\n" +
-    "      columns=\"columns\" \r" +
+    "        <tr>\r" +
     "\n" +
-    "      rows=\"items\">\r" +
+    "            <th>Type</th>\r" +
     "\n" +
-    "    </mlhr-table>\r" +
+    "            <th>Date</th>\r" +
     "\n" +
-    "</div>"
-  );
-
-  $templateCache.put("client/components/widget/widgets/appointmentUI/appointmentUI.html",
-    "<div class=\"appointmentUI\">\r" +
+    "            <th>Canceled</th>\r" +
     "\n" +
-    "\t<button id='toggleFiltering' ng-click=\"toggleFiltering()\" class=\"btn btn-success\">Toggle Filtering</button>\r" +
+    "        </tr>\r" +
     "\n" +
-    "\t<div id=\"grid1\" ui-grid=\"gridOptions\" class=\"grid\"></div>\r" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"appt in data\">\r" +
+    "\n" +
+    "            <td>{{ appt.ApptType }}</td>\r" +
+    "\n" +
+    "            <td>{{ appt.Apptdate }}</td>\r" +
+    "\n" +
+    "            <td>{{ appt.CancelationType }}</td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
     "\n" +
     "</div>"
   );
@@ -3133,15 +3137,29 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
     "<div class=\"medication\">\r" +
     "\n" +
-    "    <mlhr-table \r" +
+    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "      options=\"tableOptions\"\r" +
+    "        <thead>\r" +
     "\n" +
-    "      columns=\"columns\" \r" +
+    "        <tr>\r" +
     "\n" +
-    "      rows=\"items\">\r" +
+    "            <th>Medication</th>\r" +
     "\n" +
-    "    </mlhr-table>\r" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"meds in data\">\r" +
+    "\n" +
+    "            <td>{{ meds.Name }}</td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
     "\n" +
     "</div>"
   );
@@ -3239,15 +3257,33 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
     "<div class=\"patient-flags\">\r" +
     "\n" +
-    "    <mlhr-table \r" +
+    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "      options=\"tableOptions\"\r" +
+    "        <thead>\r" +
     "\n" +
-    "      columns=\"columns\" \r" +
+    "        <tr>\r" +
     "\n" +
-    "      rows=\"items\">\r" +
+    "            <th>Flag</th>\r" +
     "\n" +
-    "    </mlhr-table>\r" +
+    "            <th>Cat</th>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"flags in data\">\r" +
+    "\n" +
+    "            <td>{{ flags.FlagDesc }}</td>\r" +
+    "\n" +
+    "            <td>{{ flags.Category }}</td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
     "\n" +
     "</div>"
   );

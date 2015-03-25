@@ -53,7 +53,7 @@ angular.module('app')
         dataModelType: ClinicalDecisionSupportDataModel,
         title: 'Clinical Decision Support',
         dataModelOptions: {
-          riskLevel: 1,
+          //riskLevel: 1,
           guidelineType: 'SRB'
         },
         style: {
@@ -91,8 +91,8 @@ angular.module('app')
         title: 'Patient Flags',
         dataModelType: PatientFlagDataModel,
         size: {
-          width: '30%',
-          height: '250px'
+          width: '25%',
+          height: '350px'
         }
       },
       {
@@ -103,7 +103,7 @@ angular.module('app')
         dataModelType: MedicationDataModel,
         size: {
           width: '20%',
-          height: '250px'
+          height: '350px'
         }
       },
       {
@@ -113,19 +113,8 @@ angular.module('app')
         title: 'Appointment',
         dataModelType: AppointmentDataModel,
         size: {
-          width: '25%',
-          height: '250px'
-        }
-      },
-      {
-        name: 'appointmentUI',
-        directive: 'wt-appointment-u-i',
-        dataAttrName: 'data',
-        title: 'AppointmentUI',
-        dataModelType: AppointmentDataModel,
-        size: {
-          width: '25%',
-          height: '250px'
+          //width: '25%',
+          height: '350px'
         }
       },
       {
@@ -225,14 +214,13 @@ angular.module('app')
     ];
   })
   .value('defaultWidgets', [
+      { name: 'RosterTable' }, 
+      { name: 'ClinicalDecisionSupport' },
       {name: 'medication'},
       {name: 'appointment'},
-      {name: 'appointmentUI'},
       {name: 'patientFlags'},
       { name: 'contact' },
-      { name: 'emergency' }, 
-      { name: 'ClinicalDecisionSupport' }, 
-      { name: 'RosterTable' }
+      { name: 'emergency' }
       /*,
       { name: 'Metrics Chart' },
       { name: 'NVD3 Line Chart' },

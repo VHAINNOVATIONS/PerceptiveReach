@@ -7,20 +7,60 @@
 'use strict';
 
 angular.module('ui.models')
-  .factory('VeteranRosterDataModel', function ($http, WidgetDataModel) {
+  .factory('CommonDataModel', function (WidgetDataModel) {
+    function CommonDataModel() {}
+
+    CommonDataModel.prototype = Object.create(WidgetDataModel.prototype);
+
+    CommonDataModel.prototype.setup = function (widget, scope) {
+      WidgetDataModel.prototype.setup.call(this, widget, scope);
+
+      this.dataModelOptions = this.dataModelOptions || {};
+      this.dataModelOptions.common = this.dataModelOptions.common  ||  { data: 'default value' };
+     
+      scope.$on('commonDataChanged', function (event, data) {
+        console.log('Common data changed for: ' + this.widgetScope.widget.title);
+        this.setCommon(data);
+      }.bind(this));
+    };
+
+    CommonDataModel.prototype.setCommon = function (data) {
+      if (data && (!angular.equals(this.dataModelOptions.common, data))) {
+        console.log(this.widgetScope.widget.title + ' data model options changed');
+        this.dataModelOptions.common = data;
+        this.widgetScope.$emit('widgetChanged', this.widgetScope.widget);
+      }
+    };
+
+    return CommonDataModel;
+  })
+  .factory('VeteranRosterDataModel', function ($http, CommonDataModel) {
     function VeteranRosterDataModel() {
     }
 
-    VeteranRosterDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    VeteranRosterDataModel.prototype.constructor = WidgetDataModel;
-
+    //VeteranRosterDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    //VeteranRosterDataModel.prototype.constructor = WidgetDataModel;
+    VeteranRosterDataModel.prototype = Object.create(CommonDataModel.prototype);
     angular.extend(VeteranRosterDataModel.prototype, {
       init: function () {
         var dataModelOptions = this.dataModelOptions;
-        this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
-
-        this.updateScope([]);
-        this.getData();
+        var currentVAMC = null;
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          console.log('Inside Common data changed for : ' + this.widgetScope.widget.title);
+          /*console.log(data);
+          console.log(this.dataModelOptions);*/
+          //CommonDataModel.prototype.setCommon.call(this,data);
+          this.currentVAMC = this.vamc;
+          this.vamc = (dataModelOptions && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : 9;
+          /*console.log('widgetScope');
+          console.log(this.widgetScope);
+          console.log('commonData:');
+          console.log(this.dataModelOptions.common);*/
+          if(this.vamc != this.currentVAMC)
+            this.getData();
+        }.bind(this));
+        //this.updateScope([]);
+        //this.getData();
       },
 
       getData: function () {
@@ -97,18 +137,33 @@ angular.module('ui.models')
 
     return VeteranRosterDataModel;
   })
-  .factory('ClinicalDecisionSupportDataModel', function ($http, WidgetDataModel) {
+  .factory('ClinicalDecisionSupportDataModel', function ($http, CommonDataModel) {
     function ClinicalDecisionSupportDataModel() {
     }
 
-    ClinicalDecisionSupportDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    ClinicalDecisionSupportDataModel.prototype.constructor = WidgetDataModel;
-
+    /*ClinicalDecisionSupportDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    ClinicalDecisionSupportDataModel.prototype.constructor = WidgetDataModel;*/
+    ClinicalDecisionSupportDataModel.prototype = Object.create(CommonDataModel.prototype);
     angular.extend(ClinicalDecisionSupportDataModel.prototype, {
       init: function () {
         var dataModelOptions = this.dataModelOptions;
-        this.riskLevel = (dataModelOptions && dataModelOptions.riskLevel) ? dataModelOptions.riskLevel : null;
-        this.guidelineType = (dataModelOptions && dataModelOptions.guidelineType) ? dataModelOptions.guidelineType : null;
+        var currentRiskLevel = null;
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          console.log('Inside Common data changed for : ' + this.widgetScope.widget.title);
+          /*console.log(data);
+          console.log(this.dataModelOptions);*/
+          //CommonDataModel.prototype.setCommon.call(this,data);
+          this.currentRiskLevel = this.riskLevel;
+          this.riskLevel = (dataModelOptions && dataModelOptions.common.data.veteranObj.RiskLevelID) ? dataModelOptions.common.data.veteranObj.RiskLevelID : null;
+          this.guidelineType = (dataModelOptions && dataModelOptions.guidelineType) ? dataModelOptions.guidelineType : null;
+          /*console.log('widgetScope');
+          console.log(this.widgetScope);
+          console.log('commonData:');
+          console.log(this.dataModelOptions.common);*/
+          if(this.riskLevel != this.currentRiskLevel)
+            this.getData();
+        }.bind(this));
+        
 
         this.updateScope([]);
         this.getData();
