@@ -16,6 +16,44 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/appointmentDT/appointmentDT.html",
+    "<div class=\"appointmentUI\">\r" +
+    "\n" +
+    "\t<table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "        <thead>\r" +
+    "\n" +
+    "        <tr>\r" +
+    "\n" +
+    "            <th>Type</th>\r" +
+    "\n" +
+    "            <th>Date</th>\r" +
+    "\n" +
+    "            <th>Canceled</th>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"appt in data\">\r" +
+    "\n" +
+    "            <td>{{ appt.ApptType }}</td>\r" +
+    "\n" +
+    "            <td>{{ appt.Apptdate }}</td>\r" +
+    "\n" +
+    "            <td>{{ appt.CancelationType }}</td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/appointmentUI/appointmentUI.html",
     "<div class=\"appointmentUI\">\r" +
     "\n" +
