@@ -41,7 +41,7 @@ exports.index = function(req, res) {
 
   var jsonRecordSet = JSON.parse(data);
 	for (var record in jsonRecordSet) {
-	    jsonRecordSet[record].Apptdate = dataFormatter.formatData(jsonRecordSet[record].Apptdate);
+	    jsonRecordSet[record].Apptdate = dataFormatter.formatData(jsonRecordSet[record].Apptdate,"date");
 	}
 	res.send(jsonRecordSet);
 

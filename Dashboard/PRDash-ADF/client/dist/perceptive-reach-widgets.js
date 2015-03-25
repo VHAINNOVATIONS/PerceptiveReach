@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-angular.module('ui.widgets', ['datatorrent.mlhrTable', 'nvd3ChartDirectives', 'ngTable','datatables','datatables.scroller']);
+angular.module('ui.widgets', ['datatorrent.mlhrTable', 'nvd3ChartDirectives', 'ui.grid','datatables','datatables.scroller']);
 angular.module('ui.websocket', ['ui.visibility', 'ui.notify']);
 angular.module('ui.models', ['ui.visibility', 'ui.websocket']);
 
@@ -744,7 +744,7 @@ angular.module('ui.models')
 
         $http.get('/api/appointmentData')
         .success(function(dataset) {
-                data = dataset;
+                data = dataset; 
                 this.updateScope(data);
             }.bind(this));
       },
@@ -1600,6 +1600,183 @@ function Gauge(element, configuration)
     this.visibly.init();
 })();
 
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtAppointment', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/appointment/appointment.html',
+      scope: {
+        data: '=',
+      },
+      controller: function ($scope) {
+        $scope.tableOptions = {
+          loading: true,
+          noRowsText: 'No Appointments Found',
+          loadingText: 'Load...',
+          bodyHeight: 200,
+          /*initialSorts: [
+            { id: 'Name', dir: '+' }
+          ]*/
+        };
+        $scope.columns = [
+          { id: 'ApptType', key: 'ApptType', label: 'Type', sort: 'string', filter: 'like', width: '100px'},
+          { id: 'Apptdate', key: 'Apptdate', label: 'Date', sort: 'string', filter: 'like', width: '150px'}
+        ];
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.items = data;
+          }
+        });
+      }
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtAppointmentDT', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/appointmentDT/appointmentDT.html',
+      scope: {
+        data: '=',
+      },
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2)
+        ];
+        /*$resource('data.json').query().$promise.then(function(persons) {
+            vm.persons = persons;
+        });*/
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.data = data;
+          }
+        });
+      }
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtAppointmentUI', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/appointmentUI/appointmentUI.html',
+      scope: {
+        data: '=',
+      },
+      controller: function ($scope, uiGridConstants) {
+
+        $scope.gridOptions = {
+          enableFiltering: true,
+          onRegisterApi: function(gridApi){
+            $scope.gridApi = gridApi;
+          },
+          columnDefs: [
+            // data layout: {"ReachID": 1,"ApptType": 1,"Apptdate": "2014-02-03T00:00:00.000Z","CancelationType": "0"}
+            // default
+            { field: 'ApptType', enableFiltering: false },
+            // pre-populated search field
+            { field: 'CancelationType'/*, filter: { 
+                term: '1', 
+                type: uiGridConstants.filter.SELECT, 
+                selectOptions: [ { value: '0', label: 'Success'}, { value: '1', label: 'Canceled' }, { value: '2', label: 'No Show' } ]
+              }, 
+              cellFilter: 'mapCancelationType' */},                               
+            // date filter
+            { field: 'Apptdate'}
+          ]
+        };
+
+        $scope.toggleFiltering = function(){
+          $scope.gridOptions.enableFiltering = !$scope.gridOptions.enableFiltering;
+          $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+        };
+      }/*.filter('mapCancelationType', function() {
+        var cancelationTypeHash = {
+          0: 'Success'
+          1: 'Canceled',
+          2: 'No Show'
+        };
+
+        return function(input) {
+          if (!input){
+            return '';
+          } else {
+            return cancelationTypeHash[input];
+          }
+        };
+      });*/,
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.gridOptions.data = data;
+          }
+        });
+      }
+    };
+  });
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -2882,6 +3059,70 @@ angular.module('ui.dashboard')
     };
   }]);
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
+
+  $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
+    "<div class=\"appointment\">\r" +
+    "\n" +
+    "    <mlhr-table \r" +
+    "\n" +
+    "      options=\"tableOptions\"\r" +
+    "\n" +
+    "      columns=\"columns\" \r" +
+    "\n" +
+    "      rows=\"items\">\r" +
+    "\n" +
+    "    </mlhr-table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/appointmentDT/appointmentDT.html",
+    "<div class=\"appointmentUI\">\r" +
+    "\n" +
+    "\t<table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "        <thead>\r" +
+    "\n" +
+    "        <tr>\r" +
+    "\n" +
+    "            <th>Type</th>\r" +
+    "\n" +
+    "            <th>Date</th>\r" +
+    "\n" +
+    "            <th>Canceled</th>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"appt in data\">\r" +
+    "\n" +
+    "            <td>{{ appt.ApptType }}</td>\r" +
+    "\n" +
+    "            <td>{{ appt.Apptdate }}</td>\r" +
+    "\n" +
+    "            <td>{{ appt.CancelationType }}</td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/appointmentUI/appointmentUI.html",
+    "<div class=\"appointmentUI\">\r" +
+    "\n" +
+    "\t<button id='toggleFiltering' ng-click=\"toggleFiltering()\" class=\"btn btn-success\">Toggle Filtering</button>\r" +
+    "\n" +
+    "\t<div id=\"grid1\" ui-grid=\"gridOptions\" class=\"grid\"></div>\r" +
+    "\n" +
+    "</div>"
+  );
 
   $templateCache.put("client/components/widget/widgets/barChart/barChart.html",
     "<div class=\"bar-chart\">\r" +
