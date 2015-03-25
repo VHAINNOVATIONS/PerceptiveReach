@@ -14,4 +14,3 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
   And I should see "Outreach Attempted" option in the dropdown
   And I should see "Services Refused" option in the dropdown
   And I should see "No Additional Outreach Required" option in the dropdown
-  

@@ -5,8 +5,10 @@ Feature: As a Dashboard User, I want to view a Veteran's medications from within
 Scenario: I open a web browser and see the Veteran's medication widget
 Given I navigate to the http://localhost:7003/
 When I click on "Individual View"
-Then I should see the "Veteran's Medication" widget
-And I should see "Zolofit"
+And I click the Add a Widget button
+And I add the "medication" widget
+Then I should see the "Medication" widget
+And I should see "Zoloft"
 And I should see "Dosage"
 And I should see " Active Orders"
 And I should see "Inactive Orders"
@@ -18,11 +20,9 @@ Scenario: When I am at the Veteran's medication widget I should be able to click
 Given I navigate to the http://localhost:7003/
 When I click on "Individual View"
 Then I should see the "Medication" widget
-Then I should be able to click on "Medication Orders"
-And I should see "Active Orders" and "Inactive Orders"
-Then I click on "Active Orders"
-And I should see "Active Orders"
-Then I click on "Inactive Orders"
-And I should see "Inactive Orders"
-
-
+When I click on "Medication Orders"
+Then I should see "Active Orders" and "Inactive Orders"
+When I click on "Active Orders"
+Then I should see "Active Orders"
+When I click on "Inactive Orders"
+Then I should see "Inactive Orders"

@@ -1,4 +1,4 @@
-Feature: As a SPC I want customize my widget page PR-1317
+Feature: As a SPC I want customize my widget page
  	
 	@EditWidgetPR-1317
     Scenario: I open a web browser and use http://localhost:7003/ to see customize National View Widgets page to edit a widget's title
