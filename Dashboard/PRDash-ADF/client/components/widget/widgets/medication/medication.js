@@ -25,24 +25,26 @@ angular.module('ui.widgets')
       scope: {
         data: '=',
       },
-      controller: function ($scope) {
-        $scope.tableOptions = {
-          loading: true,
-          noRowsText: 'No Medications Found',
-          loadingText: 'Load...',
-          bodyHeight: 200,
-          /*initialSorts: [
-            { id: 'Name', dir: '+' }
-          ]*/
-        };
-        $scope.columns = [
-          { id: 'Name', key: 'Name', label: 'Medication', sort: 'string', filter: 'like', width: '200px'},
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scorllY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0)
         ];
+        /*$resource('data.json').query().$promise.then(function(persons) {
+            vm.persons = persons;
+        });*/
       },
       link: function postLink(scope) {
         scope.$watch('data', function (data) {
           if (data) {
-            scope.items = data;
+            scope.data = data;
           }
         });
       }

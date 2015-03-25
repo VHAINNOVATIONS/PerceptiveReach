@@ -1,7 +1,16 @@
 <div class="patient-flags">
-    <mlhr-table 
-      options="tableOptions"
-      columns="columns" 
-      rows="items">
-    </mlhr-table>
+    <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+        <thead>
+        <tr>
+            <th>Flag</th>
+            <th>Cat</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="flags in data">
+            <td>{{ flags.FlagDesc }}</td>
+            <td>{{ flags.Category }}</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
