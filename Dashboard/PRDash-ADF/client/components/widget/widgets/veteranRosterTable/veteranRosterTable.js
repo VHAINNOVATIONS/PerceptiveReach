@@ -96,81 +96,87 @@ angular.module('ui.widgets')
           console.log(v); 
           
           //console.log(DTOptionsBuilder);
-            if(v != null && v.length >0){
-                //unwatch();                
-                console.log("inside veteran roster directive after check is positive");
-                console.log(scope.widgetData);
-                //scope.dtInstance.changeData(scope.widgetData[1]);
-                scope.outreachStatusList = scope.widgetData[2];
-                scope.veteranList = scope.widgetData[1];
-                var datamodelList = {};
-                for(var veteran in scope.veteranList){
-                  datamodelList[scope.veteranList[veteran].ReachID] = scope.veteranList[veteran].OutreachStatus; 
-                }
-                scope.dataModelObj = datamodelList;
-                console.log("datamodelobj:::");
-                console.log(scope.dataModelObj);
-                var dataTableVet = $(element).children();
-                //dataTableVet.dataTable();
-                /*var dataTableVet = $(element).children().dataTable( {
-                    "data": scope.widgetData[1],
-                    "scrollY":        "200px",
-                    "scrollCollapse": true,
-                    "paging":         false,
-                    "columns": [
-                        { "title": "Veteran Name" },
-                        { "title": "Veteran SSN" },
-                        { "title": "Veteran Phone" },
-                        { "title": "Date First identified", "class": "center" },
-                        { "title": "Statistical Risk Level", "class": "center" },
-                        { "title": "Outreach Status", "class": "center" }
-                        //{ "title": "Last VA Clinician Visit", "class": "center" }
-                    ],
-                    dom: 'T<"clear">lfrtip',
-                    tableTools: {
-                        "sRowSelect": "single"
-                    }
-                });*/
-
-                scope.dtinstance.getLast().then(function(dtInstance) {
-                  scope.dtInstance = dtInstance;
-                  console.log("before select menu");
-                  for(veteran in scope.veteranList){
-                    //console.log('#vet_' + scope.veteranList[veteran].ReachID);
-                    $('#vet_' + scope.veteranList[veteran].ReachID).val(scope.veteranList[veteran].OutreachStatus);
-                    //datamodelList[scope.veteranList[veteran].ReachID] = scope.veteranList[veteran].OutreachStatus; 
-                  }
-                  $('select').selectmenu({
-                          select: function( event, ui ) {
-                            // Write back selection to the Veteran Risk table for the veteran
-                            console.log(ui);
-                            console.log(ui.item.element.context.parentElement.id.replace("vet_",""));
-                            scope.widget.dataModel.saveOutreachData(ui.item.index, ui.item.element.context.parentElement.id.replace("vet_",""));                    
-                          }
-                        });
-                        $('#sampleVet tbody').on( 'click', 'tr', function (event) {
-                            //console.log( dataTableVet.row( this ).data() );
-                            if($(this).hasClass('selected')){
-                                $(this).removeClass('selected');
-                                //scope.hideVetDetBtn = true;
-                                //$('#veteranView').hide();
-                                //$('#facilityInfo').show();
-                            }
-                            else{
-                                $('tr.selected').removeClass('selected');
-                                $(this).addClass('selected');
-                                //scope.hideVetDetBtn = false;
-                                //$('#veteranView').show();
-                                //$('#facilityInfo').hide();
-                                //scope.getVeteran(event.currentTarget.cells[4].innerText);
-                            }
-                            scope.$apply();
-                            console.log(event.currentTarget.cells[4].innerText);
-                        } );
-                });
-
-                
+        if(v != null && v.length >0){
+            //unwatch();                
+            console.log("inside veteran roster directive after check is positive");
+            console.log(scope.widgetData);
+            //scope.dtInstance.changeData(scope.widgetData[1]);
+            scope.outreachStatusList = scope.widgetData[2];
+            scope.veteranList = scope.widgetData[1];
+            var datamodelList = {};
+            for(var veteran in scope.veteranList){
+              datamodelList[scope.veteranList[veteran].ReachID] = scope.veteranList[veteran]; 
             }
+            scope.dataModelObj = datamodelList;
+            console.log("datamodelobj:::");
+            console.log(scope.dataModelObj);
+            var dataTableVet = $(element).children();
+            //dataTableVet.dataTable();
+            /*var dataTableVet = $(element).children().dataTable( {
+                "data": scope.widgetData[1],
+                "scrollY":        "200px",
+                "scrollCollapse": true,
+                "paging":         false,
+                "columns": [
+                    { "title": "Veteran Name" },
+                    { "title": "Veteran SSN" },
+                    { "title": "Veteran Phone" },
+                    { "title": "Date First identified", "class": "center" },
+                    { "title": "Statistical Risk Level", "class": "center" },
+                    { "title": "Outreach Status", "class": "center" }
+                    //{ "title": "Last VA Clinician Visit", "class": "center" }
+                ],
+                dom: 'T<"clear">lfrtip',
+                tableTools: {
+                    "sRowSelect": "single"
+                }
+            });*/
+
+            scope.dtinstance.getLast().then(function(dtInstance) {
+              scope.dtInstance = dtInstance;
+              console.log("before select menu");
+              for(veteran in scope.veteranList){
+                //console.log('#vet_' + scope.veteranList[veteran].ReachID);
+                $('#vet_' + scope.veteranList[veteran].ReachID).val(scope.veteranList[veteran].OutreachStatus);
+                //datamodelList[scope.veteranList[veteran].ReachID] = scope.veteranList[veteran].OutreachStatus; 
+              }
+              $('select').selectmenu({
+                select: function( event, ui ) {
+                  // Write back selection to the Veteran Risk table for the veteran
+                  console.log(ui);
+                  console.log(ui.item.element.context.parentElement.id.replace("vet_",""));
+                  scope.widget.dataModel.saveOutreachData(ui.item.index, ui.item.element.context.parentElement.id.replace("vet_",""));                    
+                }
+              });
+              $('#sampleVet tbody').on( 'click', 'tr', function (event) {
+                  //console.log( dataTableVet.row( this ).data() );
+                  if($(this).hasClass('selected')){
+                      //$(this).removeClass('selected'); // removes selected highlighting
+                      //scope.hideVetDetBtn = true;
+                      //$('#veteranView').hide();
+                      //$('#facilityInfo').show();
+                  }
+                  else{
+                      $('tr.selected').removeClass('selected');
+                      $(this).addClass('selected');
+                      // get common data object
+                      var commonData = scope.widget.dataModelOptions.common;
+                      console.log(commonData);
+                      // update common data object with new veteran object
+                      commonData.data.veteranObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
+                      // broadcast message throughout system
+                      scope.$parent.$broadcast('commonDataChanged', commonData);
+                      //scope.hideVetDetBtn = false;
+                      //$('#veteranView').show();
+                      //$('#facilityInfo').hide();
+                      //scope.getVeteran(event.currentTarget.cells[4].innerText);
+                  }
+                  scope.$apply();
+                  console.log("ReachID selected: " + event.currentTarget.cells[5].firstElementChild.id.replace("vet_",""));//innerText);
+                  console.log(event);
+              } );
+            });                
+        }
             
         });
       }
