@@ -1,4 +1,4 @@
-Feature: As a Dashboard User, I want to view a Veteran's medical appointments from within the Dashboard so I can view the Veteran's appointments at a glance and make outreach and care decisions PR-1407
+Feature: As a Dashboard User, I want to view a Veteran's medical appointments from within the Dashboard so I can view the Veteran's appointments at a glance and make outreach and care decisions
   
   
 @view_med_appt_PR-1407
@@ -6,17 +6,20 @@ Feature: As a Dashboard User, I want to view a Veteran's medical appointments fr
 Scenario: I open a web browser and see the medical appointments widget 
 Given I navigate to the http://localhost:7003/
 When I click on "Individual View"
-Then I should see the "AppointmentUI" widget
-And I should see "Appt Type"
-And I should see "Cancelation Type"
-And I should see "Apptdate"
+Then I should see the "Veteran Roster by VAMC" widget
+Then I should see the "AppointmentDT" widget
+And I should see "Type"
+And I should see "Canceled"
+And I should see "Date"
+And I should see "Show"
 
 @click_btw_appts_PR-1407
 
 Scenario: When I am at the Medical Appointments widget I should be able to click between upcoming and previous appointments
 Given I navigate to the http://localhost:7003/
 When I click on "Individual View"
-Then I should see the "AppointmentUI" widget
+Then I should see the "Veteran Roster by VAMC" widget
+Then I should see the "AppointmentDT" widget
 When I click on "Upcoming Appointments"
 Then I should see "Upcoming Appointments"
 When I click on "Previously Completed Appointments"
@@ -27,7 +30,8 @@ Then I should see "Previously Completed Appointments"
 Scenario: When I am at the Medical Appointments widget I should be able to see all appointments at the same time
 Given I navigate to the http://localhost:7003/
 When I click on "Individual View"
-Then I should see the "AppointmentUI" widget
+Then I should see the "Veteran Roster by VAMC" widget
+Then I should see the "AppointmentDT" widget
 When I click on "All Appointments"
 Then I should see "All Appointments"
 
@@ -36,7 +40,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
   Given I navigate to the http://localhost:7003/
   When I click on "Individual View" 
   Then I should see the "Veteran Roster by VAMC" widget
-  And I should see the "AppointmentUI" widget
+  And I should see the "AppointmentDT" widget
   And I should see " search for appointment" 
   And I should see "view all"
   And I should see "Veteran appointments"
