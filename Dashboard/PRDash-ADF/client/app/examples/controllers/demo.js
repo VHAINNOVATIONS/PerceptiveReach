@@ -118,14 +118,14 @@ angular.module('app')
         }
       },
       {
-        name: 'appointmentUI',
-        directive: 'wt-appointment-u-i',
+        name: 'appointmentDT',
+        directive: 'wt-appointment-d-t',
         dataAttrName: 'data',
-        title: 'AppointmentUI',
+        title: 'AppointmentDT',
         dataModelType: AppointmentDataModel,
         size: {
           width: '25%',
-          height: '250px'
+          height: '400px'
         }
       },
       {
@@ -227,7 +227,7 @@ angular.module('app')
   .value('defaultWidgets', [
       {name: 'medication'},
       {name: 'appointment'},
-      {name: 'appointmentUI'},
+      {name: 'appointmentDT'},
       {name: 'patientFlags'},
       { name: 'contact' },
       { name: 'emergency' }, 
