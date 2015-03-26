@@ -48,7 +48,16 @@ angular.module('app')
         userObj: {}
       }
     };
+   
     $timeout(function(){
+      // Add listener for when layout is changed
+      $('ul li a').click(function(e) 
+      {
+        //alert("clickme");
+        $scope.$broadcast('commonDataChanged', $scope.common);
+      });
+
+      // Broadcast message first time
       $scope.$broadcast('commonDataChanged', $scope.common);
       console.log('broadcast submitted');
       console.log($scope);

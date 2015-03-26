@@ -367,7 +367,7 @@ angular.module('ui.models')
       if (data && (!angular.equals(this.dataModelOptions.common, data))) {
         console.log(this.widgetScope.widget.title + ' data model options changed');
         this.dataModelOptions.common = data;
-        this.widgetScope.$emit('widgetChanged', this.widgetScope.widget);
+        //this.widgetScope.$emit('widgetChanged', this.widgetScope.widget);
       }
     };
 
@@ -384,6 +384,8 @@ angular.module('ui.models')
       init: function () {
         var dataModelOptions = this.dataModelOptions;
         var currentVAMC = null;
+        console.log("currentDataModelCommon:");
+        console.log(dataModelOptions.common);
         this.widgetScope.$on('commonDataChanged', function (event, data) {
           console.log('Inside Common data changed for : ' + this.widgetScope.widget.title);
           /*console.log(data);
@@ -398,6 +400,7 @@ angular.module('ui.models')
           if(this.vamc != this.currentVAMC)
             this.getData();
         }.bind(this));
+        this.vamc = (dataModelOptions && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : 9;
         //this.updateScope([]);
         //this.getData();
       },
@@ -469,7 +472,7 @@ angular.module('ui.models')
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
         //$http.cancel(this.intervalPromise);
       }
     });
@@ -540,7 +543,7 @@ angular.module('ui.models')
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
 
