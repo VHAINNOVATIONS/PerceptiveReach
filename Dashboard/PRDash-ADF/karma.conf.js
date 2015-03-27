@@ -24,11 +24,15 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      //'client/bower_components/datatables/media/css/jquery.dataTables.css',
       'client/bower_components/jquery/jquery.js',
       'client/bower_components/jquery-ui/jquery-ui.js',
       'client/bower_components/lodash/dist/lodash.js',
       'client/bower_components/angular/angular.js',      
       'client/bower_components/angular-mocks/angular-mocks.js',
+      'client/bower_components/datatables/media/js/jquery.dataTables.js',      
+      'client/bower_components/angular-datatables/dist/angular-datatables.js',
+      'client/bower_components/angular-datatables/dist/plugins/scroller/angular-datatables.scroller.js',        
       'client/bower_components/malhar-angular-table/dist/mlhr-table.js',
       'client/bower_components/angular-ui-sortable/sortable.js',
       'client/bower_components/angular-sanitize/angular-sanitize.js',
@@ -37,7 +41,8 @@ module.exports = function(config) {
       'client/bower_components/pines-notify/pnotify.core.js',
       'client/bower_components/angular-pines-notify/src/pnotify.js',
       'client/bower_components/visibilityjs/lib/visibility.core.js',      
-      'client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+      'client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',          
+      'client/bower_components/spin.js/spin.js',
       'client/components/adf/src/directives/dashboard.js',
       'client/components/adf/src/directives/*.js',
       'client/components/adf/src/models/*.js',
@@ -49,8 +54,9 @@ module.exports = function(config) {
       'client/components/widget/widgets/{,*/}*.js',
       'client/components/widget/models/{,*/}*.js',
       'client/components/widget/widgets/widget_template.js',
+      'client/bower_components/angular-ui-grid/ui-grid.js',
       'http://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js',
-      'client/bower_components/ng-table/dist/ng-table.min.js',
+      'client/app/**/*.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'
     ],

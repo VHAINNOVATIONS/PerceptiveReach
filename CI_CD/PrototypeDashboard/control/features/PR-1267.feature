@@ -1,11 +1,11 @@
-Feature: As a SPC I want to see a Veteran's contact information so that I can contact
+Feature: As a Dashboard user, I want to see a Veteran's contact information so that I can contact them to provide outreach and intervention services PR-1267
 
 @Contact_information_PR_1267
 Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's contact information
   Given I navigate to the http://localhost:7003/
   When I click on "Individual View" 
   Then I should see "Veteran Roster by VAMC" widget
-  And I should see "Jane Smith"
+  And I should see "Vet* Veteran_*"
  
   
   @Detail_information_PR_1267

@@ -25,25 +25,28 @@ angular.module('ui.widgets')
       scope: {
         data: '='
       },
-      controller: function ($scope) {
-        $scope.tableOptions = {
-          loading: true,
-          noRowsText: 'No Flags Found',
-          loadingText: 'Load...',
-          bodyHeight: 200,
-          initialSorts: [
-            { id: 'Category', dir: '+' }
-          ]
-        };
-        $scope.columns = [
-          { id: 'FlagDesc', key: 'FlagDesc', label: 'Flag', sort: 'string', filter: 'like', width: '200px'},
-          { id: 'Category', key: 'Category', label: 'Cat', sort: 'number', filter: 'number', width: '10px'}
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scorllY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false)
+            .withOption('order', [1, 'asc']);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1)
         ];
+        /*$resource('data.json').query().$promise.then(function(persons) {
+            vm.persons = persons;
+        });*/
       },
       link: function postLink(scope) {
         scope.$watch('data', function (data) {
           if (data) {
-            scope.items = data;
+            scope.data = data;
           }
         });
 

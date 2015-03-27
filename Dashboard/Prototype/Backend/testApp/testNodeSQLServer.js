@@ -3,11 +3,11 @@ var sql = require('mssql');
 var config = {
   // Reach database connection params
  
-    user: 'sa',
-    password: 'agile_123',
-    server: 'wbalshem01046', // You can use 'localhost\\instance' to connect to named instance
+    user: 'xx', 
+    password: 'xxxxxx',
+    server: 'xxxxxxxxx', // You can use 'localhost\\instance' to connect to named instance
     driver: 'msnodesql',
-    database: 'Reach',
+    database: 'xxxxxx',
     //connectionString: "Driver={SQL Server Native Client 11.0};Server=#{server};Database=#{database};Uid=#{user};Pwd=#{password};Trusted_Connection={true}",
     connectionString: "Driver={SQL Server Native Client 11.0};Server=#{server};Database=#{database};Trusted_Connection=yes",
     options: {

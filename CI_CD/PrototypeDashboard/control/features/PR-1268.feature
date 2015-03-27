@@ -1,4 +1,4 @@
-Feature: As a Dashboard user, I want to see a Veteran's emergency contact information so that I can contact them to provide outreach and intervention services. 
+Feature: As a Dashboard user, I want to see a Veteran's emergency contact information so that I can contact them to provide outreach and intervention services. PR-1268
 
  
 @Detail_PR-1268
@@ -14,7 +14,7 @@ Feature: As a Dashboard user, I want to see a Veteran's emergency contact inform
   And I should see "City"
   And I should see "State"
   And I should see "Zip Code"
-  And I should see "Relationship"
+ 
 
  @Drag_Widget_PR-1268
 Scenario: I open a web browser and use http://localhost:7003/ to drag the Emergency Contact Information widget.

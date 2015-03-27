@@ -1,5 +1,43 @@
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
+  $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
+    "<div class=\"appointment\">\r" +
+    "\n" +
+    "\t<table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "        <thead>\r" +
+    "\n" +
+    "        <tr>\r" +
+    "\n" +
+    "            <th>Type</th>\r" +
+    "\n" +
+    "            <th>Date</th>\r" +
+    "\n" +
+    "            <th>Canceled</th>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"appt in data\">\r" +
+    "\n" +
+    "            <td>{{ appt.ApptType }}</td>\r" +
+    "\n" +
+    "            <td>{{ appt.Apptdate }}</td>\r" +
+    "\n" +
+    "            <td>{{ appt.CancelationType }}</td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/barChart/barChart.html",
     "<div class=\"bar-chart\">\r" +
     "\n" +
@@ -28,6 +66,30 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "            tooltips=\"false\">\r" +
     "\n" +
     "    </nvd3-multi-bar-chart>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/clinicalDecisionSupport/clinicalDecisionSupport.html",
+    "<div name=\"clinicalDecisionSupport\" style='overflow:auto; height:450px; widgth:auto'>\r" +
+    "\n" +
+    "\t<div ng-repeat=\"cpg in cpgList\">\r" +
+    "\n" +
+    "\t\t<b>Chronic {{cpg.Risk_Name}}</b>\r" +
+    "\n" +
+    "\t\t<br><b>Features</b>\r" +
+    "\n" +
+    "\t\t<div ng-bind-html=\"cpg.Features\"></div>\r" +
+    "\n" +
+    "\t\t<br><b>Action</b>\r" +
+    "\n" +
+    "\t\t<br>{{cpg.Action}}\r" +
+    "\n" +
+    "\t\t<br><br>For more information visit the full Clinical Practice Guide at <a href=\"{{cpg.GuidelineURL}}\">{{cpg.GuidelineURL}}</a>\r" +
+    "\n" +
+    "\t\t<br><br>For guidance on proactive outreach and intervention strategies visit the Toolkit for Interventions <a href=\"{{cpg.ToolkitURL}}\">{{cpg.ToolkitURL}}</a><br><br>\r" +
+    "\n" +
+    "\t</div>\r" +
     "\n" +
     "</div>"
   );
@@ -132,15 +194,29 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
     "<div class=\"medication\">\r" +
     "\n" +
-    "    <mlhr-table \r" +
+    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "      options=\"tableOptions\"\r" +
+    "        <thead>\r" +
     "\n" +
-    "      columns=\"columns\" \r" +
+    "        <tr>\r" +
     "\n" +
-    "      rows=\"items\">\r" +
+    "            <th>Medication</th>\r" +
     "\n" +
-    "    </mlhr-table>\r" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"meds in data\">\r" +
+    "\n" +
+    "            <td>{{ meds.Name }}</td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
     "\n" +
     "</div>"
   );
@@ -238,15 +314,33 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
     "<div class=\"patient-flags\">\r" +
     "\n" +
-    "    <mlhr-table \r" +
+    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "      options=\"tableOptions\"\r" +
+    "        <thead>\r" +
     "\n" +
-    "      columns=\"columns\" \r" +
+    "        <tr>\r" +
     "\n" +
-    "      rows=\"items\">\r" +
+    "            <th>Flag</th>\r" +
     "\n" +
-    "    </mlhr-table>\r" +
+    "            <th>Cat</th>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"flags in data\">\r" +
+    "\n" +
+    "            <td>{{ flags.FlagDesc }}</td>\r" +
+    "\n" +
+    "            <td>{{ flags.Category }}</td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
     "\n" +
     "</div>"
   );
@@ -351,7 +445,53 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/veteranRosterTable/veteranRosterTable.html",
     "<div>\r" +
     "\n" +
-    "    <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"\" id=\"sampleVet\" width=\"100%\"></table>\r" +
+    "\t<!--<div id=\"spinner\" style=\"height: 100px;\"> </div>-->\r" +
+    "\n" +
+    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\" id=\"sampleVet\" width=\"100%\">\r" +
+    "\n" +
+    "    \t<thead>\r" +
+    "\n" +
+    "        <tr>\r" +
+    "\n" +
+    "        \t<th ng-repeat=\"column in columns\">{{column.Name}}</th>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"veteran in veteranList\">\r" +
+    "\n" +
+    "            <td>{{ veteran.Name }}</td>\r" +
+    "\n" +
+    "            <td>{{ veteran.SSN }}</td>\r" +
+    "\n" +
+    "            <td>{{ veteran.Phone }}</td>\r" +
+    "\n" +
+    "            <td>{{ veteran.DateIdentifiedRisk }}</td>\r" +
+    "\n" +
+    "            <td>{{ veteran.RiskLevel }}</td>\r" +
+    "\n" +
+    "            <td>\r" +
+    "\n" +
+    "            \t<select class='form-control' style='width: 180px;' id=\"vet_{{veteran.ReachID}}\">\r" +
+    "\n" +
+    "            \t\t<option value=''></option>\r" +
+    "\n" +
+    "            \t\t<option ng-repeat=\"outreachStatus in outreachStatusList\" value=\"{{outreachStatus.OutReachStatusID}}\">{{outreachStatus.StatusName}}</option>\r" +
+    "\n" +
+    "            \t</select> \r" +
+    "\n" +
+    "            </td>\r" +
+    "\n" +
+    "            <!--<td>{{ veteran.OutreachStatus }}</td>-->\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
     "\n" +
     "</div>"
   );
