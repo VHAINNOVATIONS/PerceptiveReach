@@ -1,7 +1,14 @@
 <div class="medication">
-    <mlhr-table 
-      options="tableOptions"
-      columns="columns" 
-      rows="items">
-    </mlhr-table>
+    <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+        <thead>
+        <tr>
+            <th>Medication</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="meds in data">
+            <td>{{ meds.Name }}</td>
+        </tr>
+        </tbody>
+    </table>
 </div>

@@ -17,7 +17,7 @@
 'use strict';
 
 angular.module('app')
-	.controller('LayoutsDemoExplicitSaveCtrl', function($scope, widgetDefinitions, defaultWidgets, LayoutStorage, $interval) {
+	.controller('LayoutsDemoExplicitSaveCtrl', function($scope, widgetDefinitions, defaultWidgets, LayoutStorage, $interval, $timeout) {
     $scope.layoutOptions = {
       storageId: 'demo-layouts-explicit-save',
       storage: localStorage,
@@ -38,6 +38,31 @@ angular.module('app')
     $interval(function () {
       $scope.randomValue = Math.random();
     }, 500);
+    // initialize common data object and broadcast to widgets
+    $scope.common = {
+      data: {
+        stateSelected: '',
+        facilitySelected: 1,
+        patientIdSelected: 1,
+        veteranObj: {"ReachID":781151,"FirstName":"Vet*","MiddleName":"I","LastName":"Veteran_*","SSN":"xxx-xx-9018","Phone":"(800) 555-4078","DateIdentifiedRisk":"2/8/2011","RiskLevel":"High","RiskLevelID":1,"OutreachStatus":null,"VAMC":"(V01) (402) Togus, ME"},
+        userObj: {}
+      }
+    };
+   
+    $timeout(function(){
+      // Add listener for when layout is changed
+      $('ul li a').click(function(e) 
+      {
+        //alert("clickme");
+        $scope.$broadcast('commonDataChanged', $scope.common);
+      });
+
+      // Broadcast message first time
+      $scope.$broadcast('commonDataChanged', $scope.common);
+      console.log('broadcast submitted');
+      console.log($scope);
+    });
+    
 
     // percentage (gauge widget, progressbar widget)
     $scope.percentage = 5;
