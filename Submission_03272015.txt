@@ -1,0 +1,571 @@
+* commit c11120a36066d8fc64a9d05f5483b7d90329e8bf (HEAD, origin/master, origin/HEAD, master)
+| Merge: b861351 6f8e32c
+| Author: Robert Snelling <robert.snelling@us.pwc.com>
+| Date:   Fri Mar 27 11:49:24 2015 -0400
+| 
+|     Merge branch 'stable'
+|  
+* commit 6f8e32c286b4e98610f674f3d0b88017767b9c51 (origin/stable)
+| Merge: b5f1caf 6a91feb
+| Author: Robert Snelling <robert.snelling@us.pwc.com>
+| Date:   Fri Mar 27 11:46:22 2015 -0400
+| 
+|     Merge branch 'test' into stable
+|  
+* commit 6a91feb80c44f591f6c7fa279527d59118035005 (origin/test)
+| Author: aqspwc <andrew.q.smith@us.pwc.com>
+| Date:   Thu Mar 26 10:16:11 2015 -0400
+| 
+|     update env file
+|     
+|     updated env file with support from agress chrome cache removal and sql
+|     support via tiny_tds
+|  
+* commit 56f518a83798d1b72c3bc9b0f8e9a0f7273a8f3e
+| Author: aqspwc <andrew.q.smith@us.pwc.com>
+| Date:   Thu Mar 26 10:14:12 2015 -0400
+| 
+|     Revert "updated env support file"
+|     
+|     This reverts commit 02d748edc81721a44a368c62f288fc6d953034be.
+|  
+* commit 050ae38ce0898962f8552e06985ffb0ecd666320
+| Author: aqspwc <andrew.q.smith@us.pwc.com>
+| Date:   Thu Mar 26 10:14:05 2015 -0400
+| 
+|     updated env support file
+|     
+|     updated env support file to ensure chrome is removing cache after each
+|     scenario
+|    
+*   commit 6d7c78e64f3543b8e1170cdce19f1463a0336dcc
+|\  Merge: eed5f25 d746a0b
+| | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | Date:   Thu Mar 26 00:02:25 2015 -0400
+| | 
+| |     Merge commit 'd746a0b9c84295ee96a8ca20df33f9d87b4f00ff' into HEAD
+| |   
+| * commit d746a0b9c84295ee96a8ca20df33f9d87b4f00ff (origin/dev)
+| | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | Date:   Thu Mar 26 00:00:14 2015 -0400
+| | 
+| |     PR-1623 fixed bugs related to widget to widget communication
+| |     
+| *   commit 539bea832865866b8f02c54637dd97b96e4b6165
+| |\  Merge: 7ddb983 45cd580
+| | | Author: unknown <william.balshem@us.pwc.com>
+| | | Date:   Wed Mar 25 17:29:37 2015 -0400
+| | | 
+| | |     Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | |    
+| * | commit 7ddb983d971d2936a8fe60636c97b2b96933780a
+| | | Author: unknown <william.balshem@us.pwc.com>
+| | | Date:   Wed Mar 25 17:12:29 2015 -0400
+| | | 
+| | |     PR-1584 #time 4H #comment rebuilt the PatientRiskfactors table added Military Branch to the Patient table
+| | |    
+* | | commit eed5f253ae1a03f5c29202e15b1c7806a676352a
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Wed Mar 25 16:13:34 2015 -0400
+| | | 
+| | |     Updated PR-1405 and PR-1407 features
+| | |      
+* | |   commit 4a4a40967cd57d4a7f5f3ce06adfe5ecc286b7f1
+|\ \ \  Merge: 73a7a6f 45cd580
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| |/|   Date:   Wed Mar 25 14:21:50 2015 -0400
+| | |   
+| | |       Merge commit '45cd580eecf90b6d5a40363c5a2d1d35fd71019e' into HEAD
+| | |    
+| * | commit 45cd580eecf90b6d5a40363c5a2d1d35fd71019e
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Wed Mar 25 14:20:06 2015 -0400
+| | | 
+| | |     PR-1594 PR-1610 PR-1615 PR-1613 PR-1614 PR-1611 Polished off the changes for the appointment widget and then implemented the standardization into the medication and patient flags widgets as well.
+| | |    
+* | | commit 73a7a6f5ff46a1567e7e3979bce6c9d1008b1877
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Wed Mar 25 12:54:56 2015 -0400
+| | | 
+| | |     Updated PR-1407 feature file
+| | |     
+| | |     Updated PR-1407 feature file
+| | |    
+* | | commit 2cfc2ccdb248a423b669d249a60894c7ebbf85d2
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Mar 25 08:41:37 2015 -0400
+| | | 
+| | |     updated control folder for midnight job
+| | |      
+* | |   commit c1f6efe4dab8c5d66c43793bf6da7c033a74cc8a
+|\ \ \  Merge: 73c7454 375f268
+| |/ /  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Wed Mar 25 05:10:35 2015 -0400
+| | |   
+| | |       Merge commit '375f2685f498809b246d00493165999e63737501' into HEAD
+| | |      
+| * |   commit 375f2685f498809b246d00493165999e63737501
+| |\ \  Merge: 4fb84ff 7ac550b
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Wed Mar 25 05:08:20 2015 -0400
+| | | | 
+| | | |     Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | | |     
+| * | | commit 4fb84ff2d1951ae1a6d997bb9fc80dd83a244a63
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Wed Mar 25 05:07:48 2015 -0400
+| | | | 
+| | | |     PR-1623 #time 1d Implemented Widget to widget communication between Roster table and Clinical Decision support.
+| | | |       
+* | | |   commit 73c745468f75b1626109c4103641e5c5890b5146
+|\ \ \ \  Merge: 0dca2ae 7ac550b
+| | |/ /  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| |/| |   Date:   Wed Mar 25 02:00:05 2015 -0400
+| | | |   
+| | | |       Merge commit '7ac550ba1abaa8e9ba237e6cae24fb87fa7a345b' into HEAD
+| | | |     
+| * | | commit 7ac550ba1abaa8e9ba237e6cae24fb87fa7a345b
+| | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| |/|   Date:   Wed Mar 25 01:58:22 2015 -0400
+| | |   
+| | |       PR-1615 PR-1613 PR-1614 PR-1611 #time 1h Updated the HTML, directive and unit test for the appointment widget. Disabled the UI-Grid prototype and created a duplicate prototype with angular-datatables..
+| | |      
+* | |   commit 0dca2ae35d52c9a897705bd79fa685c4ef3497d3
+|\ \ \  Merge: 18f7992 4d9c331
+| |/ /  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Tue Mar 24 23:59:42 2015 -0400
+| | |   
+| | |       Merge commit '4d9c33184954326846adab83b7d360af90d3ca2d' into HEAD
+| | |    
+| * | commit 4d9c33184954326846adab83b7d360af90d3ca2d
+| | | Author: unknown <wbalshem010@WBALSHEM01039.us.nam.ad.pwcinternal.com>
+| | | Date:   Tue Mar 24 23:57:46 2015 -0400
+| | | 
+| | |     PR-1577 #time 2h #comment completed Appointment scripts and applied them to Reach_Dev database on the Dev Server
+| | |     PR-1581 #time 2h #comment completed Medical Guildelines scripts and applied them to Reach_Dev database on the Dev Server
+| | |     PR-1584 #time 2.5h #comment updated table design of Patient table and child tables and applied them to Reach_Dev database on the Dev Server
+| | |    
+* | | commit 18f7992ed060550f444ed5411027b985ed69ca5d
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Mar 24 17:03:17 2015 -0400
+| | | 
+| | |     Updated steps PR-1407
+| | |     
+| | |     Updated steps PR-1407
+| | |    
+* | | commit 8108f465fc7b0b5bca9c961d09d4364a3aa3d7d4
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Tue Mar 24 15:37:46 2015 -0400
+| | | 
+| | |     PR-1405 updated steps to deal with odd behavior in Jenkins
+| | |     
+| | |     PR-1405 updated steps to deal with odd behavior in Jenkins
+| | |    
+* | | commit 6f44642bc56a78644e3e8806cf90b46cfb86b9f5
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Tue Mar 24 15:07:21 2015 -0400
+| | | 
+| | |     update support env.rb for screenshot capabilities
+| | |     
+| | |     update support env.rb for screenshot capabilities
+| | |    
+* | | commit 13c2182faa03d3171548a65cebd9b9e350ed70ea
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Mar 24 14:49:56 2015 -0400
+| | | 
+| | |     Added Jira task number PR-1407
+| | |    
+* | | commit 751a33664a767e3e832c7005f67c33e7e2ee94eb
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Mar 24 12:46:26 2015 -0400
+| | | 
+| | |     Updated PR-1380
+| | |    
+* | | commit 3d8fcd42fbc672f4fcd671c390b60f7955f94503
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Mar 24 12:19:47 2015 -0400
+| | | 
+| | |     Updated PR_1407
+| | |    
+* | | commit 6724d5d0855266dd7520b341560aaf3d57637090
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Mar 24 11:53:06 2015 -0400
+| | | 
+| | |     Updated PR-1405
+| | |    
+* | | commit 30de647df3a1a633e96f1e772983f6e67f1e24f1
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Mar 24 10:54:36 2015 -0400
+| | | 
+| | |     Updated medication feature file and deleted duplicate medication feature file
+| | |    
+* | | commit a370cd172c964e735ff91a67e777941370232d87
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Tue Mar 24 10:37:33 2015 -0400
+| | | 
+| | |     updated pr-996 feature file
+| | |     
+| | |     updated pr-996 to reflect current terminology
+| | |    
+* | | commit 75c2059348e422252d7b75e8ebdd3d515589c420
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Tue Mar 24 10:33:22 2015 -0400
+| | | 
+| | |     update pr-876 feature file
+| | |     
+| | |     updated pr-876 to execute correctly
+| | |    
+* | | commit fdfb93908efa2f5b319a84ea8acd31103dca8463
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Mar 24 10:26:17 2015 -0400
+| | | 
+| | |     Updates steps for veteran roaster feature file
+| | |      
+* | |   commit 2fe4bf428ecff1cfc2f9a1e2e79c9995e7bdd2e7
+|\ \ \  Merge: f2871c0 f527daa
+| |/ /  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Tue Mar 24 02:07:25 2015 -0400
+| | |   
+| | |       Merge commit 'f527daa45bc48e8497468ae28410f922506ce6c9' into HEAD
+| | |      
+| * |   commit f527daa45bc48e8497468ae28410f922506ce6c9
+| |\ \  Merge: b9dcb2f ea621bc
+| | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | |   Date:   Tue Mar 24 02:05:38 2015 -0400
+| | |   
+| | |       Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | |    
+| * | commit b9dcb2fc8357b4968f9caa2d54fc3ca4fc357d3e
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Tue Mar 24 01:59:01 2015 -0400
+| | | 
+| | |     PR-1610 PR-1615 PR-1613 PR-1614 PR-1611 Created the initial HTML, directive and unit test for the appointment widget.  Also, created a duplicate prototype with UIGrid.
+| | |      
+* | |   commit f2871c0f52c04737272d534cdca1238670fe654f
+|\ \ \  Merge: 80a91fe ea621bc
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| |/|   Date:   Tue Mar 24 01:32:00 2015 -0400
+| | |   
+| | |       Merge commit 'ea621bc3def6972484205a6f6c3d23d90bef0cd9' into HEAD
+| | |      
+| * |   commit ea621bc3def6972484205a6f6c3d23d90bef0cd9
+| |\ \  Merge: cddb857 5ae84ec
+| | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | |   Date:   Tue Mar 24 01:29:48 2015 -0400
+| | |   
+| | |       Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | |    
+| * | commit cddb857be0fd6705d1fe946672b54616eb2b7f2a
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Tue Mar 24 01:29:30 2015 -0400
+| | | 
+| | |     PR-1612 Updated Directives and models for Clinical Decision Support Widget PR-1606 Created UI Templates for Clinical Decision Support Widget
+| | |    
+* | | commit 80a91fee6db81894fd68ef59687570721a84d70e
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Mon Mar 23 09:32:37 2015 -0400
+| | | 
+| | |     update 1405 corrected typo
+| | |    
+* | | commit 31ad40261d7bddee4fd95260a4c63a4e3d7e1354
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Sat Mar 21 10:45:48 2015 -0400
+| | | 
+| | |     Updated problem list feature file
+| | |      
+* | |   commit a1e6965b3858249a514f3fe54aa73a88dc647195
+|\ \ \  Merge: fef8815 5ae84ec
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| |/|   Date:   Fri Mar 20 19:50:13 2015 -0400
+| | |   
+| | |       Merge commit '5ae84ecd44a9f97fa33f605b8d31e4bb76d9fadc' into HEAD
+| | |    
+| * | commit 5ae84ecd44a9f97fa33f605b8d31e4bb76d9fadc
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Fri Mar 20 19:48:36 2015 -0400
+| | | 
+| | |     PR-1608 PR-1610 #time #2h Developed the first pass of the Appointment Datamodel and unit test to accompany it.
+| | |      
+* | |   commit fef88153c12015c8a28d06fc4cdccf328bdd181b
+|\ \ \  Merge: 1324917 d42d7bd
+| |/ /  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Fri Mar 20 17:29:12 2015 -0400
+| | |   
+| | |       Merge commit 'd42d7bd8eeaa8b173cc29ca516206e003691eef8' into HEAD
+| | |      
+| * |   commit d42d7bd8eeaa8b173cc29ca516206e003691eef8
+| |\ \  Merge: ceebd73 5c0f3e4
+| | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | |   Date:   Fri Mar 20 17:27:34 2015 -0400
+| | |   
+| | |       Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | |    
+| * | commit ceebd739d197c0cec2512240060c9511e41104a8
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Fri Mar 20 17:26:59 2015 -0400
+| | | 
+| | |      PR-1666 #comment This completes steps one of two steps.  Please only test step one
+| | |    
+* | | commit 1324917d5e155336964516c75916dd561497fe8c
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Fri Mar 20 14:21:08 2015 -0400
+| | | 
+| | |     corrected typo on PR-1537
+| | |     
+| | |     Related Jira tasks PR-1589, 1580
+| | |    
+* | | commit 8843faa645b72bce6570fe50b313d76609dcd79b
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Fri Mar 20 14:16:38 2015 -0400
+| | | 
+| | |     Added feature and steps  for problem list
+| | |      
+* | |   commit c05d2ab9700b10d4a9fb99bfb27d2f69d680632a
+|\ \ \  Merge: 2157591 5c0f3e4
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| |/|   Date:   Fri Mar 20 07:57:37 2015 -0400
+| | |   
+| | |       Merge commit '5c0f3e466f0c4efb18cdef4766d023fc53702734' into HEAD
+| | |    
+| * | commit 5c0f3e466f0c4efb18cdef4766d023fc53702734
+| |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| |   Date:   Fri Mar 20 07:55:56 2015 -0400
+| |   
+| |       PR-1612 #time 5h Created Unit tests, Directives, and updated models for Clinical Decision Support Widget
+| |   
+* | commit 21575918c24eb983f18b5a54d1c36cca3626cc61
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Thu Mar 19 15:29:11 2015 -0400
+| | 
+| |     corrected typo on pr-1405
+| |     
+| |     corrected typo on pr-1405
+| |   
+* | commit dddf61558dd34dfbe1f816f9a22085990ed48171
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Thu Mar 19 15:22:56 2015 -0400
+| | 
+| |     created control folder for feature files
+| |   
+* | commit 5f7f51949ac7587df37cf66fea64300b17407d1a
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Thu Mar 19 15:02:30 2015 -0400
+| | 
+| |     update syntax of pr-1248 feature file
+| |     
+| |     update syntax of pr-1248 feature file
+| |   
+* | commit d6ec6e96e8ea219402d4fce95650a7a28361cc41
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Thu Mar 19 15:01:41 2015 -0400
+| | 
+| |     update feature files and copied to prototype directory
+| |   
+* | commit 390544205fd04338da2e9eda46b1186e5576c99d
+| | Author: radinaivanova <radina.ivanova@us.pwc.com>
+| | Date:   Thu Mar 19 14:55:17 2015 -0400
+| | 
+| |     PR-1405 and PR-1407 and PR -1248 update
+| |     
+| |     Added missing rb and feature files
+| |   
+* | commit 94f732b734e1d2d5f87e6481613ae4d259548e6d
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Thu Mar 19 14:53:43 2015 -0400
+| | 
+| |     replicated pr-1248 to prototype folder
+| |   
+* | commit 439d356cf7b64a1697891a2b083a6120b34fe160
+| | Author: radinaivanova <radina.ivanova@us.pwc.com>
+| | Date:   Thu Mar 19 14:43:01 2015 -0400
+| | 
+| |     PR-1248, PR-1405, PR-1407
+| |     
+| |     Feature files and step definitions for PR-1248, PR-1405, PR-1407
+| |   
+* | commit b86f307dd2eb2e2e9e2adfa2379b4ec45cbd9762
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Thu Mar 19 12:42:29 2015 -0400
+| | 
+| |     Updates steps and feature file for dashboard linkage
+| |     
+* |   commit 48007eaf1696d3347b7e8df4c73a6e5dfae0fa66
+|\ \  Merge: 341f09f 90598e2
+| |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| |   Date:   Thu Mar 19 10:06:15 2015 -0400
+| |   
+| |       Merge commit '90598e22155ae223dc3a56f4e3ff882a25365f42' into HEAD
+| |   
+| * commit 90598e22155ae223dc3a56f4e3ff882a25365f42
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Thu Mar 19 10:04:18 2015 -0400
+| | 
+| |     PR-1616 #comment Needed to adjust the test for an API no longer in use.
+| |   
+| * commit 6b7ccbe2f95ec7efda564a174484c6dfc3205ed6
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Thu Mar 19 09:45:21 2015 -0400
+| | 
+| |     PR-1616 #comment I've updated the database configuration file to accommodate for the changes that went in last night.
+| |   
+| * commit 585f9964a146317ad617419b4e306f00d293dfc7
+| | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | Date:   Thu Mar 19 00:23:32 2015 -0400
+| | 
+| |     PR 1616 - Create Database/API Components for Clinical Practice Guidelines (PR-996)
+| |     PR 1612 - Create Data Model for Clinical Practice Guidelines (PR-996)
+| |     
+* |   commit 341f09f1c74bb86a183983d3dd92bbf840776e8d
+|\ \  Merge: 2f0ea85 6f6546a
+| |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| |   Date:   Wed Mar 18 23:37:55 2015 -0400
+| |   
+| |       Merge commit '6f6546a9f1710ec9a139eecafe3010963c230292' into HEAD
+| |   
+| * commit 6f6546a9f1710ec9a139eecafe3010963c230292
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Wed Mar 18 23:36:12 2015 -0400
+| | 
+| |     PR-1666 #time 2h Was able to finish the proof of concept and successfully test the API with data from the database
+| |   
+* | commit 2f0ea853367f36cc0b6f4ba4e36ef76ced9f19df
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Wed Mar 18 16:30:27 2015 -0400
+| | 
+| |     Updates feature files Medication and contact
+| |   
+* | commit f520ca55773e5a0f7e64be435e4dcbd9c7f97c1f
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Wed Mar 18 16:10:39 2015 -0400
+| | 
+| |     Updates Dashboard linkage feature
+| |   
+* | commit 81374652d5721c179b06d892c81ac94a28b79338
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Wed Mar 18 16:02:14 2015 -0400
+| | 
+| |     updated naming convention of feature files
+| |     
+| |     updated naming convention of feature files
+| |   
+* | commit fcaefd7c9f9d18c788678864c0dbcc6020dc367c
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Wed Mar 18 15:45:19 2015 -0400
+| | 
+| |     update step definitions to find facility in vamc list
+| |   
+* | commit e405653b52f614d069e795b892c49ca4f675c1a0
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Wed Mar 18 15:32:20 2015 -0400
+| | 
+| |     update step definitions for veteran dashboard linkage feature
+| |     
+| |     update step definitions for veteran dashboard linkage feature
+| |   
+* | commit a2365dddbc700d9433c7ef7570a65b5e554903ad
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Wed Mar 18 15:24:34 2015 -0400
+| | 
+| |     Added Veteran Dashboard Linkage feature
+| |     
+* |   commit e53d57abf2c4dff5172495c2c8348c593bb0e7c0
+|\ \  Merge: 92c60d6 e908775
+| |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| |   Date:   Wed Mar 18 02:53:28 2015 -0400
+| |   
+| |       Merge commit 'e908775dfb1a1f3132c413cdd93e828f539aad14' into HEAD
+| |   
+| * commit e908775dfb1a1f3132c413cdd93e828f539aad14
+| | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | Date:   Wed Mar 18 02:51:45 2015 -0400
+| | 
+| |     PR 1616 - Create Database/API Components for Clinical Practice Guidelines (PR-996)
+| |   
+* | commit 92c60d675107084ebf2a569808466c1cba193d40
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Tue Mar 17 16:13:41 2015 -0400
+| | 
+| |     updated steps/feature
+| |     
+| |     pr-349
+| |   
+* | commit 019bfe20d9bb1f9214fdc37933e6005d4dac6496
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Tue Mar 17 12:01:22 2015 -0400
+| | 
+| |     fixed error
+| |   
+* | commit ace36cf060b1416a387f0131aec3fec5a2d62cfd
+| | Author: radinaivanova <radina.ivanova@us.pwc.com>
+| | Date:   Tue Mar 17 11:30:44 2015 -0400
+| | 
+| |     Sign On Test
+| |     
+| |     Test for signing in to the PR Dashboard
+| |   
+* | commit a73d888a28dabbdbb01b610533f0d10328cd2e49
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Tue Mar 17 10:16:17 2015 -0400
+| | 
+| |     Updated test cases for feature files
+| |   
+* | commit dd633cc9ac6deb1c616547169125dd6bd80c7083
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Tue Mar 17 10:05:48 2015 -0400
+| | 
+| |     Updated steps for Individual_Contact
+| |     
+* |   commit 076463421986f5fc095e393ed45cedacf957aca6
+|\ \  Merge: b823fbf 2b38d9f
+| |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| |   Date:   Tue Mar 17 02:29:21 2015 -0400
+| |   
+| |       Merge commit '2b38d9f03c90f17b15ebfdbe49bf375edc3282aa' into HEAD
+| |   
+| * commit 2b38d9f03c90f17b15ebfdbe49bf375edc3282aa
+| | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | Date:   Tue Mar 17 02:27:33 2015 -0400
+| | 
+| |     PR 1662 - Dashboard Bug fixes: Fixed errors with the build that prevented code from being migrated to the testing environment and improved the formatUtil.service.js
+| |   
+| * commit 2659a434a573d92831291c84b8dee4ca77529570
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Mon Mar 16 09:23:21 2015 -0400
+| | 
+| |     PR-1603 - After talking through the new approach for API's that are stubbed out, decided to place the JSON data inline for now.  Update to controller to house data inline rather than pull from external file.
+| |   
+| * commit 9766ccfe39b4a76b09564ffc452791661a453a33
+|   Author: Robert Snelling <robert.snelling@us.pwc.com>
+|   Date:   Mon Mar 16 00:05:03 2015 -0400
+|   
+|       PR-1603 - Developed the Appointment API and created the initial unit test for the Appointment API.
+|  
+* commit b823fbf12cc7c5bdbdd10e0f66eeef917ed3e62e
+| Author: cgattu <chandrakala.gattu@us.pwc.com>
+| Date:   Mon Mar 16 17:07:37 2015 -0400
+| 
+|     Updates steps
+|  
+* commit 515f95b832c57df45f09b15ab9ca1974b2c9cf13
+| Author: cgattu <chandrakala.gattu@us.pwc.com>
+| Date:   Mon Mar 16 15:58:32 2015 -0400
+| 
+|     Added task number
+|  
+* commit 8b1e533b685883e029806a7f897217cbe6f2d43b
+| Author: cgattu <chandrakala.gattu@us.pwc.com>
+| Date:   Mon Mar 16 15:10:53 2015 -0400
+| 
+|     Added Veteran Clinical Practice Guidelines feature
+|  
+* commit 99cc95c26424829e8c72b5f274e268efcdc5f2cc
+| Author: cgattu <chandrakala.gattu@us.pwc.com>
+| Date:   Mon Mar 16 14:34:14 2015 -0400
+| 
+|     Updated feature file
+|  
+* commit 333eccb181ce3699de16d92b65c94b30879c3215
+  Author: cgattu <chandrakala.gattu@us.pwc.com>
+  Date:   Mon Mar 16 14:19:20 2015 -0400
+  
+      Added Veteran Appointment feature
