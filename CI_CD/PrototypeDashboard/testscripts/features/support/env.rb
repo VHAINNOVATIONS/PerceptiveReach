@@ -17,8 +17,3 @@ Before do |scenario|
 	page.driver.browser.manage.window.maximize
 	#page.driver.browser.manage.window.resize_to(1920, 1080)
 end
-
-After do |scenario|
-	page.driver.browser.manage.delete_all_cookies
-	page.driver.browser.quit
-end
