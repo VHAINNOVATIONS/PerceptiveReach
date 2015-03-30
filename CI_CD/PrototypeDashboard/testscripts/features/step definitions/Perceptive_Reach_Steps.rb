@@ -57,6 +57,11 @@ Then(/^I click on the Add a widget button$/) do
   find_button('Add a Widget').click
 end
 
+When(/^I check "(.*?)" and "(.*?)" orders$/) do |arg1, arg2|
+  #pending # express the regexp above with the code you wish you had
+  expect(page).to have_content(arg1)
+end
+
 Then(/^I should see the "(.*?)" widget$/) do |pagecontent|
   expect(page).to have_content(pagecontent)
 end
