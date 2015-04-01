@@ -20,6 +20,6 @@ SET city = left(right(r.VAMC_Name, len(r.VAMC_Name) - 12), len(right(r.VAMC_Name
 FROM Patient p INNER JOIN PatientStation s ON p.ReachID = s.ReachID
  INNER JOIN Ref_VAMC r ON s.sta3n = r.sta3n
 
-UPDATE VeteranRisk
+UPDATE Patient
 SET Zip = r.StateCode + '001', zip4 = cast(ABS(Checksum(NewID()) % 8000) + 1000 as varchar(4))  
-FROM VeteranRisk v INNER JOIN (SELECT distinct StateCode, StateAbbr FROM SDR_Prod.dbo.Ref_CountyFIPS) r ON v.State = r.StateAbbr
+FROM Patient p INNER JOIN (SELECT distinct StateCode, StateAbbr FROM SDR_Prod.dbo.Ref_CountyFIPS) r ON p.State = r.StateAbbr
