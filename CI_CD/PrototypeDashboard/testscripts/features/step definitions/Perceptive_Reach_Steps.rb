@@ -97,8 +97,9 @@ And(/^I change the title to "(.*?)" on the pop\-up$/) do |widgetname|
 end
 
 And(/^I should see "(.*?)" option in the dropdown$/) do |dropdownoption|
-  page.find(:xpath, "//*[@id='vet_652427-button']/span[1]").click #click the dropdown - vet_#-button need to figure param for #value
-  expect(page).to have_content(dropdownoption)
+  #page.find(:xpath, "//*[@id='vet_652427-button']/span[1]").click #click the dropdown - vet_#-button need to figure param for #value
+  #expect(page).to have_content(dropdownoption)
+  page.find(:xpath, '//*[@id="sampleVet"]/tbody/tr[1]').find('select').find(:option,dropdownoption).select_option
 end
 
 Then(/^I put in my VA username$/) do
