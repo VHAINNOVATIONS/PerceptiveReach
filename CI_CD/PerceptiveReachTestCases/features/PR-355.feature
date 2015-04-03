@@ -1,4 +1,4 @@
-Feature: As an Dashboard User, I want to view information related to the change in suicide rates over time. PR-355
+Feature: As an Dashboard User, I want to view information related to the change in suicide rates over time. PR-355 1.1.6
 
 Scenario: PR-355
 Given I navigate to the http://localhost:7003/

@@ -1,4 +1,4 @@
-Feature: As a Dashboard User, I want to pick and choose which screen elements I see on the Dashboard, so I can first see only the data that is important to me. PR-356
+Feature: As a Dashboard User, I want to pick and choose which screen elements I see on the Dashboard, so I can first see only the data that is important to me. PR-356 1.1.7
 @PR-356
 Scenario: PR-356
 Given I navigate to the http://localhost:7003/

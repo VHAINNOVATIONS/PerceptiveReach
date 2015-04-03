@@ -1,4 +1,4 @@
-Feature: As a Dashboard User, I want to access Dashboard "views" that summarize data for a specific facility service area, state, VISN, Region, or nationally per corresponding view (Facility, VISN, National). PR-353
+Feature: As a Dashboard User, I want to access Dashboard "views" that summarize data for a specific facility service area, state, VISN, Region, or nationally per corresponding view (Facility, VISN, National). PR-353 1.2.4
 
 Scenario: 
 Given I navigate to the http://localhost:7003/

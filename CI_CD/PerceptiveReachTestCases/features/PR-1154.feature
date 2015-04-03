@@ -1,4 +1,4 @@
-Feature: As a Dashboard User, I want to view a Veteran's cover sheet information (as in the CPRS cover sheet) from within the Dashboard so I can view the Veteran's recent care at a glance and make outreach decisions. - PR-1154
+Feature: As a Dashboard User, I want to view a Veteran's cover sheet information (as in the CPRS cover sheet) from within the Dashboard so I can view the Veteran's recent care at a glance and make outreach decisions. - PR-1154 1.1.20
 
 Scenario: I open a web browser and see the Individual Veteran View and the Veteran's cover sheet information
 Given I navigate to the http://localhost:7003/

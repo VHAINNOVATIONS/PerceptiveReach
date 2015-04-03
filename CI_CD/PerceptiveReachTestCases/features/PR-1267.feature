@@ -1,4 +1,4 @@
-Feature: As a Dashboard user, I want to see a Veteran's contact information so that I can contact them to provide outreach and intervention services PR-1267
+Feature: As a Dashboard user, I want to see a Veteran's contact information so that I can contact them to provide outreach and intervention services PR-1267 1.1.22
 
 @Contact_information_PR_1267
 Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's contact information

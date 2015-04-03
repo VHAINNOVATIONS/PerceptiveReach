@@ -1,5 +1,4 @@
-Feature: As a SPC I  want to view newly identified at-risk Veterans during a specific time frame-PR-352
-#At-Risk Feature
+Feature: As a SPC I  want to view newly identified at-risk Veterans during a specific time frame. PR-352 1.1.3
 
 Scenario: I open a web browser and see the SPC navigation page
 Given I navigate to the http://localhost:7003/

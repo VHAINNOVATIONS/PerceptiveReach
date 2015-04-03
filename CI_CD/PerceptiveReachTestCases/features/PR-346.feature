@@ -1,4 +1,4 @@
-Feature: As a SPC Outreach provider I want view the direct message that highlights high risk veterans so that I can provide out reach services PR-346
+Feature: As a SPC Outreach provider I want view the direct message that highlights high risk veterans so that I can provide out reach services PR-346 1.1.1
 
 Scenario:  I open a web browser and see the SPC navigation page
 Given I navigate to the http://localhost:7003/

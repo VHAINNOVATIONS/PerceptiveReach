@@ -1,4 +1,4 @@
-Feature: As a SPC I want to Enable the background communications layer between all components of the dashboard.  Layout tab to Layout tab (i.e.. National to State), Widget to Widget (i.e. Veteran Roster to Supporting Widgets).  
+Feature: As a SPC I want to Enable the background communications layer between all components of the dashboard.  Layout tab to Layout tab (i.e.. National to State), Widget to Widget (i.e. Veteran Roster to Supporting Widgets). PR-1571 1.1.30
 @Veteran_Clinical_support_Decision_widget_PR-1571
 
   Scenario: I open a web browser and use http://localhost:7003/ to see the Clinical support Decision widget

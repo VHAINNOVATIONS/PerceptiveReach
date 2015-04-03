@@ -1,4 +1,4 @@
-Feature: As a Dashboard user, I want to see a Veteran's emergency contact information so that I can contact them to provide outreach and intervention services. PR-1268
+Feature: As a Dashboard user, I want to see a Veteran's emergency contact information so that I can contact them to provide outreach and intervention services. PR-1268 1.1.23
 
  
 @Detail_PR-1268

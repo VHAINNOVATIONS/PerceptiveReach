@@ -1,4 +1,4 @@
-Feature: As a Dashboard User, I want to see a line graph that shows the change in how many Veterans are at the top .1% or 5% of the risk stratification model over time. PR-881
+Feature: As a Dashboard User, I want to see a line graph that shows the change in how many Veterans are at the top .1% or 5% of the risk stratification model over time. PR-881 1.1.16
 Scenario: 
 Given I navigate to the http://localhost:7003/
 Then I click on "Add a Widget" button

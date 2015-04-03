@@ -1,4 +1,4 @@
-Feature: As a SPC User I want to view information about groups of at-risk Veterans filtered by data attributes PR-354
+Feature: As a SPC User I want to view information about groups of at-risk Veterans filtered by data attributes PR-354 1.1.5
 
 Scenario: I open a web browser and see the SPC navigation page
 Given I navigate to the http://localhost:7003/

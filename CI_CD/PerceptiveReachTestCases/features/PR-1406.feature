@@ -1,4 +1,4 @@
-Feature: As a Dashboard User, I want to view a Veteran's Patient Risk Flags (PRF) from within the Dashboard so I can view the Veteran's prescriptions at a glance and make outreach and care decisions. @PR-1406
+Feature: As a Dashboard User, I want to view a Veteran's Patient Risk Flags (PRF) from within the Dashboard so I can view the Veteran's prescriptions at a glance and make outreach and care decisions. @PR-1406 1.1.27
 
 
 @view_patientriskflags_PR-1406
