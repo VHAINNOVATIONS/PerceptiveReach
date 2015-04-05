@@ -11327,7 +11327,7 @@ nv.models.scatter = function() {
         points.transition()
             .attr('cx', function(d,i) { return nv.utils.NaNtoZero(x(getX(d,i))) })
             .attr('cy', function(d,i) { return nv.utils.NaNtoZero(y(getY(d,i))) })
-            .attr('r', function(d,i) { return Math.sqrt(z(4*getSize(d,i))/Math.PI) });
+            .attr('r', function(d,i) { return Math.sqrt(z(2*getSize(d,i))/Math.PI) });
 
       } else {
 

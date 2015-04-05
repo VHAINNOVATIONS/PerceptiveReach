@@ -55,9 +55,14 @@ angular.module('ui.widgets')
         };
         $scope.toolTipContentFunction = function() {
           return function(key, x, y, e, graph) {
-              return 'Date: ' + x + '<br>' + 'Risk: ' + y + '<br>' + 'Medication: ' + e.point.medication;
+              var type = e.point.type;
+              var line0 = 'Date: ' + x;
+              var line1 = type + ' Score: ' + y;
+              var line2 = type + ': ' + e.point.description;
+              return line0 + '<br>' + line1 + '<br>' + line2;
             };
         };
+        $scope.showLegend = true;
       },
       link: function postLink(scope, element, attrs) {
         if (!_.has(attrs, 'showTimeRange')) {
@@ -65,26 +70,30 @@ angular.module('ui.widgets')
         }
 
         var filter = $filter('date');
-        var mockValues = [];
-        for (var year=2011; year<2015; ++year) {
-          for (var month=1; month<12; ++month) {
-            var day = Math.floor(Math.random() * 26) + 1;
-            var value = Math.floor(Math.random() * 100);
-            var element = {
-              date: new Date(year, month, day),
-              value: value,
-              medication: 'Aspirin',
-              series: 0
-            };
+        var descriptions = ['Aspirin', 'Physical Checkup', 'Bethesda Center'];
+        var mockData = [];
+        ["Medication", "Appointment", "Therapy"].forEach(function(key, index) {
+          var mockValues = [];
+          for (var year=2011; year<2015; ++year) {
+            for (var month=1; month<12; ++month) {
+              var day = Math.floor(Math.random() * 26) + 1;
+              var value = Math.floor(Math.random() * 100);
+              var element = {
+                date: new Date(year, month, day),
+                value: value,
+                type: key,
+                description: descriptions[index],
+                series: index
+              };
 
-            mockValues.push(element);
+              mockValues.push(element);
+            }
           }
-        }
-
-        var mockData = [{
-          "key": "Risk",
-          "values": mockValues
-        }];
+          mockData.push({
+            "key": key,
+            "values": mockValues
+          });
+        });
 
         scope.data = mockData;
 
