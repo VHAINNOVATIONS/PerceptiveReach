@@ -15,12 +15,12 @@ var dataFormatter = require('../../components/formatUtil/formatUtil.service.js')
 exports.index = function(req, res) {
   res.header("content-type: application/json");
 
-  var data ='[{"firstName" : "Jane", "lastName" : "Smith", "ssn" : "000236273", "phone" : "5559876543", "altPhone" : "5558765432", "address" : "234 Pleasant St. Apt.456", "city" : "New York", "state" : "New York", "zipCode" : "11011"}]';
+  var data ='[{"firstName" : "Vet*", "lastName" : "Veteran_*", "ssn" : "000231458", "phone" : "8005553121", "altPhone" : "5558765432", "address" : "234 Pleasant St. Apt.456", "city" : "New York", "state" : "New York", "zipCode" : "11011"}]';
   var jsonRecordSet = JSON.parse(data);
 	for (var record in jsonRecordSet) {
-	    jsonRecordSet[record].phone = dataFormatter.formatData(jsonRecordSet[record].phone);
-	    jsonRecordSet[record].altPhone = dataFormatter.formatData(jsonRecordSet[record].altPhone);
-	    jsonRecordSet[record].ssn = dataFormatter.formatData(jsonRecordSet[record].ssn);
+	    jsonRecordSet[record].phone = dataFormatter.formatData(jsonRecordSet[record].phone,"phone");
+	    jsonRecordSet[record].altPhone = dataFormatter.formatData(jsonRecordSet[record].altPhone,"phone");
+	    jsonRecordSet[record].ssn = dataFormatter.formatData(jsonRecordSet[record].ssn,"ssn");
 	}
 	res.send(jsonRecordSet);
   //res.send(JSON.parse(data));

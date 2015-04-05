@@ -17,11 +17,11 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtMedication', function () {
+  .directive('wtAppointment', function () {
     return {
       restrict: 'A',
       replace: true,
-      templateUrl: 'client/components/widget/widgets/medication/medication.html',
+      templateUrl: 'client/components/widget/widgets/appointment/appointment.html',
       scope: {
         data: '=',
       },
@@ -32,10 +32,13 @@ angular.module('ui.widgets')
             .withOption('deferRender', true)
             // Do not forget to add the scorllY option!!!
             .withOption('scrollY', 200)
-            .withOption('paging',false);
+            .withOption('paging',false)
+            .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0)
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2)
         ];
         /*$resource('data.json').query().$promise.then(function(persons) {
             vm.persons = persons;

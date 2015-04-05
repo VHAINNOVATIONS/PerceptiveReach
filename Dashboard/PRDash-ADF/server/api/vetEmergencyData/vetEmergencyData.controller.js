@@ -54,8 +54,8 @@ exports.index = function(req, res) {
             var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
             //console.log(jsonRecordSet);
             for (var record in jsonRecordSet) {
-                jsonRecordSet[record].Phone = dataFormatter.formatData(jsonRecordSet[record].Phone);
-                jsonRecordSet[record].PhoneWork = dataFormatter.formatData(jsonRecordSet[record].PhoneWork);
+                jsonRecordSet[record].Phone = dataFormatter.formatData(jsonRecordSet[record].Phone,"phone");
+                jsonRecordSet[record].PhoneWork = dataFormatter.formatData(jsonRecordSet[record].PhoneWork,"phone");
             }
             res.send(jsonRecordSet);
             //res.send(recordset);

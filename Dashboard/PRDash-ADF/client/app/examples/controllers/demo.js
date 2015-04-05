@@ -5,7 +5,8 @@ angular.module('app')
                                     RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel, 
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, ContactEmergencyDataModel, VeteranRosterDataModel,
-                                    PatientFlagDataModel, MedicationDataModel) {
+                                    PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel,
+                                    AppointmentDataModel) {
     return [
       {
         name: 'time',
@@ -46,7 +47,21 @@ angular.module('app')
         }
       },
       {
-        name: 'datatable',
+        name: 'ClinicalDecisionSupport',
+        directive: 'wt-clinical-decision-support',
+        dataAttrName: 'data',
+        dataModelType: ClinicalDecisionSupportDataModel,
+        title: 'Clinical Decision Support',
+        dataModelOptions: {
+          //riskLevel: 1,
+          guidelineType: 'SRB'
+        },
+        style: {
+          width: '45%'
+        }
+      },
+      {
+        name: 'RosterTable',
         directive: 'wt-veteran-roster-table',
         settingsModalOptions: {
         templateUrl: 'client/components/widget/widgets/veteranRosterTable/veteranRosterTableWidgetSettingsTemplate.html',
@@ -76,8 +91,8 @@ angular.module('app')
         title: 'Patient Flags',
         dataModelType: PatientFlagDataModel,
         size: {
-          width: '30%',
-          height: '250px'
+          width: '25%',
+          height: '350px'
         }
       },
       {
@@ -88,7 +103,18 @@ angular.module('app')
         dataModelType: MedicationDataModel,
         size: {
           width: '20%',
-          height: '250px'
+          height: '350px'
+        }
+      },
+      {
+        name: 'appointment',
+        directive: 'wt-appointment',
+        dataAttrName: 'data',
+        title: 'Appointment',
+        dataModelType: AppointmentDataModel,
+        size: {
+          //width: '25%',
+          height: '350px'
         }
       },
       {
@@ -137,7 +163,7 @@ angular.module('app')
           'show-time-range': true
         },
         style: {
-          width: '100%'
+          width: '50%'
         }
       },
        {
@@ -157,8 +183,7 @@ angular.module('app')
         dataAttrName: 'chart',
         dataModelType: RandomTimeSeriesDataModel,
         style: {
-          width: '50%',
-          height: '250px'
+          width: '50%'
         }
       },
       {
@@ -188,7 +213,7 @@ angular.module('app')
         style: {
           width: '250px'
         }
-      },
+      }, 
       {
         name: 'fluid',
         directive: 'wt-fluid',
@@ -201,13 +226,16 @@ angular.module('app')
   })
   .value('defaultWidgets', [
       {name: 'Risk Timeline'},
+      { name: 'RosterTable' }, 
+      { name: 'ClinicalDecisionSupport' },
       {name: 'medication'},
+      {name: 'appointment'},
       {name: 'patientFlags'},
       { name: 'contact' },
-      {name: 'emergency' }, 
-      {name: 'datatable' }
+      { name: 'emergency' }
       /*,
       { name: 'Metrics Chart' },
+      { name: 'NVD3 Line Chart' },
       { name: 'Line Chart' },
       { name: 'Bar Chart' },
       { name: 'topN' },

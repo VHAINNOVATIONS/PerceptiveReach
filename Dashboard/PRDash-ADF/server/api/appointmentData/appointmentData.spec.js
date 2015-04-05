@@ -4,11 +4,11 @@ var should = require('should');
 var app = require('../../app');
 var request = require('supertest');
 
-describe('GET /api/veteranDetails', function() {
+describe('GET /api/appointmentData', function() {
 
-  /*it('should respond with JSON array', function(done) {
+  it('should respond with JSON array', function(done) {
     request(app)
-      .get('/api/veteranDetails?id=10067')
+      .get('/api/appointmentData')
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
@@ -16,5 +16,5 @@ describe('GET /api/veteranDetails', function() {
         res.body.should.be.instanceof(Array);
         done();
       });
-  });*/
+  });
 });
