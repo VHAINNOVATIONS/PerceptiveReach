@@ -758,6 +758,40 @@ angular.module('ui.models')
     });
 
     return AppointmentDataModel;
+  })
+.factory('DiagnosesDataModel', function ($http, WidgetDataModel) {
+    function DiagnosesDataModel() {
+    }
+
+    DiagnosesDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    DiagnosesDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(DiagnosesDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/DiagnosesData')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return DiagnosesDataModel;
   });
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
@@ -1804,6 +1838,61 @@ angular.module('ui.widgets')
       scope: {
         data: '=data'
       }     
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtDiagnoses', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/diagnoses/diagnoses.html',
+      scope: {
+        data: '=',
+      },
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scorllY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false)
+            .withOption('order', [1, 'desc']);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2)
+        ];
+        /*$resource('data.json').query().$promise.then(function(persons) {
+            vm.persons = persons;
+        });*/
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.data = data;
+          }
+        });
+      }
     };
   });
 /*
@@ -3062,6 +3151,44 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "    \t<b>Zip Code:</b> {{data[0].zipCode}}<br>\r" +
     "\n" +
     "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/diagnoses/diagnoses.html",
+    "<div class=\"diagnoses\">\r" +
+    "\n" +
+    "\t<table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "        <thead>\r" +
+    "\n" +
+    "        <tr>\r" +
+    "\n" +
+    "            <th>Diagnosis</th>\r" +
+    "\n" +
+    "            <th>ICD</th>\r" +
+    "\n" +
+    "            <th>Date</th>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"diagnosis in data\">\r" +
+    "\n" +
+    "            <td>{{ diagnosis.Diagnosis }}</td>\r" +
+    "\n" +
+    "            <td>{{ diagnosis.ICD }}</td>\r" +
+    "\n" +
+    "            <td>{{ diagnosis.DiagnosisDate }}</td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
     "\n" +
     "</div>"
   );

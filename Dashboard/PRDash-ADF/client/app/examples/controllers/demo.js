@@ -6,7 +6,7 @@ angular.module('app')
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, ContactEmergencyDataModel, VeteranRosterDataModel,
                                     PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel,
-                                    AppointmentDataModel) {
+                                    AppointmentDataModel, DiagnosesDataModel) {
     return [
       {
         name: 'time',
@@ -118,6 +118,16 @@ angular.module('app')
         }
       },
       {
+        name: 'diagnoses',
+        directive: 'wt-diagnoses',
+        dataAttrName: 'data',
+        title: 'Diagnoses',
+        dataModelType: DiagnosesDataModel,
+        size: {
+          //width: '25%',
+          height: '350px'
+        }
+      },{
         name: 'contact',
         directive: 'wt-contact',
         dataAttrName: 'data',
@@ -219,6 +229,7 @@ angular.module('app')
       {name: 'medication'},
       {name: 'appointment'},
       {name: 'patientFlags'},
+      {name: 'diagnoses'},
       { name: 'contact' },
       { name: 'emergency' }
       /*,

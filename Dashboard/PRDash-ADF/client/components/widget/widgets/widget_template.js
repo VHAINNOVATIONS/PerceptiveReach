@@ -120,6 +120,44 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/diagnoses/diagnoses.html",
+    "<div class=\"diagnoses\">\r" +
+    "\n" +
+    "\t<table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "        <thead>\r" +
+    "\n" +
+    "        <tr>\r" +
+    "\n" +
+    "            <th>Diagnosis</th>\r" +
+    "\n" +
+    "            <th>ICD</th>\r" +
+    "\n" +
+    "            <th>Date</th>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"diagnosis in data\">\r" +
+    "\n" +
+    "            <td>{{ diagnosis.Diagnosis }}</td>\r" +
+    "\n" +
+    "            <td>{{ diagnosis.ICD }}</td>\r" +
+    "\n" +
+    "            <td>{{ diagnosis.DiagnosisDate }}</td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/emergencyContact/emergencyContact.html",
     "<div>\r" +
     "\n" +
