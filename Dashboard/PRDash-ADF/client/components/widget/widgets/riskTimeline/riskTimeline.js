@@ -24,6 +24,7 @@ angular.module('ui.widgets')
       templateUrl: 'client/components/widget/widgets/riskTimeline/riskTimeline.html',
       scope: {
         //data: '=data',
+        date: '@',
         showLegend: '@',
         showTimeRange: '=?'
       },
@@ -96,6 +97,20 @@ angular.module('ui.widgets')
         };
         $scope.refresh = function() {
           $scope.load($scope.date.startDate, $scope.date.endDate);
+        };
+        $scope.limitny = function(year) {
+          var startDate = moment().subtract(year, 'years').toDate();
+          var endDate = moment().toDate();
+          $scope.date = {startDate: startDate, endDate: endDate};
+        };
+        $scope.limit1y = function() {
+          $scope.limitny(1);
+        };
+        $scope.limit2y = function() {
+          $scope.limitny(2);
+        };
+        $scope.limit3y = function() {
+          $scope.limitny(3);
         };
       },
       link: function postLink(scope, element, attrs) {

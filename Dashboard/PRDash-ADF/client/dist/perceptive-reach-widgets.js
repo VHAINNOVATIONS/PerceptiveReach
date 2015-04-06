@@ -2584,6 +2584,7 @@ angular.module('ui.widgets')
       templateUrl: 'client/components/widget/widgets/riskTimeline/riskTimeline.html',
       scope: {
         //data: '=data',
+        date: '@',
         showLegend: '@',
         showTimeRange: '=?'
       },
@@ -2656,6 +2657,20 @@ angular.module('ui.widgets')
         };
         $scope.refresh = function() {
           $scope.load($scope.date.startDate, $scope.date.endDate);
+        };
+        $scope.limitny = function(year) {
+          var startDate = moment().subtract(year, 'years').toDate();
+          var endDate = moment().toDate();
+          $scope.date = {startDate: startDate, endDate: endDate};
+        };
+        $scope.limit1y = function() {
+          $scope.limitny(1);
+        };
+        $scope.limit2y = function() {
+          $scope.limitny(2);
+        };
+        $scope.limit3y = function() {
+          $scope.limitny(3);
         };
       },
       link: function postLink(scope, element, attrs) {
@@ -3279,8 +3294,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/riskTimeline/riskTimeline.html",
     "<div class=\"bar-chart\">\n" +
     "    <div style=\"text-align: left;\">\n" +
-    "        <input date-range-picker class=\"date-picker\" type=\"text\" size=\"30\" ng-model=\"date\" />" +
-    "        <button type=\"button\" class=\"btn btn-sm btn-danger\" ng-click=\"refresh()\">Refresh</button>" +
+    "        <input date-range-picker class=\"date-picker\" type=\"text\" size=\"23\" ng-model=\"date\" />\n" +
+    "        <a id=\"duration_1y\" href=\"\" name=\"limit1y\" ng-click=\"limit1y()\">1y</a>\n" +
+    "        <a id=\"duration_2y\" href=\"\" name=\"limit2y\" ng-click=\"limit2y()\">2y</a>\n" +
+    "        <a id=\"duration_3y\" href=\"\" name=\"limit3y\" ng-click=\"limit3y()\">3y</a>\n" +
+    "        <button type=\"button\" class=\"btn btn-sm btn-danger\" style=\"float: right;\" ng-click=\"refresh()\">Refresh</button>\n" +
     "    </div>\n" +
     "    <nvd3-line-chart\n" +
     "            data=\"data\"\n" +

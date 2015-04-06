@@ -1,7 +1,10 @@
 <div class="bar-chart">
-    <div style="text-align: left;">\n" +
-        <input date-range-picker class="date-picker" type="text" size="30" ng-model="date" />
-        <button type="button" class="btn btn-sm btn-danger" ng-click="refresh()">Refresh</button>
+    <div style="text-align: left;">
+        <input date-range-picker class="date-picker" type="text" size="23" ng-model="date" />
+        <a id="duration_1y" href="" name="limit1y" ng-click="limit1y()">1y</a>
+        <a id="duration_2y" href="" name="limit2y" ng-click="limit2y()">2y</a>
+        <a id="duration_3y" href="" name="limit3y" ng-click="limit3y()">3y</a>
+        <button type="button" class="btn btn-sm btn-danger" style="float: right;" ng-click="refresh()">Refresh</button>
     </div>
     <nvd3-line-chart
             data="data"
