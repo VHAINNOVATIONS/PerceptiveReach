@@ -1,0 +1,18 @@
+<div class="diagnoses">
+	<table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+        <thead>
+        <tr>
+            <th>Diagnosis</th>
+            <th>ICD</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="diagnosis in data">
+            <td>{{ diagnosis.Diagnosis }}</td>
+            <td>{{ diagnosis.ICD }}</td>
+            <td>{{ diagnosis.DiagnosisDate }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
