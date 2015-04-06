@@ -54,7 +54,7 @@ angular.module('ui.widgets')
           };
         };
         $scope.toolTipContentFunction = function() {
-          return function(key, x, y, e, graph) {
+          return function(key, x, y, e) {
               var type = e.point.type;
               var line0 = 'Date: ' + x;
               var line1 = type + ' Score: ' + y;
@@ -63,49 +63,51 @@ angular.module('ui.widgets')
             };
         };
         $scope.showLegend = true;
+
+        $scope.load = function(startDate, endDate) {
+          startDate = moment(startDate);
+          endDate = moment(endDate);
+          var descriptions = ['Aspirin', 'Physical Checkup', 'Bethesda Center'];
+          var mockData = [];
+          ["Medication", "Appointment", "Therapy"].forEach(function(key, index) {
+            var mockValues = [];
+            for (var year=startDate.year(); year<=endDate.year(); ++year) {
+              var startMonth = (year === startDate.year()) ? startDate.month() : 0; 
+              var endMonth = (year === endDate.year()) ? endDate.month(): 11;
+              for (var month=startMonth; month<endMonth; ++month) {
+                var day = Math.floor(Math.random() * 26) + 1;
+                var value = Math.floor(Math.random() * 100);
+                var element = {
+                  date: new Date(year, month, day),
+                  value: value,
+                  type: key,
+                  description: descriptions[index],
+                  series: index
+                };
+                mockValues.push(element);
+              }
+            }
+            mockData.push({
+              "key": key,
+              "values": mockValues
+            });
+          });
+          $scope.data = mockData;
+        };
+        $scope.refresh = function() {
+          $scope.load($scope.date.startDate, $scope.date.endDate);
+        };
       },
       link: function postLink(scope, element, attrs) {
+        scope.date = {startDate: moment().subtract(3, 'years').toDate(), endDate: moment().toDate()};
+        scope.$watch('date', function (date) {
+          scope.load(date.startDate, date.endDate);
+        });
         if (!_.has(attrs, 'showTimeRange')) {
           scope.showTimeRange = true;
         }
 
-        var filter = $filter('date');
-        var descriptions = ['Aspirin', 'Physical Checkup', 'Bethesda Center'];
-        var mockData = [];
-        ["Medication", "Appointment", "Therapy"].forEach(function(key, index) {
-          var mockValues = [];
-          for (var year=2011; year<2015; ++year) {
-            for (var month=1; month<12; ++month) {
-              var day = Math.floor(Math.random() * 26) + 1;
-              var value = Math.floor(Math.random() * 100);
-              var element = {
-                date: new Date(year, month, day),
-                value: value,
-                type: key,
-                description: descriptions[index],
-                series: index
-              };
-
-              mockValues.push(element);
-            }
-          }
-          mockData.push({
-            "key": key,
-            "values": mockValues
-          });
-        });
-
-        scope.data = mockData;
-
-        if (mockData && mockData[0] && mockData[0].values && (mockData[0].values.length > 1)) {
-          var timeseries = _.sortBy(mockData[0].values, function (item) {
-            return item.date;
-          });
-          var start = timeseries[0].date;
-          var end = timeseries[timeseries.length - 1].date;
-          scope.start = start;
-          scope.end = end;
-        }
-      }
+        scope.load(scope.date.startDate, scope.date.endDate);
+     }
     };
   });
