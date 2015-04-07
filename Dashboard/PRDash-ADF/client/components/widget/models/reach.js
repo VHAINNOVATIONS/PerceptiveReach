@@ -419,4 +419,38 @@ angular.module('ui.models')
     });
 
     return AppointmentDataModel;
+  })
+.factory('DiagnosesDataModel', function ($http, WidgetDataModel) {
+    function DiagnosesDataModel() {
+    }
+
+    DiagnosesDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    DiagnosesDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(DiagnosesDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/DiagnosesData')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return DiagnosesDataModel;
   });
