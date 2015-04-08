@@ -110,6 +110,57 @@ Then(/^I put in my VA password$/) do
   fill_in('Password', :with => 'VA Password')# express the regexp above with the code you wish you had
 end
 
+#step that queries the database
+Then(/^I check the page for a Veteran's SSN$/) do
+  client1 = TinyTds::Client.new username: 'sa', password: 'agile_123', host: '54.225.232.25', database: 'Reach_Test'
+  result1 = client1.execute("SELECT TOP 2 * FROM Ref_VAMC")
+  #{"VAMCID"=>1, "VISN"=>1, "STA3N"=>"402", "STA6AID"=>"402", "VAMC"=>"(V01) (402) Togus, ME", "StateAbbr"=>"ME"}
+  result1.each(:as => :array) do |row|
+    #check for data in row
+    #if row = null
+    print row[0]
+    DerNumber = row[0]
+    print row[4]
+    DerName = row[4]
+    expect(page).to have_content 'Veteran Roster'
+    #edit the VAMC in the Veteran Roster Widget 
+    page.find(:xpath, "//span[normalize-space(text())='Veteran Roster by VAMC']/following-sibling::span[3]").click
+    #VAMC Dropwdown  
+    find(:xpath, "//select[@ng-model='result.dataModel.vamc']").click  
+    #chose VAMC find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[contains(text(),"(V01) (405) White River Junction, VT")]').click
+    #number works but not text (V01) (402) Togus, ME
+    find(:xpath, "//select[@ng-model='result.dataModel.vamc']/option[#{DerNumber}]").click
+    #click ok
+    find_button('OK').click
+    #wait for page to load
+    expect(page).to have_content 'Veteran Roster'
+    #query that VAMC for veterans
+    client2 = TinyTds::Client.new username: 'sa', password: 'agile_123', host: '54.225.232.25', database: 'Reach_Test'
+    result2 = client2.execute("SELECT TOP 2 SSN from VeteranRisk WHERE (RiskLevel = 1 or RiskLevel=2) and VAMC = #{DerNumber}")
+      result2.each(:as => :array) do |row|
+        #only want to do this 5 times
+        print row
+        #print fields
+        # Each row is now an array of values ordered by #fields.
+        vetssn = row[0]
+        #SQL SNN = 000649041
+        trimmed = vetssn[5..9]
+        #trimmed the SSN to the last 4 digits
+        expect(page).to have_content(trimmed)
+        #checking the page for the SSN
+        #click veteran and check that the other widgets update correctly
+        find(:xpath, "//td[contains(text(),'xxx-xx-#{trimmed}')]").click
+        #query and check other widgets
+        end
+      #close connection and close result
+      result2.cancel
+      client2.close
+    end 
+  #close connection and close result
+  result1.cancel  
+  client1.close
+end
+
 #pending steps
 Then(/^I should see search function for Veteran's health record$/) do
   pending # express the regexp above with the code you wish you had
