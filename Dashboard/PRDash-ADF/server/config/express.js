@@ -27,6 +27,71 @@ module.exports = function(app) {
   app.use(methodOverride());
   app.use(cookieParser());
   
+
+  app.use(function (req, res, next) {
+    var nodeSSPI = require('node-sspi');
+    var nodeSSPIObj = new nodeSSPI({
+      offerSSPI: false,
+      //offerBasic: true,
+      retrieveGroups: true
+    });
+    
+    if(req.url.indexOf("/api/") != -1 || req.url.indexOf("/auth/local") != -1){
+      //req.header("Authorization", "Basic ");
+      //console.log("authorization-header before: ", req.header("Authorization"));
+      //res.header("WWW-Authenticate", "xBasic");
+      nodeSSPIObj.authenticate(req, res, function(err){
+        //req.header("Authorization", "Basic AAAAAAAAAAAAAAAAAAA=");
+        
+        //console.log("WWW-Authenticate", res.header("WWW-Authenticate"));
+        //console.log("authorization-header after: ", req.header("Authorization"));
+        res.finished || next();
+      });
+    }
+    else
+      next();    
+  });
+
+  /*app.use(function (req, res, next) {
+    var nodeSSPI = require('node-sspi');
+    var nodeSSPIObj = new nodeSSPI({
+      offerSSPI: true,
+      //offerBasic: true,
+      retrieveGroups: true
+    });
+    nodeSSPIObj.authenticate(req, res, function(err){
+      res.finished || next();
+    });
+  });*/
+  
+
+  /*app.use(function (req, res, next) {
+    var out = 'Hello ' + req.connection.user + '! You belong to following groups:<br/><ul>';
+    if (req.connection.userGroups) {
+      for (var i in req.connection.userGroups) {
+        out += '<li>'+ req.connection.userGroups[i] + '</li><br/>\n';
+      }
+    }
+    out += '</ul>';
+    res.send(out)
+  });*/
+
+
+  /*app.use(function(req, res, next){
+    //res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Expose-Headers", "WWW-Authenticate, Content-Type");
+    res.header("Access-Control-Allow-Headers", "Authorization, Content-Type");
+    //res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    if(res.header("WWW-Authenticate"))
+      res.header("WWW-AuthenticateX", res.header("WWW-Authenticate"));
+      res.removeHeader("WWW-Authenticate");
+      //console.log("www-authenticate Header: ",res.header("WWW-Authenticate"));
+      console.log("iis user: ",req.header('x-iisnode-auth_user'));
+      console.log("iis auth: ",req.header('x-iisnode-auth_type'));
+      console.log("iis allrwa: ",req.header('x-iisnode-all_raw'));
+    return next();
+  });*/
+
   if ('production' === env) {
     app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
     app.use(express.static(path.join(config.root, 'public')));

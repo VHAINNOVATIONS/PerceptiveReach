@@ -18,6 +18,7 @@
 
 angular.module('app', [
     'ngRoute',
+    'ngCookies',
     'ngSanitize',
     'ui.dashboard',
     'ui.widgets',
@@ -25,9 +26,83 @@ angular.module('app', [
     'btford.markdown'
   ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
+    //$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    $httpProvider.defaults.headers.common['Authorization'] = '';
+    /*
     $routeProvider
-      .otherwise('/');
-
+      .otherwise('/');*/
+    var interceptor = ['$rootScope', '$q', '$location', function (scope, $q, $location) {
+ 
+        function success(response) {
+            return response;
+        }
+ 
+        function error(response) {
+            var status = response.status;
+ 
+            if (status === 401) {
+              console.log("401 received" + repsonse);
+                var deferred = $q.defer();
+                var req = {
+                    config: response.config,
+                    deferred: deferred
+                };
+                //scope.requests401.push(req);
+                //scope.$broadcast('event:auth-loginRequired');
+                $location.path('/login');
+                return deferred.promise;
+            }
+            // otherwise
+            return $q.reject(response);
+        }
+ 
+        return function (promise) {
+            return promise.then(success, error);
+        }
+ 
+    }];
     $locationProvider.html5Mode(true);
-    //$httpProvider.interceptors.push('authInterceptor');    
+    //$httpProvider.interceptors.push(interceptor); 
+    $httpProvider.interceptors.push('authInterceptor');    
+  })
+
+  .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
+    return {
+      // Add authorization token to headers
+      request: function (config) {
+        config.headers = config.headers || {};
+        if ($cookieStore.get('token')) {
+          config.headers.Authorization = 'Bearer ' + $cookieStore.get('token');
+        }
+        return config;
+      },
+      // Response code
+      response: function(response){
+        if (response.status === 401){
+          console.log("Response 401");
+        }
+        return response || $q.when(response);
+      },
+      // Intercept 401s and redirect you to login
+      responseError: function(response) {
+        if(response.status === 401) {
+          console.log("Response Error 401", response);
+          $location.path('/login');
+          // remove any stale tokens
+          $cookieStore.remove('token');
+        }
+        return $q.reject(response);
+      }
+    };
+  })
+
+  .run(function ($rootScope, $location, Auth) {
+    // Redirect to login if route requires auth and you're not logged in    
+    $rootScope.$on('$routeChangeStart', function (event, next, current) {
+      Auth.isLoggedInAsync(function(loggedIn) {
+        if (next.authenticate && !loggedIn) {
+          $location.path('/login');
+        }
+      });
+    });
   });
