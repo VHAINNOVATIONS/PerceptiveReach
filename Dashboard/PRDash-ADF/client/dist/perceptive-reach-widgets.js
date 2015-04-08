@@ -589,18 +589,27 @@ angular.module('ui.models')
 
     return TotalRisksDataModel;
   })
-.factory('ContactBaseDataModel', function ($http, WidgetDataModel) {
+.factory('ContactBaseDataModel', function ($http, CommonDataModel) {
     function ContactBaseDataModel() {
     }
 
-    ContactBaseDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    ContactBaseDataModel.prototype.constructor = WidgetDataModel;
+    ContactBaseDataModel.prototype = Object.create(CommonDataModel.prototype);
+    ContactBaseDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(ContactBaseDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
         //this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
 
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
+
         this.updateScope('-');
         this.getData();
       },
@@ -609,31 +618,45 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/vetContactData')
-        .success(function(dataset) {
-                data = dataset;
-                this.updateScope(data);
-            }.bind(this));
+        if(!this.reachID) {
+          this.updateScope(data);
+        }
+        else {
+          $http.get('/api/vetContactData?id='+ this.reachID)
+          .success(function(dataset) {
+                  data = dataset;
+                  this.updateScope(data);
+              }.bind(this));
+        }
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
 
     return ContactBaseDataModel;
   })
-.factory('ContactEmergencyDataModel', function ($http, WidgetDataModel) {
+.factory('ContactEmergencyDataModel', function ($http, CommonDataModel) {
     function ContactEmergencyDataModel() {
     }
 
-    ContactEmergencyDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    ContactEmergencyDataModel.prototype.constructor = WidgetDataModel;
+    ContactEmergencyDataModel.prototype = Object.create(CommonDataModel.prototype);
+    ContactEmergencyDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(ContactEmergencyDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
 
         this.updateScope('-');
         this.getData();
@@ -643,15 +666,20 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/vetEmergencyData?id='+ this.reachID)
-        .success(function(dataset) {
-                data = dataset;
-                this.updateScope(data);
-            }.bind(this));
+        if(!this.reachID) {
+          this.updateScope(data);
+        }
+        else {
+          $http.get('/api/vetEmergencyData?id='+ this.reachID)
+                .success(function(dataset) {
+                        data = dataset;
+                        this.updateScope(data);
+                    }.bind(this));
+        }
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
 
@@ -725,17 +753,25 @@ angular.module('ui.models')
 
     return MedicationDataModel;
   })
-.factory('AppointmentDataModel', function ($http, WidgetDataModel) {
+.factory('AppointmentDataModel', function ($http, CommonDataModel) {
     function AppointmentDataModel() {
     }
 
-    AppointmentDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    AppointmentDataModel.prototype.constructor = WidgetDataModel;
+    AppointmentDataModel.prototype = Object.create(CommonDataModel.prototype);
+    AppointmentDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(AppointmentDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
 
         this.updateScope('-');
         this.getData();
@@ -745,7 +781,7 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/appointmentData')
+        $http.get('/api/appointmentData?id='+ this.reachID)
         .success(function(dataset) {
                 data = dataset; 
                 this.updateScope(data);
@@ -753,7 +789,7 @@ angular.module('ui.models')
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
 
@@ -3130,25 +3166,31 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/contact/contact.html",
-    "<div>\r" +
+    "<div class=\"contact\">\r" +
     "\n" +
-    "    <div>\r" +
+    "    <div ng-show=\"data.length\">\r" +
     "\n" +
-    "    \t<b>Name:</b> {{data[0].firstName}} {{data[0].lastName}}<br>\r" +
+    "    \t<b>Name:</b> {{data[0].FirstName}} {{data[0].LastName}}<br>\r" +
     "\n" +
-    "    \t<b>Last 4 of SSN:</b> {{data[0].ssn}}<br>\r" +
+    "    \t<b>Last 4 of SSN:</b> {{data[0].SSN}}<br>\r" +
     "\n" +
-    "    \t<b>Phone:</b> {{data[0].phone}}<br>\r" +
+    "    \t<b>Phone:</b> {{data[0].Phone}}<br>\r" +
     "\n" +
-    "    \t<b>Alternate Phone:</b> {{data[0].altPhone}}<br>\r" +
+    "    \t<b>Alternate Phone:</b> {{data[0].AltPhone}}<br>\r" +
     "\n" +
-    "    \t<b>Address:</b> {{data[0].address}}<br>\r" +
+    "    \t<b>Address:</b> {{data[0].Address}}<br>\r" +
     "\n" +
-    "    \t<b>City:</b> {{data[0].city}}<br>\r" +
+    "    \t<b>City:</b> {{data[0].City}}<br>\r" +
     "\n" +
-    "    \t<b>State:</b> {{data[0].state}}<br>\r" +
+    "    \t<b>State:</b> {{data[0].State}}<br>\r" +
     "\n" +
-    "    \t<b>Zip Code:</b> {{data[0].zipCode}}<br>\r" +
+    "    \t<b>Zip Code:</b> {{data[0].Zip}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
+    "\n" +
+    "        <h4>No Data Found</h4>\r" +
     "\n" +
     "    </div>\r" +
     "\n" +
@@ -3194,9 +3236,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/emergencyContact/emergencyContact.html",
-    "<div>\r" +
+    "<div class=\"emergency\">\r" +
     "\n" +
-    "    <div>\r" +
+    "    <div ng-show=\"data.length\">\r" +
     "\n" +
     "    \t<b>Name:</b> {{data[0].NameOfContact}}<br>\r" +
     "\n" +
@@ -3218,7 +3260,14 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    </div>\r" +
     "\n" +
-    "</div>"
+    "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
+    "\n" +
+    "        <h4>No Data Found</h4>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n"
   );
 
   $templateCache.put("client/components/widget/widgets/fluid/fluid.html",
