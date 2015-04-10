@@ -151,14 +151,14 @@ describe('PerceptiveReach AppointmentDataModel', function () {
   	  }));
 
 
-	  describe('setup method', function() {
+	  /*describe('setup method', function() {
 	    it('should set dataModelOptions and widgetScope from args', function() {
 	      m.setup(widget, scope);
 	      expect(m.dataModelOptions).toEqual(widget.dataModelOptions);
 	      expect(m.widgetScope).toEqual(scope);
 	    });
 
-	  });
+	  });*/
 
 	  describe('getData method', function() {
 	    it('check the existence of getData method', function() {

@@ -13,7 +13,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <th>Date</th>\r" +
     "\n" +
-    "            <th>Canceled</th>\r" +
+    "            <th>Cancelled</th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -95,35 +95,79 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/contact/contact.html",
-    "<div>\r" +
+    "<div class=\"contact\">\r" +
     "\n" +
-    "    <div>\r" +
+    "    <div ng-show=\"data.length\">\r" +
     "\n" +
-    "    \t<b>Name:</b> {{data[0].firstName}} {{data[0].lastName}}<br>\r" +
+    "    \t<b>Name:</b> {{data[0].FirstName}} {{data[0].LastName}}<br>\r" +
     "\n" +
-    "    \t<b>Last 4 of SSN:</b> {{data[0].ssn}}<br>\r" +
+    "    \t<b>Last 4 of SSN:</b> {{data[0].SSN}}<br>\r" +
     "\n" +
-    "    \t<b>Phone:</b> {{data[0].phone}}<br>\r" +
+    "    \t<b>Phone:</b> {{data[0].Phone}}<br>\r" +
     "\n" +
-    "    \t<b>Alternate Phone:</b> {{data[0].altPhone}}<br>\r" +
+    "    \t<b>Alternate Phone:</b> {{data[0].AltPhone}}<br>\r" +
     "\n" +
-    "    \t<b>Address:</b> {{data[0].address}}<br>\r" +
+    "    \t<b>Address:</b> {{data[0].Address}}<br>\r" +
     "\n" +
-    "    \t<b>City:</b> {{data[0].city}}<br>\r" +
+    "    \t<b>City:</b> {{data[0].City}}<br>\r" +
     "\n" +
-    "    \t<b>State:</b> {{data[0].state}}<br>\r" +
+    "    \t<b>State:</b> {{data[0].State}}<br>\r" +
     "\n" +
-    "    \t<b>Zip Code:</b> {{data[0].zipCode}}<br>\r" +
+    "    \t<b>Zip Code:</b> {{data[0].Zip}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
+    "\n" +
+    "        <h4>No Data Found</h4>\r" +
     "\n" +
     "    </div>\r" +
     "\n" +
     "</div>"
   );
 
-  $templateCache.put("client/components/widget/widgets/emergencyContact/emergencyContact.html",
-    "<div>\r" +
+  $templateCache.put("client/components/widget/widgets/diagnoses/diagnoses.html",
+    "<div class=\"diagnoses\">\r" +
     "\n" +
-    "    <div>\r" +
+    "\t<table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "        <thead>\r" +
+    "\n" +
+    "        <tr>\r" +
+    "\n" +
+    "            <th>Diagnosis</th>\r" +
+    "\n" +
+    "            <th>ICD</th>\r" +
+    "\n" +
+    "            <th>Date</th>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"diagnosis in data\">\r" +
+    "\n" +
+    "            <td>{{ diagnosis.Diagnosis }}</td>\r" +
+    "\n" +
+    "            <td>{{ diagnosis.ICD }}</td>\r" +
+    "\n" +
+    "            <td>{{ diagnosis.DiagnosisDate }}</td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/emergencyContact/emergencyContact.html",
+    "<div class=\"emergency\">\r" +
+    "\n" +
+    "    <div ng-show=\"data.length\">\r" +
     "\n" +
     "    \t<b>Name:</b> {{data[0].NameOfContact}}<br>\r" +
     "\n" +
@@ -145,7 +189,14 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    </div>\r" +
     "\n" +
-    "</div>"
+    "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
+    "\n" +
+    "        <h4>No Data Found</h4>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n"
   );
 
   $templateCache.put("client/components/widget/widgets/fluid/fluid.html",

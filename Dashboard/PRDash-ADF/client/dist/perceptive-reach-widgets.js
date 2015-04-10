@@ -589,18 +589,27 @@ angular.module('ui.models')
 
     return TotalRisksDataModel;
   })
-.factory('ContactBaseDataModel', function ($http, WidgetDataModel) {
+.factory('ContactBaseDataModel', function ($http, CommonDataModel) {
     function ContactBaseDataModel() {
     }
 
-    ContactBaseDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    ContactBaseDataModel.prototype.constructor = WidgetDataModel;
+    ContactBaseDataModel.prototype = Object.create(CommonDataModel.prototype);
+    ContactBaseDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(ContactBaseDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
         //this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
 
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
+
         this.updateScope('-');
         this.getData();
       },
@@ -609,31 +618,45 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/vetContactData')
-        .success(function(dataset) {
-                data = dataset;
-                this.updateScope(data);
-            }.bind(this));
+        if(!this.reachID) {
+          this.updateScope(data);
+        }
+        else {
+          $http.get('/api/vetContactData?id='+ this.reachID)
+          .success(function(dataset) {
+                  data = dataset;
+                  this.updateScope(data);
+              }.bind(this));
+        }
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
 
     return ContactBaseDataModel;
   })
-.factory('ContactEmergencyDataModel', function ($http, WidgetDataModel) {
+.factory('ContactEmergencyDataModel', function ($http, CommonDataModel) {
     function ContactEmergencyDataModel() {
     }
 
-    ContactEmergencyDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    ContactEmergencyDataModel.prototype.constructor = WidgetDataModel;
+    ContactEmergencyDataModel.prototype = Object.create(CommonDataModel.prototype);
+    ContactEmergencyDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(ContactEmergencyDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
 
         this.updateScope('-');
         this.getData();
@@ -643,15 +666,20 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/vetEmergencyData?id='+ this.reachID)
-        .success(function(dataset) {
-                data = dataset;
-                this.updateScope(data);
-            }.bind(this));
+        if(!this.reachID) {
+          this.updateScope(data);
+        }
+        else {
+          $http.get('/api/vetEmergencyData?id='+ this.reachID)
+                .success(function(dataset) {
+                        data = dataset;
+                        this.updateScope(data);
+                    }.bind(this));
+        }
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
 
@@ -725,14 +753,56 @@ angular.module('ui.models')
 
     return MedicationDataModel;
   })
-.factory('AppointmentDataModel', function ($http, WidgetDataModel) {
+.factory('AppointmentDataModel', function ($http, CommonDataModel) {
     function AppointmentDataModel() {
     }
 
-    AppointmentDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    AppointmentDataModel.prototype.constructor = WidgetDataModel;
+    AppointmentDataModel.prototype = Object.create(CommonDataModel.prototype);
+    AppointmentDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(AppointmentDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
+
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/appointmentData?id='+ this.reachID)
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return AppointmentDataModel;
+  })
+.factory('DiagnosesDataModel', function ($http, WidgetDataModel) {
+    function DiagnosesDataModel() {
+    }
+
+    DiagnosesDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    DiagnosesDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(DiagnosesDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
         this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
@@ -745,9 +815,9 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/appointmentData')
+        $http.get('/api/DiagnosesData')
         .success(function(dataset) {
-                data = dataset; 
+                data = dataset;
                 this.updateScope(data);
             }.bind(this));
       },
@@ -757,7 +827,7 @@ angular.module('ui.models')
       }
     });
 
-    return AppointmentDataModel;
+    return DiagnosesDataModel;
   });
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
@@ -1804,6 +1874,61 @@ angular.module('ui.widgets')
       scope: {
         data: '=data'
       }     
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtDiagnoses', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/diagnoses/diagnoses.html',
+      scope: {
+        data: '=',
+      },
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scorllY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false)
+            .withOption('order', [1, 'desc']);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2)
+        ];
+        /*$resource('data.json').query().$promise.then(function(persons) {
+            vm.persons = persons;
+        });*/
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.data = data;
+          }
+        });
+      }
     };
   });
 /*
@@ -2959,7 +3084,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <th>Date</th>\r" +
     "\n" +
-    "            <th>Canceled</th>\r" +
+    "            <th>Cancelled</th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -3041,35 +3166,79 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/contact/contact.html",
-    "<div>\r" +
+    "<div class=\"contact\">\r" +
     "\n" +
-    "    <div>\r" +
+    "    <div ng-show=\"data.length\">\r" +
     "\n" +
-    "    \t<b>Name:</b> {{data[0].firstName}} {{data[0].lastName}}<br>\r" +
+    "    \t<b>Name:</b> {{data[0].FirstName}} {{data[0].LastName}}<br>\r" +
     "\n" +
-    "    \t<b>Last 4 of SSN:</b> {{data[0].ssn}}<br>\r" +
+    "    \t<b>Last 4 of SSN:</b> {{data[0].SSN}}<br>\r" +
     "\n" +
-    "    \t<b>Phone:</b> {{data[0].phone}}<br>\r" +
+    "    \t<b>Phone:</b> {{data[0].Phone}}<br>\r" +
     "\n" +
-    "    \t<b>Alternate Phone:</b> {{data[0].altPhone}}<br>\r" +
+    "    \t<b>Alternate Phone:</b> {{data[0].AltPhone}}<br>\r" +
     "\n" +
-    "    \t<b>Address:</b> {{data[0].address}}<br>\r" +
+    "    \t<b>Address:</b> {{data[0].Address}}<br>\r" +
     "\n" +
-    "    \t<b>City:</b> {{data[0].city}}<br>\r" +
+    "    \t<b>City:</b> {{data[0].City}}<br>\r" +
     "\n" +
-    "    \t<b>State:</b> {{data[0].state}}<br>\r" +
+    "    \t<b>State:</b> {{data[0].State}}<br>\r" +
     "\n" +
-    "    \t<b>Zip Code:</b> {{data[0].zipCode}}<br>\r" +
+    "    \t<b>Zip Code:</b> {{data[0].Zip}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
+    "\n" +
+    "        <h4>No Data Found</h4>\r" +
     "\n" +
     "    </div>\r" +
     "\n" +
     "</div>"
   );
 
-  $templateCache.put("client/components/widget/widgets/emergencyContact/emergencyContact.html",
-    "<div>\r" +
+  $templateCache.put("client/components/widget/widgets/diagnoses/diagnoses.html",
+    "<div class=\"diagnoses\">\r" +
     "\n" +
-    "    <div>\r" +
+    "\t<table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "        <thead>\r" +
+    "\n" +
+    "        <tr>\r" +
+    "\n" +
+    "            <th>Diagnosis</th>\r" +
+    "\n" +
+    "            <th>ICD</th>\r" +
+    "\n" +
+    "            <th>Date</th>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"diagnosis in data\">\r" +
+    "\n" +
+    "            <td>{{ diagnosis.Diagnosis }}</td>\r" +
+    "\n" +
+    "            <td>{{ diagnosis.ICD }}</td>\r" +
+    "\n" +
+    "            <td>{{ diagnosis.DiagnosisDate }}</td>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/emergencyContact/emergencyContact.html",
+    "<div class=\"emergency\">\r" +
+    "\n" +
+    "    <div ng-show=\"data.length\">\r" +
     "\n" +
     "    \t<b>Name:</b> {{data[0].NameOfContact}}<br>\r" +
     "\n" +
@@ -3091,7 +3260,14 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    </div>\r" +
     "\n" +
-    "</div>"
+    "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
+    "\n" +
+    "        <h4>No Data Found</h4>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n"
   );
 
   $templateCache.put("client/components/widget/widgets/fluid/fluid.html",
