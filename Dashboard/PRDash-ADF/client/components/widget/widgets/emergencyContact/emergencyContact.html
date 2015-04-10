@@ -1,5 +1,5 @@
-<div>
-    <div>
+<div class="emergency">
+    <div ng-show="data.length">
     	<b>Name:</b> {{data[0].NameOfContact}}<br>
     	<b>Phone:</b> {{data[0].Phone}}<br>
     	<b>Alternate Phone:</b> {{data[0].PhoneWork}}<br>
@@ -9,5 +9,8 @@
     	<b>City:</b> {{data[0].City}}<br>
     	<b>State:</b> {{data[0].State}}<br>
     	<b>Zip Code:</b> {{data[0].Zip}}-{{data[0].Zip4}}<br>
+    </div>
+    <div ng-hide="data.length" style="text-align: center;">
+        <h4>No Data Found</h4>
     </div>
 </div>
