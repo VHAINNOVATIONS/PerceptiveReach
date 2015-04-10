@@ -225,13 +225,13 @@ angular.module('app')
   })
   .value('defaultWidgets', [
       { name: 'RosterTable' }, 
+      { name: 'contact' },
+      { name: 'emergency' },
+      {name: 'diagnoses'},
+      {name: 'appointment'},
       { name: 'ClinicalDecisionSupport' },
       {name: 'medication'},
-      {name: 'appointment'},
-      {name: 'patientFlags'},
-      {name: 'diagnoses'},
-      { name: 'contact' },
-      { name: 'emergency' }
+      {name: 'patientFlags'}
       /*,
       { name: 'Metrics Chart' },
       { name: 'NVD3 Line Chart' },

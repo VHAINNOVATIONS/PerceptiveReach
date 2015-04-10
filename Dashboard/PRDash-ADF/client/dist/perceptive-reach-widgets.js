@@ -3084,7 +3084,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <th>Date</th>\r" +
     "\n" +
-    "            <th>Canceled</th>\r" +
+    "            <th>Cancelled</th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
