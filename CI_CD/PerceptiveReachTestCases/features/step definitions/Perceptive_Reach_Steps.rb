@@ -2,6 +2,11 @@ Given(/^I navigate to the http:\/\/localhost:(\d+)\/$/) do |arg1|
   visit ('http://localhost:7003')
   expect(page).to have_content 'Description' #load IRDS and wait for some content to appear
 end
+Given(/^I open the browser and enter http:\/\/localhost:(\d+)\/$/) do |arg1|
+  visit ('http://localhost:5000')
+  #expect(page).to have_content 'Description' #load IRDS and wait for some content to appear
+end
+
 
 When(/^I click on the VAMC dropdown$/) do
   find(:xpath, "//select[@ng-model='result.dataModel.vamc']").click  
@@ -108,6 +113,10 @@ end
 
 Then(/^I put in my VA password$/) do
   fill_in('Password', :with => 'VA Password')# express the regexp above with the code you wish you had
+end
+
+Then(/^I put in "(.*?)" field as "(.*?)"$/) do |arg1, arg2|
+fill_in(arg1, :with => arg2)
 end
 
 #step that queries the database
