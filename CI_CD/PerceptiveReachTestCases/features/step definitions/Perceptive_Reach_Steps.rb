@@ -9,7 +9,7 @@ end
 
 
 When(/^I click on the VAMC dropdown$/) do
-  find(:xpath, "//select[@ng-model='result.dataModel.vamc']").click  
+  find(:xpath, "//select[@ng-model='result.dataModel.vamc']").click 
 end
 
 When(/^I choose "(.*?)" as VAMC$/) do |arg1|
