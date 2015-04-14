@@ -84,6 +84,35 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/eventTimeline/eventTimeline.html",
+    "<div class=\"bar-chart\">\n" +
+    "    <div style=\"text-align: left;\">\n" +
+    "        <input date-range-picker class=\"date-picker\" type=\"text\" size=\"23\" ng-model=\"date\" />\n" +
+    "        <a id=\"duration_1y\" href=\"\" name=\"limit1y\" ng-click=\"limit1y()\">1y</a>\n" +
+    "        <a id=\"duration_2y\" href=\"\" name=\"limit2y\" ng-click=\"limit2y()\">2y</a>\n" +
+    "        <a id=\"duration_3y\" href=\"\" name=\"limit3y\" ng-click=\"limit3y()\">3y</a>\n" +
+    "        <button type=\"button\" class=\"btn btn-sm btn-danger\" style=\"float: right;\" ng-click=\"refresh()\">Refresh</button>\n" +
+    "    </div>\n" +
+    "    <nvd3-line-chart\n" +
+    "            data=\"chart\"\n" +
+    "            height=\"300\"\n" +
+    "            xAxisTickFormat=\"xAxisTickFormatFunction()\"\n" +
+    "            yAxisTickFormat=\"yAxisTickFormatFunction()\"\n" +
+    "            x=\"xFunction()\"\n" +
+    "            y=\"yFunction()\"\n" +
+    "            showXAxis=\"true\"\n" +
+    "            showYAxis=\"true\"\n" +
+    "            reduceXTicks=\"true\"\n" +
+    "            forcey=\"[0,100]\"\n" +
+    "            transitionduration=\"0\"\n" +
+    "            showLegend=\"{{showLegend}}\"\n" +
+    "            interactive=\"true\"\n" +
+    "            tooltips=\"true\"\n" +
+    "            tooltipcontent=\"toolTipContentFunction()\">\n" +
+    "    </nvd3-line-chart>\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/fluid/fluid.html",
     "<div class=\"demo-widget-fluid\">\n" +
     "    <div>\n" +
@@ -214,35 +243,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "<div>\n" +
     "    Random Number\n" +
     "    <div class=\"alert alert-info\">{{number}}</div>\n" +
-    "</div>"
-  );
-
-  $templateCache.put("client/components/widget/widgets/riskTimeline/riskTimeline.html",
-    "<div class=\"bar-chart\">\n" +
-    "    <div style=\"text-align: left;\">\n" +
-    "        <input date-range-picker class=\"date-picker\" type=\"text\" size=\"23\" ng-model=\"date\" />\n" +
-    "        <a id=\"duration_1y\" href=\"\" name=\"limit1y\" ng-click=\"limit1y()\">1y</a>\n" +
-    "        <a id=\"duration_2y\" href=\"\" name=\"limit2y\" ng-click=\"limit2y()\">2y</a>\n" +
-    "        <a id=\"duration_3y\" href=\"\" name=\"limit3y\" ng-click=\"limit3y()\">3y</a>\n" +
-    "        <button type=\"button\" class=\"btn btn-sm btn-danger\" style=\"float: right;\" ng-click=\"refresh()\">Refresh</button>\n" +
-    "    </div>\n" +
-    "    <nvd3-line-chart\n" +
-    "            data=\"chart\"\n" +
-    "            height=\"300\"\n" +
-    "            xAxisTickFormat=\"xAxisTickFormatFunction()\"\n" +
-    "            yAxisTickFormat=\"yAxisTickFormatFunction()\"\n" +
-    "            x=\"xFunction()\"\n" +
-    "            y=\"yFunction()\"\n" +
-    "            showXAxis=\"true\"\n" +
-    "            showYAxis=\"true\"\n" +
-    "            reduceXTicks=\"true\"\n" +
-    "            forcey=\"[0,100]\"\n" +
-    "            transitionduration=\"0\"\n" +
-    "            showLegend=\"{{showLegend}}\"\n" +
-    "            interactive=\"true\"\n" +
-    "            tooltips=\"true\"\n" +
-    "            tooltipcontent=\"toolTipContentFunction()\">\n" +
-    "    </nvd3-line-chart>\n" +
     "</div>"
   );
 

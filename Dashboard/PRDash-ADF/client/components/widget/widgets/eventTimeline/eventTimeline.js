@@ -21,7 +21,7 @@ angular.module('ui.widgets')
     return {
       restrict: 'A',
       replace: true,
-      templateUrl: 'client/components/widget/widgets/riskTimeline/riskTimeline.html',
+      templateUrl: 'client/components/widget/widgets/eventTimeline/eventTimeline.html',
       scope: {
         data: '=data',
         date: '@',
