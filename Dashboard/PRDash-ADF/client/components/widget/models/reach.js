@@ -454,8 +454,10 @@ angular.module('ui.models')
               mockValues.push(element);
             }
           }
+          var bar = (key === 'Therapy') ? true : false;
           mockData.push({
             "key": key,
+            "bar": bar,
             "values": mockValues
           });
         });

@@ -85,7 +85,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/eventTimeline/eventTimeline.html",
-    "<div class=\"bar-chart\">\n" +
+    "<div class=\"event-timeline-chart\">\n" +
     "    <div style=\"text-align: left;\">\n" +
     "        <input date-range-picker class=\"date-picker\" type=\"text\" size=\"23\" ng-model=\"date\" />\n" +
     "        <a id=\"duration_1y\" href=\"\" name=\"limit1y\" ng-click=\"limit1y()\">1y</a>\n" +
@@ -93,11 +93,12 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "        <a id=\"duration_3y\" href=\"\" name=\"limit3y\" ng-click=\"limit3y()\">3y</a>\n" +
     "        <button type=\"button\" class=\"btn btn-sm btn-danger\" style=\"float: right;\" ng-click=\"refresh()\">Refresh</button>\n" +
     "    </div>\n" +
-    "    <nvd3-line-chart\n" +
+    "    <nvd3-line-plus-bar-chart\n" +
     "            data=\"chart\"\n" +
     "            height=\"300\"\n" +
     "            xAxisTickFormat=\"xAxisTickFormatFunction()\"\n" +
-    "            yAxisTickFormat=\"yAxisTickFormatFunction()\"\n" +
+    "            y1AxisTickFormat=\"yAxisTickFormatFunction()\"\n" +
+    "            y2AxisTickFormat=\"yAxisTickFormatFunction()\"\n" +
     "            x=\"xFunction()\"\n" +
     "            y=\"yFunction()\"\n" +
     "            showXAxis=\"true\"\n" +
