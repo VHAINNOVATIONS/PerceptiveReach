@@ -2641,7 +2641,7 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtRiskTimeline', function ($filter) {
+  .directive('wtEventTimeline', function ($filter) {
     return {
       restrict: 'A',
       replace: true,

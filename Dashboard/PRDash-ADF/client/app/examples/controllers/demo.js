@@ -167,9 +167,9 @@ angular.module('app')
         }
       },
        {
-        name: 'Risk Timeline',
-        directive: 'wt-risk-timeline',
-        title: 'Risk Timeline',
+        name: 'Event Timeline',
+        directive: 'wt-event-timeline',
+        title: 'Event Timeline',
         dataAttrName: 'data',
         dataModelType: EventTimelineDataModel,
         attrs: {
@@ -228,7 +228,7 @@ angular.module('app')
     ];
   })
   .value('defaultWidgets', [
-      {name: 'Risk Timeline'},
+      {name: 'Event Timeline'},
       { name: 'RosterTable' }, 
       { name: 'ClinicalDecisionSupport' },
       {name: 'medication'},
