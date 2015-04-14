@@ -6,7 +6,7 @@ angular.module('app')
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, ContactEmergencyDataModel, VeteranRosterDataModel,
                                     PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel,
-                                    AppointmentDataModel) {
+                                    AppointmentDataModel, EventTimelineDataModel) {
     return [
       {
         name: 'time',
@@ -170,8 +170,11 @@ angular.module('app')
         name: 'Risk Timeline',
         directive: 'wt-risk-timeline',
         title: 'Risk Timeline',
+        dataAttrName: 'data',
+        dataModelType: EventTimelineDataModel,
         attrs: {
-          'show-time-range': true
+          'initial-duration': 3,
+          'initial-duration-type': 'years'
         },
         style: {
           width: '100%'

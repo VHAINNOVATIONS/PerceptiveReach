@@ -227,7 +227,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "        <button type=\"button\" class=\"btn btn-sm btn-danger\" style=\"float: right;\" ng-click=\"refresh()\">Refresh</button>\n" +
     "    </div>\n" +
     "    <nvd3-line-chart\n" +
-    "            data=\"data\"\n" +
+    "            data=\"chart\"\n" +
     "            height=\"300\"\n" +
     "            xAxisTickFormat=\"xAxisTickFormatFunction()\"\n" +
     "            yAxisTickFormat=\"yAxisTickFormatFunction()\"\n" +

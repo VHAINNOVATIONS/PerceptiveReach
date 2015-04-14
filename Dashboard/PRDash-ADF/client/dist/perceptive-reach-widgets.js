@@ -758,7 +758,71 @@ angular.module('ui.models')
     });
 
     return AppointmentDataModel;
+  })
+.factory('EventTimelineDataModel', function ($http, WidgetDataModel) {
+    function EventTimelineDataModel() {
+    }
+
+    EventTimelineDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    EventTimelineDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(EventTimelineDataModel.prototype, {
+       init: function () {
+        this.updateScope('-');
+      },
+      load: function(dateRange) {
+        var startDate = moment(dateRange.startDate);
+        var endDate = moment(dateRange.endDate);
+        var descriptions = ['Aspirin', 'Physical Checkup', 'Bethesda Center'];
+        var mockData = [];
+        ["Medication", "Appointment", "Therapy"].forEach(function(key, index) {
+          var mockValues = [];
+          for (var year=startDate.year(); year<=endDate.year(); ++year) {
+            var startMonth = (year === startDate.year()) ? startDate.month() : 0; 
+            var endMonth = (year === endDate.year()) ? endDate.month(): 11;
+            for (var month=startMonth; month<endMonth; ++month) {
+              var day = Math.floor(Math.random() * 26) + 1;
+              var value = Math.floor(Math.random() * 100);
+              var element = {
+                date: new Date(year, month, day),
+                value: value,
+                type: key,
+                description: descriptions[index],
+                series: index
+              };
+              mockValues.push(element);
+            }
+          }
+          mockData.push({
+            "key": key,
+            "values": mockValues
+          });
+        });
+        var data = {
+          chart: mockData
+        };
+        this.updateScope(data);
+      },
+      setup: function (widget, scope) {
+        scope.load = this.load.bind(this);
+        WidgetDataModel.prototype.setup.call(this, widget, scope);
+        widget.attrs.load = 'load(dateRange)';
+      },
+      getData: function () {
+        //$http.get('/api/eventTimeline?id='+ '1')
+        //.success(function(dataset) {
+        //        data = dataset;
+        //        this.updateScope(data);
+        //    }.bind(this));
+      },
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return EventTimelineDataModel;
   });
+
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -2583,10 +2647,12 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/riskTimeline/riskTimeline.html',
       scope: {
-        //data: '=data',
+        data: '=data',
         date: '@',
         showLegend: '@',
-        showTimeRange: '=?'
+        initialDuration: '=?',
+        initialDurationType: '=?',
+        load: '&'
       },
       controller: function ($scope) {
         var filter = $filter('date');
@@ -2625,38 +2691,8 @@ angular.module('ui.widgets')
         };
         $scope.showLegend = true;
 
-        $scope.load = function(startDate, endDate) {
-          startDate = moment(startDate);
-          endDate = moment(endDate);
-          var descriptions = ['Aspirin', 'Physical Checkup', 'Bethesda Center'];
-          var mockData = [];
-          ["Medication", "Appointment", "Therapy"].forEach(function(key, index) {
-            var mockValues = [];
-            for (var year=startDate.year(); year<=endDate.year(); ++year) {
-              var startMonth = (year === startDate.year()) ? startDate.month() : 0; 
-              var endMonth = (year === endDate.year()) ? endDate.month(): 11;
-              for (var month=startMonth; month<endMonth; ++month) {
-                var day = Math.floor(Math.random() * 26) + 1;
-                var value = Math.floor(Math.random() * 100);
-                var element = {
-                  date: new Date(year, month, day),
-                  value: value,
-                  type: key,
-                  description: descriptions[index],
-                  series: index
-                };
-                mockValues.push(element);
-              }
-            }
-            mockData.push({
-              "key": key,
-              "values": mockValues
-            });
-          });
-          $scope.data = mockData;
-        };
         $scope.refresh = function() {
-          $scope.load($scope.date.startDate, $scope.date.endDate);
+          $scope.load({dateRange: $scope.date});
         };
         $scope.limitny = function(year) {
           var startDate = moment().subtract(year, 'years').toDate();
@@ -2674,15 +2710,18 @@ angular.module('ui.widgets')
         };
       },
       link: function postLink(scope, element, attrs) {
-        scope.date = {startDate: moment().subtract(3, 'years').toDate(), endDate: moment().toDate()};
+        var duration = (attrs.initialDuration && parseInt(attrs.initialDuration)) || 3;
+        var durationType = attrs.initialDurationType || 'years';
+        scope.date = {
+          startDate: moment().subtract(duration, durationType).toDate(), 
+          endDate: moment().toDate()
+        };
         scope.$watch('date', function (date) {
-          scope.load(date.startDate, date.endDate);
+          scope.load({dateRange: date});
         });
-        if (!_.has(attrs, 'showTimeRange')) {
-          scope.showTimeRange = true;
-        }
-
-        scope.load(scope.date.startDate, scope.date.endDate);
+        scope.$watch('data', function (data) {
+          scope.chart = data.chart;
+        });
      }
     };
   });
@@ -3301,7 +3340,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "        <button type=\"button\" class=\"btn btn-sm btn-danger\" style=\"float: right;\" ng-click=\"refresh()\">Refresh</button>\n" +
     "    </div>\n" +
     "    <nvd3-line-chart\n" +
-    "            data=\"data\"\n" +
+    "            data=\"chart\"\n" +
     "            height=\"300\"\n" +
     "            xAxisTickFormat=\"xAxisTickFormatFunction()\"\n" +
     "            yAxisTickFormat=\"yAxisTickFormatFunction()\"\n" +
