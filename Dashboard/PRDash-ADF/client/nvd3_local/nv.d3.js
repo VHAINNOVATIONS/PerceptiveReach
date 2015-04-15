@@ -5138,6 +5138,9 @@ nv.models.line = function() {
     , x //can be accessed via chart.xScale()
     , y //can be accessed via chart.yScale()
     , interpolate = "linear" // controls the line interpolation
+    , getStroke = function(d) {
+      return d.hideLine ? 0 : 1;
+    }
     ;
 
   scatter
@@ -5236,7 +5239,7 @@ nv.models.line = function() {
           .style('stroke', function(d,i){ return color(d, i)});
       groups
           .transition()
-          .style('stroke-opacity', 1)
+          .style('stroke-opacity', getStroke)
           .style('fill-opacity', .5);
 
 

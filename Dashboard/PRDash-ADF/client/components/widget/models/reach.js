@@ -443,7 +443,7 @@ angular.module('ui.models')
             var endMonth = (year === endDate.year()) ? endDate.month(): 11;
             for (var month=startMonth; month<endMonth; ++month) {
               var day = Math.floor(Math.random() * 26) + 1;
-              var value = key === 'Appointment' ? 80 : Math.floor(Math.random() * 100);
+              var value = key === 'Appointment' ? 110 : Math.floor(Math.random() * 100);
               var element = {
                 date: new Date(year, month, day),
                 value: value,
@@ -455,10 +455,12 @@ angular.module('ui.models')
             }
           }
           var bar = (key === 'Therapy') ? true : false;
+          var hideLine = (key === 'Appointment') ? true : false;
           mockData.push({
-            "key": key,
-            "bar": bar,
-            "values": mockValues
+            key: key,
+            bar: bar,
+            hideLine: hideLine,
+            values: mockValues
           });
         });
         var data = {
