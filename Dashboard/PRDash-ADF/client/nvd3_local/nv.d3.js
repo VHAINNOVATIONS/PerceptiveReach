@@ -5992,11 +5992,11 @@ nv.models.linePlusBarChart = function() {
       // Setup Scales
 
       var dataBars = data.filter(function(d) { return !d.disabled && d.bar });
-      var dataLines = data.filter(function(d) { return !d.bar }); // removed the !d.disabled clause here to fix Issue #240
+      var dataLines = data.filter(function(d) { return !d.bar && !d.disabled}); // removed the !d.disabled clause here to fix Issue #240
 
       //x = xAxis.scale();
-       x = dataLines.filter(function(d) { return !d.disabled; }).length && dataLines.filter(function(d) { return !d.disabled; })[0].values.length ? lines.xScale() : bars.xScale();
-      //x = dataLines.filter(function(d) { return !d.disabled; }).length ? lines.xScale() : bars.xScale(); //old code before change above
+       //x = dataLines.filter(function(d) { return !d.disabled; }).length && dataLines.filter(function(d) { return !d.disabled; })[0].values.length ? lines.xScale() : bars.xScale();
+      x = dataLines.filter(function(d) { return !d.disabled; }).length ? lines.xScale() : bars.xScale(); //old code before change above
       y1 = bars.yScale();
       y2 = lines.yScale();
 
@@ -6052,7 +6052,6 @@ nv.models.linePlusBarChart = function() {
       //------------------------------------------------------------
       // Main Chart Component(s)
 
-
       lines
         .width(availableWidth)
         .height(availableHeight)
@@ -6073,8 +6072,7 @@ nv.models.linePlusBarChart = function() {
           .datum(dataBars.length ? dataBars : [{values:[]}])
 
       var linesWrap = g.select('.nv-linesWrap')
-          .datum(dataLines[0] && !dataLines[0].disabled ? dataLines : [{values:[]}] );
-          //.datum(!dataLines[0].disabled ? dataLines : [{values:dataLines[0].values.map(function(d) { return [d[0], null] }) }] );
+          .datum(dataLines.length ? dataLines : [{values:[]}] );
 
       d3.transition(barsWrap).call(bars);
       d3.transition(linesWrap).call(lines);
