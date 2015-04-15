@@ -6028,7 +6028,7 @@ nv.models.linePlusBarChart = function() {
         g.select('.nv-legendWrap')
             .datum(data.map(function(series) {
               series.originalKey = series.originalKey === undefined ? series.key : series.originalKey;
-              series.key = series.originalKey + (series.bar ? ' (left axis)' : ' (right axis)');
+              series.key = series.originalKey; // + (series.bar ? ' (left axis)' : ' (right axis)');
               return series;
             }))
           .call(legend);
@@ -6094,28 +6094,28 @@ nv.models.linePlusBarChart = function() {
           .call(xAxis);
 
 
-      y1Axis
-        .scale(y1)
-        .ticks( availableHeight / 36 )
-        .tickSize(-availableWidth, 0);
+      // y1Axis
+      //   .scale(y1)
+      //   .ticks( availableHeight / 36 )
+      //   .tickSize(-availableWidth, 0);
 
-      d3.transition(g.select('.nv-y1.nv-axis'))
-          .style('opacity', dataBars.length ? 1 : 0)
-          .call(y1Axis);
+      // d3.transition(g.select('.nv-y1.nv-axis'))
+      //     .style('opacity', dataBars.length ? 1 : 0)
+      //     .call(y1Axis);
 
 
-      y2Axis
-        .scale(y2)
-        .ticks( availableHeight / 36 )
-        .tickSize(dataBars.length ? 0 : -availableWidth, 0); // Show the y2 rules only if y1 has none
+      // y2Axis
+      //   .scale(y2)
+      //   .ticks( availableHeight / 36 )
+      //   .tickSize(dataBars.length ? 0 : -availableWidth, 0); // Show the y2 rules only if y1 has none
 
-      g.select('.nv-y2.nv-axis')
-          .style('opacity', dataLines.length ? 1 : 0)
-          .attr('transform', 'translate(' + availableWidth + ',0)');
-          //.attr('transform', 'translate(' + x.range()[1] + ',0)');
+      // g.select('.nv-y2.nv-axis')
+      //     .style('opacity', dataLines.length ? 1 : 0)
+      //     .attr('transform', 'translate(' + availableWidth + ',0)');
+      //     //.attr('transform', 'translate(' + x.range()[1] + ',0)');
 
-      d3.transition(g.select('.nv-y2.nv-axis'))
-          .call(y2Axis);
+      // d3.transition(g.select('.nv-y2.nv-axis'))
+      //     .call(y2Axis);
 
       //------------------------------------------------------------
 
