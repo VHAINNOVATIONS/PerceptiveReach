@@ -766,6 +766,16 @@ angular.module('ui.models')
     EventTimelineDataModel.prototype = Object.create(WidgetDataModel.prototype);
     EventTimelineDataModel.prototype.constructor = WidgetDataModel;
 
+    var convertDates = function(data) {
+      data.chart.forEach(function(series) {
+        series.values.forEach(function(value) {
+          var d = value.date;
+          var m = moment(d, 'MMDDYYYY');
+          value.date = m.toDate();
+        });
+      });
+    };
+
     angular.extend(EventTimelineDataModel.prototype, {
        init: function () {
         this.updateScope('-');
@@ -773,55 +783,27 @@ angular.module('ui.models')
       load: function(dateRange) {
         var startDate = moment(dateRange.startDate);
         var endDate = moment(dateRange.endDate);
-        var descriptions = ['Aspirin', 'Physical Checkup', 'Bethesda Center'];
-        var mockData = [];
-        ["Medication", "Appointment", "Therapy"].forEach(function(key, index) {
-          var mockValues = [];
-          for (var year=startDate.year(); year<=endDate.year(); ++year) {
-            var startMonth = (year === startDate.year()) ? startDate.month() : 0; 
-            var endMonth = (year === endDate.year()) ? endDate.month(): 11;
-            for (var month=startMonth; month<endMonth; ++month) {
-              var day = Math.floor(Math.random() * 26) + 1;
-              var value = key === 'Appointment' ? 110 : Math.floor(Math.random() * 100);
-              var element = {
-                date: new Date(year, month, day),
-                value: value,
-                type: key,
-                description: descriptions[index],
-                series: index
-              };
-              mockValues.push(element);
-            }
+        var start = startDate.format('MMDDYYYY');
+        var end = endDate.format('MMDDYYYY');
+        var config = {
+          method: 'GET',
+          url: '/api/eventTimeline',
+          params: {
+            start: start,
+            end: end
           }
-          var bar = (key === 'Therapy') ? true : false;
-          var hideLine = (key === 'Appointment') ? true : false;
-          var series = {
-            key: key,
-            bar: bar,
-            hideLine: hideLine,
-            values: mockValues
-          };
-          if (key === 'Appointment') {
-            series.color = '#000000';
-          }
-          mockData.push(series);
-        });
-        var data = {
-          chart: mockData
         };
-        this.updateScope(data);
+        var self = this;
+        $http(config)
+          .success(function(data) {
+            convertDates(data);
+            self.updateScope(data);
+          });
       },
       setup: function (widget, scope) {
         scope.load = this.load.bind(this);
         WidgetDataModel.prototype.setup.call(this, widget, scope);
         widget.attrs.load = 'load(dateRange)';
-      },
-      getData: function () {
-        //$http.get('/api/eventTimeline?id='+ '1')
-        //.success(function(dataset) {
-        //        data = dataset;
-        //        this.updateScope(data);
-        //    }.bind(this));
       },
       destroy: function () {
         WidgetDataModel.prototype.destroy.call(this);
@@ -1967,11 +1949,13 @@ angular.module('ui.widgets')
         };
         $scope.toolTipContentFunction = function() {
           return function(key, x, y, e) {
-              var type = e.point.type;
-              var line0 = 'Date: ' + x;
-              var line1 = type + ' Score: ' + y;
-              var line2 = type + ': ' + e.point.description;
-              return line0 + '<br>' + line1 + '<br>' + line2;
+              var line = 'Date: ' + x;
+              if (e.point.tooltipLines) {
+                e.point.tooltipLines.forEach(function (tooltipLine) {
+                  line += '<br>' + tooltipLine;
+                });
+              }
+              return line;
             };
         };
         $scope.showLegend = true;
@@ -2005,6 +1989,7 @@ angular.module('ui.widgets')
           scope.load({dateRange: date});
         });
         scope.$watch('data', function (data) {
+          scope.forcey = '[' + data.minY + ',' + data.maxY + ']';
           scope.chart = data.chart;
         });
      }
@@ -3225,7 +3210,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "            showXAxis=\"true\"\n" +
     "            showYAxis=\"false\"\n" +
     "            reduceXTicks=\"true\"\n" +
-    "            forcey=\"[0,120]\"\n" +
+    "            forcey=\"{{forcey}}\"\n" +
     "            transitionduration=\"0\"\n" +
     "            showLegend=\"{{showLegend}}\"\n" +
     "            interactive=\"true\"\n" +

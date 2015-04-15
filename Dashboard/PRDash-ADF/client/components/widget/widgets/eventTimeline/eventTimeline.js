@@ -58,11 +58,13 @@ angular.module('ui.widgets')
         };
         $scope.toolTipContentFunction = function() {
           return function(key, x, y, e) {
-              var type = e.point.type;
-              var line0 = 'Date: ' + x;
-              var line1 = type + ' Score: ' + y;
-              var line2 = type + ': ' + e.point.description;
-              return line0 + '<br>' + line1 + '<br>' + line2;
+              var line = 'Date: ' + x;
+              if (e.point.tooltipLines) {
+                e.point.tooltipLines.forEach(function (tooltipLine) {
+                  line += '<br>' + tooltipLine;
+                });
+              }
+              return line;
             };
         };
         $scope.showLegend = true;
@@ -96,6 +98,7 @@ angular.module('ui.widgets')
           scope.load({dateRange: date});
         });
         scope.$watch('data', function (data) {
+          scope.forcey = '[' + data.minY + ',' + data.maxY + ']';
           scope.chart = data.chart;
         });
      }

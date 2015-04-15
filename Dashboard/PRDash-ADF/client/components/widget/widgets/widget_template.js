@@ -104,7 +104,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "            showXAxis=\"true\"\n" +
     "            showYAxis=\"false\"\n" +
     "            reduceXTicks=\"true\"\n" +
-    "            forcey=\"[0,120]\"\n" +
+    "            forcey=\"{{forcey}}\"\n" +
     "            transitionduration=\"0\"\n" +
     "            showLegend=\"{{showLegend}}\"\n" +
     "            interactive=\"true\"\n" +

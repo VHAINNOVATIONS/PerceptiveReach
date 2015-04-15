@@ -32,8 +32,7 @@ module.exports = function(app) {
   app.use('/api/patientFlagData', require('./api/patientFlagData'));
   app.use('/api/medicationData', require('./api/medicationData'));
   app.use('/api/appointmentData', require('./api/appointmentData'));
-
-
+  app.use('/api/eventTimeline', require('./api/eventTimeline'));
 
   app.use('/auth', require('./auth'));
   app.use('/api/user', require('./api/user'));
