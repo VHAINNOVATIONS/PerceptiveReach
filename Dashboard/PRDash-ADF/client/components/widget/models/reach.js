@@ -456,12 +456,16 @@ angular.module('ui.models')
           }
           var bar = (key === 'Therapy') ? true : false;
           var hideLine = (key === 'Appointment') ? true : false;
-          mockData.push({
+          var series = {
             key: key,
             bar: bar,
             hideLine: hideLine,
             values: mockValues
-          });
+          };
+          if (key === 'Appointment') {
+            series.color = '#000000';
+          }
+          mockData.push(series);
         });
         var data = {
           chart: mockData
