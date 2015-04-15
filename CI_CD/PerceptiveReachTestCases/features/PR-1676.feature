@@ -24,7 +24,7 @@ And I click on "Login" button
 Then I should see "National View"
 And I click on logout
 
-@Login_Invalid_PR-1678
+@Negative_Logon_PR-1678
 
 Scenario: I open a web browser and navigate to http://localhost:5000/ where I can Perceptive Reach invalid Login to the  Dashboard
 
