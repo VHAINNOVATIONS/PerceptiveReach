@@ -250,18 +250,27 @@ angular.module('ui.models')
 
     return TotalRisksDataModel;
   })
-.factory('ContactBaseDataModel', function ($http, WidgetDataModel) {
+.factory('ContactBaseDataModel', function ($http, CommonDataModel) {
     function ContactBaseDataModel() {
     }
 
-    ContactBaseDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    ContactBaseDataModel.prototype.constructor = WidgetDataModel;
+    ContactBaseDataModel.prototype = Object.create(CommonDataModel.prototype);
+    ContactBaseDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(ContactBaseDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
         //this.vamc = (dataModelOptions && dataModelOptions.vamc) ? dataModelOptions.vamc : 9;
 
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
+
         this.updateScope('-');
         this.getData();
       },
@@ -270,31 +279,45 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/vetContactData')
-        .success(function(dataset) {
-                data = dataset;
-                this.updateScope(data);
-            }.bind(this));
+        if(!this.reachID) {
+          this.updateScope(data);
+        }
+        else {
+          $http.get('/api/vetContactData?id='+ this.reachID)
+          .success(function(dataset) {
+                  data = dataset;
+                  this.updateScope(data);
+              }.bind(this));
+        }
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
 
     return ContactBaseDataModel;
   })
-.factory('ContactEmergencyDataModel', function ($http, WidgetDataModel) {
+.factory('ContactEmergencyDataModel', function ($http, CommonDataModel) {
     function ContactEmergencyDataModel() {
     }
 
-    ContactEmergencyDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    ContactEmergencyDataModel.prototype.constructor = WidgetDataModel;
+    ContactEmergencyDataModel.prototype = Object.create(CommonDataModel.prototype);
+    ContactEmergencyDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(ContactEmergencyDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
 
         this.updateScope('-');
         this.getData();
@@ -304,15 +327,20 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/vetEmergencyData?id='+ this.reachID)
-        .success(function(dataset) {
-                data = dataset;
-                this.updateScope(data);
-            }.bind(this));
+        if(!this.reachID) {
+          this.updateScope(data);
+        }
+        else {
+          $http.get('/api/vetEmergencyData?id='+ this.reachID)
+                .success(function(dataset) {
+                        data = dataset;
+                        this.updateScope(data);
+                    }.bind(this));
+        }
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
 
@@ -386,14 +414,56 @@ angular.module('ui.models')
 
     return MedicationDataModel;
   })
-.factory('AppointmentDataModel', function ($http, WidgetDataModel) {
+.factory('AppointmentDataModel', function ($http, CommonDataModel) {
     function AppointmentDataModel() {
     }
 
-    AppointmentDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    AppointmentDataModel.prototype.constructor = WidgetDataModel;
+    AppointmentDataModel.prototype = Object.create(CommonDataModel.prototype);
+    AppointmentDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(AppointmentDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
+
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/appointmentData?id='+ this.reachID)
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return AppointmentDataModel;
+  })
+.factory('DiagnosesDataModel', function ($http, WidgetDataModel) {
+    function DiagnosesDataModel() {
+    }
+
+    DiagnosesDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    DiagnosesDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(DiagnosesDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
         this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
@@ -406,9 +476,9 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/appointmentData')
+        $http.get('/api/DiagnosesData')
         .success(function(dataset) {
-                data = dataset; 
+                data = dataset;
                 this.updateScope(data);
             }.bind(this));
       },
@@ -418,7 +488,7 @@ angular.module('ui.models')
       }
     });
 
-    return AppointmentDataModel;
+    return DiagnosesDataModel;
   })
 .factory('EventTimelineDataModel', function ($http, WidgetDataModel) {
     function EventTimelineDataModel() {

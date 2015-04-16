@@ -6,7 +6,7 @@ angular.module('app')
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, ContactEmergencyDataModel, VeteranRosterDataModel,
                                     PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel,
-                                    AppointmentDataModel, EventTimelineDataModel) {
+                                    AppointmentDataModel, DiagnosesDataModel, EventTimelineDataModel) {
     return [
       {
         name: 'time',
@@ -118,6 +118,16 @@ angular.module('app')
         }
       },
       {
+        name: 'diagnoses',
+        directive: 'wt-diagnoses',
+        dataAttrName: 'data',
+        title: 'Diagnoses',
+        dataModelType: DiagnosesDataModel,
+        size: {
+          //width: '25%',
+          height: '350px'
+        }
+      },{
         name: 'contact',
         directive: 'wt-contact',
         dataAttrName: 'data',
@@ -166,7 +176,7 @@ angular.module('app')
           width: '50%'
         }
       },
-       {
+      {
         name: 'Event Timeline',
         directive: 'wt-event-timeline',
         title: 'Event Timeline',
@@ -230,12 +240,13 @@ angular.module('app')
   .value('defaultWidgets', [
       {name: 'Event Timeline'},
       { name: 'RosterTable' }, 
+      { name: 'contact' },
+      { name: 'emergency' },
+      {name: 'diagnoses'},
+      {name: 'appointment'},
       { name: 'ClinicalDecisionSupport' },
       {name: 'medication'},
-      {name: 'appointment'},
-      {name: 'patientFlags'},
-      { name: 'contact' },
-      { name: 'emergency' }
+      {name: 'patientFlags'}
       /*,
       { name: 'Metrics Chart' },
       { name: 'NVD3 Line Chart' },
