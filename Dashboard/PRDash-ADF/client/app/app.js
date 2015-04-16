@@ -27,7 +27,7 @@ angular.module('app', [
   ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     //$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-    $httpProvider.defaults.headers.common['Authorization'] = '';
+    //$httpProvider.defaults.headers.common['Authorization'] = '';
     /*
     $routeProvider
       .otherwise('/');*/
@@ -96,13 +96,23 @@ angular.module('app', [
     };
   })
 
-  .run(function ($rootScope, $location, Auth) {
+  .run(function ($rootScope, $location, $cookieStore, $http, Auth) {
+    // keep user logged in after page refresh
+    $rootScope.globals = $cookieStore.get('globals') || {};
+    if ($rootScope.globals.currentUser) {
+        $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+    }
     // Redirect to login if route requires auth and you're not logged in    
     $rootScope.$on('$routeChangeStart', function (event, next, current) {
-      Auth.isLoggedInAsync(function(loggedIn) {
+      // redirect to login page if not logged in
+      if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
+          console.log("rootScoope.globals.userObj: ",$rootScope.globals.userObj);
+          $location.path('/login');
+      }
+      /*Auth.isLoggedInAsync(function(loggedIn) {
         if (next.authenticate && !loggedIn) {
           $location.path('/login');
         }
-      });
+      });*/
     });
   });

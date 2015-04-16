@@ -1,7 +1,33 @@
 'use strict';
 
 angular.module('app')
-  .controller('LoginCtrl', function ($scope, Auth, $location, $window) {
+  .controller('LoginCtrl',
+    ['$scope', '$rootScope', '$location', 'Auth',
+    function ($scope, $rootScope, $location, Auth) {
+        $scope.user = {};
+       $scope.errors = {};
+        // reset login status
+        Auth.ClearCredentials();
+  
+        $scope.login = function (form) {
+            $scope.submitted = true;
+            $scope.dataLoading = true;
+            if(form.$valid){
+              //Auth.SetCredentials($scope.user.email, $scope.user.password);
+              Auth.Login($scope.user.email, $scope.user.password, function(response) {
+                  if(response.success) {
+                      Auth.SetCredentials($scope.user.email, $scope.user.password);
+                      console.log("LoginController rootScoope.globals: ",$rootScope.globals);
+                      $location.path('/');
+                  } else {
+                      $scope.errors.other = response.message;
+                      $scope.dataLoading = false;
+                  }
+              });
+            }
+        };
+    }]);
+  /*.controller('LoginCtrl', function ($scope, Auth, $location, $window) {
     $scope.user = {};
     $scope.errors = {};
 
@@ -26,4 +52,4 @@ angular.module('app')
     $scope.loginOauth = function(provider) {
       $window.location.href = '/auth/' + provider;
     };
-  });
+  });*/

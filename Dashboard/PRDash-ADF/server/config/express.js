@@ -45,6 +45,9 @@ module.exports = function(app) {
         
         //console.log("WWW-Authenticate", res.header("WWW-Authenticate"));
         //console.log("authorization-header after: ", req.header("Authorization"));
+
+        if(err)
+          console.log("errors: ", err);
         res.finished || next();
       });
     }
