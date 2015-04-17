@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./vetContactData.controller');
+var controller = require('./patientContact.controller');
 
 var router = express.Router();
 

@@ -24,19 +24,19 @@ exports.index = function(req, res) {
     var id = req.param("id");
     var query = '';
     if (id) {
-        console.log("Registering endpoint: /veterans/:id is " + id);
+        //console.log("Registering endpoint: /veterans/:id is " + id);
         query = "SELECT *, vamc.vamc FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE vet.ReachID = " + id;
-        console.log("Query: " + query);
+        //console.log("Query: " + query);
     } else {
         res.send("ERROR: Veteran ID is required.");
-        console.log("ERROR: Veteran ID is required."); 
+        //console.log("ERROR: Veteran ID is required."); 
     }
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
         if (err || !query) { 
         data = "Error: Database connection failed!";
-        console.log("Database connection failed!"); 
+        //console.log("Database connection failed!"); 
         return; 
         }
 
@@ -45,11 +45,11 @@ exports.index = function(req, res) {
         request.query(query, function(err, recordset) {
             // ... error checks
             if (err) { 
-            console.log("Query failed!"); 
+            //console.log("Query failed!"); 
             return; 
             }
 
-            console.log(recordset.length);
+            //console.log(recordset.length);
 
             res.send(recordset);
         });

@@ -10,57 +10,47 @@
 'use strict';
 
 var _ = require('lodash');
+var sql = require('mssql');
 var dataFormatter = require('../../components/formatUtil/formatUtil.service.js');
 
-
-// When the Real API get's implemented remove all lines between //removeBegin & //removeEnd
-
-//removeBegin
-/*var fs = require('fs');
-var path = require('path');
-var filePath = path.normalize('server/api/appointmentData/');
-var fileName = "appointmentData.json";
-//removeEnd
-
-// Get list of things
 exports.index = function(req, res) {
   res.header("content-type: application/json");
-    //console.log("----AppointmentDataAPI");
 
-//removeBegin
-  var data = fs.readFileSync(filePath + fileName, 'utf8');
-  var jsonRecordSet = JSON.parse(data);
-	for (var record in jsonRecordSet) {
-	    jsonRecordSet[record].Apptdate = dataFormatter.formatData(jsonRecordSet[record].Apptdate);
-	}
-	res.send(jsonRecordSet);*/
+  var dbc = require('../../config/db_connection/development.js');
+    var config = dbc.config;
 
-exports.index = function(req, res) {
-  res.header("content-type: application/json");
-  var data = '[{"ReachID": 652427,"ApptType": "REGULAR","Apptdate": "2014-02-03T00:00:00.000Z","CancelationType": ""},{"ReachID": 652427,"ApptType": "SERVICE CONNECTED","Apptdate": "2015-01-03T00:00:00.000Z","CancelationType": "Patient Cancelled"},{"ReachID": 822550,"ApptType": "PRIMA FACIA","Apptdate": "2014-12-11T00:00:00.000Z","CancelationType": ""},{"ReachID": 822550,"ApptType": "REGULAR","Apptdate": "2015-03-03T00:00:00.000Z","CancelationType": "Clinic Cancelled"},{"ReachID": 822550,"ApptType": "RESEARCH","Apptdate": "2014-11-05T00:00:00.000Z","CancelationType": ""},{"ReachID": 822550,"ApptType": "SHARING AGREEMENT","Apptdate": "2014-04-21T00:00:00.000Z","CancelationType": "Patient Cancelled and Auto Re-Book"}]';
-  var filterData = [];
-  var id = req.param("id");
-
-   if (id) {
-			var jsonRecordSet = JSON.parse(data);
-			for (var record in jsonRecordSet) {
-					if (jsonRecordSet[record].ReachID == id) {
-			    	jsonRecordSet[record].Apptdate = dataFormatter.formatData(jsonRecordSet[record].Apptdate,"date");
-			  		filterData.push(jsonRecordSet[record]);
-			  	}
-			}
-			res.send(filterData);
+    var id = req.param("id");
+    var query = '';
+    if (id) {
+        query = "SELECT * FROM Appointments a INNER JOIN Ref_VistACancelNoShowCode r ON a.CancelNoShowCode = r.CancelNoShowCodeID "
+        query += "WHERE a.ReachID =  " + id;
     } else {
-        console.log("ERROR: ReachID  is required."); 
         res.send("ERROR: ReachID  is required.");
     }
 
-  console.log(filterData); 
-//removeEnd
+    var connection = new sql.Connection(config, function(err) {
+        // ... error checks
+        if (err || !query) { 
+        //data = "Error: Database connection failed!";
+        return; 
+        }
 
-//Begin Real SQL Server API Code
+        // Query
+        var request = new sql.Request(connection);
+        request.query(query, function(err, recordset) {
+            // ... error checks
+            if (err) { 
+                console.log("Query failed! " + err); 
+            return; 
+            }
 
+            var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
+            for (var record in jsonRecordSet) {
+                jsonRecordSet[record].ApptDate = dataFormatter.formatData(jsonRecordSet[record].ApptDate,"date");
+            }
+            res.send(jsonRecordSet);
+        });
 
-//End Real SQL Server API Code
-
+    });
+  
 };

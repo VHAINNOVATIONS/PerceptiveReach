@@ -12,31 +12,30 @@
 var _ = require('lodash');
 var sql = require('mssql');
 var dataFormatter = require('../../components/formatUtil/formatUtil.service.js');
+
 // Get list of things
 exports.index = function(req, res) {
-  res.header("content-type: application/json");
+    res.header("content-type: application/json");
+    var data = [];
 
-  var dbc = require('../../config/db_connection/development.js');
+    var dbc = require('../../config/db_connection/development.js');
     var config = dbc.config;
 
     var id = req.param("id");
     var query = '';
     if (id) {
-        console.log("Registering endpoint: /vetContactData/:id is " + id);
-        query = "SELECT * FROM VeteranRisk ";
+        //console.log("Registering endpoint: /vetEmergencyData/:id is " + id);
+        query = "SELECT * FROM EmergencyContact ";
         query += "WHERE ReachID =  " + id;
-        console.log("Query: " + query);
     } else {
-        console.log("ERROR: ReachID Abbreviation is required."); 
-        res.send("ERROR: ReachID Abbreviation is required.");
+        res.send("ERROR: ReachID is required.");
     }
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
         if (err || !query) { 
-        data = "Error: Database connection failed!";
-        console.log("Database connection failed! " + err); 
-        return; 
+            data = "Error: Database connection failed!";
+            return; 
         }
 
         // Query
@@ -44,22 +43,18 @@ exports.index = function(req, res) {
         request.query(query, function(err, recordset) {
             // ... error checks
             if (err) { 
-            console.log("Query failed! " + err); 
+                console.log("Query failed! " + err); 
             return; 
             }
 
-            console.log(recordset.length);
             var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
-            //console.log(jsonRecordSet);
             for (var record in jsonRecordSet) {
-			    jsonRecordSet[record].Phone = dataFormatter.formatData(jsonRecordSet[record].Phone,"phone");
-			    jsonRecordSet[record].AltPhone = dataFormatter.formatData(jsonRecordSet[record].AltPhone,"phone");
-			    jsonRecordSet[record].SSN = dataFormatter.formatData(jsonRecordSet[record].SSN,"ssn");
-			}
+                jsonRecordSet[record].Phone = dataFormatter.formatData(jsonRecordSet[record].Phone,"phone");
+                jsonRecordSet[record].PhoneWork = dataFormatter.formatData(jsonRecordSet[record].PhoneWork,"phone");
+            }
             res.send(jsonRecordSet);
-            //res.send(recordset);
         });
 
     });
-  
+    
 };

@@ -4,7 +4,7 @@ angular.module('app')
   .factory('widgetDefinitions', function(RandomDataModel,RandomTopNDataModel, RandomTimeSeriesDataModel,
                                     RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel, 
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
-                                    ContactBaseDataModel, ContactEmergencyDataModel, VeteranRosterDataModel,
+                                    ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
                                     PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel,
                                     AppointmentDataModel, DiagnosesDataModel) {
     return [
@@ -62,10 +62,10 @@ angular.module('app')
       },
       {
         name: 'RosterTable',
-        directive: 'wt-veteran-roster-table',
+        directive: 'wt-patient-roster-table',
         settingsModalOptions: {
-        templateUrl: 'client/components/widget/widgets/veteranRosterTable/veteranRosterTableWidgetSettingsTemplate.html',
-        controller: 'VeteranRosterTableWidgetSettingsCtrl'
+        templateUrl: 'client/components/widget/widgets/patientTable/patientTableWidgetSettingsTemplate.html',
+        controller: 'patientTableWidgetSettingsCtrl'
         },
         /*onSettingsClose: function(resultFromModal, widgetModel, dashboardScope) {
           // do something to update widgetModel, like the default implementation:
@@ -75,7 +75,7 @@ angular.module('app')
           // probably do nothing here, since the user pressed cancel
         },*/
         dataAttrName: 'data',
-        dataModelType: VeteranRosterDataModel,
+        dataModelType: PatientDataModel,
         title: 'Veteran Roster by VAMC',
         dataModelOptions: {
           vamc: 1
@@ -142,7 +142,7 @@ angular.module('app')
         name: 'emergency',
         directive: 'wt-emergency-contact',
         dataAttrName: 'data',
-        dataModelType: ContactEmergencyDataModel,
+        dataModelType: EmergencyContactDataModel,
         title: 'Emergency Contact Information',
         dataModelOptions: {
           reachID: 16

@@ -396,6 +396,120 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/patientTable/patientTable.html",
+    "<div>\r" +
+    "\n" +
+    "\t<!--<div id=\"spinner\" style=\"height: 100px;\"> </div>-->\r" +
+    "\n" +
+    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\" id=\"sampleVet\" width=\"100%\">\r" +
+    "\n" +
+    "    \t<thead>\r" +
+    "\n" +
+    "        <tr>\r" +
+    "\n" +
+    "        \t<th ng-repeat=\"column in columns\">{{column.Name}}</th>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"patient in patientList\">\r" +
+    "\n" +
+    "            <td>{{ patient.Name }}</td>\r" +
+    "\n" +
+    "            <td>{{ patient.SSN }}</td>\r" +
+    "\n" +
+    "            <td>{{ patient.HomePhone }}</td>\r" +
+    "\n" +
+    "            <td>{{ patient.DateIdentifiedAsHighRisk }}</td>\r" +
+    "\n" +
+    "            <td>{{ patient.RiskLevel }}</td>\r" +
+    "\n" +
+    "            <td>\r" +
+    "\n" +
+    "            \t<select class='form-control' style='width: 180px;' id=\"vet_{{patient.ReachID}}\">\r" +
+    "\n" +
+    "            \t\t<option value=''></option>\r" +
+    "\n" +
+    "            \t\t<option ng-repeat=\"outreachStatus in outreachStatusList\" value=\"{{outreachStatus.OutReachStatusID}}\">{{outreachStatus.StatusName}}</option>\r" +
+    "\n" +
+    "            \t</select> \r" +
+    "\n" +
+    "            </td>\r" +
+    "\n" +
+    "            <!--<td>{{ patient.OutreachStatus }}</td>-->\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/patientTable/patientTableWidgetSettingsTemplate.html",
+    "<div class=\"modal-header\">\r" +
+    "\n" +
+    "    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
+    "\n" +
+    "  <h3>Widget Options <small>{{widget.title}}</small></h3>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "<div class=\"modal-body\">\r" +
+    "\n" +
+    "    <form name=\"form\" novalidate class=\"form-horizontal\">\r" +
+    "\n" +
+    "        <div class=\"form-group\">\r" +
+    "\n" +
+    "            <label for=\"widgetTitle\" class=\"col-sm-2 control-label\">Title</label>\r" +
+    "\n" +
+    "            <div class=\"col-sm-10\">\r" +
+    "\n" +
+    "                <input type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <label for=\"widgetVAMC\" class=\"col-sm-2 control-label\">VAMC</label>\r" +
+    "\n" +
+    "            <div class=\"col-sm-10\">\r" +
+    "\n" +
+    "                <select class=\"form-control\" ng-model=\"result.dataModel.vamc\">\r" +
+    "\n" +
+    "                    <option ng-repeat=\"vamc in listOfVAMC\" value=\"{{vamc.STA3N}}\">{{vamc.VAMC_Name}}</option>\r" +
+    "\n" +
+    "                </select>\r" +
+    "\n" +
+    "                <!--<input type=\"text\" class=\"form-control\" name=\"widgetVAMC\" ng-model=\"result.dataModel.vamc\">-->\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div ng-if=\"widget.settingsModalOptions.partialTemplateUrl\"\r" +
+    "\n" +
+    "             ng-include=\"widget.settingsModalOptions.partialTemplateUrl\"></div>\r" +
+    "\n" +
+    "    </form>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "<div class=\"modal-footer\">\r" +
+    "\n" +
+    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
+    "\n" +
+    "    <button type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/pieChart/pieChart.html",
     "<div>\r" +
     "\n" +
@@ -489,120 +603,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "      rows=\"items\">\r" +
     "\n" +
     "    </mlhr-table>\r" +
-    "\n" +
-    "</div>"
-  );
-
-  $templateCache.put("client/components/widget/widgets/veteranRosterTable/veteranRosterTable.html",
-    "<div>\r" +
-    "\n" +
-    "\t<!--<div id=\"spinner\" style=\"height: 100px;\"> </div>-->\r" +
-    "\n" +
-    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\" id=\"sampleVet\" width=\"100%\">\r" +
-    "\n" +
-    "    \t<thead>\r" +
-    "\n" +
-    "        <tr>\r" +
-    "\n" +
-    "        \t<th ng-repeat=\"column in columns\">{{column.Name}}</th>\r" +
-    "\n" +
-    "        </tr>\r" +
-    "\n" +
-    "        </thead>\r" +
-    "\n" +
-    "        <tbody>\r" +
-    "\n" +
-    "        <tr ng-repeat=\"veteran in veteranList\">\r" +
-    "\n" +
-    "            <td>{{ veteran.Name }}</td>\r" +
-    "\n" +
-    "            <td>{{ veteran.SSN }}</td>\r" +
-    "\n" +
-    "            <td>{{ veteran.Phone }}</td>\r" +
-    "\n" +
-    "            <td>{{ veteran.DateIdentifiedRisk }}</td>\r" +
-    "\n" +
-    "            <td>{{ veteran.RiskLevel }}</td>\r" +
-    "\n" +
-    "            <td>\r" +
-    "\n" +
-    "            \t<select class='form-control' style='width: 180px;' id=\"vet_{{veteran.ReachID}}\">\r" +
-    "\n" +
-    "            \t\t<option value=''></option>\r" +
-    "\n" +
-    "            \t\t<option ng-repeat=\"outreachStatus in outreachStatusList\" value=\"{{outreachStatus.OutReachStatusID}}\">{{outreachStatus.StatusName}}</option>\r" +
-    "\n" +
-    "            \t</select> \r" +
-    "\n" +
-    "            </td>\r" +
-    "\n" +
-    "            <!--<td>{{ veteran.OutreachStatus }}</td>-->\r" +
-    "\n" +
-    "        </tr>\r" +
-    "\n" +
-    "        </tbody>\r" +
-    "\n" +
-    "    </table>\r" +
-    "\n" +
-    "</div>"
-  );
-
-  $templateCache.put("client/components/widget/widgets/veteranRosterTable/veteranRosterTableWidgetSettingsTemplate.html",
-    "<div class=\"modal-header\">\r" +
-    "\n" +
-    "    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
-    "\n" +
-    "  <h3>Widget Options <small>{{widget.title}}</small></h3>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div class=\"modal-body\">\r" +
-    "\n" +
-    "    <form name=\"form\" novalidate class=\"form-horizontal\">\r" +
-    "\n" +
-    "        <div class=\"form-group\">\r" +
-    "\n" +
-    "            <label for=\"widgetTitle\" class=\"col-sm-2 control-label\">Title</label>\r" +
-    "\n" +
-    "            <div class=\"col-sm-10\">\r" +
-    "\n" +
-    "                <input type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "            <label for=\"widgetVAMC\" class=\"col-sm-2 control-label\">VAMC</label>\r" +
-    "\n" +
-    "            <div class=\"col-sm-10\">\r" +
-    "\n" +
-    "                <select class=\"form-control\" ng-model=\"result.dataModel.vamc\">\r" +
-    "\n" +
-    "                    <option ng-repeat=\"vamc in listOfVAMC\" value=\"{{vamc.VAMCID}}\">{{vamc.VAMC}}</option>\r" +
-    "\n" +
-    "                </select>\r" +
-    "\n" +
-    "                <!--<input type=\"text\" class=\"form-control\" name=\"widgetVAMC\" ng-model=\"result.dataModel.vamc\">-->\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
-    "        <div ng-if=\"widget.settingsModalOptions.partialTemplateUrl\"\r" +
-    "\n" +
-    "             ng-include=\"widget.settingsModalOptions.partialTemplateUrl\"></div>\r" +
-    "\n" +
-    "    </form>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div class=\"modal-footer\">\r" +
-    "\n" +
-    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
-    "\n" +
-    "    <button type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
     "\n" +
     "</div>"
   );
