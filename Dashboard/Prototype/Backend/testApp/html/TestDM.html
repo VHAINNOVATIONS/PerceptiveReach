@@ -1,0 +1,170 @@
+<html>
+    <head>
+        <title>Test Message</title>
+<!--         <LINK href="/css/example.css" rel="stylesheet" type="text/css"/> -->
+        <link rel="stylesheet" type="text/css" href="/css/jquery-ui.min.css" />
+        <script type="text/javascript" src="/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="/js/jquery.form.js"></script>
+        <script type="text/javascript" src="/js/rollups/hmac-sha256.js"></script>
+        <script type="text/javascript" src="/js/components/enc-base64-min.js"></script>
+        <script type="text/javascript" src="/js/date.format.js"></script>
+        <script type="text/javascript">
+            var messagesSent = 0;
+
+            var attachments = 0;
+
+            var attempts = 0;
+
+            var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+
+            var start = new Date().getTime();
+            var end = new Date().getTime();
+
+            function encode64(input) {
+               if (!String(input).length) return false;
+               var output = "";
+               var chr1, chr2, chr3;
+               var enc1, enc2, enc3, enc4;
+               var i = 0;
+
+               do {
+                  chr1 = input.charCodeAt(i++);
+                  chr2 = input.charCodeAt(i++);
+                  chr3 = input.charCodeAt(i++);
+
+                  enc1 = chr1 >> 2;
+                  enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+                  enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+                  enc4 = chr3 & 63;
+
+                  if (isNaN(chr2)) {
+                     enc3 = enc4 = 64;
+                  } else if (isNaN(chr3)) {
+                     enc4 = 64;
+                  }
+
+                  output = output + keyStr.charAt(enc1) + keyStr.charAt(enc2) + 
+                     keyStr.charAt(enc3) + keyStr.charAt(enc4);
+               } while (i < input.length);
+               
+               return output;
+            }
+
+            function addRow() {
+                attachments++;
+                var refnode = $('#attach_div');
+                var attach = $('<div class="add_attach"><label>File:</label> <input class="attachmentItem" type="file" class="attachment" name="attachment'+attachments+'" id="attachment'+attachments+'"/><a href="#" onClick="$(this).parent().remove();">Remove</a></div>');
+                attach.insertBefore(refnode);
+            };
+            
+            $(function() {
+                $("#send").click(function() {
+                	console.log("clicked the send button");
+                    $("#sender").css("background-color","#fff");
+                    $("#to").css("background-color","#fff");
+                    $("#messageForm").ajaxSubmit({  
+                      type: "POST",  
+                      url: "https://api.demo.careinbox.com/direct/send/format/json",  
+                      beforeSend: function(request){
+                        start = new Date().getTime();
+                        //use this block if you want to send UTC stamp
+                        /*var d = Date.now();
+                        var currentDate = Math.round(d / 1000);*/
+                        //use this block if you want to send normal timestamp with timezone
+                        var d = new Date();
+                        var currentDate = d.format("mm/dd/yyyy HH:MM:ss Z");
+                    
+                        var hashString = CryptoJS.HmacSHA256("POST\n"+currentDate+"\nmultipart/form-data\n/direct/send/format/json","b5a5273e6b71ad60dbb84d04bd33f5d91767fec9da6e737a78b00c1b3915b662");
+                        var base64 = encode64(""+hashString);
+                        var authorization = "DAAS 8a674074b98cb076cda211b41034560bea5a9f36bed76d7fcb294cd95b9ef137:"+base64;
+                        request.setRequestHeader("Authorization", authorization);
+                        request.setRequestHeader("X-Daas-Date", currentDate);
+                        attempts++;
+                        var appendStr = "<div class=\"innerPost break-word\" id=\"post"+attempts+"\">"+
+                                                "<div class=\"inner\"><label>"+attempts+".</label></div>"+
+                                                "<div class=\"inner\"><label>Custom Request Headers</label></div>"+
+                                                "<div class=\"inner indent\"><label>Authentication: </label>"+authorization+"</div>"+
+                                                "<div class=\"inner indent\"><label>DaasDate: </label>"+currentDate+"</div>"+
+                                                "<div class=\"inner\"><label>Content</label></div>"+
+                                                "<div class=\"inner indent\"><label>Mailtype: </label>"+$('#mailtype').val()+"</div>"+
+                                                "<div class=\"inner indent\"><label>Priority: </label>"+$('#priority').val()+"</div>"+
+                                                "<div class=\"inner indent\"><label>To: </label>"+$('#to').val()+"</div>"+
+                                                "<div class=\"inner indent\"><label>Sender: </label>"+$('#sender').val()+"</div>"+
+                                                "<div class=\"inner indent\"><label>Subject: </label>"+$('#subject').val()+"</div>"+
+                                                "<div class=\"inner indent\"><label>Body: </label>"+$('#body').val()+"</div>"+
+                                                "<div class=\"inner\"><label>Files</label></div>";
+                        $('.attachmentItem').each(function(){
+                            if ($(this).val()){
+                                appendStr += "<div class=\"inner indent\"><label>"+$(this).attr('name')+": </label>"+$(this).val().mb_split('\\').pop()+"</div>";
+                            }
+                        });
+                        appendStr += "</div>";
+                        $('#postWrapper').append(appendStr);
+                      },
+                      success: function(data, status, jqXHR) { 
+                        $('#success').html(data['message']).slideDown(500).delay(10000).slideUp(500);
+                        end = new Date().getTime();
+                        $('#responseWrapper').append("<div class=\"inner break-word\"><label>"+attempts+". "+status+" - </label>"+jqXHR.responseText + ", Execution time: "+(end - start)+" ms</div>");
+                        $('#post'+attempts).css("background", "#E0FFD6");
+                        $('#post'+attempts).css("border", "1px solid #008A1A");
+                        $('.add_attach').remove();
+                        $('#messageForm')[0].reset();
+                        attachments = 0;
+                        messagesSent++;
+                      },
+                      error: function (jqXHR, textStatus, errorThrown) {
+                        end = new Date().getTime();
+                        $('#error').html('<div class="imageText">' + $.parseJSON(jqXHR.responseText)['message'] + '</div>').slideDown(500).delay(10000).slideUp(500);
+                        $('#responseWrapper').append("<div class=\"inner\"><label>"+attempts+". "+textStatus+" - </label>"+jqXHR.responseText+", Execution time: "+(end - start)+" ms</div>");
+                        $('#post'+attempts).css("background", "#fef1ec");
+                        $('#post'+attempts).css("border", "1px solid #990000");
+                        for (var i = 0; i < $.parseJSON(jqXHR.responseText)['fields'].length; i++){
+                            $('#'+$.parseJSON(jqXHR.responseText)['fields'][i]).css("background-color", "#fef1ec");
+                        }
+                      }
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Direct Mail</h1>
+            <div id="success">Message sent!</div>
+            <div id="error">Message failed!</div>
+            <div class="wrapper">
+                <form enctype="multipart/form-data" id="messageForm" action="/direct/send" method="POST">
+                    <label>Mailtype:</label> <select name="mailtype" id="mailtype">
+                                                <option value="HTML">HTML</option>
+                                                <option value="TEXT">Text</option>
+                                             </select> 
+                    <label class="left-spacing">Priority:</label> <select name="priority" id="priority">
+                                                    <option value="5">Low</option>
+                                                    <option value="3" SELECTED>Medium</option>
+                                                    <option value="1">High</option>
+                                                       </select><br/>
+                    <label>Sender:</label> <input type="text" name="sender" id="sender"> <label class="left-spacing">To:</label> <input type="text" name="to" id="to"><br/>
+                    <label>Subject:</label> <input type="text" class="full" name="subject" id="subject"><br/>
+                    <label>Body:</label> <textarea name="body" id="body"></textarea><br/>
+                    <div class="attachment"><label>File:</label> <input class="attachmentItem" type="file" name="attachment0" id="attachment0"/></div>
+                    <div id="attach_div"><label>&nbsp;</label><a href="#" onclick="javascript:addRow();">Add additional file</a></div>
+                </form>
+            </div>
+            <div class="button-container"><input id="send" type="button" class="button json" value="Send"></div>
+        </div>
+        <br/><br/>
+        <div id="post" class="message-container">
+            <h1>Post Request</h1>
+            <div id="postWrapper" class="wrapper">
+            
+            </div>
+        </div>
+        <br/><br/>
+        <div id="response" class="message-container">
+            <h1>Response Messages</h1>
+            <div id="responseWrapper" class="wrapper">
+            
+            </div>
+        </div>
+    </body>
