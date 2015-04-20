@@ -26,12 +26,12 @@ module.exports = function(app) {
   app.use(bodyParser.json());
   app.use(methodOverride());
   app.use(cookieParser());
-  
 
   app.use(function (req, res, next) {
     var nodeSSPI = require('node-sspi');
     var nodeSSPIObj = new nodeSSPI({
       offerSSPI: false,
+      maxLoginAttemptsPerConnection: 1,
       //offerBasic: true,
       retrieveGroups: true
     });
@@ -39,22 +39,39 @@ module.exports = function(app) {
     if(req.url.indexOf("/api/") != -1 || req.url.indexOf("/auth/local") != -1){
       //req.header("Authorization", "Basic ");
       //console.log("authorization-header before: ", req.header("Authorization"));
-      //res.header("WWW-Authenticate", "xBasic");
+      //res.header("WWW-Authenticate", "");
+      //console.log("Before-req: ", req);
+      //console.log("Before-response: ", res);
       nodeSSPIObj.authenticate(req, res, function(err){
+        //console.log("req: ", req);
+        //console.log("response_headers: ", res._headers);
+        //res._headers['www-authenticate'] = [ 'xBasic' ]; //res.header("WWW-Authenticate", "");
+        //res.removeHeader('WWW-Authenticate'); 
+        //res.header("WWW-Authenticate","xBasic");
+        //console.log("responseAfter: ", res);
         //req.header("Authorization", "Basic AAAAAAAAAAAAAAAAAAA=");
         
         //console.log("WWW-Authenticate", res.header("WWW-Authenticate"));
         //console.log("authorization-header after: ", req.header("Authorization"));
 
         if(err)
-          console.log("errors: ", err);
+          console.log("NodeSSPI errors: ", err);
         res.finished || next();
       });
     }
     else
       next();    
   });
-
+  
+  /*app.use(function (req, res, next) {
+    if(res._headers['www-authenticate']){
+      console.log("response_headers: ", res._headers);
+      res._headers['www-authenticate'] = [ 'xBasic' ]; 
+      console.log("responseAfter: ", res);  
+    }
+    
+    res.finished || next();  
+  });*/
   /*app.use(function (req, res, next) {
     var nodeSSPI = require('node-sspi');
     var nodeSSPIObj = new nodeSSPI({

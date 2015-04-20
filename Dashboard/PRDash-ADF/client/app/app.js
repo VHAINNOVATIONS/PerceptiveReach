@@ -26,7 +26,7 @@ angular.module('app', [
     'btford.markdown'
   ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
-    //$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     //$httpProvider.defaults.headers.common['Authorization'] = '';
     /*
     $routeProvider
@@ -40,8 +40,8 @@ angular.module('app', [
         function error(response) {
             var status = response.status;
  
-            if (status === 401) {
-              console.log("401 received" + repsonse);
+            if (status === 401 || status == 403) {
+              console.log("401/403 received" + repsonse);
                 var deferred = $q.defer();
                 var req = {
                     config: response.config,
@@ -81,12 +81,21 @@ angular.module('app', [
         if (response.status === 401){
           console.log("Response 401");
         }
+        if (response.status === 403){
+          console.log("Response 403");
+        }
         return response || $q.when(response);
       },
       // Intercept 401s and redirect you to login
       responseError: function(response) {
         if(response.status === 401) {
           console.log("Response Error 401", response);
+          $location.path('/login');
+          // remove any stale tokens
+          $cookieStore.remove('token');
+        }
+        if(response.status === 403) {
+          console.log("Response Error 403", response);
           $location.path('/login');
           // remove any stale tokens
           $cookieStore.remove('token');
