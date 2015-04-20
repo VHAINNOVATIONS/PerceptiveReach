@@ -72,6 +72,11 @@
                         /*var d = Date.now();
                         var currentDate = Math.round(d / 1000);*/
                         //use this block if you want to send normal timestamp with timezone
+
+                        
+                        //2015-04-19 Ref: Current Error - Access Control
+                        // res.setHeader("Access-Control-Allow-Origin", "*");
+
                         var d = new Date();
                         var currentDate = d.format("mm/dd/yyyy HH:MM:ss Z");
                     
