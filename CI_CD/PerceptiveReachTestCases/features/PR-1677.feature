@@ -9,4 +9,4 @@ Then I should see "Perceptive Reach Login"
 Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011q1123"
 And I click on "Login" button
-Then I should see "Enter valid userid and password"
+Then I should see "Then I should see "Invalid username/password combination. Please try again."
