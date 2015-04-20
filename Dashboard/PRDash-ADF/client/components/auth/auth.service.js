@@ -36,8 +36,8 @@ angular.module('app')
               console.log(data);
               var response = { success: data };
               $rootScope.globals['userObj'] = data;
-              console.log("inside rootScoope.globals.userObj: ",$rootScope.globals.userObj);
-              console.log("inside rootScoope.globals: ",$rootScope.globals);
+              //console.log("inside rootScoope.globals.userObj: ",$rootScope.globals.userObj);
+              //console.log("inside rootScoope.globals: ",$rootScope.globals);
              /* $cookieStore.put('token', data.token);
               currentUser = data.user; //User.get();
               console.log(currentUser);
@@ -50,7 +50,12 @@ angular.module('app')
               this.logout();
               deferred.reject(err);
               return cb(err);*/
-              var response = { error: err };
+              var properMessage = '';
+              if (err.indexOf('Max login attempts reached') != -1)
+                properMessage = 'Invalid username/password combination. Please try again.';
+              else
+                properMessage = err;
+              var response = {message: properMessage};
               callback(response);
             });
 

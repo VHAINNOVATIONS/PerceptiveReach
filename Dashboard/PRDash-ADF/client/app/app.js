@@ -89,13 +89,13 @@ angular.module('app', [
       // Intercept 401s and redirect you to login
       responseError: function(response) {
         if(response.status === 401) {
-          console.log("Response Error 401", response);
+          //console.log("Response Error 401", response);
           $location.path('/login');
           // remove any stale tokens
           $cookieStore.remove('token');
         }
         if(response.status === 403) {
-          console.log("Response Error 403", response);
+          //console.log("Response Error 403", response);
           $location.path('/login');
           // remove any stale tokens
           $cookieStore.remove('token');

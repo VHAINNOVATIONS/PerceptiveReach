@@ -16,7 +16,8 @@ router.post('/', function(req, res, next) {
     console.log("signedToken: " + token)
     res.json({token: token, user: user});
   })(req, res, next)*/
-	var user = {username: req.connection.user, userRole: "admin"};
+	var userObj = req.connection.user.split("\\");
+	var user = {username: userObj[1], domain: userObj[0], userRole: "admin"};
 	res.json(user);
 });
 

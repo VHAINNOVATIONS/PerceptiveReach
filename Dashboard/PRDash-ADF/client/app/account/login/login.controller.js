@@ -17,7 +17,7 @@ angular.module('app')
               Auth.Login($scope.user.email, $scope.user.password, function(response) {
                   if(response.success) {
                       Auth.SetCredentials($scope.user.email, $scope.user.password);
-                      console.log("LoginController rootScoope.globals: ",$rootScope.globals);
+                      //console.log("LoginController rootScoope.globals: ",$rootScope.globals);
                       $location.path('/');
                   } else {
                       $scope.errors.other = response.message;
