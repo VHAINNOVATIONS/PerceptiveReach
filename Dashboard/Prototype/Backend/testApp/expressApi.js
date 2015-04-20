@@ -1,4 +1,6 @@
 var sql = require('mssql');
+var querystring = require('querystring');
+var http = require('http');
 
 var config = {
     user: 'sa',
@@ -47,7 +49,7 @@ var connection = new sql.Connection(config, function(err) {
               //  $("#send").click(function() {
                     $("#messageForm").ajaxSubmit({  
                       type: "POST",  
-                      url: "https://api.demo.careinbox.com/direct/send/format/json",  
+                      url: "https:///api.test1.direct.va.gov/direct/send/format/json",  
                       beforeSend: function(request){
                         start = new Date().getTime();
                         //use this block if you want to send UTC stamp
@@ -119,7 +121,83 @@ var connection = new sql.Connection(config, function(err) {
 });
 
 
+function PostCode(codestring) {
+  
+  start = new Date().getTime();
+  //use this block if you want to send UTC stamp
+  /*var d = Date.now();
+  var currentDate = Math.round(d / 1000);*/
+  //use this block if you want to send normal timestamp with timezone
 
+
+  //2015-04-19 Ref: Current Error - Access Control
+  // res.setHeader("Access-Control-Allow-Origin", "*");
+
+  var d = new Date();
+  var currentDate = d.format("mm/dd/yyyy HH:MM:ss Z");
+
+  var hashString = CryptoJS.HmacSHA256("POST\n"+currentDate+"\nmultipart/form-data\n/direct/send/format/json","b5a5273e6b71ad60dbb84d04bd33f5d91767fec9da6e737a78b00c1b3915b662");
+  var base64 = encode64(""+hashString);
+  var authorization = "DAAS 8a674074b98cb076cda211b41034560bea5a9f36bed76d7fcb294cd95b9ef137:"+base64;
+
+// Build the post string from an object
+  var post_data = querystring.stringify({
+      'compilation_level' : 'ADVANCED_OPTIMIZATIONS',
+      'output_format': 'json',
+      'output_info': 'compiled_code',
+        'warning_level' : 'QUIET',
+        'js_code' : codestring
+  });
+
+  // An object of options to indicate where to post to
+  var post_options = {
+      host: 'https://api.demo.careinbox.com',
+      port: '80',
+      path: '/direct/send/format/json',
+      method: 'POST',
+      headers: {
+          'Authorization': authorization,
+          'X-Daas-Date': currentDate,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Length': post_data.length,
+          'Access-Control-Allow-Origin': *,
+      }
+  };
+
+  // Set up the request
+  var post_req = http.request(post_options, function(res) {
+      res.setEncoding('utf8');
+      res.on('data', function (chunk) {
+          console.log('Response: ' + chunk);
+      });
+  });
+
+  // post the data
+  post_req.write(post_data);
+  post_req.end();
+
+}
+
+// This is an async file read
+fs.readFile('LinkedList.js', 'utf-8', function (err, data) {
+  if (err) {
+    // If this were just a small part of the application, you would
+    // want to handle this differently, maybe throwing an exception
+    // for the caller to handle. Since the file is absolutely essential
+    // to the program's functionality, we're going to exit with a fatal
+    // error instead.
+    console.log("FATAL An error occurred trying to read in the file: " + err);
+    process.exit(-2);
+  }
+  // Make sure there's data before we post it
+  if(data) {
+    PostCode(data);
+  }
+  else {
+    console.log("No data to post");
+    process.exit(-1);
+  }
+});
 
 
 
