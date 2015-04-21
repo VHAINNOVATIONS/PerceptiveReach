@@ -160,7 +160,7 @@ function PostCode(codestring) {
           'X-Daas-Date': currentDate,
           'Content-Type': 'application/x-www-form-urlencoded',
           'Content-Length': post_data.length,
-          'Access-Control-Allow-Origin': *,
+          'Access-Control-Allow-Origin': '*'
       }
   };
 
