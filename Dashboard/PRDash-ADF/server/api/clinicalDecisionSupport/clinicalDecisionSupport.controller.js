@@ -63,7 +63,6 @@ exports.index = function(req, res) {
         }
 
         // Query
-        console.log("~~~~~~~~~~~~~~~~~~:"+query);
         var request = new sql.Request(connection); // or: var request = connection.request();
         request.query(query, function(err, recordset) {
             // ... error checks
