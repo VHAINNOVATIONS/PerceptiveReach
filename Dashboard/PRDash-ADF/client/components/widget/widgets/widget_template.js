@@ -9,8 +9,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th>Type</th>\r" +
-    "\n" +
     "            <th>Date</th>\r" +
     "\n" +
     "            <th>Cancelled</th>\r" +
@@ -23,11 +21,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr ng-repeat=\"appt in data\">\r" +
     "\n" +
-    "            <td>{{ appt.ApptType }}</td>\r" +
+    "            <td>{{ appt.ApptDate }}</td>\r" +
     "\n" +
-    "            <td>{{ appt.Apptdate }}</td>\r" +
-    "\n" +
-    "            <td>{{ appt.CancelationType }}</td>\r" +
+    "            <td>{{ appt.CancelNoShowCodeDesc }}</td>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -103,11 +99,13 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    \t<b>Last 4 of SSN:</b> {{data[0].SSN}}<br>\r" +
     "\n" +
-    "    \t<b>Phone:</b> {{data[0].Phone}}<br>\r" +
+    "    \t<b>Cell Phone:</b> {{data[0].CellPhone}}<br>\r" +
     "\n" +
-    "    \t<b>Alternate Phone:</b> {{data[0].AltPhone}}<br>\r" +
+    "        <b>Home Phone:</b> {{data[0].HomePhone}}<br>\r" +
     "\n" +
-    "    \t<b>Address:</b> {{data[0].Address}}<br>\r" +
+    "    \t<b>Work Phone:</b> {{data[0].WorkPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].Address1}}<br>\r" +
     "\n" +
     "    \t<b>City:</b> {{data[0].City}}<br>\r" +
     "\n" +
@@ -149,9 +147,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr ng-repeat=\"diagnosis in data\">\r" +
     "\n" +
-    "            <td>{{ diagnosis.Diagnosis }}</td>\r" +
+    "            <td>{{ diagnosis.ICD_Desc }}</td>\r" +
     "\n" +
-    "            <td>{{ diagnosis.ICD }}</td>\r" +
+    "            <td>{{ diagnosis.ICD_Code }}</td>\r" +
     "\n" +
     "            <td>{{ diagnosis.DiagnosisDate }}</td>\r" +
     "\n" +
@@ -261,7 +259,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr ng-repeat=\"meds in data\">\r" +
     "\n" +
-    "            <td>{{ meds.Name }}</td>\r" +
+    "            <td>{{ meds.MedicationName }}</td>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +

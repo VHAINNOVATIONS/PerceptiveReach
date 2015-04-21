@@ -76,7 +76,7 @@ angular.module('app')
         },*/
         dataAttrName: 'data',
         dataModelType: PatientDataModel,
-        title: 'Veteran Roster by VAMC',
+        title: 'Patient Roster by VAMC',
         dataModelOptions: {
           vamc: 1
         },
@@ -132,7 +132,7 @@ angular.module('app')
         directive: 'wt-contact',
         dataAttrName: 'data',
         dataModelType: ContactBaseDataModel,
-        title: 'Veteran Contact',
+        title: 'Patient Contact',
         size: {
           width: '25%',
           height: '250px'

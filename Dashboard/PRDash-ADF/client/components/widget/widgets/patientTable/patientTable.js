@@ -21,7 +21,7 @@ angular.module('ui.widgets')
     return {
       restrict: 'EAC',
       replace: true,
-      templateUrl: 'client/components/widget/widgets/patientRosterTable/patientRosterTable.html',
+      templateUrl: 'client/components/widget/widgets/patientTable/patientTable.html',
       
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder, DTInstances) {
         //console.log("inside patient roster controller");
@@ -161,7 +161,7 @@ angular.module('ui.widgets')
                       $(this).addClass('selected');
                       // get common data object
                       var commonData = scope.widget.dataModelOptions.common;
-                      //console.log(commonData);
+                      console.log(commonData);
                       // update common data object with new patient object
                       commonData.data.patientObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
                       // broadcast message throughout system

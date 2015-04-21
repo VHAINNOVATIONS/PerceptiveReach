@@ -23,7 +23,7 @@ exports.index = function(req, res) {
     var id = req.param("id");
     var query = '';
     if (id) {
-        query = "SELECT * FROM PatientMedications"
+        query = "SELECT * FROM PatientMedications "
         query += "WHERE ReachID =  " + id;
     } else {
         res.send("ERROR: ReachID  is required.");
@@ -37,6 +37,7 @@ exports.index = function(req, res) {
         }
 
         // Query
+        console.log("Medication Query: "+query);
         var request = new sql.Request(connection);
         request.query(query, function(err, recordset) {
             // ... error checks
@@ -45,6 +46,7 @@ exports.index = function(req, res) {
             return; 
             }
 
+            console.log(recordset);
             var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
             for (var record in jsonRecordSet) {
                 //If formatting is needed in the future...put it here

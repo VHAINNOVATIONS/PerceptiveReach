@@ -22,7 +22,7 @@ exports.index = function(req, res) {
     var id = req.param("id");
     var query = '';
     if (id) {
-        query = "SELECT * FROM Appointments a INNER JOIN Ref_VistACancelNoShowCode r ON a.CancelNoShowCode = r.CancelNoShowCodeID "
+        query = "SELECT * FROM Appointments a LEFT OUTER JOIN Ref_VistACancelNoShowCode r ON a.CancelNoShowCode = r.CancelNoShowCodeID "
         query += "WHERE a.ReachID =  " + id;
     } else {
         res.send("ERROR: ReachID  is required.");

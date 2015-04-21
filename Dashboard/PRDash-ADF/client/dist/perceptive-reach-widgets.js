@@ -622,7 +622,7 @@ angular.module('ui.models')
           this.updateScope(data);
         }
         else {
-          $http.get('/api/patientContactData?id='+ this.reachID)
+          $http.get('/api/patientContact?id='+ this.reachID)
           .success(function(dataset) {
                   data = dataset;
                   this.updateScope(data);
@@ -719,17 +719,25 @@ angular.module('ui.models')
 
     return PatientFlagDataModel;
   })
-.factory('MedicationDataModel', function ($http, WidgetDataModel) {
+.factory('MedicationDataModel', function ($http, CommonDataModel) {
     function MedicationDataModel() {
     }
 
-    MedicationDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    MedicationDataModel.prototype.constructor = WidgetDataModel;
+    MedicationDataModel.prototype = Object.create(CommonDataModel.prototype);
+    MedicationDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(MedicationDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
 
         this.updateScope('-');
         this.getData();
@@ -739,7 +747,7 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/medicationData')
+        $http.get('/api/medicationData?id='+ this.reachID)
         .success(function(dataset) {
                 data = dataset;
                 this.updateScope(data);
@@ -747,7 +755,7 @@ angular.module('ui.models')
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
 
@@ -2630,7 +2638,7 @@ angular.module('ui.widgets')
     return {
       restrict: 'EAC',
       replace: true,
-      templateUrl: 'client/components/widget/widgets/patientRosterTable/patientRosterTable.html',
+      templateUrl: 'client/components/widget/widgets/patientTable/patientTable.html',
       
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder, DTInstances) {
         //console.log("inside patient roster controller");
@@ -2770,7 +2778,7 @@ angular.module('ui.widgets')
                       $(this).addClass('selected');
                       // get common data object
                       var commonData = scope.widget.dataModelOptions.common;
-                      //console.log(commonData);
+                      console.log(commonData);
                       // update common data object with new patient object
                       commonData.data.patientObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
                       // broadcast message throughout system
@@ -3088,8 +3096,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th>Type</th>\r" +
-    "\n" +
     "            <th>Date</th>\r" +
     "\n" +
     "            <th>Cancelled</th>\r" +
@@ -3102,11 +3108,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr ng-repeat=\"appt in data\">\r" +
     "\n" +
-    "            <td>{{ appt.ApptType }}</td>\r" +
+    "            <td>{{ appt.ApptDate }}</td>\r" +
     "\n" +
-    "            <td>{{ appt.Apptdate }}</td>\r" +
-    "\n" +
-    "            <td>{{ appt.CancelationType }}</td>\r" +
+    "            <td>{{ appt.CancelNoShowCodeDesc }}</td>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -3182,11 +3186,13 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    \t<b>Last 4 of SSN:</b> {{data[0].SSN}}<br>\r" +
     "\n" +
-    "    \t<b>Phone:</b> {{data[0].Phone}}<br>\r" +
+    "    \t<b>Cell Phone:</b> {{data[0].CellPhone}}<br>\r" +
     "\n" +
-    "    \t<b>Alternate Phone:</b> {{data[0].AltPhone}}<br>\r" +
+    "        <b>Home Phone:</b> {{data[0].HomePhone}}<br>\r" +
     "\n" +
-    "    \t<b>Address:</b> {{data[0].Address}}<br>\r" +
+    "    \t<b>Work Phone:</b> {{data[0].WorkPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].Address1}}<br>\r" +
     "\n" +
     "    \t<b>City:</b> {{data[0].City}}<br>\r" +
     "\n" +
@@ -3228,9 +3234,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr ng-repeat=\"diagnosis in data\">\r" +
     "\n" +
-    "            <td>{{ diagnosis.Diagnosis }}</td>\r" +
+    "            <td>{{ diagnosis.ICD_Desc }}</td>\r" +
     "\n" +
-    "            <td>{{ diagnosis.ICD }}</td>\r" +
+    "            <td>{{ diagnosis.ICD_Code }}</td>\r" +
     "\n" +
     "            <td>{{ diagnosis.DiagnosisDate }}</td>\r" +
     "\n" +
@@ -3340,7 +3346,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr ng-repeat=\"meds in data\">\r" +
     "\n" +
-    "            <td>{{ meds.Name }}</td>\r" +
+    "            <td>{{ meds.MedicationName }}</td>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +

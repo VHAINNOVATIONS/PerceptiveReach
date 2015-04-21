@@ -25,7 +25,7 @@ exports.index = function(req, res) {
     var guideType = req.param("guideType");
     var riskLevel = req.param("riskLevel");
     var query = '';
-    var select = "SELECT CDSG.CDSG_ID, CDSG.Features, CDSG.Action, CDSG.GuidelineType, CDSG.RiskLevel, RL.Risk_Name, RF.GuidelineURL, RF.ToolkitURL FROM ClinicalDecisionSupoortGuideline As CDSG INNER JOIN  RiskFactors As RF ON CDSG.GuidelineType = RF.RiskFactorCode INNER JOIN Ref_RiskLevel As RL ON RL.Risk_ID = CDSG.RiskLevel"; 
+    var select = "SELECT CDSG.CDSG_ID, CDSG.Features, CDSG.Action, CDSG.GuidelineType, CDSG.RiskLevel, RL.RiskLevelDesc, RF.GuidelineURL, RF.ToolkitURL FROM ClinicalDecisionSupoortGuideline As CDSG INNER JOIN  RiskFactors As RF ON CDSG.GuidelineType = RF.RiskFactorCode INNER JOIN Ref_RiskLevel As RL ON RL.RiskLevelID = CDSG.RiskLevel"; 
     //query += "ReachID, vamc.VAMC FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE ";
     if (guideType) {
         //console.log("Registering endpoint: /clinicalDecisionSupport/:guideType is " + guideType);
@@ -63,6 +63,7 @@ exports.index = function(req, res) {
         }
 
         // Query
+        console.log("~~~~~~~~~~~~~~~~~~:"+query);
         var request = new sql.Request(connection); // or: var request = connection.request();
         request.query(query, function(err, recordset) {
             // ... error checks

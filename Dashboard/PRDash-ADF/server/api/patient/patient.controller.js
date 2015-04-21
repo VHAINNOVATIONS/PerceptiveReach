@@ -25,12 +25,12 @@ exports.index = function(req, res) {
     var id = req.param("id");
     var score = req.param("score");
     var query = '';
-    var select = "SELECT ReachID, FirstName, LastName, SSN, HomePhone, DateIdentifiedAsHighRisk, CASE WHEN RiskLevel = 1 THEN 'High' WHEN RiskLevel = 2 THEN 'Medium' END 'RiskLevel', RiskLevel AS RiskLevelID, OutreachStatus"; 
+    var select = "SELECT p.ReachID, FirstName, LastName, SSN, HomePhone, DateIdentifiedAsHighRisk, CASE WHEN RiskLevel = 1 THEN 'High' WHEN RiskLevel = 2 THEN 'Medium' END 'RiskLevel', RiskLevel AS RiskLevelID, OutreachStatus"; 
     //query += "ReachID, vamc.VAMC FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE ";
     if (id) {
         //console.log("Registering endpoint: /veteranRoster/:id is " + id);
         //query += "vamc.vamcID = " + id;
-        query += select + ", PatientStation.sta3N " 
+        query += select + ", ps.sta3N " 
                 + "FROM  Patient p INNER JOIN PatientStation ps ON p.ReachID = ps.ReachID "
                 + "WHERE p.RiskLevel in (1,2) and ps.sta3N = " + id;
         if (score) {
@@ -59,7 +59,9 @@ exports.index = function(req, res) {
 
         // Query
         var request = new sql.Request(connection); // or: var request = connection.request();
+        //console.log("Patient Query:" + query);
         request.query(query, function(err, recordset) {
+            //console.log(recordset);
             // ... error checks
             if (err) { 
             //console.log("Query failed! -- " + query); 
@@ -68,7 +70,7 @@ exports.index = function(req, res) {
 
             //console.log(recordset.length);
             var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
-            ////console.log(jsonRecordSet);
+            //console.log(jsonRecordSet);
             for (var patient in jsonRecordSet) {
                 jsonRecordSet[patient].SSN = dataFormatter.formatData(jsonRecordSet[patient].SSN,"ssn");
                 jsonRecordSet[patient].HomePhone = dataFormatter.formatData(jsonRecordSet[patient].HomePhone,"phone");

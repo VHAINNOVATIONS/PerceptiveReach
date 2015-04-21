@@ -283,7 +283,7 @@ angular.module('ui.models')
           this.updateScope(data);
         }
         else {
-          $http.get('/api/patientContactData?id='+ this.reachID)
+          $http.get('/api/patientContact?id='+ this.reachID)
           .success(function(dataset) {
                   data = dataset;
                   this.updateScope(data);
@@ -380,17 +380,25 @@ angular.module('ui.models')
 
     return PatientFlagDataModel;
   })
-.factory('MedicationDataModel', function ($http, WidgetDataModel) {
+.factory('MedicationDataModel', function ($http, CommonDataModel) {
     function MedicationDataModel() {
     }
 
-    MedicationDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    MedicationDataModel.prototype.constructor = WidgetDataModel;
+    MedicationDataModel.prototype = Object.create(CommonDataModel.prototype);
+    MedicationDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(MedicationDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
 
         this.updateScope('-');
         this.getData();
@@ -400,7 +408,7 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/medicationData')
+        $http.get('/api/medicationData?id='+ this.reachID)
         .success(function(dataset) {
                 data = dataset;
                 this.updateScope(data);
@@ -408,7 +416,7 @@ angular.module('ui.models')
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
 
