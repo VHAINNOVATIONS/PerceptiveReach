@@ -101,10 +101,12 @@ angular.module('ui.models')
               var selected = " selected='selected'";
               for(var outreachStat in outreachStatus){
                 if(patientsBysta3N[veteran].OutreachStatus == outreachStatus[outreachStat].OutReachStatusID)
-                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + selected + ">" + outreachStatus[outreachStat].StatusName + "</option>";
-                else
-                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusName + "</option>";
-                options += temp;
+                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + selected + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
+                else{
+                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
+                  console.log("outreachStatusString: ",  temp);
+                }
+                options += temp;                
               }
               var select = "<select class='form-control' style='width: 180px;' id='vet_" + patientsBysta3N[veteran].ReachID + "'><option value=''></option>"+ options+ "</select>";
               //record.push(String(select));
@@ -121,7 +123,7 @@ angular.module('ui.models')
       },
 
       saveOutreachData: function (outreachStatus, veteranID) {
-        $http.put('/api/veteranRoster?vetReachID=' + veteranID, {'outreachStatus': outreachStatus})
+        $http.put('/api/patient?vetReachID=' + veteranID, {'outreachStatus': outreachStatus})
         .success(function(data) {
           //alert(data);
         });  

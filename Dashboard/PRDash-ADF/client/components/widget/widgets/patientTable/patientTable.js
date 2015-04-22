@@ -161,9 +161,11 @@ angular.module('ui.widgets')
                       $(this).addClass('selected');
                       // get common data object
                       var commonData = scope.widget.dataModelOptions.common;
-                      console.log(commonData);
+                      console.log("CommonDataBeforeClick: ", commonData);
                       // update common data object with new patient object
-                      commonData.data.patientObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
+                      console.log("ReachID Vet Selected: ", event.currentTarget.cells[5].firstElementChild.id.replace("vet_",""));
+                      commonData.data.veteranObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
+                      console.log("CommonDataAfterClick: ", commonData);
                       // broadcast message throughout system
                       scope.$parent.$broadcast('commonDataChanged', commonData);
                       //scope.hideVetDetBtn = false;

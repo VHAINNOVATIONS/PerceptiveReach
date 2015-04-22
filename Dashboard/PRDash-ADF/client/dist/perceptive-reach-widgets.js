@@ -440,10 +440,12 @@ angular.module('ui.models')
               var selected = " selected='selected'";
               for(var outreachStat in outreachStatus){
                 if(patientsBysta3N[veteran].OutreachStatus == outreachStatus[outreachStat].OutReachStatusID)
-                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + selected + ">" + outreachStatus[outreachStat].StatusName + "</option>";
-                else
-                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusName + "</option>";
-                options += temp;
+                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + selected + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
+                else{
+                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
+                  console.log("outreachStatusString: ",  temp);
+                }
+                options += temp;                
               }
               var select = "<select class='form-control' style='width: 180px;' id='vet_" + patientsBysta3N[veteran].ReachID + "'><option value=''></option>"+ options+ "</select>";
               //record.push(String(select));
@@ -460,7 +462,7 @@ angular.module('ui.models')
       },
 
       saveOutreachData: function (outreachStatus, veteranID) {
-        $http.put('/api/veteranRoster?vetReachID=' + veteranID, {'outreachStatus': outreachStatus})
+        $http.put('/api/patient?vetReachID=' + veteranID, {'outreachStatus': outreachStatus})
         .success(function(data) {
           //alert(data);
         });  
@@ -2777,9 +2779,11 @@ angular.module('ui.widgets')
                       $(this).addClass('selected');
                       // get common data object
                       var commonData = scope.widget.dataModelOptions.common;
-                      console.log(commonData);
+                      console.log("CommonDataBeforeClick: ", commonData);
                       // update common data object with new patient object
-                      commonData.data.patientObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
+                      console.log("ReachID Vet Selected: ", event.currentTarget.cells[5].firstElementChild.id.replace("vet_",""));
+                      commonData.data.veteranObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
+                      console.log("CommonDataAfterClick: ", commonData);
                       // broadcast message throughout system
                       scope.$parent.$broadcast('commonDataChanged', commonData);
                       //scope.hideVetDetBtn = false;
@@ -3157,7 +3161,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t<div ng-repeat=\"cpg in cpgList\">\r" +
     "\n" +
-    "\t\t<b>Chronic {{cpg.Risk_Name}}</b>\r" +
+    "\t\t<b>Chronic {{cpg.RiskLevelDesc}} Risk</b>\r" +
     "\n" +
     "\t\t<br><b>Features</b>\r" +
     "\n" +
@@ -3517,7 +3521,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            \t\t<option value=''></option>\r" +
     "\n" +
-    "            \t\t<option ng-repeat=\"outreachStatus in outreachStatusList\" value=\"{{outreachStatus.OutReachStatusID}}\">{{outreachStatus.StatusName}}</option>\r" +
+    "            \t\t<option ng-repeat=\"outreachStatus in outreachStatusList\" value=\"{{outreachStatus.OutReachStatusID}}\">{{outreachStatus.StatusDesc}}</option>\r" +
     "\n" +
     "            \t</select> \r" +
     "\n" +

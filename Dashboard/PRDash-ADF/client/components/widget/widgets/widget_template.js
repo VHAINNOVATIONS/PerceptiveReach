@@ -71,7 +71,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t<div ng-repeat=\"cpg in cpgList\">\r" +
     "\n" +
-    "\t\t<b>Chronic {{cpg.Risk_Name}}</b>\r" +
+    "\t\t<b>Chronic {{cpg.RiskLevelDesc}} Risk</b>\r" +
     "\n" +
     "\t\t<br><b>Features</b>\r" +
     "\n" +
@@ -431,7 +431,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            \t\t<option value=''></option>\r" +
     "\n" +
-    "            \t\t<option ng-repeat=\"outreachStatus in outreachStatusList\" value=\"{{outreachStatus.OutReachStatusID}}\">{{outreachStatus.StatusName}}</option>\r" +
+    "            \t\t<option ng-repeat=\"outreachStatus in outreachStatusList\" value=\"{{outreachStatus.OutReachStatusID}}\">{{outreachStatus.StatusDesc}}</option>\r" +
     "\n" +
     "            \t</select> \r" +
     "\n" +
