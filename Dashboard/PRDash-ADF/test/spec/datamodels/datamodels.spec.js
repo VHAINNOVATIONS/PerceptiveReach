@@ -5,22 +5,21 @@ describe('PerceptiveReach DataModels', function () {
   // load the service's module
   beforeEach(module('ui.dashboard'));
   beforeEach(module('ui.models'));
+  var scope;
 
-  describe('PerceptiveReach MedicationDataModel', function () {
+  	describe('PerceptiveReach MedicationDataModel', function () {
 
 	  // instantiate service
 	  var MedicationDataModel, m, widget, scope, ctrl, $httpBackend;
 
-      beforeEach(inject(function (_MedicationDataModel_) {
+      beforeEach(inject(function (_MedicationDataModel_, $rootScope) {
 	    MedicationDataModel = _MedicationDataModel_;
     	m = new MedicationDataModel();
     	widget = {
   	  	  dataAttrName: 'data',
       	  dataModelOptions: { reachID: 16 }
     	};
-    	scope = {
-    	  fake: 'scope'
-    	};
+    	scope = $rootScope.$new();
 
     	// Not sure if we can test a mock http from within a factory
     	/* if so add the following to the inject , _$httpBackend_, $rootScope, $controller
@@ -64,21 +63,21 @@ describe('PerceptiveReach DataModels', function () {
 	  });
 	});
 
-describe('PerceptiveReach PatientFlagDataModel', function () {
+	describe('PerceptiveReach PatientFlagDataModel', function () {
 
 	  // instantiate service
 	  var PatientFlagDataModel, m, widget, scope, ctrl, $httpBackend;
 
-      beforeEach(inject(function (_PatientFlagDataModel_) {
+      beforeEach(inject(function (_PatientFlagDataModel_, $rootScope) {
 	    PatientFlagDataModel = _PatientFlagDataModel_;
     	m = new PatientFlagDataModel();
     	widget = {
   	  	  dataAttrName: 'data',
       	  dataModelOptions: { opt: true }
     	};
-    	scope = {
+    	scope = $rootScope.$new();/*{
     	  fake: 'scope'
-    	};
+    	};*/
 
     	// Not sure if we can test a mock http from within a factory
     	/* if so add the following to the inject , _$httpBackend_, $rootScope, $controller
@@ -122,21 +121,22 @@ describe('PerceptiveReach PatientFlagDataModel', function () {
 	  });
 	});
 
-describe('PerceptiveReach AppointmentDataModel', function () {
+	describe('PerceptiveReach AppointmentDataModel', function () {
 
 	  // instantiate service
 	  var AppointmentDataModel, m, widget, scope, ctrl, $httpBackend;
 
-      beforeEach(inject(function (_AppointmentDataModel_) {
+      beforeEach(inject(function (_AppointmentDataModel_, $rootScope) {
 	    AppointmentDataModel = _AppointmentDataModel_;
     	m = new AppointmentDataModel();
     	widget = {
   	  	  dataAttrName: 'data',
       	  dataModelOptions: { opt: true }
     	};
-    	scope = {
+    	scope = $rootScope.$new();
+    	/*scope = {
     	  fake: 'scope'
-    	};
+    	};*/
 
     	// Not sure if we can test a mock http from within a factory
     	/* if so add the following to the inject , _$httpBackend_, $rootScope, $controller
@@ -179,5 +179,4 @@ describe('PerceptiveReach AppointmentDataModel', function () {
 	    });
 	  });
 	});
-
 });
