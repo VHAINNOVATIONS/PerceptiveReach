@@ -26,15 +26,15 @@ exports.index = function(req, res) {
 
     var query = '';
     if (un || pw) {
-        console.log("Registering endpoint: /userLogin/:un is " + un);
+        //console.log("Registering endpoint: /userLogin/:un is " + un);
         query = "SELECT u.FirstName, u.LastName, r.RoleCode, v.VAMCID, v.VAMC, v.VISN ";
         query += "FROM prsystem.Users u INNER JOIN prsystem.UserRole r ON u.UserRole = r.RoleID ";
         query += "INNER JOIN dbo.Ref_VAMC v ON u.UserLocation = v.VAMCID ";
         query += "WHERE UserName =  '" + un + "'";
         query += "AND UserPassword =  '" + pw + "'";
-        console.log("Query: " + query);
+        //console.log("Query: " + query);
     } else {
-        console.log("ERROR: User Name and Password are required."); 
+        //console.log("ERROR: User Name and Password are required."); 
         res.send("ERROR: User Name and Password are required.");
 
     }
@@ -43,7 +43,7 @@ exports.index = function(req, res) {
         // ... error checks
         if (err || !query) { 
         data = "Error: Database connection failed!";
-        console.log("Database connection failed!"); 
+        //console.log("Database connection failed!"); 
         return; 
         }
 
@@ -53,11 +53,11 @@ exports.index = function(req, res) {
             // ... error checks
             if (recordset.length < 1){res.send("Invalid User Name and/or Password"); return;}
             if (err) { 
-            console.log("Query failed!"); 
+            //console.log("Query failed!"); 
             return; 
             }
 
-            console.log(recordset.length);
+            //console.log(recordset.length);
             res.send(recordset);
         });
 

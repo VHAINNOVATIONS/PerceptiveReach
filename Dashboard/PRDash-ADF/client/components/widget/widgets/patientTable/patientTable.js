@@ -17,21 +17,21 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtVeteranRosterTable', function () {
+  .directive('wtPatientRosterTable', function () {
     return {
       restrict: 'EAC',
       replace: true,
-      templateUrl: 'client/components/widget/widgets/veteranRosterTable/veteranRosterTable.html',
+      templateUrl: 'client/components/widget/widgets/patientTable/patientTable.html',
       
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder, DTInstances) {
-        console.log("inside veteran roster controller");
-        console.log($scope.widgetData);
+        //console.log("inside patient roster controller");
+        //console.log($scope.widgetData);
         $scope.dtinstance = DTInstances;
-        $scope.veteranList = $scope.widgetData;
-        console.log("dtoptionsbuilder, dtcolumnsdefbuilder, dtinstances");
-        console.log(DTOptionsBuilder);
-        console.log(DTColumnDefBuilder);
-        console.log(DTInstances);
+        $scope.patientList = $scope.widgetData;
+        //console.log("dtoptionsbuilder, dtcolumnsdefbuilder, dtinstances");
+        //console.log(DTOptionsBuilder);
+        //console.log(DTColumnDefBuilder);
+        //console.log(DTInstances);
         $scope.dtOptions = DTOptionsBuilder.newOptions()//.fromSource($scope.widgetData)
             .withDOM('lfrti')
             .withScroller()
@@ -46,29 +46,29 @@ angular.module('ui.widgets')
           DTColumnDefBuilder.newColumnDef(3),
           DTColumnDefBuilder.newColumnDef(4),
           DTColumnDefBuilder.newColumnDef(5)
-            /*DTColumnBuilder.newColumn('Name').withTitle('Veteran Name'),
-            DTColumnBuilder.newColumn('SSN').withTitle('Veteran SSN'),
-            DTColumnBuilder.newColumn('Phone').withTitle('Veteran Phone'),
+            /*DTColumnBuilder.newColumn('Name').withTitle('Name'),
+            DTColumnBuilder.newColumn('SSN').withTitle('SSN'),
+            DTColumnBuilder.newColumn('Phone').withTitle('Phone'),
             DTColumnBuilder.newColumn('DateIdentifiedRisk').withTitle('Date First Identified'),
             DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level'),
             DTColumnBuilder.newColumn('OutreachStatus').withTitle('Outreach Status')*/
         ];
-        console.log("dtoptions:  ");
-        console.log($scope.dtOptions);
-        console.log("dtcolumns:  ");
-        console.log($scope.dtColumns);
+        //console.log("dtoptions:  ");
+        //console.log($scope.dtOptions);
+        //console.log("dtcolumns:  ");
+        //console.log($scope.dtColumns);
         $scope.columns = [
-          {"Name" : "Veteran Name"},
-          {"Name" : "Veteran SSN"},
-          {"Name" : "Veteran Phone"},
+          {"Name" : "Name"},
+          {"Name" : "SSN"},
+          {"Name" : "Phone"},
           {"Name" : "Date First Identified"},
           {"Name" : "Statistical Risk Level"},
           {"Name" : "Outreach Status"}
         ];
       },
       link: function postLink(scope, element, attr) {
-        console.log("scope::");
-        console.log(scope);
+        //console.log("scope::");
+        //console.log(scope);
         
         //scope.dtrender.showLoading();
         scope.$watch('widgetData', function(v){
@@ -92,24 +92,24 @@ angular.module('ui.widgets')
         };
         //var spinner = new Spinner(opts).spin($("#spinner"));
 
-          console.log("inside veteran roster directive before check");
-          console.log(v); 
+          //console.log("inside patient roster directive before check");
+          //console.log(v); 
           
           //console.log(DTOptionsBuilder);
         if(v != null && v.length >0){
             //unwatch();                
-            console.log("inside veteran roster directive after check is positive");
-            console.log(scope.widgetData);
+            //console.log("inside patient roster directive after check is positive");
+            //console.log(scope.widgetData);
             //scope.dtInstance.changeData(scope.widgetData[1]);
             scope.outreachStatusList = scope.widgetData[2];
-            scope.veteranList = scope.widgetData[1];
+            scope.patientList = scope.widgetData[1];
             var datamodelList = {};
-            for(var veteran in scope.veteranList){
-              datamodelList[scope.veteranList[veteran].ReachID] = scope.veteranList[veteran]; 
+            for(var patient in scope.patientList){
+              datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient]; 
             }
             scope.dataModelObj = datamodelList;
-            console.log("datamodelobj:::");
-            console.log(scope.dataModelObj);
+            //console.log("datamodelobj:::");
+            //console.log(scope.dataModelObj);
             var dataTableVet = $(element).children();
             //dataTableVet.dataTable();
             /*var dataTableVet = $(element).children().dataTable( {
@@ -118,9 +118,9 @@ angular.module('ui.widgets')
                 "scrollCollapse": true,
                 "paging":         false,
                 "columns": [
-                    { "title": "Veteran Name" },
-                    { "title": "Veteran SSN" },
-                    { "title": "Veteran Phone" },
+                    { "title": "Name" },
+                    { "title": "SSN" },
+                    { "title": "Phone" },
                     { "title": "Date First identified", "class": "center" },
                     { "title": "Statistical Risk Level", "class": "center" },
                     { "title": "Outreach Status", "class": "center" }
@@ -134,17 +134,17 @@ angular.module('ui.widgets')
 
             scope.dtinstance.getLast().then(function(dtInstance) {
               scope.dtInstance = dtInstance;
-              console.log("before select menu");
-              for(veteran in scope.veteranList){
-                //console.log('#vet_' + scope.veteranList[veteran].ReachID);
-                $('#vet_' + scope.veteranList[veteran].ReachID).val(scope.veteranList[veteran].OutreachStatus);
-                //datamodelList[scope.veteranList[veteran].ReachID] = scope.veteranList[veteran].OutreachStatus; 
+              //console.log("before select menu");
+              for(patient in scope.patientList){
+                //console.log('#vet_' + scope.patientList[patient].ReachID);
+                $('#vet_' + scope.patientList[patient].ReachID).val(scope.patientList[patient].OutreachStatus);
+                //datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient].OutreachStatus; 
               }
               $('select').selectmenu({
                 select: function( event, ui ) {
-                  // Write back selection to the Veteran Risk table for the veteran
-                  console.log(ui);
-                  console.log(ui.item.element.context.parentElement.id.replace("vet_",""));
+                  // Write back selection to the patient Risk table for the patient
+                  //console.log(ui);
+                  //console.log(ui.item.element.context.parentElement.id.replace("vet_",""));
                   scope.widget.dataModel.saveOutreachData(ui.item.index, ui.item.element.context.parentElement.id.replace("vet_",""));                    
                 }
               });
@@ -153,7 +153,7 @@ angular.module('ui.widgets')
                   if($(this).hasClass('selected')){
                       //$(this).removeClass('selected'); // removes selected highlighting
                       //scope.hideVetDetBtn = true;
-                      //$('#veteranView').hide();
+                      //$('#patientView').hide();
                       //$('#facilityInfo').show();
                   }
                   else{
@@ -161,19 +161,21 @@ angular.module('ui.widgets')
                       $(this).addClass('selected');
                       // get common data object
                       var commonData = scope.widget.dataModelOptions.common;
-                      console.log(commonData);
-                      // update common data object with new veteran object
+                      console.log("CommonDataBeforeClick: ", commonData);
+                      // update common data object with new patient object
+                      console.log("ReachID Vet Selected: ", event.currentTarget.cells[5].firstElementChild.id.replace("vet_",""));
                       commonData.data.veteranObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
+                      console.log("CommonDataAfterClick: ", commonData);
                       // broadcast message throughout system
                       scope.$parent.$broadcast('commonDataChanged', commonData);
                       //scope.hideVetDetBtn = false;
-                      //$('#veteranView').show();
+                      //$('#patientView').show();
                       //$('#facilityInfo').hide();
-                      //scope.getVeteran(event.currentTarget.cells[4].innerText);
+                      //scope.getpatient(event.currentTarget.cells[4].innerText);
                   }
                   scope.$apply();
-                  console.log("ReachID selected: " + event.currentTarget.cells[5].firstElementChild.id.replace("vet_",""));//innerText);
-                  console.log(event);
+                  //console.log("ReachID selected: " + event.currentTarget.cells[5].firstElementChild.id.replace("vet_",""));//innerText);
+                  //console.log(event);
               } );
             });                
         }

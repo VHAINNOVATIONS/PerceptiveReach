@@ -26,13 +26,13 @@ exports.index = function(req, res) {
     var query = '';
     query = "SELECT * FROM Ref_OutreachStatus"; 
     //query += "ReachID, vamc.VAMC FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE ";
-    console.log("Registering endpoint: /getListOfOutreachStatus");
+    //console.log("Registering endpoint: /getListOfOutreachStatus");
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
         if (err) { 
         data = "Error: Database connection failed!";
-        console.log("Database connection failed!"); 
+        //console.log("Database connection failed!"); 
         return; 
         }
 
@@ -41,11 +41,11 @@ exports.index = function(req, res) {
         request.query(query, function(err, recordset) {
             // ... error checks
             if (err) { 
-            console.log("Query failed! -- " + query); 
+            //console.log("Query failed! -- " + query); 
             return; 
             }
 
-            console.log(recordset.length);
+            //console.log(recordset.length);
 
             res.send(recordset);
         });
