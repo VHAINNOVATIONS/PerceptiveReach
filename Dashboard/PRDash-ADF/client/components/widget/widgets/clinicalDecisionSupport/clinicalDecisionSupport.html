@@ -1,6 +1,6 @@
 <div name="clinicalDecisionSupport" style='overflow:auto; height:450px; widgth:auto'>
 	<div ng-repeat="cpg in cpgList">
-		<b>Chronic {{cpg.Risk_Name}}</b>
+		<b>Chronic {{cpg.RiskLevelDesc}} Risk</b>
 		<br><b>Features</b>
 		<div ng-bind-html="cpg.Features"></div>
 		<br><b>Action</b>

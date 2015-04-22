@@ -37,8 +37,7 @@ angular.module('ui.widgets')
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
             DTColumnDefBuilder.newColumnDef(0),
-            DTColumnDefBuilder.newColumnDef(1),
-            DTColumnDefBuilder.newColumnDef(2)
+            DTColumnDefBuilder.newColumnDef(1)
         ];
         /*$resource('data.json').query().$promise.then(function(persons) {
             vm.persons = persons;

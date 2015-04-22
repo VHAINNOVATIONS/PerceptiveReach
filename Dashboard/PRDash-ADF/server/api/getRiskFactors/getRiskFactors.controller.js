@@ -24,21 +24,21 @@ exports.index = function(req, res) {
     var query = '';
 
     if (id) {
-            console.log("Registering endpoint: /RiskFactors/:id is " + id);
+            //console.log("Registering endpoint: /RiskFactors/:id is " + id);
             query = "SELECT * FROM RiskFactors ";
             query += "WHERE RiskFactorCode = '" + id + "'";
-            console.log("Query: " + query);
+            //console.log("Query: " + query);
         } else {
-            console.log("Registering endpoint: /RiskFactors/");
+            //console.log("Registering endpoint: /RiskFactors/");
             query = "SELECT * FROM RiskFactors";
-            console.log("Query: " + query);
+            //console.log("Query: " + query);
         }
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
         if (err || !query) { 
         data = "Error: Database connection failed!";
-        console.log("Database connection failed!"); 
+        //console.log("Database connection failed!"); 
         return; 
         }
 
@@ -47,11 +47,11 @@ exports.index = function(req, res) {
         request.query(query, function(err, recordset) {
             // ... error checks
             if (err) { 
-            console.log("Query failed! " + err); 
+            //console.log("Query failed! " + err); 
             return; 
             }
 
-            console.log(recordset.length);
+            //console.log(recordset.length);
 
             res.send(recordset);
         });

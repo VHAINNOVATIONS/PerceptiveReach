@@ -17,13 +17,13 @@
 'use strict';
 
 angular.module('ui.dashboard')
-  .controller('VeteranRosterTableWidgetSettingsCtrl', ['$scope', '$modalInstance', '$http','widget', function ($scope, $modalInstance, $http, widget) {
+  .controller('patientTableWidgetSettingsCtrl', ['$scope', '$modalInstance', '$http','widget', function ($scope, $modalInstance, $http, widget) {
     // add widget to scope
     $scope.widget = widget;
-    console.log(widget);
+    //console.log(widget);
     // set up result object
     $scope.result = jQuery.extend(true, {}, widget);
-    console.log($scope.result);
+    //console.log($scope.result);
 
 
     $http.get('/api/getListOfVAMC')
@@ -33,7 +33,7 @@ angular.module('ui.dashboard')
 
     $scope.ok = function () {      
       $modalInstance.close($scope.result);
-      $scope.widget.dataModel.updateVAMC($scope.result.dataModel.vamc);
+      $scope.widget.dataModel.updateVAMC($scope.result.dataModel.STA3N);
       $scope.widget.dataModel.getData();
 
     };

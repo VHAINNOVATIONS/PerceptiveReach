@@ -10,17 +10,47 @@
 'use strict';
 
 var _ = require('lodash');
+var sql = require('mssql');
 var dataFormatter = require('../../components/formatUtil/formatUtil.service.js');
 
-
-// Get list of things
 exports.index = function(req, res) {
   res.header("content-type: application/json");
-  var data = '[{"ReachID": 1, "ICD": "S00.001", "Diagnosis": "Type II Diabetes", "DiagnosisDate": "2015-02-03T00:00:00.000Z"},{"ReachID": 1, "ICD": "S00.002", "Diagnosis": "Thyroiditis", "DiagnosisDate": "2014-12-03T00:00:00.000Z"},{"ReachID": 1, "ICD": "S00.003", "Diagnosis": "Thymus Gland", "DiagnosisDate": "2014-10-03T00:00:00.000Z"},{"ReachID": 1, "ICD": "S00.004", "Diagnosis": "Broken Ankle", "DiagnosisDate": "2014-09-03T00:00:00.000Z"},{"ReachID": 1, "ICD": "S00.005", "Diagnosis": "Broken Ankle", "DiagnosisDate": "2014-09-03T00:00:00.000Z"}]';
-	
-	var jsonRecordSet = JSON.parse(data);
-	for (var record in jsonRecordSet) {
-	    jsonRecordSet[record].DiagnosisDate = dataFormatter.formatData(jsonRecordSet[record].DiagnosisDate,"date");
-	}
-	res.send(jsonRecordSet);
+
+  var dbc = require('../../config/db_connection/development.js');
+    var config = dbc.config;
+
+    var id = req.param("id");
+    var query = '';
+    if (id) {
+        query = "SELECT * FROM PatientDiagnosis "
+        query += "WHERE ReachID =  " + id;
+    } else {
+        res.send("ERROR: ReachID  is required.");
+    }
+
+    var connection = new sql.Connection(config, function(err) {
+        // ... error checks
+        if (err || !query) { 
+          //data = "Error: Database connection failed!";
+        return; 
+        }
+
+        // Query
+        var request = new sql.Request(connection);
+        request.query(query, function(err, recordset) {
+            // ... error checks
+            if (err) { 
+                console.log("Query failed! " + err); 
+            return; 
+            }
+
+            var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
+            for (var record in jsonRecordSet) {
+	    		jsonRecordSet[record].DiagnosisDate = dataFormatter.formatData(jsonRecordSet[record].DiagnosisDate,"date");
+            }
+            res.send(jsonRecordSet);
+        });
+
+    });
+  
 };
