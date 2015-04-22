@@ -36,7 +36,8 @@ module.exports = function(app) {
       retrieveGroups: true
     });
     
-    if(req.url.indexOf("/api/") != -1 || req.url.indexOf("/auth/local") != -1){
+    //if(req.url.indexOf("/api/") != -1 || req.url.indexOf("/auth/local") != -1){
+    if(req.url.indexOf("/auth/local") != -1){
       //req.header("Authorization", "Basic ");
       //console.log("authorization-header before: ", req.header("Authorization"));
       //res.header("WWW-Authenticate", "");
