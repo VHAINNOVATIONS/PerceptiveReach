@@ -443,7 +443,7 @@ angular.module('ui.models')
                   temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + selected + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
                 else{
                   temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
-                  console.log("outreachStatusString: ",  temp);
+                  //console.log("outreachStatusString: ",  temp);
                 }
                 options += temp;                
               }
