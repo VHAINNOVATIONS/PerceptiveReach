@@ -239,14 +239,14 @@ angular.module('app')
   })
   .value('defaultWidgets', [
       {name: 'Event Timeline'},
-      { name: 'RosterTable' }, 
+      /*{ name: 'RosterTable' }, 
       { name: 'contact' },
       { name: 'emergency' },
       {name: 'diagnoses'},
       {name: 'appointment'},
       { name: 'ClinicalDecisionSupport' },
       {name: 'medication'},
-      {name: 'patientFlags'}
+      {name: 'patientFlags'}*/
       /*,
       { name: 'Metrics Chart' },
       { name: 'NVD3 Line Chart' },
