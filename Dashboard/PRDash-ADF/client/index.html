@@ -48,8 +48,8 @@
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="NavBarCtrl">
-      <div ng-show="$root.globals.userObj">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
+      <div id="navHeader" style="display: none;">
         <ul class="nav navbar-nav">
           <li ng-repeat="(when, route) in $route.routes" ng-class="{ 'active': $route.current.$$route === route}"><a ng-href="{{'#' + route.originalPath}}">{{ route.title }}</a></li>
         </ul>
@@ -62,7 +62,7 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<div >
+<div id="dashboardDescription" ng-controller="NavBarCtrl" style="display: none;">
   <div ng-if="$route.current.$$route.description" class="alert alert-success" role="alert" btf-markdown="'**Description:** ' + $route.current.$$route.description"></div>
 </div>
 
