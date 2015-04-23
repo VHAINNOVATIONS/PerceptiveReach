@@ -51,10 +51,10 @@ angular.module('app')
               deferred.reject(err);
               return cb(err);*/
               var properMessage = '';
-              if (err.indexOf('Max login attempts reached') != -1)
+              //if (err.indexOf('Max login attempts reached') != -1)
                 properMessage = 'Invalid username/password combination. Please try again.';
-              else
-                properMessage = err;
+              //else
+                //properMessage = err;
               var response = {message: properMessage};
               callback(response);
             });
