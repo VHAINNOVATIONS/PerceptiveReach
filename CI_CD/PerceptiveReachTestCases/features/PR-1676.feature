@@ -1,11 +1,15 @@
-Feature: As a Dashboard User, I want to log in to the Perceptive Reach application. @PR-1676 1.1.2
-   
-@sign_in_PR-1676
+Feature: As a Dashboard user, I want to enter my credentials (username and password) to log in to the Dashboard. PR-1676 1.1.2
 
-Scenario: I open a web browser and navigate to http://localhost:7003/, where I can sign in to the PR Dashboard
-Given I navigate to the http://localhost:7003/
-Then I should see "Sign In"
-Then I put in my VA username
-Then I put in my VA password
-And I click on "Sign In" button
-Then I should see "National"
+  
+@Log_On_PR-1676
+
+Scenario: I open a web browser and navigate to http://localhost:5000/ where I can Perceptive Reach Log on to the  Dashboard
+
+Given I open the browser and enter http://localhost:5000/
+Then I should see "Perceptive Reach Login"
+Then I put in "email" field as "vaphsfequia"
+Then I put in "password" field as "FeAn#011819"
+And I click on "Login" button
+Then I should see "National View"
+And I click on "Logout" button
+   

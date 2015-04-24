@@ -2,16 +2,14 @@
 	<table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
         <thead>
         <tr>
-            <th>Type</th>
             <th>Date</th>
             <th>Cancelled</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="appt in data">
-            <td>{{ appt.ApptType }}</td>
-            <td>{{ appt.Apptdate }}</td>
-            <td>{{ appt.CancelationType }}</td>
+            <td>{{ appt.ApptDate }}</td>
+            <td>{{ appt.CancelNoShowCodeDesc }}</td>
         </tr>
         </tbody>
     </table>

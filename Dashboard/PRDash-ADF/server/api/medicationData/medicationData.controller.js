@@ -10,11 +10,49 @@
 'use strict';
 
 var _ = require('lodash');
+var sql = require('mssql');
+var dataFormatter = require('../../components/formatUtil/formatUtil.service.js');
 
-// Get list of things
+
 exports.index = function(req, res) {
   res.header("content-type: application/json");
-  var data = '[{"ReachID": 1, "Active": 1, "RxID": 1, "Name": "Zoloft", "Dosage": "100mg"}, {"ReachID": 1, "Active": 0, "RxID": 2, "Name": "Xanax","Dosage": "200mg"}, {"ReachID": 1, "Active": 1, "RxID": 3, "Name": "Prednisone","Dosage": "300mg"}, {"ReachID": 1, "Active": 1, "RxID": 4, "Name": "Ambien","Dosage": "400mg"}, {"ReachID": 1, "Active": 0, "RxID": 5, "Name": "Tramadol","Dosage": "500mg"}, {"ReachID": 1, "Active": 0, "RxID": 6, "Name": "Nucynta","Dosage": "500mg"}]';
 
-  res.send(JSON.parse(data));
+  var dbc = require('../../config/db_connection/development.js');
+    var config = dbc.config;
+
+    var id = req.param("id");
+    var query = '';
+    if (id) {
+        query = "SELECT * FROM PatientMedications "
+        query += "WHERE ReachID =  " + id;
+    } else {
+        res.send("ERROR: ReachID  is required.");
+    }
+
+    var connection = new sql.Connection(config, function(err) {
+        // ... error checks
+        if (err || !query) { 
+        //data = "Error: Database connection failed!";
+        return; 
+        }
+
+        // Query
+        var request = new sql.Request(connection);
+        request.query(query, function(err, recordset) {
+            // ... error checks
+            if (err) { 
+                console.log("Query failed! " + err); 
+            return; 
+            }
+
+            var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
+            for (var record in jsonRecordSet) {
+                //If formatting is needed in the future...put it here
+                //jsonRecordSet[record].ApptDate = dataFormatter.formatData(jsonRecordSet[record].ApptDate,"date");
+            }
+            res.send(jsonRecordSet);
+        });
+
+    });
+  
 };

@@ -19,14 +19,14 @@ angular.module('ui.models')
       this.dataModelOptions.common = this.dataModelOptions.common  ||  { data: 'default value' };
      
       scope.$on('commonDataChanged', function (event, data) {
-        console.log('Common data changed for: ' + this.widgetScope.widget.title);
+        //console.log('Common data changed for: ' + this.widgetScope.widget.title);
         this.setCommon(data);
       }.bind(this));
     };
 
     CommonDataModel.prototype.setCommon = function (data) {
       if (data && (!angular.equals(this.dataModelOptions.common, data))) {
-        console.log(this.widgetScope.widget.title + ' data model options changed');
+        //console.log(this.widgetScope.widget.title + ' data model options changed');
         this.dataModelOptions.common = data;
         //this.widgetScope.$emit('widgetChanged', this.widgetScope.widget);
       }
@@ -34,34 +34,34 @@ angular.module('ui.models')
 
     return CommonDataModel;
   })
-  .factory('VeteranRosterDataModel', function ($http, CommonDataModel) {
-    function VeteranRosterDataModel() {
+  .factory('PatientDataModel', function ($http, CommonDataModel) {
+    function PatientDataModel() {
     }
 
-    //VeteranRosterDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    //VeteranRosterDataModel.prototype.constructor = WidgetDataModel;
-    VeteranRosterDataModel.prototype = Object.create(CommonDataModel.prototype);
-    angular.extend(VeteranRosterDataModel.prototype, {
+    //PatientDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    //PatientDataModel.prototype.constructor = WidgetDataModel;
+    PatientDataModel.prototype = Object.create(CommonDataModel.prototype);
+    angular.extend(PatientDataModel.prototype, {
       init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentVAMC = null;
-        console.log("currentDataModelCommon:");
-        console.log(dataModelOptions.common);
+        var currentsta3N = null;
+        //console.log("currentDataModelCommon:");
+        //console.log(dataModelOptions.common);
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          console.log('Inside Common data changed for : ' + this.widgetScope.widget.title);
+          //console.log('Inside Common data changed for : ' + this.widgetScope.widget.title);
           /*console.log(data);
           console.log(this.dataModelOptions);*/
           //CommonDataModel.prototype.setCommon.call(this,data);
-          this.currentVAMC = this.vamc;
-          this.vamc = (dataModelOptions && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : 9;
+          this.currentsta3N = this.sta3N;
+          this.sta3N = (dataModelOptions && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : 9;
           /*console.log('widgetScope');
           console.log(this.widgetScope);
           console.log('commonData:');
           console.log(this.dataModelOptions.common);*/
-          if(this.vamc != this.currentVAMC)
+          if(this.sta3N != this.currentsta3N)
             this.getData();
         }.bind(this));
-        this.vamc = (dataModelOptions && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : 9;
+        this.sta3N = (dataModelOptions && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : 9;
         //this.updateScope([]);
         //this.getData();
       },
@@ -76,60 +76,62 @@ angular.module('ui.models')
           outreachStatus = listOfOutreachStatus;
         }.bind(this));
 
-        $http.get('/api/veteranRoster?id=' + this.vamc)
-        .success(function(veteransByVAMC) {
+        $http.get('/api/patient?id=' + this.sta3N)
+        .success(function(patientsBysta3N) {
           var output = [];
-          var vamc = "";
+          var sta3N = "";
           
           while(outreachStatus == null){} // wait until outreachStatus is not null
 
-          console.log("outreachStatus -  ");
-          console.log(outreachStatus);  
-          for (var veteran in veteransByVAMC) {
-              vamc = veteransByVAMC[0].VAMC
+          //console.log("outreachStatus -  ");
+          //console.log(outreachStatus);  
+          for (var veteran in patientsBysta3N) {
+              sta3N = patientsBysta3N[0].sta3N
               var record = [];
-              var fullName = veteransByVAMC[veteran].LastName + ", " +veteransByVAMC[veteran].FirstName + " " + veteransByVAMC[veteran].MiddleName; 
+              var fullName = patientsBysta3N[veteran].LastName + ", " +patientsBysta3N[veteran].FirstName + " " + patientsBysta3N[veteran].MiddleName; 
              /* record.push(String(fullName));
               record.push(String(veteransByVAMC[veteran].SSN));
               record.push(String(veteransByVAMC[veteran].Phone));
               record.push(String(veteransByVAMC[veteran].DateIdentifiedRisk));
               record.push(String(veteransByVAMC[veteran].RiskLevel)); */
               //record.push(String(veteransByVAMC[veteran].OutreachStatus));
-              veteransByVAMC[veteran].Name = fullName;
+              patientsBysta3N[veteran].Name = fullName;
               var options = "";
               var temp = "";
               var selected = " selected='selected'";
               for(var outreachStat in outreachStatus){
-                if(veteransByVAMC[veteran].OutreachStatus == outreachStatus[outreachStat].OutReachStatusID)
-                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + selected + ">" + outreachStatus[outreachStat].StatusName + "</option>";
-                else
-                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusName + "</option>";
-                options += temp;
+                if(patientsBysta3N[veteran].OutreachStatus == outreachStatus[outreachStat].OutReachStatusID)
+                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + selected + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
+                else{
+                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
+                  //console.log("outreachStatusString: ",  temp);
+                }
+                options += temp;                
               }
-              var select = "<select class='form-control' style='width: 180px;' id='vet_" + veteransByVAMC[veteran].ReachID + "'><option value=''></option>"+ options+ "</select>";
+              var select = "<select class='form-control' style='width: 180px;' id='vet_" + patientsBysta3N[veteran].ReachID + "'><option value=''></option>"+ options+ "</select>";
               //record.push(String(select));
-              veteransByVAMC[veteran].OutreachStatusSelect = select;                
+              patientsBysta3N[veteran].OutreachStatusSelect = select;                
               //output.push(veteransByVAMC);
           }
           //output.sort(function(a,b) {return (a.RiskLevel > b.RiskLevel) ? 1 : ((b.RiskLevel > a.RiskLevel) ? -1 : 0);} );
           var columnHeaders = [];
           //data = [this.vamc, output, outreachStatus];//{vamc : this.vamc, roster : output};
-          data = [this.vamc, veteransByVAMC, outreachStatus];
-          console.log(data);
+          data = [this.sta3N, patientsBysta3N, outreachStatus];
+          //console.log(data);
           this.updateScope(data);
         }.bind(this));
       },
 
       saveOutreachData: function (outreachStatus, veteranID) {
-        $http.put('/api/veteranRoster?vetReachID=' + veteranID, {'outreachStatus': outreachStatus})
+        $http.put('/api/patient?vetReachID=' + veteranID, {'outreachStatus': outreachStatus})
         .success(function(data) {
           //alert(data);
         });  
       },
-      updateVAMC: function (vamc) {
+      updatesta3N: function (sta3N) {
         this.dataModelOptions = this.dataModelOptions ? this.dataModelOptions : {};
-        this.dataModelOptions.vamc = vamc;
-        this.vamc = vamc;
+        this.dataModelOptions.sta3N = sta3N;
+        this.sta3N = sta3N;
       },
 
       destroy: function () {
@@ -138,7 +140,7 @@ angular.module('ui.models')
       }
     });
 
-    return VeteranRosterDataModel;
+    return PatientDataModel;
   })
   .factory('ClinicalDecisionSupportDataModel', function ($http, CommonDataModel) {
     function ClinicalDecisionSupportDataModel() {
@@ -152,7 +154,7 @@ angular.module('ui.models')
         var dataModelOptions = this.dataModelOptions;
         var currentRiskLevel = null;
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          console.log('Inside Common data changed for : ' + this.widgetScope.widget.title);
+          //console.log('Inside Common data changed for : ' + this.widgetScope.widget.title);
           /*console.log(data);
           console.log(this.dataModelOptions);*/
           //CommonDataModel.prototype.setCommon.call(this,data);
@@ -184,8 +186,8 @@ angular.module('ui.models')
         
         $http.get('/api/clinicalDecisionSupport' + options) // '/api/clinicalDecisionSupport?guideType=%27SRB%27&riskLevel=1'
         .success(function(dataset) {
-          console.log('inside Clinical decision support success');
-          console.log(dataset);
+          //console.log('inside Clinical decision support success');
+          //console.log(dataset);
           data = dataset;
           this.updateScope(data);
         }.bind(this));
@@ -283,7 +285,7 @@ angular.module('ui.models')
           this.updateScope(data);
         }
         else {
-          $http.get('/api/vetContactData?id='+ this.reachID)
+          $http.get('/api/patientContact?id='+ this.reachID)
           .success(function(dataset) {
                   data = dataset;
                   this.updateScope(data);
@@ -298,14 +300,14 @@ angular.module('ui.models')
 
     return ContactBaseDataModel;
   })
-.factory('ContactEmergencyDataModel', function ($http, CommonDataModel) {
-    function ContactEmergencyDataModel() {
+.factory('EmergencyContactDataModel', function ($http, CommonDataModel) {
+    function EmergencyContactDataModel() {
     }
 
-    ContactEmergencyDataModel.prototype = Object.create(CommonDataModel.prototype);
-    ContactEmergencyDataModel.prototype.constructor = CommonDataModel;
+    EmergencyContactDataModel.prototype = Object.create(CommonDataModel.prototype);
+    EmergencyContactDataModel.prototype.constructor = CommonDataModel;
 
-    angular.extend(ContactEmergencyDataModel.prototype, {
+    angular.extend(EmergencyContactDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
         //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
@@ -331,7 +333,7 @@ angular.module('ui.models')
           this.updateScope(data);
         }
         else {
-          $http.get('/api/vetEmergencyData?id='+ this.reachID)
+          $http.get('/api/emergencyContact?id='+ this.reachID)
                 .success(function(dataset) {
                         data = dataset;
                         this.updateScope(data);
@@ -344,7 +346,7 @@ angular.module('ui.models')
       }
     });
 
-    return ContactEmergencyDataModel;
+    return EmergencyContactDataModel;
   })
 .factory('PatientFlagDataModel', function ($http, WidgetDataModel) {
     function PatientFlagDataModel() {
@@ -380,17 +382,25 @@ angular.module('ui.models')
 
     return PatientFlagDataModel;
   })
-.factory('MedicationDataModel', function ($http, WidgetDataModel) {
+.factory('MedicationDataModel', function ($http, CommonDataModel) {
     function MedicationDataModel() {
     }
 
-    MedicationDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    MedicationDataModel.prototype.constructor = WidgetDataModel;
+    MedicationDataModel.prototype = Object.create(CommonDataModel.prototype);
+    MedicationDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(MedicationDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
 
         this.updateScope('-');
         this.getData();
@@ -400,7 +410,7 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/medicationData')
+        $http.get('/api/medicationData?id='+ this.reachID)
         .success(function(dataset) {
                 data = dataset;
                 this.updateScope(data);
@@ -408,7 +418,7 @@ angular.module('ui.models')
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
 
@@ -456,18 +466,26 @@ angular.module('ui.models')
 
     return AppointmentDataModel;
   })
-.factory('DiagnosesDataModel', function ($http, WidgetDataModel) {
+.factory('DiagnosesDataModel', function ($http, CommonDataModel) {
     function DiagnosesDataModel() {
     }
 
-    DiagnosesDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    DiagnosesDataModel.prototype.constructor = WidgetDataModel;
+    DiagnosesDataModel.prototype = Object.create(CommonDataModel.prototype);
+    DiagnosesDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(DiagnosesDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
 
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
+        
         this.updateScope('-');
         this.getData();
       },
@@ -476,7 +494,7 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/DiagnosesData')
+        $http.get('/api/DiagnosesData?id='+ this.reachID)
         .success(function(dataset) {
                 data = dataset;
                 this.updateScope(data);
@@ -484,7 +502,7 @@ angular.module('ui.models')
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
 

@@ -9,9 +9,9 @@ When I click on "Individual View"
 Then I should see the "Veteran Roster by VAMC" widget
 Then I should see the "Appointment" widget
 And I should see "Type"
-And I should see "Canceled"
+And I should see "Cancelled"
 And I should see "Date"
-And I should see "Show"
+And I should see "Type"
 
 @click_btw_appts_PR-1407
 

@@ -29,7 +29,7 @@ exports.index = function(req, res) {
     }*/
     var query = '';
     if (id) {
-        console.log("Registering endpoint: /totalRiskbyVAMCPieChart/:id is " + id);
+        //console.log("Registering endpoint: /totalRiskbyVAMCPieChart/:id is " + id);
         query = "SELECT count(*) as TotalHighRisk_National, sum(cast(CriminalRecord as int)) as PTSD, ";
         query += "cast(cast(sum(cast(CriminalRecord as int)) as float)/cast(count(*) as float) * 100 as decimal(7,4)) as PTSD_PCT, ";
         query += "sum(cast(HistSubstanceAbuse as int)) as SubstanceAbuseHistory, ";
@@ -43,9 +43,9 @@ exports.index = function(req, res) {
         query += "FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID ";
         query += "WHERE vet.Score >= 0";
         query += "AND vamc.VISN = " + id;
-        console.log("Query: " + query);
+        //console.log("Query: " + query);
     } else {
-        console.log("ERROR: VISN ID is required."); 
+        //console.log("ERROR: VISN ID is required."); 
         res.end("ERROR: VISN ID is required.");
 
     }
@@ -54,7 +54,7 @@ exports.index = function(req, res) {
         // ... error checks
         if (err || !query) { 
         data = "Error: Database connection failed!";
-        console.log("Database connection failed!"); 
+        //console.log("Database connection failed!"); 
         return; 
         }
 
@@ -63,11 +63,11 @@ exports.index = function(req, res) {
         request.query(query, function(err, recordset) {
             // ... error checks
             if (err) { 
-            console.log("Query failed!"); 
+            //console.log("Query failed!"); 
             return; 
             }
 
-            console.log(recordset.length);
+            //console.log(recordset.length);
             for (var i = 0; i < recordset.length; i++) {
                 data.push({
                     key: "PTSD", 
@@ -90,7 +90,7 @@ exports.index = function(req, res) {
                     y: recordset[i].DiagnosedTBI                    
                 });
             }
-            console.log("data: "+ data)
+            //console.log("data: "+ data)
 
             res.send(data);
         });

@@ -5,7 +5,7 @@ Feature: As a Dashboard user, I want to see a Veteran's emergency contact inform
   Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's contact information of emergency contact address, emergency contact number, emergency contact alternate number,City, State and Zip code, and emergency contact relationship
   Given I navigate to the http://localhost:7003/
   When I click on "Individual View" 
-  Then I should see "Veteran Roster by VAMC" widget
+  Then I should see "Patient Roster by VAMC" widget
   Then I should see "Emergency Contact Information" widget
   And I should see "Name"
   And I should see "Phone"
@@ -20,7 +20,7 @@ Feature: As a Dashboard user, I want to see a Veteran's emergency contact inform
 Scenario: I open a web browser and use http://localhost:7003/ to drag the Emergency Contact Information widget.
   Given I navigate to the http://localhost:7003/
   When I click on "Individual View" 
-  And I should see "Veteran Roster by VAMC" widget
+  And I should see "Patient Roster by VAMC" widget
   And I should see "Emergency Contact Information" widget
   Then I drag the "Emergency Contact Information" widget to the top left of the screen
 
@@ -29,7 +29,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to drag the Emerge
 Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's emergency contact information
   Given I navigate to the http://localhost:7003/
   When I click on "Individual View" 
-  And I should see "Veteran Roster by VAMC" widget
+  And I should see "Patient Roster by VAMC" widget
   Then I should see "Emergency Contact Information" widget
 
 
@@ -37,7 +37,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
 Scenario: I open a web browser and use http://localhost:7003/ to delete/close the Emergency Contact Information widget.
   Given I navigate to the http://localhost:7003/
   When I click on "Individual View" 
-  Then I should see "Veteran Roster by VAMC" widget
+  Then I should see "Patient Roster by VAMC" widget
   Then I should see "Emergency Contact Information" widget
   When I click on close on the "Emergency Contact Information" widget
   And I click on "save changes" button
