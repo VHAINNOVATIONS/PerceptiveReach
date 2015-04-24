@@ -7,6 +7,7 @@ angular.module('app')
         templateUrl: 'app/main/main.html',
         controller: 'LayoutsDemoExplicitSaveCtrl',
         title: 'Home',
-        description: 'This view showcases the home dashboard layouts '
+        description: 'This view showcases the home dashboard layouts ',
+        authenticate: true
       });
   });
