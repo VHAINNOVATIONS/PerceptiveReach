@@ -2,9 +2,14 @@ Given(/^I navigate to the http:\/\/localhost:(\d+)\/$/) do |arg1|
   visit ('http://localhost:7003')
   expect(page).to have_content 'Description' #load IRDS and wait for some content to appear
 end
+Given(/^I open the browser and enter http:\/\/localhost:(\d+)\/$/) do |arg1|
+  visit ('http://localhost:5000')
+  #expect(page).to have_content 'Description' #load IRDS and wait for some content to appear
+end
+
 
 When(/^I click on the VAMC dropdown$/) do
-  find(:xpath, "//select[@ng-model='result.dataModel.vamc']").click  
+  find(:xpath, "//select[@ng-model='result.dataModel.vamc']").click 
 end
 
 When(/^I choose "(.*?)" as VAMC$/) do |arg1|
@@ -110,10 +115,14 @@ Then(/^I put in my VA password$/) do
   fill_in('Password', :with => 'VA Password')# express the regexp above with the code you wish you had
 end
 
-#step that queries the database
+Then(/^I put in "(.*?)" field as "(.*?)"$/) do |arg1, arg2|
+fill_in(arg1, :with => arg2)
+end
+
 Then(/^I check the page for a Veteran's SSN$/) do
+  expect(page).to have_content 'Veteran Roster'
   client1 = TinyTds::Client.new username: 'sa', password: 'agile_123', host: '54.225.232.25', database: 'Reach_Test'
-  result1 = client1.execute("SELECT TOP 2 * FROM Ref_VAMC")
+  result1 = client1.execute("SELECT TOP 1 * FROM Ref_VAMC")
   #{"VAMCID"=>1, "VISN"=>1, "STA3N"=>"402", "STA6AID"=>"402", "VAMC"=>"(V01) (402) Togus, ME", "StateAbbr"=>"ME"}
   result1.each(:as => :array) do |row|
     #check for data in row
@@ -136,21 +145,62 @@ Then(/^I check the page for a Veteran's SSN$/) do
     expect(page).to have_content 'Veteran Roster'
     #query that VAMC for veterans
     client2 = TinyTds::Client.new username: 'sa', password: 'agile_123', host: '54.225.232.25', database: 'Reach_Test'
-    result2 = client2.execute("SELECT TOP 2 SSN from VeteranRisk WHERE (RiskLevel = 1 or RiskLevel=2) and VAMC = #{DerNumber}")
+    result2 = client2.execute("SELECT TOP 2 SSN, ReachID, Phone, AltPhone, Address, City, State, Zip, RiskLevel from VeteranRisk WHERE (RiskLevel = 1 or RiskLevel=2) and VAMC = #{DerNumber}")
       result2.each(:as => :array) do |row|
         #only want to do this 5 times
         print row
         #print fields
         # Each row is now an array of values ordered by #fields.
         vetssn = row[0]
+        vetreachid = row[1]
         #SQL SNN = 000649041
         trimmed = vetssn[5..9]
         #trimmed the SSN to the last 4 digits
         expect(page).to have_content(trimmed)
         #checking the page for the SSN
         #click veteran and check that the other widgets update correctly
-        find(:xpath, "//td[contains(text(),'xxx-xx-#{trimmed}')]").click
+        find(:xpath, "//td[contains(text(),'xxx-xx-#{trimmed}')]").click        
+        #check the veteran contact info
+        #SSN, ReachID, Phone, AltPhone, Address, City, State, Zip
+        #Phoner::Phone.default_country_code = '1'
+        #pn = Phoner::Phone.parse('row[2]')
+        #pn.format(:us) # => "(234) 123-4567"
+        #print pn
+        #fixedphonenumber = Phoner::Phone.parse'row[2]' 
+        #print fixedphonenumber
+        #expect(page).to have_content(row[2]) #phone
+        #expect(page).to have_content(row[3]) #altphone 
+        expect(page).to have_content(row[4]) #address
+        expect(page).to have_content(row[5]) #city
+        expect(page).to have_content(row[6]) #state
+        expect(page).to have_content(row[7]) #zip
+        #check clinical decision support
+        if row[8] = 1
+          print 'Intermediate'
+          expect(page).to have_content("Chronic Intermediate Risk")
+        elsif row[8] = 2
+          print 'High'
+          expect(page).to have_content("Chronic High Risk")
+        end
         #query and check other widgets
+        #check the emergency contact
+        client3 = TinyTds::Client.new username: 'sa', password: 'agile_123', host: '54.225.232.25', database: 'Reach_Test'
+        result3 = client3.execute("SELECT NameOfContact, StreetAddress1, StreetAddress2, StreetAddress3, City, State, Zip, Zip4, Phone, PhoneWork FROM EmergencyContact WHERE ReachID = #{vetreachid}")
+        result3.each(:as => :array) do |row|
+        #result3.each(:symbolize_keys => true) do |field|
+          #ReachID, NameOfContact, StreetAddress1, StreetAddress2, StreetAddress3, City, State, Zip, Zip4, Phone, PhoneWork
+          print row
+          expect(page).to have_content(row[0]) #NameOfContact
+          expect(page).to have_content(row[1]) #StreetAddress1
+          expect(page).to have_content(row[2]) #StreetAddress2
+          expect(page).to have_content(row[3]) #StreetAddress3
+          expect(page).to have_content(row[4]) #City
+          expect(page).to have_content(row[5]) #State
+          expect(page).to have_content(row[6]) #Zip
+        end
+        result3.cancel
+        client3.close
+        #check the emergency contact
         end
       #close connection and close result
       result2.cancel

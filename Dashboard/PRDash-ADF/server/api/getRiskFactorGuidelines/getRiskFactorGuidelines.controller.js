@@ -24,14 +24,14 @@ exports.index = function(req, res) {
     var id = req.param("id");
     var query = '';
     if (id) {
-        console.log("Registering endpoint: /getRiskFactorGuidelines/:id is " + id);
+        //console.log("Registering endpoint: /getRiskFactorGuidelines/:id is " + id);
         query = "SELECT Priority, Guideline ";
         query += "FROM RiskFactorGuidelines ";
         query += "WHERE RiskFactorCode =  '" + id +"' ";
         query += "ORDER by priority";
-        console.log("Query: " + query);
+        //console.log("Query: " + query);
     } else {
-        console.log("ERROR: Risk Factor Code is required."); 
+        //console.log("ERROR: Risk Factor Code is required."); 
         res.end("ERROR: Risk Factor Code is required.");
 
     }
@@ -40,7 +40,7 @@ exports.index = function(req, res) {
         // ... error checks
         if (err || !query) { 
         data = "Error: Database connection failed!";
-        console.log("Database connection failed!"); 
+        //console.log("Database connection failed!"); 
         return; 
         }
 
@@ -49,11 +49,11 @@ exports.index = function(req, res) {
         request.query(query, function(err, recordset) {
             // ... error checks
             if (err) { 
-            console.log("Query failed!"); 
+            //console.log("Query failed!"); 
             return; 
             }
 
-            console.log(recordset.length);
+            //console.log(recordset.length);
 
             res.send(recordset);
         });

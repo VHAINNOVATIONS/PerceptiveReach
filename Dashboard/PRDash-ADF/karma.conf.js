@@ -58,6 +58,7 @@ module.exports = function(config) {
       'http://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js',
       'client/app/**/*.js',
       'test/mock/**/*.js',
+      'test/helper/**/*.js',
       'test/spec/**/*.js'
     ],
 
