@@ -1,0 +1,805 @@
+* commit 5a1d1fed5c51521a824a93381ea9261466d5c735 (HEAD, master)
+| Author: unknown <mmohler002@MMOHLER00290.us.nam.ad.pwcinternal.com>
+| Date:   Fri Apr 24 17:48:03 2015 -0400
+| 
+|     Sprint 14 submission log
+|  
+* commit b07d645e481ada024939cdbbd580350f139a6e31
+| Author: unknown <mmohler002@MMOHLER00290.us.nam.ad.pwcinternal.com>
+| Date:   Fri Apr 24 17:26:24 2015 -0400
+| 
+|     Design spec deliverables for Sprint 14
+|    
+*   commit 99c1e4d82591610cf20dd5dc926adb9cb9c5428e
+|\  Merge: 7af2620 8fb2f80
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Fri Apr 24 11:28:42 2015 -0400
+| | 
+| |     Merge branch 'stable'
+| |   
+| * commit 8fb2f802c81a001f43e741ab7b23a35a725f26b1
+| | Merge: 10a7c73 87906c0
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Fri Apr 24 11:27:14 2015 -0400
+| | 
+| |     Merge branch 'test' into stable
+| |     
+| *   commit 87906c0c5600f73a5c732a4415400c0d65008f4f
+| |\  Merge: e8dacbc 896ed91
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Fri Apr 24 11:24:56 2015 -0400
+| | | 
+| | |     Merge branch 'dev' into test
+| | |    
+| | * commit 896ed918e1523270d67b727848476f56adf79b31
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Thu Apr 23 10:29:15 2015 -0400
+| | | 
+| | |     PR-1846 fixed presentation issue regarding displaying header information prior to Angular JS being instantiated
+| | |    
+| | * commit d5048488827876b5a7ced0eb8df475c7d9a44856
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Thu Apr 23 09:16:25 2015 -0400
+| | | 
+| | |     PR-1846 fixed bug on server to allow for login
+| | |      
+| | *   commit 9e3d0a25f47e6221e2e04c02bbda563db40e9153
+| | |\  Merge: 8bdc449 5fdca81
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Wed Apr 22 17:02:42 2015 -0400
+| | | | 
+| | | |     Merge branch 'signon' into dev
+| | | |     
+| | | * commit 5fdca81c0d4ccbba99e0e62c2ebbfb7a6aff856b
+| | | | Author: Andal FeQuiere Jr <andal.fequiere@us.pwc.com>
+| | | | Date:   Wed Apr 22 17:00:04 2015 -0400
+| | | | 
+| | | |     PR-1840 cleaned up login screen and removed security against api services for the time being due to dev unit test failures
+| | | |       
+| | * |   commit 8bdc4497c451024e647654dfe188c01dda2cd485
+| | |\ \  Merge: 345de45 aa8d3e7
+| | | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | |   Date:   Wed Apr 22 15:15:27 2015 -0400
+| | | |   
+| | | |       Merge branch 'signon' into dev
+| | | |     
+| | | * commit aa8d3e78777b220eca75f3b269b8fdf672c50d3b
+| | | | Author: Andal FeQuiere Jr <andal.fequiere@us.pwc.com>
+| | | | Date:   Mon Apr 20 11:07:31 2015 -0400
+| | | | 
+| | | |     PR-1846 #comment updated login message and login user name
+| | | |     
+| | | * commit 5067d3c3625ee7e9b2e69533cac36dcf7ec2f808
+| | | | Author: Andal FeQuiere Jr <andal.fequiere@us.pwc.com>
+| | | | Date:   Sun Apr 19 23:53:03 2015 -0400
+| | | | 
+| | | |     PR-1846 #comment added code to disable popup message and provide friendly response
+| | | |     
+| | | * commit cc2b118789b0f054314161a3e7af5716624e46c9
+| | |   Author: Andal FeQuiere Jr <andal.fequiere@us.pwc.com>
+| | |   Date:   Thu Apr 16 01:22:39 2015 -0400
+| | |   
+| | |       PR-1837 #comment added username to header PR-1848 #comment Added logout button and functionality
+| | |      
+| * |   commit e8dacbc464e8ed32450dbbd6a7ee7463ee9d8d44
+| |\ \  Merge: 42b3d7b 345de45
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Wed Apr 22 14:18:06 2015 -0400
+| | |   
+| | |       Merge commit '345de45274cc8f3c9c84a3dc2736425fcc4be579' into HEAD
+| | |    
+| | * commit 345de45274cc8f3c9c84a3dc2736425fcc4be579
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Wed Apr 22 14:14:30 2015 -0400
+| | | 
+| | |     PR-1803 added the proper distribution file
+| | |    
+| * | commit 42b3d7b75b25b784ee603aaab77a4a88ba64c25b
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Wed Apr 22 14:01:05 2015 -0400
+| | | 
+| | |     Updated PR-996 feature file
+| | |    
+| * | commit 76c7a8178ad3bd2cd8ed657e4e3e384976df44d3
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Wed Apr 22 13:49:19 2015 -0400
+| | | 
+| | |     Updated PR-1268 feature file
+| | |    
+| * | commit 075df8664210f8aa3e35df7e9e5a3ca2ad9e9081
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Wed Apr 22 13:45:30 2015 -0400
+| | | 
+| | |     Updated PR-1267 feature file
+| | |      
+| * |   commit f1030b35d596397b3330797102a4b5b187f664c3
+| |\ \  Merge: 76b562b 21beaa2
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Wed Apr 22 13:09:55 2015 -0400
+| | |   
+| | |       Merge commit '21beaa238a1e52673e1b0a4377c23755a2315688' into HEAD
+| | |    
+| | * commit 21beaa238a1e52673e1b0a4377c23755a2315688
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Wed Apr 22 13:06:40 2015 -0400
+| | | 
+| | |     PR-1803 merged db_refactor with dev branch. Fixed unit test issues resulting from merge.
+| | |      
+| | *   commit 6005b266f730a7ec0db700807e29df43f22fcbd5
+| | |\  Merge: a0a6209 5e3393f
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Wed Apr 22 10:14:32 2015 -0400
+| | | | 
+| | | |     Merge branch 'db_refactor' into dev
+| | | |     
+| | | * commit 5e3393ff241d22cc43c2b573b2b1edd9c49aa698
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Tue Apr 21 21:00:16 2015 -0400
+| | | | 
+| | | |     PR-1803 PR-1874 Fixed widget to widget communication error in Clinical Decision support. Fixed patient table write back support to the database.
+| | | |     
+| | | * commit 65794233c349d53f0295ebe324aa422a6d1e0ef2
+| | | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | Date:   Tue Apr 21 17:02:55 2015 -0400
+| | | | 
+| | | |     PR-1802 #time 1h Worked on solving a popup from an error due to the refactoring.
+| | | |     
+| | | * commit 9da102cde105b9a792c590bae39e9a53427754cd
+| | | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | Date:   Tue Apr 21 13:47:07 2015 -0400
+| | | | 
+| | | |     PR-1802 #time 2h 30m Updated the widgets and datamodels for new fields.
+| | | |     
+| | | * commit b46d87689924dc4cbd19caccee91e7ee1cc79561
+| | | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | Date:   Fri Apr 17 02:57:44 2015 -0400
+| | | | 
+| | | |     PR-1801 PR-1802 #time 3.5h Converted all of the API's currently in use and worked on the widgets to get them refactored.
+| | | |     
+| | | * commit bd2fecb66ce6fd0c54d65cc71c1a958a5023776e
+| | |   Merge: fd42d9e c5766d0
+| | |   Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | |   Date:   Fri Apr 10 19:04:49 2015 -0400
+| | |   
+| | |       Merge branch 'dev' into db_refactor
+| | |    
+| * | commit 76b562b0d60508d8f735c6f5cefb435064dc606c
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Apr 21 16:32:48 2015 -0400
+| | | 
+| | |     Updated steps for PR-1676 feature file
+| | |      
+| * |   commit d66290133e97c2438cbf180c28d8f8067937ce1d
+| |\ \  Merge: ad04f5e a0a6209
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Tue Apr 21 14:43:52 2015 -0400
+| | |   
+| | |       Merge commit 'a0a6209026ae1c9576559388771c7a1a76498b57' into HEAD
+| | |    
+| | * commit a0a6209026ae1c9576559388771c7a1a76498b57
+| | | Author: unknown <vhaisdsnellr@IST-LTSNELLROB.vha.med.va.gov>
+| | | Date:   Tue Apr 21 13:40:51 2015 -0500
+| | | 
+| | |     PR-1820 In progress changes saved...Need to go back a few commits to test something.
+| | |    
+| * | commit ad04f5e9af61680e7dff44117487ab3830905b17
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Apr 21 12:33:45 2015 -0400
+| | | 
+| | |     Updated with error message PR-1677 feature file
+| | |    
+| * | commit 0e5c93e0c88c182cde1cf983260677e2d861b011
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Apr 21 11:37:56 2015 -0400
+| | | 
+| | |     Updated PR-1677 feature file
+| | |      
+| * |   commit ac053f8b0a5e299fd07b5a23c29da591aadd2992
+| |\ \  Merge: e75ef15 bfd9295
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Mon Apr 20 18:02:33 2015 -0400
+| | |   
+| | |       Merge commit 'bfd92953dead75351ae87fe5900edbccd7800606' into HEAD
+| | |    
+| | * commit bfd92953dead75351ae87fe5900edbccd7800606
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Mon Apr 20 17:59:12 2015 -0400
+| | | 
+| | |     PR-1820 Updated settings and continued to build out routine.
+| | |    
+| * | commit e75ef1531c1ad16a9b8677bfc1743aa8649abf07
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Mon Apr 20 13:53:04 2015 -0400
+| | | 
+| | |     Fixed typo error for PR-1677
+| | |    
+| * | commit 7b2028abc34122f6de44fd9943939af0535b87d3
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Mon Apr 20 13:22:04 2015 -0400
+| | | 
+| | |     Updated feature PR-1677 with negative logon message
+| | |      
+| * |   commit 4a453a368e577811c39d635f2e28b344b50348d7
+| |\ \  Merge: 3cdf249 860c30a
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Mon Apr 20 09:53:18 2015 -0400
+| | |   
+| | |       Merge commit '860c30aa71a3435254fd1321ff1f35f3f85578d5' into HEAD
+| | |    
+| | * commit 860c30aa71a3435254fd1321ff1f35f3f85578d5
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Mon Apr 20 09:47:51 2015 -0400
+| | | 
+| | |     PR-1820 Initial Prototype of the Direct Queue
+| | |      
+| * |   commit 3cdf249d8ac5485eed93c26aeac5925a9f348754
+| |\ \  Merge: f9104c7 c324819
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Sun Apr 19 14:29:23 2015 -0400
+| | |   
+| | |       Merge commit 'c32481942ee83bf36809c22ce41f3b5e19b33a9b' into HEAD
+| | |    
+| | * commit c32481942ee83bf36809c22ce41f3b5e19b33a9b
+| |   Author: unknown <vhaisdsnellr@IST-LTSNELLROB.vha.med.va.gov>
+| |   Date:   Sun Apr 19 13:26:20 2015 -0500
+| |   
+| |       PR-1743 Direct Message Prototyping.
+| |   
+| * commit f9104c7895a4943a3fa33e477cb9134b33915314
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Fri Apr 17 12:20:05 2015 -0400
+| | 
+| |     Added feature files for PR-1677, PR-1678 and updated PR-1676 feature
+| |   
+| * commit 3b19ba4f7ea138488924500ec87f9c91a6c20c32
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Fri Apr 17 11:22:14 2015 -0400
+| | 
+| |     archive test cases that are based on old requirements
+| |     
+| |     archive test cases that are based on old requirements
+| |   
+| * commit 3148c369df60c01e3c61c31e98345caf29c232a4
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Thu Apr 16 14:12:14 2015 -0400
+| | 
+| |     Update PR-1407
+| |   
+| * commit 051af5e65974497058a8a6100598fc8c47fe89f0
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Thu Apr 16 12:25:42 2015 -0400
+| | 
+| |     Updated logoff feature for PR-1676
+| |   
+| * commit 3e8aa8135f1bf81a784aad24190e217b7ac04fe4
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Wed Apr 15 15:43:32 2015 -0400
+| | 
+| |     Changed test case name for PR-1676
+| |   
+| * commit b31d83bb8c1ab312964fd294d268d874261b64ee
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Wed Apr 15 15:41:16 2015 -0400
+| | 
+| |     Added Negative logon steps for PR-1676
+| |   
+| * commit 61cab0ba2bb28499411ed619f525ee7bf5f51f9a
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Wed Apr 15 14:38:07 2015 -0400
+| | 
+| |     PR-1537 Updated feature file
+| |   
+| * commit 7a21d9bd2482ad1419660195837544184c747b04
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Wed Apr 15 14:21:52 2015 -0400
+| | 
+| |     updated env for screenshot driver
+| |     
+| |     updated env for screenshot driver
+| |   
+| * commit 3afb3fd0b30bb9c0c89e366db6a0c7159dd5ff83
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Wed Apr 15 14:11:20 2015 -0400
+| | 
+| |     corrected 1676 after conflict
+| |     
+| |     corrected 1676 after conflict
+| |     
+| *   commit 4ddc395ef8c04b64615e1c4e23aa7a5a027ae04a
+| |\  Merge: a98e026 c0172f7
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Apr 15 14:09:25 2015 -0400
+| | | 
+| | |     Merge remote-tracking branch 'origin/test' into test
+| | |     
+| | |     Conflicts:
+| | |     	CI_CD/PerceptiveReachTestCases/features/PR-1676.feature
+| | |    
+| | * commit c0172f764cd83cabfa7f9ce0df2cf9e5fdd8aee3
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Apr 14 18:00:54 2015 -0400
+| | | 
+| | |     Added log off feature
+| | |    
+| * | commit a98e02683f23ec9757624632089b53a2fb8b7a1d
+| |/  Author: aqspwc <andrew.q.smith@us.pwc.com>
+| |   Date:   Wed Apr 15 14:08:06 2015 -0400
+| |   
+| |       PR-1825 Step Definitions updated with SQL
+| |       
+| |       PR-1825 Step Definitions updated with SQL
+| |   
+| * commit 971d4b467bb80e7fe10e33059503e7e2f2e8204c
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Mon Apr 13 16:06:54 2015 -0400
+| | 
+| |     Updated step definitions for Log On PR_1676
+| |   
+| * commit 7237c21c21b464ef47b3de5f1a627a823444d939
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Mon Apr 13 16:05:15 2015 -0400
+| | 
+| |     Added step definitions for Log On functionality
+| |   
+| * commit 95659487730e04b7705ffb0c98347a63bfabf527
+|   Author: cgattu <chandrakala.gattu@us.pwc.com>
+|   Date:   Mon Apr 13 13:29:17 2015 -0400
+|   
+|       Added feature file for SPC Log On PR-1676
+|  
+* commit 7af2620bf827318d2182d85f707ebb69b1a82067
+| Author: pbradley25 <paul.bradley@us.pwc.com>
+| Date:   Fri Apr 10 18:22:39 2015 -0400
+| 
+|     Sprint 13 Submission
+|  
+* commit ef86412b1c5c14278ebfff3b41c02466fbe9c9ec
+  Author: pbradley25 <paul.bradley@us.pwc.com>
+  Date:   Fri Apr 10 18:18:42 2015 -0400
+  
+      Design Spec updates
+* commit ee7f20322baa0d880acc4548413114768f9ad01b (HEAD, master)
+| Author: mmohler <mmohler002@MMOHLER00290.us.nam.ad.pwcinternal.com>
+| Date:   Fri Apr 24 18:13:23 2015 -0400
+| 
+|     Sprint14 Submission Log
+|  
+* commit 5a1d1fed5c51521a824a93381ea9261466d5c735 (Monica_Mohler/master)
+| Author: unknown <mmohler002@MMOHLER00290.us.nam.ad.pwcinternal.com>
+| Date:   Fri Apr 24 17:48:03 2015 -0400
+| 
+|     Sprint 14 submission log
+|  
+* commit b07d645e481ada024939cdbbd580350f139a6e31
+| Author: unknown <mmohler002@MMOHLER00290.us.nam.ad.pwcinternal.com>
+| Date:   Fri Apr 24 17:26:24 2015 -0400
+| 
+|     Design spec deliverables for Sprint 14
+|    
+*   commit 99c1e4d82591610cf20dd5dc926adb9cb9c5428e
+|\  Merge: 7af2620 8fb2f80
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Fri Apr 24 11:28:42 2015 -0400
+| | 
+| |     Merge branch 'stable'
+| |   
+| * commit 8fb2f802c81a001f43e741ab7b23a35a725f26b1 (Monica_Mohler/stable)
+| | Merge: 10a7c73 87906c0
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Fri Apr 24 11:27:14 2015 -0400
+| | 
+| |     Merge branch 'test' into stable
+| |     
+| *   commit 87906c0c5600f73a5c732a4415400c0d65008f4f (Monica_Mohler/test)
+| |\  Merge: e8dacbc 896ed91
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Fri Apr 24 11:24:56 2015 -0400
+| | | 
+| | |     Merge branch 'dev' into test
+| | |    
+| | * commit 896ed918e1523270d67b727848476f56adf79b31 (Monica_Mohler/dev)
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Thu Apr 23 10:29:15 2015 -0400
+| | | 
+| | |     PR-1846 fixed presentation issue regarding displaying header information prior to Angular JS being instantiated
+| | |    
+| | * commit d5048488827876b5a7ced0eb8df475c7d9a44856
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Thu Apr 23 09:16:25 2015 -0400
+| | | 
+| | |     PR-1846 fixed bug on server to allow for login
+| | |      
+| | *   commit 9e3d0a25f47e6221e2e04c02bbda563db40e9153
+| | |\  Merge: 8bdc449 5fdca81
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Wed Apr 22 17:02:42 2015 -0400
+| | | | 
+| | | |     Merge branch 'signon' into dev
+| | | |     
+| | | * commit 5fdca81c0d4ccbba99e0e62c2ebbfb7a6aff856b (Monica_Mohler/signon)
+| | | | Author: Andal FeQuiere Jr <andal.fequiere@us.pwc.com>
+| | | | Date:   Wed Apr 22 17:00:04 2015 -0400
+| | | | 
+| | | |     PR-1840 cleaned up login screen and removed security against api services for the time being due to dev unit test failures
+| | | |       
+| | * |   commit 8bdc4497c451024e647654dfe188c01dda2cd485
+| | |\ \  Merge: 345de45 aa8d3e7
+| | | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | |   Date:   Wed Apr 22 15:15:27 2015 -0400
+| | | |   
+| | | |       Merge branch 'signon' into dev
+| | | |     
+| | | * commit aa8d3e78777b220eca75f3b269b8fdf672c50d3b
+| | | | Author: Andal FeQuiere Jr <andal.fequiere@us.pwc.com>
+| | | | Date:   Mon Apr 20 11:07:31 2015 -0400
+| | | | 
+| | | |     PR-1846 #comment updated login message and login user name
+| | | |     
+| | | * commit 5067d3c3625ee7e9b2e69533cac36dcf7ec2f808
+| | | | Author: Andal FeQuiere Jr <andal.fequiere@us.pwc.com>
+| | | | Date:   Sun Apr 19 23:53:03 2015 -0400
+| | | | 
+| | | |     PR-1846 #comment added code to disable popup message and provide friendly response
+| | | |     
+| | | * commit cc2b118789b0f054314161a3e7af5716624e46c9
+| | |   Author: Andal FeQuiere Jr <andal.fequiere@us.pwc.com>
+| | |   Date:   Thu Apr 16 01:22:39 2015 -0400
+| | |   
+| | |       PR-1837 #comment added username to header PR-1848 #comment Added logout button and functionality
+| | |      
+| * |   commit e8dacbc464e8ed32450dbbd6a7ee7463ee9d8d44
+| |\ \  Merge: 42b3d7b 345de45
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Wed Apr 22 14:18:06 2015 -0400
+| | |   
+| | |       Merge commit '345de45274cc8f3c9c84a3dc2736425fcc4be579' into HEAD
+| | |    
+| | * commit 345de45274cc8f3c9c84a3dc2736425fcc4be579
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Wed Apr 22 14:14:30 2015 -0400
+| | | 
+| | |     PR-1803 added the proper distribution file
+| | |    
+| * | commit 42b3d7b75b25b784ee603aaab77a4a88ba64c25b
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Wed Apr 22 14:01:05 2015 -0400
+| | | 
+| | |     Updated PR-996 feature file
+| | |    
+| * | commit 76c7a8178ad3bd2cd8ed657e4e3e384976df44d3
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Wed Apr 22 13:49:19 2015 -0400
+| | | 
+| | |     Updated PR-1268 feature file
+| | |    
+| * | commit 075df8664210f8aa3e35df7e9e5a3ca2ad9e9081
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Wed Apr 22 13:45:30 2015 -0400
+| | | 
+| | |     Updated PR-1267 feature file
+| | |      
+| * |   commit f1030b35d596397b3330797102a4b5b187f664c3
+| |\ \  Merge: 76b562b 21beaa2
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Wed Apr 22 13:09:55 2015 -0400
+| | |   
+| | |       Merge commit '21beaa238a1e52673e1b0a4377c23755a2315688' into HEAD
+| | |    
+| | * commit 21beaa238a1e52673e1b0a4377c23755a2315688
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Wed Apr 22 13:06:40 2015 -0400
+| | | 
+| | |     PR-1803 merged db_refactor with dev branch. Fixed unit test issues resulting from merge.
+| | |      
+| | *   commit 6005b266f730a7ec0db700807e29df43f22fcbd5
+| | |\  Merge: a0a6209 5e3393f
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Wed Apr 22 10:14:32 2015 -0400
+| | | | 
+| | | |     Merge branch 'db_refactor' into dev
+| | | |     
+| | | * commit 5e3393ff241d22cc43c2b573b2b1edd9c49aa698 (Monica_Mohler/db_refactor)
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Tue Apr 21 21:00:16 2015 -0400
+| | | | 
+| | | |     PR-1803 PR-1874 Fixed widget to widget communication error in Clinical Decision support. Fixed patient table write back support to the database.
+| | | |     
+| | | * commit 65794233c349d53f0295ebe324aa422a6d1e0ef2
+| | | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | Date:   Tue Apr 21 17:02:55 2015 -0400
+| | | | 
+| | | |     PR-1802 #time 1h Worked on solving a popup from an error due to the refactoring.
+| | | |     
+| | | * commit 9da102cde105b9a792c590bae39e9a53427754cd
+| | | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | Date:   Tue Apr 21 13:47:07 2015 -0400
+| | | | 
+| | | |     PR-1802 #time 2h 30m Updated the widgets and datamodels for new fields.
+| | | |     
+| | | * commit b46d87689924dc4cbd19caccee91e7ee1cc79561
+| | | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | Date:   Fri Apr 17 02:57:44 2015 -0400
+| | | | 
+| | | |     PR-1801 PR-1802 #time 3.5h Converted all of the API's currently in use and worked on the widgets to get them refactored.
+| | | |     
+| | | * commit bd2fecb66ce6fd0c54d65cc71c1a958a5023776e
+| | |   Merge: fd42d9e c5766d0
+| | |   Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | |   Date:   Fri Apr 10 19:04:49 2015 -0400
+| | |   
+| | |       Merge branch 'dev' into db_refactor
+| | |    
+| * | commit 76b562b0d60508d8f735c6f5cefb435064dc606c
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Apr 21 16:32:48 2015 -0400
+| | | 
+| | |     Updated steps for PR-1676 feature file
+| | |      
+| * |   commit d66290133e97c2438cbf180c28d8f8067937ce1d
+| |\ \  Merge: ad04f5e a0a6209
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Tue Apr 21 14:43:52 2015 -0400
+| | |   
+| | |       Merge commit 'a0a6209026ae1c9576559388771c7a1a76498b57' into HEAD
+| | |    
+| | * commit a0a6209026ae1c9576559388771c7a1a76498b57
+| | | Author: unknown <vhaisdsnellr@IST-LTSNELLROB.vha.med.va.gov>
+| | | Date:   Tue Apr 21 13:40:51 2015 -0500
+| | | 
+| | |     PR-1820 In progress changes saved...Need to go back a few commits to test something.
+| | |    
+| * | commit ad04f5e9af61680e7dff44117487ab3830905b17
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Apr 21 12:33:45 2015 -0400
+| | | 
+| | |     Updated with error message PR-1677 feature file
+| | |    
+| * | commit 0e5c93e0c88c182cde1cf983260677e2d861b011
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Apr 21 11:37:56 2015 -0400
+| | | 
+| | |     Updated PR-1677 feature file
+| | |      
+| * |   commit ac053f8b0a5e299fd07b5a23c29da591aadd2992
+| |\ \  Merge: e75ef15 bfd9295
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Mon Apr 20 18:02:33 2015 -0400
+| | |   
+| | |       Merge commit 'bfd92953dead75351ae87fe5900edbccd7800606' into HEAD
+| | |    
+| | * commit bfd92953dead75351ae87fe5900edbccd7800606
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Mon Apr 20 17:59:12 2015 -0400
+| | | 
+| | |     PR-1820 Updated settings and continued to build out routine.
+| | |    
+| * | commit e75ef1531c1ad16a9b8677bfc1743aa8649abf07
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Mon Apr 20 13:53:04 2015 -0400
+| | | 
+| | |     Fixed typo error for PR-1677
+| | |    
+| * | commit 7b2028abc34122f6de44fd9943939af0535b87d3
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Mon Apr 20 13:22:04 2015 -0400
+| | | 
+| | |     Updated feature PR-1677 with negative logon message
+| | |      
+| * |   commit 4a453a368e577811c39d635f2e28b344b50348d7
+| |\ \  Merge: 3cdf249 860c30a
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Mon Apr 20 09:53:18 2015 -0400
+| | |   
+| | |       Merge commit '860c30aa71a3435254fd1321ff1f35f3f85578d5' into HEAD
+| | |    
+| | * commit 860c30aa71a3435254fd1321ff1f35f3f85578d5
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Mon Apr 20 09:47:51 2015 -0400
+| | | 
+| | |     PR-1820 Initial Prototype of the Direct Queue
+| | |      
+| * |   commit 3cdf249d8ac5485eed93c26aeac5925a9f348754
+| |\ \  Merge: f9104c7 c324819
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Sun Apr 19 14:29:23 2015 -0400
+| | |   
+| | |       Merge commit 'c32481942ee83bf36809c22ce41f3b5e19b33a9b' into HEAD
+| | |    
+| | * commit c32481942ee83bf36809c22ce41f3b5e19b33a9b
+| |   Author: unknown <vhaisdsnellr@IST-LTSNELLROB.vha.med.va.gov>
+| |   Date:   Sun Apr 19 13:26:20 2015 -0500
+| |   
+| |       PR-1743 Direct Message Prototyping.
+| |   
+| * commit f9104c7895a4943a3fa33e477cb9134b33915314
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Fri Apr 17 12:20:05 2015 -0400
+| | 
+| |     Added feature files for PR-1677, PR-1678 and updated PR-1676 feature
+| |   
+| * commit 3b19ba4f7ea138488924500ec87f9c91a6c20c32
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Fri Apr 17 11:22:14 2015 -0400
+| | 
+| |     archive test cases that are based on old requirements
+| |     
+| |     archive test cases that are based on old requirements
+| |   
+| * commit 3148c369df60c01e3c61c31e98345caf29c232a4
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Thu Apr 16 14:12:14 2015 -0400
+| | 
+| |     Update PR-1407
+| |   
+| * commit 051af5e65974497058a8a6100598fc8c47fe89f0
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Thu Apr 16 12:25:42 2015 -0400
+| | 
+| |     Updated logoff feature for PR-1676
+| |   
+| * commit 3e8aa8135f1bf81a784aad24190e217b7ac04fe4
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Wed Apr 15 15:43:32 2015 -0400
+| | 
+| |     Changed test case name for PR-1676
+| |   
+| * commit b31d83bb8c1ab312964fd294d268d874261b64ee
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Wed Apr 15 15:41:16 2015 -0400
+| | 
+| |     Added Negative logon steps for PR-1676
+| |   
+| * commit 61cab0ba2bb28499411ed619f525ee7bf5f51f9a
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Wed Apr 15 14:38:07 2015 -0400
+| | 
+| |     PR-1537 Updated feature file
+| |   
+| * commit 7a21d9bd2482ad1419660195837544184c747b04
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Wed Apr 15 14:21:52 2015 -0400
+| | 
+| |     updated env for screenshot driver
+| |     
+| |     updated env for screenshot driver
+| |   
+| * commit 3afb3fd0b30bb9c0c89e366db6a0c7159dd5ff83
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Wed Apr 15 14:11:20 2015 -0400
+| | 
+| |     corrected 1676 after conflict
+| |     
+| |     corrected 1676 after conflict
+| |     
+| *   commit 4ddc395ef8c04b64615e1c4e23aa7a5a027ae04a
+| |\  Merge: a98e026 c0172f7
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Apr 15 14:09:25 2015 -0400
+| | | 
+| | |     Merge remote-tracking branch 'origin/test' into test
+| | |     
+| | |     Conflicts:
+| | |     	CI_CD/PerceptiveReachTestCases/features/PR-1676.feature
+| | |    
+| | * commit c0172f764cd83cabfa7f9ce0df2cf9e5fdd8aee3
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Apr 14 18:00:54 2015 -0400
+| | | 
+| | |     Added log off feature
+| | |    
+| * | commit a98e02683f23ec9757624632089b53a2fb8b7a1d
+| |/  Author: aqspwc <andrew.q.smith@us.pwc.com>
+| |   Date:   Wed Apr 15 14:08:06 2015 -0400
+| |   
+| |       PR-1825 Step Definitions updated with SQL
+| |       
+| |       PR-1825 Step Definitions updated with SQL
+| |   
+| * commit 971d4b467bb80e7fe10e33059503e7e2f2e8204c
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Mon Apr 13 16:06:54 2015 -0400
+| | 
+| |     Updated step definitions for Log On PR_1676
+| |   
+| * commit 7237c21c21b464ef47b3de5f1a627a823444d939
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Mon Apr 13 16:05:15 2015 -0400
+| | 
+| |     Added step definitions for Log On functionality
+| |   
+| * commit 95659487730e04b7705ffb0c98347a63bfabf527
+|   Author: cgattu <chandrakala.gattu@us.pwc.com>
+|   Date:   Mon Apr 13 13:29:17 2015 -0400
+|   
+|       Added feature file for SPC Log On PR-1676
+|  
+* commit 7af2620bf827318d2182d85f707ebb69b1a82067
+| Author: pbradley25 <paul.bradley@us.pwc.com>
+| Date:   Fri Apr 10 18:22:39 2015 -0400
+| 
+|     Sprint 13 Submission
+|  
+* commit ef86412b1c5c14278ebfff3b41c02466fbe9c9ec
+  Author: pbradley25 <paul.bradley@us.pwc.com>
+  Date:   Fri Apr 10 18:18:42 2015 -0400
+  
+      Design Spec updates
+  
+* commit 3e99ffb41faeacf5c82880b3e07b9aafc9b1e430 (Monica_Mohler/eventTimeLine)
+| Author: Robert Snelling <robert.snelling@us.pwc.com>
+| Date:   Thu Apr 23 13:39:11 2015 -0400
+| 
+|     Quick update to default widgets
+|  
+* commit 6b64d08c713d1ab9d3d1fefb28e325d4b5faf6cc
+| Merge: acb2a96 c5766d0
+| Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+| Date:   Wed Apr 15 20:07:52 2015 -0400
+| 
+|     Merge branch 'dev' into eventTimeLine
+|     
+|     Conflicts:
+|     	Dashboard/PRDash-ADF/client/app/examples/controllers/demo.js
+|     	Dashboard/PRDash-ADF/client/components/widget/models/reach.js
+|     	Dashboard/PRDash-ADF/client/components/widget/widgets/widget_template.js
+|     	Dashboard/PRDash-ADF/client/dist/perceptive-reach-widgets.js
+|  
+* commit acb2a9612383586fe678187387487de03129e70d
+| Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+| Date:   Wed Apr 15 19:48:59 2015 -0400
+| 
+|     Mock data generation moved to server side, tooltip message generation is user specified now, some documentation in server side controller
+|  
+* commit 118640db2a52a840799dc11a6c07fb7b82ca340a
+| Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+| Date:   Wed Apr 15 16:24:08 2015 -0400
+| 
+|     remove y-axes
+|  
+* commit a897e665fb59597dc0a8ac9abbe9afc88a1d6c49
+| Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+| Date:   Wed Apr 15 16:16:19 2015 -0400
+| 
+|     custom color for appointment
+|  
+* commit 0fae68b909e14cc856e83fe39899b87b29eacb90
+| Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+| Date:   Wed Apr 15 16:13:21 2015 -0400
+| 
+|     click on legend now works
+|  
+* commit ca20bc9d44bb3c0f54016705310ea241708fc0d6
+| Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+| Date:   Wed Apr 15 09:55:32 2015 -0400
+| 
+|     hideLines
+|  
+* commit 047684fdc5ebc58b5eec13c6cb4e964c14db48e4
+| Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+| Date:   Tue Apr 14 12:47:58 2015 -0400
+| 
+|     Appointment is constant in muck data
+|  
+* commit 2d13cf16e2a99cefa11a3574e2457fda54dee3b0
+| Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+| Date:   Tue Apr 14 12:45:02 2015 -0400
+| 
+|     line graph and charts appear together now
+|  
+* commit e49d8d2f52c67e8ef00f6c39885f8dc170a67827
+| Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+| Date:   Tue Apr 14 10:27:15 2015 -0400
+| 
+|     riskTimeline is moved to event timeline
+|  
+* commit 6e8949fcb2c8ea5b38990705769eebe663e9660e
+| Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+| Date:   Tue Apr 14 10:22:12 2015 -0400
+| 
+|     change titles to Risk Timeline to Event Timeline
+|  
+* commit 0f4e9b0d17fbfe14170f47944ccc3fa44775e8f3
+  Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+  Date:   Tue Apr 14 10:15:46 2015 -0400
+  
+      EventTimelineDataModel is created and data generation of the timeline directive moved out of the directive to EventTimelineDataModel
