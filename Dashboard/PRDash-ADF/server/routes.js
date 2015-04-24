@@ -6,7 +6,15 @@
 
 var errors = require('./components/errors');
 
+function logger(req,res,next){
+  console.log(new Date(), req.method, req.url);
+  next();
+}
+
 module.exports = function(app) {
+
+  //log everything for now
+  app.use(logger);
 
   // Insert routes below
   app.use('/api/things', require('./api/thing'));
@@ -14,7 +22,7 @@ module.exports = function(app) {
   app.use('/api/facilitiesStateCount', require('./api/facilitiesStateCount'));
   app.use('/api/veteranDetails', require('./api/veteranDetails'));
   app.use('/api/veteransByVAMC', require('./api/veteransByVAMC'));
-  app.use('/api/veteranRoster', require('./api/veteranRoster'));
+  app.use('/api/patient', require('./api/patient'));
   app.use('/api/scoreSummaryByVAMC', require('./api/scoreSummaryByVAMC'));
   app.use('/api/facilitiesByState', require('./api/facilitiesByState'));
   app.use('/api/totalRiskByVAMC', require('./api/totalRiskByVAMC'));
@@ -27,8 +35,8 @@ module.exports = function(app) {
   app.use('/api/getListOfOutreachStatus', require('./api/getListOfOutreachStatus'));
   app.use('/api/clinicalDecisionSupport', require('./api/clinicalDecisionSupport'));
 
-  app.use('/api/vetContactData', require('./api/vetContactData'));
-  app.use('/api/vetEmergencyData', require('./api/vetEmergencyData'));
+  app.use('/api/patientContact', require('./api/patientContact'));
+  app.use('/api/emergencyContact', require('./api/emergencyContact'));
   app.use('/api/patientFlagData', require('./api/patientFlagData'));
   app.use('/api/medicationData', require('./api/medicationData'));
   app.use('/api/diagnosesData', require('./api/diagnosesData'));

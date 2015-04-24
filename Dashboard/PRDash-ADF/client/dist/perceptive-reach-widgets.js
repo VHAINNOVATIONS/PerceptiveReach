@@ -358,14 +358,14 @@ angular.module('ui.models')
       this.dataModelOptions.common = this.dataModelOptions.common  ||  { data: 'default value' };
      
       scope.$on('commonDataChanged', function (event, data) {
-        console.log('Common data changed for: ' + this.widgetScope.widget.title);
+        //console.log('Common data changed for: ' + this.widgetScope.widget.title);
         this.setCommon(data);
       }.bind(this));
     };
 
     CommonDataModel.prototype.setCommon = function (data) {
       if (data && (!angular.equals(this.dataModelOptions.common, data))) {
-        console.log(this.widgetScope.widget.title + ' data model options changed');
+        //console.log(this.widgetScope.widget.title + ' data model options changed');
         this.dataModelOptions.common = data;
         //this.widgetScope.$emit('widgetChanged', this.widgetScope.widget);
       }
@@ -373,34 +373,34 @@ angular.module('ui.models')
 
     return CommonDataModel;
   })
-  .factory('VeteranRosterDataModel', function ($http, CommonDataModel) {
-    function VeteranRosterDataModel() {
+  .factory('PatientDataModel', function ($http, CommonDataModel) {
+    function PatientDataModel() {
     }
 
-    //VeteranRosterDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    //VeteranRosterDataModel.prototype.constructor = WidgetDataModel;
-    VeteranRosterDataModel.prototype = Object.create(CommonDataModel.prototype);
-    angular.extend(VeteranRosterDataModel.prototype, {
+    //PatientDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    //PatientDataModel.prototype.constructor = WidgetDataModel;
+    PatientDataModel.prototype = Object.create(CommonDataModel.prototype);
+    angular.extend(PatientDataModel.prototype, {
       init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentVAMC = null;
-        console.log("currentDataModelCommon:");
-        console.log(dataModelOptions.common);
+        var currentsta3N = null;
+        //console.log("currentDataModelCommon:");
+        //console.log(dataModelOptions.common);
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          console.log('Inside Common data changed for : ' + this.widgetScope.widget.title);
+          //console.log('Inside Common data changed for : ' + this.widgetScope.widget.title);
           /*console.log(data);
           console.log(this.dataModelOptions);*/
           //CommonDataModel.prototype.setCommon.call(this,data);
-          this.currentVAMC = this.vamc;
-          this.vamc = (dataModelOptions && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : 9;
+          this.currentsta3N = this.sta3N;
+          this.sta3N = (dataModelOptions && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : 9;
           /*console.log('widgetScope');
           console.log(this.widgetScope);
           console.log('commonData:');
           console.log(this.dataModelOptions.common);*/
-          if(this.vamc != this.currentVAMC)
+          if(this.sta3N != this.currentsta3N)
             this.getData();
         }.bind(this));
-        this.vamc = (dataModelOptions && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : 9;
+        this.sta3N = (dataModelOptions && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : 9;
         //this.updateScope([]);
         //this.getData();
       },
@@ -415,60 +415,62 @@ angular.module('ui.models')
           outreachStatus = listOfOutreachStatus;
         }.bind(this));
 
-        $http.get('/api/veteranRoster?id=' + this.vamc)
-        .success(function(veteransByVAMC) {
+        $http.get('/api/patient?id=' + this.sta3N)
+        .success(function(patientsBysta3N) {
           var output = [];
-          var vamc = "";
+          var sta3N = "";
           
           while(outreachStatus == null){} // wait until outreachStatus is not null
 
-          console.log("outreachStatus -  ");
-          console.log(outreachStatus);  
-          for (var veteran in veteransByVAMC) {
-              vamc = veteransByVAMC[0].VAMC
+          //console.log("outreachStatus -  ");
+          //console.log(outreachStatus);  
+          for (var veteran in patientsBysta3N) {
+              sta3N = patientsBysta3N[0].sta3N
               var record = [];
-              var fullName = veteransByVAMC[veteran].LastName + ", " +veteransByVAMC[veteran].FirstName + " " + veteransByVAMC[veteran].MiddleName; 
+              var fullName = patientsBysta3N[veteran].LastName + ", " +patientsBysta3N[veteran].FirstName + " " + patientsBysta3N[veteran].MiddleName; 
              /* record.push(String(fullName));
               record.push(String(veteransByVAMC[veteran].SSN));
               record.push(String(veteransByVAMC[veteran].Phone));
               record.push(String(veteransByVAMC[veteran].DateIdentifiedRisk));
               record.push(String(veteransByVAMC[veteran].RiskLevel)); */
               //record.push(String(veteransByVAMC[veteran].OutreachStatus));
-              veteransByVAMC[veteran].Name = fullName;
+              patientsBysta3N[veteran].Name = fullName;
               var options = "";
               var temp = "";
               var selected = " selected='selected'";
               for(var outreachStat in outreachStatus){
-                if(veteransByVAMC[veteran].OutreachStatus == outreachStatus[outreachStat].OutReachStatusID)
-                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + selected + ">" + outreachStatus[outreachStat].StatusName + "</option>";
-                else
-                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusName + "</option>";
-                options += temp;
+                if(patientsBysta3N[veteran].OutreachStatus == outreachStatus[outreachStat].OutReachStatusID)
+                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + selected + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
+                else{
+                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
+                  //console.log("outreachStatusString: ",  temp);
+                }
+                options += temp;                
               }
-              var select = "<select class='form-control' style='width: 180px;' id='vet_" + veteransByVAMC[veteran].ReachID + "'><option value=''></option>"+ options+ "</select>";
+              var select = "<select class='form-control' style='width: 180px;' id='vet_" + patientsBysta3N[veteran].ReachID + "'><option value=''></option>"+ options+ "</select>";
               //record.push(String(select));
-              veteransByVAMC[veteran].OutreachStatusSelect = select;                
+              patientsBysta3N[veteran].OutreachStatusSelect = select;                
               //output.push(veteransByVAMC);
           }
           //output.sort(function(a,b) {return (a.RiskLevel > b.RiskLevel) ? 1 : ((b.RiskLevel > a.RiskLevel) ? -1 : 0);} );
           var columnHeaders = [];
           //data = [this.vamc, output, outreachStatus];//{vamc : this.vamc, roster : output};
-          data = [this.vamc, veteransByVAMC, outreachStatus];
-          console.log(data);
+          data = [this.sta3N, patientsBysta3N, outreachStatus];
+          //console.log(data);
           this.updateScope(data);
         }.bind(this));
       },
 
       saveOutreachData: function (outreachStatus, veteranID) {
-        $http.put('/api/veteranRoster?vetReachID=' + veteranID, {'outreachStatus': outreachStatus})
+        $http.put('/api/patient?vetReachID=' + veteranID, {'outreachStatus': outreachStatus})
         .success(function(data) {
           //alert(data);
         });  
       },
-      updateVAMC: function (vamc) {
+      updatesta3N: function (sta3N) {
         this.dataModelOptions = this.dataModelOptions ? this.dataModelOptions : {};
-        this.dataModelOptions.vamc = vamc;
-        this.vamc = vamc;
+        this.dataModelOptions.sta3N = sta3N;
+        this.sta3N = sta3N;
       },
 
       destroy: function () {
@@ -477,7 +479,7 @@ angular.module('ui.models')
       }
     });
 
-    return VeteranRosterDataModel;
+    return PatientDataModel;
   })
   .factory('ClinicalDecisionSupportDataModel', function ($http, CommonDataModel) {
     function ClinicalDecisionSupportDataModel() {
@@ -491,7 +493,7 @@ angular.module('ui.models')
         var dataModelOptions = this.dataModelOptions;
         var currentRiskLevel = null;
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          console.log('Inside Common data changed for : ' + this.widgetScope.widget.title);
+          //console.log('Inside Common data changed for : ' + this.widgetScope.widget.title);
           /*console.log(data);
           console.log(this.dataModelOptions);*/
           //CommonDataModel.prototype.setCommon.call(this,data);
@@ -523,8 +525,8 @@ angular.module('ui.models')
         
         $http.get('/api/clinicalDecisionSupport' + options) // '/api/clinicalDecisionSupport?guideType=%27SRB%27&riskLevel=1'
         .success(function(dataset) {
-          console.log('inside Clinical decision support success');
-          console.log(dataset);
+          //console.log('inside Clinical decision support success');
+          //console.log(dataset);
           data = dataset;
           this.updateScope(data);
         }.bind(this));
@@ -622,7 +624,7 @@ angular.module('ui.models')
           this.updateScope(data);
         }
         else {
-          $http.get('/api/vetContactData?id='+ this.reachID)
+          $http.get('/api/patientContact?id='+ this.reachID)
           .success(function(dataset) {
                   data = dataset;
                   this.updateScope(data);
@@ -637,14 +639,14 @@ angular.module('ui.models')
 
     return ContactBaseDataModel;
   })
-.factory('ContactEmergencyDataModel', function ($http, CommonDataModel) {
-    function ContactEmergencyDataModel() {
+.factory('EmergencyContactDataModel', function ($http, CommonDataModel) {
+    function EmergencyContactDataModel() {
     }
 
-    ContactEmergencyDataModel.prototype = Object.create(CommonDataModel.prototype);
-    ContactEmergencyDataModel.prototype.constructor = CommonDataModel;
+    EmergencyContactDataModel.prototype = Object.create(CommonDataModel.prototype);
+    EmergencyContactDataModel.prototype.constructor = CommonDataModel;
 
-    angular.extend(ContactEmergencyDataModel.prototype, {
+    angular.extend(EmergencyContactDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
         //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
@@ -670,7 +672,7 @@ angular.module('ui.models')
           this.updateScope(data);
         }
         else {
-          $http.get('/api/vetEmergencyData?id='+ this.reachID)
+          $http.get('/api/emergencyContact?id='+ this.reachID)
                 .success(function(dataset) {
                         data = dataset;
                         this.updateScope(data);
@@ -683,7 +685,7 @@ angular.module('ui.models')
       }
     });
 
-    return ContactEmergencyDataModel;
+    return EmergencyContactDataModel;
   })
 .factory('PatientFlagDataModel', function ($http, WidgetDataModel) {
     function PatientFlagDataModel() {
@@ -719,17 +721,25 @@ angular.module('ui.models')
 
     return PatientFlagDataModel;
   })
-.factory('MedicationDataModel', function ($http, WidgetDataModel) {
+.factory('MedicationDataModel', function ($http, CommonDataModel) {
     function MedicationDataModel() {
     }
 
-    MedicationDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    MedicationDataModel.prototype.constructor = WidgetDataModel;
+    MedicationDataModel.prototype = Object.create(CommonDataModel.prototype);
+    MedicationDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(MedicationDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
 
         this.updateScope('-');
         this.getData();
@@ -739,7 +749,7 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/medicationData')
+        $http.get('/api/medicationData?id='+ this.reachID)
         .success(function(dataset) {
                 data = dataset;
                 this.updateScope(data);
@@ -747,7 +757,7 @@ angular.module('ui.models')
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
 
@@ -795,18 +805,26 @@ angular.module('ui.models')
 
     return AppointmentDataModel;
   })
-.factory('DiagnosesDataModel', function ($http, WidgetDataModel) {
+.factory('DiagnosesDataModel', function ($http, CommonDataModel) {
     function DiagnosesDataModel() {
     }
 
-    DiagnosesDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    DiagnosesDataModel.prototype.constructor = WidgetDataModel;
+    DiagnosesDataModel.prototype = Object.create(CommonDataModel.prototype);
+    DiagnosesDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(DiagnosesDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
 
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
+        
         this.updateScope('-');
         this.getData();
       },
@@ -815,7 +833,7 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/DiagnosesData')
+        $http.get('/api/DiagnosesData?id='+ this.reachID)
         .success(function(dataset) {
                 data = dataset;
                 this.updateScope(data);
@@ -823,7 +841,7 @@ angular.module('ui.models')
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
 
@@ -1712,8 +1730,7 @@ angular.module('ui.widgets')
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
             DTColumnDefBuilder.newColumnDef(0),
-            DTColumnDefBuilder.newColumnDef(1),
-            DTColumnDefBuilder.newColumnDef(2)
+            DTColumnDefBuilder.newColumnDef(1)
         ];
         /*$resource('data.json').query().$promise.then(function(persons) {
             vm.persons = persons;
@@ -2618,6 +2635,236 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
+  .directive('wtPatientRosterTable', function () {
+    return {
+      restrict: 'EAC',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/patientTable/patientTable.html',
+      
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder, DTInstances) {
+        //console.log("inside patient roster controller");
+        //console.log($scope.widgetData);
+        $scope.dtinstance = DTInstances;
+        $scope.patientList = $scope.widgetData;
+        //console.log("dtoptionsbuilder, dtcolumnsdefbuilder, dtinstances");
+        //console.log(DTOptionsBuilder);
+        //console.log(DTColumnDefBuilder);
+        //console.log(DTInstances);
+        $scope.dtOptions = DTOptionsBuilder.newOptions()//.fromSource($scope.widgetData)
+            .withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scorllY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false);
+        $scope.dtColumns = [
+          DTColumnDefBuilder.newColumnDef(0),
+          DTColumnDefBuilder.newColumnDef(1),
+          DTColumnDefBuilder.newColumnDef(2),
+          DTColumnDefBuilder.newColumnDef(3),
+          DTColumnDefBuilder.newColumnDef(4),
+          DTColumnDefBuilder.newColumnDef(5)
+            /*DTColumnBuilder.newColumn('Name').withTitle('Name'),
+            DTColumnBuilder.newColumn('SSN').withTitle('SSN'),
+            DTColumnBuilder.newColumn('Phone').withTitle('Phone'),
+            DTColumnBuilder.newColumn('DateIdentifiedRisk').withTitle('Date First Identified'),
+            DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level'),
+            DTColumnBuilder.newColumn('OutreachStatus').withTitle('Outreach Status')*/
+        ];
+        //console.log("dtoptions:  ");
+        //console.log($scope.dtOptions);
+        //console.log("dtcolumns:  ");
+        //console.log($scope.dtColumns);
+        $scope.columns = [
+          {"Name" : "Name"},
+          {"Name" : "SSN"},
+          {"Name" : "Phone"},
+          {"Name" : "Date First Identified"},
+          {"Name" : "Statistical Risk Level"},
+          {"Name" : "Outreach Status"}
+        ];
+      },
+      link: function postLink(scope, element, attr) {
+        //console.log("scope::");
+        //console.log(scope);
+        
+        //scope.dtrender.showLoading();
+        scope.$watch('widgetData', function(v){
+          var opts = {
+          lines: 13, // The number of lines to draw
+          length: 20, // The length of each line
+          width: 10, // The line thickness
+          radius: 30, // The radius of the inner circle
+          corners: 1, // Corner roundness (0..1)
+          rotate: 0, // The rotation offset
+          direction: 1, // 1: clockwise, -1: counterclockwise
+          color: '#000', // #rgb or #rrggbb or array of colors
+          speed: 1, // Rounds per second
+          trail: 60, // Afterglow percentage
+          shadow: false, // Whether to render a shadow
+          hwaccel: false, // Whether to use hardware acceleration
+          className: 'spinner', // The CSS class to assign to the spinner
+          zIndex: 2e9, // The z-index (defaults to 2000000000)
+          top: '50%', // Top position relative to parent
+          left: '50%' // Left position relative to parent
+        };
+        //var spinner = new Spinner(opts).spin($("#spinner"));
+
+          //console.log("inside patient roster directive before check");
+          //console.log(v); 
+          
+          //console.log(DTOptionsBuilder);
+        if(v != null && v.length >0){
+            //unwatch();                
+            //console.log("inside patient roster directive after check is positive");
+            //console.log(scope.widgetData);
+            //scope.dtInstance.changeData(scope.widgetData[1]);
+            scope.outreachStatusList = scope.widgetData[2];
+            scope.patientList = scope.widgetData[1];
+            var datamodelList = {};
+            for(var patient in scope.patientList){
+              datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient]; 
+            }
+            scope.dataModelObj = datamodelList;
+            //console.log("datamodelobj:::");
+            //console.log(scope.dataModelObj);
+            var dataTableVet = $(element).children();
+            //dataTableVet.dataTable();
+            /*var dataTableVet = $(element).children().dataTable( {
+                "data": scope.widgetData[1],
+                "scrollY":        "200px",
+                "scrollCollapse": true,
+                "paging":         false,
+                "columns": [
+                    { "title": "Name" },
+                    { "title": "SSN" },
+                    { "title": "Phone" },
+                    { "title": "Date First identified", "class": "center" },
+                    { "title": "Statistical Risk Level", "class": "center" },
+                    { "title": "Outreach Status", "class": "center" }
+                    //{ "title": "Last VA Clinician Visit", "class": "center" }
+                ],
+                dom: 'T<"clear">lfrtip',
+                tableTools: {
+                    "sRowSelect": "single"
+                }
+            });*/
+
+            scope.dtinstance.getLast().then(function(dtInstance) {
+              scope.dtInstance = dtInstance;
+              //console.log("before select menu");
+              for(patient in scope.patientList){
+                //console.log('#vet_' + scope.patientList[patient].ReachID);
+                $('#vet_' + scope.patientList[patient].ReachID).val(scope.patientList[patient].OutreachStatus);
+                //datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient].OutreachStatus; 
+              }
+              $('select').selectmenu({
+                select: function( event, ui ) {
+                  // Write back selection to the patient Risk table for the patient
+                  //console.log(ui);
+                  //console.log(ui.item.element.context.parentElement.id.replace("vet_",""));
+                  scope.widget.dataModel.saveOutreachData(ui.item.index, ui.item.element.context.parentElement.id.replace("vet_",""));                    
+                }
+              });
+              $('#sampleVet tbody').on( 'click', 'tr', function (event) {
+                  //console.log( dataTableVet.row( this ).data() );
+                  if($(this).hasClass('selected')){
+                      //$(this).removeClass('selected'); // removes selected highlighting
+                      //scope.hideVetDetBtn = true;
+                      //$('#patientView').hide();
+                      //$('#facilityInfo').show();
+                  }
+                  else{
+                      $('tr.selected').removeClass('selected');
+                      $(this).addClass('selected');
+                      // get common data object
+                      var commonData = scope.widget.dataModelOptions.common;
+                      console.log("CommonDataBeforeClick: ", commonData);
+                      // update common data object with new patient object
+                      console.log("ReachID Vet Selected: ", event.currentTarget.cells[5].firstElementChild.id.replace("vet_",""));
+                      commonData.data.veteranObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
+                      console.log("CommonDataAfterClick: ", commonData);
+                      // broadcast message throughout system
+                      scope.$parent.$broadcast('commonDataChanged', commonData);
+                      //scope.hideVetDetBtn = false;
+                      //$('#patientView').show();
+                      //$('#facilityInfo').hide();
+                      //scope.getpatient(event.currentTarget.cells[4].innerText);
+                  }
+                  scope.$apply();
+                  //console.log("ReachID selected: " + event.currentTarget.cells[5].firstElementChild.id.replace("vet_",""));//innerText);
+                  //console.log(event);
+              } );
+            });                
+        }
+            
+        });
+      }
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.dashboard')
+  .controller('patientTableWidgetSettingsCtrl', ['$scope', '$modalInstance', '$http','widget', function ($scope, $modalInstance, $http, widget) {
+    // add widget to scope
+    $scope.widget = widget;
+    //console.log(widget);
+    // set up result object
+    $scope.result = jQuery.extend(true, {}, widget);
+    //console.log($scope.result);
+
+
+    $http.get('/api/getListOfVAMC')
+        .success(function(listOfVAMC) {
+          $scope.listOfVAMC = listOfVAMC;
+        });
+
+    $scope.ok = function () {      
+      $modalInstance.close($scope.result);
+      $scope.widget.dataModel.updateVAMC($scope.result.dataModel.STA3N);
+      $scope.widget.dataModel.getData();
+
+    };
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  }]);
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
   .directive('wtPieChart', function () {
     return {
       restrict: 'A',
@@ -2841,234 +3088,6 @@ angular.module('ui.widgets')
       }
     };
   });
-/*
- * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-angular.module('ui.widgets')
-  .directive('wtVeteranRosterTable', function () {
-    return {
-      restrict: 'EAC',
-      replace: true,
-      templateUrl: 'client/components/widget/widgets/veteranRosterTable/veteranRosterTable.html',
-      
-      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder, DTInstances) {
-        console.log("inside veteran roster controller");
-        console.log($scope.widgetData);
-        $scope.dtinstance = DTInstances;
-        $scope.veteranList = $scope.widgetData;
-        console.log("dtoptionsbuilder, dtcolumnsdefbuilder, dtinstances");
-        console.log(DTOptionsBuilder);
-        console.log(DTColumnDefBuilder);
-        console.log(DTInstances);
-        $scope.dtOptions = DTOptionsBuilder.newOptions()//.fromSource($scope.widgetData)
-            .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scorllY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false);
-        $scope.dtColumns = [
-          DTColumnDefBuilder.newColumnDef(0),
-          DTColumnDefBuilder.newColumnDef(1),
-          DTColumnDefBuilder.newColumnDef(2),
-          DTColumnDefBuilder.newColumnDef(3),
-          DTColumnDefBuilder.newColumnDef(4),
-          DTColumnDefBuilder.newColumnDef(5)
-            /*DTColumnBuilder.newColumn('Name').withTitle('Veteran Name'),
-            DTColumnBuilder.newColumn('SSN').withTitle('Veteran SSN'),
-            DTColumnBuilder.newColumn('Phone').withTitle('Veteran Phone'),
-            DTColumnBuilder.newColumn('DateIdentifiedRisk').withTitle('Date First Identified'),
-            DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level'),
-            DTColumnBuilder.newColumn('OutreachStatus').withTitle('Outreach Status')*/
-        ];
-        console.log("dtoptions:  ");
-        console.log($scope.dtOptions);
-        console.log("dtcolumns:  ");
-        console.log($scope.dtColumns);
-        $scope.columns = [
-          {"Name" : "Veteran Name"},
-          {"Name" : "Veteran SSN"},
-          {"Name" : "Veteran Phone"},
-          {"Name" : "Date First Identified"},
-          {"Name" : "Statistical Risk Level"},
-          {"Name" : "Outreach Status"}
-        ];
-      },
-      link: function postLink(scope, element, attr) {
-        console.log("scope::");
-        console.log(scope);
-        
-        //scope.dtrender.showLoading();
-        scope.$watch('widgetData', function(v){
-          var opts = {
-          lines: 13, // The number of lines to draw
-          length: 20, // The length of each line
-          width: 10, // The line thickness
-          radius: 30, // The radius of the inner circle
-          corners: 1, // Corner roundness (0..1)
-          rotate: 0, // The rotation offset
-          direction: 1, // 1: clockwise, -1: counterclockwise
-          color: '#000', // #rgb or #rrggbb or array of colors
-          speed: 1, // Rounds per second
-          trail: 60, // Afterglow percentage
-          shadow: false, // Whether to render a shadow
-          hwaccel: false, // Whether to use hardware acceleration
-          className: 'spinner', // The CSS class to assign to the spinner
-          zIndex: 2e9, // The z-index (defaults to 2000000000)
-          top: '50%', // Top position relative to parent
-          left: '50%' // Left position relative to parent
-        };
-        //var spinner = new Spinner(opts).spin($("#spinner"));
-
-          console.log("inside veteran roster directive before check");
-          console.log(v); 
-          
-          //console.log(DTOptionsBuilder);
-        if(v != null && v.length >0){
-            //unwatch();                
-            console.log("inside veteran roster directive after check is positive");
-            console.log(scope.widgetData);
-            //scope.dtInstance.changeData(scope.widgetData[1]);
-            scope.outreachStatusList = scope.widgetData[2];
-            scope.veteranList = scope.widgetData[1];
-            var datamodelList = {};
-            for(var veteran in scope.veteranList){
-              datamodelList[scope.veteranList[veteran].ReachID] = scope.veteranList[veteran]; 
-            }
-            scope.dataModelObj = datamodelList;
-            console.log("datamodelobj:::");
-            console.log(scope.dataModelObj);
-            var dataTableVet = $(element).children();
-            //dataTableVet.dataTable();
-            /*var dataTableVet = $(element).children().dataTable( {
-                "data": scope.widgetData[1],
-                "scrollY":        "200px",
-                "scrollCollapse": true,
-                "paging":         false,
-                "columns": [
-                    { "title": "Veteran Name" },
-                    { "title": "Veteran SSN" },
-                    { "title": "Veteran Phone" },
-                    { "title": "Date First identified", "class": "center" },
-                    { "title": "Statistical Risk Level", "class": "center" },
-                    { "title": "Outreach Status", "class": "center" }
-                    //{ "title": "Last VA Clinician Visit", "class": "center" }
-                ],
-                dom: 'T<"clear">lfrtip',
-                tableTools: {
-                    "sRowSelect": "single"
-                }
-            });*/
-
-            scope.dtinstance.getLast().then(function(dtInstance) {
-              scope.dtInstance = dtInstance;
-              console.log("before select menu");
-              for(veteran in scope.veteranList){
-                //console.log('#vet_' + scope.veteranList[veteran].ReachID);
-                $('#vet_' + scope.veteranList[veteran].ReachID).val(scope.veteranList[veteran].OutreachStatus);
-                //datamodelList[scope.veteranList[veteran].ReachID] = scope.veteranList[veteran].OutreachStatus; 
-              }
-              $('select').selectmenu({
-                select: function( event, ui ) {
-                  // Write back selection to the Veteran Risk table for the veteran
-                  console.log(ui);
-                  console.log(ui.item.element.context.parentElement.id.replace("vet_",""));
-                  scope.widget.dataModel.saveOutreachData(ui.item.index, ui.item.element.context.parentElement.id.replace("vet_",""));                    
-                }
-              });
-              $('#sampleVet tbody').on( 'click', 'tr', function (event) {
-                  //console.log( dataTableVet.row( this ).data() );
-                  if($(this).hasClass('selected')){
-                      //$(this).removeClass('selected'); // removes selected highlighting
-                      //scope.hideVetDetBtn = true;
-                      //$('#veteranView').hide();
-                      //$('#facilityInfo').show();
-                  }
-                  else{
-                      $('tr.selected').removeClass('selected');
-                      $(this).addClass('selected');
-                      // get common data object
-                      var commonData = scope.widget.dataModelOptions.common;
-                      console.log(commonData);
-                      // update common data object with new veteran object
-                      commonData.data.veteranObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
-                      // broadcast message throughout system
-                      scope.$parent.$broadcast('commonDataChanged', commonData);
-                      //scope.hideVetDetBtn = false;
-                      //$('#veteranView').show();
-                      //$('#facilityInfo').hide();
-                      //scope.getVeteran(event.currentTarget.cells[4].innerText);
-                  }
-                  scope.$apply();
-                  console.log("ReachID selected: " + event.currentTarget.cells[5].firstElementChild.id.replace("vet_",""));//innerText);
-                  console.log(event);
-              } );
-            });                
-        }
-            
-        });
-      }
-    };
-  });
-/*
- * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-angular.module('ui.dashboard')
-  .controller('VeteranRosterTableWidgetSettingsCtrl', ['$scope', '$modalInstance', '$http','widget', function ($scope, $modalInstance, $http, widget) {
-    // add widget to scope
-    $scope.widget = widget;
-    console.log(widget);
-    // set up result object
-    $scope.result = jQuery.extend(true, {}, widget);
-    console.log($scope.result);
-
-
-    $http.get('/api/getListOfVAMC')
-        .success(function(listOfVAMC) {
-          $scope.listOfVAMC = listOfVAMC;
-        });
-
-    $scope.ok = function () {      
-      $modalInstance.close($scope.result);
-      $scope.widget.dataModel.updateVAMC($scope.result.dataModel.vamc);
-      $scope.widget.dataModel.getData();
-
-    };
-
-    $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
-    };
-  }]);
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
@@ -3079,8 +3098,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "        <thead>\r" +
     "\n" +
     "        <tr>\r" +
-    "\n" +
-    "            <th>Type</th>\r" +
     "\n" +
     "            <th>Date</th>\r" +
     "\n" +
@@ -3094,11 +3111,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr ng-repeat=\"appt in data\">\r" +
     "\n" +
-    "            <td>{{ appt.ApptType }}</td>\r" +
+    "            <td>{{ appt.ApptDate }}</td>\r" +
     "\n" +
-    "            <td>{{ appt.Apptdate }}</td>\r" +
-    "\n" +
-    "            <td>{{ appt.CancelationType }}</td>\r" +
+    "            <td>{{ appt.CancelNoShowCodeDesc }}</td>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -3146,7 +3161,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t<div ng-repeat=\"cpg in cpgList\">\r" +
     "\n" +
-    "\t\t<b>Chronic {{cpg.Risk_Name}}</b>\r" +
+    "\t\t<b>Chronic {{cpg.RiskLevelDesc}} Risk</b>\r" +
     "\n" +
     "\t\t<br><b>Features</b>\r" +
     "\n" +
@@ -3174,11 +3189,13 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    \t<b>Last 4 of SSN:</b> {{data[0].SSN}}<br>\r" +
     "\n" +
-    "    \t<b>Phone:</b> {{data[0].Phone}}<br>\r" +
+    "    \t<b>Cell Phone:</b> {{data[0].CellPhone}}<br>\r" +
     "\n" +
-    "    \t<b>Alternate Phone:</b> {{data[0].AltPhone}}<br>\r" +
+    "        <b>Home Phone:</b> {{data[0].HomePhone}}<br>\r" +
     "\n" +
-    "    \t<b>Address:</b> {{data[0].Address}}<br>\r" +
+    "    \t<b>Work Phone:</b> {{data[0].WorkPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].Address1}}<br>\r" +
     "\n" +
     "    \t<b>City:</b> {{data[0].City}}<br>\r" +
     "\n" +
@@ -3220,9 +3237,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr ng-repeat=\"diagnosis in data\">\r" +
     "\n" +
-    "            <td>{{ diagnosis.Diagnosis }}</td>\r" +
+    "            <td>{{ diagnosis.ICD_Desc }}</td>\r" +
     "\n" +
-    "            <td>{{ diagnosis.ICD }}</td>\r" +
+    "            <td>{{ diagnosis.ICD_Code }}</td>\r" +
     "\n" +
     "            <td>{{ diagnosis.DiagnosisDate }}</td>\r" +
     "\n" +
@@ -3332,7 +3349,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr ng-repeat=\"meds in data\">\r" +
     "\n" +
-    "            <td>{{ meds.Name }}</td>\r" +
+    "            <td>{{ meds.MedicationName }}</td>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -3467,6 +3484,120 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/patientTable/patientTable.html",
+    "<div>\r" +
+    "\n" +
+    "\t<!--<div id=\"spinner\" style=\"height: 100px;\"> </div>-->\r" +
+    "\n" +
+    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\" id=\"sampleVet\" width=\"100%\">\r" +
+    "\n" +
+    "    \t<thead>\r" +
+    "\n" +
+    "        <tr>\r" +
+    "\n" +
+    "        \t<th ng-repeat=\"column in columns\">{{column.Name}}</th>\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"patient in patientList\">\r" +
+    "\n" +
+    "            <td>{{ patient.Name }}</td>\r" +
+    "\n" +
+    "            <td>{{ patient.SSN }}</td>\r" +
+    "\n" +
+    "            <td>{{ patient.HomePhone }}</td>\r" +
+    "\n" +
+    "            <td>{{ patient.DateIdentifiedAsHighRisk }}</td>\r" +
+    "\n" +
+    "            <td>{{ patient.RiskLevel }}</td>\r" +
+    "\n" +
+    "            <td>\r" +
+    "\n" +
+    "            \t<select class='form-control' style='width: 180px;' id=\"vet_{{patient.ReachID}}\">\r" +
+    "\n" +
+    "            \t\t<option value=''></option>\r" +
+    "\n" +
+    "            \t\t<option ng-repeat=\"outreachStatus in outreachStatusList\" value=\"{{outreachStatus.OutReachStatusID}}\">{{outreachStatus.StatusDesc}}</option>\r" +
+    "\n" +
+    "            \t</select> \r" +
+    "\n" +
+    "            </td>\r" +
+    "\n" +
+    "            <!--<td>{{ patient.OutreachStatus }}</td>-->\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/patientTable/patientTableWidgetSettingsTemplate.html",
+    "<div class=\"modal-header\">\r" +
+    "\n" +
+    "    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
+    "\n" +
+    "  <h3>Widget Options <small>{{widget.title}}</small></h3>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "<div class=\"modal-body\">\r" +
+    "\n" +
+    "    <form name=\"form\" novalidate class=\"form-horizontal\">\r" +
+    "\n" +
+    "        <div class=\"form-group\">\r" +
+    "\n" +
+    "            <label for=\"widgetTitle\" class=\"col-sm-2 control-label\">Title</label>\r" +
+    "\n" +
+    "            <div class=\"col-sm-10\">\r" +
+    "\n" +
+    "                <input type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <label for=\"widgetVAMC\" class=\"col-sm-2 control-label\">VAMC</label>\r" +
+    "\n" +
+    "            <div class=\"col-sm-10\">\r" +
+    "\n" +
+    "                <select class=\"form-control\" ng-model=\"result.dataModel.vamc\">\r" +
+    "\n" +
+    "                    <option ng-repeat=\"vamc in listOfVAMC\" value=\"{{vamc.STA3N}}\">{{vamc.VAMC_Name}}</option>\r" +
+    "\n" +
+    "                </select>\r" +
+    "\n" +
+    "                <!--<input type=\"text\" class=\"form-control\" name=\"widgetVAMC\" ng-model=\"result.dataModel.vamc\">-->\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div ng-if=\"widget.settingsModalOptions.partialTemplateUrl\"\r" +
+    "\n" +
+    "             ng-include=\"widget.settingsModalOptions.partialTemplateUrl\"></div>\r" +
+    "\n" +
+    "    </form>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "<div class=\"modal-footer\">\r" +
+    "\n" +
+    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
+    "\n" +
+    "    <button type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/pieChart/pieChart.html",
     "<div>\r" +
     "\n" +
@@ -3560,120 +3691,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "      rows=\"items\">\r" +
     "\n" +
     "    </mlhr-table>\r" +
-    "\n" +
-    "</div>"
-  );
-
-  $templateCache.put("client/components/widget/widgets/veteranRosterTable/veteranRosterTable.html",
-    "<div>\r" +
-    "\n" +
-    "\t<!--<div id=\"spinner\" style=\"height: 100px;\"> </div>-->\r" +
-    "\n" +
-    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\" id=\"sampleVet\" width=\"100%\">\r" +
-    "\n" +
-    "    \t<thead>\r" +
-    "\n" +
-    "        <tr>\r" +
-    "\n" +
-    "        \t<th ng-repeat=\"column in columns\">{{column.Name}}</th>\r" +
-    "\n" +
-    "        </tr>\r" +
-    "\n" +
-    "        </thead>\r" +
-    "\n" +
-    "        <tbody>\r" +
-    "\n" +
-    "        <tr ng-repeat=\"veteran in veteranList\">\r" +
-    "\n" +
-    "            <td>{{ veteran.Name }}</td>\r" +
-    "\n" +
-    "            <td>{{ veteran.SSN }}</td>\r" +
-    "\n" +
-    "            <td>{{ veteran.Phone }}</td>\r" +
-    "\n" +
-    "            <td>{{ veteran.DateIdentifiedRisk }}</td>\r" +
-    "\n" +
-    "            <td>{{ veteran.RiskLevel }}</td>\r" +
-    "\n" +
-    "            <td>\r" +
-    "\n" +
-    "            \t<select class='form-control' style='width: 180px;' id=\"vet_{{veteran.ReachID}}\">\r" +
-    "\n" +
-    "            \t\t<option value=''></option>\r" +
-    "\n" +
-    "            \t\t<option ng-repeat=\"outreachStatus in outreachStatusList\" value=\"{{outreachStatus.OutReachStatusID}}\">{{outreachStatus.StatusName}}</option>\r" +
-    "\n" +
-    "            \t</select> \r" +
-    "\n" +
-    "            </td>\r" +
-    "\n" +
-    "            <!--<td>{{ veteran.OutreachStatus }}</td>-->\r" +
-    "\n" +
-    "        </tr>\r" +
-    "\n" +
-    "        </tbody>\r" +
-    "\n" +
-    "    </table>\r" +
-    "\n" +
-    "</div>"
-  );
-
-  $templateCache.put("client/components/widget/widgets/veteranRosterTable/veteranRosterTableWidgetSettingsTemplate.html",
-    "<div class=\"modal-header\">\r" +
-    "\n" +
-    "    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
-    "\n" +
-    "  <h3>Widget Options <small>{{widget.title}}</small></h3>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div class=\"modal-body\">\r" +
-    "\n" +
-    "    <form name=\"form\" novalidate class=\"form-horizontal\">\r" +
-    "\n" +
-    "        <div class=\"form-group\">\r" +
-    "\n" +
-    "            <label for=\"widgetTitle\" class=\"col-sm-2 control-label\">Title</label>\r" +
-    "\n" +
-    "            <div class=\"col-sm-10\">\r" +
-    "\n" +
-    "                <input type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "            <label for=\"widgetVAMC\" class=\"col-sm-2 control-label\">VAMC</label>\r" +
-    "\n" +
-    "            <div class=\"col-sm-10\">\r" +
-    "\n" +
-    "                <select class=\"form-control\" ng-model=\"result.dataModel.vamc\">\r" +
-    "\n" +
-    "                    <option ng-repeat=\"vamc in listOfVAMC\" value=\"{{vamc.VAMCID}}\">{{vamc.VAMC}}</option>\r" +
-    "\n" +
-    "                </select>\r" +
-    "\n" +
-    "                <!--<input type=\"text\" class=\"form-control\" name=\"widgetVAMC\" ng-model=\"result.dataModel.vamc\">-->\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
-    "        <div ng-if=\"widget.settingsModalOptions.partialTemplateUrl\"\r" +
-    "\n" +
-    "             ng-include=\"widget.settingsModalOptions.partialTemplateUrl\"></div>\r" +
-    "\n" +
-    "    </form>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div class=\"modal-footer\">\r" +
-    "\n" +
-    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
-    "\n" +
-    "    <button type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
     "\n" +
     "</div>"
   );

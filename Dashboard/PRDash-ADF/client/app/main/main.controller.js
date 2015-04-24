@@ -42,7 +42,7 @@ angular.module('app')
     $scope.common = {
       data: {
         stateSelected: '',
-        facilitySelected: 1,
+        facilitySelected: 613,
         patientIdSelected: 1,
         veteranObj: {"ReachID":781151,"FirstName":"Vet*","MiddleName":"I","LastName":"Veteran_*","SSN":"xxx-xx-9018","Phone":"(800) 555-4078","DateIdentifiedRisk":"2/8/2011","RiskLevel":"High","RiskLevelID":1,"OutreachStatus":null,"VAMC":"(V01) (402) Togus, ME"},
         userObj: {}

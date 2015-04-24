@@ -28,22 +28,22 @@ exports.index = function(req, res) {
     query += "ReachID, vamc.VAMC, CASE when Score >= 99 then Emergent when Score >= 95 and < 99 then High END, ";
     query += "2014-11-18T00:00:00.000Z as DateUpdated FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE "; 
         if (id) {
-        console.log("Registering endpoint: /veteransByVAMC/:id is " + id);
+        //console.log("Registering endpoint: /veteransByVAMC/:id is " + id);
         query += "vamc.vamcID = " + id;
         if (score) {
-            console.log("Registering endpoint: /veteransByVAMC/:score is " + score);
+            //console.log("Registering endpoint: /veteransByVAMC/:score is " + score);
             query += "AND vet.Score >= " + score;
         }
     } else {
         res.send("ERROR: VAMC ID is required.");
-        console.log("ERROR: VAMC ID is required."); 
+        //console.log("ERROR: VAMC ID is required."); 
     }
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
         if (err || !id) { 
         data = "Error: Database connection failed!";
-        console.log("Database connection failed!"); 
+        //console.log("Database connection failed!"); 
         return; 
         }
 
@@ -52,11 +52,11 @@ exports.index = function(req, res) {
         request.query(query, function(err, recordset) {
             // ... error checks
             if (err) { 
-            console.log("Query failed!"); 
+            //console.log("Query failed!"); 
             return; 
             }
 
-            console.log(recordset.length);
+            //console.log(recordset.length);
 
             res.send(recordset);
         });
