@@ -15,8 +15,9 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
   When I click on "Individual View"
   Then I should see "Patient Roster by VAMC" widget
   Then I should see "Patient Contact" widget
-  And I should see "Veteran SSN"
-  And I should see "Veteran Phone"
+  And I should see "Last 4 of SSN"
+  And I should see "Cell Phone"
+  And I should see "Work Phone"
   And I should see "Address"
   And I should see "City"
   And I should see "State"
