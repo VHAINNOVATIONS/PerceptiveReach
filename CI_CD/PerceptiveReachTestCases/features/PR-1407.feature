@@ -6,7 +6,7 @@ Feature: As a Dashboard User, I want to view a Veteran's medical appointments fr
 Scenario: I open a web browser and see the medical appointments widget 
 Given I navigate to the http://localhost:7003/
 When I click on "Individual View"
-Then I should see the "Veteran Roster by VAMC" widget
+Then I should see the "Patient Roster by VAMC" widget
 Then I should see the "Appointment" widget
 And I should see "Type"
 And I should see "Cancelled"
@@ -18,7 +18,7 @@ And I should see "Type"
 Scenario: When I am at the Medical Appointments widget I should be able to click between upcoming and previous appointments
 Given I navigate to the http://localhost:7003/
 When I click on "Individual View"
-Then I should see the "Veteran Roster by VAMC" widget
+Then I should see the "Patient Roster by VAMC" widget
 Then I should see the "Appointment" widget
 When I click on "Upcoming Appointments"
 Then I should see "Upcoming Appointments"
@@ -30,7 +30,7 @@ Then I should see "Previously Completed Appointments"
 Scenario: When I am at the Medical Appointments widget I should be able to see all appointments at the same time
 Given I navigate to the http://localhost:7003/
 When I click on "Individual View"
-Then I should see the "Veteran Roster by VAMC" widget
+Then I should see the "Patient Roster by VAMC" widget
 Then I should see the "Appointment" widget
 When I click on "All Appointments"
 Then I should see "All Appointments"
@@ -39,7 +39,7 @@ Then I should see "All Appointments"
 Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's Outreach Status in veteran roaster widget
   Given I navigate to the http://localhost:7003/
   When I click on "Individual View" 
-  Then I should see the "Veteran Roster by VAMC" widget
+  Then I should see the "Patient Roster by VAMC" widget
   And I should see the "Appointment" widget
   And I should see " search for appointment" 
   And I should see "view all"
