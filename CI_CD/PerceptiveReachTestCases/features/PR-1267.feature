@@ -3,15 +3,25 @@ Feature: As a Dashboard user, I want to see a Veteran's contact information so t
 @Contact_information_PR_1267
 Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's contact information
   Given I navigate to the http://localhost:7003/
+  Then I should see "Perceptive Reach Login"
+  Then I put in "Username" field as "vaphsfequia"
+  Then I put in "password" field as "FeAn#011819"
+  And I click on "Login" button
   When I click on "Individual View" 
   Then I should see "Patient Roster by VAMC" widget
   And I should see "Veteran_109258, Vet109258 undefined"
+  And I click on "Logout" button
+
  
   
   @Detail_information_PR_1267
   Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's contact information of Name, Last 4 of SSN, Phone, Alternate Phone, Address, City, State and Zip code  
   
   Given I navigate to the http://localhost:7003/
+  Then I should see "Perceptive Reach Login"
+  Then I put in "Username" field as "vaphsfequia"
+  Then I put in "password" field as "FeAn#011819"
+  And I click on "Login" button
   When I click on "Individual View"
   Then I should see "Patient Roster by VAMC" widget
   Then I should see "Patient Contact" widget
@@ -22,5 +32,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
   And I should see "City"
   And I should see "State"
   And I should see "Zip Code"
+  And I click on "Logout" button
+
   
   
