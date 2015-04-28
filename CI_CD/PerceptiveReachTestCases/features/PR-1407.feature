@@ -5,6 +5,10 @@ Feature: As a Dashboard User, I want to view a Veteran's medical appointments fr
 
 Scenario: I open a web browser and see the medical appointments widget 
 Given I navigate to the http://localhost:7003/
+Then I should see "Perceptive Reach Login"
+Then I put in "Username" field as "vaphsfequia"
+Then I put in "password" field as "FeAn#011819"
+And I click on "Login" button
 When I click on "Individual View"
 Then I should see the "Patient Roster by VAMC" widget
 Then I should see the "Appointment" widget
@@ -12,11 +16,16 @@ And I should see "Type"
 And I should see "Cancelled"
 And I should see "Date"
 And I should see "Type"
+And I click on "Logout" button
 
 @click_btw_appts_PR-1407
 
 Scenario: When I am at the Medical Appointments widget I should be able to click between upcoming and previous appointments
 Given I navigate to the http://localhost:7003/
+Then I should see "Perceptive Reach Login"
+Then I put in "Username" field as "vaphsfequia"
+Then I put in "password" field as "FeAn#011819"
+And I click on "Login" button
 When I click on "Individual View"
 Then I should see the "Patient Roster by VAMC" widget
 Then I should see the "Appointment" widget
@@ -24,20 +33,30 @@ When I click on "Upcoming Appointments"
 Then I should see "Upcoming Appointments"
 When I click on "Previously Completed Appointments"
 Then I should see "Previously Completed Appointments"
+And I click on "Logout" button
 
 @see_all_appts_PR-1407
 
 Scenario: When I am at the Medical Appointments widget I should be able to see all appointments at the same time
 Given I navigate to the http://localhost:7003/
+Then I should see "Perceptive Reach Login"
+Then I put in "Username" field as "vaphsfequia"
+Then I put in "password" field as "FeAn#011819"
+And I click on "Login" button
 When I click on "Individual View"
 Then I should see the "Patient Roster by VAMC" widget
 Then I should see the "Appointment" widget
 When I click on "All Appointments"
 Then I should see "All Appointments"
+And I click on "Logout" button
 
 @Veteran_Appointments_PR_1407
 Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's Outreach Status in veteran roaster widget
   Given I navigate to the http://localhost:7003/
+  Then I should see "Perceptive Reach Login"
+  Then I put in "Username" field as "vaphsfequia"
+  Then I put in "password" field as "FeAn#011819"
+  And I click on "Login" button
   When I click on "Individual View" 
   Then I should see the "Patient Roster by VAMC" widget
   And I should see the "Appointment" widget
@@ -47,5 +66,6 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
   When I click on "Active appointments"
   Then I should see "June 3, 2014 Unscheduled Endocrinology Clinic"
   And I should see "May 4, 2014 Primary Care"
+  And I click on "Logout" button
 
   
