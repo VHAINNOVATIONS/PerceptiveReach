@@ -76,11 +76,13 @@ angular.module('ui.widgets')
           //scope.dtInstance = dtInstance;
           //while($('#vet_').length < 1){} 
           //console.log("before select menu");
+          var datamodelList = {};
           var patientList = scope.widgetData[1];
 
           for(patient in scope.patientList){
             //console.log('#vet_' + scope.patientList[patient].ReachID);
             var reachID = scope.patientList[patient].ReachID;
+            datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient]; 
             $('#vet_' + reachID).val(scope.patientList[patient].OutreachStatus);
             //console.log('#vet_' + reachID,$('#vet_' + reachID).val());
             $('#vet_' + reachID).selectmenu({
@@ -158,7 +160,7 @@ angular.module('ui.widgets')
             //scope.dtInstance.changeData(scope.widgetData[1]);
             scope.outreachStatusList = scope.widgetData[2];
             scope.patientList = scope.widgetData[1];
-            var datamodelList = {};
+            
             /*for(var patient in scope.patientList){
               datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient]; 
             }*/
