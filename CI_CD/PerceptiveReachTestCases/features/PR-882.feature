@@ -2,7 +2,7 @@ Feature: As a Dashboard User, I want to view a graphic in a widget that allows m
 Scenario: 
 Given I navigate to the http://localhost:7003/
 Then I should see "Perceptive Reach Login"
-Then I put in "Username" field as "vaphsfequia"
+Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"
 And I click on "Login" button
 Then I click on the "Facility View"

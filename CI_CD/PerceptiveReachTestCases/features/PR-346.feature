@@ -3,7 +3,7 @@ Feature: As a SPC Outreach provider I want view the direct message that highligh
 Scenario:  I open a web browser and see the SPC navigation page
 Given I navigate to the http://localhost:7003/
 Then I should see "Perceptive Reach Login"
-Then I put in "Username" field as "vaphsfequia"
+Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"
 And I click on "Login" button
 When I click on "Notifications"
