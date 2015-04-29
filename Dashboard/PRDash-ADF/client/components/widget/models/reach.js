@@ -98,7 +98,7 @@ angular.module('ui.models')
               patientsBysta3N[veteran].Name = fullName;
               var options = "";
               var temp = "";
-              var selected = " selected='selected'";
+              var selected = ' selected="selected"';
               for(var outreachStat in outreachStatus){
                 if(patientsBysta3N[veteran].OutreachStatus == outreachStatus[outreachStat].OutReachStatusID)
                   temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + selected + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
@@ -403,7 +403,7 @@ angular.module('ui.models')
         }.bind(this));
 
         this.updateScope('-');
-        this.getData();
+        //this.getData();
       },
 
       getData: function () {
@@ -445,7 +445,7 @@ angular.module('ui.models')
         }.bind(this));
 
         this.updateScope('-');
-        this.getData();
+        //this.getData();
       },
 
       getData: function () {
@@ -487,7 +487,7 @@ angular.module('ui.models')
         }.bind(this));
         
         this.updateScope('-');
-        this.getData();
+        //this.getData();
       },
 
       getData: function () {
