@@ -5,7 +5,7 @@ Feature: As a SPC I want customize my widget page PR-1317 1.1.24
 
 	Given I navigate to the http://localhost:7003/
 	Then I should see "Perceptive Reach Login"
-    Then I put in "Username" field as "vaphsfequia"
+    Then I put in "email" field as "vaphsfequia"
     Then I put in "password" field as "FeAn#011819"
     And I click on "Login" button
 	When I click on "Individual View"
@@ -25,7 +25,7 @@ Feature: As a SPC I want customize my widget page PR-1317 1.1.24
 	
 	Given I navigate to the http://localhost:7003/
 	Then I should see "Perceptive Reach Login"
-    Then I put in "Username" field as "vaphsfequia"
+    Then I put in "email" field as "vaphsfequia"
     Then I put in "password" field as "FeAn#011819"
     And I click on "Login" button
 	When I click on "Individual View"

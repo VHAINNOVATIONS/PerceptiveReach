@@ -4,7 +4,7 @@ Feature: As a Dashboard user, I want log out of the Dashboard to end my session.
 
 Scenario:  open a web browser and navigate to http://localhost:7003/ where I can Perceptive Reach Logout to the  Dashboard
 
-Given I open the browser and enter http://localhost:7003/
+Given I navigate to the http://localhost:7003/
 Then I should see "Perceptive Reach Login"
 Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"

@@ -2,10 +2,6 @@ Given(/^I navigate to the http:\/\/localhost:(\d+)\/$/) do |arg1|
   visit ('http://localhost:7003')
   #expect(page).to have_content 'Description' #load IRDS and wait for some content to appear
 end
-Given(/^I open the browser and enter http:\/\/localhost:(\d+)\/$/) do |arg1|
-  visit ('http://localhost:5000')
-  #expect(page).to have_content 'Description' #load IRDS and wait for some content to appear
-end
 
 
 When(/^I click on the VAMC dropdown$/) do
