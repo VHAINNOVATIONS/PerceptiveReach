@@ -39,7 +39,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to drag the Emerge
 Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's emergency contact information
   Given I navigate to the http://localhost:7003/
   Then I should see "Perceptive Reach Login"
-  Then I put in "Username" field as "vaphsfequia"
+  Then I put in "email" field as "vaphsfequia"
   Then I put in "password" field as "FeAn#011819"
   And I click on "Login" button
   When I click on "Individual View" 
@@ -52,7 +52,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
 Scenario: I open a web browser and use http://localhost:7003/ to delete/close the Emergency Contact Information widget.
   Given I navigate to the http://localhost:7003/
   Then I should see "Perceptive Reach Login"
-  Then I put in "Username" field as "vaphsfequia"
+  Then I put in "email" field as "vaphsfequia"
   Then I put in "password" field as "FeAn#011819"
   And I click on "Login" button
   When I click on "Individual View" 
