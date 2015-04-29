@@ -12,7 +12,7 @@ When I click on "Individual View"
 And I click the Add a Widget button
 And I add the "medication" widget
 Then I should see the "Medication" widget
-And I should see "Ambien"
+And I should see "Amoxicillin"
 And I should see "Dosage"
 And I should see "Active Orders"
 And I should see "Inactive Orders"
