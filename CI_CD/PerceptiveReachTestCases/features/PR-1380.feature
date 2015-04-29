@@ -11,7 +11,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
   And I click on "Clear" button
   And I click the Add a Widget button
   And I click on "RosterTable" button
-  Then I should see the "Veteran Roster by VAMC" widget
+  Then I should see the "Patient Roster by VAMC" widget
   And I should see "Outreach Status" column
   And I should see "Not Contacted" option in the dropdown
   And I should see "Outreach Initiated" option in the dropdown
