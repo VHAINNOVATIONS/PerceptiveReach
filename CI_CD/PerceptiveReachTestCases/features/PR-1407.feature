@@ -6,16 +6,14 @@ Feature: As a Dashboard User, I want to view a Veteran's medical appointments fr
 Scenario: I open a web browser and see the medical appointments widget 
 Given I navigate to the http://localhost:7003/
 Then I should see "Perceptive Reach Login"
-Then I put in "Username" field as "vaphsfequia"
+Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"
 And I click on "Login" button
 When I click on "Individual View"
 Then I should see the "Patient Roster by VAMC" widget
 Then I should see the "Appointment" widget
-And I should see "Type"
 And I should see "Cancelled"
 And I should see "Date"
-And I should see "Type"
 And I click on "Logout" button
 
 @click_btw_appts_PR-1407
@@ -23,7 +21,7 @@ And I click on "Logout" button
 Scenario: When I am at the Medical Appointments widget I should be able to click between upcoming and previous appointments
 Given I navigate to the http://localhost:7003/
 Then I should see "Perceptive Reach Login"
-Then I put in "Username" field as "vaphsfequia"
+Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"
 And I click on "Login" button
 When I click on "Individual View"
@@ -40,7 +38,7 @@ And I click on "Logout" button
 Scenario: When I am at the Medical Appointments widget I should be able to see all appointments at the same time
 Given I navigate to the http://localhost:7003/
 Then I should see "Perceptive Reach Login"
-Then I put in "Username" field as "vaphsfequia"
+Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"
 And I click on "Login" button
 When I click on "Individual View"
@@ -54,7 +52,7 @@ And I click on "Logout" button
 Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's Outreach Status in veteran roaster widget
   Given I navigate to the http://localhost:7003/
   Then I should see "Perceptive Reach Login"
-  Then I put in "Username" field as "vaphsfequia"
+  Then I put in "email" field as "vaphsfequia"
   Then I put in "password" field as "FeAn#011819"
   And I click on "Login" button
   When I click on "Individual View" 
