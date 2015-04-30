@@ -13,6 +13,27 @@ When(/^I choose "(.*?)" as VAMC$/) do |arg1|
   #find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[2]').click
 end
 
+When(/^I select middle risk veteran row in the widget$/) do 
+  #pending # express the regexp above with the code you wish you had
+ # row=number
+  #find(:xpath, '//*[@id="sampleVet"]/tbody/tr["+row+"]').click
+   #find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[2]').click
+      #find(:xpath, '//*[@id="sampleVet"]/tbody/tr[9]').click 
+	expect(page).to have_content '3799'
+	find(:xpath, '//td[contains(text(),"1966")]').click 
+	 #click_link('vet_566384')
+end
+
+When(/^I select top risk veteran row in the widget$/) do 
+  #pending # express the regexp above with the code you wish you had
+ # row=number
+  #find(:xpath, '//*[@id="sampleVet"]/tbody/tr["+row+"]').click
+   #find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[2]').click
+     # find(:xpath, '//*[@id="sampleVet"]/tbody/tr[9]').click 
+	  find(:xpath, '//td[contains(text(),"4669")]').click 
+	  # click_link('vet_652427')
+end
+
 
 When(/^I select "(.*?)"$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
