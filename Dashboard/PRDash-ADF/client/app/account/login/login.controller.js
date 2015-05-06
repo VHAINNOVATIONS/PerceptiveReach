@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app')
-  .controller('LoginCtrl',
+  /*.controller('LoginCtrl',
     ['$scope', '$rootScope', '$location', 'Auth',
     function ($scope, $rootScope, $location, Auth) {
         $scope.user = {};
@@ -20,7 +20,8 @@ angular.module('app')
                       //console.log("LoginController rootScoope.globals: ",$rootScope.globals);
                       $location.path('/');
                       $('#navHeader').show();
-                      $('#dashboardDescription').show();
+                      $('#description').show();
+
                   } else {
                       $scope.errors.other = response.message;
                       $scope.dataLoading = false;
@@ -28,8 +29,8 @@ angular.module('app')
               });
             }
         };
-    }]);
-  /*.controller('LoginCtrl', function ($scope, Auth, $location, $window) {
+    }]);*/
+  .controller('LoginCtrl', function ($scope, Auth, $location, $window) {
     $scope.user = {};
     $scope.errors = {};
 
@@ -46,6 +47,7 @@ angular.module('app')
           $location.path('/');
         })
         .catch( function(err) {
+          console.log("loginCtrl error: ",err);
           $scope.errors.other = err.message;
         });
       }
@@ -54,4 +56,4 @@ angular.module('app')
     $scope.loginOauth = function(provider) {
       $window.location.href = '/auth/' + provider;
     };
-  });*/
+  });
