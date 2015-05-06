@@ -74,7 +74,7 @@ exports.index = function(req, res) {
             for (var patient in jsonRecordSet) {
                 jsonRecordSet[patient].SSN = dataFormatter.formatData(jsonRecordSet[patient].SSN,"ssn");
                 jsonRecordSet[patient].HomePhone = dataFormatter.formatData(jsonRecordSet[patient].HomePhone,"phone");
-                jsonRecordSet[patient].DateIdentifiedAsHighRisk = dataFormatter.formatData(jsonRecordSet[patient].DateIdentifiedAsHighRisk,"date");
+                jsonRecordSet[patient].DateIdentifiedAsAtRisk = dataFormatter.formatData(jsonRecordSet[patient].DateIdentifiedAsAtRisk,"date");
                 ////console.log(jsonRecordSet[patient].SSN + " " + jsonRecordSet[patient].Phone + " " + jsonRecordSet[patient].DateIdentifiedAsHighRisk);
             }
             res.send(jsonRecordSet);

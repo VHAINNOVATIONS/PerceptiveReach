@@ -130,6 +130,7 @@ angular.module('app', [
         else{
           if(loggedIn){
             $rootScope.globals.isLogggedIn = true;
+            $rootScope.globals['userObj'] = $cookieStore.get('user');
             console.log("rootScoope.globals.userObj: ",$rootScope.globals.userObj);
             $('#navHeader').show();
             $('#dashboardDescription').show();

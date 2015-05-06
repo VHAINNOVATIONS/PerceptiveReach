@@ -421,7 +421,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <td>{{ patient.HomePhone }}</td>\r" +
     "\n" +
-    "            <td>{{ patient.DateIdentifiedAsHighRisk }}</td>\r" +
+    "            <td>{{ patient.DateIdentifiedAsAtRisk}}</td>\r" +
     "\n" +
     "            <td>{{ patient.RiskLevel }}</td>\r" +
     "\n" +
