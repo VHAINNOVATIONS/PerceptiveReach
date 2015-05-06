@@ -2778,6 +2778,7 @@ angular.module('ui.widgets')
             //scope.dtInstance.changeData(scope.widgetData[1]);
             scope.outreachStatusList = scope.widgetData[2];
             scope.patientList = scope.widgetData[1];
+            console.log("Patient Roster: ",scope.patientList);
             
             /*for(var patient in scope.patientList){
               datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient]; 
@@ -3527,7 +3528,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <td>{{ patient.HomePhone }}</td>\r" +
     "\n" +
-    "            <td>{{ patient.DateIdentifiedAsHighRisk }}</td>\r" +
+    "            <td>{{ patient.DateIdentifiedAsAtRisk}}</td>\r" +
     "\n" +
     "            <td>{{ patient.RiskLevel }}</td>\r" +
     "\n" +
