@@ -144,7 +144,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "    \t<div id=\"display\" class=\"col-sm-3\">\n" +
     "    \t\t<div id=\"serieskey\"><strong>{{selectedSeries.key}}</strong></div>\n" +
     "    \t\t<div id=\"boxofps\" style=\"height: 275px; overflow: scroll; outline: 1px solid black;\">\n" +
-    "\t\t\t\t<div ng-repeat=\"value in selectedValues\">\n" +
+    "\t\t\t\t<div ng-repeat=\"value in selectedValues\" my-repeat-directive>\n" +
     "\t\t\t\t\t<div id=\"p{{$index}}\">\n" +
     "\t\t\t\t\t\t<span style=\"padding-left: 5px;\">Date: {{value.date | date:'yyyy-MM-dd'}} </span>\n" +
     "\t\t\t\t\t\t<span style=\"padding-left: 15px;\">Value: {{value.value}}</span>\n" +

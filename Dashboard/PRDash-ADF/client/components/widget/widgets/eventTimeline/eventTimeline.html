@@ -30,7 +30,7 @@
     	<div id="display" class="col-sm-3">
     		<div id="serieskey"><strong>{{selectedSeries.key}}</strong></div>
     		<div id="boxofps" style="height: 275px; overflow: scroll; outline: 1px solid black;">
-				<div ng-repeat="value in selectedValues">
+				<div ng-repeat="value in selectedValues" my-repeat-directive>
 					<div id="p{{$index}}">
 						<span style="padding-left: 5px;">Date: {{value.date | date:'yyyy-MM-dd'}} </span>
 						<span style="padding-left: 15px;">Value: {{value.value}}</span>

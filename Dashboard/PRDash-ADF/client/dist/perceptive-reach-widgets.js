@@ -2033,7 +2033,16 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtEventTimeline', function ($filter) {
+  .directive('myRepeatDirective', function($timeout) {
+    return function(scope, element, attrs) {
+   	  if (scope.$last){
+      	$timeout(function () {
+  	  	  scope.$emit('LastElem');
+   	    });
+   	  }
+    };
+ })
+   .directive('wtEventTimeline', function ($filter) {
     return {
       restrict: 'A',
       replace: true,
@@ -2072,6 +2081,12 @@ angular.module('ui.widgets')
             return d.value;
           };
         };
+        $scope.scrollToSelectedPoint = function(index) {
+    	  var e = angular.element("#p" + index)[0];
+    	  var topPos = e.offsetTop;
+    	  var p = angular.element("#boxofps")[0];
+    	  p.scrollTop = topPos - p.offsetTop;
+        },
         $scope.toolTipContentFunction = function() {
           return function(key, x, y, e) {
               var line = 'Date: ' + x;
@@ -2081,12 +2096,15 @@ angular.module('ui.widgets')
                 });
               }
               var seriesIndex = $scope.keyIndex[key];
-	          $scope.selectedSeries = $scope.chart[seriesIndex]
-    	      $scope.selectedValues = $scope.chart[seriesIndex].values;
-    	      var e = angular.element("#p" + e.pointIndex)[0];
-    	      var topPos = e.offsetTop;
-    	      var p = angular.element("#boxofps")[0];
-    	      p.scrollTop = topPos - p.offsetTop;
+              if ($scope.chart) {
+              	  if ($scope.selectedSeries === $scope.chart[seriesIndex]) {
+              	  	$scope.scrollToSelectedPoint(e.pointIndex);
+              	  } else {
+    		  	  	$scope.pointIndex = e.pointIndex;
+		          	$scope.selectedSeries = $scope.chart[seriesIndex]
+    		      	$scope.selectedValues = $scope.chart[seriesIndex].values;
+    		      }
+    		  }
               return line;
             };
         };
@@ -2128,9 +2146,14 @@ angular.module('ui.widgets')
     	      	r[series.key] = index;
         	  	return r;
           	}, {});
+          	scope.selectedSeries = data.chart[0]
+          	scope.selectedValues = data.chart[0].values;
 	      }
-          scope.selectedSeries = data.chart[0]
-          scope.selectedValues = data.chart[0].values;
+        });
+        scope.$on('LastElem', function(event){
+          if (scope.pointIndex) {
+            scope.scrollToSelectedPoint(scope.pointIndex);
+          }
         });
       }
     };
@@ -3390,7 +3413,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "    \t<div id=\"display\" class=\"col-sm-3\">\n" +
     "    \t\t<div id=\"serieskey\"><strong>{{selectedSeries.key}}</strong></div>\n" +
     "    \t\t<div id=\"boxofps\" style=\"height: 275px; overflow: scroll; outline: 1px solid black;\">\n" +
-    "\t\t\t\t<div ng-repeat=\"value in selectedValues\">\n" +
+    "\t\t\t\t<div ng-repeat=\"value in selectedValues\" my-repeat-directive>\n" +
     "\t\t\t\t\t<div id=\"p{{$index}}\">\n" +
     "\t\t\t\t\t\t<span style=\"padding-left: 5px;\">Date: {{value.date | date:'yyyy-MM-dd'}} </span>\n" +
     "\t\t\t\t\t\t<span style=\"padding-left: 15px;\">Value: {{value.value}}</span>\n" +
