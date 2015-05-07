@@ -64,6 +64,13 @@ angular.module('ui.widgets')
                   line += '<br>' + tooltipLine;
                 });
               }
+              var seriesIndex = $scope.keyIndex[key];
+	          $scope.selectedSeries = $scope.chart[seriesIndex]
+    	      $scope.selectedValues = $scope.chart[seriesIndex].values;
+    	      var e = angular.element("#p" + e.pointIndex)[0];
+    	      var topPos = e.offsetTop;
+    	      var p = angular.element("#boxofps")[0];
+    	      p.scrollTop = topPos - p.offsetTop;
               return line;
             };
         };
@@ -100,7 +107,15 @@ angular.module('ui.widgets')
         scope.$watch('data', function (data) {
           scope.forcey = '[' + data.minY + ',' + data.maxY + ']';
           scope.chart = data.chart;
+          if (data.chart) {
+	          scope.keyIndex = data.chart.reduce(function(r, series, index) {
+    	      	r[series.key] = index;
+        	  	return r;
+          	}, {});
+	      }
+          scope.selectedSeries = data.chart[0]
+          scope.selectedValues = data.chart[0].values;
         });
-     }
+      }
     };
-  });
+});
