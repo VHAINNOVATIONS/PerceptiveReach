@@ -26,7 +26,7 @@ angular.module('app', [
     'btford.markdown'
   ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
-    $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    //$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     //$httpProvider.defaults.headers.common['Authorization'] = '';
     /*
     $routeProvider
@@ -107,6 +107,7 @@ angular.module('app', [
 
   .run(function ($rootScope, $location, $cookieStore, $http, Auth) {
     // keep user logged in after page refresh
+    
     $rootScope.globals = $cookieStore.get('globals') || {};
     if ($rootScope.globals.currentUser) {
         $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
@@ -114,14 +115,27 @@ angular.module('app', [
     // Redirect to login if route requires auth and you're not logged in    
     $rootScope.$on('$routeChangeStart', function (event, next, current) {
       // redirect to login page if not logged in
-      if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
+      /*if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
           console.log("rootScoope.globals.userObj: ",$rootScope.globals.userObj);
           $location.path('/login');
-      }
-      /*Auth.isLoggedInAsync(function(loggedIn) {
+      }*/
+      Auth.isLoggedInAsync(function(loggedIn) {
         if (next.authenticate && !loggedIn) {
+          $rootScope.globals.isLogggedIn = false;
+          $('#navHeader').hide();
+          $('#dashboardDescription').hide();
           $location.path('/login');
+
         }
-      });*/
+        else{
+          if(loggedIn){
+            $rootScope.globals.isLogggedIn = true;
+            $rootScope.globals['userObj'] = $cookieStore.get('user');
+            console.log("rootScoope.globals.userObj: ",$rootScope.globals.userObj);
+            $('#navHeader').show();
+            $('#dashboardDescription').show();
+          }
+        }
+      });
     });
   });
