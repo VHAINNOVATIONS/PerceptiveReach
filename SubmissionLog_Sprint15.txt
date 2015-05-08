@@ -1,0 +1,290 @@
+*   commit 9e9301029d1a8055c89b8946252693c8c000d27a (HEAD, master)
+|\  Merge: 5e91a24 afa4d97
+| | Author: Monica Mohler <monica.mohler@us.pwc.com>
+| | Date:   Fri May 8 17:55:16 2015 -0400
+| | 
+| |     Merge branch 'master' of https://github.com/VHAINNOVATIONS/PerceptiveReach
+| |     
+| *   commit afa4d9710ae67383549f93dd45816b4e3af2cd5b (origin/master)
+| |\  Merge: 4f4b6f4 8b17ef7
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Fri May 8 17:47:49 2015 -0400
+| | | 
+| | |     Merge branch 'stable'
+| | |      
+| | *   commit 8b17ef70ec529f46733e4951101f61fff52d9631 (origin/stable)
+| | |\  Merge: dd68558 6cfca83
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Fri May 8 17:46:09 2015 -0400
+| | | | 
+| | | |     Merge branch 'test' into stable
+| | | |       
+| | | *   commit 6cfca83301939f0e1bdfd40cf746ae5ae1336a3f (origin/test)
+| | | |\  Merge: 0a010e2 329f876
+| | | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | | Date:   Fri May 8 17:44:41 2015 -0400
+| | | | | 
+| | | | |     Merge branch 'dev' into test
+| | | | |      
+| | | | * commit 329f87647c6ad604e20d63e800d295e3cb22abb3 (origin/dev)
+| | | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | | Date:   Fri May 8 17:42:21 2015 -0400
+| | | | | 
+| | | | |     Removed files that shouldn't be on the repository.
+| | | | |        
+* | | | |   commit 5e91a24c941c760fcbea95bbc0f02318a29fa220
+|\ \ \ \ \  Merge: a6cbfa0 4f4b6f4
+| |/ / / /  Author: Monica Mohler <monica.mohler@us.pwc.com>
+| | | | |   Date:   Fri May 8 17:21:50 2015 -0400
+| | | | |   
+| | | | |       Merge branch 'master' of https://github.com/VHAINNOVATIONS/PerceptiveReach
+| | | | |        
+| * | | |   commit 4f4b6f4c3addcecfb398deaf5c9f89075566eb9b
+| |\ \ \ \  Merge: bbe1d65 dd68558
+| | |/ / /  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | |   Date:   Fri May 8 13:28:46 2015 -0400
+| | | | |   
+| | | | |       Merge branch 'stable'
+| | | | |      
+| | * | | commit dd685581c14d422b701881865b8f6713a2fa664e
+| | |/ /  Merge: 8fb2f80 0a010e2
+| | | |   Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | |   Date:   Fri May 8 13:26:48 2015 -0400
+| | | |   
+| | | |       Merge branch 'test' into stable
+| | | |       
+| | * |   commit 0a010e2ded68266b45253af9389018a21a534189
+| | |\ \  Merge: d042c7f 5fa6fcb
+| | | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | |   Date:   Fri May 8 13:06:32 2015 -0400
+| | | |   
+| | | |       Merge commit '5fa6fcb42d52371507541039aa7c528f07893692' into HEAD
+| | | |       
+| | | *   commit 5fa6fcb42d52371507541039aa7c528f07893692
+| | | |\  Merge: c53be2d b6f659f
+| | | | | Author: unknown <william.balshem@us.pwc.com>
+| | | | | Date:   Fri May 8 13:03:51 2015 -0400
+| | | | | 
+| | | | |     Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | | | |      
+| | | * | commit c53be2d266d0251e1185f2c1976b836989fd3a85
+| | |  /  Author: unknown <william.balshem@us.pwc.com>
+| | | |   Date:   Fri May 8 13:03:26 2015 -0400
+| | | |   
+| | | |       sprint 15 analytics work
+| | | |       
+| | * |   commit d042c7fb28bea01d7dccdb952682c56d1065623f
+| | |\ \  Merge: 6f96fa5 b6f659f
+| | | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | |   Date:   Wed May 6 18:18:14 2015 -0400
+| | | |   
+| | | |       Merge commit 'b6f659f829b06de63aefa9b711b238692cbd1af8' into HEAD
+| | | |       
+| | * |   commit 6f96fa53dafc7d66fbaea1cc7f5d2b7590542e1b
+| | |\ \  Merge: 4345b47 2d4a82f
+| | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | Date:   Wed May 6 06:59:33 2015 -0400
+| | | | | 
+| | | | |     Merge commit '2d4a82f58ecd8ff6d10d76f7cedef1ffe0263a4c' into HEAD
+| | | | |      
+| | * | | commit 4345b475912ef7db9ee1b571a082421df3192a3d
+| | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | Date:   Thu Apr 30 15:17:18 2015 -0400
+| | | | | 
+| | | | |     Updated step definitions with Top And Middle
+| | | | |      
+| | * | | commit ff2e8e6a4d220488ebd0015068adba8beaeee0b2
+| | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | Date:   Wed Apr 29 15:00:01 2015 -0400
+| | | | | 
+| | | | |     Updated PR-1405 with medication name
+| | | | |      
+| | * | | commit ec3531c81af069acdc001512049eb28023ee078f
+| | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | Date:   Wed Apr 29 14:56:34 2015 -0400
+| | | | | 
+| | | | |     Updated PR-1380 with correct widget name
+| | | | |      
+| | * | | commit db8d83a925c9c88a1be2394c48b8936f40c7e400
+| | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | Date:   Wed Apr 29 12:44:59 2015 -0400
+| | | | | 
+| | | | |     Fixed typo error for PR-1407
+| | | | |      
+| | * | | commit 86787ff64781dad98093291b4bf92e365b0a944c
+| | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | Date:   Wed Apr 29 11:47:47 2015 -0400
+| | | | | 
+| | | | |     Fixed typo errors for PR-1537
+| | | | |      
+| | * | | commit 9f7d5e0ce6087bde28bfd8aa05ac3e291d5069eb
+| | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | Date:   Wed Apr 29 10:03:13 2015 -0400
+| | | | | 
+| | | | |     Updated PR-1268, 1571 test scripts with logoff
+| | | | |      
+| | * | | commit 0a3a3d0502ed3bb99d71a311500a78d4ea32c64b
+| | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | Date:   Wed Apr 29 09:30:41 2015 -0400
+| | | | | 
+| | | | |     Updated PR-1151, 1248, 1268, 346, 353, 355 test scripts with log off
+| | | | |      
+| | * | | commit 8bcd53affb42680dc9c6c25a9344b8b800aad28e
+| | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | Date:   Wed Apr 29 09:24:51 2015 -0400
+| | | | | 
+| | | | |     Updated PR-1267, 1317, 1380, 1405, 1406, 1537, 1571, 1676, 1677, 1678 with logoff
+| | | | |        
+| | * | |   commit 9e9479da61d67e5d561eeb21d8ea2fcb097f6d0a
+| | |\ \ \  Merge: b1306be 61b0d9b
+| | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | Date:   Wed Apr 29 09:04:02 2015 -0400
+| | | | | | 
+| | | | | |     Merge commit '61b0d9b05f1fefce2890e91ed42aa93a12481577' into HEAD
+| | | | | |       
+| | * | | | commit b1306beb24d4e94aefc86e3c834d6eff66b011bf
+| | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | Date:   Wed Apr 29 09:03:45 2015 -0400
+| | | | | | 
+| | | | | |     Updated PR-1267 feature and step definitions file
+| | | | | |         
+| | * | | |   commit 16d609394558b9ec843801061b2e8b06d608c9d2
+| | |\ \ \ \  Merge: 8f616f5 9a65d8a
+| | | | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | | | Date:   Wed Apr 29 01:54:05 2015 -0400
+| | | | | | | 
+| | | | | | |     Merge commit '9a65d8a6f92bb0ed19c6337ecb3aeb2bdb621ce1' into HEAD
+| | | | | | |        
+| | * | | | | commit 8f616f565456d66b0acf87f0ef874b3893edf685
+| | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | Date:   Tue Apr 28 15:34:37 2015 -0400
+| | | | | | | 
+| | | | | | |     Fixed typo error PR-1151
+| | | | | | |        
+| | * | | | | commit fd41de113a1623b73834359b5a8c6b3deba5f56f
+| | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | Date:   Tue Apr 28 15:10:39 2015 -0400
+| | | | | | | 
+| | | | | | |     Updated PR-1537, 1571 test scripts with single sign-on
+| | | | | | |        
+| | * | | | | commit f99527141435a3cf849951a8b4d39239377d0ed9
+| | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | Date:   Tue Apr 28 15:03:56 2015 -0400
+| | | | | | | 
+| | | | | | |     Updated PR-1317, 1380, 1405, 1406, 1407 test scripts with single sign-on.
+| | | | | | |        
+| | * | | | | commit 699d61f82d448cc293aca0dffeb0cc5f33902e08
+| | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | Date:   Tue Apr 28 14:56:01 2015 -0400
+| | | | | | | 
+| | | | | | |     Updated PR-1151, 1248, 1267, 1268, 882, 996 test scripts with single sign-on
+| | | | | | |        
+| | * | | | | commit 1fe94b641d6f9b5deeef08b77229d377d5370ba5
+| | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | Date:   Tue Apr 28 13:18:44 2015 -0400
+| | | | | | | 
+| | | | | | |     Updated PR-505, 876,877,878, 879, 880, 881 with single sign on
+| | | | | | |        
+| | * | | | | commit e5e330950f30199007c7f18065d177eefb32b0b6
+| | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | Date:   Tue Apr 28 13:12:42 2015 -0400
+| | | | | | | 
+| | | | | | |     Updates PR-353, 355, 356, 357 test scripts with single sign on
+| | | | | | |        
+| | * | | | | commit ee29b06376590d07f6aa2b5b78ee05fe12d822d8
+| | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | Date:   Tue Apr 28 11:45:37 2015 -0400
+| | | | | | | 
+| | | | | | |     Updated PR-346 test scripts with single sign on
+| | | | | | |        
+| | * | | | | commit 5189578163db60e2c4177b2726de0456f37de625
+| | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | Date:   Mon Apr 27 12:03:02 2015 -0400
+| | | | | | | 
+| | | | | | |     Updated PR-1537, 1571, 1676 with the correct widget title
+| | | | | | |        
+| | * | | | | commit 29d6906e34d5ec6ca27eba4b7267f505aef3be98
+| | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | Date:   Mon Apr 27 11:59:15 2015 -0400
+| | | | | | | 
+| | | | | | |     Updated PR-1407 with the correct widget title
+| | | | | | |        
+| | * | | | | commit ab1c6d17eba711a4111b748e6c3c76ec546176c4
+| | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | Date:   Mon Apr 27 11:45:10 2015 -0400
+| | | | | | | 
+| | | | | | |     Updated PR-1267 feature file with the correct widget title and test cases
+| | | | | | |        
+| | * | | | | commit 0c203628039cc8a9cdaf724c07cbcedd478e7b84
+| |  / / / /  Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | |   Date:   Mon Apr 27 10:26:07 2015 -0400
+| | | | | |   
+| | | | | |       PR-1920 update env file
+| | | | | |       
+| | | | | |       updated env file for capybara screenshot
+| | | | | |       
+| * | | | | commit bbe1d65d7eabce2bcb591c937f3d87fb36274e92
+|  / / / /  Author: Monica Mohler <monica.mohler@us.pwc.com>
+| | | | |   Date:   Fri Apr 24 18:41:10 2015 -0400
+| | | | |   
+| | | | |       Complete Submission Log
+| | | | |      
+* | | | | commit a6cbfa0e4d20e6126508113b5909cb822675f6ac
+| | | | | Author: mmohler <mmohler002@MMOHLER00290.us.nam.ad.pwcinternal.com>
+| | | | | Date:   Fri Apr 24 18:17:27 2015 -0400
+| | | | | 
+| | | | |     Sprint14 Submission Log
+| | | | |      
+* | | | | commit ee7f20322baa0d880acc4548413114768f9ad01b
+ / / / /  Author: mmohler <mmohler002@MMOHLER00290.us.nam.ad.pwcinternal.com>
+| | | |   Date:   Fri Apr 24 18:13:23 2015 -0400
+| | | |   
+| | | |       Sprint14 Submission Log
+| | | |       
+| | | | * commit 9a9ebfaa32ddc087f030dedaec6940914614631a (origin/angular_dashboard_framework)
+| | | | | Author: Andal FeQuiere Jr <andal.fequiere@us.pwc.com>
+| | | | | Date:   Fri May 8 15:55:18 2015 -0400
+| | | | | 
+| | | | |     PR-1956 Added missing files to appropriate branch.
+| | | | |      
+| | | | * commit 15fb6e4fe39a9720b8d81e25d7f8825d72f709cf
+| | | |/  Author: Andal FeQuiere Jr <andal.fequiere@us.pwc.com>
+| | | |   Date:   Fri May 8 14:48:46 2015 -0400
+| | | |   
+| | | |       PR-1956 Created updates and fixes to integrate new dashboard framework
+| | | |     
+| | | * commit b6f659f829b06de63aefa9b711b238692cbd1af8
+| | |/  Author: Andal FeQuiere Jr <andal.fequiere@us.pwc.com>
+| | |   Date:   Wed May 6 18:15:38 2015 -0400
+| | |   
+| | |       PR-1945 PR-1949 Fixed bugs related to Date not displaying in Patient Roster Table. Fixed Grunt task issue regarding not loading updated html templates properly
+| | |    
+| | * commit 2d4a82f58ecd8ff6d10d76f7cedef1ffe0263a4c
+| |/  Author: Andal FeQuiere Jr <andal.fequiere@us.pwc.com>
+| |   Date:   Wed May 6 06:57:03 2015 -0400
+| |   
+| |       PR-1945 PR-1949 Fixed issue with Logout Button disappearing. Added User Role tables and data to support it. Enhanced User Authentication and User tables.
+| |   
+| * commit 61b0d9b05f1fefce2890e91ed42aa93a12481577
+|/  Author: Andal FeQuiere Jr <andal.fequiere@us.pwc.com>
+|   Date:   Wed Apr 29 09:01:06 2015 -0400
+|   
+|       PR-1847 Fixed bug preventing widget to widget communication
+|  
+* commit 9a65d8a6f92bb0ed19c6337ecb3aeb2bdb621ce1
+  Author: Andal FeQuiere Jr <andal.fequiere@us.pwc.com>
+  Date:   Wed Apr 29 01:50:37 2015 -0400
+  
+      PR-1847 Update a number of files to repair bugs preventing dashboard from building properly in Jenkins
+  
+* commit 0cee3d7c70f218222ef49c1ef291c4a30a41e2b6 (origin/eventTimeLine)
+| Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+| Date:   Wed May 6 23:21:58 2015 -0400
+| 
+|     better update algorithm
+|  
+* commit 0160d27da3dfe17ba01e1efb31df35dd7bdfc37a
+  Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+  Date:   Wed May 6 21:54:39 2015 -0400
+  
+      text box info for the selected
