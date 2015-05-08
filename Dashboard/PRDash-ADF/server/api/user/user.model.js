@@ -27,20 +27,22 @@ var UserSchema = Joi.object().keys({
   UserID: Joi.number().integer().required(),
   UserName: Joi.string().max(50).required(),
   UserRole: Joi.string().max(50),
-  UserLocation: Joi.string().max(50),
+  UserStateLocation: Joi.string().max(2),
   FirstName: Joi.string().max(50),
   LastName: Joi.string().max(50),
-  UserPassword: Joi.string().max(50)
+  UserHomeFacility: Joi.string().max(50),
+  UserDomain: Joi.string().max(50),
+  isActive: Joi.string().max(10)
 });
 
 var User = function(data){
-  console.log(data);
+  //console.log(data);
   this.salt = this.makeSalt();
   this.data = data; //this.sanitize(data);
-  console.log(this.data);
+  //console.log(this.data);
   Joi.validate(data, UserSchema, console.log);
-  //console.log("\n" + data['UserPassword']);
-  this.hashedPassword = this.encryptPassword(data['UserPassword']);
+  ////console.log("\n" + data['UserPassword']);
+  //this.hashedPassword = this.encryptPassword(data['UserPassword']);
 }
 
 
@@ -168,7 +170,7 @@ User.prototype.validatePresenceOf = function(value) {
  */
 
  User.prototype.authenticate = function(plainText) {
-    console.log("inside user authentication method");
+    //console.log("inside user authentication method");
     return this.encryptPassword(plainText) === this.hashedPassword;
   }
 
@@ -177,7 +179,7 @@ User.prototype.validatePresenceOf = function(value) {
   }
 
   User.prototype.encryptPassword = function(password) {
-    console.log("inside encrypt password: " + password);
+    //console.log("inside encrypt password: " + password);
     if (!password || !this.salt) return '';
     var salt = new Buffer(this.salt, 'base64');
     return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
@@ -189,10 +191,10 @@ User.prototype.validatePresenceOf = function(value) {
   }
 
   User.findById = function(id, callback){
-    console.log("findById: " + id);
+    //console.log("findById: " + id);
     /*this.findBy({UserID: id},function(err, data) {
-        //console.log(err);
-        //console.log("This is data: " + data[0]);
+        ////console.log(err);
+        ////console.log("This is data: " + data[0]);
         if (err) return callback(null, null);
         if (data == null) return callback(err,null);
         callback(null, new User(data[0]));
@@ -201,8 +203,8 @@ User.prototype.validatePresenceOf = function(value) {
   User.findOne = function(param, callback){
     //if(param.UserName){
       this.findBy(param,function(err, data) {
-        //console.log(err);
-        //console.log("This is data: " + data[0]);
+        ////console.log(err);
+        ////console.log("This is data: " + data[0]);
         if (err) return callback(null, null);
         if (data == null) return callback(err,null);
         callback(null, new User(data[0]));
@@ -221,15 +223,15 @@ User.prototype.validatePresenceOf = function(value) {
 
     var query = '';
     if (key) {
-        console.log("Registering endpoint: /user/findBy/:key is " + key);
-        query = "SELECT u.UserID, u.UserName, u.FirstName, u.LastName, r.RoleCode AS UserRole, v.VAMC AS UserLocation, u.UserPassword ";
+        //console.log("Registering endpoint: /user/findBy/:key is " + key);
+        query = "SELECT u.UserID, u.UserName, u.FirstName, u.LastName, r.RoleCode AS UserRole, u.UserStateLocation, u.UserHomeFacility, u.UserDomain, u.isActive ";
         query += "FROM prsystem.Users u INNER JOIN prsystem.UserRole r ON u.UserRole = r.RoleID ";
-        query += "INNER JOIN dbo.Ref_VAMC v ON u.UserLocation = v.VAMCID ";
+        query += "INNER JOIN dbo.Ref_VAMC v ON u.UserHomeFacility = v.STA3N ";
         query += "WHERE "+ Object.keys(key)[0] + " =  '" + key[Object.keys(key)[0]] + "'";
         //query += "AND UserPassword =  '" + pw + "'";
-        console.log("Query: " + query);
+        //console.log("Query: " + query);
     } else {
-        //console.log("ERROR: User Name and Password are required."); 
+        ////console.log("ERROR: User Name and Password are required."); 
         //res.send("ERROR: User Name and Password are required.");
 
     }
@@ -238,7 +240,7 @@ User.prototype.validatePresenceOf = function(value) {
         // ... error checks
         if (err || !query) { 
         data = "Error: Database connection failed!";
-        console.log("Database connection failed!"); 
+        //console.log("Database connection failed!"); 
         return; 
         }
 
@@ -246,15 +248,15 @@ User.prototype.validatePresenceOf = function(value) {
         var request = new sql.Request(connection); // or: var request = connection.request();
         request.query(query, function(err, recordset) {
             // ... error checks
-            if (recordset.length < 1){console.log("Invalid Key or statement"); /*res.send("Invalid key value");*/ return callback("Invalid Key or statement",null);}
+            if (recordset.length < 1){/*console.log("Invalid Key or statement");*/ /*res.send("Invalid key value");*/ return callback("Invalid Key or statement",null);}
             if (err) { 
-            console.log("Query failed!"); 
+            //console.log("Query failed!"); 
             return; 
             }
 
-            console.log(recordset.length);
+            //console.log(recordset.length);
             //res.send(recordset);
-            //console.log(JSON.stringify(recordset));
+            ////console.log(JSON.stringify(recordset));
             return callback(null,recordset);
         });
 

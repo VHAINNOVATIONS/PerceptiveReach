@@ -10,49 +10,47 @@
 'use strict';
 
 var _ = require('lodash');
+var sql = require('mssql');
 var dataFormatter = require('../../components/formatUtil/formatUtil.service.js');
 
-
-// When the Real API get's implemented remove all lines between //removeBegin & //removeEnd
-
-//removeBegin
-/*var fs = require('fs');
-var path = require('path');
-var filePath = path.normalize('server/api/appointmentData/');
-var fileName = "appointmentData.json";
-//removeEnd
-
-// Get list of things
 exports.index = function(req, res) {
   res.header("content-type: application/json");
-    //console.log("----AppointmentDataAPI");
 
-//removeBegin
-  var data = fs.readFileSync(filePath + fileName, 'utf8');
-  var jsonRecordSet = JSON.parse(data);
-	for (var record in jsonRecordSet) {
-	    jsonRecordSet[record].Apptdate = dataFormatter.formatData(jsonRecordSet[record].Apptdate);
-	}
-	res.send(jsonRecordSet);*/
+  var dbc = require('../../config/db_connection/development.js');
+    var config = dbc.config;
 
-exports.index = function(req, res) {
-  res.header("content-type: application/json");
-  var data = '[{"ReachID": 1,"ApptType": "REGULAR","Apptdate": "2014-02-03T00:00:00.000Z","CancelationType": ""},{"ReachID": 1,"ApptType": "SERVICE CONNECTED","Apptdate": "2015-01-03T00:00:00.000Z","CancelationType": "Patient Cancelled"},{"ReachID": 1,"ApptType": "PRIMA FACIA","Apptdate": "2014-12-11T00:00:00.000Z","CancelationType": ""},{"ReachID": 1,"ApptType": "REGULAR","Apptdate": "2015-03-03T00:00:00.000Z","CancelationType": "Clinic Cancelled"},{"ReachID": 1,"ApptType": "RESEARCH","Apptdate": "2014-11-05T00:00:00.000Z","CancelationType": ""},{"ReachID": 1,"ApptType": "SHARING AGREEMENT","Apptdate": "2014-04-21T00:00:00.000Z","CancelationType": "Patient Cancelled and Auto Re-Book"}]';
+    var id = req.param("id");
+    var query = '';
+    if (id) {
+        query = "SELECT * FROM Appointments a LEFT OUTER JOIN Ref_VistACancelNoShowCode r ON a.CancelNoShowCode = r.CancelNoShowCodeID "
+        query += "WHERE a.ReachID =  " + id;
+    } else {
+        res.send("ERROR: ReachID  is required.");
+    }
 
-  var jsonRecordSet = JSON.parse(data);
-	for (var record in jsonRecordSet) {
-	    jsonRecordSet[record].Apptdate = dataFormatter.formatData(jsonRecordSet[record].Apptdate,"date");
-	}
-	res.send(jsonRecordSet);
+    var connection = new sql.Connection(config, function(err) {
+        // ... error checks
+        if (err || !query) { 
+        //data = "Error: Database connection failed!";
+        return; 
+        }
 
+        // Query
+        var request = new sql.Request(connection);
+        request.query(query, function(err, recordset) {
+            // ... error checks
+            if (err) { 
+                console.log("Query failed! " + err); 
+            return; 
+            }
 
+            var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
+            for (var record in jsonRecordSet) {
+                jsonRecordSet[record].ApptDate = dataFormatter.formatData(jsonRecordSet[record].ApptDate,"date");
+            }
+            res.send(jsonRecordSet);
+        });
 
-
-//removeEnd
-
-//Begin Real SQL Server API Code
-
-
-//End Real SQL Server API Code
-
+    });
+  
 };

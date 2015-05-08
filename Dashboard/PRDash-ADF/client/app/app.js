@@ -18,6 +18,7 @@
 
 angular.module('app', [
     'ngRoute',
+    'ngCookies',
     'ngSanitize',
     'ui.dashboard',
     'ui.widgets',
@@ -25,9 +26,116 @@ angular.module('app', [
     'btford.markdown'
   ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
+    //$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    //$httpProvider.defaults.headers.common['Authorization'] = '';
+    /*
     $routeProvider
-      .otherwise('/');
-
+      .otherwise('/');*/
+    var interceptor = ['$rootScope', '$q', '$location', function (scope, $q, $location) {
+ 
+        function success(response) {
+            return response;
+        }
+ 
+        function error(response) {
+            var status = response.status;
+ 
+            if (status === 401 || status == 403) {
+              console.log("401/403 received" + repsonse);
+                var deferred = $q.defer();
+                var req = {
+                    config: response.config,
+                    deferred: deferred
+                };
+                //scope.requests401.push(req);
+                //scope.$broadcast('event:auth-loginRequired');
+                $location.path('/login');
+                return deferred.promise;
+            }
+            // otherwise
+            return $q.reject(response);
+        }
+ 
+        return function (promise) {
+            return promise.then(success, error);
+        }
+ 
+    }];
     $locationProvider.html5Mode(true);
-    //$httpProvider.interceptors.push('authInterceptor');    
+    //$httpProvider.interceptors.push(interceptor); 
+    $httpProvider.interceptors.push('authInterceptor');    
+  })
+
+  .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
+    return {
+      // Add authorization token to headers
+      request: function (config) {
+        config.headers = config.headers || {};
+        if ($cookieStore.get('token')) {
+          config.headers.Authorization = 'Bearer ' + $cookieStore.get('token');
+        }
+        return config;
+      },
+      // Response code
+      response: function(response){
+        if (response.status === 401){
+          console.log("Response 401");
+        }
+        if (response.status === 403){
+          console.log("Response 403");
+        }
+        return response || $q.when(response);
+      },
+      // Intercept 401s and redirect you to login
+      responseError: function(response) {
+        if(response.status === 401) {
+          //console.log("Response Error 401", response);
+          $location.path('/login');
+          // remove any stale tokens
+          $cookieStore.remove('token');
+        }
+        if(response.status === 403) {
+          //console.log("Response Error 403", response);
+          $location.path('/login');
+          // remove any stale tokens
+          $cookieStore.remove('token');
+        }
+        return $q.reject(response);
+      }
+    };
+  })
+
+  .run(function ($rootScope, $location, $cookieStore, $http, Auth) {
+    // keep user logged in after page refresh
+    
+    $rootScope.globals = $cookieStore.get('globals') || {};
+    if ($rootScope.globals.currentUser) {
+        $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+    }
+    // Redirect to login if route requires auth and you're not logged in    
+    $rootScope.$on('$routeChangeStart', function (event, next, current) {
+      // redirect to login page if not logged in
+      /*if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
+          console.log("rootScoope.globals.userObj: ",$rootScope.globals.userObj);
+          $location.path('/login');
+      }*/
+      Auth.isLoggedInAsync(function(loggedIn) {
+        if (next.authenticate && !loggedIn) {
+          $rootScope.globals.isLogggedIn = false;
+          $('#navHeader').hide();
+          $('#dashboardDescription').hide();
+          $location.path('/login');
+
+        }
+        else{
+          if(loggedIn){
+            $rootScope.globals.isLogggedIn = true;
+            $rootScope.globals['userObj'] = $cookieStore.get('user');
+            console.log("rootScoope.globals.userObj: ",$rootScope.globals.userObj);
+            $('#navHeader').show();
+            $('#dashboardDescription').show();
+          }
+        }
+      });
+    });
   });

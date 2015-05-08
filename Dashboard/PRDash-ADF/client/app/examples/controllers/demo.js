@@ -4,7 +4,7 @@ angular.module('app')
   .factory('widgetDefinitions', function(RandomDataModel,RandomTopNDataModel, RandomTimeSeriesDataModel,
                                     RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel, 
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
-                                    ContactBaseDataModel, ContactEmergencyDataModel, VeteranRosterDataModel,
+                                    ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
                                     PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel,
                                     AppointmentDataModel, DiagnosesDataModel) {
     return [
@@ -62,10 +62,10 @@ angular.module('app')
       },
       {
         name: 'RosterTable',
-        directive: 'wt-veteran-roster-table',
+        directive: 'wt-patient-roster-table',
         settingsModalOptions: {
-        templateUrl: 'client/components/widget/widgets/veteranRosterTable/veteranRosterTableWidgetSettingsTemplate.html',
-        controller: 'VeteranRosterTableWidgetSettingsCtrl'
+        templateUrl: 'client/components/widget/widgets/patientTable/patientTableWidgetSettingsTemplate.html',
+        controller: 'patientTableWidgetSettingsCtrl'
         },
         /*onSettingsClose: function(resultFromModal, widgetModel, dashboardScope) {
           // do something to update widgetModel, like the default implementation:
@@ -75,8 +75,8 @@ angular.module('app')
           // probably do nothing here, since the user pressed cancel
         },*/
         dataAttrName: 'data',
-        dataModelType: VeteranRosterDataModel,
-        title: 'Veteran Roster by VAMC',
+        dataModelType: PatientDataModel,
+        title: 'Patient Roster by VAMC',
         dataModelOptions: {
           vamc: 1
         },
@@ -132,7 +132,7 @@ angular.module('app')
         directive: 'wt-contact',
         dataAttrName: 'data',
         dataModelType: ContactBaseDataModel,
-        title: 'Veteran Contact',
+        title: 'Patient Contact',
         size: {
           width: '25%',
           height: '250px'
@@ -142,7 +142,7 @@ angular.module('app')
         name: 'emergency',
         directive: 'wt-emergency-contact',
         dataAttrName: 'data',
-        dataModelType: ContactEmergencyDataModel,
+        dataModelType: EmergencyContactDataModel,
         title: 'Emergency Contact Information',
         dataModelOptions: {
           reachID: 16
@@ -225,13 +225,13 @@ angular.module('app')
   })
   .value('defaultWidgets', [
       { name: 'RosterTable' }, 
+      { name: 'contact' },
+      { name: 'emergency' },
+      {name: 'diagnoses'},
+      {name: 'appointment'},
       { name: 'ClinicalDecisionSupport' },
       {name: 'medication'},
-      {name: 'appointment'},
-      {name: 'patientFlags'},
-      {name: 'diagnoses'},
-      { name: 'contact' },
-      { name: 'emergency' }
+      {name: 'patientFlags'}
       /*,
       { name: 'Metrics Chart' },
       { name: 'NVD3 Line Chart' },

@@ -56,8 +56,12 @@ module.exports = function(config) {
       'client/components/widget/widgets/widget_template.js',
       'client/bower_components/angular-ui-grid/ui-grid.js',
       'http://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js',
+      'client/app/app.js',
       'client/app/**/*.js',
+      'client/components/navbar/**/*.js',
+      'client/components/auth/**/*.js',
       'test/mock/**/*.js',
+      'test/helper/**/*.js',
       'test/spec/**/*.js'
     ],
 
@@ -69,8 +73,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-    logLevel: config.LOG_INFO,
-
+    logLevel: config.LOG_DEBUG,
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
