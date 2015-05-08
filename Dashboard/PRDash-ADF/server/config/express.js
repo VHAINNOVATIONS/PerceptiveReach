@@ -27,23 +27,23 @@ module.exports = function(app) {
   app.use(methodOverride());
   app.use(cookieParser());
 
-  app.use(function (req, res, next) {
-    var nodeSSPI = require('node-sspi');
+  //app.use(function (req, res, next) {
+    /*var nodeSSPI = require('node-sspi');
     var nodeSSPIObj = new nodeSSPI({
       offerSSPI: false,
       maxLoginAttemptsPerConnection: 1,
       //offerBasic: true,
       retrieveGroups: true
-    });
+    });*/
     
     //if(req.url.indexOf("/api/") != -1 || req.url.indexOf("/auth/local") != -1){
-    if(req.url.indexOf("/auth/local") != -1){
+    //if(req.url.indexOf("/auth/local") != -1){
       //req.header("Authorization", "Basic ");
       //console.log("authorization-header before: ", req.header("Authorization"));
       //res.header("WWW-Authenticate", "");
       //console.log("Before-req: ", req);
       //console.log("Before-response: ", res);
-      nodeSSPIObj.authenticate(req, res, function(err){
+      //nodeSSPIObj.authenticate(req, res, function(err){
         //console.log("req: ", req);
         //console.log("response_headers: ", res._headers);
         //res._headers['www-authenticate'] = [ 'xBasic' ]; //res.header("WWW-Authenticate", "");
@@ -55,14 +55,14 @@ module.exports = function(app) {
         //console.log("WWW-Authenticate", res.header("WWW-Authenticate"));
         //console.log("authorization-header after: ", req.header("Authorization"));
 
-        if(err)
+        /*if(err)
           console.log("NodeSSPI errors: ", err);
         res.finished || next();
       });
     }
     else
       next();    
-  });
+  });*/
   
   /*app.use(function (req, res, next) {
     if(res._headers['www-authenticate']){

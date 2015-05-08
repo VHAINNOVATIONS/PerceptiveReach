@@ -27,10 +27,12 @@ var UserSchema = Joi.object().keys({
   UserID: Joi.number().integer().required(),
   UserName: Joi.string().max(50).required(),
   UserRole: Joi.string().max(50),
-  UserLocation: Joi.string().max(50),
+  UserStateLocation: Joi.string().max(2),
   FirstName: Joi.string().max(50),
   LastName: Joi.string().max(50),
-  UserPassword: Joi.string().max(50)
+  UserHomeFacility: Joi.string().max(50),
+  UserDomain: Joi.string().max(50),
+  isActive: Joi.string().max(10)
 });
 
 var User = function(data){
@@ -40,7 +42,7 @@ var User = function(data){
   //console.log(this.data);
   Joi.validate(data, UserSchema, console.log);
   ////console.log("\n" + data['UserPassword']);
-  this.hashedPassword = this.encryptPassword(data['UserPassword']);
+  //this.hashedPassword = this.encryptPassword(data['UserPassword']);
 }
 
 
@@ -222,9 +224,9 @@ User.prototype.validatePresenceOf = function(value) {
     var query = '';
     if (key) {
         //console.log("Registering endpoint: /user/findBy/:key is " + key);
-        query = "SELECT u.UserID, u.UserName, u.FirstName, u.LastName, r.RoleCode AS UserRole, v.VAMC AS UserLocation, u.UserPassword ";
+        query = "SELECT u.UserID, u.UserName, u.FirstName, u.LastName, r.RoleCode AS UserRole, u.UserStateLocation, u.UserHomeFacility, u.UserDomain, u.isActive ";
         query += "FROM prsystem.Users u INNER JOIN prsystem.UserRole r ON u.UserRole = r.RoleID ";
-        query += "INNER JOIN dbo.Ref_VAMC v ON u.UserLocation = v.VAMCID ";
+        query += "INNER JOIN dbo.Ref_VAMC v ON u.UserHomeFacility = v.STA3N ";
         query += "WHERE "+ Object.keys(key)[0] + " =  '" + key[Object.keys(key)[0]] + "'";
         //query += "AND UserPassword =  '" + pw + "'";
         //console.log("Query: " + query);

@@ -6,7 +6,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="meds in data">
+        <tr ng-repeat="meds in data track by $index">
             <td>{{ meds.MedicationName }}</td>
         </tr>
         </tbody>

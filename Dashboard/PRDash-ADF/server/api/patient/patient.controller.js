@@ -25,7 +25,7 @@ exports.index = function(req, res) {
     var id = req.param("id");
     var score = req.param("score");
     var query = '';
-    var select = "SELECT p.ReachID, FirstName, LastName, SSN, HomePhone, DateIdentifiedAsHighRisk, CASE WHEN RiskLevel = 1 THEN 'High' WHEN RiskLevel = 2 THEN 'Medium' END 'RiskLevel', RiskLevel AS RiskLevelID, OutreachStatus"; 
+    var select = "SELECT p.ReachID, FirstName, LastName, SSN, HomePhone, DateIdentifiedAsAtRisk, CASE WHEN RiskLevel = 1 THEN 'Top' WHEN RiskLevel = 2 THEN 'Middle' END 'RiskLevel', RiskLevel AS RiskLevelID, OutreachStatus"; 
     //query += "ReachID, vamc.VAMC FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE ";
     if (id) {
         //console.log("Registering endpoint: /veteranRoster/:id is " + id);
@@ -74,7 +74,7 @@ exports.index = function(req, res) {
             for (var patient in jsonRecordSet) {
                 jsonRecordSet[patient].SSN = dataFormatter.formatData(jsonRecordSet[patient].SSN,"ssn");
                 jsonRecordSet[patient].HomePhone = dataFormatter.formatData(jsonRecordSet[patient].HomePhone,"phone");
-                jsonRecordSet[patient].DateIdentifiedAsHighRisk = dataFormatter.formatData(jsonRecordSet[patient].DateIdentifiedAsHighRisk,"date");
+                jsonRecordSet[patient].DateIdentifiedAsAtRisk = dataFormatter.formatData(jsonRecordSet[patient].DateIdentifiedAsAtRisk,"date");
                 ////console.log(jsonRecordSet[patient].SSN + " " + jsonRecordSet[patient].Phone + " " + jsonRecordSet[patient].DateIdentifiedAsHighRisk);
             }
             res.send(jsonRecordSet);
