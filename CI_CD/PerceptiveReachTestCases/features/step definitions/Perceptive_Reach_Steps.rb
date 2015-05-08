@@ -1,9 +1,5 @@
 Given(/^I navigate to the http:\/\/localhost:(\d+)\/$/) do |arg1|
   visit ('http://localhost:7003')
-  expect(page).to have_content 'Description' #load IRDS and wait for some content to appear
-end
-Given(/^I open the browser and enter http:\/\/localhost:(\d+)\/$/) do |arg1|
-  visit ('http://localhost:5000')
   #expect(page).to have_content 'Description' #load IRDS and wait for some content to appear
 end
 
@@ -15,6 +11,27 @@ end
 When(/^I choose "(.*?)" as VAMC$/) do |arg1|
   find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[contains(text(),"(V01) (405) White River Junction, VT")]').click
   #find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[2]').click
+end
+
+When(/^I select middle risk veteran row in the widget$/) do 
+  #pending # express the regexp above with the code you wish you had
+ # row=number
+  #find(:xpath, '//*[@id="sampleVet"]/tbody/tr["+row+"]').click
+   #find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[2]').click
+      #find(:xpath, '//*[@id="sampleVet"]/tbody/tr[9]').click 
+	expect(page).to have_content '3799'
+	find(:xpath, '//td[contains(text(),"1966")]').click 
+	 #click_link('vet_566384')
+end
+
+When(/^I select top risk veteran row in the widget$/) do 
+  #pending # express the regexp above with the code you wish you had
+ # row=number
+  #find(:xpath, '//*[@id="sampleVet"]/tbody/tr["+row+"]').click
+   #find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[2]').click
+     # find(:xpath, '//*[@id="sampleVet"]/tbody/tr[9]').click 
+	  find(:xpath, '//td[contains(text(),"4669")]').click 
+	  # click_link('vet_652427')
 end
 
 

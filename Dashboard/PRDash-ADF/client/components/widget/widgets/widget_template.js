@@ -19,7 +19,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tbody>\r" +
     "\n" +
-    "        <tr ng-repeat=\"appt in data\">\r" +
+    "        <tr ng-repeat=\"appt in data track by $index\">\r" +
     "\n" +
     "            <td>{{ appt.ApptDate }}</td>\r" +
     "\n" +
@@ -145,7 +145,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tbody>\r" +
     "\n" +
-    "        <tr ng-repeat=\"diagnosis in data\">\r" +
+    "        <tr ng-repeat=\"diagnosis in data track by $index\">\r" +
     "\n" +
     "            <td>{{ diagnosis.ICD_Desc }}</td>\r" +
     "\n" +
@@ -257,7 +257,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tbody>\r" +
     "\n" +
-    "        <tr ng-repeat=\"meds in data\">\r" +
+    "        <tr ng-repeat=\"meds in data track by $index\">\r" +
     "\n" +
     "            <td>{{ meds.MedicationName }}</td>\r" +
     "\n" +
@@ -421,7 +421,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <td>{{ patient.HomePhone }}</td>\r" +
     "\n" +
-    "            <td>{{ patient.DateIdentifiedAsHighRisk }}</td>\r" +
+    "            <td>{{ patient.DateIdentifiedAsAtRisk}}</td>\r" +
     "\n" +
     "            <td>{{ patient.RiskLevel }}</td>\r" +
     "\n" +
