@@ -347,11 +347,13 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
       'clean:dist',
+      'clean:templates',
+      'ngtemplates',
       'concat',
       'copy:dist',
       'env:all',  
       'injector',
-      'wiredep',
+      'wiredep'
   ]);
 
   grunt.registerTask('server', function () {

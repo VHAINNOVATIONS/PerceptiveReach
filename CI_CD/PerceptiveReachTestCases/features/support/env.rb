@@ -17,7 +17,3 @@ Before do |scenario|
 	page.driver.browser.manage.window.maximize
 	#page.driver.browser.manage.window.resize_to(1920, 1080)
 end
-
-Capybara::Screenshot.register_driver(:selenium_chrome) do |driver, path|
-    driver.page.save_screenshot(path)
-  end
