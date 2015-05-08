@@ -8,6 +8,7 @@ var expressJwt = require('express-jwt');
 var compose = require('composable-middleware');
 var User = require('../api/user/user.model');
 var validateJwt = expressJwt({ secret: config.secrets.session });
+var nodeSSPI = require('node-sspi');
 
 /**
  * Attaches the user object to the request if authenticated
@@ -72,7 +73,57 @@ function setTokenCookie(req, res) {
   res.redirect('/');
 }
 
+/**
+ * Authenticates user against active directory with NodeSSPI
+ * 
+ */
+function authenticate(req, res, user, callback) {
+  console.log("inside authenticate first - nodesspi");
+  var cb = callback;
+  var nodeSSPIObj = new nodeSSPI({
+    offerSSPI: false,
+    maxLoginAttemptsPerConnection: 1,
+    //offerBasic: true,
+    retrieveGroups: true,
+    domain: user.data.UserDomain
+  });
+  var username = user.data.UserName;
+  var password = user.tempPass;
+  var authdata = new Buffer(username + ":" + password).toString('base64');
+  console.log("AuthData Output: ",authdata);
+  req.headers["authorization"] = "Basic " + authdata;
+  req.rawHeaders.push("authorization");
+  req.rawHeaders.push("Basic " + authdata);
+  //console.log("Authorization Header: ",req.headers["authorization"]);
+  console.log("Before Request Output: ",req);
+  try{
+    nodeSSPIObj.authenticate(req, res, function(err){
+      console.log("After Request Output: ",req);
+      if (err){
+        console.log("error: ",err);
+        res.json(401, {message: 'This password is not correct.'});
+        return cb(err, false);
+      }
+      var userObj = req.connection.user;
+      console.log("userObj:: ",userObj);
+      if(userObj !== undefined){
+        var userObj = userObj.split("\\");
+        var user = {username: userObj[1], domain: userObj[0], userRole: "admin"};
+        console.log("userOBJ: ", userObj);
+        return cb(null, true);
+      }
+      return cb("UserObject Null", false);  
+      //res.json(user);
+    })
+  } catch (err){
+      console.log("TryCatch error:", err);
+      return cb(err, false);
+  }
+  
+}
+
 exports.isAuthenticated = isAuthenticated;
 exports.hasRole = hasRole;
 exports.signToken = signToken;
 exports.setTokenCookie = setTokenCookie;
+exports.authenticate = authenticate;

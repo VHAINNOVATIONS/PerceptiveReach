@@ -9,16 +9,19 @@ exports.setup = function (User, config) {
     function(email, password, done) {
       User.findOne({
         UserName: email.toLowerCase()
-      }, function(err, user) {
-        console.log(user);        
+      }, function(err, user) {                
         if (err) return done(err);
 
         if (!user) {
           return done(null, false, { message: 'This user is not registered or does not exist.' });
         }
-        if (!user.authenticate(password)) {
+       /* if (Auth.authenticate(user, password)) {
           return done(null, false, { message: 'This password is not correct.' });
+        }*/
+        if(user){
+          user['tempPass'] = password;          
         }
+        console.log("UserObj: ", user);
         return done(null, user);
       });
     }

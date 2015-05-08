@@ -1,0 +1,1679 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable
+  DTS:refId="Package" xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:CreatorName="DVA\vacobalshw"
+  DTS:CreatorComputerName="VACOLTBALSHW1V"
+  DTS:CreationDate="4/30/2015 11:53:39 AM"
+  DTS:PackageType="5"
+  DTS:VersionBuild="16"
+  DTS:VersionGUID="{176885DD-86C1-4EB6-B873-CBBF8EE8E075}"
+  DTS:LastModifiedProductVersion="11.0.2100.60"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="RiskAssessment"
+  DTS:DTSID="{DF54F5A5-ED57-49E6-9392-3D5521393FFD}"
+  DTS:CreationName="SSIS.Package.3">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CDWWork]"
+      DTS:ObjectName="CDWWork"
+      DTS:DTSID="{B2508681-F8D7-4775-AE23-FBA906A7A016}"
+      DTS:CreationName="OLEDB">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=vhacdwa01;Initial Catalog=CDWWork;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Reach]"
+      DTS:ObjectName="Reach"
+      DTS:DTSID="{15C6B181-83AD-4457-A2FB-1A59C47F6D90}"
+      DTS:CreationName="OLEDB">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=vhacdwa01;Initial Catalog=VACI_IRDS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ReachLocal]"
+      DTS:ObjectName="ReachLocal"
+      DTS:DTSID="{6A8ABAB6-642D-406B-97E1-94DC34AA38B8}"
+      DTS:CreationName="OLEDB">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=VACOLTBALSHW1V;Initial Catalog=Reach;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[VACI_IRDS]"
+      DTS:ObjectName="VACI_IRDS"
+      DTS:DTSID="{602C2611-D04E-4D01-8F45-44C089C0D3CF}"
+      DTS:CreationName="OLEDB">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=vhacdwa01;Initial Catalog=VACI_IRDS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:Namespace="User"
+      DTS:IncludeInDebugDump="2345"
+      DTS:ObjectName="CDWWork_DB"
+      DTS:DTSID="{5682928D-68EE-4D14-B424-63E566A330FF}"
+      DTS:CreationName="">
+      <DTS:VariableValue
+        DTS:DataType="8">CDWWork</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:Namespace="User"
+      DTS:IncludeInDebugDump="2345"
+      DTS:ObjectName="CDW_Server"
+      DTS:DTSID="{08B92B9C-1D15-48C4-A457-30ADEBF51E51}"
+      DTS:CreationName="">
+      <DTS:VariableValue
+        DTS:DataType="8">vhacdwa01.vha.med.va.gov</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:Namespace="User"
+      DTS:IncludeInDebugDump="2345"
+      DTS:ObjectName="DefaultSchema"
+      DTS:DTSID="{10937DD3-0C0E-48D0-9B58-5BB241838830}"
+      DTS:CreationName="">
+      <DTS:VariableValue
+        DTS:DataType="8">DVA\vacobalshw</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:Namespace="User"
+      DTS:IncludeInDebugDump="2345"
+      DTS:ObjectName="Reach_DB"
+      DTS:DTSID="{ADBBAA03-99FB-4DB9-9CEB-03B8E24DF697}"
+      DTS:CreationName="">
+      <DTS:VariableValue
+        DTS:DataType="8">VACI_IRDS</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:Namespace="User"
+      DTS:IncludeInDebugDump="2345"
+      DTS:ObjectName="Reach_Server"
+      DTS:DTSID="{161E0D04-6E2C-457E-A215-AE6A4A9E2B34}"
+      DTS:CreationName="">
+      <DTS:VariableValue
+        DTS:DataType="8">vhacdwa01.vha.med.va.gov</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:Namespace="User"
+      DTS:IncludeInDebugDump="2345"
+      DTS:ObjectName="VACI_IRDS_DB"
+      DTS:DTSID="{314B6408-98B2-4B36-A7E8-3CE2E85ADB6D}"
+      DTS:CreationName="">
+      <DTS:VariableValue
+        DTS:DataType="8">VACI_IRDS</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Add indexes to NewAtRisk Table"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:ThreadHint="0"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:LocaleID="-1"
+      DTS:DelayValidation="True"
+      DTS:ObjectName="Add indexes to NewAtRisk Table"
+      DTS:DTSID="{aa7e7943-337b-4d37-b314-9ad269cdf106}"
+      DTS:Description="Execute SQL Task"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{15C6B181-83AD-4457-A2FB-1A59C47F6D90}"
+          SQLTask:SqlStatementSource="CREATE INDEX ndxAtRisk_PatientSID on etl.NewAtRisk(PatientSID)&#xA;CREATE INDEX ndxAtRisk_sta3n on etl.NewAtRisk(sta3n)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Drop - Create NewAtRisk ETL Table"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:ThreadHint="0"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:LocaleID="-1"
+      DTS:DelayValidation="True"
+      DTS:ObjectName="Drop - Create NewAtRisk ETL Table"
+      DTS:DTSID="{65D2AF78-EA85-4A94-9A58-2F359287C2A3}"
+      DTS:Description="Execute SQL Task"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{15C6B181-83AD-4457-A2FB-1A59C47F6D90}"
+          SQLTask:SqlStatementSource="IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE Table_Name = 'NewAtRisk')&#xA;DROP TABLE etl.NewAtRisk&#xA;CREATE TABLE etl.NewAtRisk(ReachID int, PatientSID int, sta3n smallint)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Pop NewAtRisk Table"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:LocaleID="-1"
+      DTS:DelayValidation="True"
+      DTS:ObjectName="Pop NewAtRisk Table"
+      DTS:DTSID="{13E94DDC-76F6-458A-ADDD-7B4DF2C6C345}"
+      DTS:Description="Data Flow Task"
+      DTS:CreationName="SSIS.Pipeline.3">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Pop NewAtRisk Table\New At Risk Qry"
+              name="New At Risk Qry"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              description="OLE DB Source"
+              usesDispositions="true"
+              version="7"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7">
+              <properties>
+                <property
+                  name="CommandTimeout"
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out.">0</property>
+                <property
+                  name="OpenRowset"
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."></property>
+                <property
+                  name="OpenRowsetVariable"
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."></property>
+                <property
+                  name="SqlCommand"
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT p.ReachID, s.PatientSID, s.sta3n
+FROM Patient p INNER JOIN PatientStation s ON p.ReachID = s.ReachID
+WHERE p.ScoringStatus &lt;&gt; 2
+AND p.RiskScore &gt;= (SELECT Threshold FROM Ref_RiskLevel WHERE RiskLevelID = 2)
+AND p.DateIdentifiedAsAtRisk is NULL</property>
+                <property
+                  name="SqlCommandVariable"
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."></property>
+                <property
+                  name="DefaultCodePage"
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source.">1252</property>
+                <property
+                  name="AlwaysUseDefaultCodePage"
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data.">false</property>
+                <property
+                  name="AccessMode"
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  typeConverter="AccessMode">2</property>
+                <property
+                  name="ParameterMapping"
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Pop NewAtRisk Table\New At Risk Qry.Connections[OleDbConnection]"
+                  name="OleDbConnection"
+                  description="The OLE DB runtime connection used to access the database."
+                  connectionManagerID="Package.ConnectionManagers[Reach]"
+                  connectionManagerRefId="Package.ConnectionManagers[Reach]" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Output].Columns[ReachID]"
+                      name="ReachID"
+                      lineageId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Output].Columns[ReachID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      truncationRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Output].ExternalColumns[ReachID]" />
+                    <outputColumn
+                      refId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Output].Columns[PatientSID]"
+                      name="PatientSID"
+                      lineageId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Output].Columns[PatientSID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      truncationRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Output].ExternalColumns[PatientSID]" />
+                    <outputColumn
+                      refId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Output].Columns[sta3n]"
+                      name="sta3n"
+                      lineageId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Output].Columns[sta3n]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      truncationRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Output].ExternalColumns[sta3n]" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Output].ExternalColumns[ReachID]"
+                      name="ReachID"
+                      dataType="i4" />
+                    <externalMetadataColumn
+                      refId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Output].ExternalColumns[PatientSID]"
+                      name="PatientSID"
+                      dataType="i4" />
+                    <externalMetadataColumn
+                      refId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Output].ExternalColumns[sta3n]"
+                      name="sta3n"
+                      dataType="i2" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Error Output]"
+                  name="OLE DB Source Error Output"
+                  isErrorOut="true">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Error Output].Columns[ReachID]"
+                      name="ReachID"
+                      lineageId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Error Output].Columns[ReachID]"
+                      dataType="i4" />
+                    <outputColumn
+                      refId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Error Output].Columns[PatientSID]"
+                      name="PatientSID"
+                      lineageId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Error Output].Columns[PatientSID]"
+                      dataType="i4" />
+                    <outputColumn
+                      refId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Error Output].Columns[sta3n]"
+                      name="sta3n"
+                      lineageId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Error Output].Columns[sta3n]"
+                      dataType="i2" />
+                    <outputColumn
+                      refId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      lineageId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      lineageId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Pop NewAtRisk Table\NewAtRisk Table"
+              name="NewAtRisk Table"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              description="OLE DB Destination"
+              usesDispositions="true"
+              version="4"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4">
+              <properties>
+                <property
+                  name="CommandTimeout"
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out.">0</property>
+                <property
+                  name="OpenRowset"
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset.">[ETL].[NewAtRisk]</property>
+                <property
+                  name="OpenRowsetVariable"
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."></property>
+                <property
+                  name="SqlCommand"
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  name="DefaultCodePage"
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source.">1252</property>
+                <property
+                  name="AlwaysUseDefaultCodePage"
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data.">false</property>
+                <property
+                  name="AccessMode"
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  typeConverter="AccessMode">3</property>
+                <property
+                  name="FastLoadKeepIdentity"
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on.">false</property>
+                <property
+                  name="FastLoadKeepNulls"
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on.">false</property>
+                <property
+                  name="FastLoadOptions"
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on.">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  name="FastLoadMaxInsertCommitSize"
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on.">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Pop NewAtRisk Table\NewAtRisk Table.Connections[OleDbConnection]"
+                  name="OleDbConnection"
+                  description="The OLE DB runtime connection used to access the database."
+                  connectionManagerID="Package.ConnectionManagers[VACI_IRDS]"
+                  connectionManagerRefId="Package.ConnectionManagers[VACI_IRDS]" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Pop NewAtRisk Table\NewAtRisk Table.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Destination Input"
+                  hasSideEffects="true"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Pop NewAtRisk Table\NewAtRisk Table.Inputs[OLE DB Destination Input].Columns[ReachID]"
+                      lineageId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Output].Columns[ReachID]"
+                      externalMetadataColumnId="Package\Pop NewAtRisk Table\NewAtRisk Table.Inputs[OLE DB Destination Input].ExternalColumns[ReachID]"
+                      cachedName="ReachID"
+                      cachedDataType="i4" />
+                    <inputColumn
+                      refId="Package\Pop NewAtRisk Table\NewAtRisk Table.Inputs[OLE DB Destination Input].Columns[PatientSID]"
+                      lineageId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Output].Columns[PatientSID]"
+                      externalMetadataColumnId="Package\Pop NewAtRisk Table\NewAtRisk Table.Inputs[OLE DB Destination Input].ExternalColumns[PatientSID]"
+                      cachedName="PatientSID"
+                      cachedDataType="i4" />
+                    <inputColumn
+                      refId="Package\Pop NewAtRisk Table\NewAtRisk Table.Inputs[OLE DB Destination Input].Columns[sta3n]"
+                      lineageId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Output].Columns[sta3n]"
+                      externalMetadataColumnId="Package\Pop NewAtRisk Table\NewAtRisk Table.Inputs[OLE DB Destination Input].ExternalColumns[sta3n]"
+                      cachedName="sta3n"
+                      cachedDataType="i2" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Pop NewAtRisk Table\NewAtRisk Table.Inputs[OLE DB Destination Input].ExternalColumns[ReachID]"
+                      name="ReachID"
+                      dataType="i4" />
+                    <externalMetadataColumn
+                      refId="Package\Pop NewAtRisk Table\NewAtRisk Table.Inputs[OLE DB Destination Input].ExternalColumns[PatientSID]"
+                      name="PatientSID"
+                      dataType="i4" />
+                    <externalMetadataColumn
+                      refId="Package\Pop NewAtRisk Table\NewAtRisk Table.Inputs[OLE DB Destination Input].ExternalColumns[sta3n]"
+                      name="sta3n"
+                      dataType="i2" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Pop NewAtRisk Table\NewAtRisk Table.Outputs[OLE DB Destination Error Output]"
+                  name="OLE DB Destination Error Output"
+                  exclusionGroup="1"
+                  synchronousInputId="Package\Pop NewAtRisk Table\NewAtRisk Table.Inputs[OLE DB Destination Input]"
+                  isErrorOut="true">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Pop NewAtRisk Table\NewAtRisk Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      lineageId="Package\Pop NewAtRisk Table\NewAtRisk Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Pop NewAtRisk Table\NewAtRisk Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      lineageId="Package\Pop NewAtRisk Table\NewAtRisk Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Pop NewAtRisk Table.Paths[OLE DB Source Output]"
+              name="OLE DB Source Output"
+              startId="Package\Pop NewAtRisk Table\New At Risk Qry.Outputs[OLE DB Source Output]"
+              endId="Package\Pop NewAtRisk Table\NewAtRisk Table.Inputs[OLE DB Destination Input]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Queue Direct Messaging"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:ThreadHint="0"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:LocaleID="-1"
+      DTS:DelayValidation="True"
+      DTS:ObjectName="Queue Direct Messaging"
+      DTS:DTSID="{ECAD2E88-707C-4A9F-A35F-68538319C708}"
+      DTS:Description="Execute SQL Task"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{15C6B181-83AD-4457-A2FB-1A59C47F6D90}"
+          SQLTask:SqlStatementSource="select 1" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Retrieve Widget Data for New At Risk Patients"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:DelayValidation="True"
+      DTS:ObjectName="Retrieve Widget Data for New At Risk Patients"
+      DTS:DTSID="{3719C059-F4F8-4F07-A42C-16C7CAEB44BD}"
+      DTS:Description="Sequence Container"
+      DTS:CreationName="STOCK:SEQUENCE">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Retrieve Widget Data for New At Risk Patients\Appointments"
+          DTS:ExecutableType="SSIS.Pipeline.3"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Appointments"
+          DTS:DTSID="{6E0316FD-46C5-4271-BE08-4336A9AC3D83}"
+          DTS:Description="Data Flow Task"
+          DTS:CreationName="SSIS.Pipeline.3">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts"
+          DTS:ExecutableType="SSIS.Pipeline.3"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Emergency Contacts"
+          DTS:DTSID="{ED4E2C7B-0B3B-4C23-B1A9-1907AABB3015}"
+          DTS:Description="Data Flow Task"
+          DTS:CreationName="SSIS.Pipeline.3">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry"
+                  name="Emergency Contact Qry"
+                  componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+                  description="OLE DB Source"
+                  usesDispositions="true"
+                  version="7"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7">
+                  <properties>
+                    <property
+                      name="CommandTimeout"
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out.">0</property>
+                    <property
+                      name="OpenRowset"
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."></property>
+                    <property
+                      name="OpenRowsetVariable"
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."></property>
+                    <property
+                      name="SqlCommand"
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT
+NameOfContact, StreetAddress1, StreetAddress2, StreetAddress3, City, State, Zip, Zip4, Phone, PhoneWork
+FROM CDWWork.sPatient.sPatientAddress s INNER JOIN etl.NewAtRisk r ON 
+ s.PatientSID = r.PatientSID AND s.sta3n = r.sta3n
+WHERE s.AddressType = 'Emergency Contact' 
+OR s.AddressType = 'Secondary Emergency Contact'</property>
+                    <property
+                      name="SqlCommandVariable"
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."></property>
+                    <property
+                      name="DefaultCodePage"
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source.">1252</property>
+                    <property
+                      name="AlwaysUseDefaultCodePage"
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data.">false</property>
+                    <property
+                      name="AccessMode"
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      name="ParameterMapping"
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Connections[OleDbConnection]"
+                      name="OleDbConnection"
+                      description="The OLE DB runtime connection used to access the database."
+                      connectionManagerID="Package.ConnectionManagers[VACI_IRDS]"
+                      connectionManagerRefId="Package.ConnectionManagers[VACI_IRDS]" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[NameOfContact]"
+                          name="NameOfContact"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[NameOfContact]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          truncationRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[NameOfContact]" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[StreetAddress1]"
+                          name="StreetAddress1"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[StreetAddress1]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          truncationRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[StreetAddress1]" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[StreetAddress2]"
+                          name="StreetAddress2"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[StreetAddress2]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          truncationRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[StreetAddress2]" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[StreetAddress3]"
+                          name="StreetAddress3"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[StreetAddress3]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          truncationRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[StreetAddress3]" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[City]"
+                          name="City"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[City]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          truncationRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[City]" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[State]"
+                          name="State"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[State]"
+                          length="30"
+                          dataType="str"
+                          codePage="1252"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          truncationRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[State]" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[Zip]"
+                          name="Zip"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[Zip]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          truncationRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[Zip]" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[Zip4]"
+                          name="Zip4"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[Zip4]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          truncationRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[Zip4]" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[Phone]"
+                          name="Phone"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[Phone]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          truncationRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[Phone]" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[PhoneWork]"
+                          name="PhoneWork"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[PhoneWork]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          truncationRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[PhoneWork]" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[NameOfContact]"
+                          name="NameOfContact"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[StreetAddress1]"
+                          name="StreetAddress1"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[StreetAddress2]"
+                          name="StreetAddress2"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[StreetAddress3]"
+                          name="StreetAddress3"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[City]"
+                          name="City"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[State]"
+                          name="State"
+                          dataType="str"
+                          length="30"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[Zip]"
+                          name="Zip"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[Zip4]"
+                          name="Zip4"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[Phone]"
+                          name="Phone"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].ExternalColumns[PhoneWork]"
+                          name="PhoneWork"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output]"
+                      name="OLE DB Source Error Output"
+                      isErrorOut="true">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[NameOfContact]"
+                          name="NameOfContact"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[NameOfContact]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[StreetAddress1]"
+                          name="StreetAddress1"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[StreetAddress1]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[StreetAddress2]"
+                          name="StreetAddress2"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[StreetAddress2]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[StreetAddress3]"
+                          name="StreetAddress3"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[StreetAddress3]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[City]"
+                          name="City"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[City]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[State]"
+                          name="State"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[State]"
+                          length="30"
+                          dataType="str"
+                          codePage="1252" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[Zip]"
+                          name="Zip"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[Zip]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[Zip4]"
+                          name="Zip4"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[Zip4]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[Phone]"
+                          name="Phone"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[Phone]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[PhoneWork]"
+                          name="PhoneWork"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[PhoneWork]"
+                          length="50"
+                          dataType="str"
+                          codePage="1252" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table"
+                  name="Emergency Contact Table"
+                  componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+                  description="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4">
+                  <properties>
+                    <property
+                      name="CommandTimeout"
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out.">0</property>
+                    <property
+                      name="OpenRowset"
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset.">[DVA\vacobalshw].[EmergencyContact]</property>
+                    <property
+                      name="OpenRowsetVariable"
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."></property>
+                    <property
+                      name="SqlCommand"
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      name="DefaultCodePage"
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source.">1252</property>
+                    <property
+                      name="AlwaysUseDefaultCodePage"
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data.">false</property>
+                    <property
+                      name="AccessMode"
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      name="FastLoadKeepIdentity"
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on.">false</property>
+                    <property
+                      name="FastLoadKeepNulls"
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on.">false</property>
+                    <property
+                      name="FastLoadOptions"
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on.">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      name="FastLoadMaxInsertCommitSize"
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on.">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Connections[OleDbConnection]"
+                      name="OleDbConnection"
+                      description="The OLE DB runtime connection used to access the database."
+                      connectionManagerID="Package.ConnectionManagers[Reach]"
+                      connectionManagerRefId="Package.ConnectionManagers[Reach]" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input]"
+                      name="OLE DB Destination Input"
+                      hasSideEffects="true"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].Columns[NameOfContact]"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[NameOfContact]"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[NameOfContact]"
+                          cachedName="NameOfContact"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedCodepage="1252" />
+                        <inputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].Columns[StreetAddress1]"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[StreetAddress1]"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[StreetAddress1]"
+                          cachedName="StreetAddress1"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedCodepage="1252" />
+                        <inputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].Columns[StreetAddress2]"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[StreetAddress2]"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[StreetAddress2]"
+                          cachedName="StreetAddress2"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedCodepage="1252" />
+                        <inputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].Columns[StreetAddress3]"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[StreetAddress3]"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[StreetAddress3]"
+                          cachedName="StreetAddress3"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedCodepage="1252" />
+                        <inputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].Columns[City]"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[City]"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[City]"
+                          cachedName="City"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedCodepage="1252" />
+                        <inputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].Columns[State]"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[State]"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[State]"
+                          cachedName="State"
+                          cachedDataType="str"
+                          cachedLength="30"
+                          cachedCodepage="1252" />
+                        <inputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].Columns[Zip]"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[Zip]"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[Zip]"
+                          cachedName="Zip"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedCodepage="1252" />
+                        <inputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].Columns[Zip4]"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[Zip4]"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[Zip4]"
+                          cachedName="Zip4"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedCodepage="1252" />
+                        <inputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].Columns[Phone]"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[Phone]"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[Phone]"
+                          cachedName="Phone"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedCodepage="1252" />
+                        <inputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].Columns[PhoneWork]"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output].Columns[PhoneWork]"
+                          externalMetadataColumnId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[PhoneWork]"
+                          cachedName="PhoneWork"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedCodepage="1252" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[ReachID]"
+                          name="ReachID"
+                          dataType="i4" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[NameOfContact]"
+                          name="NameOfContact"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[StreetAddress1]"
+                          name="StreetAddress1"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[StreetAddress2]"
+                          name="StreetAddress2"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[StreetAddress3]"
+                          name="StreetAddress3"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[City]"
+                          name="City"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[State]"
+                          name="State"
+                          dataType="str"
+                          length="30"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[Zip]"
+                          name="Zip"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[Zip4]"
+                          name="Zip4"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[Phone]"
+                          name="Phone"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                        <externalMetadataColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input].ExternalColumns[PhoneWork]"
+                          name="PhoneWork"
+                          dataType="str"
+                          length="50"
+                          codePage="1252" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Outputs[OLE DB Destination Error Output]"
+                      name="OLE DB Destination Error Output"
+                      exclusionGroup="1"
+                      synchronousInputId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input]"
+                      isErrorOut="true">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          lineageId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts.Paths[OLE DB Source Output]"
+                  name="OLE DB Source Output"
+                  startId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry.Outputs[OLE DB Source Output]"
+                  endId="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table.Inputs[OLE DB Destination Input]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Retrieve Widget Data for New At Risk Patients\Patient Diagnosis"
+          DTS:ExecutableType="SSIS.Pipeline.3"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Patient Diagnosis"
+          DTS:DTSID="{0BEB9F67-8CC6-4004-B696-DD4214C713EB}"
+          DTS:Description="Data Flow Task"
+          DTS:CreationName="SSIS.Pipeline.3">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Retrieve Widget Data for New At Risk Patients\Patient Medications"
+          DTS:ExecutableType="SSIS.Pipeline.3"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Patient Medications"
+          DTS:DTSID="{28F45F7C-BAA4-409F-B4EB-2058D09DC979}"
+          DTS:Description="Data Flow Task"
+          DTS:CreationName="SSIS.Pipeline.3">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Retrieve Widget Data for New At Risk Patients.PrecedenceConstraints[Constraint]"
+          DTS:From="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts"
+          DTS:To="Package\Retrieve Widget Data for New At Risk Patients\Appointments"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:DTSID="{EDFD3744-D6D3-473D-86DD-3ED615577E78}"
+          DTS:CreationName="" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Retrieve Widget Data for New At Risk Patients.PrecedenceConstraints[Constraint 1]"
+          DTS:From="Package\Retrieve Widget Data for New At Risk Patients\Appointments"
+          DTS:To="Package\Retrieve Widget Data for New At Risk Patients\Patient Diagnosis"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:DTSID="{3364862F-0B22-4EC9-A27D-CDA600C7F748}"
+          DTS:CreationName="" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Retrieve Widget Data for New At Risk Patients.PrecedenceConstraints[Constraint 2]"
+          DTS:From="Package\Retrieve Widget Data for New At Risk Patients\Patient Diagnosis"
+          DTS:To="Package\Retrieve Widget Data for New At Risk Patients\Patient Medications"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:DTSID="{3326267A-6A74-4649-B277-BC4F27805531}"
+          DTS:CreationName="" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Run Risk Score Stored Proc"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:ThreadHint="0"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:LocaleID="-1"
+      DTS:DelayValidation="True"
+      DTS:ObjectName="Run Risk Score Stored Proc"
+      DTS:DTSID="{5E8AD7F8-FB43-469F-A713-AF5B0BABCD9B}"
+      DTS:Description="Execute SQL Task"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{15C6B181-83AD-4457-A2FB-1A59C47F6D90}"
+          SQLTask:SqlStatementSource="exec sp_AssessPatients" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Set Patients Risk Levels in Patient Table"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:ThreadHint="0"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:LocaleID="-1"
+      DTS:DelayValidation="True"
+      DTS:ObjectName="Set Patients Risk Levels in Patient Table"
+      DTS:DTSID="{C1C2BC32-7DF7-48F4-80E0-FF26E7537E6C}"
+      DTS:Description="Execute SQL Task"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{15C6B181-83AD-4457-A2FB-1A59C47F6D90}"
+          SQLTask:SqlStatementSource="DECLARE @Var1 decimal(11,10), @Var2 decimal(11,10)&#xA;&#xA;SELECT @Var1 = RiskThreshold FROM Ref_RiskLevel WHERE RiskLevelID = 1&#xA;SELECT @Var2 = RiskThreshold FROM Ref_RiskLevel WHERE RiskLevelID = 2&#xA;&#xA;UPDATE Patient&#xA;SET RiskLevel = &#xA;  CASE&#xA;    when RiskScore &gt;= @var1 then 1&#xA;    when RiskScore &gt;= @Var1 and RiskScore &lt; @Var2 then 2&#xA;    else NULL&#xA;  END&#xA;WHERE ScoringStatus &lt;&gt; 2&#xA;&#xA;UPDATE Patient&#xA;SET DateIdentifiedAsAtRisk = cast(getdate() as date)&#xA;WHERE RiskLevel is not NULL&#xA;AND DateIdentifiedAsAtRisk = NULL&#xA;AND ScoringStatus &lt;&gt; 2" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:From="Package\Run Risk Score Stored Proc"
+      DTS:To="Package\Drop - Create NewAtRisk ETL Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:DTSID="{AE4A3133-9922-4200-9E9C-E038002537A3}"
+      DTS:CreationName="" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:From="Package\Drop - Create NewAtRisk ETL Table"
+      DTS:To="Package\Pop NewAtRisk Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:DTSID="{4807C6EF-F11A-476C-AB31-23B5B2A76857}"
+      DTS:CreationName="" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:From="Package\Pop NewAtRisk Table"
+      DTS:To="Package\Add indexes to NewAtRisk Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:DTSID="{614607CE-6534-4FD6-B3D6-72703FD1D28B}"
+      DTS:CreationName="" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:From="Package\Add indexes to NewAtRisk Table"
+      DTS:To="Package\Set Patients Risk Levels in Patient Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:DTSID="{7EF4AA2C-C2A1-4783-A176-C44528A3EF67}"
+      DTS:CreationName="" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:From="Package\Set Patients Risk Levels in Patient Table"
+      DTS:To="Package\Retrieve Widget Data for New At Risk Patients"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:DTSID="{67051A3E-AE2D-4614-9AB8-612295C296D7}"
+      DTS:CreationName="" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:From="Package\Retrieve Widget Data for New At Risk Patients"
+      DTS:To="Package\Queue Direct Messaging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:DTSID="{CF007278-8AC7-4E86-A925-6E6E8CD4648B}"
+      DTS:CreationName="" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="205.6,41.6"
+          Id="Package\Drop - Create NewAtRisk ETL Table"
+          TopLeft="43.2793657089307,104.367321708321" />
+        <NodeLayout
+          Size="179.2,41.6"
+          Id="Package\Pop NewAtRisk Table"
+          TopLeft="49.0793658092178,171.98039455324" />
+        <NodeLayout
+          Size="208.8,41.6"
+          Id="Package\Queue Direct Messaging"
+          TopLeft="333.533338905895,486.618307461402" />
+        <NodeLayout
+          Size="176,41.6"
+          Id="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts"
+          TopLeft="38.4857198082672,26.7529423454641" />
+        <NodeLayout
+          Size="144,41.6"
+          Id="Package\Retrieve Widget Data for New At Risk Patients\Appointments"
+          TopLeft="47.7714342521163,97.8705904016858" />
+        <NodeLayout
+          Size="160,41.6"
+          Id="Package\Retrieve Widget Data for New At Risk Patients\Patient Diagnosis"
+          TopLeft="46.3428627992163,181.22353274715" />
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\Retrieve Widget Data for New At Risk Patients\Patient Medications"
+          TopLeft="60.6285773282149,263.047063306459" />
+        <EdgeLayout
+          Id="Package\Retrieve Widget Data for New At Risk Patients.PrecedenceConstraints[Constraint]"
+          TopLeft="123.128577030192,68.3529423454641">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,29.5176480562217"
+              Start="0,0"
+              End="0,22.0176480562217">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.0176480562217" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Retrieve Widget Data for New At Risk Patients.PrecedenceConstraints[Constraint 1]"
+          TopLeft="123.057148525666,139.470590401686">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41.7529423454641"
+              Start="0,0"
+              End="0,34.2529423454641">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.2529423454641" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Retrieve Widget Data for New At Risk Patients.PrecedenceConstraints[Constraint 2]"
+          TopLeft="126.342862799216,222.82353274715">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="19.8857145289986,40.2235305593087"
+              Start="0,0"
+              End="19.8857145289986,32.7235305593087">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.1117652796544" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.1117652796544"
+                    Point2="0,20.1117652796544"
+                    Point3="4,20.1117652796544" />
+                  <mssgle:LineSegment
+                    End="15.8857145289986,20.1117652796544" />
+                  <mssgle:CubicBezierSegment
+                    Point1="15.8857145289986,20.1117652796544"
+                    Point2="19.8857145289986,20.1117652796544"
+                    Point3="19.8857145289986,24.1117652796544" />
+                  <mssgle:LineSegment
+                    End="19.8857145289986,32.7235305593087" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="390.4,376"
+          Size="390.4,419.2"
+          Id="Package\Retrieve Widget Data for New At Risk Patients"
+          TopLeft="284.888893278818,14.3581701472281" />
+        <NodeLayout
+          Size="208,41.6"
+          Id="Package\Run Risk Score Stored Proc"
+          TopLeft="40.422222803131,36.2235299029565" />
+        <NodeLayout
+          Size="208,41.6"
+          Id="Package\Set Patients Risk Levels in Patient Table"
+          TopLeft="41.5333340542657,308.968631767319" />
+        <NodeLayout
+          Size="205.6,41.6"
+          Id="Package\Add indexes to NewAtRisk Table"
+          TopLeft="44.1111118774565,239.444447786979" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="145.250794256031,77.8235299029566">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,26.5437918053641"
+              Start="0,0"
+              End="0,19.0437918053641">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.0437918053641" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="142.379365759074,145.967321708321">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,26.013072844919"
+              Start="0,0"
+              End="0,18.513072844919">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.513072844919" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="138.679365809218,213.58039455324">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="8.23174606823869,25.8640532337398"
+              Start="0,0"
+              End="8.23174606823869,18.3640532337398">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.93202661686991" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.93202661686991"
+                    Point2="0,12.9320266168699"
+                    Point3="4,12.9320266168699" />
+                  <mssgle:LineSegment
+                    End="4.23174606823869,12.9320266168699" />
+                  <mssgle:CubicBezierSegment
+                    Point1="4.23174606823869,12.9320266168699"
+                    Point2="8.23174606823869,12.9320266168699"
+                    Point3="8.23174606823869,16.9320266168699" />
+                  <mssgle:LineSegment
+                    End="8.23174606823869,18.3640532337398" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="146.222222965861,281.044447786979">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27.9241839803399"
+              Start="0,0"
+              End="0,20.4241839803399">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.4241839803399" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="249.533334054266,329.768631767319">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="35.355559224552,-105.810461620091"
+              Start="0,0"
+              End="27.855559224552,-105.810461620091">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="13.677779612276,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="13.677779612276,0"
+                    Point2="17.677779612276,0"
+                    Point3="17.677779612276,-4" />
+                  <mssgle:LineSegment
+                    End="17.677779612276,-101.810461620091" />
+                  <mssgle:CubicBezierSegment
+                    Point1="17.677779612276,-101.810461620091"
+                    Point2="17.677779612276,-105.810461620091"
+                    Point3="21.677779612276,-105.810461620091" />
+                  <mssgle:LineSegment
+                    End="27.855559224552,-105.810461620091" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="480.088893278818,433.558170147228">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-42.1555543729228,53.0601373141741"
+              Start="0,0"
+              End="-42.1555543729228,45.5601373141741">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.530068657087" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.530068657087"
+                    Point2="0,26.530068657087"
+                    Point3="-4,26.530068657087" />
+                  <mssgle:LineSegment
+                    End="-38.1555543729228,26.530068657087" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-38.1555543729228,26.530068657087"
+                    Point2="-42.1555543729228,26.530068657087"
+                    Point3="-42.1555543729228,30.530068657087" />
+                  <mssgle:LineSegment
+                    End="-42.1555543729228,45.5601373141741" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Pop NewAtRisk Table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="156.8,41.6"
+          Id="Package\Pop NewAtRisk Table\New At Risk Qry"
+          TopLeft="70.6285726449927,136.847060753977" />
+        <NodeLayout
+          Size="158.4,41.6"
+          Id="Package\Pop NewAtRisk Table\NewAtRisk Table"
+          TopLeft="259.771433008934,136.235296039515" />
+        <EdgeLayout
+          Id="Package\Pop NewAtRisk Table.Paths[OLE DB Source Output]"
+          TopLeft="227.428572644993,157.341178396746">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="32.3428603639409,0"
+              Start="0,0"
+              End="24.8428603639409,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="24.8428603639409,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Pop NewAtRisk Table\New At Risk Qry">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Pop NewAtRisk Table\NewAtRisk Table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="190.4,41.6"
+          Id="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry"
+          TopLeft="113.6,120" />
+        <NodeLayout
+          Size="200,41.6"
+          Id="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table"
+          TopLeft="399.2,124" />
+        <EdgeLayout
+          Id="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts.Paths[OLE DB Source Output]"
+          TopLeft="304,142.8">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="95.1999999999999,0"
+              Start="0,0"
+              End="87.6999999999999,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="87.6999999999999,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Qry">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Retrieve Widget Data for New At Risk Patients\Emergency Contacts\Emergency Contact Table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -7,7 +7,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="appt in data">
+        <tr ng-repeat="appt in data track by $index">
             <td>{{ appt.ApptDate }}</td>
             <td>{{ appt.CancelNoShowCodeDesc }}</td>
         </tr>
