@@ -43,11 +43,12 @@ module.exports = function(config) {
       'client/bower_components/visibilityjs/lib/visibility.core.js',      
       'client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',          
       'client/bower_components/spin.js/spin.js',
-      'client/components/adf/src/directives/dashboard.js',
-      'client/components/adf/src/directives/*.js',
-      'client/components/adf/src/models/*.js',
-      'client/components/adf/src/controllers/*.js',
-      'client/components/adf/template/*.js',
+      'client/components/adf/directives/dashboard/dashboard.js', // old stuff -- /adf/src/directives/dashboard.js
+      'client/components/adf/directives/{,*/}*.js', // old stuff -- /adf/src/directives/*.js
+      'client/components/adf/models/{,*/}*.js', // old stuff -- /adf/src/models/*.js
+      //'client/components/adf/src/controllers/*.js', 
+      //'client/components/adf/*.js', // old stuff -- /adf/template/*.js
+      //'client/components/adf/tests/{,*/}*.js',
       'client/components/widget/vendor/{,*/}*.js',
       'client/components/widget/modules.js',
       'client/components/widget/service/{,*/}*.js',

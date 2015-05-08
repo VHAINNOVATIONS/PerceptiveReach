@@ -214,6 +214,13 @@ describe('Directive: dashboard', function () {
         expect(childScope.saveDashboard).toHaveBeenCalled();
     });
 
+    it('should support passing just the widget name as a string', function() {
+      spyOn(childScope.widgetDefs, 'getByName').and.returnValue({ title: 'defaultTitle', name: 'A' });
+      childScope.addWidget('A');
+      expect(childScope.widgetDefs.getByName).toHaveBeenCalledWith('A');
+      expect(widgetCreated.title).toEqual('defaultTitle');
+    });
+
     describe('@awashbrook Test Case', function() {
       beforeEach(function() {
         spyOn(childScope.widgetDefs, 'getByName').and.returnValue(widgetDefault = {
@@ -476,7 +483,7 @@ describe('Directive: dashboard', function () {
       expect(modalOptions.resolve.widget() === widget).toEqual(true);
     });
 
-    it('should set the templateUrl in modal options to the default ("client/components/adf/template/widget-settings-template.html")', function() {
+    it('should set the templateUrl in modal options to the default ("client/components/directives/dashboard/widget-settings-template.html")', function() {
       var widget = {};
       var dfr = $q.defer();
       spyOn(mockModal, 'open').and.callFake(function(options) {
@@ -486,7 +493,7 @@ describe('Directive: dashboard', function () {
         };
       });
       childScope.openWidgetSettings(widget);
-      expect(modalOptions.templateUrl).toEqual('client/components/adf/template/widget-settings-template.html');
+      expect(modalOptions.templateUrl).toEqual('client/components/directives/dashboard/widget-settings-template.html');
     });
 
     it('should set the templateUrl in modal options to scope.options.settingsModalOptions.templateUrl', function() {
