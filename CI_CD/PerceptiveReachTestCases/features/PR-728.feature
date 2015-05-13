@@ -5,7 +5,7 @@ Feature: As a Dashboard user, I want to verify user roles based security for the
 Scenario: I open a web browser and navigate to http://localhost:7003/ where I can Perceptive Reach Login to the  Dashboard as a system administrator
 Given I open the browser and enter http://localhost:7003/
 Then I should see "Perceptive Reach Login"
-Then I put in "Username" field as "vaphsfequia"
+Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"
 And I click on "Login" button
 Then I should see "Individual View"
@@ -21,7 +21,7 @@ And I click on "Logout" button
 Scenario: I open a web browser and navigate to http://localhost:7003/ where I can Perceptive Reach Login to the  Dashboard as a Clinical Care Team Member
 Given I open the browser and enter http://localhost:7003/
 Then I should see "Perceptive Reach Login"
-Then I put in "Username" field as "vaphsfequia"
+Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"
 And I click on "Login" button
 Then I should see "Individual View"
@@ -33,7 +33,7 @@ And I click on "Logout" button
 Scenario: I open a web browser and navigate to http://localhost:7003/ where I can Perceptive Reach Login to the  Dashboard as a Researcher
 Given I open the browser and enter http://localhost:7003/
 Then I should see "Perceptive Reach Login"
-Then I put in "Username" field as "vaphsfequia"
+Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"
 And I click on "Login" button
 Then I should see "KNIME & MYSQL Access"
@@ -45,7 +45,7 @@ And I click on "Logout" button
 Scenario: I open a web browser and navigate to http://localhost:7003/ where I can Perceptive Reach Login to the  Dashboard as a Reporter
 Given I open the browser and enter http://localhost:7003/
 Then I should see "Perceptive Reach Login"
-Then I put in "Username" field as "vaphsfequia"
+Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"
 And I click on "Login" button
 Then I should see Individual View
