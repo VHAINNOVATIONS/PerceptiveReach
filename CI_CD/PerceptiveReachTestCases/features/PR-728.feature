@@ -48,7 +48,7 @@ Then I should see "Perceptive Reach Login"
 Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"
 And I click on "Login" button
-Then I should see Individual View
+Then I should see "Individual View"
 And I should see "Facility View"
 And I should see "National View"
 And I should see "KNIME & MYSQL Access"
