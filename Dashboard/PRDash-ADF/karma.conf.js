@@ -49,6 +49,7 @@ module.exports = function(config) {
       //'client/components/adf/src/controllers/*.js', 
       //'client/components/adf/*.js', // old stuff -- /adf/template/*.js
       //'client/components/adf/tests/{,*/}*.js',
+      'client/components/adf/tests/{,*/}*.js',
       'client/components/widget/vendor/{,*/}*.js',
       'client/components/widget/modules.js',
       'client/components/widget/service/{,*/}*.js',
@@ -62,7 +63,7 @@ module.exports = function(config) {
       'client/components/navbar/**/*.js',
       'client/components/auth/**/*.js',
       'test/mock/**/*.js',
-      'test/helper/**/*.js',
+      'test/helper/**/*.js',    
       'test/spec/**/*.js'
     ],
 

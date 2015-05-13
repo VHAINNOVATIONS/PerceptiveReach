@@ -99,6 +99,7 @@ angular.module('ui.dashboard')
         angular.extend(this.containerStyle, style);
       },
       serialize: function() {
+        console.log("WidgetModel - inside serialize");
         return _.pick(this, ['title', 'name', 'style', 'size', 'dataModelOptions', 'attrs', 'storageHash']);
       }
     };

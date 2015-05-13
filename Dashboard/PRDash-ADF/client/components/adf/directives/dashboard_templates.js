@@ -314,7 +314,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "</ul>\r" +
     "\n" +
-    "<div ng-repeat=\"layout in layouts | filter:isActive\" dashboard=\"layout.dashboard\" template-url=\"components/adf/directives/dashboard/dashboard.html\"></div>"
+    "<div ng-repeat=\"layout in layouts | filter:isActive\" dashboard=\"layout.dashboard\" template-url=\"client/components/adf/directives/dashboard/dashboard.html\"></div>"
   );
 
 }]);

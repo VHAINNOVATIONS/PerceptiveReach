@@ -22,7 +22,7 @@ angular.module('ui.dashboard')
       return {
         scope: true,
         templateUrl: function(element, attr) {
-          return attr.templateUrl ? attr.templateUrl : 'components/adf/directives/dashboardLayouts/dashboardLayouts.html';
+          return attr.templateUrl ? attr.templateUrl : 'client/components/adf/directives/dashboardLayouts/dashboardLayouts.html';
         },
         link: function(scope, element, attrs) {
 

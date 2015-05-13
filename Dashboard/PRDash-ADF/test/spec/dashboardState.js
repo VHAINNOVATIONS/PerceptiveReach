@@ -13,6 +13,7 @@ describe('Factory: DashboardState', function () {
     id,
     hash,
     widgetDefinitions,
+    WidgetModel,
     item,
     setItemSpy,
     getItemSpy,
@@ -31,8 +32,9 @@ describe('Factory: DashboardState', function () {
     };
     $provide.value('$log', $log);
   }));
-  beforeEach(inject(function (_DashboardState_, _$q_, _$rootScope_) {
+  beforeEach(inject(function (_DashboardState_, _$q_, _$rootScope_, _WidgetModel_) {
     DashboardState = _DashboardState_;
+    WidgetModel = _WidgetModel_;
     $q = _$q_;
     $rootScope = _$rootScope_;
     
@@ -85,13 +87,14 @@ describe('Factory: DashboardState', function () {
     it('should serialize and store widgets passed to it', function() {
       spyOn(storage, 'setItem');
       var widgets = [
-        { title: 'widget1', name: 'Widget1', size: { width: '50%' }, dataModelOptions: { foo: 'bar' }, storageHash: '123', attrs: { bar: 'baz' } },
-        { title: 'widget2', name: 'Widget2', size: { width: '50%' }, dataModelOptions: { foo: 'bar' }, storageHash: '123'},
-        { title: 'widget3', name: 'Widget3', size: { width: '100%' }, attrs: { bar: 'baz' } },
-        { title: 'widget4', name: 'Widget3', dataModelOptions: { foo: 'baz' }, storageHash: '123', arbitrary: 'value' }
+        new WidgetModel(widgetDefinitions,{ title: 'widget1', name: 'Widget1', size: { width: '50%' }, dataModelOptions: { foo: 'bar' }, storageHash: '123', attrs: { bar: 'baz' } }),
+        new WidgetModel(widgetDefinitions,{ title: 'widget2', name: 'Widget2', size: { width: '50%' }, dataModelOptions: { foo: 'bar' }, storageHash: '123'}),
+        new WidgetModel(widgetDefinitions,{ title: 'widget3', name: 'Widget3', size: { width: '100%' }, attrs: { bar: 'baz' } }),
+        new WidgetModel(widgetDefinitions,{ title: 'widget4', name: 'Widget3', dataModelOptions: { foo: 'baz' }, storageHash: '123', arbitrary: 'value' })
       ];
       state.save(widgets);
       delete widgets[3].arbitrary;
+      console.log("expect storage setItem to be called");
       expect(storage.setItem).toHaveBeenCalledWith(id, JSON.stringify({widgets: widgets, hash: hash}));
     });
 

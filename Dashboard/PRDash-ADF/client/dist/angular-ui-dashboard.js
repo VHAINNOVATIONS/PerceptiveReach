@@ -24,7 +24,7 @@ angular.module('ui.dashboard')
     return {
       restrict: 'A',
       templateUrl: function(element, attr) {
-        return attr.templateUrl ? attr.templateUrl : 'components/adf/directives/dashboard/dashboard.html';
+        return attr.templateUrl ? attr.templateUrl : 'client/components/adf/directives/dashboard/dashboard.html';
       },
       scope: true,
 
@@ -35,7 +35,7 @@ angular.module('ui.dashboard')
           hideWidgetSettings: false,
           hideWidgetClose: false,
           settingsModalOptions: {
-            templateUrl: 'components/adf/directives/dashboard/widget-settings-template.html',
+            templateUrl: 'client/components/adf/directives/dashboard/widget-settings-template.html',
             controller: 'WidgetSettingsCtrl'
           },
           onSettingsClose: function(result, widget) { // NOTE: dashboard scope is also passed as 3rd argument
@@ -378,7 +378,7 @@ angular.module('ui.dashboard')
       return {
         scope: true,
         templateUrl: function(element, attr) {
-          return attr.templateUrl ? attr.templateUrl : 'components/adf/directives/dashboardLayouts/dashboardLayouts.html';
+          return attr.templateUrl ? attr.templateUrl : 'client/components/adf/directives/dashboardLayouts/dashboardLayouts.html';
         },
         link: function(scope, element, attrs) {
 
@@ -818,7 +818,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "</ul>\r" +
     "\n" +
-    "<div ng-repeat=\"layout in layouts | filter:isActive\" dashboard=\"layout.dashboard\" template-url=\"components/adf/directives/dashboard/dashboard.html\"></div>"
+    "<div ng-repeat=\"layout in layouts | filter:isActive\" dashboard=\"layout.dashboard\" template-url=\"client/components/adf/directives/dashboard/dashboard.html\"></div>"
   );
 
 }]);
@@ -1176,8 +1176,9 @@ angular.module('ui.dashboard')
         if (this.stringify) {
           item = JSON.stringify(item);
         }
-
+        console.log("DashboardState - Before setItem");
         this.storage.setItem(this.id, item);
+        console.log("DashboardState - After setItem");
         return true;
       },
 
@@ -1761,6 +1762,7 @@ angular.module('ui.dashboard')
         angular.extend(this.containerStyle, style);
       },
       serialize: function() {
+        console.log("WidgetModel - inside serialize");
         return _.pick(this, ['title', 'name', 'style', 'size', 'dataModelOptions', 'attrs', 'storageHash']);
       }
     };
