@@ -49,9 +49,8 @@ angular.module('ui.dashboard')
         if (this.stringify) {
           item = JSON.stringify(item);
         }
-        console.log("DashboardState - Before setItem");
+        
         this.storage.setItem(this.id, item);
-        console.log("DashboardState - After setItem");
         return true;
       },
 

@@ -98,9 +98,19 @@ angular.module('ui.dashboard')
       updateContainerStyle: function (style) {
         angular.extend(this.containerStyle, style);
       },
+
+      compactObject : function(o) {
+         var clone = _.clone(o);
+         _.each(clone, function(v, k) {
+           if(!v || _.isEmpty(v)) {
+             clone[k] = undefined;
+           }
+         });
+         return clone;
+      },
+
       serialize: function() {
-        console.log("WidgetModel - inside serialize");
-        return _.pick(this, ['title', 'name', 'style', 'size', 'dataModelOptions', 'attrs', 'storageHash']);
+        return _.pick(this.compactObject(this), ['title', 'name', 'style', 'size', 'dataModelOptions', 'attrs', 'storageHash']);
       }
     };
 

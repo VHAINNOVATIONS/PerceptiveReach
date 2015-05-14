@@ -87,12 +87,17 @@ describe('Factory: DashboardState', function () {
     it('should serialize and store widgets passed to it', function() {
       spyOn(storage, 'setItem');
       var widgets = [
-        new WidgetModel(widgetDefinitions,{ title: 'widget1', name: 'Widget1', size: { width: '50%' }, dataModelOptions: { foo: 'bar' }, storageHash: '123', attrs: { bar: 'baz' } }),
-        new WidgetModel(widgetDefinitions,{ title: 'widget2', name: 'Widget2', size: { width: '50%' }, dataModelOptions: { foo: 'bar' }, storageHash: '123'}),
-        new WidgetModel(widgetDefinitions,{ title: 'widget3', name: 'Widget3', size: { width: '100%' }, attrs: { bar: 'baz' } }),
-        new WidgetModel(widgetDefinitions,{ title: 'widget4', name: 'Widget3', dataModelOptions: { foo: 'baz' }, storageHash: '123', arbitrary: 'value' })
+        { title: 'widget1', name: 'Widget1', size: { width: '50%' }, dataModelOptions: { foo: 'bar' }, attrs: { bar: 'baz' }, storageHash: '123'},
+        { title: 'widget2', name: 'Widget2', size: { width: '50%' }, dataModelOptions: { foo: 'bar' }, storageHash: '123'},
+        { title: 'widget3', name: 'Widget3', size: { width: '100%' }, attrs: { bar: 'baz' } },
+        { title: 'widget4', name: 'Widget3', dataModelOptions: { foo: 'baz' }, storageHash: '123', arbitrary: 'value' }
       ];
-      state.save(widgets);
+      var serialWidgets = [];
+      for(var key in widgets){
+        var widget = new WidgetModel(widgetDefinitions,widgets[key]);
+        serialWidgets.push(widget);
+      }
+      state.save(serialWidgets);
       delete widgets[3].arbitrary;
       console.log("expect storage setItem to be called");
       expect(storage.setItem).toHaveBeenCalledWith(id, JSON.stringify({widgets: widgets, hash: hash}));
@@ -106,7 +111,12 @@ describe('Factory: DashboardState', function () {
         { title: 'widget3', name: 'Widget3', size: { width: '100%' }, attrs: { bar: 'baz' } },
         { title: 'widget4', name: 'Widget3', dataModelOptions: { foo: 'baz' }, storageHash: '123' }
       ];
-      state_no_stringify.save(widgets);
+      var serialWidgets = [];
+      for(var key in widgets){
+        var widget = new WidgetModel(widgetDefinitions,widgets[key]);
+        serialWidgets.push(widget);
+      }
+      state_no_stringify.save(serialWidgets);
       expect(typeof storage.setItem.calls.argsFor(0)[1]).toEqual('object');
     });
 
