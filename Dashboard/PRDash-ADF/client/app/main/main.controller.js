@@ -61,7 +61,7 @@ angular.module('app')
       $scope.$broadcast('commonDataChanged', $scope.common);
       console.log('broadcast submitted');
       console.log($scope);
-    });
+    },1000);
     
 
     // percentage (gauge widget, progressbar widget)

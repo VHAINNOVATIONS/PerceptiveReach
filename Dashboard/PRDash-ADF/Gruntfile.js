@@ -32,8 +32,8 @@ module.exports = function (grunt) {
         options: {
           module: 'ui.dashboard'
         },
-        src: ['<%= yeoman.client %>/components/adf/template/*.html'],
-        dest: '<%= yeoman.client %>/components/adf/template/dashboard.js'
+        src: ['<%= yeoman.client %>/components/adf/directives/{,*/}*.html'], // old stuff -- /components/adf/template/*.html
+        dest: '<%= yeoman.client %>/components/adf/directives/dashboard_templates.js' // old stuff -- /components/adf/template/dashboard.js
       },
       widget: {
         options: {
@@ -77,11 +77,11 @@ module.exports = function (grunt) {
     concat: {
       dashboard: {
         src: [
-          '<%= yeoman.client %>/components/adf/src/directives/dashboard.js',
-          '<%= yeoman.client %>/components/adf/src/directives/*.js',
-          '<%= yeoman.client %>/components/adf/src/models/*.js',
-          '<%= yeoman.client %>/components/adf/src/controllers/*.js',
-          '<%= yeoman.client %>/components/adf/template/dashboard.js'
+          '<%= yeoman.client %>/components/adf/directives/dashboard/dashboard.js', // old stuff - /components/adf/src/directives/dashboard.js
+          '<%= yeoman.client %>/components/adf/directives/{,*/}*.js',  // old stuff - /components/adf/src/directives/*.js
+          '<%= yeoman.client %>/components/adf/models/{,*/}*.js',      // old stuff - /components/adf/src/models/*.js
+          //'<%= yeoman.client %>/components/adf/src/controllers/*.js', // old stuff - /components/adf/src/controllers/*.js
+          '<%= yeoman.client %>/components/adf/directives/dashboard_templates.js' // old stuff - /components/adf/template/dashboard.js
         ],
         dest: '<%= yeoman.client %>/dist/angular-ui-dashboard.js'
       },
@@ -130,7 +130,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           flatten: true,
-          src: ['client/components/adf/src/angular-ui-dashboard.css'],
+          src: ['client/components/adf/angular-ui-dashboard.css'], // old stuff -- ['client/components/adf/src/angular-ui-dashboard.css']
           dest: 'client/dist'
         }]
       }
@@ -159,7 +159,7 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= yeoman.client %>/components/adf/src/{,*/}*.js',
+        '<%= yeoman.client %>/components/adf/{directives,models}/{,*/}*.js', // old stuff -- /components/adf/src/{,*/}*.js'
         '<%= yeoman.client %>/{app,components}/**/*.js',
         '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
         '!<%= yeoman.client %>/{app,components}/**/*.mock.js'
