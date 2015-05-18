@@ -29,6 +29,9 @@ var all = {
     session: 'perceptive-reach-secret'
   },
 
+  // Should we bypass user Authentication to develop locally?
+  bypassAuth: true,
+
   // List of user roles
   userRoles: ['guest', 'user', 'admin'],
 
