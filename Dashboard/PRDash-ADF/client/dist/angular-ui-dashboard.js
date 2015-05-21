@@ -15,7 +15,7 @@
  */
 'use strict';
 
-angular.module('ui.dashboard', ['ui.bootstrap', 'ui.sortable']);
+angular.module('ui.dashboard', ['ui.bootstrap', 'ui.sortable', 'ui.DashboardUtil']);
 
 angular.module('ui.dashboard')
 
@@ -616,7 +616,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "              <button type=\"button\" class=\"btn btn-primary dropdown-toggle\" data-toggle=\"dropdown\">\r" +
     "\n" +
-    "                Button dropdown <span class=\"caret\"></span>\r" +
+    "                Add a Widget <span class=\"caret\"></span>\r" +
     "\n" +
     "              </button>\r" +
     "\n" +
@@ -1324,7 +1324,7 @@ angular.module('ui.dashboard')
 'use strict';
 
 angular.module('ui.dashboard')
-  .factory('LayoutStorage', function() {
+  .factory('LayoutStorage', function(Dashboard) {
 
     var noopStorage = {
       setItem: function() {
@@ -1424,6 +1424,9 @@ angular.module('ui.dashboard')
 
         this.storage.setItem(this.id, state);
         this.options.unsavedChangeCount = 0;
+
+        Dashboard.saveDashboard({id: this.id, data: state});
+        //console.log("Inside save function for LayoutStorage: ");
       },
 
       load: function() {

@@ -29,7 +29,7 @@ var all = {
     session: 'perceptive-reach-secret'
   },
 
-  // Should we bypass user Authentication to develop locally?
+  // Should we bypass user Authentication in Active Directory to develop locally?
   bypassAuth: true,
 
   // List of user roles

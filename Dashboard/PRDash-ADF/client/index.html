@@ -50,7 +50,7 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
-      <div id="navHeader" style="display: block;">
+      <div id="navHeader" style="display: none;">
         <ul class="nav navbar-nav">
           <li ng-repeat="(when, route) in $route.routes" ng-class="{ 'active': $route.current.$$route === route}"><a ng-href="{{'#' + route.originalPath}}">{{ route.title }}</a></li>
         </ul>
@@ -130,7 +130,9 @@
       <script src="app/main/main.js"></script>
       <script src="components/auth/auth.service.js"></script>
       <script src="components/auth/user.service.js"></script>
+      <script src="components/dashboard/dashboard.service.js"></script>
       <script src="components/navbar/navbar.controller.js"></script>
+      <script src="components/util/util.js"></script>
       <script src="dist/angular-ui-dashboard.js"></script>
       <script src="dist/perceptive-reach-widgets.js"></script>
       <!-- endinjector -->

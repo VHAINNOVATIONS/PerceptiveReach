@@ -400,7 +400,7 @@ angular.module('ui.models')
           if(this.sta3N != this.currentsta3N)
             this.getData();
         }.bind(this));
-        this.sta3N = (dataModelOptions && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : 9;
+        //this.sta3N = (dataModelOptions && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : 9;
         //this.updateScope([]);
         //this.getData();
       },

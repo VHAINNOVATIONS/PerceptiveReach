@@ -112,7 +112,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "              <button type=\"button\" class=\"btn btn-primary dropdown-toggle\" data-toggle=\"dropdown\">\r" +
     "\n" +
-    "                Button dropdown <span class=\"caret\"></span>\r" +
+    "                Add a Widget <span class=\"caret\"></span>\r" +
     "\n" +
     "              </button>\r" +
     "\n" +

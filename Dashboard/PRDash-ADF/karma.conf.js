@@ -62,6 +62,8 @@ module.exports = function(config) {
       'client/app/**/*.js',
       'client/components/navbar/**/*.js',
       'client/components/auth/**/*.js',
+      'client/components/dashboard/**/*.js',
+      'client/components/util/**/*.js',
       'test/mock/**/*.js',
       'test/helper/**/*.js',    
       'test/spec/**/*.js'
