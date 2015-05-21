@@ -17,21 +17,48 @@
 'use strict';
 
 angular.module('app')
-	.controller('LayoutsDemoExplicitSaveCtrl', function($scope, widgetDefinitions, defaultWidgets, LayoutStorage, $interval, $timeout) {
+	.controller('LayoutsDemoExplicitSaveCtrl', function($scope, widgetDefinitions, defaultWidgets, LayoutStorage, Util, $interval, $timeout) {
+    //console.log("UserObj inside main controller: ",$rootScope.globals['userObj']);
+    console.log("localStorage: ", JSON.parse(localStorage.user));
+    var user = JSON.parse(localStorage.user);
+    //user.DashboardData = JSON.parse(user.DashboardData);
+    console.log("output of user object: ", user);
+    // initialize LayoutOptions depending on role or dashboard data
+    var layouts = [];
+
+    if (user.DashboardData){
+      layouts = user.DashboardData.layouts;
+      console.log("output layouts: ", layouts);
+      // populate local storage
+      localStorage.setItem(user.UserDashboardID, JSON.stringify(user.DashboardData));
+      console.log("get from LocalStorage: ",JSON.parse(localStorage.getItem(user.UserDashboardID)));
+    }
+    else{
+      var role = user.UserRole;
+     
+      if (user.VISN_State_Reg_View_Access){
+        layouts.push({ title: 'National View', active: (role.match(/^(SUP|REP|ADM)$/)) ? true : false , defaultWidgets: defaultWidgets });
+        layouts.push({ title: 'State View', active: false, defaultWidgets: defaultWidgets });
+      }
+      if (user.Facility_View_Access){
+        layouts.push({ title: 'Facility View', active: (role.match(/^(CCT)$/)) ? true : false, defaultWidgets: defaultWidgets });  
+      }
+      if (user.Individual_View_Access){
+        layouts.push({ title: 'Individual View', active: false, defaultWidgets: defaultWidgets });
+      }
+    }
+
     $scope.layoutOptions = {
-      storageId: 'demo-layouts-explicit-save',
+      storageId: (user.DashboardData) ? user.UserDashboardID : user.UserName + '-dashboard-' + user.UserRole,
       storage: localStorage,
-      storageHash: 'fs4df4d51',
+      storageHash: (user.DashboardData) ? user.DashboardData.storageHash : Util.makeStorageID(),
       widgetDefinitions: widgetDefinitions,
       defaultWidgets: defaultWidgets,
       explicitSave: true,
-      defaultLayouts: [
-        { title: 'National View', active: true , defaultWidgets: defaultWidgets },
-        { title: 'State View', active: false, defaultWidgets: defaultWidgets },
-        { title: 'Facility View', active: false, defaultWidgets: defaultWidgets },
-        { title: 'Individual View', active: false, defaultWidgets: defaultWidgets }
-      ]
+      defaultLayouts: layouts      
     };
+
+    
 
     // random scope value
     $scope.randomValue = Math.random();
