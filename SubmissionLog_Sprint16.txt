@@ -1,0 +1,246 @@
+* commit 151b70a4d97f833e0c13f337fb2909bca6492cba (HEAD, origin/master, master)
+| Author: Monica Mohler <monica.mohler@us.pwc.com>
+| Date:   Fri May 22 14:39:41 2015 -0400
+| 
+|     Design Spec Deliverables for Sprint 16
+|    
+*   commit 2639fd186345597d690278046fc7662afc711674
+|\  Merge: e30dbbc 82f2f21
+| | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | Date:   Fri May 22 13:53:53 2015 -0400
+| | 
+| |     Merge branch 'stable'
+| |     
+| *   commit 82f2f21775953dd67b5a1f31ee692618662182c9 (origin/stable)
+| |\  Merge: 8b17ef7 792a393
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Fri May 22 13:52:30 2015 -0400
+| | | 
+| | |     Merge branch 'test' into stable
+| | |      
+| | *   commit 792a3932ba8e8adcfe2cecca392145b74018bae7 (origin/test)
+| | |\  Merge: 1b50588 7f51346
+| | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | Date:   Thu May 21 00:41:13 2015 -0400
+| | | | 
+| | | |     Merge commit '7f5134660680b752126fa07d34ef6838416d98f3' into HEAD
+| | | |     
+| | | * commit 7f5134660680b752126fa07d34ef6838416d98f3 (origin/dev)
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Thu May 21 00:33:53 2015 -0400
+| | | | 
+| | | |     PR-1947 PR-2052 PR-2055 Created User Role capabilities. Added Functionality for Users to store and retrieve configured dashboard. Fixed unit tests for storing dashboard.
+| | | |       
+| | * |   commit 1b5058869e73ef5e0f4c825e7ef35a873ee14713
+| | |\ \  Merge: e98271e 4139c42
+| | | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | |   Date:   Wed May 20 16:25:53 2015 -0400
+| | | |   
+| | | |       Merge commit '4139c42b16b4eca4fe4af22aae4c0576e10d5a7b' into HEAD
+| | | |     
+| | | * commit 4139c42b16b4eca4fe4af22aae4c0576e10d5a7b
+| | | | Author: jarao <jaya.rao@us.pwc.com>
+| | | | Date:   Wed May 20 16:10:36 2015 -0400
+| | | | 
+| | | |     Update login.html
+| | | |     
+| | | |     commented out header
+| | | |     
+| | | * commit fad18b938f4ece83c639b3882122d444f2c30c93
+| | | | Author: jarao <jaya.rao@us.pwc.com>
+| | | | Date:   Wed May 20 16:09:39 2015 -0400
+| | | | 
+| | | |     Update index.html
+| | | |       
+| | * |   commit e98271e3f76c065a58c59897ef9ce40628ea1435
+| | |\ \  Merge: a069c66 4a8330d
+| | | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | |   Date:   Wed May 20 16:06:08 2015 -0400
+| | | |   
+| | | |       Merge commit '4a8330df156ab9422fbc4dd63d15337e873db8b1' into HEAD
+| | | |     
+| | | * commit 4a8330df156ab9422fbc4dd63d15337e873db8b1
+| | | | Author: jarao <jaya.rao@us.pwc.com>
+| | | | Date:   Wed May 20 15:59:12 2015 -0400
+| | | | 
+| | | |     Update index.html
+| | | |       
+| | * |   commit a069c66d7135d270d219562bde5cd093d251aa2d
+| | |\ \  Merge: 98eff62 8a171f5
+| | | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | |   Date:   Wed May 20 15:27:00 2015 -0400
+| | | |   
+| | | |       Merge commit '8a171f52ec920bc3821bd90bec1b594077064342' into HEAD
+| | | |     
+| | | * commit 8a171f52ec920bc3821bd90bec1b594077064342
+| | | | Author: jarao <jaya.rao@us.pwc.com>
+| | | | Date:   Wed May 20 15:09:53 2015 -0400
+| | | | 
+| | | |     Create bootstrap.css
+| | | |     
+| | | |     Added a 508-compliant bootstrap.css page to replace the bootstrap.css page in the bower components folder
+| | | |     
+| | | * commit ad9437b1ebde686cebf7f2094a939d3c0385fd1a
+| | | | Author: jarao <jaya.rao@us.pwc.com>
+| | | | Date:   Wed May 20 15:08:38 2015 -0400
+| | | | 
+| | | |     Update index.html
+| | | |     
+| | | |     Added page header level h1
+| | | |     
+| | | * commit 338dbd0c6ca1e368b11927e3db177320bd064218
+| | | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | | Date:   Wed May 20 13:20:58 2015 -0400
+| | | | 
+| | | |     Added Node-Inspector(Used for debuggimg noddejs) module to package file.
+| | | |     
+| | | * commit 0215bf846e0d68c5bf992ebee7760fedb656ebdb
+| | | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | | Date:   Mon May 18 16:26:21 2015 -0400
+| | | | 
+| | | |     Fix for liveReload performance issue.
+| | | |       
+| | * |   commit 98eff621b1533b2aee1c50adcd7cab34de7f4c1e
+| | |\ \  Merge: c5e8a5b 739a77e
+| | | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | |   Date:   Mon May 18 11:48:08 2015 -0400
+| | | |   
+| | | |       Merge commit '739a77ea9d76b5da91bf05f6829e24b0f76bae20' into HEAD
+| | | |     
+| | | * commit 739a77ea9d76b5da91bf05f6829e24b0f76bae20
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Mon May 18 11:45:30 2015 -0400
+| | | | 
+| | | |     PR-2077 Created database table to store dashboard and modified code to bypass active directory authentication
+| | | |     
+| | * | commit c5e8a5be8fca2bf15703a85a44e3fc747608b15d
+| | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | Date:   Fri May 15 14:56:16 2015 -0400
+| | | | 
+| | | |     updated env file
+| | | |     
+| | | |     updated env file to fix some screenshot issues
+| | | |     
+| | * | commit eef48292f00aada91aae9768c5ce8ae546a2efda
+| | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | Date:   Fri May 15 12:49:50 2015 -0400
+| | | | 
+| | | |     enhance env and steps
+| | | |     
+| | | |     enhanced the env and step definition so deal with errors generated by
+| | | |     buttons not being visible during the test
+| | | |       
+| | * |   commit 6caf2359e7634c30a52bf40adc631bbb12b36f64
+| | |\ \  Merge: 9ac59a2 24c711e
+| | | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | |   Date:   Thu May 14 01:14:49 2015 -0400
+| | | |   
+| | | |       Merge commit '24c711e49a78ceeedebe5e513b94412ef59abbda' into HEAD
+| | | |       
+| | | *   commit 24c711e49a78ceeedebe5e513b94412ef59abbda
+| | | |\  Merge: 329f876 3040358
+| | | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | | Date:   Thu May 14 01:08:54 2015 -0400
+| | | | | 
+| | | | |     Merge branch 'angular_dashboard_framework' into dev
+| | | | |      
+| | | | * commit 304035890739b253312387e9fa3768e4bdebedd1 (origin/angular_dashboard_framework)
+| | | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | | Date:   Thu May 14 01:06:46 2015 -0400
+| | | | | 
+| | | | |     PR-2046 Fixed unit tests for updated Angular Dashboard Framework
+| | | | |      
+| | | | * commit 23d73df2d5b552695ce50fef4d762a19244a24bb
+| | | | | Author: Andal FeQuiere Jr <andal.fequiere@us.pwc.com>
+| | | | | Date:   Wed May 13 11:48:31 2015 -0400
+| | | | | 
+| | | | |     PR-2046 Updated Tests for DashboardState
+| | | | |      
+| | | | * commit 9a9ebfaa32ddc087f030dedaec6940914614631a
+| | | | | Author: Andal FeQuiere Jr <andal.fequiere@us.pwc.com>
+| | | | | Date:   Fri May 8 15:55:18 2015 -0400
+| | | | | 
+| | | | |     PR-1956 Added missing files to appropriate branch.
+| | | | |      
+| | | | * commit 15fb6e4fe39a9720b8d81e25d7f8825d72f709cf
+| | | |   Author: Andal FeQuiere Jr <andal.fequiere@us.pwc.com>
+| | | |   Date:   Fri May 8 14:48:46 2015 -0400
+| | | |   
+| | | |       PR-1956 Created updates and fixes to integrate new dashboard framework
+| | | |     
+| | * | commit 9ac59a2becbd7519d9d4dd98e1c7db0976dd05e3
+| | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | Date:   Wed May 13 11:54:55 2015 -0400
+| | | | 
+| | | |     Fixed the typo error PR-728
+| | | |     
+| | * | commit 3e67b6058a9169858443a5acfbfdf17b19049dcc
+| | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | Date:   Wed May 13 11:02:46 2015 -0400
+| | | | 
+| | | |     Updated feature file PR-728
+| | | |     
+| | * | commit 6a6b7fa7df3e065da78fc1c647a9a048e6a66851
+| | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | Date:   Wed May 13 10:28:43 2015 -0400
+| | | | 
+| | | |     Updated feature file for PR-728
+| | | |     
+| | * | commit 7dda32c3c5a7af77806a99d6a8b47ec1fad15048
+| | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | Date:   Tue May 12 09:59:28 2015 -0400
+| | | | 
+| | | |     Added feature file for SPC user roles PR-728
+| | | |     
+* | | | commit e30dbbc59e6aead04b415b97f4528d2ef175ec74
+| | | | Author: jarao <jaya.rao@us.pwc.com>
+| | | | Date:   Wed May 20 15:36:34 2015 -0400
+| | | | 
+| | | |     Update index.html
+| | | |     
+* | | | commit addd25b51d9a2415334e79dc22ea90233566bf61
+| | | | Author: Monica Mohler <monica.mohler@us.pwc.com>
+| | | | Date:   Fri May 8 18:02:44 2015 -0400
+| | | | 
+| | | |     Sprint 15 Submission Log
+| | | |       
+* | | |   commit 9e9301029d1a8055c89b8946252693c8c000d27a
+|\ \ \ \  Merge: 5e91a24 afa4d97
+| | | | | Author: Monica Mohler <monica.mohler@us.pwc.com>
+| | | | | Date:   Fri May 8 17:55:16 2015 -0400
+| | | | | 
+| | | | |     Merge branch 'master' of https://github.com/VHAINNOVATIONS/PerceptiveReach
+| | | | |      
+| * | | | commit afa4d9710ae67383549f93dd45816b4e3af2cd5b
+| |/ / /  Merge: 4f4b6f4 8b17ef7
+| | | |   Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | |   Date:   Fri May 8 17:47:49 2015 -0400
+| | | |   
+| | | |       Merge branch 'stable'
+| | | |     
+| * | | commit 8b17ef70ec529f46733e4951101f61fff52d9631
+| |/ /  Merge: dd68558 6cfca83
+| | |   Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | |   Date:   Fri May 8 17:46:09 2015 -0400
+| | |   
+| | |       Merge branch 'test' into stable
+| | |    
+| * | commit 6cfca83301939f0e1bdfd40cf746ae5ae1336a3f
+| |/  Merge: 0a010e2 329f876
+| |   Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| |   Date:   Fri May 8 17:44:41 2015 -0400
+| |   
+| |       Merge branch 'dev' into test
+| |   
+| * commit 329f87647c6ad604e20d63e800d295e3cb22abb3
+|   Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+|   Date:   Fri May 8 17:42:21 2015 -0400
+|   
+|       Removed files that shouldn't be on the repository.
+|  
+* commit 5e91a24c941c760fcbea95bbc0f02318a29fa220
+  Merge: a6cbfa0 4f4b6f4
+  Author: Monica Mohler <monica.mohler@us.pwc.com>
+  Date:   Fri May 8 17:21:50 2015 -0400
+  
+      Merge branch 'master' of https://github.com/VHAINNOVATIONS/PerceptiveReach
