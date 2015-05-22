@@ -358,14 +358,14 @@ angular.module('ui.models')
       this.dataModelOptions.common = this.dataModelOptions.common  ||  { data: 'default value' };
      
       scope.$on('commonDataChanged', function (event, data) {
-        //console.log('Common data changed for: ' + this.widgetScope.widget.title);
+        console.log('Common data changed for: ' + this.widgetScope.widget.title);
         this.setCommon(data);
       }.bind(this));
     };
 
     CommonDataModel.prototype.setCommon = function (data) {
       if (data && (!angular.equals(this.dataModelOptions.common, data))) {
-        //console.log(this.widgetScope.widget.title + ' data model options changed');
+        console.log(this.widgetScope.widget.title + ' data model options changed');
         this.dataModelOptions.common = data;
         //this.widgetScope.$emit('widgetChanged', this.widgetScope.widget);
       }
@@ -400,7 +400,7 @@ angular.module('ui.models')
           if(this.sta3N != this.currentsta3N)
             this.getData();
         }.bind(this));
-        this.sta3N = (dataModelOptions && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : 9;
+        //this.sta3N = (dataModelOptions && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : 9;
         //this.updateScope([]);
         //this.getData();
       },

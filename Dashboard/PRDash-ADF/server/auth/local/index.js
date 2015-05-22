@@ -3,6 +3,7 @@
 var express = require('express');
 var passport = require('passport');
 var auth = require('../auth.service');
+var config = require('../../config/environment');
 
 var router = express.Router();
 
@@ -12,19 +13,26 @@ router.post('/', function(req, res, next) {
     if (error) return res.json(401, error);
     if (!user) return res.json(404, {message: 'Something went wrong, please try again.'});
 
-    auth.authenticate(req, res, user, function(error, isAuthenticated){
-    	console.log("return error: ", error);
-    	console.log("return response: ", isAuthenticated);
-    	if (!isAuthenticated)
-    		return res.json(401, {message: 'This password is not correct.'}); 
-    	else{
-    		var token = auth.signToken(user.data.UserID, user.data.UserRole);
-    		console.log("signedToken: " + token)
-    		delete user['tempPass'];
-    		res.json({token: token, user: user});
-    	}
-    }); 
-
+    if(!config.bypassAuth){  
+        auth.authenticate(req, res, user, function(error, isAuthenticated){
+        	console.log("return error: ", error);
+        	console.log("return response: ", isAuthenticated);
+        	if (!isAuthenticated)
+        		return res.json(401, {message: 'This password is not correct.'}); 
+        	else{
+        		var token = auth.signToken(user.data.UserID, user.data.UserRole);
+        		console.log("signedToken: " + token)
+        		delete user['tempPass'];
+        		res.json({token: token, user: user});
+        	}
+        }); 
+    }
+    else{
+        var token = auth.signToken(user.data.UserID, user.data.UserRole);
+        console.log("signedToken: " + token)
+        delete user['tempPass'];
+        res.json({token: token, user: user});
+    }    
     //var token = auth.signToken(user.data.UserID, user.data.UserRole);
     //console.log("signedToken: " + token)
     //res.json({token: token, user: user});

@@ -20,6 +20,8 @@ angular.module('app', [
     'ngRoute',
     'ngCookies',
     'ngSanitize',
+    'ui.util',
+    'ui.DashboardUtil',
     'ui.dashboard',
     'ui.widgets',
     'ui.models',
@@ -130,7 +132,7 @@ angular.module('app', [
         else{
           if(loggedIn){
             $rootScope.globals.isLogggedIn = true;
-            $rootScope.globals['userObj'] = $cookieStore.get('user');
+            $rootScope.globals['userObj'] = JSON.parse(localStorage.user); //$cookieStore.get('user');
             console.log("rootScoope.globals.userObj: ",$rootScope.globals.userObj);
             $('#navHeader').show();
             $('#dashboardDescription').show();

@@ -28,9 +28,11 @@ angular.module('app')
           email: user.email,
           password: user.password
         }).
-        success(function(data) {
+        success(function(data) {          
+          localStorage.setItem("user", JSON.stringify(data.user.data));
+          //delete data.user.data['DashboardData'];
           $cookieStore.put('token', data.token);
-          $cookieStore.put('user', data.user.data);
+          //$cookieStore.put('user', data.user.data);
           currentUser = data.user; //User.get();
           //$rootScope.globals.userObj = data.user;
           $rootScope.globals['userObj'] = data.user.data;
@@ -61,12 +63,13 @@ angular.module('app')
        */
       logout: function() {
         $cookieStore.remove('token');
-        $cookieStore.remove('user');
+        //$cookieStore.remove('user');
         currentUser = {};
         //$http.defaults.headers.common.Authorization = 'Basic ';
         $location.path('/login');
         $('#navHeader').hide();
         $('#dashboardDescription').hide();
+        localStorage.clear();
       },
 
       /**
@@ -164,7 +167,7 @@ angular.module('app')
        * @return {Boolean}
        */
       isAdmin: function() {
-        return currentUser.data.role === 'admin';
+        return currentUser.data.UserRole === 'ADM';
       },
 
       /**

@@ -9,8 +9,7 @@
     "angular": "~1.3",
     "angular-datatables": "~0.4.2",
     "angular-bootstrap": "~0.11.0",
-    "angular-ui-sortable": "~0.13.1",
-    
+    "angular-ui-sortable": "~0.13.1",    
     "lodash": "~2.4.1",
     "malhar-angular-table": ">=1.2.0",
     "angular-route": "~1.3",
