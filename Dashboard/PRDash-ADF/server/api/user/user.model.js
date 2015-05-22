@@ -204,7 +204,7 @@ User.prototype.validatePresenceOf = function(value) {
     //if(param.UserName){
       this.findBy(param,function(err, data) {
         ////console.log(err);
-        ////console.log("This is data: " + data[0]);
+        //console.log("This is data: ", data[0]);
         if (err) return callback(null, null);
         if (data == null) return callback(err,null);
         callback(null, new User(data[0]));
@@ -224,8 +224,9 @@ User.prototype.validatePresenceOf = function(value) {
     var query = '';
     if (key) {
         //console.log("Registering endpoint: /user/findBy/:key is " + key);
-        query = "SELECT u.UserID, u.UserName, u.FirstName, u.LastName, r.RoleCode AS UserRole, u.UserStateLocation, u.UserHomeFacility, u.UserDomain, u.isActive ";
+        query = "SELECT u.UserID, u.UserName, u.FirstName, u.LastName, u.UserStateLocation, u.UserHomeFacility, u.UserDomain, u.isActive, r.RoleCode AS UserRole, r.Individual_View_Access, r.Facility_View_Access, r.VISN_State_Reg_View_Access, r.Analytics_Reporting_Access, r.System_Admin_Access, u.UserDashboardID, d.DashboardData ";
         query += "FROM prsystem.Users u INNER JOIN prsystem.UserRole r ON u.UserRole = r.RoleID ";
+        query += "LEFT JOIN prsystem.UserDashboard d ON u.UserDashboardID = d.DashboardID ";
         query += "INNER JOIN dbo.Ref_VAMC v ON u.UserHomeFacility = v.STA3N ";
         query += "WHERE "+ Object.keys(key)[0] + " =  '" + key[Object.keys(key)[0]] + "'";
         //query += "AND UserPassword =  '" + pw + "'";
@@ -240,7 +241,7 @@ User.prototype.validatePresenceOf = function(value) {
         // ... error checks
         if (err || !query) { 
         data = "Error: Database connection failed!";
-        //console.log("Database connection failed!"); 
+        console.log("Database connection failed!", err); 
         return; 
         }
 
@@ -248,15 +249,20 @@ User.prototype.validatePresenceOf = function(value) {
         var request = new sql.Request(connection); // or: var request = connection.request();
         request.query(query, function(err, recordset) {
             // ... error checks
-            if (recordset.length < 1){/*console.log("Invalid Key or statement");*/ /*res.send("Invalid key value");*/ return callback("Invalid Key or statement",null);}
             if (err) { 
-            //console.log("Query failed!"); 
-            return; 
+              console.log("Query failed!", err); 
+              return; 
             }
+
+            if (recordset.length < 1){/*console.log("Invalid Key or statement");*/ /*res.send("Invalid key value");*/ return callback("Invalid Key or statement",null);}
+            
 
             //console.log(recordset.length);
             //res.send(recordset);
-            ////console.log(JSON.stringify(recordset));
+            //var record = recordset[0];
+            //console.log("User.findBy - ", JSON.parse(record.DashboardData));//JSON.stringify(JSON.parse(record.DashboardData)));
+            recordset[0].DashboardData = JSON.parse(recordset[0].DashboardData);
+            //console.log("User.findBy - full record", recordset);
             return callback(null,recordset);
         });
 
