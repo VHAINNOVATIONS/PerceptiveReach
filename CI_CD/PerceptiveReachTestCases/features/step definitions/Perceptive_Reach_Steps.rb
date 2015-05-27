@@ -40,6 +40,16 @@ When(/^I select "(.*?)"$/) do |arg1|
   find(:xpath, '//*[@id="sampleVet"]/tbody/tr[1]').click
 
 end
+Then(/^I click on check box "(.*?)"$/) do |arg1|
+  #pending # express the regexp above with the code you wish you had
+   check(arg1)
+   sleep(5)
+end
+
+When(/^I leave the page inactive for"(.*?)" seconds$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+  sleep(arg1)
+end
 
 When(/^I click on "(.*?)"$/) do |view|
   title = view
