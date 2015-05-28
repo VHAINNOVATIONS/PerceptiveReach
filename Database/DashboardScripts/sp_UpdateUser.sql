@@ -13,6 +13,11 @@ BEGIN
 	-- interfering with SELECT statements.
 		SET NOCOUNT ON;
 
+		DECLARE @ActiveSessionCounter INT
+
+		select @ActiveSessionCounter = ActiveSessionCounter FROM prsystem.Users
+		WHERE UserName = @UserName	
+
 		IF @Status = 'loginsuccess'
 		BEGIN
 			UPDATE prsystem.Users
@@ -28,7 +33,7 @@ BEGIN
 					LastLoginAttemptDateTime = GETDATE()
 			WHERE UserName = @UserName
 		END
-		ELSE IF @Status = 'logout'
+		ELSE IF @Status = 'logout' AND @ActiveSessionCounter > 0
 		BEGIN
 			UPDATE prsystem.Users
 			SET ActiveSessionCounter = ActiveSessionCounter - 1
