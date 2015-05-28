@@ -17,7 +17,8 @@ BEGIN
 	@UserID Int,@LastLoginAttemptDateTime Datetime,
 	@LastLoggedInDateTime DateTime, @CreatedDateTime Datetime
 
-	SELECT @UserID = UserId, 
+	SELECT @UserID = UserId,
+	@IsActive = isActive, 
 	@IsAccountLocked = IsAccountLocked,
 	@ActiveSessionCounter = ActiveSessionCounter,
 	@UserRole = UserRole,
