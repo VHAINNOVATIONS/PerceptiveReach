@@ -38,7 +38,6 @@
     "socketio-jwt": "^2.0.2"
   },
   "devDependencies": {
-    "grunt": "~0.4.2",
     "grunt-angular-templates": "~0.3.0",
     "grunt-autoprefixer": "~0.2.0",
     "grunt-concurrent": "~0.3.0",
