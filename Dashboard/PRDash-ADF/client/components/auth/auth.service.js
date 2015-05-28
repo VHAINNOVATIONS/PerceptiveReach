@@ -42,12 +42,12 @@ angular.module('app')
         }).
         error(function(err) {
           //console.log("Login error: ", err);
-          this.logout();          
+          //this.logout();          
           var properMessage = '';
-          if (err.indexOf('Max login attempts reached') != -1)
-            properMessage = 'Invalid username/password combination. Please try again.';
-          else
-            properMessage = err;
+          // if (err.indexOf('Max login attempts reached') != -1)
+          //   properMessage = 'Invalid username/password combination. Please try again.';
+          // else
+          properMessage = err;
           var response = {message: properMessage};
           deferred.reject(response);
           return cb(response);
@@ -62,14 +62,20 @@ angular.module('app')
        * @param  {Function}
        */
       logout: function() {
-        $cookieStore.remove('token');
-        //$cookieStore.remove('user');
-        currentUser = {};
-        //$http.defaults.headers.common.Authorization = 'Basic ';
-        $location.path('/login');
-        $('#navHeader').hide();
-        $('#dashboardDescription').hide();
-        localStorage.clear();
+        $http.post('/auth/logout',{username:$rootScope.globals.userObj.UserName}).
+        success(function(data) { 
+          $cookieStore.remove('token');
+          //$cookieStore.remove('user');
+          currentUser = {};
+          //$http.defaults.headers.common.Authorization = 'Basic ';
+          $location.path('/login');
+          $('#navHeader').hide();
+          $('#dashboardDescription').hide();
+          localStorage.clear();
+        }).
+        error(function(err){
+          
+        });
       },
 
       /**

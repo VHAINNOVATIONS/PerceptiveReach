@@ -205,7 +205,7 @@ User.prototype.validatePresenceOf = function(value) {
       this.findBy(param,function(err, data) {
         ////console.log(err);
         //console.log("This is data: ", data[0]);
-        if (err) return callback(null, null);
+        if (err) return callback(err, null);
         if (data == null) return callback(err,null);
         callback(null, new User(data[0]));
       });
@@ -223,14 +223,7 @@ User.prototype.validatePresenceOf = function(value) {
 
     var query = '';
     if (key) {
-        //console.log("Registering endpoint: /user/findBy/:key is " + key);
-        query = "SELECT u.UserID, u.UserName, u.FirstName, u.LastName, u.UserStateLocation, u.UserHomeFacility, u.UserDomain, u.isActive, r.RoleCode AS UserRole, r.Individual_View_Access, r.Facility_View_Access, r.VISN_State_Reg_View_Access, r.Analytics_Reporting_Access, r.System_Admin_Access, u.UserDashboardID, d.DashboardData ";
-        query += "FROM prsystem.Users u INNER JOIN prsystem.UserRole r ON u.UserRole = r.RoleID ";
-        query += "LEFT JOIN prsystem.UserDashboard d ON u.UserDashboardID = d.DashboardID ";
-        query += "INNER JOIN dbo.Ref_VAMC v ON u.UserHomeFacility = v.STA3N ";
-        query += "WHERE "+ Object.keys(key)[0] + " =  '" + key[Object.keys(key)[0]] + "'";
-        //query += "AND UserPassword =  '" + pw + "'";
-        //console.log("Query: " + query);
+        query = "exec prsystem.sp_GetUser " + "'" + key[Object.keys(key)[0]] + "'";
     } else {
         ////console.log("ERROR: User Name and Password are required."); 
         //res.send("ERROR: User Name and Password are required.");
@@ -250,13 +243,12 @@ User.prototype.validatePresenceOf = function(value) {
         request.query(query, function(err, recordset) {
             // ... error checks
             if (err) { 
-              console.log("Query failed!", err); 
-              return; 
+              //console.log("Query failed!", err); 
+              return callback(err.message,null);
             }
 
             if (recordset.length < 1){/*console.log("Invalid Key or statement");*/ /*res.send("Invalid key value");*/ return callback("Invalid Key or statement",null);}
             
-
             //console.log(recordset.length);
             //res.send(recordset);
             //var record = recordset[0];
@@ -265,7 +257,29 @@ User.prototype.validatePresenceOf = function(value) {
             //console.log("User.findBy - full record", recordset);
             return callback(null,recordset);
         });
+    });
+  }
 
+  User.Update = function(key,callback){
+    var dbc = require('../../config/db_connection/development.js');
+    var config = dbc.config;
+    var query = "exec prsystem.sp_UpdateUser @UserName=" + "'" + key[Object.keys(key)[0]] + "', @Status="+"'"+key[Object.keys(key)[1]] +"'";
+    var connection = new sql.Connection(config, function(err) {
+
+        if (err || !query) { 
+          data = "Error: Database connection failed!";
+          console.log("Database connection failed!", err); 
+          return; 
+        }
+
+        var request = new sql.Request(connection);   
+        request.query(query, function(err, recordset) {
+          if(err)
+          {
+            return callback(err.message,null);
+          }
+          return callback(null,recordset);
+        });
     });
   }
 //UserSchema.methods = {
