@@ -24,16 +24,16 @@ router.post('/', function(req, res, next) {
                         UserName: user.data.UserName,
                         Status: 'loginerror'
                      }, function(err, user) {                
-                            if (err) return res.json(401, {message: 'ERROR:Updating user record after authentication'}); 
+                            if (err) return res.json(401,'ERROR:Updating user record after authentication'); 
                     });
-                return res.json(401, {message: 'This password is not correct.'}); 
+                return res.json(401, 'This password is not correct.'); 
             }
             else{
                 User.Update({
                         UserName: user.data.UserName,
                         Status: 'loginsuccess'
                      }, function(err, user) {                
-                            if (err) return res.json(401, {message: 'ERROR:Updating user record after authentication'}); 
+                            if (err) return res.json(401,'ERROR:Updating user record after authentication'); 
                     });
                 var token = auth.signToken(user.data.UserID, user.data.UserRole);
                 console.log("signedToken: " + token)
@@ -48,7 +48,7 @@ router.post('/', function(req, res, next) {
                         UserName: user.data.UserName,
                         Status: 'loginsuccess'
                      }, function(err, user) {                
-                            if (err) return res.json(401, {message: 'ERROR:Updating user record after authentication'}); 
+                            if (err) return res.json(401,'ERROR:Updating user record after authentication'); 
                     });
         var token = auth.signToken(user.data.UserID, user.data.UserRole);
         console.log("signedToken: " + token)
