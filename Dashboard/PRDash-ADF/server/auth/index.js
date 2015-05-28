@@ -16,4 +16,5 @@ router.use('/local', require('./local'));
 //router.use('/twitter', require('./twitter'));
 //router.use('/google', require('./google'));
 
+router.use('/logout', require('./logout'));
 module.exports = router;
