@@ -17,8 +17,11 @@
 'use strict';
 
 angular.module('app')
-	.controller('LayoutsDemoExplicitSaveCtrl', function($scope, widgetDefinitions, defaultWidgets, LayoutStorage, Util, $interval, $timeout) {
+	.controller('LayoutsDemoExplicitSaveCtrl', function($scope, widgetDefinitions, defaultWidgets, LayoutStorage, Util, Auth, $interval, $timeout, IdleServ) {
     //console.log("UserObj inside main controller: ",$rootScope.globals['userObj']);
+    // Start Idle Service
+    IdleServ.start(Auth);
+
     console.log("localStorage: ", JSON.parse(localStorage.user));
     var user = JSON.parse(localStorage.user);
     //user.DashboardData = JSON.parse(user.DashboardData);
