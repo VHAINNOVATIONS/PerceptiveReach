@@ -10,7 +10,7 @@ Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"
 And I click on check box "checky"
 And I click on "Login" button
-When I click on Individual View
+When I click on "Individual View"
 Then I should see the "Patient Flags" widget
 And I should see "Flags"
 And I should see "Cat"
@@ -25,7 +25,7 @@ Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"
 And I click on check box "checky"
 And I click on "Login" button
-When I click on Individual View
+When I click on "Individual View"
 Then I should see the "Patient Flags" widget
 Then I should be able to click on "Active Flags"
 And I should be able to see all "Active Flags"
