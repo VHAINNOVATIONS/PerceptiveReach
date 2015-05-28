@@ -127,7 +127,11 @@ Then(/^I should see my default widgets$/) do
 end
 
 And(/^I add the "(.*?)" widget$/) do |widgetname|
-  find_button(widgetname).click 
+  #find_button(widgetname).click
+ title=widgetname
+  page.find(:xpath, "//span[contains(text(),'#{title}')]").click  
+  
+  
 end
 
 And(/^I change the title to "(.*?)" on the pop\-up$/) do |widgetname|
