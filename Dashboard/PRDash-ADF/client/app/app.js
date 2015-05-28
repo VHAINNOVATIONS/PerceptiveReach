@@ -20,6 +20,8 @@ angular.module('app', [
     'ngRoute',
     'ngCookies',
     'ngSanitize',
+    'ui.bootstrap',
+    'ui.Idle',
     'ui.util',
     'ui.DashboardUtil',
     'ui.dashboard',
@@ -33,6 +35,7 @@ angular.module('app', [
     /*
     $routeProvider
       .otherwise('/');*/
+
     var interceptor = ['$rootScope', '$q', '$location', function (scope, $q, $location) {
  
         function success(response) {
@@ -107,8 +110,10 @@ angular.module('app', [
     };
   })
 
-  .run(function ($rootScope, $location, $cookieStore, $http, Auth) {
+  .run(function ($rootScope, $location, $cookieStore, $http, Auth, Idle) {
     // keep user logged in after page refresh
+    Idle.watch();
+    //IdleServ.start();
     
     $rootScope.globals = $cookieStore.get('globals') || {};
     if ($rootScope.globals.currentUser) {
