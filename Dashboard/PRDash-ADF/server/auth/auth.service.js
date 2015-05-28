@@ -82,10 +82,11 @@ function authenticate(req, res, user, callback) {
   var cb = callback;
   var nodeSSPIObj = new nodeSSPI({
     offerSSPI: false,
-    maxLoginAttemptsPerConnection: 1,
-    //offerBasic: true,
+    maxLoginAttemptsPerConnection: 5,
+    offerBasic: false,
     retrieveGroups: true,
-    domain: user.data.UserDomain
+    domain: user.data.UserDomain,
+    authoritative:false
   });
   var username = user.data.UserName;
   var password = user.tempPass;
@@ -101,7 +102,7 @@ function authenticate(req, res, user, callback) {
       console.log("After Request Output: ",req);
       if (err){
         console.log("error: ",err);
-        res.json(401, {message: 'This password is not correct.'});
+        //res.json(401, {message: 'This password is not correct.'});
         return cb(err, false);
       }
       var userObj = req.connection.user;
