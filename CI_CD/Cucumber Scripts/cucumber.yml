@@ -1,3 +1,0 @@
-default:  --no-source --format pretty --tags ~@not_ready
-
-Facility:  --no-source --format pretty --tags ~@not_ready

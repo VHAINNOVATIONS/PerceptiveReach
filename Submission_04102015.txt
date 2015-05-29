@@ -1,0 +1,275 @@
+* commit ef86412b1c5c14278ebfff3b41c02466fbe9c9ec (HEAD, origin/master, origin/HEAD, master)
+| Author: pbradley25 <paul.bradley@us.pwc.com>
+| Date:   Fri Apr 10 18:18:42 2015 -0400
+| 
+|     Design Spec updates
+|    
+*   commit 88ce0d67cf67e29073eabf996c4aaab0e3164e83
+|\  Merge: af89656 10a7c73
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Fri Apr 10 15:52:14 2015 -0400
+| | 
+| |     Merge branch 'stable'
+| |   
+| * commit 10a7c73bc9eae25a893c95cd71798cfe05130bb2 (origin/stable)
+| | Merge: 6f8e32c 746474a
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Fri Apr 10 15:51:15 2015 -0400
+| | 
+| |     Merge branch 'test' into stable
+| |     
+| *   commit 746474a4c109cca3e493c75e8919123d5caf328a (origin/test)
+| |\  Merge: 073390a c5766d0
+| | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | Date:   Thu Apr 9 10:29:48 2015 -0400
+| | | 
+| | |     Merge commit 'c5766d068ec6b766e874719817df84ae4f3199b0' into HEAD
+| | |    
+| | * commit c5766d068ec6b766e874719817df84ae4f3199b0 (origin/dev)
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Thu Apr 9 10:27:40 2015 -0400
+| | | 
+| | |     PR-1705 Quick updates to default widgets ordering
+| | |      
+| * |   commit 073390aa95b324015073338da98a9cec75e4aa47
+| |\ \  Merge: bac93ee fd42d9e
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Wed Apr 8 16:46:37 2015 -0400
+| | |   
+| | |       Merge commit 'fd42d9e0aed335adad85b88546ed1329c9bc4b00' into HEAD
+| | |    
+| | * commit fd42d9e0aed335adad85b88546ed1329c9bc4b00 (origin/db_refactor)
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Wed Apr 8 16:44:54 2015 -0400
+| | | 
+| | |     PR-1703 5h Was able to hook data into the Emergency Contact, Contact, and Appointment Widgets which enables these three widgets to respond to the Veteran selected in the Veteran Roster widget.  For the Appointment widget there are only two Veterans that have data - Last 4 SSN is 7706 and 9041.
+| | |    
+| * | commit bac93ee1c0ac22d497beafb752b7b638135b37cb
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Apr 8 16:16:36 2015 -0400
+| | | 
+| | |     PR-1756 updated step definitions
+| | |     
+| | |     PR-1756 updated step definitions with sql code to query for the vamc and
+| | |     check the assoc ssn
+| | |      
+| * |   commit 0559471a0d34e367a4d5934a06f478e9024e299e
+| |\ \  Merge: 2a94079 2c01506
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Mon Apr 6 22:28:38 2015 -0400
+| | |   
+| | |       Merge commit '2c015062e327f05918f522d305f126bb02b45d9a' into HEAD
+| | |      
+| | *   commit 2c015062e327f05918f522d305f126bb02b45d9a
+| | |\  Merge: 32ee462 c168760
+| | | | Author: unknown <william.balshem@us.pwc.com>
+| | | | Date:   Mon Apr 6 22:26:33 2015 -0400
+| | | | 
+| | | |     Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | | |     
+| | * | commit 32ee462a1fa6f0a2e94a4e6102d50e4b23b6e923
+| | | | Author: unknown <william.balshem@us.pwc.com>
+| | | | Date:   Mon Apr 6 22:26:03 2015 -0400
+| | | | 
+| | | |     PR-1753 #Time 4H Script to create Patient Diagnosis table and test data.
+| | | |       
+| * | |   commit 2a94079697f2a0845730ab72e02c8ffdca0cbdd7
+| |\ \ \  Merge: ab69f0a c168760
+| | | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |/|   Date:   Mon Apr 6 00:46:46 2015 -0400
+| | | |   
+| | | |       Merge commit 'c1687601a1fd038e2d4e0ff356b4a7b5b2e42249' into HEAD
+| | | |     
+| | * | commit c1687601a1fd038e2d4e0ff356b4a7b5b2e42249
+| | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | |   Date:   Mon Apr 6 00:41:32 2015 -0400
+| | |   
+| | |       PR-1700 PR-1701 PR-1702 Developed all of the code for the Diagnoses Widget.  The API is stubbed in lieu of real data.
+| | |    
+| * | commit ab69f0a61cafe429b62d6c58eab120cc267992ab
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Fri Apr 3 12:27:55 2015 -0400
+| | | 
+| | |     added test case ids
+| | |     
+| | |     added test cases ids to each feature and updated pr-349 to the correct
+| | |     story
+| | |    
+| * | commit 80eeb86e2fb38cf36941e408e8802b22f4c8fd9f
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Fri Apr 3 11:15:47 2015 -0400
+| | | 
+| | |     Added feature file for Patient Flags PR-1406
+| | |    
+| * | commit c1d173c195e48f777e3d97d6f6bcd725f8296454
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Fri Apr 3 10:10:01 2015 -0400
+| | | 
+| | |     updated folders and backed up old folders
+| | |     
+| | |     updated folders and backed up old folders
+| | |    
+| * | commit 886b9574815d5f2a9ae23541e6d4a78eeebbb160
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Fri Apr 3 10:09:00 2015 -0400
+| | | 
+| | |     restructure github folder structure and remove duplicates
+| | |     
+| | |     restructure github folder structure and remove duplicates
+| | |    
+| * | commit de3064c6f2adee8a75a4f1d7c397f80f016d6360
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Thu Apr 2 16:53:32 2015 -0400
+| | | 
+| | |     Updated  syntax of PR- 1380 step definitions
+| | |    
+| * | commit ad8ef9ebc2063b384d492cae10164f7b503b44ae
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Thu Apr 2 10:09:55 2015 -0400
+| | | 
+| | |     updated control directory for midnight job
+| | |     
+| | |     updated control directory for midnight job
+| | |    
+| * | commit b37a7c0a0b06d6ade88b1ecf6f0a58ed5b147fac
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Thu Apr 2 10:06:11 2015 -0400
+| | | 
+| | |     removed duplicated test feature files
+| | |     
+| | |     removed duplicated test feature files
+| | |      
+| * |   commit 5f2a3eea2558a14ebd63ff1829f6f454423c6c94
+| |\ \  Merge: e173e84 593bffc
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Wed Apr 1 17:57:44 2015 -0400
+| | |   
+| | |       Merge commit '593bffc6688befb8f4496fce8dc3bbb436a7f5fd' into HEAD
+| | |    
+| * | commit e173e8486214cd88381f931b60cfe8dc1de6942a
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Wed Apr 1 15:54:05 2015 -0400
+| | | 
+| | |     Updated steps for PR-1682
+| | |    
+| * | commit 21fad9fe0a411c828d63107db7985f117cfbdfcf
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Wed Apr 1 13:34:21 2015 -0400
+| | | 
+| | |     Updated dashboard linkage feature file with addtional steps for PR-1682
+| | |      
+| * |   commit 7c66b7d50ce64a4d3d9a5f5b127f08d92c439a97
+| |\ \  Merge: 32e4573 56cb699
+| | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | Date:   Tue Mar 31 21:47:42 2015 -0400
+| | | | 
+| | | |     Merge commit '56cb6997d921a7b3551f5dfb2516a9e9ab22c318' into HEAD
+| | | |     
+| * | | commit 32e4573b427784ddf851caff41e23c1ccf85437e
+| | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | Date:   Tue Mar 31 12:49:46 2015 -0400
+| | | | 
+| | | |     Updates feature file step definition's for Veteran Diagnoses PR-1683
+| | | |       
+| * | |   commit a2b8b563b2361e3a9fa9bb324be8a26784f70e38
+| |\ \ \  Merge: efe30bb 59ce6cc
+| | | | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | | | Date:   Mon Mar 30 21:31:54 2015 -0400
+| | | | | 
+| | | | |     Merge commit '59ce6cc343a34f1fa85ad75c7bb5cfe237013060' into HEAD
+| | | | |      
+| * | | | commit efe30bb19872fbdd60d92950ba1f54360d8d3e8f
+| | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | Date:   Mon Mar 30 12:59:12 2015 -0400
+| | | | | 
+| | | | |     updated env file to deal with some error messages
+| | | | |     
+| | | | |     updated env file to deal with some error messages
+| | | | |      
+| * | | | commit a6e69de07eff18999ee33234b2fd9150cff07f46
+|  / / /  Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | |   Date:   Mon Mar 30 11:27:10 2015 -0400
+| | | |   
+| | | |       Enhanced medication feature file with new steps and added step in step definitions PR-1691
+| | | |     
+* | | | commit af8965608e513677ab8429a0a942eefff1c9f43d
+ / / /  Author: unknown <pbradley001@PBRADLEY00110.us.nam.ad.pwcinternal.com>
+| | |   Date:   Fri Mar 27 22:12:41 2015 -0400
+| | |   
+| | |       Sprint 12 submission
+| | |      
+| | | * commit 7a1ac8d050c8e8b69d14941a5e7683409e211020 (origin/signon)
+| | |/  Author: unknown <afequiere004@i558dev.innovations.va.gov>
+| | |   Date:   Wed Apr 8 15:06:58 2015 -0400
+| | |   
+| | |       PR-1707 #comment created modules to support authentication setup PR-1708 #comment created code to support login implementation
+| | |      
+| | | * commit 94e8925d43547f95501b0d6ffa10a78aeb7556ba (origin/riskTimeLine)
+| | | | Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+| | | | Date:   Mon Apr 6 11:19:50 2015 -0400
+| | | | 
+| | | |     Add links for timeline
+| | | |     
+| | | * commit 130351189e66280438a08b55ab0e08ed1a9e3ce2
+| | | | Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+| | | | Date:   Mon Apr 6 07:07:19 2015 -0400
+| | | | 
+| | | |     risktimeline:
+| | | |      - daterange picker
+| | | |      - refresh
+| | | |     
+| | | * commit cdb0f6c6ebf0a497917fe128a62675555e43a007
+| | | | Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+| | | | Date:   Mon Apr 6 07:05:12 2015 -0400
+| | | | 
+| | | |     push working perceptive reach for insurance
+| | | |       
+| | | *   commit f137f44e2f1e6b09c2e5a5c738c08b3bca7553e5
+| | | |\  Merge: 8f00aac 593bffc
+| | | |/  Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+| | |/|   Date:   Sun Apr 5 00:52:19 2015 -0400
+| | | |   
+| | | |       Merge branch 'dev' into riskTimeLine
+| | | |       
+| | | |       Conflicts: allResolved
+| | | |       	Dashboard/PRDash-ADF/client/app/examples/controllers/demo.js
+| | | |       	Dashboard/PRDash-ADF/client/components/widget/widgets/widget_template.js
+| | | |       	Dashboard/PRDash-ADF/client/dist/perceptive-reach-widgets.js
+| | | |       	Dashboard/PRDash-ADF/client/index.html
+| | | |     
+| | * | commit 593bffc6688befb8f4496fce8dc3bbb436a7f5fd
+| |/ /  Author: unknown <william.balshem@us.pwc.com>
+| | |   Date:   Wed Apr 1 17:55:36 2015 -0400
+| | |   
+| | |       PR-1745 #Time 2h  Created scripts to create Appointment data, Emergency Contact data & Patient Medication data
+| | |    
+| * | commit 56cb6997d921a7b3551f5dfb2516a9e9ab22c318
+|/ /  Author: unknown <william.balshem@us.pwc.com>
+| |   Date:   Tue Mar 31 21:45:44 2015 -0400
+| |   
+| |       PR-1745 #Time 5h Created scripts to generate Patient and PatientStation data
+| |   
+* | commit 59ce6cc343a34f1fa85ad75c7bb5cfe237013060
+| | Merge: 512acf9 d746a0b
+| | Author: unknown <william.balshem@us.pwc.com>
+| | Date:   Mon Mar 30 21:29:56 2015 -0400
+| | 
+| |     Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| |   
+* | commit 512acf95a707dd4efaac1fb51ce46b76212a8866
+ /  Author: unknown <william.balshem@us.pwc.com>
+|   Date:   Mon Mar 30 21:29:13 2015 -0400
+|   
+|       PR-1746 #time 6H Created and implemented scripts to populate reference tables.
+|  
+* commit 8f00aacff4d9a6514de21e8947f86732f4359b50
+| Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+| Date:   Sat Apr 4 23:56:35 2015 -0400
+| 
+|     3 data series
+|  
+* commit b80bfdc3a52099ec6f4771c1b7af9fcc5b8ecb98
+  Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+  Date:   Sat Apr 4 23:01:50 2015 -0400
+  
+      Have data points show up.
