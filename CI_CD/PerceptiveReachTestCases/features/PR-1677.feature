@@ -10,4 +10,4 @@ Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011q1123"
 And I click on check box "checky"
 And I click on "Login" button
-Then I should see "Invalid username/password combination. Please try again."
+Then I should see "This password is not correct."
