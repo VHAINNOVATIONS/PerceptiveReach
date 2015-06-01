@@ -7,6 +7,6 @@ When I put in "email" field as "vaphsfequia"
 And I put in "password" field as "FeAn#011819"
 And I click on check box "checky"
 And I click on "Login" button
-And I should see "National View"
-When I leave the page inactive for "900" seconds
-Then I should see "Inactive logout message"
+And I should see "Individual View"
+When I leave the page inactive for 900 seconds
+Then I should see "Account is disabled due to inactivity"
