@@ -3110,7 +3110,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
     "<div class=\"appointment\">\r" +
     "\n" +
-    "\t<table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\t<table id=\"tblAppointment\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
     "        <thead>\r" +
     "\n" +
@@ -3234,7 +3234,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/diagnoses/diagnoses.html",
     "<div class=\"diagnoses\">\r" +
     "\n" +
-    "\t<table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\t<table id=\"tblDiagnoses\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
     "        <thead>\r" +
     "\n" +
@@ -3330,11 +3330,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"btn-group\" style=\"float: right;\">\r" +
     "\n" +
-    "            <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"changeMode('MINUTES')\"\r" +
+    "            <button name=\"btnChangeMin\" type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"changeMode('MINUTES')\"\r" +
     "\n" +
     "                    ng-class=\"{active: mode === 'MINUTES'}\">Minutes</button>\r" +
     "\n" +
-    "            <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"changeMode('HOURS')\"\r" +
+    "            <button name=\"btnChangeMode\" type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"changeMode('HOURS')\"\r" +
     "\n" +
     "                    ng-class=\"{active: mode === 'HOURS'}\">Hours</button>\r" +
     "\n" +
@@ -3350,7 +3350,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
     "<div class=\"medication\">\r" +
     "\n" +
-    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "    <table id=\"tblMedication\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
     "        <thead>\r" +
     "\n" +
@@ -3470,7 +3470,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
     "<div class=\"patient-flags\">\r" +
     "\n" +
-    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "    <table id=\"tblPatientFlags\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
     "        <thead>\r" +
     "\n" +
@@ -3506,7 +3506,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t<!--<div id=\"spinner\" style=\"height: 100px;\"> </div>-->\r" +
     "\n" +
-    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\" id=\"sampleVet\" width=\"100%\">\r" +
+    "    <table id=\"tblPatient\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\" id=\"sampleVet\" width=\"100%\">\r" +
     "\n" +
     "    \t<thead>\r" +
     "\n" +
@@ -3534,6 +3534,8 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <td>\r" +
     "\n" +
+    "\t\t\t<label alt=\"Patient ID Status\" for=\"vet_{{patient.ReachID}}\">Status</label>\r" +
+    "\n" +
     "            \t<select class='form-control' style='width: 180px;' id=\"vet_{{patient.ReachID}}\">\r" +
     "\n" +
     "            \t\t<option value=''></option>\r" +
@@ -3558,7 +3560,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/patientTable/patientTableWidgetSettingsTemplate.html",
     "<div class=\"modal-header\">\r" +
     "\n" +
-    "    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
+    "    <button name=\"btnClose\" type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
     "\n" +
     "  <h3>Widget Options <small>{{widget.title}}</small></h3>\r" +
     "\n" +
@@ -3572,15 +3574,15 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"form-group\">\r" +
     "\n" +
-    "            <label for=\"widgetTitle\" class=\"col-sm-2 control-label\">Title</label>\r" +
+    "            <label id=\"lblTitle\" alt=\"Title\" for=\"widgetTitle\" class=\"col-sm-2 control-label\">Title</label>\r" +
     "\n" +
     "            <div class=\"col-sm-10\">\r" +
     "\n" +
-    "                <input type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
+    "                <input alt=\"Result Title\" type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
-    "            <label for=\"widgetVAMC\" class=\"col-sm-2 control-label\">VAMC</label>\r" +
+    "            <label id=\"lblVAMC\" alt=\"VAMC\" for=\"widgetVAMC\" class=\"col-sm-2 control-label\">VAMC</label>\r" +
     "\n" +
     "            <div class=\"col-sm-10\">\r" +
     "\n" +
@@ -3608,9 +3610,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "<div class=\"modal-footer\">\r" +
     "\n" +
-    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
+    "    <button name=\"btnCancel\" type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
     "\n" +
-    "    <button type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
+    "    <button name=\"btnOK\" type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
     "\n" +
     "</div>"
   );
@@ -3671,13 +3673,13 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                          class=\"form-control\" style=\"width: 200px; display: inline;\"></select>\r" +
     "\n" +
-    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"prevValue();\">\r" +
+    "    <button name=\"btnPreviousValue\" type=\"button\" class=\"btn btn-default\" ng-click=\"prevValue();\">\r" +
     "\n" +
     "        <span class=\"glyphicon glyphicon-chevron-left\"></span>\r" +
     "\n" +
     "    </button>\r" +
     "\n" +
-    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"nextValue();\">\r" +
+    "    <button name=\"btnNextValue\" type=\"button\" class=\"btn btn-default\" ng-click=\"nextValue();\">\r" +
     "\n" +
     "        <span class=\"glyphicon glyphicon-chevron-right\"></span>\r" +
     "\n" +
