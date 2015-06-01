@@ -49,6 +49,7 @@ end
 When(/^I leave the page inactive for (\d+) seconds$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
   sleep(900)
+  end
 
 When(/^I click on "(.*?)"$/) do |view|
   title = view
