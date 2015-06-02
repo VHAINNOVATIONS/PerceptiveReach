@@ -369,6 +369,9 @@ a.list-group-item-success.active:focus {
   border-bottom-color: #e6f3f7;
 }
 
+.label-primary {
+  background-color: #1034A6;
+}
 
 
 
