@@ -30,7 +30,7 @@ var all = {
   },
 
   // Should we bypass user Authentication in Active Directory to develop locally?
-  bypassAuth: false,
+  bypassAuth: true,
 
   // List of user roles
   userRoles: ['guest', 'user', 'admin'],
