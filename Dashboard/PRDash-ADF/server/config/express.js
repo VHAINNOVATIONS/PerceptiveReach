@@ -27,6 +27,35 @@ module.exports = function(app) {
   app.use(methodOverride());
   app.use(cookieParser());
 
+  app.use(function(req,res,next){
+    if(req.headers.prsessionkey){
+      var userName = req.headers.prsessionkey.split('::')[0];
+      var timeStamp = req.headers.prsessionkey.split('::')[1];
+      if(config.prSessionStore[userName] && config.prSessionStore[userName][timeStamp])
+      {
+        var lastPing = config.prSessionStore[userName][timeStamp];
+        var timeDiff = ((new Date()).getTime() - lastPing)/1000;
+         if(timeDiff > 30)
+        {
+          return res.json(401, 'Session Expired.');
+        }
+        else
+        {
+          next();
+        }
+      }
+      else
+      {
+        return res.json(401, 'Session Expired.');
+      }
+    }
+    else  
+    {
+      next();
+    }
+    
+  });
+
   //app.use(function (req, res, next) {
     /*var nodeSSPI = require('node-sspi');
     var nodeSSPIObj = new nodeSSPI({

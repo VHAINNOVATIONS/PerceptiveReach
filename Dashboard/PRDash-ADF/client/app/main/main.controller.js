@@ -21,9 +21,8 @@ angular.module('app')
     //console.log("UserObj inside main controller: ",$rootScope.globals['userObj']);
     // Start Idle Service
     IdleServ.start(Auth);
-
-    console.log("localStorage: ", JSON.parse(localStorage.user));
-    var user = JSON.parse(localStorage.user);
+    console.log("sessionStorage: ", JSON.parse(sessionStorage.user));
+    var user = JSON.parse(sessionStorage.user);
     //user.DashboardData = JSON.parse(user.DashboardData);
     console.log("output of user object: ", user);
     // initialize LayoutOptions depending on role or dashboard data
@@ -33,8 +32,8 @@ angular.module('app')
       layouts = user.DashboardData.layouts;
       console.log("output layouts: ", layouts);
       // populate local storage
-      localStorage.setItem(user.UserDashboardID, JSON.stringify(user.DashboardData));
-      console.log("get from LocalStorage: ",JSON.parse(localStorage.getItem(user.UserDashboardID)));
+      sessionStorage.setItem(user.UserDashboardID, JSON.stringify(user.DashboardData));
+      console.log("get from SessionStorage: ",JSON.parse(sessionStorage.getItem(user.UserDashboardID)));
     }
     else{
       var role = user.UserRole;
@@ -53,7 +52,7 @@ angular.module('app')
 
     $scope.layoutOptions = {
       storageId: (user.DashboardData) ? user.UserDashboardID : user.UserName + '-dashboard-' + user.UserRole,
-      storage: localStorage,
+      storage: sessionStorage,
       storageHash: (user.DashboardData) ? user.DashboardData.storageHash : Util.makeStorageID(),
       widgetDefinitions: widgetDefinitions,
       defaultWidgets: defaultWidgets,
