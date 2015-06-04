@@ -216,14 +216,21 @@ User.prototype.validatePresenceOf = function(value) {
     var data = [];
 
     var dbc = require('../../config/db_connection/development.js');
+    var appConfig = require('../../config/environment');
     var config = dbc.config;
-
+    var sessionStore = appConfig.prSessionStore;
+    var userSessions = sessionStore[key[Object.keys(key)[0]]];
+    var sessioncount = 0;
+    if(userSessions)
+    {
+      sessioncount = Object.keys(userSessions).length;
+    }
     //var un = req.param("UserName");
     //var pw = req.param("Password");
 
     var query = '';
     if (key) {
-        query = "exec prsystem.sp_GetUser " + "'" + key[Object.keys(key)[0]] + "'";
+        query = "exec prsystem.sp_GetUser @UserName=" + "'" + key[Object.keys(key)[0]] + "', @ExistingSessionCount=" + sessioncount;
     } else {
         ////console.log("ERROR: User Name and Password are required."); 
         //res.send("ERROR: User Name and Password are required.");
