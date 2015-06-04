@@ -36,9 +36,18 @@ router.post('/', function(req, res, next) {
                             if (err) return res.json(401,'ERROR:Updating user record after authentication'); 
                     });
                 var token = auth.signToken(user.data.UserID, user.data.UserRole);
-                console.log("signedToken: " + token)
+                console.log("signedToken: " + token);
                 delete user['tempPass'];
-                res.json({token: token, user: user});
+                var timeStamp = (new Date().getTime());
+                var lowercasename = user.data.UserName.toLowerCase();
+                var sessionKey = lowercasename+'::'+timeStamp;
+                if(!config.prSessionStore[lowercasename])
+                {
+                 config.prSessionStore[lowercasename] = {};
+                }
+                config.prSessionStore[lowercasename][timeStamp] = (new Date()).getTime();
+                //config.prSessionStore[sessionKey] = (new Date()).getTime();
+                res.json({token: token, user: user, prSessionKey:sessionKey });
             }
         }); 
     }
@@ -53,7 +62,16 @@ router.post('/', function(req, res, next) {
         var token = auth.signToken(user.data.UserID, user.data.UserRole);
         console.log("signedToken: " + token)
         delete user['tempPass'];
-        res.json({token: token, user: user});
+        var timeStamp = (new Date().getTime());
+        var lowercasename = user.data.UserName.toLowerCase();
+        var sessionKey = lowercasename+'::'+timeStamp;
+        if(!config.prSessionStore[lowercasename])
+        {
+         config.prSessionStore[lowercasename] = {};
+        }
+        config.prSessionStore[lowercasename][timeStamp] = (new Date()).getTime();
+        //config.prSessionStore[sessionKey] = (new Date()).getTime();
+        res.json({token: token, user: user, prSessionKey:sessionKey });
     }    
   })(req, res, next)
     

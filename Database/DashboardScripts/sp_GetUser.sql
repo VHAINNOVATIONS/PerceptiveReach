@@ -5,7 +5,8 @@ IF NOT EXISTS(SELECT TOP 1 1 FROM INFORMATION_SCHEMA.ROUTINES WHERE SPECIFIC_NAM
         EXEC('CREATE PROCEDURE [prsystem].[sp_GetUser] as select 1 as one')
 GO
 ALTER PROCEDURE [prsystem].[sp_GetUser]
-	@UserName nvarchar(50)
+	@UserName nvarchar(50),
+	@ExistingSessionCount int = null
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -30,6 +31,16 @@ BEGIN
 
 	IF @UserID is not null
 	BEGIN
+		
+		--Sync up session counts
+		IF(@ActiveSessionCounter > ISNULL(@ExistingSessionCount,0))
+		BEGIN
+			UPDATE prsystem.Users
+			SET ActiveSessionCounter = ISNULL(@ExistingSessionCount,0)
+			WHERE UserName = @UserName
+
+			SET @ActiveSessionCounter = ISNULL(@ExistingSessionCount,0)
+		END
 
 		IF @IsAccountLocked = 1 AND DATEDIFF(HOUR, @LastLoginAttemptDateTime, GetDate()) > 24 
 		BEGIN
@@ -50,7 +61,7 @@ BEGIN
 		END
 		ELSE IF (@ActiveSessionCounter >= 3 AND @UserRole = 5) OR (@ActiveSessionCounter >= 1 AND @UserRole <> 5)
 		BEGIN
-			RAISERROR ('Max number of sessions reached, Please log out from your active sessions.',16,1)
+			RAISERROR ('Max number of sessions reached, Please log out from your active sessions or wait for 30 secs and try again.',16,1)
 			RETURN
 		End
 
