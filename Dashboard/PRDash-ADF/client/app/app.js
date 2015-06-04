@@ -60,24 +60,23 @@ angular.module('app', [
             // otherwise
             return $q.reject(response);
         }
- 
         return function (promise) {
             return promise.then(success, error);
         }
- 
     }];
     $locationProvider.html5Mode(true);
     //$httpProvider.interceptors.push(interceptor); 
     $httpProvider.interceptors.push('authInterceptor');    
   })
 
-  .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
+  .factory('authInterceptor', function ($rootScope, $q, $location) {
     return {
       // Add authorization token to headers
       request: function (config) {
         config.headers = config.headers || {};
-        if ($cookieStore.get('token')) {
-          config.headers.Authorization = 'Bearer ' + $cookieStore.get('token');
+        if (sessionStorage.getItem('token')) {
+          config.headers.Authorization = 'Bearer ' + sessionStorage.getItem('token');
+          config.headers.prSessionKey = sessionStorage.getItem('prSessionKey');
         }
         return config;
       },
@@ -97,25 +96,26 @@ angular.module('app', [
           //console.log("Response Error 401", response);
           $location.path('/login');
           // remove any stale tokens
-          $cookieStore.remove('token');
+          sessionStorage.removeItem('token');
         }
         if(response.status === 403) {
           //console.log("Response Error 403", response);
           $location.path('/login');
           // remove any stale tokens
-          $cookieStore.remove('token');
+          sessionStorage.removeItem('token');
         }
         return $q.reject(response);
       }
     };
   })
 
-  .run(function ($rootScope, $location, $cookieStore, $http, Auth, Idle) {
+  .run(function ($rootScope, $location, $http, Auth, Idle) {
     // keep user logged in after page refresh
     Idle.watch();
     //IdleServ.start();
+    Auth.RegenerateSessionPing();
     
-    $rootScope.globals = $cookieStore.get('globals') || {};
+    $rootScope.globals = sessionStorage.getItem('globals') || {};
     if ($rootScope.globals.currentUser) {
         $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
     }
@@ -137,7 +137,7 @@ angular.module('app', [
         else{
           if(loggedIn){
             $rootScope.globals.isLogggedIn = true;
-            $rootScope.globals['userObj'] = JSON.parse(localStorage.user); //$cookieStore.get('user');
+            $rootScope.globals['userObj'] = JSON.parse(sessionStorage.user);
             console.log("rootScoope.globals.userObj: ",$rootScope.globals.userObj);
             $('#navHeader').show();
             $('#dashboardDescription').show();
