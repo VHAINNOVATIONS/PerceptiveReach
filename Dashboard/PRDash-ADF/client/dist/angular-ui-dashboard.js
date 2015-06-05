@@ -410,7 +410,7 @@ angular.module('ui.dashboard')
 
             if (current && current.dashboard.unsavedChangeCount) {
               var modalInstance = $modal.open({
-                templateUrl: 'template/SaveChangesModal.html',
+                templateUrl: 'client/components/adf/directives/dashboardLayouts/SaveChangesModal.html',
                 resolve: {
                   layout: function() {
                     return layout;
