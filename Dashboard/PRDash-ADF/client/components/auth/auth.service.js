@@ -76,10 +76,11 @@ angular.module('app')
           currentUser = {};
           clearInterval(sessionPingInterval);
           //$http.defaults.headers.common.Authorization = 'Basic ';
-          $location.path('/login');
           $('#navHeader').hide();
           $('#dashboardDescription').hide();
           sessionStorage.clear();
+          $location.path('/login');
+          
         }).
         error(function(err){
           
