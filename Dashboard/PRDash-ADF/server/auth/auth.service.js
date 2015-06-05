@@ -9,6 +9,7 @@ var compose = require('composable-middleware');
 var User = require('../api/user/user.model');
 var validateJwt = expressJwt({ secret: config.secrets.session });
 var nodeSSPI = require('node-sspi');
+var forge = require('node-forge');
 
 /**
  * Attaches the user object to the request if authenticated
@@ -88,8 +89,18 @@ function authenticate(req, res, user, callback) {
     domain: user.data.UserDomain,
     authoritative:false
   });
+  
+  //Decrypt password
+  var decipher = forge.cipher.createDecipher('AES-CBC', forge.util.decode64(config.encryptionObj.key));
+  decipher.start({iv: forge.util.decode64(config.encryptionObj.iv)});
+  decipher.update(forge.util.createBuffer(forge.util.decode64(user.tempPass)));
+  decipher.finish();
+  var password = decipher.output.toString();
+  //console.log("password before decrypt: ", user.tempPass);
+  //console.log("password after decrypt: ", password);
+
   var username = user.data.UserName;
-  var password = user.tempPass;
+  //var password = user.tempPass;
   var authdata = new Buffer(username + ":" + password).toString('base64');
   console.log("AuthData Output: ",authdata);
   req.headers["authorization"] = "Basic " + authdata;
