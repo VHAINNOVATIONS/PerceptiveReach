@@ -30,9 +30,10 @@ angular.module('app')
             }
         };
     }]);*/
-  .controller('LoginCtrl', function ($scope, Auth, $location, $window) {
+  .controller('LoginCtrl', function ($scope, Auth, $location, $window, CipherService) {
     $scope.user = {};
     $scope.errors = {};
+    CipherService.getEncryptionObj();
 
     //Add listener to for checkbox
     $('.btn-login').attr("disabled","disabled");
@@ -53,7 +54,7 @@ angular.module('app')
       if(form.$valid) {
         Auth.login({
           email: $scope.user.email,
-          password: $scope.user.password
+          password: CipherService.encrypt($scope.user.password).cipher_text
         })
         .then( function() {
           // Logged in, redirect to home
