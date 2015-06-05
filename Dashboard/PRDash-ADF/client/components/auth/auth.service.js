@@ -40,7 +40,7 @@ angular.module('app')
           $rootScope.globals['userObj'] = data.user.data;
           console.log("Returned Logged In User: ",currentUser);
           deferred.resolve(data);
-          var socket = io.connect('http://localhost:9000');
+          var socket = io.connect(window.location.host);
           sessionPingInterval = setInterval(function() {
             socket.emit('sessionKeyUpsert', { sessionkey: data.prSessionKey });
           }, 10000);
