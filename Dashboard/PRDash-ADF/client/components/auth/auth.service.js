@@ -196,7 +196,7 @@ angular.module('app')
       {
         if(sessionStorage.getItem('prSessionKey'))
         {
-          var socket = io.connect('http://localhost:9000');
+          var socket = io.connect(window.location.host);
           sessionPingInterval = setInterval(function() {
             socket.emit('sessionKeyUpsert', { sessionkey: sessionStorage.getItem('prSessionKey') });
           }, 2000);
