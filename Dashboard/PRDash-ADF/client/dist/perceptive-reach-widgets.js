@@ -358,14 +358,12 @@ angular.module('ui.models')
       this.dataModelOptions.common = this.dataModelOptions.common  ||  { data: 'default value' };
      
       scope.$on('commonDataChanged', function (event, data) {
-        console.log('Common data changed for: ' + this.widgetScope.widget.title);
         this.setCommon(data);
       }.bind(this));
     };
 
     CommonDataModel.prototype.setCommon = function (data) {
       if (data && (!angular.equals(this.dataModelOptions.common, data))) {
-        console.log(this.widgetScope.widget.title + ' data model options changed');
         this.dataModelOptions.common = data;
         //this.widgetScope.$emit('widgetChanged', this.widgetScope.widget);
       }
@@ -2727,11 +2725,9 @@ angular.module('ui.widgets')
               $(this).addClass('selected');
               // get common data object
               var commonData = scope.widget.dataModelOptions.common;
-              console.log("CommonDataBeforeClick: ", commonData);
               // update common data object with new patient object
               console.log("ReachID Vet Selected: ", event.currentTarget.cells[5].firstElementChild.id.replace("vet_",""));
               commonData.data.veteranObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
-              console.log("CommonDataAfterClick: ", commonData);
               // broadcast message throughout system
               scope.$parent.$broadcast('commonDataChanged', commonData);
               //scope.hideVetDetBtn = false;
@@ -2778,8 +2774,6 @@ angular.module('ui.widgets')
             //scope.dtInstance.changeData(scope.widgetData[1]);
             scope.outreachStatusList = scope.widgetData[2];
             scope.patientList = scope.widgetData[1];
-            console.log("Patient Roster: ",scope.patientList);
-            
             /*for(var patient in scope.patientList){
               datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient]; 
             }*/

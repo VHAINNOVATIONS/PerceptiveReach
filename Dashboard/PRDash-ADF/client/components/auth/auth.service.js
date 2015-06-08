@@ -38,7 +38,7 @@ angular.module('app')
           currentUser = data.user; //User.get();
           //$rootScope.globals.userObj = data.user;
           $rootScope.globals['userObj'] = data.user.data;
-          console.log("Returned Logged In User: ",currentUser);
+          //console.log("Returned Logged In User: ",currentUser);
           deferred.resolve(data);
           var socket = io.connect(window.location.host);
           sessionPingInterval = setInterval(function() {
@@ -152,7 +152,6 @@ angular.module('app')
        * Waits for currentUser to resolve before checking if user is logged in
        */
       isLoggedInAsync: function(cb) {
-        console.log("inside loginAsync");
         /*if(currentUser.hasOwnProperty('$promise') && $cookieStore.get('token')) {
           currentUser.$promise.then(function() {
             cb(true);

@@ -21,19 +21,15 @@ angular.module('app')
     //console.log("UserObj inside main controller: ",$rootScope.globals['userObj']);
     // Start Idle Service
     IdleServ.start(Auth);
-    console.log("sessionStorage: ", JSON.parse(sessionStorage.user));
     var user = JSON.parse(sessionStorage.user);
     //user.DashboardData = JSON.parse(user.DashboardData);
-    console.log("output of user object: ", user);
     // initialize LayoutOptions depending on role or dashboard data
     var layouts = [];
 
     if (user.DashboardData){
       layouts = user.DashboardData.layouts;
-      console.log("output layouts: ", layouts);
       // populate local storage
       sessionStorage.setItem(user.UserDashboardID, JSON.stringify(user.DashboardData));
-      console.log("get from SessionStorage: ",JSON.parse(sessionStorage.getItem(user.UserDashboardID)));
     }
     else{
       var role = user.UserRole;
@@ -88,8 +84,6 @@ angular.module('app')
 
       // Broadcast message first time
       $scope.$broadcast('commonDataChanged', $scope.common);
-      console.log('broadcast submitted');
-      console.log($scope);
     },1000);
     
 
