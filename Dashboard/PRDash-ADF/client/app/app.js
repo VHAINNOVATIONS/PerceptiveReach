@@ -46,7 +46,6 @@ angular.module('app', [
             var status = response.status;
  
             if (status === 401 || status == 403) {
-              console.log("401/403 received" + repsonse);
                 var deferred = $q.defer();
                 var req = {
                     config: response.config,
@@ -138,7 +137,6 @@ angular.module('app', [
           if(loggedIn){
             $rootScope.globals.isLogggedIn = true;
             $rootScope.globals['userObj'] = JSON.parse(sessionStorage.user);
-            console.log("rootScoope.globals.userObj: ",$rootScope.globals.userObj);
             $('#navHeader').show();
             $('#dashboardDescription').show();
           }
