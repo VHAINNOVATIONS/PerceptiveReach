@@ -71,7 +71,6 @@ angular.module('ui.widgets')
         //console.log("patientTable widgetScope", scope);
         
         scope.$on("updateSelectMenu", function (){
-          console.log("--inside updateSelectMenu--");
           //scope.$apply();
           //scope.dtInstance = dtInstance;
           //while($('#vet_').length < 1){} 
@@ -109,11 +108,9 @@ angular.module('ui.widgets')
               $(this).addClass('selected');
               // get common data object
               var commonData = scope.widget.dataModelOptions.common;
-              console.log("CommonDataBeforeClick: ", commonData);
               // update common data object with new patient object
-              console.log("ReachID Vet Selected: ", event.currentTarget.cells[5].firstElementChild.id.replace("vet_",""));
+              
               commonData.data.veteranObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
-              console.log("CommonDataAfterClick: ", commonData);
               // broadcast message throughout system
               scope.$parent.$broadcast('commonDataChanged', commonData);
               //scope.hideVetDetBtn = false;
@@ -160,8 +157,6 @@ angular.module('ui.widgets')
             //scope.dtInstance.changeData(scope.widgetData[1]);
             scope.outreachStatusList = scope.widgetData[2];
             scope.patientList = scope.widgetData[1];
-            console.log("Patient Roster: ",scope.patientList);
-            
             /*for(var patient in scope.patientList){
               datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient]; 
             }*/

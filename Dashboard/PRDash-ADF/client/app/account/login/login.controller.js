@@ -61,7 +61,6 @@ angular.module('app')
           $location.path('/');
         })
         .catch( function(err) {
-          console.log("loginCtrl error: ",err);
           $scope.errors.other = err.message;
         });
       }
