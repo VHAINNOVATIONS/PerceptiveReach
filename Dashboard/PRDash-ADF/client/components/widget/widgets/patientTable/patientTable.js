@@ -95,8 +95,9 @@ angular.module('ui.widgets')
             //datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient].OutreachStatus; 
           }
           
-          $('#sampleVet tbody').on( 'click', 'tr', function (event) {
+          $('#tblPatient tbody').on( 'click', 'tr', function (event) {
             //console.log( dataTableVet.row( this ).data() );
+            //console.log("Patient click event",event);
             if($(this).hasClass('selected')){
                 //$(this).removeClass('selected'); // removes selected highlighting
                 //scope.hideVetDetBtn = true;
@@ -111,6 +112,10 @@ angular.module('ui.widgets')
               // update common data object with new patient object
               
               commonData.data.veteranObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
+              var vetId = event.currentTarget.cells[5].children[1].id.replace("vet_","");
+              console.log("ReachID Vet Selected: ",vetId);
+              commonData.data.veteranObj = datamodelList[vetId];
+              console.log("CommonDataAfterClick: ", commonData);
               // broadcast message throughout system
               scope.$parent.$broadcast('commonDataChanged', commonData);
               //scope.hideVetDetBtn = false;

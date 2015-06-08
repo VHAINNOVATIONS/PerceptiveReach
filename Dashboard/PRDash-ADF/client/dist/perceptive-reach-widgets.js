@@ -2687,7 +2687,6 @@ angular.module('ui.widgets')
         //console.log("patientTable widgetScope", scope);
         
         scope.$on("updateSelectMenu", function (){
-          console.log("--inside updateSelectMenu--");
           //scope.$apply();
           //scope.dtInstance = dtInstance;
           //while($('#vet_').length < 1){} 
@@ -2712,8 +2711,9 @@ angular.module('ui.widgets')
             //datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient].OutreachStatus; 
           }
           
-          $('#sampleVet tbody').on( 'click', 'tr', function (event) {
+          $('#tblPatient tbody').on( 'click', 'tr', function (event) {
             //console.log( dataTableVet.row( this ).data() );
+            //console.log("Patient click event",event);
             if($(this).hasClass('selected')){
                 //$(this).removeClass('selected'); // removes selected highlighting
                 //scope.hideVetDetBtn = true;
@@ -2726,8 +2726,12 @@ angular.module('ui.widgets')
               // get common data object
               var commonData = scope.widget.dataModelOptions.common;
               // update common data object with new patient object
-              console.log("ReachID Vet Selected: ", event.currentTarget.cells[5].firstElementChild.id.replace("vet_",""));
+              
               commonData.data.veteranObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
+              var vetId = event.currentTarget.cells[5].children[1].id.replace("vet_","");
+              console.log("ReachID Vet Selected: ",vetId);
+              commonData.data.veteranObj = datamodelList[vetId];
+              console.log("CommonDataAfterClick: ", commonData);
               // broadcast message throughout system
               scope.$parent.$broadcast('commonDataChanged', commonData);
               //scope.hideVetDetBtn = false;
@@ -3500,7 +3504,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t<!--<div id=\"spinner\" style=\"height: 100px;\"> </div>-->\r" +
     "\n" +
-    "    <table id=\"tblPatient\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\" id=\"sampleVet\" width=\"100%\">\r" +
+    "    <table id=\"tblPatient\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
     "    \t<thead>\r" +
     "\n" +
