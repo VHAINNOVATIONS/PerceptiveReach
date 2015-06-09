@@ -24,6 +24,22 @@ When(/^I select middle risk veteran row in the widget$/) do
 	 #click_link('vet_566384')
 end
 
+#To test active sessions
+When(/^I open a new browser and navigate to http:\/\/localhost:(\d+)\/$/) do |arg1|
+  #pending # express the regexp above with the code you wish you had
+   
+  
+  #page.driver.browser.close
+  
+  page.driver.browser.navigate.to 'http://localhost:7003'
+    page.driver.browser.switch_to.window(page.driver.browser.window_handles.last)
+ 
+ 
+ 
+ 
+  
+end
+
 When(/^I select top risk veteran row in the widget$/) do 
   #pending # express the regexp above with the code you wish you had
  # row=number
@@ -48,7 +64,7 @@ end
 
 When(/^I leave the page inactive for (\d+) seconds$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
-  sleep(900)
+  sleep(132)
   end
 
 When(/^I click on "(.*?)"$/) do |view|
