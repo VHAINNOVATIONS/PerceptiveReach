@@ -3110,7 +3110,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t<table id=\"tblAppointment\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "        <thead>\r" +
+    "        <thead> \r" +
     "\n" +
     "        <tr>\r" +
     "\n" +
@@ -3234,7 +3234,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t<table id=\"tblDiagnoses\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "        <thead>\r" +
+    "        <thead> \r" +
     "\n" +
     "        <tr>\r" +
     "\n" +
@@ -3330,7 +3330,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <button name=\"btnChangeMin\" type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"changeMode('MINUTES')\"\r" +
     "\n" +
-    "                    ng-class=\"{active: mode === 'MINUTES'}\">Minutes</button>\r" +
+    "                    ng-class=\"{active: mode === 'MINUTES'}\">Minutes </button>\r" +
     "\n" +
     "            <button name=\"btnChangeMode\" type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"changeMode('HOURS')\"\r" +
     "\n" +
@@ -3350,7 +3350,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <table id=\"tblMedication\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "        <thead>\r" +
+    "        <thead> \r" +
     "\n" +
     "        <tr>\r" +
     "\n" +
@@ -3470,7 +3470,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <table id=\"tblPatientFlags\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "        <thead>\r" +
+    "        <thead> \r" +
     "\n" +
     "        <tr>\r" +
     "\n" +
@@ -3512,7 +3512,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        \t<th ng-repeat=\"column in columns\">{{column.Name}}</th>\r" +
     "\n" +
-    "        </tr>\r" +
+    "        </tr> \r" +
     "\n" +
     "        </thead>\r" +
     "\n" +
@@ -3560,7 +3560,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <button name=\"btnClose\" type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
     "\n" +
-    "  <h3>Widget Options <small>{{widget.title}}</small></h3>\r" +
+    "  <h3>Widget Options<small>{{widget.title}}</small></h3>\r" +
     "\n" +
     "</div>\r" +
     "\n" +
@@ -3667,7 +3667,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/select/select.html",
     "<div>\r" +
     "\n" +
-    "    {{label}} <select ng-model=\"value\" ng-options=\"opt for opt in options\"\r" +
+    "    {{label}}<select ng-model=\"value\" ng-options=\"opt for opt in options\"\r" +
     "\n" +
     "                          class=\"form-control\" style=\"width: 200px; display: inline;\"></select>\r" +
     "\n" +

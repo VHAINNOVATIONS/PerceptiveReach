@@ -515,7 +515,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "              <button name=\"btnDropdown\" type=\"button\" class=\"btn btn-primary dropdown-toggle\" ng-disabled=\"disabled\">\r" +
     "\n" +
-    "                Button dropdown <span class=\"caret\"></span>\r" +
+    "                Button dropdown<span class=\"caret\"></span>\r" +
     "\n" +
     "              </button>\r" +
     "\n" +
@@ -616,7 +616,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "              <button name=\"btnAddWidget\" type=\"button\" class=\"btn btn-primary dropdown-toggle\" data-toggle=\"dropdown\">\r" +
     "\n" +
-    "                Add a Widget <span class=\"caret\"></span>\r" +
+    "                Add a Widget<span class=\"caret\"></span>\r" +
     "\n" +
     "              </button>\r" +
     "\n" +
@@ -712,7 +712,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <button name=\"btnCancel\" type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
     "\n" +
-    "  <h3>Widget Options <small>{{widget.title}}</small></h3>\r" +
+    "  <h3>Widget Options<small>{{widget.title}}</small></h3>\r" +
     "\n" +
     "</div>\r" +
     "\n" +
@@ -766,7 +766,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "<div class=\"modal-body\">\r" +
     "\n" +
-    "    <p>You have {{layout.dashboard.unsavedChangeCount}} unsaved changes on this dashboard. Would you like to save them?</p>\r" +
+    "    <p>You have {{layout.dashboard.unsavedChangeCount}} unsaved changes on this dashboard. Would you like to save them? </p>\r" +
     "\n" +
     "</div>\r" +
     "\n" +
