@@ -15,7 +15,7 @@ angular.module('app')
           width: '33%'
         }
       },
-      {
+      /*{
         name: 'random',
         directive: 'wt-random',
         style: {
@@ -32,7 +32,7 @@ angular.module('app')
         style: {
           width: '34%'
         }
-      },
+      },*/
       {
         name: 'piechart',
         directive: 'wt-pie-chart',
@@ -152,7 +152,7 @@ angular.module('app')
           height: '250px'
         }
       },
-      {
+      /*{
         name: 'Metrics Chart',
         directive: 'wt-metrics-chart',
         dataAttrName: 'data',
@@ -202,7 +202,7 @@ angular.module('app')
         directive: 'wt-top-n',
         dataAttrName: 'data',
         dataModelType: RandomTopNDataModel
-      },
+      },*/
       {
         name: 'gauge',
         directive: 'wt-gauge',
@@ -266,27 +266,12 @@ angular.module('app')
       storageId: 'demo_simple'
     };
 
-    // random scope value
-    $scope.randomValue = Math.random();
-    $interval(function () {
-      $scope.randomValue = Math.random();
-    }, 500);
 
     // percentage (gauge widget, progressbar widget)
     $scope.percentage = 5;
     $interval(function () {
       $scope.percentage = ($scope.percentage + 10) % 100;
     }, 1000);
-
-    // line chart widget
-    $interval(function () {
-      $scope.topN = _.map(_.range(0, 10), function (index) {
-        return {
-          name: 'item' + index,
-          value: Math.floor(Math.random() * 100)
-        };
-      });
-    }, 500);
 
   });
 
