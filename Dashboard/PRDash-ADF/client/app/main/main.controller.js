@@ -56,13 +56,6 @@ angular.module('app')
       defaultLayouts: layouts      
     };
 
-    
-
-    // random scope value
-    $scope.randomValue = Math.random();
-    $interval(function () {
-      $scope.randomValue = Math.random();
-    }, 500);
     // initialize common data object and broadcast to widgets
     $scope.common = {
       data: {
@@ -92,15 +85,5 @@ angular.module('app')
     $interval(function () {
       $scope.percentage = ($scope.percentage + 10) % 100;
     }, 1000);
-
-    // line chart widget
-    $interval(function () {
-      $scope.topN = _.map(_.range(0, 10), function (index) {
-        return {
-          name: 'item' + index,
-          value: Math.floor(Math.random() * 100)
-        };
-      });
-    }, 500);
 
   });

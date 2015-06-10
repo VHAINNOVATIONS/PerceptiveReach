@@ -13,9 +13,9 @@ BEGIN
 	-- interfering with SELECT statements.
 		SET NOCOUNT ON;
 
-		DECLARE @ActiveSessionCounter INT
+		DECLARE @ActiveSessionCounter INT,@UserID INT
 
-		select @ActiveSessionCounter = ActiveSessionCounter FROM prsystem.Users
+		select @ActiveSessionCounter = ActiveSessionCounter, @UserID = UserID FROM prsystem.Users
 		WHERE UserName = @UserName	
 
 		IF @Status = 'loginsuccess'
@@ -25,6 +25,17 @@ BEGIN
 					ActiveSessionCounter = ActiveSessionCounter + 1,
 					LoginAttemptCount = 0
 			WHERE UserName = @UserName
+
+			INSERT INTO [prsystem].[UserAccessLog]
+           ([UserID]
+           ,[Action]
+           ,[CreatedDateTime]
+           ,[MachineIP])
+			VALUES
+           (@UserID
+           ,'LOGIN'
+           ,GETDATE()
+           ,NULL)
 		END
 		ELSE IF @Status = 'loginerror'
 		BEGIN
@@ -38,6 +49,17 @@ BEGIN
 			UPDATE prsystem.Users
 			SET ActiveSessionCounter = ActiveSessionCounter - 1
 			WHERE UserName = @UserName	
+
+			INSERT INTO [prsystem].[UserAccessLog]
+           ([UserID]
+           ,[Action]
+           ,[CreatedDateTime]
+           ,[MachineIP])
+			VALUES
+           (@UserID
+           ,'LOGOUT'
+           ,GETDATE()
+           ,NULL)
 		END
 		ELSE
 		BEGIN
