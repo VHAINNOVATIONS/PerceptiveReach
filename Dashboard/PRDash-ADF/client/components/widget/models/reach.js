@@ -121,7 +121,8 @@ angular.module('ui.models')
       },
 
       saveOutreachData: function (outreachStatus, veteranID) {
-        $http.put('/api/patient?vetReachID=' + veteranID, {'outreachStatus': outreachStatus})
+        var user = JSON.parse(sessionStorage.user);
+        $http.put('/api/patient?vetReachID=' + veteranID, {'outreachStatus': outreachStatus, 'UserID':user.UserID})
         .success(function(data) {
           //alert(data);
         });  

@@ -92,6 +92,7 @@ exports.update = function(req, res) {
     var config = dbc.config;
     var outreachStatus = req.param("outreachStatus");
     var vetReachID = req.param("vetReachID");
+    var userId = req.param("UserID");
     var query = '';
     
     if (vetReachID) {
@@ -101,7 +102,8 @@ exports.update = function(req, res) {
             value = "NULL";
         else
             value = outreachStatus;
-        query += "UPDATE Patient SET OutreachStatus = " + value + " WHERE  ReachID=" + vetReachID;
+        //query += "UPDATE Patient SET OutreachStatus = " + value + " WHERE  ReachID=" + vetReachID;
+        query += "exec dbo.sp_SaveOutreachStatus @User=" + userId + ", @ReachID=" + vetReachID +", @Status='"+ value+"'";
     }
     else {
         res.send("ERROR: vetReach ID is required.");
