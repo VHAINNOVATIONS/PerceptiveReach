@@ -3,7 +3,8 @@
         <a name="liTitle" ng-click="makeLayoutActive(layout)">
             <span ng-dblclick="editTitle(layout)" ng-show="!layout.editingTitle">{{layout.title}}</span>
             <form action="" class="layout-title" ng-show="layout.editingTitle" ng-submit="saveTitleEdit(layout)">
-                <input name="LayoutTitle" alt="Layout Title" type="text" ng-model="layout.title" class="form-control" data-layout="{{layout.id}}">
+				<label id="lblLayoutTitle" alt="Layout Title" for="layoutID">.</label>
+                <input name="LayoutTitle" alt="Layout Title" type="text" ng-model="layout.title" id="layoutID" class="form-control" data-layout="{{layout.id}}">
             </form>
             <span ng-if="!layout.locked" ng-click="removeLayout(layout)" class="glyphicon glyphicon-remove remove-layout-icon"></span>
             <!-- <span class="glyphicon glyphicon-pencil"></span> -->
