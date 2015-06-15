@@ -6,7 +6,7 @@ Capybara.default_wait_time = 15
 Capybara.default_driver = :selenium
 
 Capybara.register_driver :selenium do |app|
-  Capybara::Selenium::Driver.new(app, :browser => :chrome)
+  Capybara::Selenium::Driver.new(app, :browser => :chrome, :switches => %w[--aggressive-cache-discard --ignore-certificate-errors --disable-popup-blocking --disable-translate])
 end
 
 #Capybara.javascript_driver = :selenium
