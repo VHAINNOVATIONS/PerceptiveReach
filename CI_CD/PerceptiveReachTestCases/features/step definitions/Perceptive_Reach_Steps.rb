@@ -1,5 +1,5 @@
 Given(/^I navigate to the http:\/\/localhost:(\d+)\/$/) do |arg1|
-sleep(30)
+#sleep(30)
   visit ('http://localhost:7003')
  
   
