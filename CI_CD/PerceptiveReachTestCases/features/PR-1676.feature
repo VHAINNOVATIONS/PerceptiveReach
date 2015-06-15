@@ -11,6 +11,6 @@ Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"
 And I click on check box "checky"
 And I click on "Login" button
-Then I should see "National View"
+Then I should see "Individual View"
 And I click on "Logout" button
    
