@@ -1,6 +1,14 @@
 Given(/^I navigate to the http:\/\/localhost:(\d+)\/$/) do |arg1|
   visit ('http://localhost:7003')
-  #expect(page).to have_content 'Description' #load IRDS and wait for some content to appear
+  begin
+    expect(page).to have_content 'warning message'
+  rescue
+    #scroll to top of page
+    page.execute_script("scroll(250, 0)");
+    #logout
+    find_button('Logout').click 
+  end
+  
 end
 
 
