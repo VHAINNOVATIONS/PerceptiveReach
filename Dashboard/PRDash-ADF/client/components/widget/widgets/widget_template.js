@@ -429,7 +429,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<label alt=\"Patient ID Status\" for=\"vetPatientIDStatus\">Status</label>\r" +
     "\n" +
-    "            \t<select class='form-control' style='width: 180px;' selected=\"\" id=\"vetPatientIDStatus\">\r" +
+    "            \t<select class='form-control' style='width: 180px;' selected=\"\" name=\"vetPatientIDStatus\" id=\"vet_{{patient.ReachID}}\">\r" +
     "\n" +
     "            \t\t<option value=''></option>\r" +
     "\n" +

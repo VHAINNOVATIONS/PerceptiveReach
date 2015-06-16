@@ -15,7 +15,7 @@
             <td>{{ patient.RiskLevel }}</td>
             <td>
 			<label alt="Patient ID Status" for="vetPatientIDStatus">Status</label>
-            	<select class='form-control' style='width: 180px;' selected="" id="vetPatientIDStatus">
+            	<select class='form-control' style='width: 180px;' selected="" name="vetPatientIDStatus" id="vet_{{patient.ReachID}}">
             		<option value=''></option>
             		<option ng-repeat="outreachStatus in outreachStatusList" value="{{outreachStatus.OutReachStatusID}}">{{outreachStatus.StatusDesc}}</option>
             	</select> 
