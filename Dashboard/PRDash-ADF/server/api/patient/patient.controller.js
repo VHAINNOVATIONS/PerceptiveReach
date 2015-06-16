@@ -25,59 +25,40 @@ exports.index = function(req, res) {
     var id = req.param("id");
     var score = req.param("score");
     var query = '';
-    var select = "SELECT p.ReachID, FirstName, LastName, SSN, HomePhone, DateIdentifiedAsAtRisk, CASE WHEN RiskLevel = 1 THEN 'Top' WHEN RiskLevel = 2 THEN 'Middle' END 'RiskLevel', RiskLevel AS RiskLevelID, OutreachStatus"; 
-    //query += "ReachID, vamc.VAMC FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE ";
+    var select = "SELECT LastName+','+FirstName as Name, p.ReachID, FirstName, LastName, 'xxx-xx-'+substring(ssn,6,9) AS SSN,'(' + SUBSTRING(HomePhone,1, 3) +')' + SUBSTRING(HomePhone,4,3) + '-' + SUBSTRING(HomePhone,7,4) AS HomePhone, convert(varchar, DateIdentifiedAsAtRisk, 101) AS DateIdentifiedAsAtRisk, CASE WHEN RiskLevel = 1 THEN 'Top' WHEN RiskLevel = 2 THEN 'Middle' END 'RiskLevel', RiskLevel AS RiskLevelID, OutreachStatus"; 
     if (id) {
-        //console.log("Registering endpoint: /veteranRoster/:id is " + id);
-        //query += "vamc.vamcID = " + id;
+        
         query += select + ", ps.sta3N " 
                 + "FROM  Patient p INNER JOIN PatientStation ps ON p.ReachID = ps.ReachID "
                 + "WHERE p.RiskLevel in (1,2) and ps.sta3N = " + id;
         if (score) {
-            //console.log("Registering endpoint: /veteranRoster/:score is " + score);
             query += "AND p.Score >= " + score;
         }
         query += " ORDER BY RiskLevel ASC";
-
     } 
     
     else {
         query += select + " FROM Patient "
                 + "WHERE RiskLevel in (1,2) "
-                + "ORDER BY RiskLevel ASC";
-        //res.send("ERROR: VAMC ID is required.");
-        ////console.log("ERROR: VAMC ID is required."); 
+                + "ORDER BY RiskLevel ASC"; 
     }
 
+    query += "; SELECT * FROM Ref_OutreachStatus";
     var connection = new sql.Connection(config, function(err) {
-        // ... error checks
         if (err) { 
         data = "Error: Database connection failed!";
-        //console.log("Database connection failed!"); 
         return; 
         }
 
-        // Query
         var request = new sql.Request(connection); // or: var request = connection.request();
-        //console.log("Patient Query:" + query);
+        request.multiple = true;
         request.query(query, function(err, recordset) {
-            //console.log(recordset);
-            // ... error checks
             if (err) { 
-            //console.log("Query failed! -- " + query); 
             return; 
             }
-
-            //console.log(recordset.length);
-            var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
-            //console.log(jsonRecordSet);
-            for (var patient in jsonRecordSet) {
-                jsonRecordSet[patient].SSN = dataFormatter.formatData(jsonRecordSet[patient].SSN,"ssn");
-                jsonRecordSet[patient].HomePhone = dataFormatter.formatData(jsonRecordSet[patient].HomePhone,"phone");
-                jsonRecordSet[patient].DateIdentifiedAsAtRisk = dataFormatter.formatData(jsonRecordSet[patient].DateIdentifiedAsAtRisk,"date");
-                ////console.log(jsonRecordSet[patient].SSN + " " + jsonRecordSet[patient].Phone + " " + jsonRecordSet[patient].DateIdentifiedAsHighRisk);
-            }
-            res.send(jsonRecordSet);
+            var jsonRecordSet = JSON.parse(JSON.stringify(recordset[0]));
+            var jsonOutreachStatus = JSON.parse(JSON.stringify(recordset[1]));
+            res.send({patients:jsonRecordSet, outreachStatus:jsonOutreachStatus });
         });
 
     });
