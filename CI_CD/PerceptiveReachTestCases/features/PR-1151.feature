@@ -2,9 +2,10 @@ Feature: As a Dashboard user, I want to search an at-risk Veteran's health recor
 
 Scenario: I open a web browser and see the Individual Veteran View where I can search a Veteran's health record
 Given I navigate to the http://localhost:7003/
-Then I should see "Perceptive Reach Login"
+Then I should see "Perceptive Reach"
 Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"
+And I click on check box "checky"
 And I click on "Login" button
 When I Click on "Individual View"
 Then I should see search function for Veteran's health record

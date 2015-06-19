@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -45,7 +45,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Perceptive Reach</a>
+      <a class="navbar-brand" href="#">Perceptive Reach </a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -63,9 +63,6 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<div id="pageTitle" style="display: block;">
-<h1 style="text-align:center">Perceptive Reach</h1>
-</div>
 
 <!--div id="dashboardDescription" ng-controller="NavBarCtrl" style="display: none;">
   <div ng-if="$route.current.$$route.description" class="alert alert-success" role="alert" btf-markdown="'**Description:** ' + $route.current.$$route.description"></div>
@@ -107,6 +104,7 @@
       <script src="bower_components/pines-notify/pnotify.nonblock.js"></script>
       <script src="bower_components/angular-pines-notify/src/pnotify.js"></script>
       <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+      <script src="bower_components/ng-idle/angular-idle.js"></script>
       <script src="bower_components/angular-mocks/angular-mocks.js"></script>
       <script src="bower_components/showdown/src/showdown.js"></script>
       <script src="bower_components/angular-markdown-directive/markdown.js"></script>
@@ -114,28 +112,31 @@
       <!-- endbower -->
       <script src="bower_components/spin.js/spin.js"></script>
       <script src="bower_components/angular-datatables/dist/plugins/scroller/angular-datatables.scroller.js"></script>
+      <script src="bower_components/forge/js/util.js"></script>
+      <script src="bower_components/forge/js/cipher.js"></script>
+      <script src="bower_components/forge/js/cipherModes.js"></script>
+      <script src="bower_components/forge/js/aes.js"></script>
+      <script src="bower_components/forge/js/forge.js"></script>
+      
       <script src="app/app.js"></script>
       <!-- injector:js -->
       <script src="app/account/account.js"></script>
       <script src="app/account/login/login.controller.js"></script>
-      <script src="app/account/settings/settings.controller.js"></script>
-      <script src="app/account/signup/signup.controller.js"></script>
-      <script src="app/examples/controllers/customWidgetSettings.js"></script>
-      <script src="app/examples/controllers/demo.js"></script>
-      <script src="app/examples/controllers/explicitSave.js"></script>
-      <script src="app/examples/controllers/layouts.js"></script>
-      <script src="app/examples/controllers/resize.js"></script>
-      <script src="app/examples/examples.js"></script>
+      <script src="app/controllers/demo.js"></script>
       <script src="app/main/main.controller.js"></script>
       <script src="app/main/main.js"></script>
       <script src="components/auth/auth.service.js"></script>
       <script src="components/auth/user.service.js"></script>
       <script src="components/dashboard/dashboard.service.js"></script>
+      <script src="components/idle/idle.service.js"></script>
       <script src="components/navbar/navbar.controller.js"></script>
       <script src="components/util/util.js"></script>
       <script src="dist/angular-ui-dashboard.js"></script>
       <script src="dist/perceptive-reach-widgets.js"></script>
       <!-- endinjector -->
+
+      <script src="bower_components/socket.io-client/socket.io.js"></script>
+
       <!--<script src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>-->
       <script type="text/javascript" src="https://www.google.com/jsapi"></script>
       <script type="text/javascript">

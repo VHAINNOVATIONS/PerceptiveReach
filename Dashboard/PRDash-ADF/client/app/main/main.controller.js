@@ -17,21 +17,19 @@
 'use strict';
 
 angular.module('app')
-	.controller('LayoutsDemoExplicitSaveCtrl', function($scope, widgetDefinitions, defaultWidgets, LayoutStorage, Util, $interval, $timeout) {
+	.controller('LayoutsDemoExplicitSaveCtrl', function($scope, widgetDefinitions, defaultWidgets, LayoutStorage, Util, Auth, $interval, $timeout, IdleServ) {
     //console.log("UserObj inside main controller: ",$rootScope.globals['userObj']);
-    console.log("localStorage: ", JSON.parse(localStorage.user));
-    var user = JSON.parse(localStorage.user);
+    // Start Idle Service
+    IdleServ.start(Auth);
+    var user = JSON.parse(sessionStorage.user);
     //user.DashboardData = JSON.parse(user.DashboardData);
-    console.log("output of user object: ", user);
     // initialize LayoutOptions depending on role or dashboard data
     var layouts = [];
 
     if (user.DashboardData){
       layouts = user.DashboardData.layouts;
-      console.log("output layouts: ", layouts);
       // populate local storage
-      localStorage.setItem(user.UserDashboardID, JSON.stringify(user.DashboardData));
-      console.log("get from LocalStorage: ",JSON.parse(localStorage.getItem(user.UserDashboardID)));
+      sessionStorage.setItem(user.UserDashboardID, JSON.stringify(user.DashboardData));
     }
     else{
       var role = user.UserRole;
@@ -50,7 +48,7 @@ angular.module('app')
 
     $scope.layoutOptions = {
       storageId: (user.DashboardData) ? user.UserDashboardID : user.UserName + '-dashboard-' + user.UserRole,
-      storage: localStorage,
+      storage: sessionStorage,
       storageHash: (user.DashboardData) ? user.DashboardData.storageHash : Util.makeStorageID(),
       widgetDefinitions: widgetDefinitions,
       defaultWidgets: defaultWidgets,
@@ -58,13 +56,6 @@ angular.module('app')
       defaultLayouts: layouts      
     };
 
-    
-
-    // random scope value
-    $scope.randomValue = Math.random();
-    $interval(function () {
-      $scope.randomValue = Math.random();
-    }, 500);
     // initialize common data object and broadcast to widgets
     $scope.common = {
       data: {
@@ -86,8 +77,6 @@ angular.module('app')
 
       // Broadcast message first time
       $scope.$broadcast('commonDataChanged', $scope.common);
-      console.log('broadcast submitted');
-      console.log($scope);
     },1000);
     
 
@@ -96,15 +85,5 @@ angular.module('app')
     $interval(function () {
       $scope.percentage = ($scope.percentage + 10) % 100;
     }, 1000);
-
-    // line chart widget
-    $interval(function () {
-      $scope.topN = _.map(_.range(0, 10), function (index) {
-        return {
-          name: 'item' + index,
-          value: Math.floor(Math.random() * 100)
-        };
-      });
-    }, 500);
 
   });

@@ -7,7 +7,8 @@ angular.module('app')
   .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q) {
 
     var currentUser = {};
-    if($cookieStore.get('token')) {
+    var sessionPingInterval;
+    if(sessionStorage.getItem('token')) {
       //currentUser = User.get();
     }
 
@@ -29,25 +30,31 @@ angular.module('app')
           password: user.password
         }).
         success(function(data) {          
-          localStorage.setItem("user", JSON.stringify(data.user.data));
+          sessionStorage.setItem("user", JSON.stringify(data.user.data));
           //delete data.user.data['DashboardData'];
-          $cookieStore.put('token', data.token);
+          sessionStorage.setItem('token', data.token);
+          sessionStorage.setItem('prSessionKey',data.prSessionKey);
           //$cookieStore.put('user', data.user.data);
           currentUser = data.user; //User.get();
           //$rootScope.globals.userObj = data.user;
           $rootScope.globals['userObj'] = data.user.data;
-          console.log("Returned Logged In User: ",currentUser);
+          //console.log("Returned Logged In User: ",currentUser);
           deferred.resolve(data);
+          var socket = io.connect(window.location.host);
+          sessionPingInterval = setInterval(function() {
+            socket.emit('sessionKeyUpsert', { sessionkey: data.prSessionKey });
+          }, 10000);
+          
           return cb();
         }).
         error(function(err) {
           //console.log("Login error: ", err);
-          this.logout();          
+          //this.logout();          
           var properMessage = '';
-          if (err.indexOf('Max login attempts reached') != -1)
-            properMessage = 'Invalid username/password combination. Please try again.';
-          else
-            properMessage = err;
+          // if (err.indexOf('Max login attempts reached') != -1)
+          //   properMessage = 'Invalid username/password combination. Please try again.';
+          // else
+          properMessage = err;
           var response = {message: properMessage};
           deferred.reject(response);
           return cb(response);
@@ -62,14 +69,22 @@ angular.module('app')
        * @param  {Function}
        */
       logout: function() {
-        $cookieStore.remove('token');
-        //$cookieStore.remove('user');
-        currentUser = {};
-        //$http.defaults.headers.common.Authorization = 'Basic ';
-        $location.path('/login');
-        $('#navHeader').hide();
-        $('#dashboardDescription').hide();
-        localStorage.clear();
+        $http.post('/auth/logout',{username:$rootScope.globals.userObj.UserName}).
+        success(function(data) { 
+          sessionStorage.removeItem('token');
+          //$cookieStore.remove('user');
+          currentUser = {};
+          clearInterval(sessionPingInterval);
+          //$http.defaults.headers.common.Authorization = 'Basic ';
+          $('#navHeader').hide();
+          $('#dashboardDescription').hide();
+          sessionStorage.clear();
+          $location.path('/login');
+          
+        }).
+        error(function(err){
+          
+        });
       },
 
       /**
@@ -137,7 +152,6 @@ angular.module('app')
        * Waits for currentUser to resolve before checking if user is logged in
        */
       isLoggedInAsync: function(cb) {
-        console.log("inside loginAsync");
         /*if(currentUser.hasOwnProperty('$promise') && $cookieStore.get('token')) {
           currentUser.$promise.then(function() {
             cb(true);
@@ -150,11 +164,11 @@ angular.module('app')
           cb(false);
         }*/
 
-        if(!currentUser || !$cookieStore.get('token')) {
+        if(!currentUser || !sessionStorage.getItem('token')) {
           cb(false);        
-        } else if(!currentUser || $cookieStore.get('token')) {
+        } else if(!currentUser || sessionStorage.getItem('token')) {
           cb(true);
-        } else if(!currentUser.data.UserRole || $cookieStore.get('token')) {
+        } else if(!currentUser.data.UserRole || sessionStorage.getItem('token')) {
           cb(false);
         } else {
           cb(true);
@@ -174,7 +188,18 @@ angular.module('app')
        * Get auth token
        */
       getToken: function() {
-        return $cookieStore.get('token');
+        return sessionStorage.getItem('token');
+      },
+
+      RegenerateSessionPing:function()
+      {
+        if(sessionStorage.getItem('prSessionKey'))
+        {
+          var socket = io.connect(window.location.host);
+          sessionPingInterval = setInterval(function() {
+            socket.emit('sessionKeyUpsert', { sessionkey: sessionStorage.getItem('prSessionKey') });
+          }, 2000);
+        }
       }
     };
   });

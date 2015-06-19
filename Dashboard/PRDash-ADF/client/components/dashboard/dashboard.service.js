@@ -18,7 +18,6 @@ angular.module('ui.DashboardUtil')
      saveDashboard: function(dash, callback) {
         var cb = callback || angular.noop;
         var deferred = $q.defer();
-        console.log("Dashboard API - saveDashboard() - ", dash);
         $http.post('/api/dashboard', {
           dashboard: dash
         }).
@@ -29,7 +28,6 @@ angular.module('ui.DashboardUtil')
           //currentUser = data.user; //User.get();
           //$rootScope.globals.userObj = data.user;
           //$rootScope.globals['userObj'] = data.user.data;
-          console.log("Returned response: ",data);
           deferred.resolve(data);
           return cb();
         }).
@@ -71,7 +69,6 @@ angular.module('ui.DashboardUtil')
           currentUser = data.user; //User.get();
           //$rootScope.globals.userObj = data.user;
           $rootScope.globals['userObj'] = data.user.data;
-          console.log("Returned Logged In User: ",currentUser);
           deferred.resolve(data);
           return cb();
         }).
