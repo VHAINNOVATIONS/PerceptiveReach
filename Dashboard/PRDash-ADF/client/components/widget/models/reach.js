@@ -19,14 +19,12 @@ angular.module('ui.models')
       this.dataModelOptions.common = this.dataModelOptions.common  ||  { data: 'default value' };
      
       scope.$on('commonDataChanged', function (event, data) {
-        console.log('Common data changed for: ' + this.widgetScope.widget.title);
         this.setCommon(data);
       }.bind(this));
     };
 
     CommonDataModel.prototype.setCommon = function (data) {
       if (data && (!angular.equals(this.dataModelOptions.common, data))) {
-        console.log(this.widgetScope.widget.title + ' data model options changed');
         this.dataModelOptions.common = data;
         //this.widgetScope.$emit('widgetChanged', this.widgetScope.widget);
       }
@@ -69,63 +67,23 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var outreachStatus = null;
-
-        $http.get('/api/getListOfOutreachStatus')
-        .success(function(listOfOutreachStatus) {
-          outreachStatus = listOfOutreachStatus;
-        }.bind(this));
-
+       
         $http.get('/api/patient?id=' + this.sta3N)
-        .success(function(patientsBysta3N) {
+        .success(function(rtnVal) {
+          var patientsBysta3N = rtnVal.patients;
+          var outreachStatus = rtnVal.outreachStatus;
           var output = [];
           var sta3N = "";
-          
-          while(outreachStatus == null){} // wait until outreachStatus is not null
-
-          //console.log("outreachStatus -  ");
-          //console.log(outreachStatus);  
-          for (var veteran in patientsBysta3N) {
-              sta3N = patientsBysta3N[0].sta3N
-              var record = [];
-              var fullName = patientsBysta3N[veteran].LastName + ", " +patientsBysta3N[veteran].FirstName + " " + patientsBysta3N[veteran].MiddleName; 
-             /* record.push(String(fullName));
-              record.push(String(veteransByVAMC[veteran].SSN));
-              record.push(String(veteransByVAMC[veteran].Phone));
-              record.push(String(veteransByVAMC[veteran].DateIdentifiedRisk));
-              record.push(String(veteransByVAMC[veteran].RiskLevel)); */
-              //record.push(String(veteransByVAMC[veteran].OutreachStatus));
-              patientsBysta3N[veteran].Name = fullName;
-              var options = "";
-              var temp = "";
-              var selected = ' selected="selected"';
-              for(var outreachStat in outreachStatus){
-                if(patientsBysta3N[veteran].OutreachStatus == outreachStatus[outreachStat].OutReachStatusID)
-                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + selected + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
-                else{
-                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
-                  //console.log("outreachStatusString: ",  temp);
-                }
-                options += temp;                
-              }
-              var select = "<select class='form-control' style='width: 180px;' id='vet_" + patientsBysta3N[veteran].ReachID + "'><option value=''></option>"+ options+ "</select>";
-              //record.push(String(select));
-              patientsBysta3N[veteran].OutreachStatusSelect = select;                
-              //output.push(veteransByVAMC);
-          }
-          //output.sort(function(a,b) {return (a.RiskLevel > b.RiskLevel) ? 1 : ((b.RiskLevel > a.RiskLevel) ? -1 : 0);} );
           var columnHeaders = [];
-          //data = [this.vamc, output, outreachStatus];//{vamc : this.vamc, roster : output};
           data = [this.sta3N, patientsBysta3N, outreachStatus];
-          //console.log(data);
           this.updateScope(data);
         }.bind(this));
       },
 
       saveOutreachData: function (outreachStatus, veteranID) {
-        $http.put('/api/patient?vetReachID=' + veteranID, {'outreachStatus': outreachStatus})
+        var user = JSON.parse(sessionStorage.user);
+        $http.put('/api/patient?vetReachID=' + veteranID, {'outreachStatus': outreachStatus, 'UserID':user.UserID})
         .success(function(data) {
-          //alert(data);
         });  
       },
       updatesta3N: function (sta3N) {

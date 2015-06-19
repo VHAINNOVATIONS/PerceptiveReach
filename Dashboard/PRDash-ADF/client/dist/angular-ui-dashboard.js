@@ -410,7 +410,7 @@ angular.module('ui.dashboard')
 
             if (current && current.dashboard.unsavedChangeCount) {
               var modalInstance = $modal.open({
-                templateUrl: 'template/SaveChangesModal.html',
+                templateUrl: 'client/components/adf/directives/dashboardLayouts/SaveChangesModal.html',
                 resolve: {
                   layout: function() {
                     return layout;
@@ -513,9 +513,9 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <span class=\"dropdown\" on-toggle=\"toggled(open)\">\r" +
     "\n" +
-    "              <button type=\"button\" class=\"btn btn-primary dropdown-toggle\" ng-disabled=\"disabled\">\r" +
+    "              <button name=\"btnDropdown\" type=\"button\" class=\"btn btn-primary dropdown-toggle\" ng-disabled=\"disabled\">\r" +
     "\n" +
-    "                Button dropdown <span class=\"caret\"></span>\r" +
+    "                Button dropdown<span class=\"caret\"></span>\r" +
     "\n" +
     "              </button>\r" +
     "\n" +
@@ -523,7 +523,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                <li ng-repeat=\"widget in widgetDefs\">\r" +
     "\n" +
-    "                  <a href=\"#\" ng-click=\"addWidgetInternal($event, widget);\" class=\"dropdown-toggle\">{{widget.name}}</a>\r" +
+    "                  <a name=\"liWidgetName\" href=\"#\" ng-click=\"addWidgetInternal($event, widget);\" class=\"dropdown-toggle\">{{widget.name}}</a>\r" +
     "\n" +
     "                </li>\r" +
     "\n" +
@@ -537,7 +537,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"btn-group\" ng-if=\"options.widgetButtons\">\r" +
     "\n" +
-    "            <button ng-repeat=\"widget in widgetDefs\"\r" +
+    "            <button name=\"btnWidgetName\" ng-repeat=\"widget in widgetDefs\"\r" +
     "\n" +
     "                    ng-click=\"addWidgetInternal($event, widget);\" type=\"button\" class=\"btn btn-primary\">\r" +
     "\n" +
@@ -549,15 +549,15 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\r" +
     "\n" +
-    "        <button class=\"btn btn-warning\" ng-click=\"resetWidgetsToDefault()\">Default Widgets</button>\r" +
+    "        <button name=\"btnDefaultWidgets\" class=\"btn btn-warning\" ng-click=\"resetWidgetsToDefault()\">Default Widgets</button>\r" +
     "\n" +
     "\r" +
     "\n" +
-    "        <button ng-if=\"options.storage && options.explicitSave\" ng-click=\"options.saveDashboard()\" class=\"btn btn-success\" ng-hide=\"!options.unsavedChangeCount\">{{ !options.unsavedChangeCount ? \"Alternative - No Changes\" : \"Save\" }}</button>\r" +
+    "        <button name=\"btnUnsaved\" ng-if=\"options.storage && options.explicitSave\" ng-click=\"options.saveDashboard()\" class=\"btn btn-success\" ng-hide=\"!options.unsavedChangeCount\">{{ !options.unsavedChangeCount ? \"Alternative - No Changes\" : \"Save\" }}</button>\r" +
     "\n" +
     "\r" +
     "\n" +
-    "        <button ng-click=\"clear();\" ng-hide=\"!widgets.length\" type=\"button\" class=\"btn btn-info\">Clear</button>\r" +
+    "        <button name=\"btnClear\" ng-click=\"clear();\" ng-hide=\"!widgets.length\" type=\"button\" class=\"btn btn-info\">Clear</button>\r" +
     "\n" +
     "    </div>\r" +
     "\n" +
@@ -577,7 +577,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                        <form action=\"\" class=\"widget-title\" ng-show=\"widget.editingTitle\" ng-submit=\"saveTitleEdit(widget)\">\r" +
     "\n" +
-    "                            <input type=\"text\" ng-model=\"widget.title\" class=\"form-control\">\r" +
+    "                            <input alt=\"Widget Title\" type=\"text\" ng-model=\"widget.title\" class=\"form-control\">\r" +
     "\n" +
     "                        </form>\r" +
     "\n" +
@@ -614,9 +614,9 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <span class=\"dropdown\" on-toggle=\"toggled(open)\">\r" +
     "\n" +
-    "              <button type=\"button\" class=\"btn btn-primary dropdown-toggle\" data-toggle=\"dropdown\">\r" +
+    "              <button name=\"btnAddWidget\" type=\"button\" class=\"btn btn-primary dropdown-toggle\" data-toggle=\"dropdown\">\r" +
     "\n" +
-    "                Add a Widget <span class=\"caret\"></span>\r" +
+    "                Add a Widget<span class=\"caret\"></span>\r" +
     "\n" +
     "              </button>\r" +
     "\n" +
@@ -624,7 +624,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                <li ng-repeat=\"widget in widgetDefs\">\r" +
     "\n" +
-    "                  <a href=\"#\" ng-click=\"addWidgetInternal($event, widget);\" class=\"dropdown-toggle\"><span class=\"label label-primary\">{{widget.name}}</span></a>\r" +
+    "                  <a name=\"liWidgetDropdown\" href=\"#\" ng-click=\"addWidgetInternal($event, widget);\" class=\"dropdown-toggle\"><span class=\"label label-primary\">{{widget.name}}</span></a>\r" +
     "\n" +
     "                </li>\r" +
     "\n" +
@@ -636,7 +636,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"btn-group\" ng-if=\"options.widgetButtons\">\r" +
     "\n" +
-    "            <button ng-repeat=\"widget in widgetDefs\"\r" +
+    "            <button name=\"btnWidgetName\" ng-repeat=\"widget in widgetDefs\"\r" +
     "\n" +
     "                    ng-click=\"addWidgetInternal($event, widget);\" type=\"button\" class=\"btn btn-primary\">\r" +
     "\n" +
@@ -648,15 +648,15 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\r" +
     "\n" +
-    "        <button class=\"btn btn-warning\" ng-click=\"resetWidgetsToDefault()\">Default Widgets</button>\r" +
+    "        <button name=\"btnDefaultWarning\" class=\"btn btn-warning\" ng-click=\"resetWidgetsToDefault()\">Default Widgets</button>\r" +
     "\n" +
     "\r" +
     "\n" +
-    "        <button ng-if=\"options.storage && options.explicitSave\" ng-click=\"options.saveDashboard()\" class=\"btn btn-success\" ng-disabled=\"!options.unsavedChangeCount\">{{ !options.unsavedChangeCount ? \"all saved\" : \"save changes (\" + options.unsavedChangeCount + \")\" }}</button>\r" +
+    "        <button name=\"btnSave\" ng-if=\"options.storage && options.explicitSave\" ng-click=\"options.saveDashboard()\" class=\"btn btn-success\" ng-disabled=\"!options.unsavedChangeCount\">{{ !options.unsavedChangeCount ? \"all saved\" : \"save changes (\" + options.unsavedChangeCount + \")\" }}</button>\r" +
     "\n" +
     "\r" +
     "\n" +
-    "        <button ng-click=\"clear();\" type=\"button\" class=\"btn btn-info\">Clear</button>\r" +
+    "        <button name=\"btnClear\" ng-click=\"clear();\" type=\"button\" class=\"btn btn-info\">Clear</button>\r" +
     "\n" +
     "    </div>\r" +
     "\n" +
@@ -676,7 +676,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                        <form action=\"\" class=\"widget-title\" ng-show=\"widget.editingTitle\" ng-submit=\"saveTitleEdit(widget)\">\r" +
     "\n" +
-    "                            <input type=\"text\" ng-model=\"widget.title\" class=\"form-control\">\r" +
+    "                            <input alt=\"Widget Title\" name=\"WidgetTitle\" type=\"text\" ng-model=\"widget.title\" class=\"form-control\">\r" +
     "\n" +
     "                        </form>\r" +
     "\n" +
@@ -710,9 +710,9 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/adf/directives/dashboard/widget-settings-template.html",
     "<div class=\"modal-header\">\r" +
     "\n" +
-    "    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
+    "    <button name=\"btnCancel\" type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
     "\n" +
-    "  <h3>Widget Options <small>{{widget.title}}</small></h3>\r" +
+    "  <h3>Widget Options<small>{{widget.title}}</small></h3>\r" +
     "\n" +
     "</div>\r" +
     "\n" +
@@ -728,7 +728,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <div class=\"col-sm-10\">\r" +
     "\n" +
-    "                <input type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
+    "                <input alt=\"Result Title\" type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
@@ -746,9 +746,9 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "<div class=\"modal-footer\">\r" +
     "\n" +
-    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
+    "    <button name=\"btn2Cancel\" type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
     "\n" +
-    "    <button type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
+    "    <button name=\"btnOK\" type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
     "\n" +
     "</div>"
   );
@@ -756,7 +756,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/adf/directives/dashboardLayouts/SaveChangesModal.html",
     "<div class=\"modal-header\">\r" +
     "\n" +
-    "    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
+    "    <button name=\"btnCancel\" type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
     "\n" +
     "  <h3>Unsaved Changes to \"{{layout.title}}\"</h3>\r" +
     "\n" +
@@ -766,7 +766,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "<div class=\"modal-body\">\r" +
     "\n" +
-    "    <p>You have {{layout.dashboard.unsavedChangeCount}} unsaved changes on this dashboard. Would you like to save them?</p>\r" +
+    "    <p>You have {{layout.dashboard.unsavedChangeCount}} unsaved changes on this dashboard. Would you like to save them? </p>\r" +
     "\n" +
     "</div>\r" +
     "\n" +
@@ -774,9 +774,9 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "<div class=\"modal-footer\">\r" +
     "\n" +
-    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Don't Save</button>\r" +
+    "    <button name=\"btn2Cancel\" type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
     "\n" +
-    "    <button type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">Save</button>\r" +
+    "    <button name=\"btnSave\" type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">Save</button>\r" +
     "\n" +
     "</div>"
   );

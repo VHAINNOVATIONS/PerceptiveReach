@@ -358,14 +358,12 @@ angular.module('ui.models')
       this.dataModelOptions.common = this.dataModelOptions.common  ||  { data: 'default value' };
      
       scope.$on('commonDataChanged', function (event, data) {
-        console.log('Common data changed for: ' + this.widgetScope.widget.title);
         this.setCommon(data);
       }.bind(this));
     };
 
     CommonDataModel.prototype.setCommon = function (data) {
       if (data && (!angular.equals(this.dataModelOptions.common, data))) {
-        console.log(this.widgetScope.widget.title + ' data model options changed');
         this.dataModelOptions.common = data;
         //this.widgetScope.$emit('widgetChanged', this.widgetScope.widget);
       }
@@ -408,63 +406,23 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var outreachStatus = null;
-
-        $http.get('/api/getListOfOutreachStatus')
-        .success(function(listOfOutreachStatus) {
-          outreachStatus = listOfOutreachStatus;
-        }.bind(this));
-
+       
         $http.get('/api/patient?id=' + this.sta3N)
-        .success(function(patientsBysta3N) {
+        .success(function(rtnVal) {
+          var patientsBysta3N = rtnVal.patients;
+          var outreachStatus = rtnVal.outreachStatus;
           var output = [];
           var sta3N = "";
-          
-          while(outreachStatus == null){} // wait until outreachStatus is not null
-
-          //console.log("outreachStatus -  ");
-          //console.log(outreachStatus);  
-          for (var veteran in patientsBysta3N) {
-              sta3N = patientsBysta3N[0].sta3N
-              var record = [];
-              var fullName = patientsBysta3N[veteran].LastName + ", " +patientsBysta3N[veteran].FirstName + " " + patientsBysta3N[veteran].MiddleName; 
-             /* record.push(String(fullName));
-              record.push(String(veteransByVAMC[veteran].SSN));
-              record.push(String(veteransByVAMC[veteran].Phone));
-              record.push(String(veteransByVAMC[veteran].DateIdentifiedRisk));
-              record.push(String(veteransByVAMC[veteran].RiskLevel)); */
-              //record.push(String(veteransByVAMC[veteran].OutreachStatus));
-              patientsBysta3N[veteran].Name = fullName;
-              var options = "";
-              var temp = "";
-              var selected = ' selected="selected"';
-              for(var outreachStat in outreachStatus){
-                if(patientsBysta3N[veteran].OutreachStatus == outreachStatus[outreachStat].OutReachStatusID)
-                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + selected + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
-                else{
-                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
-                  //console.log("outreachStatusString: ",  temp);
-                }
-                options += temp;                
-              }
-              var select = "<select class='form-control' style='width: 180px;' id='vet_" + patientsBysta3N[veteran].ReachID + "'><option value=''></option>"+ options+ "</select>";
-              //record.push(String(select));
-              patientsBysta3N[veteran].OutreachStatusSelect = select;                
-              //output.push(veteransByVAMC);
-          }
-          //output.sort(function(a,b) {return (a.RiskLevel > b.RiskLevel) ? 1 : ((b.RiskLevel > a.RiskLevel) ? -1 : 0);} );
           var columnHeaders = [];
-          //data = [this.vamc, output, outreachStatus];//{vamc : this.vamc, roster : output};
           data = [this.sta3N, patientsBysta3N, outreachStatus];
-          //console.log(data);
           this.updateScope(data);
         }.bind(this));
       },
 
       saveOutreachData: function (outreachStatus, veteranID) {
-        $http.put('/api/patient?vetReachID=' + veteranID, {'outreachStatus': outreachStatus})
+        var user = JSON.parse(sessionStorage.user);
+        $http.put('/api/patient?vetReachID=' + veteranID, {'outreachStatus': outreachStatus, 'UserID':user.UserID})
         .success(function(data) {
-          //alert(data);
         });  
       },
       updatesta3N: function (sta3N) {
@@ -2689,7 +2647,6 @@ angular.module('ui.widgets')
         //console.log("patientTable widgetScope", scope);
         
         scope.$on("updateSelectMenu", function (){
-          console.log("--inside updateSelectMenu--");
           //scope.$apply();
           //scope.dtInstance = dtInstance;
           //while($('#vet_').length < 1){} 
@@ -2714,8 +2671,9 @@ angular.module('ui.widgets')
             //datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient].OutreachStatus; 
           }
           
-          $('#sampleVet tbody').on( 'click', 'tr', function (event) {
+          $('#tblPatient tbody').on( 'click', 'tr', function (event) {
             //console.log( dataTableVet.row( this ).data() );
+            //console.log("Patient click event",event);
             if($(this).hasClass('selected')){
                 //$(this).removeClass('selected'); // removes selected highlighting
                 //scope.hideVetDetBtn = true;
@@ -2727,10 +2685,12 @@ angular.module('ui.widgets')
               $(this).addClass('selected');
               // get common data object
               var commonData = scope.widget.dataModelOptions.common;
-              console.log("CommonDataBeforeClick: ", commonData);
               // update common data object with new patient object
-              console.log("ReachID Vet Selected: ", event.currentTarget.cells[5].firstElementChild.id.replace("vet_",""));
+              
               commonData.data.veteranObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
+              var vetId = event.currentTarget.cells[5].children[1].id.replace("vet_","");
+              console.log("ReachID Vet Selected: ",vetId);
+              commonData.data.veteranObj = datamodelList[vetId];
               console.log("CommonDataAfterClick: ", commonData);
               // broadcast message throughout system
               scope.$parent.$broadcast('commonDataChanged', commonData);
@@ -2778,8 +2738,6 @@ angular.module('ui.widgets')
             //scope.dtInstance.changeData(scope.widgetData[1]);
             scope.outreachStatusList = scope.widgetData[2];
             scope.patientList = scope.widgetData[1];
-            console.log("Patient Roster: ",scope.patientList);
-            
             /*for(var patient in scope.patientList){
               datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient]; 
             }*/
@@ -3110,9 +3068,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
     "<div class=\"appointment\">\r" +
     "\n" +
-    "\t<table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\t<table id=\"tblAppointment\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "        <thead>\r" +
+    "        <thead> \r" +
     "\n" +
     "        <tr>\r" +
     "\n" +
@@ -3234,9 +3192,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/diagnoses/diagnoses.html",
     "<div class=\"diagnoses\">\r" +
     "\n" +
-    "\t<table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\t<table id=\"tblDiagnoses\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "        <thead>\r" +
+    "        <thead> \r" +
     "\n" +
     "        <tr>\r" +
     "\n" +
@@ -3330,11 +3288,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"btn-group\" style=\"float: right;\">\r" +
     "\n" +
-    "            <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"changeMode('MINUTES')\"\r" +
+    "            <button name=\"btnChangeMin\" type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"changeMode('MINUTES')\"\r" +
     "\n" +
-    "                    ng-class=\"{active: mode === 'MINUTES'}\">Minutes</button>\r" +
+    "                    ng-class=\"{active: mode === 'MINUTES'}\">Minutes </button>\r" +
     "\n" +
-    "            <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"changeMode('HOURS')\"\r" +
+    "            <button name=\"btnChangeMode\" type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"changeMode('HOURS')\"\r" +
     "\n" +
     "                    ng-class=\"{active: mode === 'HOURS'}\">Hours</button>\r" +
     "\n" +
@@ -3350,9 +3308,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
     "<div class=\"medication\">\r" +
     "\n" +
-    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "    <table id=\"tblMedication\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "        <thead>\r" +
+    "        <thead> \r" +
     "\n" +
     "        <tr>\r" +
     "\n" +
@@ -3470,9 +3428,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
     "<div class=\"patient-flags\">\r" +
     "\n" +
-    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "    <table id=\"tblPatientFlags\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "        <thead>\r" +
+    "        <thead> \r" +
     "\n" +
     "        <tr>\r" +
     "\n" +
@@ -3506,7 +3464,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t<!--<div id=\"spinner\" style=\"height: 100px;\"> </div>-->\r" +
     "\n" +
-    "    <table datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\" id=\"sampleVet\" width=\"100%\">\r" +
+    "    <table id=\"tblPatient\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
     "    \t<thead>\r" +
     "\n" +
@@ -3514,7 +3472,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        \t<th ng-repeat=\"column in columns\">{{column.Name}}</th>\r" +
     "\n" +
-    "        </tr>\r" +
+    "        </tr> \r" +
     "\n" +
     "        </thead>\r" +
     "\n" +
@@ -3534,7 +3492,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <td>\r" +
     "\n" +
-    "            \t<select class='form-control' style='width: 180px;' id=\"vet_{{patient.ReachID}}\">\r" +
+    "\t\t\t<label alt=\"Patient ID Status\" for=\"vetPatientIDStatus\">Status</label>\r" +
+    "\n" +
+    "            \t<select class='form-control' style='width: 180px;' selected=\"\" name=\"vetPatientIDStatus\" id=\"vet_{{patient.ReachID}}\">\r" +
     "\n" +
     "            \t\t<option value=''></option>\r" +
     "\n" +
@@ -3558,9 +3518,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/patientTable/patientTableWidgetSettingsTemplate.html",
     "<div class=\"modal-header\">\r" +
     "\n" +
-    "    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
+    "    <button name=\"btnClose\" type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
     "\n" +
-    "  <h3>Widget Options <small>{{widget.title}}</small></h3>\r" +
+    "  <h3>Widget Options<small>{{widget.title}}</small></h3>\r" +
     "\n" +
     "</div>\r" +
     "\n" +
@@ -3572,15 +3532,15 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"form-group\">\r" +
     "\n" +
-    "            <label for=\"widgetTitle\" class=\"col-sm-2 control-label\">Title</label>\r" +
+    "            <label id=\"lblTitle\" alt=\"Title\" for=\"widgetTitle\" class=\"col-sm-2 control-label\">Title</label>\r" +
     "\n" +
     "            <div class=\"col-sm-10\">\r" +
     "\n" +
-    "                <input type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
+    "                <input alt=\"Result Title\" type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
-    "            <label for=\"widgetVAMC\" class=\"col-sm-2 control-label\">VAMC</label>\r" +
+    "            <label id=\"lblVAMC\" alt=\"VAMC\" for=\"widgetVAMC\" class=\"col-sm-2 control-label\">VAMC</label>\r" +
     "\n" +
     "            <div class=\"col-sm-10\">\r" +
     "\n" +
@@ -3608,9 +3568,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "<div class=\"modal-footer\">\r" +
     "\n" +
-    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
+    "    <button name=\"btnCancel\" type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
     "\n" +
-    "    <button type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
+    "    <button name=\"btnOK\" type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
     "\n" +
     "</div>"
   );
@@ -3667,17 +3627,17 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/select/select.html",
     "<div>\r" +
     "\n" +
-    "    {{label}} <select ng-model=\"value\" ng-options=\"opt for opt in options\"\r" +
+    "    {{label}}<select ng-model=\"value\" ng-options=\"opt for opt in options\"\r" +
     "\n" +
     "                          class=\"form-control\" style=\"width: 200px; display: inline;\"></select>\r" +
     "\n" +
-    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"prevValue();\">\r" +
+    "    <button name=\"btnPreviousValue\" type=\"button\" class=\"btn btn-default\" ng-click=\"prevValue();\">\r" +
     "\n" +
     "        <span class=\"glyphicon glyphicon-chevron-left\"></span>\r" +
     "\n" +
     "    </button>\r" +
     "\n" +
-    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"nextValue();\">\r" +
+    "    <button name=\"btnNextValue\" type=\"button\" class=\"btn btn-default\" ng-click=\"nextValue();\">\r" +
     "\n" +
     "        <span class=\"glyphicon glyphicon-chevron-right\"></span>\r" +
     "\n" +

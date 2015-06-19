@@ -9,6 +9,7 @@ var compose = require('composable-middleware');
 var User = require('../api/user/user.model');
 var validateJwt = expressJwt({ secret: config.secrets.session });
 var nodeSSPI = require('node-sspi');
+var forge = require('node-forge');
 
 /**
  * Attaches the user object to the request if authenticated
@@ -82,13 +83,24 @@ function authenticate(req, res, user, callback) {
   var cb = callback;
   var nodeSSPIObj = new nodeSSPI({
     offerSSPI: false,
-    maxLoginAttemptsPerConnection: 1,
-    //offerBasic: true,
+    maxLoginAttemptsPerConnection: 5,
+    offerBasic: false,
     retrieveGroups: true,
-    domain: user.data.UserDomain
+    domain: user.data.UserDomain,
+    authoritative:false
   });
+  
+  //Decrypt password
+  var decipher = forge.cipher.createDecipher('AES-CBC', forge.util.decode64(config.encryptionObj.key));
+  decipher.start({iv: forge.util.decode64(config.encryptionObj.iv)});
+  decipher.update(forge.util.createBuffer(forge.util.decode64(user.tempPass)));
+  decipher.finish();
+  var password = decipher.output.toString();
+  //console.log("password before decrypt: ", user.tempPass);
+  //console.log("password after decrypt: ", password);
+
   var username = user.data.UserName;
-  var password = user.tempPass;
+  //var password = user.tempPass;
   var authdata = new Buffer(username + ":" + password).toString('base64');
   console.log("AuthData Output: ",authdata);
   req.headers["authorization"] = "Basic " + authdata;
@@ -101,7 +113,7 @@ function authenticate(req, res, user, callback) {
       console.log("After Request Output: ",req);
       if (err){
         console.log("error: ",err);
-        res.json(401, {message: 'This password is not correct.'});
+        //res.json(401, {message: 'This password is not correct.'});
         return cb(err, false);
       }
       var userObj = req.connection.user;

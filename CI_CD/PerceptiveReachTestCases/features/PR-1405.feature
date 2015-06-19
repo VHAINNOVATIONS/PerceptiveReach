@@ -4,9 +4,10 @@ Feature: As a Dashboard User, I want to view a Veteran's medications from within
 
 Scenario: I open a web browser and see the Veteran's medication widget
 Given I navigate to the http://localhost:7003/
-Then I should see "Perceptive Reach Login"
+Then I should see "Perceptive Reach"
 Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"
+And I click on check box "checky"
 And I click on "Login" button
 When I click on "Individual View"
 And I click the Add a Widget button
@@ -23,9 +24,10 @@ And I click on "Logout" button
 Scenario: When I am at the Veteran's medication widget I should be able to click between active and inactive orders, and I should be able to see both displayed at the same time.
 
 Given I navigate to the http://localhost:7003/
-Then I should see "Perceptive Reach Login"
+Then I should see "Perceptive Reach"
 Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"
+And I click on check box "checky"
 And I click on "Login" button
 When I click on "Individual View"
 Then I should see the "Medication" widget

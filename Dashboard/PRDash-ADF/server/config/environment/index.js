@@ -32,6 +32,9 @@ var all = {
   // Should we bypass user Authentication in Active Directory to develop locally?
   bypassAuth: true,
 
+  // Server Encryption object
+  encryptionObj: {},
+
   // List of user roles
   userRoles: ['guest', 'user', 'admin'],
 
@@ -43,6 +46,8 @@ var all = {
       }
     }
   },
+
+  prSessionStore:{}
 
 };
 

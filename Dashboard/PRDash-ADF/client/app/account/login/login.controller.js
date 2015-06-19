@@ -30,9 +30,23 @@ angular.module('app')
             }
         };
     }]);*/
-  .controller('LoginCtrl', function ($scope, Auth, $location, $window) {
+  .controller('LoginCtrl', function ($scope, Auth, $location, $window, CipherService) {
     $scope.user = {};
     $scope.errors = {};
+    CipherService.getEncryptionObj();
+
+    //Add listener to for checkbox
+    $('.btn-login').attr("disabled","disabled");
+    $('#checky').click(function(){      
+      if($(this).prop('checked')){
+        $('.btn-login').removeAttr('disabled');
+        //console.log("Entered click event-enabled", $('.btn-login'));
+      }
+      else{
+        $('.btn-login').attr("disabled","disabled");
+        //console.log("Entered click event-disabled", $('.btn-login'));  
+      }
+    });
 
     $scope.login = function(form) {
       $scope.submitted = true;
@@ -40,14 +54,13 @@ angular.module('app')
       if(form.$valid) {
         Auth.login({
           email: $scope.user.email,
-          password: $scope.user.password
+          password: CipherService.encrypt($scope.user.password).cipher_text
         })
         .then( function() {
           // Logged in, redirect to home
           $location.path('/');
         })
         .catch( function(err) {
-          console.log("loginCtrl error: ",err);
           $scope.errors.other = err.message;
         });
       }

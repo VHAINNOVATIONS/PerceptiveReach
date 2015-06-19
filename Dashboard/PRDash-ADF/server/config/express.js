@@ -14,9 +14,21 @@ var cookieParser = require('cookie-parser');
 var errorHandler = require('errorhandler');
 var path = require('path');
 var config = require('./environment');
+var forge = require('node-forge');
 
 module.exports = function(app) {
   var env = app.get('env');
+
+  var salt = forge.random.getBytesSync(128);
+  var key = forge.pkcs5.pbkdf2(config.secrets.session, salt, 4, 16);
+  var iv = forge.random.getBytesSync(16);
+  var encryptObj = {
+    key: forge.util.encode64(key),
+    salt: forge.util.encode64(salt),
+    iv: forge.util.encode64(iv)
+  }
+  config.encryptionObj = encryptObj;
+  //console.log("encrypt value:",config.encryptionObj);
 
   app.set('views', config.root + '/server/views');
   app.engine('html', require('ejs').renderFile);
@@ -26,6 +38,36 @@ module.exports = function(app) {
   app.use(bodyParser.json());
   app.use(methodOverride());
   app.use(cookieParser());
+
+  app.use(function(req,res,next){
+    if(req.headers.prsessionkey){
+      var userName = req.headers.prsessionkey.split('::')[0];
+      var timeStamp = req.headers.prsessionkey.split('::')[1];
+      if(config.prSessionStore[userName] && config.prSessionStore[userName][timeStamp])
+      {
+        var lastPing = config.prSessionStore[userName][timeStamp];
+        var timeDiff = ((new Date()).getTime() - lastPing)/1000;
+         if(timeDiff > 30)
+        {
+          return res.json(401, 'Session Expired.');
+        }
+        else
+        {
+          next();
+        }
+      }
+      else
+      {
+        return res.json(401, 'Session Expired.');
+      }
+    }
+    else  
+    {
+      next();
+    }
+    
+  });  
+
 
   //app.use(function (req, res, next) {
     /*var nodeSSPI = require('node-sspi');
