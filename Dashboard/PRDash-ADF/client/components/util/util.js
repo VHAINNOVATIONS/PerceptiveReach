@@ -13,8 +13,9 @@ angular.module('ui.util')
 
 	    	for( var i=0; i < 9; i++ )
 	    	{
+	    		var cryptoObj = window.crypto || window.msCrypto; // for IE 11
 	    		var arr = new Uint32Array(2);
-				window.crypto.getRandomValues(arr);
+				cryptoObj.getRandomValues(arr);
 
 				// keep all 32 bits of the the first, top 20 of the second for 52 random bits
 				var mantissa = (arr[0] * Math.pow(2,20)) + (arr[1] >>> 12)
