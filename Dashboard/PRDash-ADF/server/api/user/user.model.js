@@ -49,7 +49,7 @@ var User = function(data){
 User.prototype.data = {};
 User.prototype.token = {};
 User.prototype.salt = "";
-User.prototype.hashedPassword = "";
+//User.prototype.hashedPassword = "";
 
 
 User.prototype.getData = function(name){
@@ -65,7 +65,7 @@ User.prototype.getPassword = function(){
 User.prototype.setPassword = function(password){
   this.userPassword = password;
   this.salt = this.makeSalt();
-  this.hashedPassword = this.encryptPassword(password);
+//  this.hashedPassword = this.encryptPassword(password);
 }
 
 User.prototype.getProfile = function(){
@@ -169,10 +169,10 @@ User.prototype.validatePresenceOf = function(value) {
  * Methods
  */
 
- User.prototype.authenticate = function(plainText) {
+ /*User.prototype.authenticate = function(plainText) {
     //console.log("inside user authentication method");
     return this.encryptPassword(plainText) === this.hashedPassword;
-  }
+  }*/
 
   User.prototype.makeSalt = function() {
     return crypto.randomBytes(16).toString('base64');
