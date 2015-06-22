@@ -74,7 +74,7 @@ a.text-success {
 .btn-primary {
   color: #fff;
   background-color: #1034A6;
-  border-color: #60DFE5;
+  border-color: transparent;
 }
 .btn-primary:hover,
 .btn-primary:focus,
@@ -82,8 +82,8 @@ a.text-success {
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
   color: #fff;
-  background-color: #3071a9;
-  border-color: #285e8e;
+  background-color: #3F00FF;
+  border-color: transparent;
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -106,7 +106,7 @@ fieldset[disabled] .btn-primary:active,
 .btn-primary[disabled].active,
 fieldset[disabled] .btn-primary.active {
   background-color: #428bca;
-  border-color: #357ebd;
+  border-color: transparent;
 }
 .btn-primary .badge {
   color: #428bca;
@@ -115,7 +115,7 @@ fieldset[disabled] .btn-primary.active {
 .btn-danger {
   color: #fff;
   background-color: #1034A6;
-  border-color: #60DFE5;
+  border-color: transparent;
 }
 .btn-danger:hover,
 .btn-danger:focus,
@@ -123,17 +123,18 @@ fieldset[disabled] .btn-primary.active {
 .btn-danger.active,
 .open > .dropdown-toggle.btn-danger {
   color: #fff;
-  background-color: #c9302c;
-  border-color: #60DFE5;
+  background-color: #428bca;
+  border-color: transparent;
 }
 fieldset[disabled] .btn-danger.active {
-  background-color: #103496;
-  border-color: #60DFE5;
+  background-color: #1034A6;
+  border-color: transparent;
 }
 .btn-danger .badge {
-  color: #103496;
-  background-color: #60DFE5;
+  color: #1034A6;
+  background-color: #428bca;
 }
+/* btn success is for login/logout */
 .btn-success {
   color: #fff;
   background-color: #000000;
@@ -144,9 +145,9 @@ fieldset[disabled] .btn-danger.active {
 .btn-success:active,
 .btn-success.active,
 .open > .dropdown-toggle.btn-success {
-  color: #fff;
-  background-color: #3F00FF;
-  border-color: #1034A6;
+  color: #428bca;
+  background-color: #000000;
+  border-color: transparent;
 }
 .btn-success.disabled,
 .btn-success[disabled],
@@ -164,7 +165,7 @@ fieldset[disabled] .btn-success:active,
 .btn-success[disabled].active,
 fieldset[disabled] .btn-success.active {
   background-color: #1034A6;
-  border-color: #1034A6;
+  border-color: transparent;
 }
 .btn-success .badge {
   color: #1034A6;
@@ -174,7 +175,7 @@ fieldset[disabled] .btn-success.active {
 .btn-info {
   color: #fff;
   background-color: #1034A6;
-  border-color: #60DFE5;
+  border-color: transparent;
 }
 .btn-info:hover,
 .btn-info:focus,
@@ -183,12 +184,12 @@ fieldset[disabled] .btn-success.active {
 .open > .dropdown-toggle.btn-info {
   color: #fff;
   background-color: #3F00FF;
-  border-color: #60DFE5;
+  border-color: transparent;
 }
 
 fieldset[disabled] .btn-info.active {
   background-color: #1034A6;
-  border-color: #60DFE5;
+  border-color: transparent;
 }
 .btn-info .badge {
   color: #3F00FF;
@@ -197,7 +198,7 @@ fieldset[disabled] .btn-info.active {
 .btn-warning {
   color: #fff;
   background-color: #1034A6;
-  border-color: #60DFE5;
+  border-color: transparent;
 }
 .btn-warning:hover,
 .btn-warning:focus,
@@ -206,18 +207,17 @@ fieldset[disabled] .btn-info.active {
 .open > .dropdown-toggle.btn-warning {
   color: #fff;
   background-color: #3F00FF;
-  border-color: #60DFE5;
+  border-color: transparent;
 }
 
 fieldset[disabled] .btn-warning.active {
   background-color: #1034A6;
-  border-color: #60DFE5;
+  border-color: transparent;
 }
 .btn-warning .badge {
   color: #1034A6;
-  background-color: #60DFE5;
+  background-color: #428bca;
 }
-
 
 .input-group-btn {
   position: relative;
@@ -244,7 +244,7 @@ fieldset[disabled] .btn-warning.active {
 .nav .open > a:hover,
 .nav .open > a:focus {
   background-color: #eee;
-  border-color: #60DFE5;
+  border-color: transparent;
 }
 
 .nav-tabs > li.active > a:focus {
@@ -263,7 +263,7 @@ fieldset[disabled] .btn-warning.active {
 }
 .navbar-inverse .navbar-brand:hover,
 .navbar-inverse .navbar-brand:focus {
-  color: #60DFE5;
+  color: #428bca;
   background-color: transparent;
 }
 .navbar-default .navbar-text {
@@ -282,7 +282,7 @@ fieldset[disabled] .btn-warning.active {
 }
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
-  color: #60DFE5;
+  color: #428bca;
   background-color: transparent;
 }
 
