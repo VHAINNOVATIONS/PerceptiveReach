@@ -12,7 +12,19 @@ angular.module('ui.util')
 	    	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
 	    	for( var i=0; i < 9; i++ )
-	        	text += possible.charAt(Math.floor(Math.random() * possible.length));
+	    	{
+	    		var cryptoObj = window.crypto || window.msCrypto; // for IE 11
+	    		var arr = new Uint32Array(2);
+				cryptoObj.getRandomValues(arr);
+
+				// keep all 32 bits of the the first, top 20 of the second for 52 random bits
+				var mantissa = (arr[0] * Math.pow(2,20)) + (arr[1] >>> 12)
+
+				// shift all 52 bits to the right of the decimal point
+				var result = mantissa * Math.pow(2,-52);
+
+	        	text += possible.charAt(Math.floor(result * possible.length));
+	    	}	    		
 
 	    	return text;
 		}

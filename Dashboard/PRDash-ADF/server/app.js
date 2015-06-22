@@ -21,7 +21,6 @@ io.on('connection', function (socket) {
 	  if(config.prSessionStore[userName] && config.prSessionStore[userName][timeStamp])
 	  {
 	  	 config.prSessionStore[userName][timeStamp] = (new Date()).getTime();
-	  	 console.log('SOCKET DATA: UserName = '+ userName +', TimeStamp='+timeStamp);
 	  }
 	});
 });
