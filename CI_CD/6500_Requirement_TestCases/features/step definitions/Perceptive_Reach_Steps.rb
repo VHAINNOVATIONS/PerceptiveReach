@@ -1,6 +1,7 @@
 Given(/^I navigate to the http:\/\/localhost:(\d+)\/$/) do |arg1|
   visit ('http://localhost:7003')
-  #expect(page).to have_content 'Description' #load IRDS and wait for some content to appear
+ 
+  
 end
 
 
@@ -25,20 +26,71 @@ When(/^I select middle risk veteran row in the widget$/) do
 end
 
 #To test active sessions
-When(/^I open a new browser and navigate to http:\/\/localhost:(\d+)\/$/) do |arg1|
-  #pending # express the regexp above with the code you wish you had
-   
+When(/^I open a browser and navigate to http:\/\/localhost:(\d+) for another session$/) do |arg1|
+  sleep(10)
   
-  #page.driver.browser.close
-  
-  page.driver.browser.navigate.to 'http://localhost:7003'
-    page.driver.browser.switch_to.window(page.driver.browser.window_handles.last)
+  #page.driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL +"t");
+   # page.driver.browser.switch_to.window(page.driver.browser.window_handles.last)
+	#page.driver.browser.get ('http://localhost:7003')
+	#page.driver.browser.close
+	require 'watir-webdriver'
+	b=Watir::Browser.new :chrome
+	b.goto('http://localhost:7003')
+	b.windows.count
+	#b.windows.first.close
+	#b.driver.switch_to.window(b.driver.browser.window_handles.last)
+	b.windows.last.use do
+	b.text_field(:name => "email").set 'perceptiveSUP'
+	#fill_in("email", :with => "vaphsfequia")
+	#fill_in("password", :with => "adsdggtt12")
+	b.text_field(:name => "password").set 'adsdggtt12'
+	#check(arg1)
+	b.checkbox(:id => 'checky').set
+	#find_button('Login').click
+	b.button(:name => 'btnLoginSubmit').click
+	#sleep(3)
+	
+	b.close
+	end
+	
+	
  
  
  
  
   
 end
+
+When(/^I open a browser and navigate to http:\/\/localhost:(\d+) for last session$/) do |arg1|
+  require 'watir-webdriver'
+	b=Watir::Browser.new :chrome
+	b.goto('http://localhost:7003')
+	b.windows.count
+	#b.windows.first.close
+	#b.driver.switch_to.window(b.driver.browser.window_handles.last)
+	b.windows.last.use do
+	b.text_field(:name => "email").set 'perceptiveSUP'
+	#fill_in("email", :with => "vaphsfequia")
+	#fill_in("password", :with => "adsdggtt12")
+	b.text_field(:name => "password").set 'adsdggtt12'
+	#check(arg1)
+	b.checkbox(:id => 'checky').set
+	#find_button('Login').click
+	b.button(:name => 'btnLoginSubmit').click
+	sleep(3)
+	#b.text.include?('Max number of sessions reached, Please log out from your active sessions or wait for 30 secs and try again.').
+	if(b.text.match("Max number of sessions reached, Please log out from your active sessions or wait for 30 secs and try again.") != nil)
+	puts 'passed'
+	
+	else
+	puts 'failed'
+	end
+
+	
+	
+	end
+end
+
 
 When(/^I select top risk veteran row in the widget$/) do 
   #pending # express the regexp above with the code you wish you had
@@ -64,7 +116,7 @@ end
 
 When(/^I leave the page inactive for (\d+) seconds$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
-  sleep(900)
+  sleep(132)
   end
 
 When(/^I click on "(.*?)"$/) do |view|
