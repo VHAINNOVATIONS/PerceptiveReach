@@ -429,17 +429,13 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<label alt=\"Patient ID Status\" for=\"vetPatientIDStatus\">Status</label>\r" +
     "\n" +
-    "            \t<select class='form-control' style='width: 180px;' selected=\"\" name=\"vetPatientIDStatus\" id=\"vet_{{patient.ReachID}}\">\r" +
+    "             <select ng-model=\"patient.OutreachStatus\" id=\"vet_{{patient.ReachID}}\" style='width: 180px;' name=\"vetPatientIDStatus\"\r" +
     "\n" +
-    "            \t\t<option value=''></option>\r" +
+    "                ng-options=\"opt.OutReachStatusID as opt.StatusDesc for opt in outreachStatusList\">\r" +
     "\n" +
-    "            \t\t<option ng-repeat=\"outreachStatus in outreachStatusList\" value=\"{{outreachStatus.OutReachStatusID}}\">{{outreachStatus.StatusDesc}}</option>\r" +
-    "\n" +
-    "            \t</select> \r" +
+    "             </select>\r" +
     "\n" +
     "            </td>\r" +
-    "\n" +
-    "            <!--<td>{{ patient.OutreachStatus }}</td>-->\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +

@@ -2647,30 +2647,14 @@ angular.module('ui.widgets')
         //console.log("patientTable widgetScope", scope);
         
         scope.$on("updateSelectMenu", function (){
-          //scope.$apply();
-          //scope.dtInstance = dtInstance;
-          //while($('#vet_').length < 1){} 
-          //console.log("before select menu");
           var datamodelList = {};
-          var patientList = scope.widgetData[1];
+          var patientList = scope.widgetData[1];          
+          $( "select[id^='vet_']" ).on("change",function(e,ui){
+            var selectedIndex = $("option:selected", this).val();
+            var selectedreachId = $(e.currentTarget).attr('id').replace("vet_","");
+            scope.widget.dataModel.saveOutreachData(parseInt(selectedIndex) + 1,selectedreachId);
+          } );
 
-          for(patient in scope.patientList){
-            //console.log('#vet_' + scope.patientList[patient].ReachID);
-            var reachID = scope.patientList[patient].ReachID;
-            datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient]; 
-            $('#vet_' + reachID).val(scope.patientList[patient].OutreachStatus);
-            //console.log('#vet_' + reachID,$('#vet_' + reachID).val());
-            $('#vet_' + reachID).selectmenu({
-              select: function( event, ui ) {
-                // Write back selection to the patient Risk table for the patient
-                //console.log(ui);
-                //console.log(ui.item.element.context.parentElement.id.replace("vet_",""));
-                scope.widget.dataModel.saveOutreachData(ui.item.index, ui.item.element.context.parentElement.id.replace("vet_",""));                    
-              }
-            });
-            //datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient].OutreachStatus; 
-          }
-          
           $('#tblPatient tbody').on( 'click', 'tr', function (event) {
             //console.log( dataTableVet.row( this ).data() );
             //console.log("Patient click event",event);
@@ -2686,11 +2670,12 @@ angular.module('ui.widgets')
               // get common data object
               var commonData = scope.widget.dataModelOptions.common;
               // update common data object with new patient object
-              
-              commonData.data.veteranObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
               var vetId = event.currentTarget.cells[5].children[1].id.replace("vet_","");
+              var obj = jQuery.grep(scope.patientList, function( n, i ) {
+                return ( n.ReachID == vetId );
+              });
               console.log("ReachID Vet Selected: ",vetId);
-              commonData.data.veteranObj = datamodelList[vetId];
+              commonData.data.veteranObj = obj[0];
               console.log("CommonDataAfterClick: ", commonData);
               // broadcast message throughout system
               scope.$parent.$broadcast('commonDataChanged', commonData);
@@ -3494,17 +3479,13 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<label alt=\"Patient ID Status\" for=\"vetPatientIDStatus\">Status</label>\r" +
     "\n" +
-    "            \t<select class='form-control' style='width: 180px;' selected=\"\" name=\"vetPatientIDStatus\" id=\"vet_{{patient.ReachID}}\">\r" +
+    "             <select ng-model=\"patient.OutreachStatus\" id=\"vet_{{patient.ReachID}}\" style='width: 180px;' name=\"vetPatientIDStatus\"\r" +
     "\n" +
-    "            \t\t<option value=''></option>\r" +
+    "                ng-options=\"opt.OutReachStatusID as opt.StatusDesc for opt in outreachStatusList\">\r" +
     "\n" +
-    "            \t\t<option ng-repeat=\"outreachStatus in outreachStatusList\" value=\"{{outreachStatus.OutReachStatusID}}\">{{outreachStatus.StatusDesc}}</option>\r" +
-    "\n" +
-    "            \t</select> \r" +
+    "             </select>\r" +
     "\n" +
     "            </td>\r" +
-    "\n" +
-    "            <!--<td>{{ patient.OutreachStatus }}</td>-->\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
