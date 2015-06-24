@@ -9,4 +9,4 @@ And I click on check box "checky"
 And I click on "Login" button
 And I should see "Individual View"
 When I leave the page inactive for 912 seconds
-Then I should see "Account is disabled due to inactivity"
+Then I should see "You're Idle. Do Something! You'll be logged out"
