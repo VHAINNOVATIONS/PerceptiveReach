@@ -465,4 +465,37 @@ angular.module('ui.models')
     });
 
     return DiagnosesDataModel;
-  });
+  })/*
+.factory('SuicideIndicatorsDataModel', function ($http, WidgetDataModel) {
+    function SuicideIndicatorsDataModel() {
+    }
+
+    SuicideIndicatorsDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    SuicideIndicatorsDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(SuicideIndicatorsDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+      $http.get('http://services.healthindicators.gov/v5/REST.svc/IndicatorDescription/1105/Data/1?Key=dde176b400f9465890a62e5c70f70155')
+        .success(function(dataset) {
+		//insert custom transformation code here
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return SuicideIndicatorsDataModel;
+  })*/;
