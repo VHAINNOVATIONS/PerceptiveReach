@@ -465,7 +465,7 @@ angular.module('ui.models')
     });
 
     return DiagnosesDataModel;
-  })/*
+  })
 .factory('SuicideIndicatorsDataModel', function ($http, WidgetDataModel) {
     function SuicideIndicatorsDataModel() {
     }
@@ -485,10 +485,12 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-      $http.get('http://services.healthindicators.gov/v5/REST.svc/IndicatorDescription/1105/Data/1?Key=dde176b400f9465890a62e5c70f70155')
+      $http.get('services.healthindicators.gov/v5/REST.svc/IndicatorDescription/1105/Data/1?Key=dde176b400f9465890a62e5c70f70155')
+	  
         .success(function(dataset) {
 		//insert custom transformation code here
-                data = dataset;
+		var jsonObject = ngXml2json.parser(dataset);
+                data = jsonObject;
                 this.updateScope(data);
             }.bind(this));
       },
@@ -498,4 +500,4 @@ angular.module('ui.models')
       }
     });
     return SuicideIndicatorsDataModel;
-  })*/;
+  });

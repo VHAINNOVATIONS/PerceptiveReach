@@ -6,7 +6,7 @@ angular.module('app')
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
                                     PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel,
-                                    AppointmentDataModel, DiagnosesDataModel/*, SuicideIndicatorsDataModel*/) {
+                                    AppointmentDataModel, DiagnosesDataModel, SuicideIndicatorsDataModel) {
     return [
       {
         name: 'time',
@@ -128,7 +128,7 @@ angular.module('app')
           height: '350px'
         }
       },
-	  /*{
+	  {
         name: 'suicideIndicators',
         directive: 'wt-suicide-indicators',
         dataAttrName: 'data',
@@ -138,7 +138,7 @@ angular.module('app')
           //width: '25%',
           height: '350px'
         }
-      },*/
+      },
 	  {
         name: 'contact',
         directive: 'wt-contact',
