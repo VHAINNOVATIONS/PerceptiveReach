@@ -8,6 +8,6 @@ And I put in "password" field as "FeAn#011819"
 And I click on check box "checky"
 And I click on "Login" button
 And I click on "Individual View"
-When I open a browser and navigate to http://localhost:7003 for another session
-When  I open a browser and navigate to http://localhost:7003 for another session
-When  I open a browser and navigate to http://localhost:7003 for last session
+When I open a browser and navigate to http://localhost:7003 for another session with username "TESTER191" and password "FeAn#011819"
+When  I open a browser and navigate to http://localhost:7003 for another session with username "TESTER191" and password "FeAn#011819"
+When  I open a browser and navigate to http://localhost:7003 for last session with username "TESTER191" and password "FeAn#011819"
