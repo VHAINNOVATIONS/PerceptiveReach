@@ -11,3 +11,4 @@ And I click on "Individual View"
 When I open a browser and navigate to http://localhost:7003 for another session with username "TESTER191" and password "FeAn#011819"
 When  I open a browser and navigate to http://localhost:7003 for another session with username "TESTER191" and password "FeAn#011819"
 When  I open a browser and navigate to http://localhost:7003 for last session with username "TESTER191" and password "FeAn#011819"
+And I click on "Logout" button
