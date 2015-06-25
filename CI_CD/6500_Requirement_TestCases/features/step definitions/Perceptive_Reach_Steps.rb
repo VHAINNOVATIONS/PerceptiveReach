@@ -1,4 +1,5 @@
 Given(/^I navigate to the http:\/\/localhost:(\d+)\/$/) do |arg1|
+sleep(30)
  visit ('http://localhost:7003')
   #expect(page).to have_content 'Description' #load IRDS and wait for some content to appear
 end
