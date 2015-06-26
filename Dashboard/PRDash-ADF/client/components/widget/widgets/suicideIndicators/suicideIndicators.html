@@ -1,0 +1,23 @@
+<div class="suicideIndicators">
+		<table id="tblSuicideIndicators" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">		
+			<thead>
+				<tr>
+					<th>Age Range</th>
+					<th>Timeframe</th>
+					<th>Numeric Value</th>
+					<th>Veteran Status<th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="ind in data track by $index">
+					<td>{{ind.Age}}</td>
+					<td>{{ind.Timeframe}}</td>
+					<td>{{ind.NumericValue}}</td>
+					<td>{{ind.VeteranStatus}}</td>
+				</tr>
+			</tbody>
+		<table>
+</div>
+<div>
+	<br><br>For more information visit the Suicide Deaths per 100000 indicator site at HealthIndicators.gov <a href="http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData">http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData</a>
+</div>
