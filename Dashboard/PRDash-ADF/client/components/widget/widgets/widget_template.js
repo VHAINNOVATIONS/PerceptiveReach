@@ -399,9 +399,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t<!--<div id=\"spinner\" style=\"height: 100px;\"> </div>-->\r" +
     "\n" +
-    "    <table id=\"tblPatient\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\" width=\"100%\">\r" +
+    "    <table id=\"tblPatient\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
-    "    \t<thead>\r" +
+    "    \t<!--<thead>\r" +
     "\n" +
     "        <tr>\r" +
     "\n" +
@@ -439,7 +439,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        </tr>\r" +
     "\n" +
-    "        </tbody>\r" +
+    "        </tbody>-->\r" +
     "\n" +
     "    </table>\r" +
     "\n" +
@@ -573,6 +573,54 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "        <span class=\"glyphicon glyphicon-chevron-right\"></span>\r" +
     "\n" +
     "    </button>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/suicideIndicators/suicideIndicators.html",
+    "<div class=\"suicideIndicators\">\r" +
+    "\n" +
+    "\t\t<table id=\"tblSuicideIndicators\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\t\t\r" +
+    "\n" +
+    "\t\t\t<thead>\r" +
+    "\n" +
+    "\t\t\t\t<tr>\r" +
+    "\n" +
+    "\t\t\t\t\t<th>Age Range</th>\r" +
+    "\n" +
+    "\t\t\t\t\t<th>Timeframe</th>\r" +
+    "\n" +
+    "\t\t\t\t\t<th>Numeric Value</th>\r" +
+    "\n" +
+    "\t\t\t\t\t<th>Veteran Status<th>\r" +
+    "\n" +
+    "\t\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t\t</thead>\r" +
+    "\n" +
+    "\t\t\t<tbody>\r" +
+    "\n" +
+    "\t\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\n" +
+    "\t\t\t\t\t<td>{{ind.Age}}</td>\r" +
+    "\n" +
+    "\t\t\t\t\t<td>{{ind.Timeframe}}</td>\r" +
+    "\n" +
+    "\t\t\t\t\t<td>{{ind.NumericValue}}</td>\r" +
+    "\n" +
+    "\t\t\t\t\t<td>{{ind.VeteranStatus}}</td>\r" +
+    "\n" +
+    "\t\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t\t</tbody>\r" +
+    "\n" +
+    "\t\t<table>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "<div>\r" +
+    "\n" +
+    "\t<br><br>For more information visit the Suicide Deaths per 100000 indicator site at HealthIndicators.gov <a href=\"http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData\">http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData</a>\r" +
     "\n" +
     "</div>"
   );

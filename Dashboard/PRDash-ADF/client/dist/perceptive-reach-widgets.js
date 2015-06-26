@@ -804,6 +804,41 @@ angular.module('ui.models')
     });
 
     return DiagnosesDataModel;
+  })
+.factory('SuicideIndicatorsDataModel', function ($http, WidgetDataModel) {
+    function SuicideIndicatorsDataModel() {
+    }
+
+    SuicideIndicatorsDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    SuicideIndicatorsDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(SuicideIndicatorsDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+      $http.get('services.healthindicators.gov/v5/REST.svc/IndicatorDescription/1105/Data/1?Key=dde176b400f9465890a62e5c70f70155')
+	  
+        .success(function(dataset) {
+		//insert custom transformation code here
+		var jsonObject = ngXml2json.parser(dataset);
+                data = jsonObject;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return SuicideIndicatorsDataModel;
   });
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
@@ -2599,16 +2634,25 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/patientTable/patientTable.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
         //console.log("inside patient roster controller");
         //console.log($scope.widgetData);
-        $scope.dtinstance = DTInstances;
+        //$scope.dtinstance = DTInstances;
+        $scope.dtInstance = {};
         $scope.patientList = $scope.widgetData;
         //console.log("dtoptionsbuilder, dtcolumnsdefbuilder, dtinstances");
         //console.log(DTOptionsBuilder);
         //console.log(DTColumnDefBuilder);
         //console.log(DTInstances);
-        $scope.dtOptions = DTOptionsBuilder.newOptions()//.fromSource($scope.widgetData)
+        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+              return new Promise( function(resolve, reject){
+                if ($scope.widgetData)
+                  resolve($scope.widgetData);
+                else
+                  resolve([]);
+              });
+
+          })//.fromSource($scope.widgetData) newOptions().
             .withDOM('lfrti')
             .withScroller()
             .withOption('deferRender', true)
@@ -2616,18 +2660,18 @@ angular.module('ui.widgets')
             .withOption('scrollY', 200)
             .withOption('paging',false);
         $scope.dtColumns = [
-          DTColumnDefBuilder.newColumnDef(0),
+          /*DTColumnDefBuilder.newColumnDef(0),
           DTColumnDefBuilder.newColumnDef(1),
           DTColumnDefBuilder.newColumnDef(2),
           DTColumnDefBuilder.newColumnDef(3),
           DTColumnDefBuilder.newColumnDef(4),
-          DTColumnDefBuilder.newColumnDef(5)
-            /*DTColumnBuilder.newColumn('Name').withTitle('Name'),
+          DTColumnDefBuilder.newColumnDef(5)*/
+            DTColumnBuilder.newColumn('Name').withTitle('Name'),
             DTColumnBuilder.newColumn('SSN').withTitle('SSN'),
-            DTColumnBuilder.newColumn('Phone').withTitle('Phone'),
-            DTColumnBuilder.newColumn('DateIdentifiedRisk').withTitle('Date First Identified'),
+            DTColumnBuilder.newColumn('HomePhone').withTitle('Phone'),
+            DTColumnBuilder.newColumn('DateIdentifiedAsAtRisk').withTitle('Date First Identified'),
             DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level'),
-            DTColumnBuilder.newColumn('OutreachStatus').withTitle('Outreach Status')*/
+            DTColumnBuilder.newColumn('OutreachStatusSelect').withTitle('Outreach Status')
         ];
         //console.log("dtoptions:  ");
         //console.log($scope.dtOptions);
@@ -2670,7 +2714,7 @@ angular.module('ui.widgets')
               // get common data object
               var commonData = scope.widget.dataModelOptions.common;
               // update common data object with new patient object
-              var vetId = event.currentTarget.cells[5].children[1].id.replace("vet_","");
+              var vetId = event.currentTarget.cells[5].children[0].id.replace("vet_","");
               var obj = jQuery.grep(scope.patientList, function( n, i ) {
                 return ( n.ReachID == vetId );
               });
@@ -2723,9 +2767,28 @@ angular.module('ui.widgets')
             //scope.dtInstance.changeData(scope.widgetData[1]);
             scope.outreachStatusList = scope.widgetData[2];
             scope.patientList = scope.widgetData[1];
-            /*for(var patient in scope.patientList){
-              datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient]; 
-            }*/
+            var outreachStatus = scope.outreachStatusList;
+            var patientsBysta3N = scope.patientList;
+
+            for(var patient in patientsBysta3N){
+              var selected = ' selected="selected"';
+              var options = "";
+              var temp = "";
+              for(var outreachStat in outreachStatus){
+                if(patientsBysta3N[patient].OutreachStatus == outreachStatus[outreachStat].OutReachStatusID)
+                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + selected + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
+                else{
+                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
+                  //console.log("outreachStatusString: ",  temp);
+                }
+                options += temp;                
+              }
+              var select = "<select class='form-control' style='width: 180px;' id='vet_" + patientsBysta3N[patient].ReachID + "'><option value=''></option>"+ options+ "</select>";
+              //record.push(String(select));
+              patientsBysta3N[patient].OutreachStatusSelect = select;
+              //datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient]; 
+            }
+            scope.patientList = patientsBysta3N;
             //scope.dataModelObj = datamodelList;
             //console.log("datamodelobj:::");
             //console.log(scope.dataModelObj);
@@ -2750,9 +2813,15 @@ angular.module('ui.widgets')
                     "sRowSelect": "single"
                 }
             });*/
-            /*scope.dtinstance.getLast().then(function(dtInstance) {
-              
-            });*/
+            console.log("dtInstance",scope.dtInstance);
+            scope.dtInstance.changeData(
+              new Promise( function(resolve, reject){
+                if (scope.patientList)
+                  resolve(scope.patientList);
+                else
+                  resolve([]);
+              })              
+            );
             //scope.$apply();
             $timeout(function(){
               scope.$emit('updateSelectMenu');  
@@ -2961,6 +3030,59 @@ angular.module('ui.widgets')
           var nextIndex = (index + 1) % $scope.options.length;
           $scope.value = $scope.options[nextIndex];
         };
+      }
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtSuicideIndicators', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/suicideIndicators/suicideIndicators.html',
+      scope: {
+        data: '=',
+      },
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scrollY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false)
+            .withOption('order', [1, 'desc']);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2),
+			DTColumnDefBuilder.newColumnDef(3)
+        ];
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.data = data;
+          }
+        });
       }
     };
   });
@@ -3449,9 +3571,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t<!--<div id=\"spinner\" style=\"height: 100px;\"> </div>-->\r" +
     "\n" +
-    "    <table id=\"tblPatient\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\" width=\"100%\">\r" +
+    "    <table id=\"tblPatient\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
-    "    \t<thead>\r" +
+    "    \t<!--<thead>\r" +
     "\n" +
     "        <tr>\r" +
     "\n" +
@@ -3489,7 +3611,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        </tr>\r" +
     "\n" +
-    "        </tbody>\r" +
+    "        </tbody>-->\r" +
     "\n" +
     "    </table>\r" +
     "\n" +
@@ -3623,6 +3745,54 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "        <span class=\"glyphicon glyphicon-chevron-right\"></span>\r" +
     "\n" +
     "    </button>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/suicideIndicators/suicideIndicators.html",
+    "<div class=\"suicideIndicators\">\r" +
+    "\n" +
+    "\t\t<table id=\"tblSuicideIndicators\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\t\t\r" +
+    "\n" +
+    "\t\t\t<thead>\r" +
+    "\n" +
+    "\t\t\t\t<tr>\r" +
+    "\n" +
+    "\t\t\t\t\t<th>Age Range</th>\r" +
+    "\n" +
+    "\t\t\t\t\t<th>Timeframe</th>\r" +
+    "\n" +
+    "\t\t\t\t\t<th>Numeric Value</th>\r" +
+    "\n" +
+    "\t\t\t\t\t<th>Veteran Status<th>\r" +
+    "\n" +
+    "\t\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t\t</thead>\r" +
+    "\n" +
+    "\t\t\t<tbody>\r" +
+    "\n" +
+    "\t\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\n" +
+    "\t\t\t\t\t<td>{{ind.Age}}</td>\r" +
+    "\n" +
+    "\t\t\t\t\t<td>{{ind.Timeframe}}</td>\r" +
+    "\n" +
+    "\t\t\t\t\t<td>{{ind.NumericValue}}</td>\r" +
+    "\n" +
+    "\t\t\t\t\t<td>{{ind.VeteranStatus}}</td>\r" +
+    "\n" +
+    "\t\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t\t</tbody>\r" +
+    "\n" +
+    "\t\t<table>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "<div>\r" +
+    "\n" +
+    "\t<br><br>For more information visit the Suicide Deaths per 100000 indicator site at HealthIndicators.gov <a href=\"http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData\">http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData</a>\r" +
     "\n" +
     "</div>"
   );
