@@ -6,7 +6,7 @@ angular.module('app')
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
                                     PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel,
-                                    AppointmentDataModel, DiagnosesDataModel, SuicideIndicatorsDataModel) {
+                                    AppointmentDataModel, DiagnosesDataModel, SuicideIndicatorsDataModel /*,NationalDataModel*/) {
     return [
       {
         name: 'time',
@@ -138,7 +138,18 @@ angular.module('app')
           //width: '25%',
           height: '350px'
         }
-      },
+      }/*,
+	  {
+        name: 'nationalData',
+        directive: 'wt-national-data',
+        dataAttrName: 'data',
+        title: 'National Data',
+        dataModelType: NationalDataModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      }*/,
 	  {
         name: 'contact',
         directive: 'wt-contact',
