@@ -484,13 +484,11 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
+        
 
-      $http.get('services.healthindicators.gov/v5/REST.svc/IndicatorDescription/1105/Data/1?Key=dde176b400f9465890a62e5c70f70155')
-	  
+      $http.get('/api/suicideData?id='+ this.reachID)
         .success(function(dataset) {
-		//insert custom transformation code here
-		var jsonObject = ngXml2json.parser(dataset);
-                data = jsonObject;
+                data = dataset; 
                 this.updateScope(data);
             }.bind(this));
       },
@@ -500,4 +498,46 @@ angular.module('ui.models')
       }
     });
     return SuicideIndicatorsDataModel;
-  });
+  })/*
+  .factory('NationalDataModel', function ($http, CommonDataModel) {
+    function NationalDataModel() {
+    }
+
+    NationalDataModel.prototype = Object.create(CommonDataModel.prototype);
+    NationalDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(NationalDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
+        
+        this.updateScope('-');
+        //this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/nationalData?id='+ this.reachID)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return NationalDataModel;
+  })*/;

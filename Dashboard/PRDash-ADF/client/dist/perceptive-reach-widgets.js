@@ -823,13 +823,11 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
+        
 
-      $http.get('services.healthindicators.gov/v5/REST.svc/IndicatorDescription/1105/Data/1?Key=dde176b400f9465890a62e5c70f70155')
-	  
+      $http.get('/api/suicideData?id='+ this.reachID)
         .success(function(dataset) {
-		//insert custom transformation code here
-		var jsonObject = ngXml2json.parser(dataset);
-                data = jsonObject;
+                data = dataset; 
                 this.updateScope(data);
             }.bind(this));
       },
@@ -839,7 +837,49 @@ angular.module('ui.models')
       }
     });
     return SuicideIndicatorsDataModel;
-  });
+  })/*
+  .factory('NationalDataModel', function ($http, CommonDataModel) {
+    function NationalDataModel() {
+    }
+
+    NationalDataModel.prototype = Object.create(CommonDataModel.prototype);
+    NationalDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(NationalDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
+        
+        this.updateScope('-');
+        //this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/nationalData?id='+ this.reachID)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return NationalDataModel;
+  })*/;
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -2480,6 +2520,35 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
+  .directive('wtNationalData', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/national/national.html',
+      scope: {
+        data: '=data'
+      }     
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
   .directive('wtNvd3LineChart', function ($filter) {
     return {
       restrict: 'A',
@@ -2637,8 +2706,8 @@ angular.module('ui.widgets')
       controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
         //console.log("inside patient roster controller");
         //console.log($scope.widgetData);
-        //$scope.dtinstance = DTInstances;
-        $scope.dtInstance = {};
+        $scope.dtInstanceAbstract = DTInstances;
+        $scope.dtInstance = null;
         $scope.patientList = $scope.widgetData;
         //console.log("dtoptionsbuilder, dtcolumnsdefbuilder, dtinstances");
         //console.log(DTOptionsBuilder);
@@ -2813,15 +2882,22 @@ angular.module('ui.widgets')
                     "sRowSelect": "single"
                 }
             });*/
-            console.log("dtInstance",scope.dtInstance);
-            scope.dtInstance.changeData(
-              new Promise( function(resolve, reject){
-                if (scope.patientList)
-                  resolve(scope.patientList);
-                else
-                  resolve([]);
-              })              
-            );
+            
+            var promise = new Promise( function(resolve, reject){
+                  if (scope.patientList)
+                    resolve(scope.patientList);
+                  else
+                    resolve([]);
+                });
+            if(scope.dtInstance)
+              scope.dtInstance.changeData(promise);
+            else {
+              scope.dtInstanceAbstract.getList().then(function(dtInstances){
+                //console.log("dtInstance",dtInstances);
+                dtInstances.tblPatient._renderer.changeData(promise)              
+              });
+            }
+            
             //scope.$apply();
             $timeout(function(){
               scope.$emit('updateSelectMenu');  
@@ -3486,6 +3562,40 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "            tooltips=\"true\">\r" +
     "\n" +
     "    </nvd3-line-chart>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/national/national.html",
+    "<div class=\"national\">\r" +
+    "\n" +
+    "    <div ng-show=\"data.length\">\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data[0].FirstName}} {{data[0].LastName}}<br>\r" +
+    "\n" +
+    "    \t<b>Last 4 of SSN:</b> {{data[0].SSN}}<br>\r" +
+    "\n" +
+    "    \t<b>Cell Phone:</b> {{data[0].CellPhone}}<br>\r" +
+    "\n" +
+    "        <b>Home Phone:</b> {{data[0].HomePhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Work Phone:</b> {{data[0].WorkPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].Address1}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data[0].City}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data[0].State}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data[0].Zip}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
+    "\n" +
+    "        <h4>No Data Found</h4>\r" +
+    "\n" +
+    "    </div>\r" +
     "\n" +
     "</div>"
   );
