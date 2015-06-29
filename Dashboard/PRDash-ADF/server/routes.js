@@ -34,6 +34,7 @@ module.exports = function(app) {
   app.use('/api/getListOfVAMC', require('./api/getListOfVAMC'));
   app.use('/api/getListOfOutreachStatus', require('./api/getListOfOutreachStatus'));
   app.use('/api/clinicalDecisionSupport', require('./api/clinicalDecisionSupport'));
+  app.use('/api/suicideData', require('./api/suicideData'));
 
   app.use('/api/patientContact', require('./api/patientContact'));
   app.use('/api/emergencyContact', require('./api/emergencyContact'));

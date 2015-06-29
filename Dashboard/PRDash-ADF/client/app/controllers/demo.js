@@ -135,7 +135,7 @@ angular.module('app')
         title: 'Suicide Indicators',
         dataModelType: SuicideIndicatorsDataModel,
         size: {
-          //width: '25%',
+          width: '35%',
           height: '350px'
         }
       }/*,
