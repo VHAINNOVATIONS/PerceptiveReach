@@ -3,16 +3,16 @@
 			<thead>
 				<tr>
 					<th>Age Range</th>
-					<th>Timeframe</th>
-					<th>Numeric Value</th>
-					<th>Veteran Status<th>
+					<th>Gender</th>
+					<th>Total</th>
+					<th>Veteran Status</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="ind in data track by $index">
 					<td>{{ind.Age}}</td>
-					<td>{{ind.Timeframe}}</td>
-					<td>{{ind.NumericValue}}</td>
+					<td>{{ind.Sex}}</td>
+					<td>{{ind.Total}}</td>
 					<td>{{ind.VeteranStatus}}</td>
 				</tr>
 			</tbody>

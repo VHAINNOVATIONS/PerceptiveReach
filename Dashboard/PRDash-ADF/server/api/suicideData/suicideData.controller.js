@@ -19,14 +19,7 @@ exports.index = function(req, res) {
   var dbc = require('../../config/db_connection/development.js');
     var config = dbc.config;
 
-    var id = req.param("id");
-    var query = '';
-    if (id) {
-        query = "SELECT Age, Sex, Total, VeteranStatus FROM  dbo.SuicideIndicators"
-        query += "WHERE a.ReachID =  " + id;
-    } else {
-        res.send("ERROR: ReachID  is required.");
-    }
+    var query = "SELECT Age, Sex, Total, VeteranStatus FROM dbo.SuicideIndicators";
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
@@ -45,9 +38,6 @@ exports.index = function(req, res) {
             }
 
             var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
-           /* for (var record in jsonRecordSet) {
-                jsonRecordSet[record].ApptDate = dataFormatter.formatData(jsonRecordSet[record].ApptDate,"date");
-            }*/
             res.send(jsonRecordSet);
         });
 

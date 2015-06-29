@@ -622,11 +622,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t\t<th>Age Range</th>\r" +
     "\n" +
-    "\t\t\t\t\t<th>Timeframe</th>\r" +
+    "\t\t\t\t\t<th>Gender</th>\r" +
     "\n" +
-    "\t\t\t\t\t<th>Numeric Value</th>\r" +
+    "\t\t\t\t\t<th>Total</th>\r" +
     "\n" +
-    "\t\t\t\t\t<th>Veteran Status<th>\r" +
+    "\t\t\t\t\t<th>Veteran Status</th>\r" +
     "\n" +
     "\t\t\t\t</tr>\r" +
     "\n" +
@@ -638,9 +638,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t\t<td>{{ind.Age}}</td>\r" +
     "\n" +
-    "\t\t\t\t\t<td>{{ind.Timeframe}}</td>\r" +
+    "\t\t\t\t\t<td>{{ind.Sex}}</td>\r" +
     "\n" +
-    "\t\t\t\t\t<td>{{ind.NumericValue}}</td>\r" +
+    "\t\t\t\t\t<td>{{ind.Total}}</td>\r" +
     "\n" +
     "\t\t\t\t\t<td>{{ind.VeteranStatus}}</td>\r" +
     "\n" +

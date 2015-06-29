@@ -815,7 +815,8 @@ angular.module('ui.models')
     angular.extend(SuicideIndicatorsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        
+		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+		
         this.updateScope('-');
         this.getData();
       },
@@ -825,7 +826,7 @@ angular.module('ui.models')
         var data = [];
         
 
-      $http.get('/api/suicideData?id='+ this.reachID)
+      $http.get('/api/suicideData')
         .success(function(dataset) {
                 data = dataset; 
                 this.updateScope(data);
@@ -837,7 +838,7 @@ angular.module('ui.models')
       }
     });
     return SuicideIndicatorsDataModel;
-  })/*
+  })
   .factory('NationalDataModel', function ($http, CommonDataModel) {
     function NationalDataModel() {
     }
@@ -879,7 +880,7 @@ angular.module('ui.models')
     });
 
     return NationalDataModel;
-  })*/;
+  });
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -3156,6 +3157,7 @@ angular.module('ui.widgets')
       link: function postLink(scope) {
         scope.$watch('data', function (data) {
           if (data) {
+			console.log("SuicideData: ", data);
             scope.data = data;
           }
         });
@@ -3870,11 +3872,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t\t<th>Age Range</th>\r" +
     "\n" +
-    "\t\t\t\t\t<th>Timeframe</th>\r" +
+    "\t\t\t\t\t<th>Gender</th>\r" +
     "\n" +
-    "\t\t\t\t\t<th>Numeric Value</th>\r" +
+    "\t\t\t\t\t<th>Total</th>\r" +
     "\n" +
-    "\t\t\t\t\t<th>Veteran Status<th>\r" +
+    "\t\t\t\t\t<th>Veteran Status</th>\r" +
     "\n" +
     "\t\t\t\t</tr>\r" +
     "\n" +
@@ -3886,9 +3888,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t\t<td>{{ind.Age}}</td>\r" +
     "\n" +
-    "\t\t\t\t\t<td>{{ind.Timeframe}}</td>\r" +
+    "\t\t\t\t\t<td>{{ind.Sex}}</td>\r" +
     "\n" +
-    "\t\t\t\t\t<td>{{ind.NumericValue}}</td>\r" +
+    "\t\t\t\t\t<td>{{ind.Total}}</td>\r" +
     "\n" +
     "\t\t\t\t\t<td>{{ind.VeteranStatus}}</td>\r" +
     "\n" +
