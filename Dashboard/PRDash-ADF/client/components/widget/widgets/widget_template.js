@@ -318,6 +318,40 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/national/national.html",
+    "<div class=\"national\">\r" +
+    "\n" +
+    "    <div ng-show=\"data.length\">\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data[0].FirstName}} {{data[0].LastName}}<br>\r" +
+    "\n" +
+    "    \t<b>Last 4 of SSN:</b> {{data[0].SSN}}<br>\r" +
+    "\n" +
+    "    \t<b>Cell Phone:</b> {{data[0].CellPhone}}<br>\r" +
+    "\n" +
+    "        <b>Home Phone:</b> {{data[0].HomePhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Work Phone:</b> {{data[0].WorkPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].Address1}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data[0].City}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data[0].State}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data[0].Zip}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
+    "\n" +
+    "        <h4>No Data Found</h4>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/nvd3LineChart/nvd3LineChart.html",
     "<div class=\"bar-chart\">\r" +
     "\n" +
