@@ -476,7 +476,8 @@ angular.module('ui.models')
     angular.extend(SuicideIndicatorsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        
+		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+		
         this.updateScope('-');
         this.getData();
       },
@@ -486,7 +487,7 @@ angular.module('ui.models')
         var data = [];
         
 
-      $http.get('/api/suicideData?id='+ this.reachID)
+      $http.get('/api/suicideData')
         .success(function(dataset) {
                 data = dataset; 
                 this.updateScope(data);
@@ -498,7 +499,7 @@ angular.module('ui.models')
       }
     });
     return SuicideIndicatorsDataModel;
-  })/*
+  })
   .factory('NationalDataModel', function ($http, CommonDataModel) {
     function NationalDataModel() {
     }
@@ -540,4 +541,4 @@ angular.module('ui.models')
     });
 
     return NationalDataModel;
-  })*/;
+  });
