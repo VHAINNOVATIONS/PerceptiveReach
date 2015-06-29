@@ -2706,8 +2706,8 @@ angular.module('ui.widgets')
       controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
         //console.log("inside patient roster controller");
         //console.log($scope.widgetData);
-        //$scope.dtinstance = DTInstances;
-        $scope.dtInstance = {};
+        $scope.dtInstanceAbstract = DTInstances;
+        $scope.dtInstance = null;
         $scope.patientList = $scope.widgetData;
         //console.log("dtoptionsbuilder, dtcolumnsdefbuilder, dtinstances");
         //console.log(DTOptionsBuilder);
@@ -2882,15 +2882,22 @@ angular.module('ui.widgets')
                     "sRowSelect": "single"
                 }
             });*/
-            console.log("dtInstance",scope.dtInstance);
-            scope.dtInstance.changeData(
-              new Promise( function(resolve, reject){
-                if (scope.patientList)
-                  resolve(scope.patientList);
-                else
-                  resolve([]);
-              })              
-            );
+            
+            var promise = new Promise( function(resolve, reject){
+                  if (scope.patientList)
+                    resolve(scope.patientList);
+                  else
+                    resolve([]);
+                });
+            if(scope.dtInstance)
+              scope.dtInstance.changeData(promise);
+            else {
+              scope.dtInstanceAbstract.getList().then(function(dtInstances){
+                //console.log("dtInstance",dtInstances);
+                dtInstances.tblPatient._renderer.changeData(promise)              
+              });
+            }
+            
             //scope.$apply();
             $timeout(function(){
               scope.$emit('updateSelectMenu');  
