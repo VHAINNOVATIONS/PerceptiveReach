@@ -10,7 +10,7 @@ And I click on check box "checky"
   And I click on "Login" button
   When I click on "Individual View" 
   Then I should see "Patient Roster by VAMC" widget
-  And I should see "Veteran_109258, Vet109258 undefined"
+  And I should see "Veteran_109258, Vet109258"
   Then I should see "Patient Contact" widget
   And I click on "Logout" button
 
