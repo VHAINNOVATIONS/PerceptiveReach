@@ -626,6 +626,8 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t\t<th>Total</th>\r" +
     "\n" +
+    "\t\t\t\t\t<th>Ethnicity</th>\r" +
+    "\n" +
     "\t\t\t\t\t<th>Veteran Status</th>\r" +
     "\n" +
     "\t\t\t\t</tr>\r" +
@@ -641,6 +643,8 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\t\t\t\t\t<td>{{ind.Sex}}</td>\r" +
     "\n" +
     "\t\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "\n" +
+    "\t\t\t\t\t<td>{{ind.RaceEthnicity}}</td>\r" +
     "\n" +
     "\t\t\t\t\t<td>{{ind.VeteranStatus}}</td>\r" +
     "\n" +

@@ -19,7 +19,7 @@ exports.index = function(req, res) {
   var dbc = require('../../config/db_connection/development.js');
     var config = dbc.config;
 
-    var query = "SELECT Age, Sex, Total, VeteranStatus FROM dbo.SuicideIndicators";
+    var query = "SELECT Age, Sex, Total, RaceEthnicity, VeteranStatus FROM  dbo.HealthDataSuicideIndicators";
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks

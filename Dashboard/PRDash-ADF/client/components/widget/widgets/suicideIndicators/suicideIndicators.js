@@ -31,7 +31,7 @@ angular.module('ui.widgets')
             .withScroller()
             .withOption('deferRender', true)
             // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
+            .withOption('scrollY', 450)
             .withOption('paging',false)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
@@ -39,7 +39,8 @@ angular.module('ui.widgets')
             DTColumnDefBuilder.newColumnDef(0),
             DTColumnDefBuilder.newColumnDef(1),
             DTColumnDefBuilder.newColumnDef(2),
-			DTColumnDefBuilder.newColumnDef(3)
+			DTColumnDefBuilder.newColumnDef(3),
+			DTColumnDefBuilder.newColumnDef(4)
         ];
       },
       link: function postLink(scope) {
