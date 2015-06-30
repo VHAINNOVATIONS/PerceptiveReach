@@ -1,9 +1,0 @@
-Feature: As any IRDS user, I want to view the standard VA 6500 Handbook warning before I log in to the system PR-2079 1.1.67
-
-Scenario: I open a web browser and navigate to http://localhost:7003/ to see the waring before log in
-Given I navigate to the http://localhost:7003/
-Then I should see "Perceptive Reach"
-And I should see "This U.S government system is intended to be used by [authorized VA network users] for viewing and retrieving information only, except as otherwise explicitly authorized. VA information resides on and transmits through computer systems and networks funded by VA. All use is considered to be with an understanding and acceptance that there is no reasonable expectation of privacy for any data or transmissions on Government Intranet or Extranet (non-public) networks or systems. All transactions that occur on this system and all data transmitted through this system are subject to review and action including (but not limited to) monitoring, recording, retrieving, copying, auditing, inspecting, investigating, restricting access, blocking, tracking, disclosing to authorized personnel, or any other authorized actions by all authorized VA and law enforcement personnel. All use of this system constitutes understanding and unconditional acceptance of these terms. Unauthorized attempts or acts to either (1) access, upload, change, or delete information on this system, (2) modify this system, (3) deny access to this system, or (4) accrue resources for unauthorized use on this system are strictly prohibited. Such attempts or acts are subject to action that may result in criminal, civil, or administrative penalties."
-And I should see "Username"
-And I should see "Password"
-And I should see "Login"
