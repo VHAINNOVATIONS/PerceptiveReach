@@ -14,9 +14,6 @@ And I click the Add a Widget button
 And I add the "medication" widget
 Then I should see the "Medication" widget
 And I should see "Amoxicillin"
-And I should see "Dosage"
-And I should see "Active Orders"
-And I should see "Inactive Orders"
 And I click on "Logout" button
 
 @click_btw_appts_PR-1405
@@ -31,12 +28,6 @@ And I click on check box "checky"
 And I click on "Login" button
 When I click on "Individual View"
 Then I should see the "Medication" widget
-When I click on "Active Orders"
-Then I should see "Active Orders"
-When I click on "Inactive Orders"
-Then I should see "Inactive Orders" 
-When I check "active" and "inactive" orders
-Then I should see "active and inactive orders"
 And I click on "Logout" button
 
 
