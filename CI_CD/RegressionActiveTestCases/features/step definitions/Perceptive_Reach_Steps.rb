@@ -1,6 +1,8 @@
 Given(/^I navigate to the http:\/\/localhost:(\d+)\/$/) do |arg1|
-sleep(30)
+
+sleep(5)
   visit ('http://localhost:7003')
+  expect(page).to have_content 'I accept the terms and conditions for accessing the system described above'
  
   
 end
