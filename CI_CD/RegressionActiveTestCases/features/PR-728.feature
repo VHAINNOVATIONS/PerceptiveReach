@@ -12,8 +12,7 @@ And I click on "Login" button
 Then I should see "Individual View"
 And I should see "Facility View"
 And I should see "National View"
-And I should see "System Administrator tools"
-And I should see "KNIME & MYSQL Access"
+And I should see "State"
 And I click on "Logout" button
 
 
@@ -45,7 +44,6 @@ And I click on "Login" button
 Then I should see "Individual View"
 And I should see "Facility View"
 And I should see "National View"
-And I should see "KNIME & MYSQL Access"
 And I click on "Logout" button
 
 
