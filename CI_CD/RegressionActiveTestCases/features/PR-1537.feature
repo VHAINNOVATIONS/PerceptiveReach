@@ -17,20 +17,6 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
   And I click on "Logout" button
 
   
-  @active_prob_PR-1537
-
-Scenario: When I am at the Medical Appointments widget I should be able to see all appointments at the same time
-Given I navigate to the http://localhost:7003/
-Then I should see "Perceptive Reach"
-Then I put in "email" field as "vaphsfequia"
-Then I put in "password" field as "FeAn#011819"
-And I click on check box "checky"
-And I click on "Login" button
-When I click on "Individual View"
-Then I should see the "Diagnoses" widget
-Then I click on "Active Problems"
-And I should see "Hypertension (ICD 401)"
-And I should see "Type II Diabetes (ICD 250)"
-And I click on "Logout" button
+  
 
 
