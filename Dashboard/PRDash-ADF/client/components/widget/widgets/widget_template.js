@@ -318,7 +318,45 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
-  $templateCache.put("client/components/widget/widgets/national/national.html",
+  $templateCache.put("client/components/widget/widgets/nationalAgeGroups/nationalAgeGroups.html",
+    "<div class=\"nationalAgeGroups\">\r" +
+    "\n" +
+    "\t<table id=\"tblAgeGroups\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "\t\t<thead>\t\r" +
+    "\n" +
+    "\t\t\t<th>Age Groups</th>\r" +
+    "\n" +
+    "\t\t\t<th>Top</th>\r" +
+    "\n" +
+    "\t\t\t<th>Middle</th>\r" +
+    "\n" +
+    "\t\t\t<th>Total</th>\r" +
+    "\n" +
+    "\t\t</thead>\r" +
+    "\n" +
+    "\t\t<tbody>\r" +
+    "\n" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.AgeRange}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Top}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Middle}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "\n" +
+    "\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t</tbody>\r" +
+    "\n" +
+    "\t</table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalCombatEra/nationalCombatEra.html",
     "<div class=\"national\">\r" +
     "\n" +
     "    <div ng-show=\"data.length\">\r" +
@@ -348,6 +386,302 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "        <h4>No Data Found</h4>\r" +
     "\n" +
     "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalCurrentSafetyPlan/nationalCurrentSafetyPlan.html",
+    "<div class=\"national\">\r" +
+    "\n" +
+    "    <div ng-show=\"data.length\">\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data[0].FirstName}} {{data[0].LastName}}<br>\r" +
+    "\n" +
+    "    \t<b>Last 4 of SSN:</b> {{data[0].SSN}}<br>\r" +
+    "\n" +
+    "    \t<b>Cell Phone:</b> {{data[0].CellPhone}}<br>\r" +
+    "\n" +
+    "        <b>Home Phone:</b> {{data[0].HomePhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Work Phone:</b> {{data[0].WorkPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].Address1}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data[0].City}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data[0].State}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data[0].Zip}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
+    "\n" +
+    "        <h4>No Data Found</h4>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalGenderDistribution/nationalGenderDistribution.html",
+    "<div class=\"nationalGenderDistribution\">\r" +
+    "\n" +
+    "\t<table id=\"tblGenderDistribution\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "\t\t<thead>\t\r" +
+    "\n" +
+    "\t\t\t<th>Risk Level</th>\r" +
+    "\n" +
+    "\t\t\t<th>Gender</th>\r" +
+    "\n" +
+    "\t\t\t<th>Total</th>\r" +
+    "\n" +
+    "\t\t</thead>\r" +
+    "\n" +
+    "\t\t<tbody>\r" +
+    "\n" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Gender}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "\n" +
+    "\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t</tbody>\r" +
+    "\n" +
+    "\t</table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalHighRiskFlag/nationalHighRiskFlag.html",
+    "<div class=\"national\">\r" +
+    "\n" +
+    "    <div ng-show=\"data.length\">\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data[0].FirstName}} {{data[0].LastName}}<br>\r" +
+    "\n" +
+    "    \t<b>Last 4 of SSN:</b> {{data[0].SSN}}<br>\r" +
+    "\n" +
+    "    \t<b>Cell Phone:</b> {{data[0].CellPhone}}<br>\r" +
+    "\n" +
+    "        <b>Home Phone:</b> {{data[0].HomePhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Work Phone:</b> {{data[0].WorkPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].Address1}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data[0].City}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data[0].State}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data[0].Zip}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
+    "\n" +
+    "        <h4>No Data Found</h4>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalMilitaryBranch/nationalMilitaryBranch.html",
+    "<div class=\"national-military-branch\">\r" +
+    "\n" +
+    "\t    <nvd3-discrete-bar-chart\r" +
+    "\n" +
+    "            data=\"data\" \r" +
+    "\n" +
+    "            x=\"xFunction()\" \r" +
+    "\n" +
+    "            y=\"yFunction()\" \r" +
+    "\n" +
+    "            showXAxis=\"true\"\r" +
+    "\n" +
+    "            showYAxis=\"true\"\r" +
+    "\n" +
+    "            showValues=\"true\"\r" +
+    "\n" +
+    "            showLegend=\"true\"\r" +
+    "\n" +
+    "            reduceXTicks=\"false\"\r" +
+    "\n" +
+    "            tooltips=\"true\">\r" +
+    "\n" +
+    "    </nvd3-discrete-bar-chart>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalOutReachStatus/nationalOutReachStatus.html",
+    "<div class=\"nationalOutReachStatus\">\r" +
+    "\n" +
+    "\t<table id=\"tblNationalOutReachStatus\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "\t\t<thead>\t\r" +
+    "\n" +
+    "\t\t\t<th>Risk Level</th>\r" +
+    "\n" +
+    "\t\t\t<th>Status</th>\r" +
+    "\n" +
+    "\t\t\t<th>Total</th>\r" +
+    "\n" +
+    "\t\t</thead>\r" +
+    "\n" +
+    "\t\t<tbody>\r" +
+    "\n" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Status}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "\n" +
+    "\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t</tbody>\r" +
+    "\n" +
+    "\t</table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalPTSDMDDSUD/nationalPTSDMDDSUD.html",
+    "<div class=\"national\">\r" +
+    "\n" +
+    "    <div ng-show=\"data.length\">\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data[0].FirstName}} {{data[0].LastName}}<br>\r" +
+    "\n" +
+    "    \t<b>Last 4 of SSN:</b> {{data[0].SSN}}<br>\r" +
+    "\n" +
+    "    \t<b>Cell Phone:</b> {{data[0].CellPhone}}<br>\r" +
+    "\n" +
+    "        <b>Home Phone:</b> {{data[0].HomePhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Work Phone:</b> {{data[0].WorkPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].Address1}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data[0].City}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data[0].State}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data[0].Zip}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
+    "\n" +
+    "        <h4>No Data Found</h4>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalTopMidRisk/nationalTopMidRisk.html",
+    "<div class=\"nationalTopMidRisk\">\r" +
+    "\n" +
+    "\t    <nvd3-multi-bar-chart\r" +
+    "\n" +
+    "            data=\"data\"\r" +
+    "\n" +
+    "           <!-- xAxisTickFormat=\"xAxisTickFormatFunction()\"-->\r" +
+    "\n" +
+    "            x=\"xFunction()\"\r" +
+    "\n" +
+    "            y=\"yFunction()\"\r" +
+    "\n" +
+    "            showXAxis=\"true\"\r" +
+    "\n" +
+    "            showYAxis=\"true\"\r" +
+    "\n" +
+    "            reduceXTicks=\"false\"\r" +
+    "\n" +
+    "            tooltips=\"true\">\r" +
+    "\n" +
+    "    </nvd3-multi-bar-chart>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalVAClinicTwelveMonths/nationalVAClinicTwelveMonths.html",
+    "<div class=\"national\">\r" +
+    "\n" +
+    "    <div ng-show=\"data.length\">\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data[0].FirstName}} {{data[0].LastName}}<br>\r" +
+    "\n" +
+    "    \t<b>Last 4 of SSN:</b> {{data[0].SSN}}<br>\r" +
+    "\n" +
+    "    \t<b>Cell Phone:</b> {{data[0].CellPhone}}<br>\r" +
+    "\n" +
+    "        <b>Home Phone:</b> {{data[0].HomePhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Work Phone:</b> {{data[0].WorkPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].Address1}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data[0].City}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data[0].State}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data[0].Zip}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
+    "\n" +
+    "        <h4>No Data Found</h4>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalVAMC/nationalVAMC.html",
+    "<div class=\"nationalVAMC\">\r" +
+    "\n" +
+    "\t<table id=\"tblVAMC\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "\t\t<thead>\t\r" +
+    "\n" +
+    "\t\t\t<th>VAMC Name</th>\r" +
+    "\n" +
+    "\t\t\t<th>State</th>\r" +
+    "\n" +
+    "\t\t\t<th>VISN</th>\r" +
+    "\n" +
+    "\t\t\t<th>Total</th>\r" +
+    "\n" +
+    "\t\t</thead>\r" +
+    "\n" +
+    "\t\t<tbody>\r" +
+    "\n" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.VAMCName}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.StateID}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.VISN}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "\n" +
+    "\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t</tbody>\r" +
+    "\n" +
+    "\t</table>\r" +
     "\n" +
     "</div>"
   );

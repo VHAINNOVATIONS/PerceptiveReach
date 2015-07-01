@@ -1,0 +1,16 @@
+<div class="nationalOutReachStatus">
+	<table id="tblNationalOutReachStatus" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+		<thead>	
+			<th>Risk Level</th>
+			<th>Status</th>
+			<th>Total</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="ind in data track by $index">
+				<td>{{ind.RiskLevel}}</td>
+				<td>{{ind.Status}}</td>
+				<td>{{ind.Total}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

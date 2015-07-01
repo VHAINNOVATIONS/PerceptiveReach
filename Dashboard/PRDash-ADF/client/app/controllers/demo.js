@@ -6,7 +6,8 @@ angular.module('app')
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
                                     PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel,
-                                    AppointmentDataModel, DiagnosesDataModel, SuicideIndicatorsDataModel /*,NationalDataModel*/) {
+                                    AppointmentDataModel, DiagnosesDataModel, SuicideIndicatorsDataModel,NationalAgeGroupsDataModel, NationalGenderDistributionDataModel,NationalMilitaryBranchDataModel, NationalOutReachStatusDataModel,NationalTopMidRiskDataModel, NationalVAMCDataModel /*, NationalCombatEraDataModel, NationalCurrentSafetyDataModel,NationalHighRiskFlagDataModel, NationalPTSDMDDSUDDataModel,NationalVAClinicTwelveMonthsModel,*/ 
+									) {
     return [
       {
         name: 'time',
@@ -138,18 +139,128 @@ angular.module('app')
           width: '35%',
           height: '350px'
         }
-      }/*,
+      },
 	  {
-        name: 'nationalData',
-        directive: 'wt-national-data',
+        name: 'NationalAgeGroups',
+        directive: 'wt-national-age-groups',
         dataAttrName: 'data',
-        title: 'National Data',
-        dataModelType: NationalDataModel,
+        title: 'National Age Groups Data',
+        dataModelType: NationalAgeGroupsDataModel,
         size: {
           width: '35%',
           height: '350px'
         }
-      }*/,
+      },
+	  {
+        name: 'NationalGenderDistribution',
+        directive: 'wt-national-gender-distribution',
+        dataAttrName: 'data',
+        title: 'National Gender Distribution Data',
+        dataModelType: NationalGenderDistributionDataModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+	  {
+        name: 'NationalMilitaryBranch',
+        directive: 'wt-national-military-branch',
+        dataAttrName: 'data',
+        title: 'National Military Branch Data',
+        dataModelType: NationalMilitaryBranchDataModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+	  {
+        name: 'NationalOutReachStatus',
+        directive: 'wt-national-out-reach-status',
+        dataAttrName: 'data',
+        title: 'National Outreach Status Data',
+        dataModelType: NationalOutReachStatusDataModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+	  {
+        name: 'NationalTopMidRisk',
+        directive: 'wt-national-top-mid-risk',
+        dataAttrName: 'data',
+        title: 'National Top Mid Risk Data',
+        dataModelType: NationalTopMidRiskDataModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+	  {
+        name: 'NationalVamc',
+        directive: 'wt-national-vamc',
+        dataAttrName: 'data',
+        title: 'National VAMC Data',
+        dataModelType: NationalVAMCDataModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },/*
+	  {
+        name: 'nationalCombatEra',
+        directive: 'wt-national-combat-era',
+        dataAttrName: 'data',
+        title: 'National Combat Era Data',
+        dataModelType: NationalCombatEraDataModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+	  {
+        name: 'nationalCurrentSafetyPlan',
+        directive: 'wt-national-current-safety-plan',
+        dataAttrName: 'data',
+        title: 'National Current Safety Plan Data',
+        dataModelType: NationalCurrentSafetyDataModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+	  {
+        name: 'nationalHighRiskFlag',
+        directive: 'wt-national-high-risk-flag',
+        dataAttrName: 'data',
+        title: 'National High Risk Flag Data',
+        dataModelType: NationalHighRiskFlagDataModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+	  {
+        name: 'nationalPtsdMddSud',
+        directive: 'wt-national-ptsd-mdd-sud',
+        dataAttrName: 'data',
+        title: 'National PTSD MDD SUD Data',
+        dataModelType: NationalPTSDMDDSUDDataModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+	  {
+        name: 'nationalVAClinicTwelveMonths',
+        directive: 'wt-national-va-clinic-twelve-months',
+        dataAttrName: 'data',
+        title: 'National Visit Data for VA Clinic in Past Twelve Months',
+        dataModelType: NationalVAClinicTwelveMonthsModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },*/
 	  {
         name: 'contact',
         directive: 'wt-contact',
