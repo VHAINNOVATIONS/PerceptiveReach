@@ -17,11 +17,11 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtSuicideIndicators', function () {
+  .directive('wtNationalVamc', function () {
     return {
       restrict: 'A',
       replace: true,
-      templateUrl: 'client/components/widget/widgets/suicideIndicators/suicideIndicators.html',
+      templateUrl: 'client/components/widget/widgets/nationalVAMC/nationalVAMC.html',
       scope: {
         data: '=',
       },
@@ -34,13 +34,11 @@ angular.module('ui.widgets')
             .withOption('scrollY', 200)
             .withOption('paging',false)
             .withOption('order', [1, 'desc']);
-        //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
             DTColumnDefBuilder.newColumnDef(0),
             DTColumnDefBuilder.newColumnDef(1),
-            DTColumnDefBuilder.newColumnDef(2),
-			DTColumnDefBuilder.newColumnDef(3),
-			DTColumnDefBuilder.newColumnDef(4)
+			DTColumnDefBuilder.newColumnDef(2),
+			DTColumnDefBuilder.newColumnDef(3)
         ];
       },
       link: function postLink(scope) {

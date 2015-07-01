@@ -47,9 +47,9 @@ module.exports = function(app) {
       {
         var lastPing = config.prSessionStore[userName][timeStamp];
         var timeDiff = ((new Date()).getTime() - lastPing)/1000;
-         if(timeDiff > 30)
+        if(timeDiff > 30)
         {
-          return res.json(401, 'Session Expired.');
+          return res.json(401, 'Session Expired/Not Authorized');
         }
         else
         {
@@ -58,12 +58,19 @@ module.exports = function(app) {
       }
       else
       {
-        return res.json(401, 'Session Expired.');
+        return res.json(401, 'Session Expired/Not Authorized');
       }
     }
     else  
     {
-      next();
+      if(req.url.indexOf("/api/") != -1 )
+      {
+        return res.json(401, 'Session Expired/Not authorized');
+      }
+      else
+      {
+        next();
+      }
     }
     
   });  
