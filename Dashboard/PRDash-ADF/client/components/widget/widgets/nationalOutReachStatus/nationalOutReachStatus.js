@@ -17,13 +17,13 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtSuicideIndicators', function () {
+  .directive('wtNationalOutReachStatus', function () {
     return {
       restrict: 'A',
       replace: true,
-      templateUrl: 'client/components/widget/widgets/suicideIndicators/suicideIndicators.html',
+      templateUrl: 'client/components/widget/widgets/nationalOutReachStatus/nationalOutReachStatus.html',
       scope: {
-        data: '=',
+        data: '=data'
       },
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
@@ -38,9 +38,7 @@ angular.module('ui.widgets')
         $scope.dtColumnDefs = [
             DTColumnDefBuilder.newColumnDef(0),
             DTColumnDefBuilder.newColumnDef(1),
-            DTColumnDefBuilder.newColumnDef(2),
-			DTColumnDefBuilder.newColumnDef(3),
-			DTColumnDefBuilder.newColumnDef(4)
+            DTColumnDefBuilder.newColumnDef(2)
         ];
       },
       link: function postLink(scope) {

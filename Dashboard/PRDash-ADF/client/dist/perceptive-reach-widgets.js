@@ -839,48 +839,373 @@ angular.module('ui.models')
     });
     return SuicideIndicatorsDataModel;
   })
-  .factory('NationalDataModel', function ($http, CommonDataModel) {
-    function NationalDataModel() {
+  .factory('NationalAgeGroupsDataModel', function ($http, WidgetDataModel) {
+    function NationalAgeGroupsDataModel() {
     }
 
-    NationalDataModel.prototype = Object.create(CommonDataModel.prototype);
-    NationalDataModel.prototype.constructor = CommonDataModel;
+    NationalAgeGroupsDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalAgeGroupsDataModel.prototype.constructor = WidgetDataModel;
 
-    angular.extend(NationalDataModel.prototype, {
+    angular.extend(NationalAgeGroupsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
-        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
-
-        this.widgetScope.$on('commonDataChanged', function (event, data) {
-          this.currentReachID = this.reachID;
-          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
-          if(this.reachID != this.currentReachID)
-            this.getData();
-        }.bind(this));
-        
+		
         this.updateScope('-');
-        //this.getData();
+        this.getData();
       },
 
       getData: function () {
         var that = this;
         var data = [];
+        
 
-        $http.get('/api/nationalData?id='+ this.reachID)
+      $http.get('/api/nationalAgeGroups')
         .success(function(dataset) {
-                data = dataset;
+                data = dataset; 
                 this.updateScope(data);
             }.bind(this));
       },
 
       destroy: function () {
-        CommonDataModel.prototype.destroy.call(this);
+        WidgetDataModel.prototype.destroy.call(this);
       }
     });
+    return NationalAgeGroupsDataModel;
+  })
+  /* .factory('NationalCombatEraDataModel', function ($http, WidgetDataModel) {
+    function NationalCombatEraDataModel() {
+    }
 
-    return NationalDataModel;
-  });
+    NationalCombatEraDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalCombatEraDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalCombatEraDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/nationalCombatEra')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalCombatEraDataModel;
+  })
+   .factory('NationalCurrentSafetyPlanDataModel', function ($http, WidgetDataModel) {
+    function NationalCurrentSafetyPlanDataModel() {
+    }
+
+    NationalCurrentSafetyPlanDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalCurrentSafetyPlanDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalCurrentSafetyPlanDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/nationalCurrentSafetyPlan')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalCurrentSafetyPlanDataModel;
+  })*/
+   .factory('NationalGenderDistributionDataModel', function ($http, WidgetDataModel) {
+    function NationalGenderDistributionDataModel() {
+    }
+
+    NationalGenderDistributionDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalGenderDistributionDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalGenderDistributionDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/nationalGenderDistribution')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalGenderDistributionDataModel;
+  })
+  /*  .factory('NationalHighRiskFlagDataModel', function ($http, WidgetDataModel) {
+    function NationalHighRiskFlagDataModel() {
+    }
+
+    NationalHighRiskFlagDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalHighRiskFlagDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalHighRiskFlagDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/nationalHighRiskFlag')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalHighRiskFlagDataModel;
+  })*/
+   .factory('NationalMilitaryBranchDataModel', function ($http, WidgetDataModel) {
+    function NationalMilitaryBranchDataModel() {
+    }
+
+    NationalMilitaryBranchDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalMilitaryBranchDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalMilitaryBranchDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];       
+
+		$http.get('/api/nationalMilitaryBranch')
+        .success(function(dataset) {
+			console.log("militaryReachJS", dataset);
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalMilitaryBranchDataModel;
+  })
+   .factory('NationalOutReachStatusDataModel', function ($http, WidgetDataModel) {
+    function NationalOutReachStatusDataModel() {
+    }
+
+    NationalOutReachStatusDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalOutReachStatusDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalOutReachStatusDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/nationalOutReachStatus')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalOutReachStatusDataModel;
+  })
+  /* .factory('NationalPTSDMDDSUDDataModel', function ($http, WidgetDataModel) {
+    function NationalPTSDMDDSUDDataModel() {
+    }
+
+    NationalPTSDMDDSUDDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalPTSDMDDSUDDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalPTSDMDDSUDDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/nationalPTSDMDDSUD')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalPTSDMDDSUDDataModel;
+  })*/
+   .factory('NationalTopMidRiskDataModel', function ($http, WidgetDataModel) {
+    function NationalTopMidRiskDataModel() {
+    }
+
+    NationalTopMidRiskDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalTopMidRiskDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalTopMidRiskDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];  
+
+      $http.get('/api/nationalTopMidRisk')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalTopMidRiskDataModel;
+  })
+  /* .factory('NationalVAClinicTwelveMonthsDataModel', function ($http, WidgetDataModel) {
+    function NationalVAClinicTwelveMonthsDataModel() {
+    }
+
+    NationalVAClinicTwelveMonthsDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalVAClinicTwelveMonthsDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalVAClinicTwelveMonthsDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/nationalVAClinicTwelveMonths')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalVAClinicTwelveMonthsDataModel;
+  })*/
+   .factory('NationalVAMCDataModel', function ($http, WidgetDataModel) {
+    function NationalVAMCDataModel() {
+    }
+
+    NationalVAMCDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalVAMCDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalVAMCDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/nationalVAMC')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalVAMCDataModel;
+  }) ;
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -2521,6 +2846,58 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
+  .directive('wtNationalAgeGroups', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/nationalAgeGroups/nationalAgeGroups.html',
+      scope: {
+        data: '=data'
+      } ,
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scrollY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false)
+            .withOption('order', [1, 'desc']);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2)
+        ];
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.data = data;
+          }
+        });
+      }
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
   .directive('wtNationalData', function () {
     return {
       restrict: 'A',
@@ -2529,6 +2906,425 @@ angular.module('ui.widgets')
       scope: {
         data: '=data'
       }     
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtNationalData', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/national/national.html',
+      scope: {
+        data: '=data'
+      }     
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtNationalGenderDistribution', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/nationalGenderDistribution/nationalGenderDistribution.html',
+      scope: {
+        data: '=data'
+      } ,
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withOption('deferRender', true)
+            // Do not forget to add the scrollY option!!!
+            .withOption('paging',false)
+            .withOption('order', [1, 'desc']);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1)
+        ];
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.data = data;
+          }
+        });
+      }
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtNationalData', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/national/national.html',
+      scope: {
+        data: '=data'
+      }     
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtNationalMilitaryBranch', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/nationalMilitaryBranch/nationalMilitaryBranch.html',
+      scope: {
+        data: '=data'
+      },  
+	controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+	$scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+		.withScroller()
+		.withOption('deferRender', true)
+		// Do not forget to add the scrollY option!!!
+		.withOption('scrollY', 200)
+		.withOption('paging',false)
+		.withOption('order', [1, 'desc']);
+	//.withPaginationType('full_numbers').withDisplayLength(5);
+	$scope.dtColumnDefs = [
+		DTColumnDefBuilder.newColumnDef(0),
+		DTColumnDefBuilder.newColumnDef(1)
+	];
+  },
+  link: function postLink(scope) {
+	scope.$watch('data', function (data) {
+	  if (data) {
+		scope.data = data;
+	  }
+	});
+  }
+};
+});
+	 /* controller: function ($scope) {
+		console.log("First log stmt:", $scope.data);
+		$scope.toolTipContentFunction = function(){
+		return function(key, x, y, e, graph) {
+			return  'Super New Tooltip' +
+				'<h1>' + key + '</h1>' +
+				'<p>' +  y + ' at ' + x + '</p>'
+			};
+		};
+
+        $scope.xFunction = function(){
+          return function(d) {
+			console.log("Label console stmt:",d.Label);
+            return d.Label;
+          };
+        };
+        $scope.yFunction = function(){
+          return function(d) {
+			console.log("Value console stmt:", d.Value);
+            return d.Value;
+          };
+        };
+      }
+    };
+  });*/
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtNationalOutReachStatus', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/nationalOutReachStatus/nationalOutReachStatus.html',
+      scope: {
+        data: '=data'
+      },
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scrollY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false)
+            .withOption('order', [1, 'desc']);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2)
+        ];
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.data = data;
+          }
+        });
+      }
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtNationalData', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/national/national.html',
+      scope: {
+        data: '=data'
+      }     
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtNationalTopMidRisk', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/nationalTopMidRisk/nationalTopMidRisk.html',
+      scope: {
+        data: '=data'
+      }, 
+	controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+	$scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+		.withScroller()
+		.withOption('deferRender', true)
+		// Do not forget to add the scrollY option!!!
+		.withOption('scrollY', 200)
+		.withOption('paging',false)
+		.withOption('order', [1, 'desc']);
+	//.withPaginationType('full_numbers').withDisplayLength(5);
+	$scope.dtColumnDefs = [
+		DTColumnDefBuilder.newColumnDef(0),
+		DTColumnDefBuilder.newColumnDef(1)
+	];
+  },
+  link: function postLink(scope) {
+	scope.$watch('data', function (data) {
+	  if (data) {
+		scope.data = data;
+	  }
+	});
+  }
+};
+});
+      /*controller: function ($scope) {
+		
+		$scope.toolTipContentFunction = function(){
+		return function(key, x, y, e, graph) {
+			return  'Super New Tooltip' +
+				'<h1>' + key + '</h1>' +
+				'<p>' +  y + ' at ' + x + '</p>'
+			};
+		};
+
+        $scope.xFunction = function(){
+          return function(d) {
+            return d.label;
+          };
+        };
+        $scope.yFunction = function(){
+          return function(d) {
+            return d.value;
+          };
+        };
+      }
+    };
+  });*/
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtNationalData', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/national/national.html',
+      scope: {
+        data: '=data'
+      }     
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtNationalVamc', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/nationalVAMC/nationalVAMC.html',
+      scope: {
+        data: '=',
+      },
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scrollY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false)
+            .withOption('order', [1, 'desc']);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+			DTColumnDefBuilder.newColumnDef(2),
+			DTColumnDefBuilder.newColumnDef(3)
+        ];
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.data = data;
+          }
+        });
+      }
     };
   });
 /*
@@ -3143,7 +3939,7 @@ angular.module('ui.widgets')
             .withScroller()
             .withOption('deferRender', true)
             // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 450)
+            .withOption('scrollY', 200)
             .withOption('paging',false)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
@@ -3568,7 +4364,41 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
-  $templateCache.put("client/components/widget/widgets/national/national.html",
+  $templateCache.put("client/components/widget/widgets/nationalAgeGroups/nationalAgeGroups.html",
+    "<div class=\"nationalAgeGroups\">\r" +
+    "\n" +
+    "\t<table id=\"tblAgeGroups\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "\t\t<thead>\t\r" +
+    "\n" +
+    "\t\t\t<th>Age Groups</th>\r" +
+    "\n" +
+    "\t\t\t<th>RiskLevel</th>\r" +
+    "\n" +
+    "\t\t\t<th>Total</th>\r" +
+    "\n" +
+    "\t\t</thead>\r" +
+    "\n" +
+    "\t\t<tbody>\r" +
+    "\n" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.AgeRange}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.RiskLevelDescription}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "\n" +
+    "\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t</tbody>\r" +
+    "\n" +
+    "\t</table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalCombatEra/nationalCombatEra.html",
     "<div class=\"national\">\r" +
     "\n" +
     "    <div ng-show=\"data.length\">\r" +
@@ -3598,6 +4428,308 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "        <h4>No Data Found</h4>\r" +
     "\n" +
     "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalCurrentSafetyPlan/nationalCurrentSafetyPlan.html",
+    "<div class=\"national\">\r" +
+    "\n" +
+    "    <div ng-show=\"data.length\">\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data[0].FirstName}} {{data[0].LastName}}<br>\r" +
+    "\n" +
+    "    \t<b>Last 4 of SSN:</b> {{data[0].SSN}}<br>\r" +
+    "\n" +
+    "    \t<b>Cell Phone:</b> {{data[0].CellPhone}}<br>\r" +
+    "\n" +
+    "        <b>Home Phone:</b> {{data[0].HomePhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Work Phone:</b> {{data[0].WorkPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].Address1}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data[0].City}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data[0].State}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data[0].Zip}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
+    "\n" +
+    "        <h4>No Data Found</h4>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalGenderDistribution/nationalGenderDistribution.html",
+    "<div class=\"nationalGenderDistribution\">\r" +
+    "\n" +
+    "\t<table id=\"tblGenderDistribution\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "\t\t<thead>\t\r" +
+    "\n" +
+    "\t\t\t<th>Risk Level</th>\r" +
+    "\n" +
+    "\t\t\t<th>Gender</th>\r" +
+    "\n" +
+    "\t\t\t<th>Total</th>\r" +
+    "\n" +
+    "\t\t</thead>\r" +
+    "\n" +
+    "\t\t<tbody>\r" +
+    "\n" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Gender}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "\n" +
+    "\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t</tbody>\r" +
+    "\n" +
+    "\t</table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalHighRiskFlag/nationalHighRiskFlag.html",
+    "<div class=\"national\">\r" +
+    "\n" +
+    "    <div ng-show=\"data.length\">\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data[0].FirstName}} {{data[0].LastName}}<br>\r" +
+    "\n" +
+    "    \t<b>Last 4 of SSN:</b> {{data[0].SSN}}<br>\r" +
+    "\n" +
+    "    \t<b>Cell Phone:</b> {{data[0].CellPhone}}<br>\r" +
+    "\n" +
+    "        <b>Home Phone:</b> {{data[0].HomePhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Work Phone:</b> {{data[0].WorkPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].Address1}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data[0].City}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data[0].State}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data[0].Zip}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
+    "\n" +
+    "        <h4>No Data Found</h4>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalMilitaryBranch/nationalMilitaryBranch.html",
+    "<div class=\"nationalMilitaryBranch\">\r" +
+    "\n" +
+    "\t<table id=\"tblMilitaryBranch\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "\t\t<thead>\t\r" +
+    "\n" +
+    "\t\t\t<th>Branch Description</th>>\r" +
+    "\n" +
+    "\t\t\t<th>Total</th>\r" +
+    "\n" +
+    "\t\t</thead>\r" +
+    "\n" +
+    "\t\t<tbody>\r" +
+    "\n" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.BranchDesc}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "\n" +
+    "\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t</tbody>\r" +
+    "\n" +
+    "\t</table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalOutReachStatus/nationalOutReachStatus.html",
+    "<div class=\"nationalOutReachStatus\">\r" +
+    "\n" +
+    "\t<table id=\"tblNationalOutReachStatus\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "\t\t<thead>\t\r" +
+    "\n" +
+    "\t\t\t<th>Status</th>\r" +
+    "\n" +
+    "\t\t\t<th>Risk Level</th>\r" +
+    "\n" +
+    "\t\t\t<th>Total</th>\r" +
+    "\n" +
+    "\t\t</thead>\r" +
+    "\n" +
+    "\t\t<tbody>\r" +
+    "\n" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Status}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.RiskLevelDesc}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "\n" +
+    "\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t</tbody>\r" +
+    "\n" +
+    "\t</table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalPTSDMDDSUD/nationalPTSDMDDSUD.html",
+    "<div class=\"national\">\r" +
+    "\n" +
+    "    <div ng-show=\"data.length\">\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data[0].FirstName}} {{data[0].LastName}}<br>\r" +
+    "\n" +
+    "    \t<b>Last 4 of SSN:</b> {{data[0].SSN}}<br>\r" +
+    "\n" +
+    "    \t<b>Cell Phone:</b> {{data[0].CellPhone}}<br>\r" +
+    "\n" +
+    "        <b>Home Phone:</b> {{data[0].HomePhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Work Phone:</b> {{data[0].WorkPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].Address1}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data[0].City}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data[0].State}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data[0].Zip}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
+    "\n" +
+    "        <h4>No Data Found</h4>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalTopMidRisk/nationalTopMidRisk.html",
+    "<div class=\"nationalTopMidRisk\">\r" +
+    "\n" +
+    "\t<table id=\"tblTopMidRisk\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "\t\t<thead>\t\r" +
+    "\n" +
+    "\t\t\t<th>RiskLevel</th>>\r" +
+    "\n" +
+    "\t\t\t<th>Total</th>\r" +
+    "\n" +
+    "\t\t</thead>\r" +
+    "\n" +
+    "\t\t<tbody>\r" +
+    "\n" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "\n" +
+    "\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t</tbody>\r" +
+    "\n" +
+    "\t</table>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalVAClinicTwelveMonths/nationalVAClinicTwelveMonths.html",
+    "<div class=\"national\">\r" +
+    "\n" +
+    "    <div ng-show=\"data.length\">\r" +
+    "\n" +
+    "    \t<b>Name:</b> {{data[0].FirstName}} {{data[0].LastName}}<br>\r" +
+    "\n" +
+    "    \t<b>Last 4 of SSN:</b> {{data[0].SSN}}<br>\r" +
+    "\n" +
+    "    \t<b>Cell Phone:</b> {{data[0].CellPhone}}<br>\r" +
+    "\n" +
+    "        <b>Home Phone:</b> {{data[0].HomePhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Work Phone:</b> {{data[0].WorkPhone}}<br>\r" +
+    "\n" +
+    "    \t<b>Address:</b> {{data[0].Address1}}<br>\r" +
+    "\n" +
+    "    \t<b>City:</b> {{data[0].City}}<br>\r" +
+    "\n" +
+    "    \t<b>State:</b> {{data[0].State}}<br>\r" +
+    "\n" +
+    "    \t<b>Zip Code:</b> {{data[0].Zip}}<br>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
+    "\n" +
+    "        <h4>No Data Found</h4>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/nationalVAMC/nationalVAMC.html",
+    "<div class=\"nationalVAMC\">\r" +
+    "\n" +
+    "\t<table id=\"tblVAMC\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "\t\t<thead>\t\r" +
+    "\n" +
+    "\t\t\t<th>VAMC Name</th>\r" +
+    "\n" +
+    "\t\t\t<th>State</th>\r" +
+    "\n" +
+    "\t\t\t<th>VISN</th>\r" +
+    "\n" +
+    "\t\t\t<th>Total</th>\r" +
+    "\n" +
+    "\t\t</thead>\r" +
+    "\n" +
+    "\t\t<tbody>\r" +
+    "\n" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.VAMCName}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.StateID}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.VISN}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "\n" +
+    "\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t</tbody>\r" +
+    "\n" +
+    "\t</table>\r" +
     "\n" +
     "</div>"
   );

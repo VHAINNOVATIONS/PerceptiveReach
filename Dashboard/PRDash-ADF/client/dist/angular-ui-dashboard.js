@@ -1384,7 +1384,7 @@ angular.module('ui.dashboard')
           layout.dashboard = layout.dashboard || {};
           layout.dashboard.storage = self;
           layout.dashboard.storageId = layout.id = self._getLayoutId.call(self,layout);
-          layout.dashboard.widgetDefinitions = layout.widgetDefinitions || self.widgetDefinitions;
+          layout.dashboard.widgetDefinitions = self._getProperWidgetDefinitions(layout.widgetDefinitions, self.widgetDefinitions);//layout.widgetDefinitions || self.widgetDefinitions; // PerceptiveReach change
           layout.dashboard.stringifyStorage = false;
           layout.dashboard.defaultWidgets = layout.defaultWidgets || self.defaultWidgets;
           layout.dashboard.widgetButtons = self.widgetButtons;
@@ -1556,6 +1556,19 @@ angular.module('ui.dashboard')
           max = Math.max(max, id * 1);
         }
         return max + 1;
+      },
+
+      _getProperWidgetDefinitions: function(widgetDefinitionsLayout, widgetDefinitionsAll)
+      {
+        var someView = [];        
+        var widget = null;
+
+        for(var widgetIdx in widgetDefinitionsLayout){
+          widget = widgetDefinitionsLayout[widgetIdx];
+          someView.push(_.filter(widgetDefinitionsAll,{'name': widget.name})[0]);                     
+        }       
+        //console.log("LayoutViewWidgets:",someView);
+        return someView;
       }
 
     };

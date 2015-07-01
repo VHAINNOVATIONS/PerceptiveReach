@@ -17,30 +17,25 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtSuicideIndicators', function () {
+  .directive('wtNationalGenderDistribution', function () {
     return {
       restrict: 'A',
       replace: true,
-      templateUrl: 'client/components/widget/widgets/suicideIndicators/suicideIndicators.html',
+      templateUrl: 'client/components/widget/widgets/nationalGenderDistribution/nationalGenderDistribution.html',
       scope: {
-        data: '=',
-      },
+        data: '=data'
+      } ,
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
         $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
-            .withScroller()
             .withOption('deferRender', true)
             // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
             .withOption('paging',false)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
             DTColumnDefBuilder.newColumnDef(0),
-            DTColumnDefBuilder.newColumnDef(1),
-            DTColumnDefBuilder.newColumnDef(2),
-			DTColumnDefBuilder.newColumnDef(3),
-			DTColumnDefBuilder.newColumnDef(4)
+            DTColumnDefBuilder.newColumnDef(1)
         ];
       },
       link: function postLink(scope) {

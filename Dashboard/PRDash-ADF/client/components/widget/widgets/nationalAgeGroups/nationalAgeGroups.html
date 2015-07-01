@@ -1,0 +1,16 @@
+<div class="nationalAgeGroups">
+	<table id="tblAgeGroups" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+		<thead>	
+			<th>Age Groups</th>
+			<th>RiskLevel</th>
+			<th>Total</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="ind in data track by $index">
+				<td>{{ind.AgeRange}}</td>
+				<td>{{ind.RiskLevelDescription}}</td>
+				<td>{{ind.Total}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
