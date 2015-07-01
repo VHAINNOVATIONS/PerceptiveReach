@@ -79,6 +79,14 @@ When(/^I click on "(.*?)"$/) do |view|
   page.find(:xpath, "//span[contains(text(),'#{title}')]").click #find and click National/State/Facility/Individual View tabe
   #page.save_screenshot('screenshot1.png')
 end
+Then(/^I click on save changes button$/) do
+  page.find(:xpath,"/html/body/div/div/div/div/div[1]/button[2]").click
+end
+
+Then(/^I click on "(.*?)" button in the menu$/) do |arg1|
+  title = arg1
+  page.find(:xpath, "//span[contains(text(),'#{title}')]",:match => :prefer_exact).click #find and click National/State/Facility/Individual View tabe
+end
 
 When(/^I Click on "(.*?)"$/) do |view|
   title = view
