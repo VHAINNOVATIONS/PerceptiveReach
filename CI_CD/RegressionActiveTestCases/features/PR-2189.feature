@@ -7,7 +7,7 @@ When I put in "email" field as "vaphsfequia"
 And I put in "password" field as "FeAn#011819"
 And I click on check box "checky"
 And I click on "Login" button
-And I click on "Individual View"
+And I click on "National View"
 Then I should see "Suicide Indicators" widget
 And I should see "Age Range"
 And I should see "Gender"
