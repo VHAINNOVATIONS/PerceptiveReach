@@ -22,21 +22,6 @@ Feature: As a Dashboard user, I want to see a Veteran's emergency contact inform
   And I click on "Logout" button
  
 
- @Drag_Widget_PR-1268
-Scenario: I open a web browser and use http://localhost:7003/ to drag the Emergency Contact Information widget.
-  Given I navigate to the http://localhost:7003/
-  Then I should see "Perceptive Reach"
-  Then I put in "email" field as "vaphsfequia"
-  Then I put in "password" field as "FeAn#011819"
-  And I click on check box "checky"
-  And I click on "Login" button
-  When I click on "Individual View" 
-  And I should see "Patient Roster by VAMC" widget
-  And I should see "Emergency Contact Information" widget
-  Then I drag the "Emergency Contact Information" widget to the top left of the screen
-  And I click on "Logout" button
-
-
  @Info_PR-1268
 Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's emergency contact information
   Given I navigate to the http://localhost:7003/
