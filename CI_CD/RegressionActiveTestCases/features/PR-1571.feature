@@ -22,8 +22,10 @@ Feature: As a SPC I want to Enable the background communications layer between a
   And I should see "Chronic High Risk"
   And I click on "Add a Widget" button
   And I click on "Add a Widget" button
-  And I click on "medication" button
+  And I click on "medication" button in the menu
+  And I click on save changes button
   Then I should see the "medication" widget
+  And I click on "Logout" button
   
   @Veteran-Medication_Linkage-PR-1571
   
@@ -36,12 +38,8 @@ Feature: As a SPC I want to Enable the background communications layer between a
   And I click on "Login" button
   When I click on "Individual View"
   Then I should see the "Patient Roster by VAMC" widget
-  When I select a veteran row in the widget
-  Then I should see the "Medication" widget  
-  When I click on "Add a Widget" button
-  And I click on "Add a Widget" button
-  And I click on "medication" button
-  Then I should see the "medication" widget
+  When I select top risk veteran row in the widget
+  Then I should see the "medication" widget  
   And I click on "Logout" button
   
   
