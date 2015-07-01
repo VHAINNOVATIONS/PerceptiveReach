@@ -7,10 +7,12 @@ Then I put in "email" field as "vaphsfequia"
 Then I put in "password" field as "FeAn#011819"
 And I click on check box "checky"
 And I click on "Login" button
-Then I click the Add a Widget button
-Then I add the "RosterTable" widget 
-Then I click on "save changes" button
-And I should see "Patient Roster by VAMC" widget
+When I click on "Individual View"
+And I click on "Add a Widget" button
+And I click on "Add a Widget" button
+And I click on "medication" button in the menu
+And I click on save changes button
+Then I should see the "medication" widget
 And I should see "Name" column
 And I should see "SSN" column
 And I should see "Phone" column
