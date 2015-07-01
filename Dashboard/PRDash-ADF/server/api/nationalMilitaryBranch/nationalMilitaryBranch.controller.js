@@ -38,12 +38,14 @@ exports.index = function(req, res) {
                 console.log("Query failed! " + err); 
             return; 
             }
-			var data = new Array();
+		/*	var data = new Array();
 			for (var i = 0; i < recordset.length; i++) {
                 data.push({Label: recordset[i].BranchDesc, Value: recordset[i].Total});
-				
-			};
-			res.send(data);
+			res.send(data);	
+			};*/
+			var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
+            res.send(jsonRecordSet);
+		
 		});
 	});
 };

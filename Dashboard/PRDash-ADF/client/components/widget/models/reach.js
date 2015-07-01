@@ -510,7 +510,6 @@ angular.module('ui.models')
     angular.extend(NationalAgeGroupsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
 		
         this.updateScope('-');
         this.getData();
@@ -686,11 +685,11 @@ angular.module('ui.models')
 
       getData: function () {
         var that = this;
-        var data = [];
-        
+        var data = [];       
 
-      $http.get('/api/nationalMilitaryBranch')
+		$http.get('/api/nationalMilitaryBranch')
         .success(function(dataset) {
+			console.log("militaryReachJS", dataset);
                 data = dataset; 
                 this.updateScope(data);
             }.bind(this));

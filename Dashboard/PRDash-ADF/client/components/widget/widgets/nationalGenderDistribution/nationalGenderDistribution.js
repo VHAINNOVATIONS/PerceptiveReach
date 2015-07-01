@@ -24,6 +24,26 @@ angular.module('ui.widgets')
       templateUrl: 'client/components/widget/widgets/nationalGenderDistribution/nationalGenderDistribution.html',
       scope: {
         data: '=data'
-      }     
+      } ,
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withOption('deferRender', true)
+            // Do not forget to add the scrollY option!!!
+            .withOption('paging',false)
+            .withOption('order', [1, 'desc']);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1)
+        ];
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.data = data;
+          }
+        });
+      }
     };
   });

@@ -849,7 +849,6 @@ angular.module('ui.models')
     angular.extend(NationalAgeGroupsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
 		
         this.updateScope('-');
         this.getData();
@@ -1025,11 +1024,11 @@ angular.module('ui.models')
 
       getData: function () {
         var that = this;
-        var data = [];
-        
+        var data = [];       
 
-      $http.get('/api/nationalMilitaryBranch')
+		$http.get('/api/nationalMilitaryBranch')
         .success(function(dataset) {
+			console.log("militaryReachJS", dataset);
                 data = dataset; 
                 this.updateScope(data);
             }.bind(this));
@@ -2854,7 +2853,30 @@ angular.module('ui.widgets')
       templateUrl: 'client/components/widget/widgets/nationalAgeGroups/nationalAgeGroups.html',
       scope: {
         data: '=data'
-      }     
+      } ,
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scrollY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false)
+            .withOption('order', [1, 'desc']);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2)
+        ];
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.data = data;
+          }
+        });
+      }
     };
   });
 /*
@@ -2941,7 +2963,27 @@ angular.module('ui.widgets')
       templateUrl: 'client/components/widget/widgets/nationalGenderDistribution/nationalGenderDistribution.html',
       scope: {
         data: '=data'
-      }     
+      } ,
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withOption('deferRender', true)
+            // Do not forget to add the scrollY option!!!
+            .withOption('paging',false)
+            .withOption('order', [1, 'desc']);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1)
+        ];
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.data = data;
+          }
+        });
+      }
     };
   });
 /*
@@ -3000,8 +3042,32 @@ angular.module('ui.widgets')
       scope: {
         data: '=data'
       },  
-	  controller: function ($scope) {
-		
+	controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+	$scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+		.withScroller()
+		.withOption('deferRender', true)
+		// Do not forget to add the scrollY option!!!
+		.withOption('scrollY', 200)
+		.withOption('paging',false)
+		.withOption('order', [1, 'desc']);
+	//.withPaginationType('full_numbers').withDisplayLength(5);
+	$scope.dtColumnDefs = [
+		DTColumnDefBuilder.newColumnDef(0),
+		DTColumnDefBuilder.newColumnDef(1)
+	];
+  },
+  link: function postLink(scope) {
+	scope.$watch('data', function (data) {
+	  if (data) {
+		scope.data = data;
+	  }
+	});
+  }
+};
+});
+	 /* controller: function ($scope) {
+		console.log("First log stmt:", $scope.data);
 		$scope.toolTipContentFunction = function(){
 		return function(key, x, y, e, graph) {
 			return  'Super New Tooltip' +
@@ -3012,17 +3078,19 @@ angular.module('ui.widgets')
 
         $scope.xFunction = function(){
           return function(d) {
-            return $scope.Label;
+			console.log("Label console stmt:",d.Label);
+            return d.Label;
           };
         };
         $scope.yFunction = function(){
           return function(d) {
-            return $scope.Value;
+			console.log("Value console stmt:", d.Value);
+            return d.Value;
           };
         };
       }
     };
-  });
+  });*/
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -3049,7 +3117,30 @@ angular.module('ui.widgets')
       templateUrl: 'client/components/widget/widgets/nationalOutReachStatus/nationalOutReachStatus.html',
       scope: {
         data: '=data'
-      }     
+      },
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scrollY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false)
+            .withOption('order', [1, 'desc']);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2)
+        ];
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.data = data;
+          }
+        });
+      }
     };
   });
 /*
@@ -3107,8 +3198,32 @@ angular.module('ui.widgets')
       templateUrl: 'client/components/widget/widgets/nationalTopMidRisk/nationalTopMidRisk.html',
       scope: {
         data: '=data'
-      },
-      controller: function ($scope) {
+      }, 
+	controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+	$scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+		.withScroller()
+		.withOption('deferRender', true)
+		// Do not forget to add the scrollY option!!!
+		.withOption('scrollY', 200)
+		.withOption('paging',false)
+		.withOption('order', [1, 'desc']);
+	//.withPaginationType('full_numbers').withDisplayLength(5);
+	$scope.dtColumnDefs = [
+		DTColumnDefBuilder.newColumnDef(0),
+		DTColumnDefBuilder.newColumnDef(1)
+	];
+  },
+  link: function postLink(scope) {
+	scope.$watch('data', function (data) {
+	  if (data) {
+		scope.data = data;
+	  }
+	});
+  }
+};
+});
+      /*controller: function ($scope) {
 		
 		$scope.toolTipContentFunction = function(){
 		return function(key, x, y, e, graph) {
@@ -3130,7 +3245,7 @@ angular.module('ui.widgets')
         };
       }
     };
-  });
+  });*/
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -3824,7 +3939,7 @@ angular.module('ui.widgets')
             .withScroller()
             .withOption('deferRender', true)
             // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 450)
+            .withOption('scrollY', 200)
             .withOption('paging',false)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
@@ -4258,9 +4373,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<th>Age Groups</th>\r" +
     "\n" +
-    "\t\t\t<th>Top</th>\r" +
-    "\n" +
-    "\t\t\t<th>Middle</th>\r" +
+    "\t\t\t<th>RiskLevel</th>\r" +
     "\n" +
     "\t\t\t<th>Total</th>\r" +
     "\n" +
@@ -4272,9 +4385,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t<td>{{ind.AgeRange}}</td>\r" +
     "\n" +
-    "\t\t\t\t<td>{{ind.Top}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.Middle}}</td>\r" +
+    "\t\t\t\t<td>{{ind.RiskLevelDescription}}</td>\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.Total}}</td>\r" +
     "\n" +
@@ -4424,29 +4535,31 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalMilitaryBranch/nationalMilitaryBranch.html",
-    "<div class=\"national-military-branch\">\r" +
+    "<div class=\"nationalMilitaryBranch\">\r" +
     "\n" +
-    "\t    <nvd3-discrete-bar-chart\r" +
+    "\t<table id=\"tblMilitaryBranch\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "            data=\"data\" \r" +
+    "\t\t<thead>\t\r" +
     "\n" +
-    "            x=\"xFunction()\" \r" +
+    "\t\t\t<th>Branch Description</th>>\r" +
     "\n" +
-    "            y=\"yFunction()\" \r" +
+    "\t\t\t<th>Total</th>\r" +
     "\n" +
-    "            showXAxis=\"true\"\r" +
+    "\t\t</thead>\r" +
     "\n" +
-    "            showYAxis=\"true\"\r" +
+    "\t\t<tbody>\r" +
     "\n" +
-    "            showValues=\"true\"\r" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
     "\n" +
-    "            showLegend=\"true\"\r" +
+    "\t\t\t\t<td>{{ind.BranchDesc}}</td>\r" +
     "\n" +
-    "            reduceXTicks=\"false\"\r" +
+    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
     "\n" +
-    "            tooltips=\"true\">\r" +
+    "\t\t\t</tr>\r" +
     "\n" +
-    "    </nvd3-discrete-bar-chart>\r" +
+    "\t\t</tbody>\r" +
+    "\n" +
+    "\t</table>\r" +
     "\n" +
     "</div>"
   );
@@ -4458,9 +4571,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th>Risk Level</th>\r" +
-    "\n" +
     "\t\t\t<th>Status</th>\r" +
+    "\n" +
+    "\t\t\t<th>Risk Level</th>\r" +
     "\n" +
     "\t\t\t<th>Total</th>\r" +
     "\n" +
@@ -4470,9 +4583,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
     "\n" +
-    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
-    "\n" +
     "\t\t\t\t<td>{{ind.Status}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.RiskLevelDesc}}</td>\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.Total}}</td>\r" +
     "\n" +
@@ -4522,25 +4635,29 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/nationalTopMidRisk/nationalTopMidRisk.html",
     "<div class=\"nationalTopMidRisk\">\r" +
     "\n" +
-    "\t    <nvd3-multi-bar-chart\r" +
+    "\t<table id=\"tblTopMidRisk\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "            data=\"data\"\r" +
+    "\t\t<thead>\t\r" +
     "\n" +
-    "           <!-- xAxisTickFormat=\"xAxisTickFormatFunction()\"-->\r" +
+    "\t\t\t<th>RiskLevel</th>>\r" +
     "\n" +
-    "            x=\"xFunction()\"\r" +
+    "\t\t\t<th>Total</th>\r" +
     "\n" +
-    "            y=\"yFunction()\"\r" +
+    "\t\t</thead>\r" +
     "\n" +
-    "            showXAxis=\"true\"\r" +
+    "\t\t<tbody>\r" +
     "\n" +
-    "            showYAxis=\"true\"\r" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
     "\n" +
-    "            reduceXTicks=\"false\"\r" +
+    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
     "\n" +
-    "            tooltips=\"true\">\r" +
+    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
     "\n" +
-    "    </nvd3-multi-bar-chart>\r" +
+    "\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t</tbody>\r" +
+    "\n" +
+    "\t</table>\r" +
     "\n" +
     "</div>"
   );

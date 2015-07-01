@@ -19,14 +19,19 @@ exports.index = function(req, res) {
   var dbc = require('../../config/db_connection/development.js');
     var config = dbc.config;
 
-    var id = req.param("id");
-    var query = '';
-    if (id) {
-        query = "SELECT * FROM  "
-        query += "WHERE a.ReachID =  " + id;
-    } else {
-        res.send("ERROR: ReachID  is required.");
-    }
+        var query = "SELECT CASE";
+		query += " WHEN DOB < DATEADD(year, -18, getdate()) AND DOB >= DATEADD(year, -29, getdate()) THEN '18 - 29'";
+		query += " WHEN DOB < DATEADD(year, -29, getdate()) AND DOB >= DATEADD(year, -44, getdate()) THEN '30 - 44'";
+		query += " WHEN DOB < DATEADD(year, -44, getdate()) AND DOB >= DATEADD(year, -69, getdate()) THEN '45 - 69'";
+		query += " WHEN DOB < DATEADD(year, -69, getdate()) then '70+'";
+		query += " END as AgeRange, d.RiskLevelDesc as RiskLevelDescription, COUNT(*) as Total";
+		query += " FROM dbo.Patient p INNER JOIN Ref_RiskLevel d ON p.RiskLevel = d.RiskLevelID";
+		query += " GROUP BY CASE";
+		query += " WHEN DOB < DATEADD(year, -18, getdate()) AND DOB >= DATEADD(year, -29, getdate()) THEN '18 - 29'";
+		query += " WHEN DOB < DATEADD(year, -29, getdate()) AND DOB >= DATEADD(year, -44, getdate()) THEN '30 - 44'";
+		query += " WHEN DOB < DATEADD(year, -44, getdate()) AND DOB >= DATEADD(year, -69, getdate()) THEN '45 - 69'";
+		query += " WHEN DOB < DATEADD(year, -69, getdate()) then '70+'";
+		query += " END, d.RiskLevelDesc ORDER BY AgeRange";
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks
@@ -45,9 +50,6 @@ exports.index = function(req, res) {
             }
 
             var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
-           /* for (var record in jsonRecordSet) {
-                jsonRecordSet[record].ApptDate = dataFormatter.formatData(jsonRecordSet[record].ApptDate,"date");
-            }*/
             res.send(jsonRecordSet);
         });
 

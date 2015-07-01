@@ -327,9 +327,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<th>Age Groups</th>\r" +
     "\n" +
-    "\t\t\t<th>Top</th>\r" +
-    "\n" +
-    "\t\t\t<th>Middle</th>\r" +
+    "\t\t\t<th>RiskLevel</th>\r" +
     "\n" +
     "\t\t\t<th>Total</th>\r" +
     "\n" +
@@ -341,9 +339,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t<td>{{ind.AgeRange}}</td>\r" +
     "\n" +
-    "\t\t\t\t<td>{{ind.Top}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.Middle}}</td>\r" +
+    "\t\t\t\t<td>{{ind.RiskLevelDescription}}</td>\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.Total}}</td>\r" +
     "\n" +
@@ -493,29 +489,31 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalMilitaryBranch/nationalMilitaryBranch.html",
-    "<div class=\"national-military-branch\">\r" +
+    "<div class=\"nationalMilitaryBranch\">\r" +
     "\n" +
-    "\t    <nvd3-discrete-bar-chart\r" +
+    "\t<table id=\"tblMilitaryBranch\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "            data=\"data\" \r" +
+    "\t\t<thead>\t\r" +
     "\n" +
-    "            x=\"xFunction()\" \r" +
+    "\t\t\t<th>Branch Description</th>>\r" +
     "\n" +
-    "            y=\"yFunction()\" \r" +
+    "\t\t\t<th>Total</th>\r" +
     "\n" +
-    "            showXAxis=\"true\"\r" +
+    "\t\t</thead>\r" +
     "\n" +
-    "            showYAxis=\"true\"\r" +
+    "\t\t<tbody>\r" +
     "\n" +
-    "            showValues=\"true\"\r" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
     "\n" +
-    "            showLegend=\"true\"\r" +
+    "\t\t\t\t<td>{{ind.BranchDesc}}</td>\r" +
     "\n" +
-    "            reduceXTicks=\"false\"\r" +
+    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
     "\n" +
-    "            tooltips=\"true\">\r" +
+    "\t\t\t</tr>\r" +
     "\n" +
-    "    </nvd3-discrete-bar-chart>\r" +
+    "\t\t</tbody>\r" +
+    "\n" +
+    "\t</table>\r" +
     "\n" +
     "</div>"
   );
@@ -527,9 +525,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th>Risk Level</th>\r" +
-    "\n" +
     "\t\t\t<th>Status</th>\r" +
+    "\n" +
+    "\t\t\t<th>Risk Level</th>\r" +
     "\n" +
     "\t\t\t<th>Total</th>\r" +
     "\n" +
@@ -539,9 +537,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
     "\n" +
-    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
-    "\n" +
     "\t\t\t\t<td>{{ind.Status}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.RiskLevelDesc}}</td>\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.Total}}</td>\r" +
     "\n" +
@@ -591,25 +589,29 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/nationalTopMidRisk/nationalTopMidRisk.html",
     "<div class=\"nationalTopMidRisk\">\r" +
     "\n" +
-    "\t    <nvd3-multi-bar-chart\r" +
+    "\t<table id=\"tblTopMidRisk\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "            data=\"data\"\r" +
+    "\t\t<thead>\t\r" +
     "\n" +
-    "           <!-- xAxisTickFormat=\"xAxisTickFormatFunction()\"-->\r" +
+    "\t\t\t<th>RiskLevel</th>>\r" +
     "\n" +
-    "            x=\"xFunction()\"\r" +
+    "\t\t\t<th>Total</th>\r" +
     "\n" +
-    "            y=\"yFunction()\"\r" +
+    "\t\t</thead>\r" +
     "\n" +
-    "            showXAxis=\"true\"\r" +
+    "\t\t<tbody>\r" +
     "\n" +
-    "            showYAxis=\"true\"\r" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
     "\n" +
-    "            reduceXTicks=\"false\"\r" +
+    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
     "\n" +
-    "            tooltips=\"true\">\r" +
+    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
     "\n" +
-    "    </nvd3-multi-bar-chart>\r" +
+    "\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t</tbody>\r" +
+    "\n" +
+    "\t</table>\r" +
     "\n" +
     "</div>"
   );

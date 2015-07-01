@@ -25,8 +25,32 @@ angular.module('ui.widgets')
       scope: {
         data: '=data'
       },  
-	  controller: function ($scope) {
-		
+	controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+	$scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+		.withScroller()
+		.withOption('deferRender', true)
+		// Do not forget to add the scrollY option!!!
+		.withOption('scrollY', 200)
+		.withOption('paging',false)
+		.withOption('order', [1, 'desc']);
+	//.withPaginationType('full_numbers').withDisplayLength(5);
+	$scope.dtColumnDefs = [
+		DTColumnDefBuilder.newColumnDef(0),
+		DTColumnDefBuilder.newColumnDef(1)
+	];
+  },
+  link: function postLink(scope) {
+	scope.$watch('data', function (data) {
+	  if (data) {
+		scope.data = data;
+	  }
+	});
+  }
+};
+});
+	 /* controller: function ($scope) {
+		console.log("First log stmt:", $scope.data);
 		$scope.toolTipContentFunction = function(){
 		return function(key, x, y, e, graph) {
 			return  'Super New Tooltip' +
@@ -37,14 +61,16 @@ angular.module('ui.widgets')
 
         $scope.xFunction = function(){
           return function(d) {
-            return $scope.Label;
+			console.log("Label console stmt:",d.Label);
+            return d.Label;
           };
         };
         $scope.yFunction = function(){
           return function(d) {
-            return $scope.Value;
+			console.log("Value console stmt:", d.Value);
+            return d.Value;
           };
         };
       }
     };
-  });
+  });*/

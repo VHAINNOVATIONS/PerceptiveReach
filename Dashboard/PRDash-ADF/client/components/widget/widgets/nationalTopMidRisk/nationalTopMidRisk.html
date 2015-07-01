@@ -1,12 +1,14 @@
 <div class="nationalTopMidRisk">
-	    <nvd3-multi-bar-chart
-            data="data"
-           <!-- xAxisTickFormat="xAxisTickFormatFunction()"-->
-            x="xFunction()"
-            y="yFunction()"
-            showXAxis="true"
-            showYAxis="true"
-            reduceXTicks="false"
-            tooltips="true">
-    </nvd3-multi-bar-chart>
+	<table id="tblTopMidRisk" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+		<thead>	
+			<th>RiskLevel</th>>
+			<th>Total</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="ind in data track by $index">
+				<td>{{ind.RiskLevel}}</td>
+				<td>{{ind.Total}}</td>
+			</tr>
+		</tbody>
+	</table>
 </div>

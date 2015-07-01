@@ -19,9 +19,13 @@ exports.index = function(req, res) {
   var dbc = require('../../config/db_connection/development.js');
     var config = dbc.config;
 
-    var query = 'SELECT os.StatusDesc as Status, COUNT(p.ReachID) Total FROM dbo.Patient p'; 
-		query += ' LEFT JOIN dbo.Ref_OutreachStatus os ON p.OutreachStatus = os.OutReachStatusID';
-		query += ' GROUP BY os.StatusDesc';
+    var query = 'SELECT m.Status as Status, d.RiskLevelDesc, m.Total as Total FROM(';
+		query += " SELECT CASE WHEN os.StatusDesc IS NULL THEN 'Uninitiated'";
+		query += ' ELSE os.StatusDesc END as Status, COUNT(p.ReachID) Total, p.RiskLevel';
+		query += ' FROM dbo.Patient p LEFT JOIN dbo.Ref_OutreachStatus os';
+		query += ' ON p.OutreachStatus = os.OutReachStatusID GROUP BY os.StatusDesc, p.RiskLevel) m';
+		query += ' INNER JOIN dbo.Ref_RiskLevel d ON m.RiskLevel = d.RiskLevelID';
+		query += ' GROUP BY Status, Total, d.RiskLevelDesc ORDER BY Status';
 
     var connection = new sql.Connection(config, function(err) {
         // ... error checks

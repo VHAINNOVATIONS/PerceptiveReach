@@ -39,11 +39,13 @@ exports.index = function(req, res) {
             return; 
             }
 
-			for (var i = 0; i < recordset.length; i++) {
+		/*	for (var i = 0; i < recordset.length; i++) {
                 data.push({Label: recordset[i].RiskLevel, Value: recordset[i].Total});
 				res.send(data);
-			};
-    });
+			};*/
+		var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
+        res.send(jsonRecordSet);
+		});
 	});
 };
 
