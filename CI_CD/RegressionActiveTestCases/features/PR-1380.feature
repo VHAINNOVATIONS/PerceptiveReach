@@ -11,7 +11,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
   When I click on "Individual View" 
   And I click on "Clear" button
   And I click the Add a Widget button
-  And I click on "medication" button in the menu
+  And I click on "Roster Table" button in the menu
   And I click on save changes button
   Then I should see the "Patient Roster by VAMC" widget
   And I should see "Outreach Status" column
