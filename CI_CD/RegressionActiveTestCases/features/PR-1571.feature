@@ -16,10 +16,10 @@ Feature: As a SPC I want to Enable the background communications layer between a
   Then I should see the "Patient Roster by VAMC" widget
   When I select middle risk veteran row in the widget
   Then I should see the "Clinical Decision Support" widget
-  And I should see "Chronic Medium Risk"
+  And I should see "Chronic Middle Risk"
   When I select top risk veteran row in the widget
   Then I should see the "Clinical Decision Support" widget
-  And I should see "Chronic High Risk"
+  And I should see "Chronic Top Risk "
   And I click on "Add a Widget" button
   And I click on "Add a Widget" button
   And I click on "medication" button in the menu
