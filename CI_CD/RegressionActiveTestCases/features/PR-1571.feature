@@ -8,7 +8,7 @@ Feature: As a SPC I want to Enable the background communications layer between a
   Then I put in "password" field as "FeAn#011819"
   And I click on check box "checky"
   And I click on "Login" button
-  When I click on "Facility View"
+  When I click on "Individual View"
   Then I should see the "Patient Roster by VAMC" widget
   When I click on edit on the "Patient Roster by VAMC" widget
   And I choose "(V01)(518) Bedford,MA" as VAMC
