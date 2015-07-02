@@ -1,7 +1,7 @@
 Feature: As a system administrator, I want any user who attempts three invalid logins to be locked out of the system PR-2081 1.1.69
 
 Scenario: I open a web browser and navigate to http://localhost:7003/ where I can Perceptive Reach Login to the  Dashboard
-Given I open the browser and enter http://localhost:7003/
+Given I navigate to the http://localhost:7003/
 
 Then I should see "Perceptive Reach"
 Then I put in "email" field as "vaphsfequia"

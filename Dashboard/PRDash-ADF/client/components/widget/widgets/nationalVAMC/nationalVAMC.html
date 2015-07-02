@@ -1,0 +1,18 @@
+<div class="nationalVAMC">
+	<table id="tblVAMC" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+		<thead>	
+			<th>VAMC Name</th>
+			<th>State</th>
+			<th>VISN</th>
+			<th>Total</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="ind in data track by $index">
+				<td>{{ind.VAMCName}}</td>
+				<td>{{ind.StateID}}</td>
+				<td>{{ind.VISN}}</td>
+				<td>{{ind.Total}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

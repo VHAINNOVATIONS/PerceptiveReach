@@ -465,4 +465,405 @@ angular.module('ui.models')
     });
 
     return DiagnosesDataModel;
-  });
+  })
+.factory('SuicideIndicatorsDataModel', function ($http, WidgetDataModel) {
+    function SuicideIndicatorsDataModel() {
+    }
+
+    SuicideIndicatorsDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    SuicideIndicatorsDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(SuicideIndicatorsDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/suicideData')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return SuicideIndicatorsDataModel;
+  })
+  .factory('NationalAgeGroupsDataModel', function ($http, WidgetDataModel) {
+    function NationalAgeGroupsDataModel() {
+    }
+
+    NationalAgeGroupsDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalAgeGroupsDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalAgeGroupsDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/nationalAgeGroups')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalAgeGroupsDataModel;
+  })
+  /* .factory('NationalCombatEraDataModel', function ($http, WidgetDataModel) {
+    function NationalCombatEraDataModel() {
+    }
+
+    NationalCombatEraDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalCombatEraDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalCombatEraDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/nationalCombatEra')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalCombatEraDataModel;
+  })
+   .factory('NationalCurrentSafetyPlanDataModel', function ($http, WidgetDataModel) {
+    function NationalCurrentSafetyPlanDataModel() {
+    }
+
+    NationalCurrentSafetyPlanDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalCurrentSafetyPlanDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalCurrentSafetyPlanDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/nationalCurrentSafetyPlan')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalCurrentSafetyPlanDataModel;
+  })*/
+   .factory('NationalGenderDistributionDataModel', function ($http, WidgetDataModel) {
+    function NationalGenderDistributionDataModel() {
+    }
+
+    NationalGenderDistributionDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalGenderDistributionDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalGenderDistributionDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/nationalGenderDistribution')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalGenderDistributionDataModel;
+  })
+  /*  .factory('NationalHighRiskFlagDataModel', function ($http, WidgetDataModel) {
+    function NationalHighRiskFlagDataModel() {
+    }
+
+    NationalHighRiskFlagDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalHighRiskFlagDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalHighRiskFlagDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/nationalHighRiskFlag')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalHighRiskFlagDataModel;
+  })*/
+   .factory('NationalMilitaryBranchDataModel', function ($http, WidgetDataModel) {
+    function NationalMilitaryBranchDataModel() {
+    }
+
+    NationalMilitaryBranchDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalMilitaryBranchDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalMilitaryBranchDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];       
+
+		$http.get('/api/nationalMilitaryBranch')
+        .success(function(dataset) {
+			console.log("militaryReachJS", dataset);
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalMilitaryBranchDataModel;
+  })
+   .factory('NationalOutReachStatusDataModel', function ($http, WidgetDataModel) {
+    function NationalOutReachStatusDataModel() {
+    }
+
+    NationalOutReachStatusDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalOutReachStatusDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalOutReachStatusDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/nationalOutReachStatus')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalOutReachStatusDataModel;
+  })
+  /* .factory('NationalPTSDMDDSUDDataModel', function ($http, WidgetDataModel) {
+    function NationalPTSDMDDSUDDataModel() {
+    }
+
+    NationalPTSDMDDSUDDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalPTSDMDDSUDDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalPTSDMDDSUDDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/nationalPTSDMDDSUD')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalPTSDMDDSUDDataModel;
+  })*/
+   .factory('NationalTopMidRiskDataModel', function ($http, WidgetDataModel) {
+    function NationalTopMidRiskDataModel() {
+    }
+
+    NationalTopMidRiskDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalTopMidRiskDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalTopMidRiskDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];  
+
+      $http.get('/api/nationalTopMidRisk')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalTopMidRiskDataModel;
+  })
+  /* .factory('NationalVAClinicTwelveMonthsDataModel', function ($http, WidgetDataModel) {
+    function NationalVAClinicTwelveMonthsDataModel() {
+    }
+
+    NationalVAClinicTwelveMonthsDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalVAClinicTwelveMonthsDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalVAClinicTwelveMonthsDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/nationalVAClinicTwelveMonths')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalVAClinicTwelveMonthsDataModel;
+  })*/
+   .factory('NationalVAMCDataModel', function ($http, WidgetDataModel) {
+    function NationalVAMCDataModel() {
+    }
+
+    NationalVAMCDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    NationalVAMCDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(NationalVAMCDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+		
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        
+
+      $http.get('/api/nationalVAMC')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    return NationalVAMCDataModel;
+  }) ;

@@ -1,0 +1,51 @@
+[4mRunning "default" task[24m
+[31m>> [39mThe `default` task has been deprecated. Use `grunt serve` to start a server.
+
+[4mRunning "serve" task[24m
+
+[4mRunning "clean:dist" (clean) task[24m
+Cleaning client/dist/angular-ui-dashboard.css...[32mOK[39m
+Cleaning client/dist/angular-ui-dashboard.js...[32mOK[39m
+Cleaning client/dist/perceptive-reach-widgets.js...[32mOK[39m
+
+[4mRunning "concat:dashboard" (concat) task[24m
+File "client/dist/angular-ui-dashboard.js" created.
+
+[4mRunning "concat:widget" (concat) task[24m
+File "client/dist/perceptive-reach-widgets.js" created.
+
+[4mRunning "copy:dist" (copy) task[24m
+Copied [36m1[39m files
+
+[4mRunning "env:all" (env) task[24m
+
+[4mRunning "injector:scripts" (injector) task[24m
+[90mMissing option `template`, using `dest` as template instead[39m
+Injecting [32mjs[39m files [90m(13 files)[39m
+[32m>> [39mNothing changed
+
+[4mRunning "injector:css" (injector) task[24m
+[90mMissing option `template`, using `dest` as template instead[39m
+Injecting [32mcss[39m files [90m(2 files)[39m
+[32m>> [39mNothing changed
+
+[4mRunning "wiredep:target" (wiredep) task[24m
+
+socket.io-client was not injected in your file.
+Please go take a look in "C:\PerceptiveReach\Dashboard\PRDash-ADF\client\bower_components\socket.io-client" for the file you need, then manually include it in your file.
+
+[4mRunning "express:dev" (express) task[24m
+[36mStarting [39mbackground Express server
+
+[4mRunning "wait" task[24m
+[32m>> [39mWaiting for server reload...
+Done waiting!
+
+[4mRunning "open:server" (open) task[24m
+
+[4mRunning "watch" task[24m
+Waiting...[33mWarning: An error occurred while processing a template (Cannot read property 'options' of undefined).[39m
+[33mWarning: An error occurred while processing a template (Cannot read property 'options' of undefined).[39m
+[33mWarning: An error occurred while processing a template (Cannot read property 'options' of undefined).[39m
+[33mWarning: An error occurred while processing a template (Cannot read property 'options' of undefined).[39m
+Terminate batch job (Y/N)? Terminate batch job (Y/N)? 
