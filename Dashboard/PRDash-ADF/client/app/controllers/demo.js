@@ -6,11 +6,16 @@ angular.module('app')
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
                                     PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel,
-                                    AppointmentDataModel, DiagnosesDataModel) {
+                                    AppointmentDataModel, DiagnosesDataModel, SuicideIndicatorsDataModel,NationalAgeGroupsDataModel, NationalGenderDistributionDataModel,NationalMilitaryBranchDataModel, NationalOutReachStatusDataModel,NationalTopMidRiskDataModel, NationalVAMCDataModel /*, NationalCombatEraDataModel, NationalCurrentSafetyDataModel,NationalHighRiskFlagDataModel, NationalPTSDMDDSUDDataModel,NationalVAClinicTwelveMonthsModel,*/ 
+									) {
     return [
       {
         name: 'time',
         directive: 'wt-time',
+        dataModelOptions: {
+          defaultWidget: false,
+          layout: 'all'
+        },
         style: {
           width: '33%'
         }
@@ -40,7 +45,9 @@ angular.module('app')
         dataModelType: TotalRisksDataModel,
         title: 'Total Risks by VAMC',
         dataModelOptions: {
-          vamc: 1
+          vamc: 1,
+          defaultWidget: false,
+          layout: 'facility'
         },
         style: {
           width: '25%'
@@ -54,6 +61,8 @@ angular.module('app')
         title: 'Clinical Decision Support',
         dataModelOptions: {
           //riskLevel: 1,
+          defaultWidget: true,
+          layout: 'individual',
           guidelineType: 'SRB'
         },
         style: {
@@ -78,6 +87,8 @@ angular.module('app')
         dataModelType: PatientDataModel,
         title: 'Patient Roster by VAMC',
         dataModelOptions: {
+          defaultWidget: true,
+          layout: 'individual',
           vamc: 1
         },
         style: {
@@ -90,6 +101,10 @@ angular.module('app')
         dataAttrName: 'data',
         title: 'Patient Flags',
         dataModelType: PatientFlagDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'individual'
+        },
         size: {
           width: '25%',
           height: '350px'
@@ -101,6 +116,10 @@ angular.module('app')
         dataAttrName: 'data',
         title: 'Medication',
         dataModelType: MedicationDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'individual'
+        },
         size: {
           width: '20%',
           height: '350px'
@@ -112,6 +131,10 @@ angular.module('app')
         dataAttrName: 'data',
         title: 'Appointment',
         dataModelType: AppointmentDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'individual'
+        },
         size: {
           //width: '25%',
           height: '350px'
@@ -123,15 +146,187 @@ angular.module('app')
         dataAttrName: 'data',
         title: 'Diagnoses',
         dataModelType: DiagnosesDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'individual'
+        },
         size: {
           //width: '25%',
           height: '350px'
         }
-      },{
+      },
+	  {
+        name: 'suicideIndicators',
+        directive: 'wt-suicide-indicators',
+        dataAttrName: 'data',
+        title: 'Suicide Indicators',
+        dataModelType: SuicideIndicatorsDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'national'
+        },
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+	  {
+        name: 'NationalAgeGroups',
+        directive: 'wt-national-age-groups',
+        dataAttrName: 'data',
+        title: 'National Age Groups Data',
+        dataModelType: NationalAgeGroupsDataModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        },
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'national'
+        }
+        //}
+      },
+
+	  {
+        name: 'NationalGenderDistribution',
+        directive: 'wt-national-gender-distribution',
+        dataAttrName: 'data',
+        title: 'National Gender Distribution Data',
+        dataModelType: NationalGenderDistributionDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'national'
+        },
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+	  {
+        name: 'NationalMilitaryBranch',
+        directive: 'wt-national-military-branch',
+        dataAttrName: 'data',
+        title: 'National Military Branch Data',
+        dataModelType: NationalMilitaryBranchDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'national'
+        },
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+	  {
+        name: 'NationalOutReachStatus',
+        directive: 'wt-national-out-reach-status',
+        dataAttrName: 'data',
+        title: 'National Outreach Status Data',
+        dataModelType: NationalOutReachStatusDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'national'
+        },
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+	  {
+        name: 'NationalTopMidRisk',
+        directive: 'wt-national-top-mid-risk',
+        dataAttrName: 'data',
+        title: 'National Top Mid Risk Data',
+        dataModelType: NationalTopMidRiskDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'national'
+        },
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+	  {
+        name: 'NationalVamc',
+        directive: 'wt-national-vamc',
+        dataAttrName: 'data',
+        title: 'National VAMC Data',
+        dataModelType: NationalVAMCDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'national'
+        },
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+      /*
+	  {
+        name: 'nationalCombatEra',
+        directive: 'wt-national-combat-era',
+        dataAttrName: 'data',
+        title: 'National Combat Era Data',
+        dataModelType: NationalCombatEraDataModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+	  {
+        name: 'nationalCurrentSafetyPlan',
+        directive: 'wt-national-current-safety-plan',
+        dataAttrName: 'data',
+        title: 'National Current Safety Plan Data',
+        dataModelType: NationalCurrentSafetyDataModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+	  {
+        name: 'nationalHighRiskFlag',
+        directive: 'wt-national-high-risk-flag',
+        dataAttrName: 'data',
+        title: 'National High Risk Flag Data',
+        dataModelType: NationalHighRiskFlagDataModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+	  {
+        name: 'nationalPtsdMddSud',
+        directive: 'wt-national-ptsd-mdd-sud',
+        dataAttrName: 'data',
+        title: 'National PTSD MDD SUD Data',
+        dataModelType: NationalPTSDMDDSUDDataModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+	  {
+        name: 'nationalVAClinicTwelveMonths',
+        directive: 'wt-national-va-clinic-twelve-months',
+        dataAttrName: 'data',
+        title: 'National Visit Data for VA Clinic in Past Twelve Months',
+        dataModelType: NationalVAClinicTwelveMonthsModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },*/
+	  {
         name: 'contact',
         directive: 'wt-contact',
         dataAttrName: 'data',
         dataModelType: ContactBaseDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'individual'
+        },
         title: 'Patient Contact',
         size: {
           width: '25%',
@@ -145,6 +340,8 @@ angular.module('app')
         dataModelType: EmergencyContactDataModel,
         title: 'Emergency Contact Information',
         dataModelOptions: {
+          defaultWidget: true,
+          layout: 'individual',
           reachID: 16
         },
         size: {
@@ -206,6 +403,10 @@ angular.module('app')
       {
         name: 'gauge',
         directive: 'wt-gauge',
+        dataModelOptions: {
+          defaultWidget: false,
+          layout: 'all'
+        },
         attrs: {
           value: 'percentage'
         },
@@ -216,6 +417,10 @@ angular.module('app')
       {
         name: 'fluid',
         directive: 'wt-fluid',
+        dataModelOptions: {
+          defaultWidget: false,
+          layout: 'all'
+        },
         size: {
           width: '50%',
           height: '250px'
@@ -256,6 +461,95 @@ angular.module('app')
       }
     }*/
   ])
+  .factory('DefaultWidgetService', function(){
+
+  return {
+    getDefaultWidgetsObj: function(widgetDefinitions)
+    {
+        var defaultWidgetsObj = {};
+        var nationalViewDefault = [];
+        var stateVISNViewDefault = [];
+        var facilityViewDefault = [];
+        var individualViewDefault = [];
+        
+        var widget = null;
+        for(var widgetIdx in widgetDefinitions){
+          widget = widgetDefinitions[widgetIdx];
+          if(widget.dataModelOptions.defaultWidget)
+            if(widget.dataModelOptions.layout == "national"){
+              nationalViewDefault.push({name: widget.name});
+            }
+            else if(widget.dataModelOptions.layout == "stateVISN"){
+              stateVISNViewDefault.push({name: widget.name});
+            }
+            else if(widget.dataModelOptions.layout == "facility"){
+              facilityViewDefault.push({name: widget.name});
+            }
+            else if(widget.dataModelOptions.layout == "individual"){
+              individualViewDefault.push({name: widget.name});
+            }            
+        }
+        defaultWidgetsObj.national = nationalViewDefault;
+        defaultWidgetsObj.stateVISN = stateVISNViewDefault;
+        defaultWidgetsObj.facility = facilityViewDefault;
+        defaultWidgetsObj.individual = individualViewDefault;         
+
+        return defaultWidgetsObj;
+    },
+
+    getAllWidgetsObj: function(widgetDefinitions)
+    {
+        var widgetsObj = {};
+        var nationalView = [];
+        var stateVISNView = [];
+        var facilityView = [];
+        var individualView = [];
+        var allViews = widgetDefinitions;
+        
+        var widget = null;
+        for(var widgetIdx in widgetDefinitions){
+          widget = widgetDefinitions[widgetIdx];
+          if(widget.dataModelOptions.layout == "national"){
+            nationalView.push(widget);
+          }
+          else if(widget.dataModelOptions.layout == "stateVISN"){
+            stateVISNView.push(widget);
+          }
+          else if(widget.dataModelOptions.layout == "facility"){
+            facilityView.push(widget);
+          }
+          else if(widget.dataModelOptions.layout == "individual"){
+            individualView.push(widget);
+          }
+          else if(widget.dataModelOptions.layout == "all"){
+            nationalView.push(widget);
+            stateVISNView.push(widget);
+            facilityView.push(widget);
+            individualView.push(widget);
+          }            
+        }
+        widgetsObj.national = nationalView;
+        widgetsObj.stateVISN = stateVISNView;
+        widgetsObj.facility = facilityView;
+        widgetsObj.individual = individualView; 
+        widgetsObj.allViews = allViews;        
+
+        return widgetsObj;
+    },
+
+    getAllDefaultWidgets: function(widgetDefinitions)
+    {
+        var defaultWidgets = [];        
+        var widget = null;
+        for(var widgetIdx in widgetDefinitions){
+          widget = widget = widgetDefinitions[widgetIdx];
+          if(widget.dataModelOptions.defaultWidget){
+             defaultWidgets.push({name: widget.name}); 
+          }
+        }
+        return defaultWidgets;
+    }
+  }})
   .controller('DemoCtrl', function ($scope, $interval, $window, widgetDefinitions, defaultWidgets) {
     
     $scope.dashboardOptions = {

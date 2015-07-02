@@ -25,24 +25,14 @@ exports.index = function(req, res) {
     var id = req.param("id");
     var score = req.param("score");
     var query = '';
-    var select = "SELECT LastName+','+FirstName as Name, p.ReachID, FirstName, LastName, 'xxx-xx-'+substring(ssn,6,9) AS SSN,'(' + SUBSTRING(HomePhone,1, 3) +')' + SUBSTRING(HomePhone,4,3) + '-' + SUBSTRING(HomePhone,7,4) AS HomePhone, convert(varchar, DateIdentifiedAsAtRisk, 101) AS DateIdentifiedAsAtRisk, CASE WHEN RiskLevel = 1 THEN 'Top' WHEN RiskLevel = 2 THEN 'Middle' END 'RiskLevel', RiskLevel AS RiskLevelID, OutreachStatus"; 
+    var select = "SELECT * FROM [dbo].[vw_PatientRoster] WHERE RiskLevelID in (1,2)"; 
     if (id) {
         
-        query += select + ", ps.sta3N " 
-                + "FROM  Patient p INNER JOIN PatientStation ps ON p.ReachID = ps.ReachID "
-                + "WHERE p.RiskLevel in (1,2) and ps.sta3N = " + id;
-        if (score) {
-            query += "AND p.Score >= " + score;
-        }
+        query += select
+                + " and sta3N = " + id;
         query += " ORDER BY RiskLevel ASC";
     } 
-    
-    else {
-        query += select + " FROM Patient "
-                + "WHERE RiskLevel in (1,2) "
-                + "ORDER BY RiskLevel ASC"; 
-    }
-
+   
     query += "; SELECT * FROM Ref_OutreachStatus";
     var connection = new sql.Connection(config, function(err) {
         if (err) { 

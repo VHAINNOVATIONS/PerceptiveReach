@@ -34,6 +34,14 @@ module.exports = function(app) {
   app.use('/api/getListOfVAMC', require('./api/getListOfVAMC'));
   app.use('/api/getListOfOutreachStatus', require('./api/getListOfOutreachStatus'));
   app.use('/api/clinicalDecisionSupport', require('./api/clinicalDecisionSupport'));
+  app.use('/api/suicideData', require('./api/suicideData'));
+  app.use('/api/nationalTopMidRisk', require('./api/nationalTopMidRisk'));
+  app.use('/api/nationalGenderDistribution', require('./api/nationalGenderDistribution'));
+  app.use('/api/nationalAgeGroups', require('./api/nationalAgeGroups'));
+  app.use('/api/nationalMilitaryBranch', require('./api/nationalMilitaryBranch'));
+  app.use('/api/nationalVAMC', require('./api/nationalVAMC'))
+  app.use('/api/nationalOutReachStatus', require('./api/nationalOutReachStatus'));
+  
 
   app.use('/api/patientContact', require('./api/patientContact'));
   app.use('/api/emergencyContact', require('./api/emergencyContact'));

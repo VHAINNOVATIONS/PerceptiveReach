@@ -1,6 +1,8 @@
 Given(/^I navigate to the http:\/\/localhost:(\d+)\/$/) do |arg1|
+sleep(30)
   visit ('http://localhost:7003')
-  #expect(page).to have_content 'Description' #load IRDS and wait for some content to appear
+ 
+  
 end
 
 
@@ -64,7 +66,7 @@ end
 
 When(/^I leave the page inactive for (\d+) seconds$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
-  sleep(132)
+  sleep(912)
   end
 
 When(/^I click on "(.*?)"$/) do |view|

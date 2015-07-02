@@ -1,4 +1,4 @@
-Feature: As a system administrator, I want the application to reject user login attempts that have the attributes listed in the acceptance criteria of this story PR-2088
+Feature: As a system administrator, I want the application to reject user login attempts that have the attributes(username or password with more than 32 characters) listed in the acceptance criteria of this story PR-2088
 
 Scenario: I open a web browser and navigate to http://localhost:7003/ to put the  username or password with more than 32 characters 
 
