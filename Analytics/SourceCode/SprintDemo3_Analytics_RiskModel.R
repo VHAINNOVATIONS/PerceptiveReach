@@ -2,7 +2,7 @@
 require("RODBC")
 
 ## Connect to the database
-channel <- odbcConnect("PR", uid="sa", "agile_123")
+channel <- odbcConnect("db", uid="user", "pw")
 data <- sqlQuery(channel, "select * from VeteranRiskAnalytics")
 ind <- runif(20000, min=0, max=1)
 data$ind <- ind

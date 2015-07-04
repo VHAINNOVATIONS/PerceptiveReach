@@ -5,7 +5,7 @@ require("randomForest")
 
 
 ## Connect to the database
-channel <- odbcConnect("PR", uid="sa", "agile_123")
+channel <- odbcConnect("db", uid="user", "pw")
 
 ## Pull data from the database
 veterans <- sqlQuery(channel, "select * from Veterans")
