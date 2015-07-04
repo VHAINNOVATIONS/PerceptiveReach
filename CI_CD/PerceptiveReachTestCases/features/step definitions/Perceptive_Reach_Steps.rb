@@ -176,7 +176,7 @@ end
 
 Then(/^I check the page for a Veteran's SSN$/) do
   expect(page).to have_content 'Veteran Roster'
-  client1 = TinyTds::Client.new username: 'sa', password: 'agile_123', host: '54.225.232.25', database: 'Reach_Test'
+  client1 = TinyTds::Client.new username: 'user', password: 'pw', host: 'host', database: 'db'
   result1 = client1.execute("SELECT TOP 1 * FROM Ref_VAMC")
   #{"VAMCID"=>1, "VISN"=>1, "STA3N"=>"402", "STA6AID"=>"402", "VAMC"=>"(V01) (402) Togus, ME", "StateAbbr"=>"ME"}
   result1.each(:as => :array) do |row|
@@ -199,7 +199,7 @@ Then(/^I check the page for a Veteran's SSN$/) do
     #wait for page to load
     expect(page).to have_content 'Veteran Roster'
     #query that VAMC for veterans
-    client2 = TinyTds::Client.new username: 'sa', password: 'agile_123', host: '54.225.232.25', database: 'Reach_Test'
+    client2 = TinyTds::Client.new username: 'user', password: 'pw', host: 'host', database: 'db'
     result2 = client2.execute("SELECT TOP 2 SSN, ReachID, Phone, AltPhone, Address, City, State, Zip, RiskLevel from VeteranRisk WHERE (RiskLevel = 1 or RiskLevel=2) and VAMC = #{DerNumber}")
       result2.each(:as => :array) do |row|
         #only want to do this 5 times
@@ -239,7 +239,7 @@ Then(/^I check the page for a Veteran's SSN$/) do
         end
         #query and check other widgets
         #check the emergency contact
-        client3 = TinyTds::Client.new username: 'sa', password: 'agile_123', host: '54.225.232.25', database: 'Reach_Test'
+        client3 = TinyTds::Client.new username: 'user', password: 'pw', host: 'host', database: 'db'
         result3 = client3.execute("SELECT NameOfContact, StreetAddress1, StreetAddress2, StreetAddress3, City, State, Zip, Zip4, Phone, PhoneWork FROM EmergencyContact WHERE ReachID = #{vetreachid}")
         result3.each(:as => :array) do |row|
         #result3.each(:symbolize_keys => true) do |field|
