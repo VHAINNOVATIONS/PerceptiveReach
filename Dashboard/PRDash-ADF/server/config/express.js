@@ -36,10 +36,10 @@ module.exports = function(app) {
   app.engine('html', require('ejs').renderFile);
   app.set('view engine', 'html');
   app.set(session({
-  	cookie : {
-		httpOnly: true, secure: true, maxAge: null
-  		}
-	}));
+    cookie : {
+      httpOnly: true, secure: true, maxAge: null
+    }
+  }));
   app.use(compression());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
@@ -98,24 +98,24 @@ module.exports = function(app) {
   });
   
   app.use(function(req, res, next) {
-  setCookie('io', 'connectSIDCookieValue', {
-    res: res,
-	path: '/socket.io/',
-	httpOnly: true, 
-	secure:true,
-	expires:0 //at the end of the session
-  });
-  next();
+    setCookie('io', 'connectSIDCookieValue', {
+      res: res,
+    	path: '/socket.io/',
+    	httpOnly: true, 
+    	secure:true,
+    	expires:0 //at the end of the session
+    });
+    next();
   });
 
   app.use(function(req,res,next){
     if(req.headers.prsessionkey){
       var userName = req.headers.prsessionkey.split('::')[0];
-      var timeStamp = req.headers.prsessionkey.split('::')[1];
+      var timeStampKey = req.headers.prsessionkey.split('::')[1];
       res.header("Access-Control-Allow-Credentials", true);
-      if(config.prSessionStore[userName] && config.prSessionStore[userName][timeStamp])
+      if(config.prSessionStore[userName] && config.prSessionStore[userName][timeStampKey])
       {
-        var lastPing = config.prSessionStore[userName][timeStamp];
+        var lastPing = config.prSessionStore[userName][timeStampKey];
         var timeDiff = ((new Date()).getTime() - lastPing)/1000;
         if(timeDiff > 30)
         {
