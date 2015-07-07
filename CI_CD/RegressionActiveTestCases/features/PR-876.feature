@@ -3,7 +3,7 @@ Feature: As a Dashboard User, I want to see a widget that allows me to view a ""
 Scenario: PR-876
 Given I navigate to the http://localhost:7003/
 Then I should see "Perceptive Reach"
-Then I put in "email" field as "vaphsfequia"
+Then I put in "email" field as "vaphsgattuc"
 Then I put in "password" field as "FeAn#011819"
 And I click on check box "checky"
 And I click on "Login" button
