@@ -18,6 +18,7 @@ var path = require('path');
 var config = require('./environment');
 var forge = require('node-forge');
 var rawbody = require('raw-body');
+var _ = require('lodash');
 
 module.exports = function(app) {
   var env = app.get('env');
@@ -80,22 +81,34 @@ module.exports = function(app) {
   app.use(function(req, res, next){
 
     if (req.originalUrl !== null && req.originalUrl !== undefined) {
-        if (hasSql(req.originalUrl) === true) {
+        if (hasSql(decodeURI(req.originalUrl)) === true) {
             containsSql = true;
         }
     }
 
-    if(req.body.email && hasSql(req.body.email))
+    if(containsSql === false)
     {
-      containsSql = true;
+      _.forEach(req.body, function(n,key){
+       if(containsSql) return;
+        if(hasSql(n))
+        {
+          containsSql = true;
+        }
+      });
+    }
+    else{
+      containsSql = false;
+      res.send(403);
     }
     
+    
     if(containsSql === false){
-     next();
+      next();
     } else {
         containsSql = false;
         res.send(403);
     }
+
   });
 
   app.use(function(req, res, next){
