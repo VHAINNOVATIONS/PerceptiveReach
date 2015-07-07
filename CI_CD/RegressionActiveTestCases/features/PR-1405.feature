@@ -10,8 +10,10 @@ Then I put in "password" field as "FeAn#011819"
 And I click on check box "checky"
 And I click on "Login" button
 When I click on "Individual View"
-And I click the Add a Widget button
-And I add the "medication" widget
+And I click on "Add a Widget" button
+And I click on "Add a Widget" button
+And I click on "medication" button in the menu
+And I click on save changes button
 Then I should see the "Medication" widget
 And I should see "Amoxicillin"
 And I click on "Logout" button
