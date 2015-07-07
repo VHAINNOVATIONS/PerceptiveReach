@@ -17,6 +17,7 @@ var session = require('express-session')
 var path = require('path');
 var config = require('./environment');
 var forge = require('node-forge');
+var rawbody = require('raw-body');
 
 module.exports = function(app) {
   var env = app.get('env');
@@ -70,7 +71,7 @@ module.exports = function(app) {
     }
 
     var sql_keywords = new RegExp('\\b(ALTER|CREATE|DELETE|DROP|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|SELECT|UPDATE|UNION( +ALL){0,1})\\b','i');
-     if(sql_keywords.test(value)){
+    if(sql_keywords.test(value)){
         return true;
     }
     return false;
@@ -83,9 +84,14 @@ module.exports = function(app) {
             containsSql = true;
         }
     }
+
+    if(req.body.email && hasSql(req.body.email))
+    {
+      containsSql = true;
+    }
     
     if(containsSql === false){
-        next();
+     next();
     } else {
         containsSql = false;
         res.send(403);
