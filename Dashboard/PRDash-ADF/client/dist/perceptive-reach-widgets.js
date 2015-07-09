@@ -407,7 +407,7 @@ angular.module('ui.models')
         var that = this;
         var data = [];
        
-        $http.get('/api/patient?id=' + this.sta3N)
+        $http.get('/api/patient?sta3N=' + this.sta3N)
         .success(function(rtnVal) {
           var patientsBysta3N = rtnVal.patients;
           var outreachStatus = rtnVal.outreachStatus;
@@ -707,7 +707,7 @@ angular.module('ui.models')
         var that = this;
         var data = [];
 
-        $http.get('/api/medicationData?id='+ this.reachID)
+        $http.get('/api/medicationData?reachID='+ this.reachID)
         .success(function(dataset) {
                 data = dataset;
                 this.updateScope(data);
