@@ -1,60 +1,52 @@
-/**
- * Using Rails-like standard naming convention for endpoints.
- * GET     /things              ->  index
- * POST    /things              ->  create
- * GET     /things/:id          ->  show
- * PUT     /things/:id          ->  update
- * DELETE  /things/:id          ->  destroy
- */
-
 'use strict';
 
 var _ = require('lodash');
+var validator = require('validator');
 var sql = require('mssql');
 var dataFormatter = require('../../components/formatUtil/formatUtil.service.js');
 
-// Get list of things
 exports.index = function(req, res) {
-    res.header("content-type: application/json");
-    var data = [];
-
+	/*Configure response header */
+	res.header("content-type: application/json");
+	
+	/*Configure and open database */
     var dbc = require('../../config/db_connection/development.js');
-    var config = dbc.config;
+    var config = dbc.config; var data = [];
+	var connection = new sql.Connection(config, function(err) {
+		if (err) { 
+			data = "Error: Database connection failed!";
+			return; 
+		}
+		var request = new sql.Request(connection);
+		
+		/*Configure database query */
+		var reachID = req.param("reachID");
+		var query = '';
+		if (reachID && validator.isInt(reachID)) {
+			request.input('reachID', sql.Int, reachID);
+			query = "SELECT * FROM EmergencyContact ";
+			query += "WHERE ReachID = @reachID";
+		} else {
+			res.send("ERROR: ReachID is required.");
+		}
 
-    var id = req.param("id");
-    var query = '';
-    if (id) {
-        //console.log("Registering endpoint: /vetEmergencyData/:id is " + id);
-        query = "SELECT * FROM EmergencyContact ";
-        query += "WHERE ReachID =  " + id;
-    } else {
-        res.send("ERROR: ReachID is required.");
-    }
-
-    var connection = new sql.Connection(config, function(err) {
-        // ... error checks
-        if (err || !query) { 
-            data = "Error: Database connection failed!";
-            return; 
-        }
-
-        // Query
-        var request = new sql.Request(connection); // or: var request = connection.request();
-        request.query(query, function(err, recordset) {
-            // ... error checks
-            if (err) { 
-                console.log("Query failed! " + err); 
-            return; 
-            }
-
-            var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
-            for (var record in jsonRecordSet) {
-                jsonRecordSet[record].Phone = dataFormatter.formatData(jsonRecordSet[record].Phone,"phone");
-                jsonRecordSet[record].PhoneWork = dataFormatter.formatData(jsonRecordSet[record].PhoneWork,"phone");
-            }
-            res.send(jsonRecordSet);
-        });
-
+		/*Query database */
+		request.query(query, function(err, recordset) {
+			if (err) { 
+				console.dir(err);
+				res.send(401, "Query Failed");
+				return; 
+			}
+			
+			/*Parse result into JSON object and format the date */
+			var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
+			for (var record in jsonRecordSet) {
+				jsonRecordSet[record].Phone = dataFormatter.formatData(jsonRecordSet[record].Phone,"phone");
+				jsonRecordSet[record].PhoneWork = dataFormatter.formatData(jsonRecordSet[record].PhoneWork,"phone");
+			}
+			
+			/*Send the data */
+			res.send(jsonRecordSet);
+		});
     });
-    
 };
