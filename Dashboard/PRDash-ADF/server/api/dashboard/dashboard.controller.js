@@ -61,15 +61,16 @@ exports.create = function(req, res) {
 
         var request = new sql.Request(connection);
 
-        var param1 = dashboard.data;
-        var param2 = dashboard.id;
-        var param3 = dashboard.id.split("-")[0];
-
-        request.input('data', sql.VarChar(sql.MAX), param1);
-        request.input('id',sql.VarChar(50),param2);
-        request.input('username',sql.VarChar(50),param3);
-
         if (dashboard) {
+
+            var param1 = dashboard.data;
+            var param2 = dashboard.id;
+            var param3 = dashboard.id.split("-")[0];
+
+            request.input('data', sql.VarChar(sql.MAX), param1);
+            request.input('id',sql.VarChar(50),param2);
+            request.input('username',sql.VarChar(50),param3);
+
             query += "UPDATE prsystem.UserDashboard SET DashboardData = @data WHERE  DashboardID = @id";
             query += " IF @@ROWCOUNT=0 ";
             query += "INSERT INTO prsystem.UserDashboard (DashboardID, DashboardData) VALUES (@id,@data) ";

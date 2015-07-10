@@ -40,7 +40,7 @@ router.post('/', function(req, res, next) {
                 var token = auth.signToken(user.data.UserID, user.data.UserRole);
                 console.log("signedToken: " + token);
                 delete user['tempPass'];
-                var timeStampKey = forge.util.bytesToHex(forge.random.getBytesSync(10));//(new Date().getTime());
+                var timeStampKey = forge.util.bytesToHex(forge.random.getBytesSync(16));//(new Date().getTime());
                 var lowercasename = user.data.UserName.toLowerCase();
                 var sessionKey = lowercasename+'::'+timeStampKey;
                 if(!config.prSessionStore[lowercasename])
@@ -64,7 +64,7 @@ router.post('/', function(req, res, next) {
         var token = auth.signToken(user.data.UserID, user.data.UserRole);
         console.log("signedToken: " + token)
         delete user['tempPass'];
-        var timeStampKey = forge.util.bytesToHex(forge.random.getBytesSync(10));//(new Date().getTime());
+        var timeStampKey = forge.util.bytesToHex(forge.random.getBytesSync(16));//(new Date().getTime());
         var lowercasename = user.data.UserName.toLowerCase();
         var sessionKey = lowercasename+'::'+timeStampKey;
         if(!config.prSessionStore[lowercasename])
