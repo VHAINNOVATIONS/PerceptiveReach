@@ -248,7 +248,7 @@ fieldset[disabled] .btn-warning.active {
 }
 
 .nav > li > a:focus {
-  color: #003366
+  color: #003366;
   background-color: #fff;
   text-decoration: underline;
 }
@@ -367,7 +367,6 @@ fieldset[disabled] .btn-warning.active {
 .progress-bar-warning {
   background-color: #1034A6;
 }
-
 a.list-group-item-success {
   color: #1034A6;
 }
@@ -387,7 +386,6 @@ a.list-group-item-success.active:focus {
   border-color: #1034A6;
   text-decoration: underline;
 }
-
 .panel-success {
   border-color: #e6f3f7;
 }
@@ -406,7 +404,6 @@ a.list-group-item-success.active:focus {
 .panel-success > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #e6f3f7;
 }
-
 .label-primary {
   background-color: #1034A6;
 }
@@ -423,19 +420,3 @@ position: relative;
 .ui-pnotify .ui-pnotify-shadow {
 -webkit-box-shadow: 0px 2px 10px rgba(50, 50, 50, 0.5);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
