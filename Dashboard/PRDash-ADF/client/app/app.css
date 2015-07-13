@@ -8,7 +8,9 @@ a{
 .layout-tabs {
     margin-bottom: 10px;
 }
-
+.label-primary {
+  background-color: #1034A6;
+}
 .demo-widget-fluid {
     border: 1px solid blue;
     height: 100%;
@@ -403,9 +405,6 @@ a.list-group-item-success.active:focus {
 }
 .panel-success > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #e6f3f7;
-}
-.label-primary {
-  background-color: #1034A6;
 }
 .ui-pnotify {
 top: 25px;
