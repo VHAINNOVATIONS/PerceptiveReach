@@ -17,11 +17,11 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtSuicideIndicators', function () {
+  .directive('wtExternalSuicideStatistics', function () {
     return {
       restrict: 'A',
       replace: true,
-      templateUrl: 'client/components/widget/widgets/suicideIndicators/suicideIndicators.html',
+      templateUrl: 'client/components/widget/widgets/suicideStatistics/suicideStatistics.html',
       scope: {
         data: '=',
       },
@@ -39,8 +39,7 @@ angular.module('ui.widgets')
             DTColumnDefBuilder.newColumnDef(0),
             DTColumnDefBuilder.newColumnDef(1),
             DTColumnDefBuilder.newColumnDef(2),
-			DTColumnDefBuilder.newColumnDef(3),
-			DTColumnDefBuilder.newColumnDef(4)
+			DTColumnDefBuilder.newColumnDef(3)
         ];
       },
       link: function postLink(scope) {

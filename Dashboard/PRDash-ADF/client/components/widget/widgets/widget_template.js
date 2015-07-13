@@ -947,10 +947,12 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
-  $templateCache.put("client/components/widget/widgets/suicideIndicators/suicideIndicators.html",
-    "<div class=\"suicideIndicators\">\r" +
+  $templateCache.put("client/components/widget/widgets/suicideStatistics/suicideStatistics.html",
+    "<div class=\"suicideStatistics\">\r" +
     "\n" +
-    "\t\t<table id=\"tblSuicideIndicators\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\t\t\r" +
+    "\t\t<br>This product uses the Health Indicators Warehouse API but is not endorsed or certified by the Health Indicators Warehouse or its associated Federal agencies.\r" +
+    "\n" +
+    "\t\t<table id=\"tblSuicideStatistics\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\t\t\r" +
     "\n" +
     "\t\t\t<thead>\r" +
     "\n" +
@@ -960,11 +962,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t\t<th>Gender</th>\r" +
     "\n" +
-    "\t\t\t\t\t<th>Total</th>\r" +
+    "\t\t\t\t\t<th>2013 Total Suicide Deaths Per 100K</th>\r" +
     "\n" +
     "\t\t\t\t\t<th>Ethnicity</th>\r" +
-    "\n" +
-    "\t\t\t\t\t<th>Veteran Status</th>\r" +
     "\n" +
     "\t\t\t\t</tr>\r" +
     "\n" +
@@ -982,8 +982,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t\t<td>{{ind.RaceEthnicity}}</td>\r" +
     "\n" +
-    "\t\t\t\t\t<td>{{ind.VeteranStatus}}</td>\r" +
-    "\n" +
     "\t\t\t\t</tr>\r" +
     "\n" +
     "\t\t\t</tbody>\r" +
@@ -994,7 +992,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "<div>\r" +
     "\n" +
-    "\t<br><br>For more information visit the Suicide Deaths per 100000 indicator site at HealthIndicators.gov <a href=\"http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData\">http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData</a>\r" +
+    "\t<br>For more information visit the Suicide Deaths per 100000 indicator site at HealthIndicators.gov <a href=\"http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData\">http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData</a>\r" +
     "\n" +
     "</div>"
   );
