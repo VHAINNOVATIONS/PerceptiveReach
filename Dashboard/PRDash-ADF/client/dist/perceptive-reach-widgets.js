@@ -4332,9 +4332,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<th>Age Groups</th>\r" +
     "\n" +
-    "\t\t\t<th>RiskLevel</th>\r" +
+    "\t\t\t<th>Risk Level Group</th>\r" +
     "\n" +
-    "\t\t\t<th>Total</th>\r" +
+    "\t\t\t<th>Total Number of Patients</th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
@@ -4432,11 +4432,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th>Risk Level</th>\r" +
+    "\t\t\t<th>Risk Level Group</th>\r" +
     "\n" +
     "\t\t\t<th>Gender</th>\r" +
     "\n" +
-    "\t\t\t<th>Total</th>\r" +
+    "\t\t\t<th>Total Number of Patients</th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
@@ -4502,7 +4502,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<th>Branch Description</th>>\r" +
     "\n" +
-    "\t\t\t<th>Total</th>\r" +
+    "\t\t\t<th>Total Number of Patients per Branch</th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
@@ -4530,11 +4530,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th>Status</th>\r" +
+    "\t\t\t<th>Outreach Status</th>\r" +
     "\n" +
-    "\t\t\t<th>Risk Level</th>\r" +
+    "\t\t\t<th>Risk Level Group</th>\r" +
     "\n" +
-    "\t\t\t<th>Total</th>\r" +
+    "\t\t\t<th>Total Number of Patients</th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
@@ -4598,9 +4598,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th>RiskLevel</th>>\r" +
+    "\t\t\t<th>Risk Level Group</th>>\r" +
     "\n" +
-    "\t\t\t<th>Total</th>\r" +
+    "\t\t\t<th>Total Number of Patients</th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
@@ -4668,7 +4668,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<th>VISN</th>\r" +
     "\n" +
-    "\t\t\t<th>Total</th>\r" +
+    "\t\t\t<th>Total Number of Patients</th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
