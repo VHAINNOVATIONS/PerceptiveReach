@@ -42,13 +42,13 @@ module.exports = function(app) {
   app.use('/api/user', require('./api/user'));
   app.use('/encryption', require('./encryption'));
   
-  // All undefined asset or api routes should return a 404
-  //app.route('/:url(api|auth|components|app|bower_components|assets)/*')
-  // .get(errors[404]);
-
-  // All other routes should redirect to the index.html
-  app.route('/*')
+  app.route('/login')
     .get(function(req, res) {
       res.sendfile(app.get('appPath') + 'index.html');
-    });
+  });
+
+  app.route('/*')
+    .get(function(req, res) {
+      res.send('NOT FOUND',404);
+  });
 };

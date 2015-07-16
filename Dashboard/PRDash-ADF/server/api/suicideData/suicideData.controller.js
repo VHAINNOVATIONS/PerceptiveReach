@@ -18,7 +18,7 @@ exports.index = function(req, res) {
 		var request = new sql.Request(connection);
 			
 		/*Configure database query */
-		var query = "SELECT Age, Sex, Total, RaceEthnicity, VeteranStatus FROM dbo.HealthDataSuicideIndicators";
+		var query = "SELECT Age, Sex, Total, RaceEthnicity FROM dbo.HealthDataSuicideIndicators";
 
 		/*Query database */
 		request.query(query, function(err, recordset) {
