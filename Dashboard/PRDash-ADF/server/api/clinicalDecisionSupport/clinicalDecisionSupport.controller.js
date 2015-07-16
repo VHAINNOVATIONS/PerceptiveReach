@@ -25,7 +25,7 @@ exports.index = function(req, res) {
 		
 		/*Configure database query */
 		var query = '';
-		var select = "SELECT CDSG.CDSG_ID, CDSG.Features, CDSG.Action, CDSG.GuidelineType, CDSG.RiskLevel, RL.RiskLevelDesc, RF.GuidelineURL, RF.ToolkitURL FROM Ref_ClinicalDecisionSupportGuideline As CDSG INNER JOIN  RiskFactors As RF ON CDSG.GuidelineType = RF.RiskFactorCode INNER JOIN Ref_RiskLevel As RL ON RL.RiskLevelID = CDSG.RiskLevel"; 
+		var select = "SELECT CDSG.CDSG_ID, CDSG.Features, CDSG.Action, CDSG.GuidelineType, CDSG.RiskLevel, RL.RiskLevelDesc, RF.GuidelineURL, RF.ToolkitURL FROM Ref_ClinicalDecisionSupportGuideline As CDSG INNER JOIN  Ref_GuidelineRiskFactors As RF ON CDSG.GuidelineType = RF.RiskFactorCode INNER JOIN Ref_RiskLevel As RL ON RL.RiskLevelID = CDSG.RiskLevel"; 
 
 		if (guideType) {
 			request.input('guideType', sql.VarChar(50), guideType);

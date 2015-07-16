@@ -6,7 +6,7 @@ angular.module('app')
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
                                     PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel,
-                                    AppointmentDataModel, DiagnosesDataModel, SuicideIndicatorsDataModel,NationalAgeGroupsDataModel, NationalGenderDistributionDataModel,NationalMilitaryBranchDataModel, NationalOutReachStatusDataModel,NationalTopMidRiskDataModel, NationalVAMCDataModel /*, NationalCombatEraDataModel, NationalCurrentSafetyDataModel,NationalHighRiskFlagDataModel, NationalPTSDMDDSUDDataModel,NationalVAClinicTwelveMonthsModel,*/ 
+                                    AppointmentDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,NationalAgeGroupsDataModel, NationalGenderDistributionDataModel,NationalMilitaryBranchDataModel, NationalOutReachStatusDataModel,NationalTopMidRiskDataModel, NationalVAMCDataModel /*, NationalCombatEraDataModel, NationalCurrentSafetyDataModel,NationalHighRiskFlagDataModel, NationalPTSDMDDSUDDataModel,NationalVAClinicTwelveMonthsModel,*/ 
 									) {
     return [
       {
@@ -156,18 +156,18 @@ angular.module('app')
         }
       },
 	  {
-        name: 'suicideIndicators',
-        directive: 'wt-suicide-indicators',
+        name: 'ExternalSuicideStatistics',
+        directive: 'wt-external-suicide-statistics',
         dataAttrName: 'data',
-        title: 'Suicide Indicators',
-        dataModelType: SuicideIndicatorsDataModel,
+        title: 'External Data HealthIndicators.gov Suicide Statistics',
+        dataModelType: SuicideStatisticsDataModel,
         dataModelOptions: {
           defaultWidget: true,
           layout: 'national'
         },
         size: {
-          width: '35%',
-          height: '350px'
+          width: '45%',
+          height: '485px'
         }
       },
 	  {
