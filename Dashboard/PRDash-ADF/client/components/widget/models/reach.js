@@ -427,14 +427,14 @@ angular.module('ui.models')
 
     return DiagnosesDataModel;
   })
-.factory('SuicideIndicatorsDataModel', function ($http, WidgetDataModel) {
-    function SuicideIndicatorsDataModel() {
+.factory('SuicideStatisticsDataModel', function ($http, WidgetDataModel) {
+    function SuicideStatisticsDataModel() {
     }
 
-    SuicideIndicatorsDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    SuicideIndicatorsDataModel.prototype.constructor = WidgetDataModel;
+    SuicideStatisticsDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    SuicideStatisticsDataModel.prototype.constructor = WidgetDataModel;
 
-    angular.extend(SuicideIndicatorsDataModel.prototype, {
+    angular.extend(SuicideStatisticsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
 		
@@ -458,7 +458,7 @@ angular.module('ui.models')
         WidgetDataModel.prototype.destroy.call(this);
       }
     });
-    return SuicideIndicatorsDataModel;
+    return SuicideStatisticsDataModel;
   })
   .factory('NationalAgeGroupsDataModel', function ($http, WidgetDataModel) {
     function NationalAgeGroupsDataModel() {

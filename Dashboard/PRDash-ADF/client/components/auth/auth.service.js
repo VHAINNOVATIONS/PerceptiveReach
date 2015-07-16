@@ -29,31 +29,31 @@ angular.module('app')
           email: user.email,
           password: user.password
         }).
-        success(function(data) {          
-          sessionStorage.setItem("user", JSON.stringify(data.user.data));
-          //delete data.user.data['DashboardData'];
-          sessionStorage.setItem('token', data.token);
-          sessionStorage.setItem('prSessionKey',data.prSessionKey);
-          //$cookieStore.put('user', data.user.data);
-          currentUser = data.user; //User.get();
-          //$rootScope.globals.userObj = data.user;
-          $rootScope.globals['userObj'] = data.user.data;
-          //console.log("Returned Logged In User: ",currentUser);
-          deferred.resolve(data);
-          var socket = io.connect(window.location.host);
-          sessionPingInterval = setInterval(function() {
-            socket.emit('sessionKeyUpsert', { sessionkey: data.prSessionKey });
-          }, 10000);
-          
-          return cb();
+        success(function(data) {  
+          if(data.PrErrorObj)
+          {
+            var response = {message: data.PrErrorObj.message};
+            deferred.reject(response);
+            return cb(response);
+          }
+          else  
+          {
+            sessionStorage.setItem("user", JSON.stringify(data.user.data));
+            sessionStorage.setItem('token', data.token);
+            sessionStorage.setItem('prSessionKey',data.prSessionKey);
+            currentUser = data.user;
+            $rootScope.globals['userObj'] = data.user.data;
+            deferred.resolve(data);
+            var socket = io.connect(window.location.host);
+            sessionPingInterval = setInterval(function() {
+              socket.emit('sessionKeyUpsert', { sessionkey: data.prSessionKey });
+            }, 10000);
+            
+            return cb();
+          }
         }).
-        error(function(err) {
-          //console.log("Login error: ", err);
-          //this.logout();          
+        error(function(err) {     
           var properMessage = '';
-          // if (err.indexOf('Max login attempts reached') != -1)
-          //   properMessage = 'Invalid username/password combination. Please try again.';
-          // else
           properMessage = err;
           var response = {message: properMessage};
           deferred.reject(response);

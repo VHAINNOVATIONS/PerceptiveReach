@@ -176,7 +176,7 @@ module.exports = function(app) {
     //app.use(require('connect-livereload')());
     app.use(express.static(path.join(config.root, '.tmp')));
     app.use(express.static(path.join(config.root, 'client')));
-    app.set('appPath', 'client/');
+    app.set('appPath', process.env.APP_PATH);
     //console.log('Express config.root %d, appPath %s', config.root, app.get('appPath'));
     app.use(morgan('dev'));
     app.use(errorHandler()); // Error handler - has to be last
