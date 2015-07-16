@@ -1,0 +1,24 @@
+<div class="suicideStatistics">
+		<br>This product uses the Health Indicators Warehouse API but is not endorsed or certified by the Health Indicators Warehouse or its associated Federal agencies.
+		<table id="tblSuicideStatistics" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">		
+			<thead>
+				<tr>
+					<th>Age Range</th>
+					<th>Gender</th>
+					<th>2013 Total Suicide Deaths Per 100K</th>
+					<th>Ethnicity</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="ind in data track by $index">
+					<td>{{ind.Age}}</td>
+					<td>{{ind.Sex}}</td>
+					<td>{{ind.Total}}</td>
+					<td>{{ind.RaceEthnicity}}</td>
+				</tr>
+			</tbody>
+		<table>
+</div>
+<div>
+	<br>For more information visit the Suicide Deaths per 100000 indicator site at HealthIndicators.gov <a href="http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData">http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData</a>
+</div>

@@ -23,7 +23,7 @@ exports.index = function(req, res) {
 		/*Configure database query */
 		var sta3N = req.param("sta3N");
 		var query = '';
-		var select = "SELECT * FROM [dbo].[vw_PatientRoster] WHERE RiskLevelID in (1,2)"; 
+		var select = "SELECT * FROM [dbo].[vw_PatientRoster] WHERE RiskLevelID in (1,2) AND ISNULL(Active,-1) in (-1,1)"; 
 		if (sta3N && validator.isInt(sta3N)) {
 			request.input('sta3N', sql.Int, sta3N);
 			query += select
