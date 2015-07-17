@@ -50,6 +50,7 @@ angular.module('app')
           layout.defaultWidgets = defaultWidgetsLayout.individual;
           layout.widgetDefinitions = widgetsAllObj.individual;
         }
+        
         user.DashboardData.layouts[layoutIdx] = layout;
       }
       layouts = user.DashboardData.layouts;
@@ -79,6 +80,7 @@ angular.module('app')
       widgetDefinitions: widgetDefinitions,
       defaultWidgets: defaultWidgetsAll,
       explicitSave: true,
+      lockDefaultLayouts: true,
       defaultLayouts: layouts      
     };
 

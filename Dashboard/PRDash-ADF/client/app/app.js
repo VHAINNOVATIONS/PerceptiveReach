@@ -117,7 +117,9 @@ angular.module('app', [
     
     $rootScope.globals = sessionStorage.getItem('globals') || {};
     if ($rootScope.globals.currentUser) {
-        $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+        $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint
+		$http.defaults.headers.common['Set-Cookie'] = HttpOnly, Secure;
+		ignore:line
     }
     // Redirect to login if route requires auth and you're not logged in    
     $rootScope.$on('$routeChangeStart', function (event, next, current) {
