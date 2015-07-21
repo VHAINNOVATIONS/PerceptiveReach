@@ -3132,33 +3132,32 @@ angular.module('ui.widgets')
       }     
     };
   });
-/*
- * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtNationalTopMidRisk', function () {
+  .directive('wt-national-top-mid-risk', function () {
     return {
       restrict: 'A',
       replace: true,
       templateUrl: 'client/components/widget/widgets/nationalTopMidRisk/nationalTopMidRisk.html',
       scope: {
         data: '=data'
-      }, 
+      },
+      controller: function($scope) {
+        $scope.xFunction = function(){return function(d){return d.Label;};};
+			
+        $scope.yFunction = function(){return function(d){return d.Value;};};	
+		return data;
+      },
+	 link: function(scope) {
+	    scope.$watch('data', function (data) {
+          if (data && data[0] && data[0].values && (data[0].values.length > 1)) {
+			return item.Label;
+		  }	
+		});
+	 }
+}});
+ /*
 	controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
 	$scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
@@ -3182,30 +3181,7 @@ angular.module('ui.widgets')
 	});
   }
 };
-});
-      /*controller: function ($scope) {
-		
-		$scope.toolTipContentFunction = function(){
-		return function(key, x, y, e, graph) {
-			return  'Super New Tooltip' +
-				'<h1>' + key + '</h1>' +
-				'<p>' +  y + ' at ' + x + '</p>'
-			};
-		};
-
-        $scope.xFunction = function(){
-          return function(d) {
-            return d.label;
-          };
-        };
-        $scope.yFunction = function(){
-          return function(d) {
-            return d.value;
-          };
-        };
-      }
-    };
-  });*/
+});*/
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -4592,33 +4568,38 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalTopMidRisk/nationalTopMidRisk.html",
-    "<div class=\"nationalTopMidRisk\">\r" +
+    "\t<div ng-controller=\"wt-national-top-mid-risk\">\r" +
     "\n" +
-    "\t<table id=\"tblTopMidRisk\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\t\t<nvd3-discrete-bar-chart\r" +
     "\n" +
-    "\t\t<thead>\t\r" +
+    "\t\t\tdata=\"data\"\r" +
     "\n" +
-    "\t\t\t<th>Risk Level Group</th>>\r" +
+    "\t\t\tid=\"riskPatientNumbers\"\r" +
     "\n" +
-    "\t\t\t<th>Total Number of Patients</th>\r" +
+    "\t\t\tshowLegend=\"true\"\r" +
     "\n" +
-    "\t\t</thead>\r" +
+    "\t\t\twidth=\"300\" \r" +
     "\n" +
-    "\t\t<tbody>\r" +
+    "\t\t\theight=\"300\"\r" +
     "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\t\t\tshowLabels=\"true\"\r" +
     "\n" +
-    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
+    "\t\t\tshowXAxis = \"true\"\r" +
     "\n" +
-    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "\t\t\tshowYAxis = \"true\"\r" +
     "\n" +
-    "\t\t\t</tr>\r" +
+    "\t\t\tx=\"xFunction()\"\r" +
     "\n" +
-    "\t\t</tbody>\r" +
+    "\t\t\ty=\"yFunction()\"\r" +
     "\n" +
-    "\t</table>\r" +
+    "\t\t\tnoData=\"Loading Data...\">\r" +
     "\n" +
-    "</div>"
+    "\t\t\t<svg></svg>\r" +
+    "\n" +
+    "\t\t</nvd3-discrete-bar-chart>\r" +
+    "\n" +
+    "\t</div>\r" +
+    "\n"
   );
 
   $templateCache.put("client/components/widget/widgets/nationalVAClinicTwelveMonths/nationalVAClinicTwelveMonths.html",
@@ -4981,11 +4962,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t\t<td>{{ind.Age}}</td>\r" +
     "\n" +
-    "\t\t\t\t\t<td>{{ind.Sex}}</td>\r" +
+    "\t\t\t\t\t<td>{{ind.Gender}}</td>\r" +
     "\n" +
-    "\t\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "\t\t\t\t\t<td>{{ind.Value}}</td>\r" +
     "\n" +
-    "\t\t\t\t\t<td>{{ind.RaceEthnicity}}</td>\r" +
+    "\t\t\t\t\t<td>{{ind.Ethnicity}}</td>\r" +
     "\n" +
     "\t\t\t\t</tr>\r" +
     "\n" +
