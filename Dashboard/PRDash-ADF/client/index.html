@@ -52,10 +52,10 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
-      <div id="navHeader" style="display: none;">
-        <ul class="nav navbar-nav">
+      <div id="navHeader">
+        <!--ul class="nav navbar-nav">
           <li ng-repeat="(when, route) in $route.routes" ng-class="{ 'active': $route.current.$$route === route}"><a ng-href="{{'#' + route.originalPath}}">{{ route.title }}</a></li>
-        </ul>
+        </ul-->
         <div style="float: right; color: #fff; cursor: default; padding-top: 10px;"> 
           <span>{{$root.globals.userObj.UserName }}</span>
           <button ng-click="Logout()" class="btn btn-success" >Logout</button>
