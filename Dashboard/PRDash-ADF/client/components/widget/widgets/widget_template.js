@@ -587,33 +587,38 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalTopMidRisk/nationalTopMidRisk.html",
-    "<div class=\"nationalTopMidRisk\">\r" +
+    "\t<div ng-controller=\"wt-national-top-mid-risk\">\r" +
     "\n" +
-    "\t<table id=\"tblTopMidRisk\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\t\t<nvd3-discrete-bar-chart\r" +
     "\n" +
-    "\t\t<thead>\t\r" +
+    "\t\t\tdata=\"data\"\r" +
     "\n" +
-    "\t\t\t<th>Risk Level Group</th>>\r" +
+    "\t\t\tid=\"riskPatientNumbers\"\r" +
     "\n" +
-    "\t\t\t<th>Total Number of Patients</th>\r" +
+    "\t\t\tshowLegend=\"true\"\r" +
     "\n" +
-    "\t\t</thead>\r" +
+    "\t\t\twidth=\"300\" \r" +
     "\n" +
-    "\t\t<tbody>\r" +
+    "\t\t\theight=\"300\"\r" +
     "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\t\t\tshowLabels=\"true\"\r" +
     "\n" +
-    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
+    "\t\t\tshowXAxis = \"true\"\r" +
     "\n" +
-    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "\t\t\tshowYAxis = \"true\"\r" +
     "\n" +
-    "\t\t\t</tr>\r" +
+    "\t\t\tx=\"xFunction()\"\r" +
     "\n" +
-    "\t\t</tbody>\r" +
+    "\t\t\ty=\"yFunction()\"\r" +
     "\n" +
-    "\t</table>\r" +
+    "\t\t\tnoData=\"Loading Data...\">\r" +
     "\n" +
-    "</div>"
+    "\t\t\t<svg></svg>\r" +
+    "\n" +
+    "\t\t</nvd3-discrete-bar-chart>\r" +
+    "\n" +
+    "\t</div>\r" +
+    "\n"
   );
 
   $templateCache.put("client/components/widget/widgets/nationalVAClinicTwelveMonths/nationalVAClinicTwelveMonths.html",
@@ -976,11 +981,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t\t<td>{{ind.Age}}</td>\r" +
     "\n" +
-    "\t\t\t\t\t<td>{{ind.Sex}}</td>\r" +
+    "\t\t\t\t\t<td>{{ind.Gender}}</td>\r" +
     "\n" +
-    "\t\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "\t\t\t\t\t<td>{{ind.Value}}</td>\r" +
     "\n" +
-    "\t\t\t\t\t<td>{{ind.RaceEthnicity}}</td>\r" +
+    "\t\t\t\t\t<td>{{ind.Ethnicity}}</td>\r" +
     "\n" +
     "\t\t\t\t</tr>\r" +
     "\n" +
