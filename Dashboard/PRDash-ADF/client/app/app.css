@@ -25,6 +25,17 @@ a{
     transform: translateY(-50%);
 }
 
+.hidden {
+    display: none;
+}
+
+h1{
+  font-weight: inherit;
+  font-size: 2em; 
+  line-height: 80px; 
+  margin-bottom: 14px;
+}
+
 h2 {
   font-size: 1em;
 }
@@ -149,7 +160,7 @@ fieldset[disabled] .btn-danger.active {
 /* btn success is for login/logout */
 .btn-success {
   color: #fff;
-  background-color: #000000;
+  background-color: #101010;
   border-color: transparent;
   text-decoration: underline;
 }
@@ -159,7 +170,7 @@ fieldset[disabled] .btn-danger.active {
 .btn-success.active,
 .open > .dropdown-toggle.btn-success {
   color: #428bca;
-  background-color: #000000;
+  background-color: #101010;
   border-color: transparent;
   text-decoration: underline;
 }
@@ -298,7 +309,7 @@ fieldset[disabled] .btn-warning.active {
 }
 .navbar-default .navbar-text {
   color: #fff;
-  text-decoration: underline;
+  font-size: 20px;
 }
 .navbar-default .navbar-nav > li > a {
   color: #fff;
