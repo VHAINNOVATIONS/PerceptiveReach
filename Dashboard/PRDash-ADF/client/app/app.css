@@ -37,10 +37,10 @@ h1{
 }
 
 h2 {
-  font-size: 1em;
+  font-size: 1.5em;
 }
 h3 {
-  font-size: 0.5em
+  font-size: 1em
 }
 
 html {
@@ -416,6 +416,10 @@ a.list-group-item-success.active:focus {
 }
 .panel-success > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #e6f3f7;
+}
+
+.panel-title {
+	font-size: 1em;
 }
 .ui-pnotify {
 top: 25px;

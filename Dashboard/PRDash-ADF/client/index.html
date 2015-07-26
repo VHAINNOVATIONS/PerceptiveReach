@@ -56,7 +56,7 @@
         <!--ul class="nav navbar-nav">
           <li ng-repeat="(when, route) in $route.routes" ng-class="{ 'active': $route.current.$$route === route}"><a ng-href="{{'#' + route.originalPath}}">{{ route.title }}</a></li>
         </ul-->
-        <div style="float: right; color: #fff; cursor: default; padding-top: 10px;"> 
+        <div style="float: right; color: #fff; background-color: transparent; cursor: default; padding-top: 10px;"> 
           <span>{{$root.globals.userObj.UserName }}</span>
           <button ng-click="Logout()" class="btn btn-success" >Logout</button>
         </div>
