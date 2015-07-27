@@ -1,31 +1,37 @@
 <div>
-    <div class="btn-toolbar" ng-if="!options.hideToolbar">
-        <div class="btn-group" ng-if="!options.widgetButtons">
-            <span class="dropdown" on-toggle="toggled(open)">
-              <button name="btnAddWidget" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                Add a Widget<span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu">
-                <li ng-repeat="widget in widgetDefs">
-                  <a name="liWidgetDropdown" href="#" ng-click="addWidgetInternal($event, widget);" class="dropdown-toggle"><span class="label label-primary">{{widget.name}}</span></a>
-                </li>
-              </ul>
-            </span>
-    </div>
-        <div class="btn-group" ng-if="options.widgetButtons">
-            <button name="btnWidgetName" ng-repeat="widget in widgetDefs"
-                    ng-click="addWidgetInternal($event, widget);" type="button" class="btn btn-primary">
-                {{widget.name}}
-            </button>
+    <div offset="105" style="z-index:10001;background-color:white;" sticky>
+        <div class="btn-toolbar" ng-if="!options.hideToolbar">
+            <div class="btn-group" ng-if="!options.widgetButtons">
+                <span class="dropdown" on-toggle="toggled(open)">
+                  <button name="btnAddWidget" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Add a Widget<span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li ng-repeat="widget in widgetDefs">
+                      <a name="liWidgetDropdown" href="#" ng-click="addWidgetInternal($event, widget);" class="dropdown-toggle"><span class="label label-primary">{{widget.name}}</span></a>
+                    </li>
+                  </ul>
+                </span>
         </div>
+            <div class="btn-group" ng-if="options.widgetButtons">
+                <button name="btnWidgetName" ng-repeat="widget in widgetDefs"
+                        ng-click="addWidgetInternal($event, widget);" type="button" class="btn btn-primary">
+                    {{widget.name}}
+                </button>
+            </div>
 
-        <button name="btnDefaultWarning" class="btn btn-warning" ng-click="resetWidgetsToDefault()">Default Widgets</button>
+            <button name="btnDefaultWarning" class="btn btn-warning" ng-click="resetWidgetsToDefault()">Default Widgets</button>
 
-        <button name="btnSave" ng-if="options.storage && options.explicitSave" ng-click="options.saveDashboard()" class="btn btn-success" ng-disabled="!options.unsavedChangeCount">{{ !options.unsavedChangeCount ? "all saved" : "save changes (" + options.unsavedChangeCount + ")" }}</button>
+            <button name="btnSave" ng-if="options.storage && options.explicitSave" ng-click="options.saveDashboard()" class="btn btn-success" ng-disabled="!options.unsavedChangeCount">{{ !options.unsavedChangeCount ? "all saved" : "save changes (" + options.unsavedChangeCount + ")" }}</button>
 
-        <button name="btnClear" ng-click="clear();" type="button" class="btn btn-info">Clear</button>
+            <button name="btnClear" ng-click="clear();" type="button" class="btn btn-info">Clear</button>
+            <div style="height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;" ng-show=" dashboardTitle == 'Individual View'">
+                <label>
+                    <span> {{ PatientName }}</span>
+                </label>
+            </div>
+        </div>
     </div>
-
     <div ui-sortable="sortableOptions" ng-model="widgets" class="dashboard-widget-area">
         <div ng-repeat="widget in widgets" ng-style="widget.containerStyle" class="widget-container" widget>
             <div class="widget panel panel-default">

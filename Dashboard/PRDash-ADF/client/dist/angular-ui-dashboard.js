@@ -48,6 +48,7 @@ angular.module('ui.dashboard')
 
         // from dashboard="options"
         scope.options = scope.$eval(attrs.dashboard);
+        scope.dashboardTitle = scope.$eval(attrs.dashboardTitle)
 
         // Deep options
         scope.options.settingsModalOptions = scope.options.settingsModalOptions || {};
@@ -88,6 +89,13 @@ angular.module('ui.dashboard')
           scope.widgetDefs,
           scope.options.stringifyStorage
         );
+
+        scope.$on('commonDataChanged', function (event, data) {
+        if(data.data.veteranObj.Name)
+          scope.PatientName = data.data.veteranObj.Name;
+        else
+          scope.PatientName = '';
+        }.bind(this));
 
         /**
          * Instantiates a new widget on the dashboard
@@ -608,59 +616,71 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/adf/directives/dashboard/dashboard.html",
     "<div>\r" +
     "\n" +
-    "    <div class=\"btn-toolbar\" ng-if=\"!options.hideToolbar\">\r" +
+    "    <div offset=\"105\" style=\"z-index:10001;background-color:white;\" sticky>\r" +
     "\n" +
-    "        <div class=\"btn-group\" ng-if=\"!options.widgetButtons\">\r" +
+    "        <div class=\"btn-toolbar\" ng-if=\"!options.hideToolbar\">\r" +
     "\n" +
-    "            <span class=\"dropdown\" on-toggle=\"toggled(open)\">\r" +
+    "            <div class=\"btn-group\" ng-if=\"!options.widgetButtons\">\r" +
     "\n" +
-    "              <button name=\"btnAddWidget\" type=\"button\" class=\"btn btn-primary dropdown-toggle\" data-toggle=\"dropdown\">\r" +
+    "                <span class=\"dropdown\" on-toggle=\"toggled(open)\">\r" +
     "\n" +
-    "                Add a Widget<span class=\"caret\"></span>\r" +
+    "                  <button name=\"btnAddWidget\" type=\"button\" class=\"btn btn-primary dropdown-toggle\" data-toggle=\"dropdown\">\r" +
     "\n" +
-    "              </button>\r" +
+    "                    Add a Widget<span class=\"caret\"></span>\r" +
     "\n" +
-    "              <ul class=\"dropdown-menu\" role=\"menu\">\r" +
+    "                  </button>\r" +
     "\n" +
-    "                <li ng-repeat=\"widget in widgetDefs\">\r" +
+    "                  <ul class=\"dropdown-menu\" role=\"menu\">\r" +
     "\n" +
-    "                  <a name=\"liWidgetDropdown\" href=\"#\" ng-click=\"addWidgetInternal($event, widget);\" class=\"dropdown-toggle\"><span class=\"label label-primary\">{{widget.name}}</span></a>\r" +
+    "                    <li ng-repeat=\"widget in widgetDefs\">\r" +
     "\n" +
-    "                </li>\r" +
+    "                      <a name=\"liWidgetDropdown\" href=\"#\" ng-click=\"addWidgetInternal($event, widget);\" class=\"dropdown-toggle\"><span class=\"label label-primary\">{{widget.name}}</span></a>\r" +
     "\n" +
-    "              </ul>\r" +
+    "                    </li>\r" +
     "\n" +
-    "            </span>\r" +
+    "                  </ul>\r" +
     "\n" +
-    "    </div>\r" +
-    "\n" +
-    "        <div class=\"btn-group\" ng-if=\"options.widgetButtons\">\r" +
-    "\n" +
-    "            <button name=\"btnWidgetName\" ng-repeat=\"widget in widgetDefs\"\r" +
-    "\n" +
-    "                    ng-click=\"addWidgetInternal($event, widget);\" type=\"button\" class=\"btn btn-primary\">\r" +
-    "\n" +
-    "                {{widget.name}}\r" +
-    "\n" +
-    "            </button>\r" +
+    "                </span>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
+    "            <div class=\"btn-group\" ng-if=\"options.widgetButtons\">\r" +
+    "\n" +
+    "                <button name=\"btnWidgetName\" ng-repeat=\"widget in widgetDefs\"\r" +
+    "\n" +
+    "                        ng-click=\"addWidgetInternal($event, widget);\" type=\"button\" class=\"btn btn-primary\">\r" +
+    "\n" +
+    "                    {{widget.name}}\r" +
+    "\n" +
+    "                </button>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
     "\r" +
     "\n" +
-    "        <button name=\"btnDefaultWarning\" class=\"btn btn-warning\" ng-click=\"resetWidgetsToDefault()\">Default Widgets</button>\r" +
+    "            <button name=\"btnDefaultWarning\" class=\"btn btn-warning\" ng-click=\"resetWidgetsToDefault()\">Default Widgets</button>\r" +
     "\n" +
     "\r" +
     "\n" +
-    "        <button name=\"btnSave\" ng-if=\"options.storage && options.explicitSave\" ng-click=\"options.saveDashboard()\" class=\"btn btn-success\" ng-disabled=\"!options.unsavedChangeCount\">{{ !options.unsavedChangeCount ? \"all saved\" : \"save changes (\" + options.unsavedChangeCount + \")\" }}</button>\r" +
+    "            <button name=\"btnSave\" ng-if=\"options.storage && options.explicitSave\" ng-click=\"options.saveDashboard()\" class=\"btn btn-success\" ng-disabled=\"!options.unsavedChangeCount\">{{ !options.unsavedChangeCount ? \"all saved\" : \"save changes (\" + options.unsavedChangeCount + \")\" }}</button>\r" +
     "\n" +
     "\r" +
     "\n" +
-    "        <button name=\"btnClear\" ng-click=\"clear();\" type=\"button\" class=\"btn btn-info\">Clear</button>\r" +
+    "            <button name=\"btnClear\" ng-click=\"clear();\" type=\"button\" class=\"btn btn-info\">Clear</button>\r" +
+    "\n" +
+    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Individual View'\">\r" +
+    "\n" +
+    "                <label>\r" +
+    "\n" +
+    "                    <span> {{ PatientName }}</span>\r" +
+    "\n" +
+    "                </label>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "        </div>\r" +
     "\n" +
     "    </div>\r" +
-    "\n" +
-    "\r" +
     "\n" +
     "    <div ui-sortable=\"sortableOptions\" ng-model=\"widgets\" class=\"dashboard-widget-area\">\r" +
     "\n" +
@@ -782,7 +802,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/adf/directives/dashboardLayouts/dashboardLayouts.html",
-    "<ul ui-sortable=\"sortableOptions\" ng-model=\"layouts\" class=\"nav nav-tabs layout-tabs\">\r" +
+    "<ul ui-sortable=\"sortableOptions\" ng-model=\"layouts\" class=\"nav nav-tabs layout-tabs\" offset=\"59\" style=\"z-index:10002;background-color:white;\" sticky>\r" +
     "\n" +
     "    <li ng-repeat=\"layout in layouts\" ng-class=\"{ active: layout.active }\">\r" +
     "\n" +
@@ -818,7 +838,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "</ul>\r" +
     "\n" +
-    "<div ng-repeat=\"layout in layouts | filter:isActive\" dashboard=\"layout.dashboard\" template-url=\"client/components/adf/directives/dashboard/dashboard.html\"></div>"
+    "<div ng-repeat=\"layout in layouts | filter:isActive\" dashboard=\"layout.dashboard\" template-url=\"client/components/adf/directives/dashboard/dashboard.html\" dashboard-title=\"layout.title\"></div>"
   );
 
 }]);
