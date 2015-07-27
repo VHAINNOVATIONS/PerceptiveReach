@@ -618,7 +618,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <div offset=\"105\" style=\"z-index:10001;background-color:white;\" sticky>\r" +
     "\n" +
-    "        <div class=\"btn-toolbar\" ng-if=\"!options.hideToolbar\">\r" +
+    "        <div class=\"btn-toolbar\" ng-if=\"!options.hideToolbar\" style=\"padding-bottom:5px;padding-top:5px;border-bottom: 2px solid gray;\">\r" +
     "\n" +
     "            <div class=\"btn-group\" ng-if=\"!options.widgetButtons\">\r" +
     "\n" +
