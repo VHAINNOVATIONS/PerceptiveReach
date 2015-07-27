@@ -5,7 +5,7 @@ var sql = require('mssql');
 
 exports.index = function(req, res) {
 	/*Configure response header */
-    res.header("content-type: application/json");
+    //res.header("content-type: application/json");
 
 	/*Configure and open database */
     var dbc = require('../../config/db_connection/development.js');

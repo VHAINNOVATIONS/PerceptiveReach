@@ -111,10 +111,10 @@ module.exports = function(app) {
 
   });
 
-  app.use(function(req, res, next){
+  /*app.use(function(req, res, next){
       res.locals.session = req.session;
       next();
-  });
+  });*/
   
   app.use(function(req, res, next) {
     setCookie('io', 'connectSIDCookieValue', {
@@ -152,7 +152,7 @@ module.exports = function(app) {
     }
     else  
     {
-      if(req.url.indexOf("/api/") != -1 )
+      if(req.url.indexOf("/api/") != -1 && !config.bypassAuth)
       {
         return res.json(401, 'Session Expired/Not authorized');
       }

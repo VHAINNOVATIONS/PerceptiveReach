@@ -356,7 +356,7 @@ describe('Factory: LayoutStorage', function () {
 
       var newLayouts = [ { title: 'my-layout', widgetDefinitions: [] }, { title: 'my-layout-2' } ];
       storage.add(newLayouts);
-      expect(newLayouts[0].dashboard.widgetDefinitions).toEqual([]);
+      expect(newLayouts[0].dashboard.widgetDefinitions).toEqual([]); // change test to not equal
       expect(newLayouts[1].dashboard.widgetDefinitions).toEqual(options.widgetDefinitions);
     });
 
