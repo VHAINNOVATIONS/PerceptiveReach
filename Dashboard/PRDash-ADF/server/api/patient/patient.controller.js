@@ -67,7 +67,7 @@ exports.update = function(req, res) {
 		/*Configure database query */
         var outreachStatus = req.param("outreachStatus");
         var vetReachID = req.param("vetReachID");
-        var userId = req.param("UserID");
+        var userID = req.param("UserID");
         var query = '';
         if (userID && validator.isInt(userID)) {
           request.input('userID', sql.Int, userID);

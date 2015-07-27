@@ -83,9 +83,9 @@ angular.module('ui.widgets')
           var datamodelList = {};
           var patientList = scope.widgetData[1];          
           $( "select[id^='vet_']" ).on("change",function(e,ui){
-            var selectedIndex = $("option:selected", this).val();
+            var selectedIndex = this.value;
             var selectedreachId = $(e.currentTarget).attr('id').replace("vet_","");
-            scope.widget.dataModel.saveOutreachData(parseInt(selectedIndex) + 1,selectedreachId);
+            scope.widget.dataModel.saveOutreachData(parseInt(selectedIndex),selectedreachId);
           } );
 
           $('#tblPatient tbody').on( 'click', 'tr', function (event) {
@@ -221,7 +221,7 @@ angular.module('ui.widgets')
             //scope.$apply();
             $timeout(function(){
               scope.$emit('updateSelectMenu');  
-            })            
+            },5000)            
           }
         });
       }
