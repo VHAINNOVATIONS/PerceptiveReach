@@ -767,49 +767,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/patientTable/patientTable.html",
     "<div>\r" +
     "\n" +
-    "\t<!--<div id=\"spinner\" style=\"height: 100px;\"> </div>-->\r" +
-    "\n" +
     "    <table id=\"tblPatient\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
-    "    \t<!--<thead>\r" +
-    "\n" +
-    "        <tr>\r" +
-    "\n" +
-    "        \t<th ng-repeat=\"column in columns\">{{column.Name}}</th>\r" +
-    "\n" +
-    "        </tr> \r" +
-    "\n" +
-    "        </thead>\r" +
-    "\n" +
-    "        <tbody>\r" +
-    "\n" +
-    "        <tr ng-repeat=\"patient in patientList\">\r" +
-    "\n" +
-    "            <td>{{ patient.Name }}</td>\r" +
-    "\n" +
-    "            <td>{{ patient.SSN }}</td>\r" +
-    "\n" +
-    "            <td>{{ patient.HomePhone }}</td>\r" +
-    "\n" +
-    "            <td>{{ patient.DateIdentifiedAsAtRisk}}</td>\r" +
-    "\n" +
-    "            <td>{{ patient.RiskLevel }}</td>\r" +
-    "\n" +
-    "            <td>\r" +
-    "\n" +
-    "\t\t\t<label alt=\"Patient ID Status\" for=\"vetPatientIDStatus\">Status</label>\r" +
-    "\n" +
-    "             <select ng-model=\"patient.OutreachStatus\" id=\"vet_{{patient.ReachID}}\" style='width: 180px;' name=\"vetPatientIDStatus\"\r" +
-    "\n" +
-    "                ng-options=\"opt.OutReachStatusID as opt.StatusDesc for opt in outreachStatusList\">\r" +
-    "\n" +
-    "             </select>\r" +
-    "\n" +
-    "            </td>\r" +
-    "\n" +
-    "        </tr>\r" +
-    "\n" +
-    "        </tbody>-->\r" +
+    "    \r" +
     "\n" +
     "    </table>\r" +
     "\n" +
