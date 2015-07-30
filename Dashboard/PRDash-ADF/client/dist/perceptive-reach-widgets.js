@@ -3461,15 +3461,9 @@ angular.module('ui.widgets')
       templateUrl: 'client/components/widget/widgets/patientTable/patientTable.html',
       
       controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
-        //console.log("inside patient roster controller");
-        //console.log($scope.widgetData);
         $scope.dtInstanceAbstract = DTInstances;
         $scope.dtInstance = null;
         $scope.patientList = $scope.widgetData;
-        //console.log("dtoptionsbuilder, dtcolumnsdefbuilder, dtinstances");
-        //console.log(DTOptionsBuilder);
-        //console.log(DTColumnDefBuilder);
-        //console.log(DTInstances);
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
               return new Promise( function(resolve, reject){
                 if ($scope.widgetData)
@@ -3486,12 +3480,6 @@ angular.module('ui.widgets')
             .withOption('scrollY', 200)
             .withOption('paging',false);
         $scope.dtColumns = [
-          /*DTColumnDefBuilder.newColumnDef(0),
-          DTColumnDefBuilder.newColumnDef(1),
-          DTColumnDefBuilder.newColumnDef(2),
-          DTColumnDefBuilder.newColumnDef(3),
-          DTColumnDefBuilder.newColumnDef(4),
-          DTColumnDefBuilder.newColumnDef(5)*/
             DTColumnBuilder.newColumn('Name').withTitle('Name'),
             DTColumnBuilder.newColumn('SSN').withTitle('SSN'),
             DTColumnBuilder.newColumn('HomePhone').withTitle('Phone'),
@@ -3499,10 +3487,6 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level'),
             DTColumnBuilder.newColumn('OutreachStatusSelect').withTitle('Outreach Status')
         ];
-        //console.log("dtoptions:  ");
-        //console.log($scope.dtOptions);
-        //console.log("dtcolumns:  ");
-        //console.log($scope.dtColumns);
         $scope.columns = [
           {"Name" : "Name"},
           {"Name" : "SSN"},
@@ -3513,26 +3497,17 @@ angular.module('ui.widgets')
         ];
       },
       link: function postLink(scope, element, attr) {
-        //console.log("scope::");
-        //console.log("patientTable widgetScope", scope);
-        
         scope.$on("updateSelectMenu", function (){
           var datamodelList = {};
           var patientList = scope.widgetData[1];          
           $( "select[id^='vet_']" ).on("change",function(e,ui){
-            var selectedIndex = $("option:selected", this).val();
+            var selectedIndex = this.value;
             var selectedreachId = $(e.currentTarget).attr('id').replace("vet_","");
-            scope.widget.dataModel.saveOutreachData(parseInt(selectedIndex) + 1,selectedreachId);
+            scope.widget.dataModel.saveOutreachData(parseInt(selectedIndex),selectedreachId);
           } );
 
           $('#tblPatient tbody').on( 'click', 'tr', function (event) {
-            //console.log( dataTableVet.row( this ).data() );
-            //console.log("Patient click event",event);
             if($(this).hasClass('selected')){
-                //$(this).removeClass('selected'); // removes selected highlighting
-                //scope.hideVetDetBtn = true;
-                //$('#patientView').hide();
-                //$('#facilityInfo').show();
             }
             else{
               $('tr.selected').removeClass('selected');
@@ -3549,14 +3524,8 @@ angular.module('ui.widgets')
               console.log("CommonDataAfterClick: ", commonData);
               // broadcast message throughout system
               scope.$parent.$broadcast('commonDataChanged', commonData);
-              //scope.hideVetDetBtn = false;
-              //$('#patientView').show();
-              //$('#facilityInfo').hide();
-              //scope.getpatient(event.currentTarget.cells[4].innerText);
             }
             scope.$apply();
-            //console.log("ReachID selected: " + event.currentTarget.cells[5].firstElementChild.id.replace("vet_",""));//innerText);
-            //console.log(event);
           });  
         });
         //scope.dtrender.showLoading();
@@ -3579,18 +3548,8 @@ angular.module('ui.widgets')
           top: '50%', // Top position relative to parent
           left: '50%' // Left position relative to parent
         };
-        //var spinner = new Spinner(opts).spin($("#spinner"));
-
-          //console.log("inside patient roster directive before check");
-          //console.log("logg v:",v); 
           
-          //console.log(DTOptionsBuilder);
         if(v != null && v.length >0){
-            //unwatch();
-            //console.log("--inside watch for roster-");                
-            //console.log("inside patient roster directive after check is positive");
-            //console.log(scope.widgetData);
-            //scope.dtInstance.changeData(scope.widgetData[1]);
             scope.outreachStatusList = scope.widgetData[2];
             scope.patientList = scope.widgetData[1];
             var outreachStatus = scope.outreachStatusList;
@@ -3610,36 +3569,10 @@ angular.module('ui.widgets')
                 options += temp;                
               }
               var select = "<select class='form-control' style='width: 180px;' id='vet_" + patientsBysta3N[patient].ReachID + "'><option value=''></option>"+ options+ "</select>";
-              //record.push(String(select));
               patientsBysta3N[patient].OutreachStatusSelect = select;
-              //datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient]; 
             }
-            scope.patientList = patientsBysta3N;
-            //scope.dataModelObj = datamodelList;
-            //console.log("datamodelobj:::");
-            //console.log(scope.dataModelObj);
-            //var dataTableVet = $(element).children(); scope.$apply();
-            //dataTableVet.dataTable();
-            /*var dataTableVet = $(element).children().dataTable( {
-                "data": scope.widgetData[1],
-                "scrollY":        "200px",
-                "scrollCollapse": true,
-                "paging":         false,
-                "columns": [
-                    { "title": "Name" },
-                    { "title": "SSN" },
-                    { "title": "Phone" },
-                    { "title": "Date First identified", "class": "center" },
-                    { "title": "Statistical Risk Level", "class": "center" },
-                    { "title": "Outreach Status", "class": "center" }
-                    //{ "title": "Last VA Clinician Visit", "class": "center" }
-                ],
-                dom: 'T<"clear">lfrtip',
-                tableTools: {
-                    "sRowSelect": "single"
-                }
-            });*/
             
+            scope.patientList = patientsBysta3N;
             var promise = new Promise( function(resolve, reject){
                   if (scope.patientList)
                     resolve(scope.patientList);
@@ -3650,15 +3583,22 @@ angular.module('ui.widgets')
               scope.dtInstance.changeData(promise);
             else {
               scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                //console.log("dtInstance",dtInstances);
                 dtInstances.tblPatient._renderer.changeData(promise)              
               });
             }
             
-            //scope.$apply();
             $timeout(function(){
-              scope.$emit('updateSelectMenu');  
-            })            
+              scope.$emit('updateSelectMenu'); 
+              var commonData = scope.widget.dataModelOptions.common;
+              if(!commonData.data.veteranObj)
+              {
+                $('#tblPatient').find( "tbody>tr:first" ).click();
+              }
+              else
+              {
+                $('#tblPatient').find( "tbody>tr td:contains('"+commonData.data.veteranObj.Name+"')" ).parent().click();
+              }
+            },500)            
           }
         });
       }
@@ -4072,7 +4012,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/clinicalDecisionSupport/clinicalDecisionSupport.html",
-    "<div name=\"clinicalDecisionSupport\" style='overflow:auto; height:450px; widgth:auto'>\r" +
+    "<div name=\"clinicalDecisionSupport\" style=\"overflow:auto; height:450px; width:auto\">\r" +
     "\n" +
     "\t<div ng-repeat=\"cpg in cpgList\">\r" +
     "\n" +
@@ -4122,7 +4062,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
     "\n" +
-    "        <h4>No Data Found</h4>\r" +
+    "        <p font-size=\"12\"><b>No Data Found</b></p>\r" +
     "\n" +
     "    </div>\r" +
     "\n" +
@@ -4194,7 +4134,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
     "\n" +
-    "        <h4>No Data Found</h4>\r" +
+    "        <p font-size=\"12\"><br>No Data Found</b></p>\r" +
     "\n" +
     "    </div>\r" +
     "\n" +
@@ -4772,49 +4712,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/patientTable/patientTable.html",
     "<div>\r" +
     "\n" +
-    "\t<!--<div id=\"spinner\" style=\"height: 100px;\"> </div>-->\r" +
-    "\n" +
     "    <table id=\"tblPatient\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
-    "    \t<!--<thead>\r" +
-    "\n" +
-    "        <tr>\r" +
-    "\n" +
-    "        \t<th ng-repeat=\"column in columns\">{{column.Name}}</th>\r" +
-    "\n" +
-    "        </tr> \r" +
-    "\n" +
-    "        </thead>\r" +
-    "\n" +
-    "        <tbody>\r" +
-    "\n" +
-    "        <tr ng-repeat=\"patient in patientList\">\r" +
-    "\n" +
-    "            <td>{{ patient.Name }}</td>\r" +
-    "\n" +
-    "            <td>{{ patient.SSN }}</td>\r" +
-    "\n" +
-    "            <td>{{ patient.HomePhone }}</td>\r" +
-    "\n" +
-    "            <td>{{ patient.DateIdentifiedAsAtRisk}}</td>\r" +
-    "\n" +
-    "            <td>{{ patient.RiskLevel }}</td>\r" +
-    "\n" +
-    "            <td>\r" +
-    "\n" +
-    "\t\t\t<label alt=\"Patient ID Status\" for=\"vetPatientIDStatus\">Status</label>\r" +
-    "\n" +
-    "             <select ng-model=\"patient.OutreachStatus\" id=\"vet_{{patient.ReachID}}\" style='width: 180px;' name=\"vetPatientIDStatus\"\r" +
-    "\n" +
-    "                ng-options=\"opt.OutReachStatusID as opt.StatusDesc for opt in outreachStatusList\">\r" +
-    "\n" +
-    "             </select>\r" +
-    "\n" +
-    "            </td>\r" +
-    "\n" +
-    "        </tr>\r" +
-    "\n" +
-    "        </tbody>-->\r" +
+    "    \r" +
     "\n" +
     "    </table>\r" +
     "\n" +
@@ -4824,9 +4724,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/patientTable/patientTableWidgetSettingsTemplate.html",
     "<div class=\"modal-header\">\r" +
     "\n" +
-    "    <button name=\"btnClose\" type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
+    "    <button name=\"btnClose\" alt=\"close\" type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
     "\n" +
-    "  <h3>Widget Options<small>{{widget.title}}</small></h3>\r" +
+    "  <p font-size=\"12\"><b>Widget Options:  </b><small>{{widget.title}}</small></p>\r" +
     "\n" +
     "</div>\r" +
     "\n" +
@@ -4842,7 +4742,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <div class=\"col-sm-10\">\r" +
     "\n" +
-    "                <input alt=\"Result Title\" type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
+    "                <input alt=\"Result Title\" id=\"widgetTitle\" type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
@@ -4850,7 +4750,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <div class=\"col-sm-10\">\r" +
     "\n" +
-    "                <select class=\"form-control\" ng-model=\"result.dataModel.vamc\">\r" +
+    "                <select class=\"form-control\" id=\"widgetVAMC\" ng-model=\"result.dataModel.vamc\">\r" +
     "\n" +
     "                    <option ng-repeat=\"vamc in listOfVAMC\" value=\"{{vamc.STA3N}}\">{{vamc.VAMC_Name}}</option>\r" +
     "\n" +
@@ -4874,9 +4774,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "<div class=\"modal-footer\">\r" +
     "\n" +
-    "    <button name=\"btnCancel\" type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
+    "    <button name=\"btnCancel\" alt=\"cancel\" type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
     "\n" +
-    "    <button name=\"btnOK\" type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
+    "    <button name=\"btnOK\" alt=\"ok\" type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
     "\n" +
     "</div>"
   );
@@ -4981,11 +4881,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t\t<td>{{ind.Age}}</td>\r" +
     "\n" +
-    "\t\t\t\t\t<td>{{ind.Sex}}</td>\r" +
+    "\t\t\t\t\t<td>{{ind.Gender}}</td>\r" +
     "\n" +
-    "\t\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "\t\t\t\t\t<td>{{ind.Value}}</td>\r" +
     "\n" +
-    "\t\t\t\t\t<td>{{ind.RaceEthnicity}}</td>\r" +
+    "\t\t\t\t\t<td>{{ind.Ethnicity}}</td>\r" +
     "\n" +
     "\t\t\t\t</tr>\r" +
     "\n" +

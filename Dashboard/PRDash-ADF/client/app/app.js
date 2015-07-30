@@ -28,7 +28,8 @@ angular.module('app', [
     'ui.widgets',
     'ui.models',
     'btford.markdown',
-    'angular-loading-bar'
+    'angular-loading-bar',
+    'sticky'
   ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     //$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
