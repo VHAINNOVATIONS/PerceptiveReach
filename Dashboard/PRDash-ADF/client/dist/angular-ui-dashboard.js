@@ -1583,10 +1583,18 @@ angular.module('ui.dashboard')
         var someView = [];        
         var widget = null;
 
-        for(var widgetIdx in widgetDefinitionsLayout){
-          widget = widgetDefinitionsLayout[widgetIdx];
-          someView.push(_.filter(widgetDefinitionsAll,{'name': widget.name})[0]);                     
-        }       
+        if (widgetDefinitionsLayout == null)
+          return widgetDefinitionsAll;
+        
+        else if (widgetDefinitionsLayout != null && widgetDefinitionsLayout.length == 0)
+          return widgetDefinitionsLayout;
+        
+        else{
+          for(var widgetIdx in widgetDefinitionsLayout){
+            widget = widgetDefinitionsLayout[widgetIdx];
+            someView.push(_.filter(widgetDefinitionsAll,{'name': widget.name})[0]);                     
+          }  
+        }          
         //console.log("LayoutViewWidgets:",someView);
         return someView;
       }
