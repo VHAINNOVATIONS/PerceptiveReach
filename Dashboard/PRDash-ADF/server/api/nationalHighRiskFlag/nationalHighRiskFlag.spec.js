@@ -5,7 +5,7 @@ var app = require('../../app');
 var request = require('supertest');
 
 describe('GET /api/appointmentData', function() {
-
+/*
   it('should respond with JSON array', function(done) {
     request(app)
       .get('/api/appointmentData?id=652427')
@@ -16,5 +16,5 @@ describe('GET /api/appointmentData', function() {
         res.body.should.be.instanceof(Array);
         done();
       });
-  });
+  });*/
 });

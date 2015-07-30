@@ -48,6 +48,7 @@ angular.module('ui.dashboard')
 
         // from dashboard="options"
         scope.options = scope.$eval(attrs.dashboard);
+        scope.dashboardTitle = scope.$eval(attrs.dashboardTitle)
 
         // Deep options
         scope.options.settingsModalOptions = scope.options.settingsModalOptions || {};
@@ -88,6 +89,13 @@ angular.module('ui.dashboard')
           scope.widgetDefs,
           scope.options.stringifyStorage
         );
+
+        scope.$on('commonDataChanged', function (event, data) {
+        if(data.data.veteranObj.Name)
+          scope.PatientName = data.data.veteranObj.Name;
+        else
+          scope.PatientName = '';
+        }.bind(this));
 
         /**
          * Instantiates a new widget on the dashboard

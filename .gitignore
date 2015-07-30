@@ -3,3 +3,7 @@ Dashboard/PRDash/src/test-results.xml
 Dashboard/PRDash-ADF/.env
 Dashboard/PRDash-ADF/web.config
 Dashboard/config.zip
+Database/SSIS/HealthData/HealthIndicators.suo
+Database/SSIS/HealthData/HealthIndicators.dtproj.user
+Database/SSIS/HealthData/HealthIndicators/bin
+Database/SSIS/HealthData/HealthIndicators/obj
