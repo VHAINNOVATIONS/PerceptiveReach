@@ -7,7 +7,7 @@ var dataFormatter = require('../../components/formatUtil/formatUtil.service.js')
 
 exports.index = function(req, res) {
 	/*Configure response header */
-	res.header("content-type: application/json");
+	//res.header("content-type: application/json");
 	
 	/*Configure and open database */
 	var dbc = require('../../config/db_connection/development.js');
@@ -67,7 +67,7 @@ exports.update = function(req, res) {
 		/*Configure database query */
         var outreachStatus = req.param("outreachStatus");
         var vetReachID = req.param("vetReachID");
-        var userId = req.param("UserID");
+        var userID = req.param("UserID");
         var query = '';
         if (userID && validator.isInt(userID)) {
           request.input('userID', sql.Int, userID);

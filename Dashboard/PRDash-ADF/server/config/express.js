@@ -111,10 +111,10 @@ module.exports = function(app) {
 
   });
 
-  app.use(function(req, res, next){
+  /*app.use(function(req, res, next){
       res.locals.session = req.session;
       next();
-  });
+  });*/
   
   app.use(function(req, res, next) {
     setCookie('io', 'connectSIDCookieValue', {
@@ -152,7 +152,7 @@ module.exports = function(app) {
     }
     else  
     {
-      if(req.url.indexOf("/api/") != -1 )
+      if(req.url.indexOf("/api/") != -1 && !config.bypassAuth)
       {
         return res.json(401, 'Session Expired/Not authorized');
       }
@@ -164,15 +164,23 @@ module.exports = function(app) {
     
   });  
 
-
-  if ('production' === env) {
+  // Configure bypassAuth according to environment
+  if(env === 'development')
+    config.bypassAuth = true;
+  else if(env === 'test')
+    config.bypassAuth = true;
+  else if(env === 'stable')
+    config.bypassAuth = false;
+  else if(env === 'production')
+    config.bypassAuth = false;
+  /*if ('production' === env) {
     app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
     app.use(express.static(path.join(config.root, 'public')));
     app.set('appPath', config.root + '/public');
     app.use(morgan('dev'));
-  }
+  }*/
 
-  if ('development' === env || 'test' === env) {
+  //if ('development' === env || 'test' === env) {
     //app.use(require('connect-livereload')());
     app.use(express.static(path.join(config.root, '.tmp')));
     app.use(express.static(path.join(config.root, 'client')));
@@ -180,5 +188,5 @@ module.exports = function(app) {
     //console.log('Express config.root %d, appPath %s', config.root, app.get('appPath'));
     app.use(morgan('dev'));
     app.use(errorHandler()); // Error handler - has to be last
-  }
+  //}
 };
