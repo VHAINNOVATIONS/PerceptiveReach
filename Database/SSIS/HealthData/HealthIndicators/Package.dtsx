@@ -1,0 +1,3341 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/15/2015 11:39:51 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="VARUNDEV"
+  DTS:CreatorName="VARUNDEV\Varun"
+  DTS:DTSID="{346C589E-C37B-4294-A4DB-0889C53A61AE}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.5058.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="67"
+  DTS:VersionGUID="{84ECC745-F693-4EEE-AAE1-660246F79B82}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ReachDev]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D23116FB-58BF-48B0-8799-FB19AE4DE768}"
+      DTS:ObjectName="ReachDev">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=54.225.232.25;User ID=sa;Initial Catalog=Reach_Dev;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAc1AurMxeZkux3EC4D0J4AAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAB+vA8uwwe+l6K38BqpL1espCiH9AJ1MqFS/ol4FstN2QAAAAAOgAAAAAIAACAAAACsVaVK4BCJw6Tp9uqVVbVU3UVTLPovpDQZiCWFYVvkUSAAAACAydMn5Y6J5CaRlcfeDqOfznVObpeWUN6+hqOQ0gCk4UAAAACoCDlXs903ke8pFfeh6l19VLCmN8Ga2SPy3/He6q/+YgO79QspvTlpHKnOyIF4o91EAYS52aa3evCIFZGdsx8w</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="C:\PerceptiveReach_SSIS\HealthIndicators\HealthIndicators\HealthIndicators.dtsConfig"
+      DTS:ConfigurationType="1"
+      DTS:CreationName=""
+      DTS:DTSID="{E9B787CD-6794-4330-9674-2B161CF4D254}"
+      DTS:ObjectName="HealthIndicatorConfig" />
+  </DTS:Configurations>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2400A1AD-9BC6-403D-B6C5-E1CA7BC022DA}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="RestAPIUrl">
+      <DTS:VariableValue
+        DTS:DataType="8">http://services.healthindicators.gov/v5/REST.svc/IndicatorDescription/1105/Data/1?Key=dde176b400f9465890a62e5c70f70155
+    </DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data From Rest API"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{693D22B9-7A02-47DE-BB82-2EF2F132D75A}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data From Rest API"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data From Rest API\OLE DB Destination"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[HealthDataSuicideIndicators_New]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data From Rest API\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ReachDev]"
+                  connectionManagerRefId="Package.ConnectionManagers[ReachDev]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Other]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Other"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Other]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Other]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ObesityStatus]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ObesityStatus"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ObesityStatus]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[ObesityStatus]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[VeteranStatus]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="VeteranStatus"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[VeteranStatus]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[VeteranStatus]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Total]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Total"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Total]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Total]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Timeframe]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Timeframe"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Timeframe]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Timeframe]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[StandardError]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="StandardError"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[StandardError]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[StandardError]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SexualOrientation]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="SexualOrientation"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SexualOrientation]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[SexualOrientation]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Numerator]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Numerator"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Numerator]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Numerator]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Modifier5]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Modifier5"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Modifier5]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Modifier5]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Modifier4]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Modifier4"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Modifier4]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Modifier4]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Modifier3]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Modifier3"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Modifier3]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Modifier3]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Modifier2]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Modifier2"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Modifier2]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Modifier2]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Modifier1]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Modifier1"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Modifier1]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Modifier1]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MissingValueFlag]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="MissingValueFlag"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MissingValueFlag]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[MissingValueFlag]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MaritalStatus]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="MaritalStatus"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MaritalStatus]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[MaritalStatus]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LocaleStateFIPSCode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="LocaleStateFIPSCode"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LocaleStateFIPSCode]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[LocaleStateFIPSCode]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LocaleLevel]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="LocaleLevel"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LocaleLevel]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[LocaleLevel]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LocaleHRRCode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="LocaleHRRCode"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LocaleHRRCode]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[LocaleHRRCode]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LocaleCountySSACode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="LocaleCountySSACode"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LocaleCountySSACode]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[LocaleCountySSACode]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LocaleCountyFIPSCode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="LocaleCountyFIPSCode"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LocaleCountyFIPSCode]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[LocaleCountyFIPSCode]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Locale]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Locale"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Locale]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Locale]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[IndicatorID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="IndicatorID"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IndicatorID]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[IndicatorID]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[IncomeAndPovertyStatus]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="IncomeAndPovertyStatus"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IncomeAndPovertyStatus]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[IncomeAndPovertyStatus]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[HealthInsuranceStatus]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="HealthInsuranceStatus"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[HealthInsuranceStatus]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[HealthInsuranceStatus]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Geography]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Geography"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Geography]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Geography]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FamilyType]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="FamilyType"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FamilyType]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[FamilyType]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Age]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Age"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Age]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Age]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[RaceEthnicity]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="RaceEthnicity"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RaceEthnicity]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[RaceEthnicity]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[NumericValue]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="NumericValue"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NumericValue]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[NumericValue]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Sex]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Sex"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sex]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Sex]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CountryOfBirth]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="CountryOfBirth"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CountryOfBirth]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[CountryOfBirth]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ConfidenceIntervalLow]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ConfidenceIntervalLow"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ConfidenceIntervalLow]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[ConfidenceIntervalLow]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ConfidenceIntervalHigh]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ConfidenceIntervalHigh"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ConfidenceIntervalHigh]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[ConfidenceIntervalHigh]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[EducationalAttainment]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="EducationalAttainment"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[EducationalAttainment]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[EducationalAttainment]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DisabilityStatus]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="DisabilityStatus"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DisabilityStatus]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[DisabilityStatus]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DimensionList]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="200"
+                      cachedName="DimensionList"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DimensionList]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[DimensionList]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Denominator]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="200"
+                      cachedName="Denominator"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Denominator]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Denominator]" />
+                    <inputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CharacteristicOfSchoolOrStudent]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="CharacteristicOfSchoolOrStudent"
+                      externalMetadataColumnId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CharacteristicOfSchoolOrStudent]"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[CharacteristicOfSchoolOrStudent]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Other]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Other" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ObesityStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ObesityStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[VeteranStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="VeteranStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Total]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Total" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Timeframe]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Timeframe" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[StandardError]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="StandardError" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SexualOrientation]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="SexualOrientation" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Numerator]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Numerator" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Modifier5]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Modifier5" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Modifier4]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Modifier4" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Modifier3]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Modifier3" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Modifier2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Modifier2" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Modifier1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Modifier1" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MissingValueFlag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="MissingValueFlag" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MaritalStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="MaritalStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LocaleStateFIPSCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="LocaleStateFIPSCode" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LocaleLevel]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="LocaleLevel" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LocaleHRRCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="LocaleHRRCode" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LocaleCountySSACode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="LocaleCountySSACode" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LocaleCountyFIPSCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="LocaleCountyFIPSCode" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Locale]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Locale" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IndicatorID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="IndicatorID" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IncomeAndPovertyStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="IncomeAndPovertyStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[HealthInsuranceStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="HealthInsuranceStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Geography]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Geography" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FamilyType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="FamilyType" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Age]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Age" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RaceEthnicity]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="RaceEthnicity" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NumericValue]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="NumericValue" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sex]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Sex" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CountryOfBirth]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CountryOfBirth" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ConfidenceIntervalLow]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ConfidenceIntervalLow" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ConfidenceIntervalHigh]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ConfidenceIntervalHigh" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[EducationalAttainment]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="EducationalAttainment" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DisabilityStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="DisabilityStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DimensionList]"
+                      codePage="1252"
+                      dataType="str"
+                      length="200"
+                      name="DimensionList" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Denominator]"
+                      codePage="1252"
+                      dataType="str"
+                      length="200"
+                      name="Denominator" />
+                    <externalMetadataColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CharacteristicOfSchoolOrStudent]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CharacteristicOfSchoolOrStudent" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data From Rest API\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data From Rest API\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data From Rest API\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data From Rest API\Script Component"
+              componentClassID="{874F7595-FB5F-40FF-96AF-FBFF8250E3EF}"
+              contactInfo="Includes and runs custom script code. For example, apply a business rule that limits the range of valid values in an &quot;income&quot; column or add values in two columns and calculate the average of the sum.;Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;8"
+              description="Includes and runs custom script code. For example, apply a business rule that limits the range of valid values in an &quot;income&quot; column or add values in two columns and calculate the average of the sum."
+              name="Script Component"
+              version="8">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Stores the source code of the component"
+                  isArray="true"
+                  name="SourceCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="30">
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Resources.resx]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[main.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[#region Help:  Introduction to the Script Component
+/* The Script Component allows you to perform virtually any operation that can be accomplished in
+ * a .Net application within the context of an Integration Services data flow.
+ *
+ * Expand the other regions which have "Help" prefixes for examples of specific ways to use
+ * Integration Services features within this script component. */
+#endregion
+
+#region Namespaces
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Net;
+using System.Reflection;
+using System.Web.Script.Serialization;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+using Microsoft.SqlServer.Dts.Runtime.Wrapper;
+using System.Xml;
+using System.Xml.Linq;
+#endregion
+
+/// <summary>
+/// This is the class to which to add your code.  Do not change the name, attributes, or parent
+/// of this class.
+/// </summary>
+[Microsoft.SqlServer.Dts.Pipeline.SSISScriptComponentEntryPointAttribute]
+public class ScriptMain : UserComponent
+{
+    #region Help:  Using Integration Services variables and parameters
+    /* To use a variable in this script, first ensure that the variable has been added to
+     * either the list contained in the ReadOnlyVariables property or the list contained in
+     * the ReadWriteVariables property of this script component, according to whether or not your
+     * code needs to write into the variable.  To do so, save this script, close this instance of
+     * Visual Studio, and update the ReadOnlyVariables and ReadWriteVariables properties in the
+     * Script Transformation Editor window.
+     * To use a parameter in this script, follow the same steps. Parameters are always read-only.
+     *
+     * Example of reading from a variable or parameter:
+     *  DateTime startTime = Variables.MyStartTime;
+     *
+     * Example of writing to a variable:
+     *  Variables.myStringVariable = "new value";
+     */
+    #endregion
+
+    #region Help:  Using Integration Services Connnection Managers
+    /* Some types of connection managers can be used in this script component.  See the help topic
+     * "Working with Connection Managers Programatically" for details.
+     *
+     * To use a connection manager in this script, first ensure that the connection manager has
+     * been added to either the list of connection managers on the Connection Managers page of the
+     * script component editor.  To add the connection manager, save this script, close this instance of
+     * Visual Studio, and add the Connection Manager to the list.
+     *
+     * If the component needs to hold a connection open while processing rows, override the
+     * AcquireConnections and ReleaseConnections methods.
+     * 
+     * Example of using an ADO.Net connection manager to acquire a SqlConnection:
+     *  object rawConnection = Connections.SalesDB.AcquireConnection(transaction);
+     *  SqlConnection salesDBConn = (SqlConnection)rawConnection;
+     *
+     * Example of using a File connection manager to acquire a file path:
+     *  object rawConnection = Connections.Prices_zip.AcquireConnection(transaction);
+     *  string filePath = (string)rawConnection;
+     *
+     * Example of releasing a connection manager:
+     *  Connections.SalesDB.ReleaseConnection(rawConnection);
+     */
+    #endregion
+
+    #region Help:  Firing Integration Services Events
+    /* This script component can fire events.
+     *
+     * Example of firing an error event:
+     *  ComponentMetaData.FireError(10, "Process Values", "Bad value", "", 0, out cancel);
+     *
+     * Example of firing an information event:
+     *  ComponentMetaData.FireInformation(10, "Process Values", "Processing has started", "", 0, fireAgain);
+     *
+     * Example of firing a warning event:
+     *  ComponentMetaData.FireWarning(10, "Process Values", "No rows were received", "", 0);
+     */
+    #endregion
+
+    /// <summary>
+    /// This method is called once, before rows begin to be processed in the data flow.
+    ///
+    /// You can remove this method if you don't need to do anything here.
+    /// </summary>
+    public override void PreExecute()
+    {
+        base.PreExecute();
+        /*
+         * Add your code here
+         */
+    }
+
+    /// <summary>
+    /// This method is called after all the rows have passed through this component.
+    ///
+    /// You can delete this method if you don't need to do anything here.
+    /// </summary>
+    public override void PostExecute()
+    {
+        base.PostExecute();
+        /*
+         * Add your code here
+         */
+    }
+
+    public override void CreateNewOutputRows()
+    {
+        /*
+          Add rows by calling the AddRow method on the member variable named "<Output Name>Buffer".
+          For example, call MyOutputBuffer.AddRow() if your output was named "MyOutput".
+        */
+        string wUrl = Variables.RestAPIUrl;
+        try
+        {
+            //Call getWebServiceResult to return our WorkGroupMetric array
+            var indicatorsList = GetWebServiceResult(wUrl);
+
+            //For each group of metrics output records
+            foreach (var indicator in indicatorsList)
+            {
+                Output0Buffer.AddRow();
+                Output0Buffer.Age = indicator.Age;
+                Output0Buffer.CharacteristicOfSchoolOrStudent = indicator.CharacteristicOfSchoolOrStudent;
+                Output0Buffer.ConfidenceIntervalHigh = indicator.ConfidenceIntervalHigh;
+                Output0Buffer.ConfidenceIntervalLow = indicator.ConfidenceIntervalLow;
+                Output0Buffer.CountryOfBirth = indicator.CountryOfBirth;
+                Output0Buffer.Denominator = indicator.Denominator;
+                Output0Buffer.DimensionList = indicator.DimensionList;
+                Output0Buffer.DisabilityStatus = indicator.DisabilityStatus;
+                Output0Buffer.EducationalAttainment = indicator.EducationalAttainment;
+                Output0Buffer.FamilyType = indicator.FamilyType;
+                Output0Buffer.Geography = indicator.Geography;
+                Output0Buffer.HealthInsuranceStatus = indicator.HealthInsuranceStatus;
+                Output0Buffer.IncomeAndPovertyStatus = indicator.IncomeAndPovertyStatus;
+                Output0Buffer.IndicatorID = indicator.IndicatorID;
+                Output0Buffer.Locale = indicator.Locale;
+                Output0Buffer.LocaleCountyFIPSCode = indicator.LocaleCountyFIPSCode;
+                Output0Buffer.LocaleCountySSACode = indicator.LocaleCountySSACode;
+                Output0Buffer.LocaleHRRCode = indicator.LocaleHRRCode;
+                Output0Buffer.LocaleLevel = indicator.LocaleLevel;
+                Output0Buffer.LocaleStateFIPSCode = indicator.LocaleStateFIPSCode;
+                Output0Buffer.MaritalStatus = indicator.MaritalStatus;
+                Output0Buffer.MissingValueFlag = indicator.MissingValueFlag;
+                Output0Buffer.Modifier1 = indicator.Modifier1;
+                Output0Buffer.Modifier2 = indicator.Modifier2;
+                Output0Buffer.Modifier3 = indicator.Modifier3;
+                Output0Buffer.Modifier4 = indicator.Modifier4;
+                Output0Buffer.Modifier5 = indicator.Modifier5;
+                Output0Buffer.Numerator = indicator.Numerator;
+                Output0Buffer.NumericValue = indicator.NumericValue;
+                Output0Buffer.ObesityStatus = indicator.ObesityStatus;
+                Output0Buffer.Other = indicator.Other;
+                Output0Buffer.RaceEthnicity = indicator.RaceEthnicity;
+                Output0Buffer.Sex = indicator.Sex;
+                Output0Buffer.SexualOrientation = indicator.SexualOrientation;
+                Output0Buffer.StandardError = indicator.StandardError;
+                Output0Buffer.Timeframe = indicator.Timeframe;
+                Output0Buffer.Total = indicator.Total;
+                Output0Buffer.VeteranStatus = indicator.VeteranStatus;
+            }
+        }
+        catch (Exception e)
+        {
+            FailComponent(e.ToString());
+        }
+    }
+
+
+    /// <summary>
+    /// Method to return our WorkGroupMetric array
+    /// </summary>
+    /// <param name="wUrl">The web service URL to call</param>
+    /// <returns>An array of WorkGroupMetric composed of the de-serialized JSON</returns>
+    private IList<IndicatorDataItem> GetWebServiceResult(string wUrl)
+    {
+
+        HttpWebRequest httpWReq = (HttpWebRequest)WebRequest.Create(wUrl);
+        HttpWebResponse httpWResp = (HttpWebResponse)httpWReq.GetResponse();
+        IList<IndicatorDataItem> rtnList = new List<IndicatorDataItem>();
+
+        try
+        {
+            //Test the connection
+            if (httpWResp.StatusCode == HttpStatusCode.OK)
+            {
+
+                Stream responseStream = httpWResp.GetResponseStream();
+                string xmlString = null;
+                using (var reader = new StreamReader(responseStream))
+                {
+                    xmlString = reader.ReadToEnd();
+                    reader.Close();
+                }
+                XDocument xdcDocument = XDocument.Parse(xmlString);
+                foreach (XElement xe in xdcDocument.Descendants("IndicatorDataItem"))
+                {
+                    var item = new IndicatorDataItem();
+                    foreach (XElement childEllement in xe.Descendants())
+                    {
+                        PropertyInfo prop = item.GetType().GetProperty(childEllement.Name.LocalName, BindingFlags.Public | BindingFlags.Instance);
+                        if (null != prop && prop.CanWrite)
+                        {
+                            prop.SetValue(item, childEllement.Value, null);
+                        }
+                    }
+                    rtnList.Add(item);
+                }
+            }
+            //Output connection error message
+            else
+            {
+                FailComponent(httpWResp.StatusCode.ToString());
+
+            }
+        }
+        //Output XML parsing error
+        catch (Exception e)
+        {
+            FailComponent(e.ToString());
+        }
+        return rtnList;
+
+    }
+
+    /// <summary>
+    /// Outputs error message
+    /// </summary>
+    /// <param name="errorMsg">Full error text</param>
+    private void FailComponent(string errorMsg)
+    {
+        bool fail = false;
+        IDTSComponentMetaData100 compMetadata = this.ComponentMetaData;
+        compMetadata.FireError(1, "Error Getting Data From Webservice!", errorMsg, "", 0, out fail);
+
+    }
+
+}
+
+#region Data Class
+//Class to hold our work group metrics
+class IndicatorDataItem
+{
+    public string Age { get; set; }
+    public string CharacteristicOfSchoolOrStudent { get; set; }
+    public string ConfidenceIntervalHigh { get; set; }
+    public string ConfidenceIntervalLow { get; set; }
+    public string CountryOfBirth { get; set; }
+    public string Denominator { get; set; }
+    public string DimensionList { get; set; }
+    public string DisabilityStatus { get; set; }
+    public string EducationalAttainment { get; set; }
+    public string FamilyType { get; set; }
+    public string Geography { get; set; }
+    public string HealthInsuranceStatus { get; set; }
+    public string IncomeAndPovertyStatus { get; set; }
+    public string IndicatorID { get; set; }
+    public string Locale { get; set; }
+    public string LocaleCountyFIPSCode { get; set; }
+    public string LocaleCountySSACode { get; set; }
+    public string LocaleHRRCode { get; set; }
+    public string LocaleLevel { get; set; }
+    public string LocaleStateFIPSCode { get; set; }
+    public string MaritalStatus { get; set; }
+    public string MissingValueFlag { get; set; }
+    public string Modifier1 { get; set; }
+    public string Modifier2 { get; set; }
+    public string Modifier3 { get; set; }
+    public string Modifier4 { get; set; }
+    public string Modifier5 { get; set; }
+    public string Numerator { get; set; }
+    public string NumericValue { get; set; }
+    public string ObesityStatus { get; set; }
+    public string Other { get; set; }
+    public string RaceEthnicity { get; set; }
+    public string Sex { get; set; }
+    public string SexualOrientation { get; set; }
+    public string StandardError { get; set; }
+    public string Timeframe { get; set; }
+    public string Total { get; set; }
+    public string VeteranStatus { get; set; }
+}
+#endregion
+
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[BufferWrapper.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[/* THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+*  Microsoft SQL Server Integration Services buffer wrappers
+*  This module defines classes for accessing data flow buffers
+*  THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT! */
+
+
+
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Pipeline;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+
+public class Output0Buffer: ScriptBuffer
+
+{
+    public Output0Buffer(PipelineBuffer Buffer, int[] BufferColumnIndexes, OutputNameMap OutputMap)
+        : base(Buffer, BufferColumnIndexes, OutputMap)
+    {
+    }
+
+    public String Other
+    {
+        set
+        {
+            this[0] = value;
+        }
+    }
+    public bool Other_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(0);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String ObesityStatus
+    {
+        set
+        {
+            this[1] = value;
+        }
+    }
+    public bool ObesityStatus_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(1);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String VeteranStatus
+    {
+        set
+        {
+            this[2] = value;
+        }
+    }
+    public bool VeteranStatus_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(2);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Total
+    {
+        set
+        {
+            this[3] = value;
+        }
+    }
+    public bool Total_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(3);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Timeframe
+    {
+        set
+        {
+            this[4] = value;
+        }
+    }
+    public bool Timeframe_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(4);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String StandardError
+    {
+        set
+        {
+            this[5] = value;
+        }
+    }
+    public bool StandardError_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(5);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String SexualOrientation
+    {
+        set
+        {
+            this[6] = value;
+        }
+    }
+    public bool SexualOrientation_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(6);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Numerator
+    {
+        set
+        {
+            this[7] = value;
+        }
+    }
+    public bool Numerator_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(7);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Modifier5
+    {
+        set
+        {
+            this[8] = value;
+        }
+    }
+    public bool Modifier5_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(8);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Modifier4
+    {
+        set
+        {
+            this[9] = value;
+        }
+    }
+    public bool Modifier4_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(9);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Modifier3
+    {
+        set
+        {
+            this[10] = value;
+        }
+    }
+    public bool Modifier3_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(10);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Modifier2
+    {
+        set
+        {
+            this[11] = value;
+        }
+    }
+    public bool Modifier2_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(11);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Modifier1
+    {
+        set
+        {
+            this[12] = value;
+        }
+    }
+    public bool Modifier1_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(12);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String MissingValueFlag
+    {
+        set
+        {
+            this[13] = value;
+        }
+    }
+    public bool MissingValueFlag_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(13);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String MaritalStatus
+    {
+        set
+        {
+            this[14] = value;
+        }
+    }
+    public bool MaritalStatus_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(14);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String LocaleStateFIPSCode
+    {
+        set
+        {
+            this[15] = value;
+        }
+    }
+    public bool LocaleStateFIPSCode_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(15);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String LocaleLevel
+    {
+        set
+        {
+            this[16] = value;
+        }
+    }
+    public bool LocaleLevel_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(16);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String LocaleHRRCode
+    {
+        set
+        {
+            this[17] = value;
+        }
+    }
+    public bool LocaleHRRCode_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(17);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String LocaleCountySSACode
+    {
+        set
+        {
+            this[18] = value;
+        }
+    }
+    public bool LocaleCountySSACode_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(18);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String LocaleCountyFIPSCode
+    {
+        set
+        {
+            this[19] = value;
+        }
+    }
+    public bool LocaleCountyFIPSCode_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(19);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Locale
+    {
+        set
+        {
+            this[20] = value;
+        }
+    }
+    public bool Locale_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(20);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String IndicatorID
+    {
+        set
+        {
+            this[21] = value;
+        }
+    }
+    public bool IndicatorID_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(21);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String IncomeAndPovertyStatus
+    {
+        set
+        {
+            this[22] = value;
+        }
+    }
+    public bool IncomeAndPovertyStatus_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(22);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String HealthInsuranceStatus
+    {
+        set
+        {
+            this[23] = value;
+        }
+    }
+    public bool HealthInsuranceStatus_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(23);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Geography
+    {
+        set
+        {
+            this[24] = value;
+        }
+    }
+    public bool Geography_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(24);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String FamilyType
+    {
+        set
+        {
+            this[25] = value;
+        }
+    }
+    public bool FamilyType_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(25);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Age
+    {
+        set
+        {
+            this[26] = value;
+        }
+    }
+    public bool Age_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(26);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String RaceEthnicity
+    {
+        set
+        {
+            this[27] = value;
+        }
+    }
+    public bool RaceEthnicity_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(27);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String NumericValue
+    {
+        set
+        {
+            this[28] = value;
+        }
+    }
+    public bool NumericValue_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(28);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Sex
+    {
+        set
+        {
+            this[29] = value;
+        }
+    }
+    public bool Sex_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(29);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String CountryOfBirth
+    {
+        set
+        {
+            this[30] = value;
+        }
+    }
+    public bool CountryOfBirth_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(30);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String ConfidenceIntervalLow
+    {
+        set
+        {
+            this[31] = value;
+        }
+    }
+    public bool ConfidenceIntervalLow_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(31);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String ConfidenceIntervalHigh
+    {
+        set
+        {
+            this[32] = value;
+        }
+    }
+    public bool ConfidenceIntervalHigh_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(32);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String EducationalAttainment
+    {
+        set
+        {
+            this[33] = value;
+        }
+    }
+    public bool EducationalAttainment_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(33);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String DisabilityStatus
+    {
+        set
+        {
+            this[34] = value;
+        }
+    }
+    public bool DisabilityStatus_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(34);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String DimensionList
+    {
+        set
+        {
+            this[35] = value;
+        }
+    }
+    public bool DimensionList_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(35);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Denominator
+    {
+        set
+        {
+            this[36] = value;
+        }
+    }
+    public bool Denominator_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(36);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String CharacteristicOfSchoolOrStudent
+    {
+        set
+        {
+            this[37] = value;
+        }
+    }
+    public bool CharacteristicOfSchoolOrStudent_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(37);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    new public void AddRow()
+    {
+        base.AddRow();
+    }
+
+    new public void SetEndOfRowset()
+    {
+        base.SetEndOfRowset();
+    }
+
+    new public bool EndOfRowset()
+    {
+        return base.EndOfRowset();
+    }
+
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[ComponentWrapper.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[/* THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+*  Microsoft SQL Server Integration Services component wrapper
+*  This module defines the base class for your component
+*  THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT! */
+
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Pipeline;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+using Microsoft.SqlServer.Dts.Runtime.Wrapper;
+
+public class UserComponent: ScriptComponent
+{
+    public Connections Connections;
+    public Variables Variables;
+    public UserComponent()
+    {
+        Connections = new Connections(this);
+        Variables = new Variables(this);
+    }
+
+    public Output0Buffer Output0Buffer;
+
+    public virtual void FinishOutputs()
+    {
+    }
+
+    private void MarkOutputsFinished()
+    {
+
+        if (null != Output0Buffer)
+        {
+            Output0Buffer.SetEndOfRowset();
+            Output0Buffer = null;
+        }
+
+    }
+
+    public override void PrimeOutput(int Outputs, int[] OutputIDs, PipelineBuffer[] Buffers, OutputNameMap OutputMap)
+    {
+       for(int Idx = 0; Idx < Outputs; Idx++)
+       {
+            if(OutputIDs[Idx] == GetOutputID(OutputMap, @"Output 0"))
+            {
+                Output0Buffer = new Output0Buffer(Buffers[Idx], GetColumnIndexes(OutputIDs[Idx]), OutputMap);
+            }
+        }
+
+        CreateNewOutputRows();
+
+        FinishOutputs();
+        MarkOutputsFinished();
+
+    }
+
+    public virtual void CreateNewOutputRows()
+    {
+    }
+
+}
+
+public class Connections
+{
+    ScriptComponent ParentComponent;
+
+    public Connections(ScriptComponent Component)
+    {
+        ParentComponent = Component;
+    }
+
+}
+
+public class Variables
+{
+    ScriptComponent ParentComponent;
+
+    public Variables(ScriptComponent Component)
+    {
+        ParentComponent = Component;
+    }
+
+    public String RestAPIUrl
+    {
+        get
+        {
+            return (String)(ParentComponent.ReadOnlyVariables["RestAPIUrl"].GetValueWithContext(ScriptComponent.EvaluatorContext));
+        }
+    }
+
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[SC_23d300e582604827b22cfe642dcfb193.csproj]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4D9AE8F9-467E-450B-A064-1C2CFC078DBB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SC_23d300e582604827b22cfe642dcfb193</RootNamespace>
+    <AssemblyName>SC_23d300e582604827b22cfe642dcfb193</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.\bin\Debug\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.SqlServer.TxScript, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.DTSRuntimeWrap, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.DTSPipelineWrap, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.PipelineHost, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Compile Include="main.cs" />
+    <Compile Include="BufferWrapper.cs" />
+    <Compile Include="ComponentWrapper.cs" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <!-- Include the build rules for a C# project.-->
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- This section defines VSTA properties that describe the host-changable project properties. -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}">
+        <ProjectProperties HostName="VSTAHostName" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" DebugInfoExeName="devenv.exe" DebugInfoCommandLine="/vstaHostDebugUri:&quot;vstadebug783b2c6f-510a-4863-b2ed-1af2c047292d/0dea4071-d031-4fdb-b0f3-4e8f0db128f9&quot;" />
+        <Host Name="ScriptComponent" IconIndex="0" />
+        <ProjectClient>
+          <HostIdentifier>SSIS_SC110</HostIdentifier>
+        </ProjectClient>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Settings.Designer.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_23d300e582604827b22cfe642dcfb193.Properties.Settings.get_Default():SC_23d300e582604827b22cfe642dcfb193.Properties.Sett" +
+    "ings")]
+
+namespace SC_23d300e582604827b22cfe642dcfb193.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Project]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF16LE]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="3.0" schemaVersion="1.0">
+	<msb:PropertyGroup>
+		<msb:CodeName>SC_23d300e582604827b22cfe642dcfb193</msb:CodeName>
+		<msb:DisplayName>SC_23d300e582604827b22cfe642dcfb193</msb:DisplayName>
+		<msb:Language>msBuild</msb:Language>
+		<msb:ProjectId>{53293D50-8325-4BE8-AF8C-377C80CA1C71}</msb:ProjectId>
+	</msb:PropertyGroup>
+	<msb:ItemGroup>
+		<msb:Project Include="SC_23d300e582604827b22cfe642dcfb193.csproj"/>
+		<msb:File Include="Properties\AssemblyInfo.cs"/>
+		<msb:File Include="main.cs"/>
+		<msb:File Include="Properties\Resources.resx"/>
+		<msb:File Include="ComponentWrapper.cs"/>
+		<msb:File Include="Properties\Resources.Designer.cs"/>
+		<msb:File Include="Properties\Settings.Designer.cs"/>
+		<msb:File Include="BufferWrapper.cs"/>
+		<msb:File Include="Properties\Settings.settings"/>
+		<msb:Breakpoint Include="579f430bf9524eaba5f75e837b6047f8">
+			<msb:HitCountType>1</msb:HitCountType>
+			<msb:FileName>main.cs</msb:FileName>
+			<msb:LineNumber>191</msb:LineNumber>
+			<msb:HitCountTarget>1</msb:HitCountTarget>
+			<msb:ColumnNumber>13</msb:ColumnNumber>
+			<msb:Enabled>True</msb:Enabled>
+			<msb:Condition></msb:Condition>
+			<msb:ConditionType>1</msb:ConditionType>
+			<msb:Language>C#</msb:Language>
+		</msb:Breakpoint>
+		<msb:Breakpoint Include="6003deb4172b433a94b9a748c8c43de6">
+			<msb:HitCountType>1</msb:HitCountType>
+			<msb:FileName>main.cs</msb:FileName>
+			<msb:LineNumber>185</msb:LineNumber>
+			<msb:HitCountTarget>1</msb:HitCountTarget>
+			<msb:ColumnNumber>9</msb:ColumnNumber>
+			<msb:Enabled>True</msb:Enabled>
+			<msb:Condition></msb:Condition>
+			<msb:ConditionType>1</msb:ConditionType>
+			<msb:Language>C#</msb:Language>
+		</msb:Breakpoint>
+	</msb:ItemGroup>
+</c:Project>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\AssemblyInfo.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
+//
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("SC_23d300e582604827b22cfe642dcfb193")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("SC_23d300e582604827b22cfe642dcfb193")]
+[assembly: AssemblyCopyright("Copyright @  2015")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.*")]
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Settings.settings]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Resources.Designer.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_23d300e582604827b22cfe642dcfb193.Properties.Resources.get_ResourceManager():System.Resources.Resou" +
+    "rceManager")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_23d300e582604827b22cfe642dcfb193.Properties.Resources.get_Culture():System.Globalization.CultureIn" +
+    "fo")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_23d300e582604827b22cfe642dcfb193.Properties.Resources.set_Culture(System.Globalization.CultureInfo" +
+    "):Void")]
+
+namespace SC_23d300e582604827b22cfe642dcfb193.Properties {
+    
+    
+    /// <summary>
+    ///   A strongly-typed resource class, for looking up localized strings, etc.
+    /// </summary>
+    // This class was auto-generated by the StronglyTypedResourceBuilder
+    // class via a tool like ResGen or Visual Studio.
+    // To add or remove a member, edit your .ResX file then rerun ResGen
+    // with the /str option, or rebuild your VS project.
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    internal class Resources {
+        
+        private static global::System.Resources.ResourceManager resourceMan;
+        
+        private static global::System.Globalization.CultureInfo resourceCulture;
+        
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        internal Resources() {
+        }
+        
+        /// <summary>
+        ///   Returns the cached ResourceManager instance used by this class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if ((resourceMan == null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SC_23d300e582604827b22cfe642dcfb193.Properties.Resources", typeof(Resources).Assembly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+        
+        /// <summary>
+        ///   Overrides the current thread's CurrentUICulture property for all
+        ///   resource lookups using this strongly typed resource class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
+                return resourceCulture;
+            }
+            set {
+                resourceCulture = value;
+            }
+        }
+    }
+}
+]]></arrayElement>
+                  </arrayElements>
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Stores the binary representation of the component"
+                  isArray="true"
+                  name="BinaryCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="2">
+                    <arrayElement
+                      dataType="System.String"><![CDATA[SC_23d300e582604827b22cfe642dcfb193.dll]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[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
+AAAKKnKBAABwczYAAAp6KgIfGwMoNAAACipeAywJAh8bKDUAAAoqcoEAAHBzNgAACnoqAh8cAyg0
+AAAKKl4DLAkCHxwoNQAACipygQAAcHM2AAAKeioCHx0DKDQAAAoqXgMsCQIfHSg1AAAKKnKBAABw
+czYAAAp6KgIfHgMoNAAACipeAywJAh8eKDUAAAoqcoEAAHBzNgAACnoqAh8fAyg0AAAKKl4DLAkC
+Hx8oNQAACipygQAAcHM2AAAKeioCHyADKDQAAAoqXgMsCQIfICg1AAAKKnKBAABwczYAAAp6KgIf
+IQMoNAAACipeAywJAh8hKDUAAAoqcoEAAHBzNgAACnoqAh8iAyg0AAAKKl4DLAkCHyIoNQAACipy
+gQAAcHM2AAAKeioCHyMDKDQAAAoqXgMsCQIfIyg1AAAKKnKBAABwczYAAAp6KgIfJAMoNAAACipe
+AywJAh8kKDUAAAoqcoEAAHBzNgAACnoqAh8lAyg0AAAKKl4DLAkCHyUoNQAACipygQAAcHM2AAAK
+eh4CKDcAAAoqHgIoOAAACioeAig5AAAKKjoCKDIAAAoCA30qAAAEKjoCKDIAAAoCA30rAAAEKpYC
+eysAAARvOgAACnIeAQBwbzsAAAooPAAACm89AAAKdDQAAAEqHgIoMgAACioTMAIALQAAAAUAABF+
+LAAABC0gcjQBAHDQCAAAAig/AAAKb0AAAApzQQAACgoGgCwAAAR+LAAABCoafi0AAAQqHgKALQAA
+BCoafi4AAAQqLnOxAAAGgC4AAAQqHgIoQwAACioAtAAAAM7K774BAAAAkQAAAGxTeXN0ZW0uUmVz
+b3VyY2VzLlJlc291cmNlUmVhZGVyLCBtc2NvcmxpYiwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJl
+PW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkjU3lzdGVtLlJlc291cmNl
+cy5SdW50aW1lUmVzb3VyY2VTZXQCAAAAAAAAAAAAAABQQURQQURQtAAAAEJTSkIBAAEAAAAAAAwA
+AAB2NC4wLjMwMzE5AAAAAAUAbAAAAOAbAAAjfgAATBwAAGwdAAAjU3RyaW5ncwAAAAC4OQAAqAEA
+ACNVUwBgOwAAEAAAACNHVUlEAAAAcDsAAMgCAAAjQmxvYgAAAAAAAAACAAABVxWiCQkBAAAA+iUz
+ABYAAAEAAAA5AAAACQAAAC4AAACyAAAAfgAAAEMAAACBAAAABQAAAAUAAAB2AAAAnQAAAAYAAAAB
+AAAABwAAAAEAAAAAAAoAAQAAAAAABgABAeAACgAhARoBBgAoAeAADgBKATUBEgCrAeAABgC6AeAA
+CgAaAv8BCgCZFYgVCgDKFbUVCgC1FpsWCgDgFs4WCgD3Fs4WCgAUF84WCgAzF84WCgBMF84WCgBl
+F84WCgCAF84WCgCbF84WCgC0F84WCgDtF80XCgANGM0XBgBsGOAACgCTGP8BCgChGP8BCgDcGMkY
+CgDxGBoBCgAOGRoBDgAjGRgZDgA1GRgZDgBEGRgZDgBcGRgZCgBsGf8BDgBzGRgZCgCbGZEZCgC0
+GZEZCgDBGZEZFgDsGdwZFgD8GdwZFgAOGtwZFgAZGtwZCgAuGhoBCgBSGs4WCgBfGs4WCgCmGv8B
+GgAFG9waCgA+G80XCgBqGxoBHgDPG6cbHgD2G6cbBwAPHAAAHgA/HKcbCgBrHBoBCgCFHHIcCgCi
+HBoBCgDGHM4WDgDyHNwcDgALHdwcAAAAAAEAAAAAAAEAAQABABAAMgAAAAUAAQABAAEAEABAAAAA
+CAAEAAYAAAAQAEsAAAAJAAQADAABABAAXQAAAA0AKgBZAAEAEABrAAAACQAqAKkAAQAQAHcAAAAJ
+ACsAqgAAABAAgQCLAAkALACsAAABEAC6AIsAEQAuALAABgBrABMABgB3ABcABgBdAB8AAQCmB0IA
+AQC7B0IAAQDsB0IAAQAUCEIAAQA7CEIAAQBbCEIAAQB4CEIAAQCXCEIAAQC5CEIAAQDgCEIAAQD8
+CEIAAQAXCUIAAQA+CUIAAQBmCUIAAQCDCUIAAQCbCUIAAQDBCUIAAQDmCUIAAQAFCkIAAQAiCkIA
+AQBHCkIAAQBmCkIAAQCICkIAAQCjCkIAAQC+CkIAAQDZCkIAAQD0CkIAAQAPC0IAAQAqC0IAAQBI
+C0IAAQBnC0IAAQB+C0IAAQCdC0IAAQCyC0IAAQDVC0IAAQD0C0IAAQAPDEIAAQAmDEIAAQBeFWAA
+AQBeFWAAEQCpFWoAEQDWFW4AEQAaFowAUCAAAAAAhhhiARsAAQBwIAAAAADGAWgBGwABAHIgAAAA
+AIEAdgEbAAEAkCAAAAAAxgDIASMAAQDlIAAAAADGAdQBGwAFAOcgAAAAAMYA6AEbAAUA7yAAAAAA
+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
+cBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYA
+AAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEA
+cBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYA
+AAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEA
+cBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYA
+AAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEA
+cBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYAAAEAcBYA
+AAEAcBYAAAEAkRYAAAEAkRYAAAEAcBZRAGIBOQBZAGIBOQBhAGIBOQBpAGIBOQBxAGIBOQB5AGIB
+OQCBAGIBOQCJAGIBOQCRAGIBOQCZAGIBOQChAGIBmgCpAGIBGwAJAGIBGwAJAE8YnwAJAFsYpgCx
+AGIBGwAJAOgBGwAJAPMBGwAMAK8YvAAUAL0YzADJAOgYWADRAP0YGwARAAUZPgDhAC4Z5QDhAFAZ
+6wAcAGIBGwD5AIIZ+ADxAKIZ/gAZAWIBBAEhAcwZPgAhAdYZGwApAfYZCwExAQIaEgE5ASIaGQEk
+AK8YvAAsAL0YzAA5ASIaNgERADMaQAFBATsaRgExAUQaPgBJAWwaTAFRAXgaVgFRAYYaWABBAZMa
+PgBRAZ0aYAE0ALQacAEJAB4bqAFpATQbrgFxAWIBGwARAGIBGwAZAGIBSQAZAFkbwAEZAGIbmgB5
+AWIBOQAZABkSGwAZACASGwAZAC8SWAAJAOAbxgGBAQYczAEJACoc0wGJAVcc2QGpAWIBGwBJAbQc
+4AFJAc8c6QFBAGIB7wHBAWIB/AEhAGIBGwAuADMAWAIuADsAhwIuAEMAgQIuAAsAEAIuAFsAngIu
+AGMApwIuABMAWAIuABsAgQIuACMAgQIuACsAgQJjAIMAsACBAIsBsAChAIsBsADBAIsBsADhAIsB
+sAABAYsBsAADAfMBsAAhAYsBsABBAYsBsABhAYsBsACAAYsBsACBAYsBsACgAYsBsAChAYsBsADA
+AYsBsADBAYsBsADgAYsBsADhAYsBsAAAAosBsAABAosBsAAgAosBsAAhAosBsABAAosBsABBAosB
+sABgAosBsABhAosBsACAAosBsACBAosBsACgAosBsAChAosBsADAAosBsADBAosBsADgAosBsADh
+AosBsAAAA4sBsAABA4sBsAAgA4sBsAAhA4sBsABAA4sBsABBA4sBsABgA4sBsABhA4sBsACAA4sB
+sACBA4sBsACgA4sBsAChA4sBsADAA4sBsADBA4sBsADgA4sBsADhA4sBsAAABIsBsAABBIsBsAAg
+BIsBsAAhBIsBsABABIsBsABBBIsBsABgBIsBsABhBIsBsACABIsBsACBBIsBsACgBIsBsAChBIsB
+sADABIsBsADBBIsBsADgBIsBsADhBIsBsAAABYsBsAABBYsBsAAgBYsBsAAhBYsBsABABYsBsABg
+BYsBsACABYsBsACgBYsBsADABYsBsADBBYsBsADgBYsBsAAABosBsAAgBosBsABABosBsABgBosB
+sACABosBsACgBosBsADABosBsADgBosBsAAAB4sBsAAgB4sBsABAB4sBsABgB4sBsACAB4sBsACg
+B4sBsADAB4sBsADgB4sBsAAACIsBsAAgCIsBsABACIsBsABgCIsBsACACIsBsACgCIsBsADACIsB
+sADgCIsBsAAACYsBsAAgCYsBsABACYsBsABgCYsBsACACYsBsACgCYsBsADACYsBsADgCYsBsAAA
+CosBsAAgCosBsABACosBsABgCosBsACACosBsACgCosBsADACosBsADgCosBsACJDhMCAwKpDhMC
+AwKsANEAdgG5AfcBBAABAAUAJwAHAHMACAB0AAkAdgAAAEUMRQAAAEkMRQAAAGkMRQAAAIAMRQAA
+AJYMRQAAAKUMRQAAALEMRQAAAL8MRQAAANAMRQAAAOYMRQAAAPEMRQAAAPsMRQAAABENRQAAACgN
+RQAAADQNRQAAADsNRQAAAFANRQAAAGQNRQAAAHINRQAAAH4NRQAAAJINRQAAAKANRQAAALENRQAA
+ALsNRQAAAMUNRQAAAM8NRQAAANkNRQAAAOMNRQAAAO0NRQAAAPoNRQAAAAgORQAAAA4ORQAAABwO
+RQAAACAORQAAADIORQAAAEAORQAAAEoORQAAAFAORQAAAAgORQAAADsSXAAAAPoNRQAAAEgSXAAA
+AFAORQAAAF0SXAAAAEoORQAAAHISXAAAAEAORQAAAH8SXAAAADIORQAAAJASXAAAACAORQAAAKUS
+XAAAAOMNRQAAAL4SXAAAANkNRQAAAM8SXAAAAM8NRQAAAOASXAAAAMUNRQAAAPESXAAAALsNRQAA
+AAITXAAAALENRQAAABMTXAAAAKANRQAAACQTXAAAAJINRQAAADwTXAAAAH4NRQAAAFETXAAAAHIN
+RQAAAGwTXAAAAGQNRQAAAH8TXAAAAFANRQAAAJQTXAAAADsNRQAAAK8TXAAAADQNRQAAAMsTXAAA
+ACgNRQAAANkTXAAAABENRQAAAOwTXAAAAPsMRQAAAAoUXAAAAPEMRQAAACcUXAAAAOYMRQAAADgU
+XAAAAEUMRQAAAEoUXAAAAA4ORQAAAFUUXAAAAO0NRQAAAGoUXAAAABwORQAAAH4UXAAAAJYMRQAA
+AIkUXAAAAIAMRQAAAJ8UXAAAAGkMRQAAALwUXAAAANAMRQAAANoUXAAAAL8MRQAAAPcUXAAAALEM
+RQAAAA8VXAAAAKUMRQAAACQVXAAAAEkMRQAAADcVXAAAAH0VRQAAAJkVggAAABIWhwAAADYWlQAC
+AAwAAwABAA0AAwABAA8ABQACAA4ABQABABEABwACABAABwACABIACQABABMACQACABQACwABABUA
+CwACABYADQABABcADQABABkADwACABgADwABABsAEQACABoAEQACABwAEwABAB0AEwACAB4AFQAB
+AB8AFQACACAAFwABACEAFwABACMAGQACACIAGQABACUAGwACACQAGwACACYAHQABACcAHQACACgA
+HwABACkAHwACACoAIQABACsAIQABAC0AIwACACwAIwABAC8AJQACAC4AJQACADAAJwABADEAJwAC
+ADIAKQABADMAKQACADQAKwABADUAKwABADcALQACADYALQABADkALwACADgALwACADoAMQABADsA
+MQACADwAMwABAD0AMwACAD4ANQABAD8ANQABAEEANwACAEAANwABAEMAOQACAEIAOQACAEQAOwAB
+AEUAOwACAEYAPQABAEcAPQACAEgAPwABAEkAPwABAEsAQQACAEoAQQABAE0AQwACAEwAQwACAE4A
+RQABAE8ARQACAFAARwABAFEARwACAFIASQABAFMASQABAFUASwACAFQASwABAFcATQACAFYATQAB
+AFoATwABAFsAUQABAFwAUwABAF0AVQABAF4AVwABAF8AWQABAGAAWwABAGEAXQABAGIAXwABAGMA
+YQABAGQAYwABAGUAZQABAGYAZwABAGcAaQABAGgAawABAGkAbQABAGoAbwABAGsAcQABAGwAcwAB
+AG0AdQABAG4AdwABAG8AeQABAHAAewABAHEAfQABAHIAfwABAHMAgQABAHQAgwABAHUAhQABAHYA
+hwABAHcAiQABAHgAiwABAHkAjQABAHoAjwABAHsAkQABAHwAkwABAH0AlQABAH4AlwABAH8AmQAB
+AIAAmwABAIEAnQABAIIAnwABAIMAoQABAIQAowABAIUApQABAIYApwABAIcAqQABAIgAqwABAIkA
+rQABAIoArwABAIsAsQABAIwAswABAI0AtQABAI4AtwABAI8AuQABAJAAuwABAJEAvQABAJIAvwAB
+AJMAwQABAJQAwwABAJUAxQABAJYAxwABAJcAyQABAJgAywABAJkAzQABAJoAzwABAJsA0QABAJwA
+0wABAJ0A1QABAJ4A1wABAJ8A2QABAKAA2wABAKEA3QABAKIA3wABAKMA4QABAKQA4wABAKUA5QAC
+AKsA5wACAK0A6QACAK4A6wABAK8A6wACALAA7QC1AMUA8AAmAS4BaAEEgAAAAQAAADEWUXQAAAAA
+AAArGAAACwAAAAAAAAAAAAAAAQDDAAAAAAAEAAAAAAAAAAAAAAAKABEBAAAAAAQAAAAAAAAAAAAA
+AAoAGgEAAAAACwAAAAAAAAAAAAAAAQCKAQAAAAAEAAAAAAAAAAAAAAAKANwZAAAAAAsAAAAAAAAA
+AAAAAAEAuBoAAAAACwAAAAAAAAAAAAAAAQCEGwAAAAAAAAAAAQAAACcdAAAAAAAAADxNb2R1bGU+
+AFNDXzIzZDMwMGU1ODI2MDQ4MjdiMjJjZmU2NDJkY2ZiMTkzLmRsbABVc2VyQ29tcG9uZW50AFNj
+cmlwdE1haW4ASW5kaWNhdG9yRGF0YUl0ZW0AT3V0cHV0MEJ1ZmZlcgBDb25uZWN0aW9ucwBWYXJp
+YWJsZXMAUmVzb3VyY2VzAFNDXzIzZDMwMGU1ODI2MDQ4MjdiMjJjZmU2NDJkY2ZiMTkzLlByb3Bl
+cnRpZXMAU2V0dGluZ3MATWljcm9zb2Z0LlNxbFNlcnZlci5UeFNjcmlwdABNaWNyb3NvZnQuU3Fs
+U2VydmVyLkR0cy5QaXBlbGluZQBTY3JpcHRDb21wb25lbnQAbXNjb3JsaWIAU3lzdGVtAE9iamVj
+dABTY3JpcHRCdWZmZXIAU3lzdGVtLkNvbmZpZ3VyYXRpb24AQXBwbGljYXRpb25TZXR0aW5nc0Jh
+c2UALmN0b3IARmluaXNoT3V0cHV0cwBNYXJrT3V0cHV0c0ZpbmlzaGVkAE1pY3Jvc29mdC5TcWxT
+ZXJ2ZXIuUGlwZWxpbmVIb3N0AFBpcGVsaW5lQnVmZmVyAE91dHB1dE5hbWVNYXAAUHJpbWVPdXRw
+dXQAQ3JlYXRlTmV3T3V0cHV0Um93cwBQcmVFeGVjdXRlAFBvc3RFeGVjdXRlAFN5c3RlbS5Db2xs
+ZWN0aW9ucy5HZW5lcmljAElMaXN0YDEAR2V0V2ViU2VydmljZVJlc3VsdABGYWlsQ29tcG9uZW50
+AGdldF9BZ2UAc2V0X0FnZQBnZXRfQ2hhcmFjdGVyaXN0aWNPZlNjaG9vbE9yU3R1ZGVudABzZXRf
+Q2hhcmFjdGVyaXN0aWNPZlNjaG9vbE9yU3R1ZGVudABnZXRfQ29uZmlkZW5jZUludGVydmFsSGln
+aABzZXRfQ29uZmlkZW5jZUludGVydmFsSGlnaABnZXRfQ29uZmlkZW5jZUludGVydmFsTG93AHNl
+dF9Db25maWRlbmNlSW50ZXJ2YWxMb3cAZ2V0X0NvdW50cnlPZkJpcnRoAHNldF9Db3VudHJ5T2ZC
+aXJ0aABnZXRfRGVub21pbmF0b3IAc2V0X0Rlbm9taW5hdG9yAGdldF9EaW1lbnNpb25MaXN0AHNl
+dF9EaW1lbnNpb25MaXN0AGdldF9EaXNhYmlsaXR5U3RhdHVzAHNldF9EaXNhYmlsaXR5U3RhdHVz
+AGdldF9FZHVjYXRpb25hbEF0dGFpbm1lbnQAc2V0X0VkdWNhdGlvbmFsQXR0YWlubWVudABnZXRf
+RmFtaWx5VHlwZQBzZXRfRmFtaWx5VHlwZQBnZXRfR2VvZ3JhcGh5AHNldF9HZW9ncmFwaHkAZ2V0
+X0hlYWx0aEluc3VyYW5jZVN0YXR1cwBzZXRfSGVhbHRoSW5zdXJhbmNlU3RhdHVzAGdldF9JbmNv
+bWVBbmRQb3ZlcnR5U3RhdHVzAHNldF9JbmNvbWVBbmRQb3ZlcnR5U3RhdHVzAGdldF9JbmRpY2F0
+b3JJRABzZXRfSW5kaWNhdG9ySUQAZ2V0X0xvY2FsZQBzZXRfTG9jYWxlAGdldF9Mb2NhbGVDb3Vu
+dHlGSVBTQ29kZQBzZXRfTG9jYWxlQ291bnR5RklQU0NvZGUAZ2V0X0xvY2FsZUNvdW50eVNTQUNv
+ZGUAc2V0X0xvY2FsZUNvdW50eVNTQUNvZGUAZ2V0X0xvY2FsZUhSUkNvZGUAc2V0X0xvY2FsZUhS
+UkNvZGUAZ2V0X0xvY2FsZUxldmVsAHNldF9Mb2NhbGVMZXZlbABnZXRfTG9jYWxlU3RhdGVGSVBT
+Q29kZQBzZXRfTG9jYWxlU3RhdGVGSVBTQ29kZQBnZXRfTWFyaXRhbFN0YXR1cwBzZXRfTWFyaXRh
+bFN0YXR1cwBnZXRfTWlzc2luZ1ZhbHVlRmxhZwBzZXRfTWlzc2luZ1ZhbHVlRmxhZwBnZXRfTW9k
+aWZpZXIxAHNldF9Nb2RpZmllcjEAZ2V0X01vZGlmaWVyMgBzZXRfTW9kaWZpZXIyAGdldF9Nb2Rp
+ZmllcjMAc2V0X01vZGlmaWVyMwBnZXRfTW9kaWZpZXI0AHNldF9Nb2RpZmllcjQAZ2V0X01vZGlm
+aWVyNQBzZXRfTW9kaWZpZXI1AGdldF9OdW1lcmF0b3IAc2V0X051bWVyYXRvcgBnZXRfTnVtZXJp
+Y1ZhbHVlAHNldF9OdW1lcmljVmFsdWUAZ2V0X09iZXNpdHlTdGF0dXMAc2V0X09iZXNpdHlTdGF0
+dXMAZ2V0X090aGVyAHNldF9PdGhlcgBnZXRfUmFjZUV0aG5pY2l0eQBzZXRfUmFjZUV0aG5pY2l0
+eQBnZXRfU2V4AHNldF9TZXgAZ2V0X1NleHVhbE9yaWVudGF0aW9uAHNldF9TZXh1YWxPcmllbnRh
+dGlvbgBnZXRfU3RhbmRhcmRFcnJvcgBzZXRfU3RhbmRhcmRFcnJvcgBnZXRfVGltZWZyYW1lAHNl
+dF9UaW1lZnJhbWUAZ2V0X1RvdGFsAHNldF9Ub3RhbABnZXRfVmV0ZXJhblN0YXR1cwBzZXRfVmV0
+ZXJhblN0YXR1cwA8QWdlPmtfX0JhY2tpbmdGaWVsZAA8Q2hhcmFjdGVyaXN0aWNPZlNjaG9vbE9y
+U3R1ZGVudD5rX19CYWNraW5nRmllbGQAPENvbmZpZGVuY2VJbnRlcnZhbEhpZ2g+a19fQmFja2lu
+Z0ZpZWxkADxDb25maWRlbmNlSW50ZXJ2YWxMb3c+a19fQmFja2luZ0ZpZWxkADxDb3VudHJ5T2ZC
+aXJ0aD5rX19CYWNraW5nRmllbGQAPERlbm9taW5hdG9yPmtfX0JhY2tpbmdGaWVsZAA8RGltZW5z
+aW9uTGlzdD5rX19CYWNraW5nRmllbGQAPERpc2FiaWxpdHlTdGF0dXM+a19fQmFja2luZ0ZpZWxk
+ADxFZHVjYXRpb25hbEF0dGFpbm1lbnQ+a19fQmFja2luZ0ZpZWxkADxGYW1pbHlUeXBlPmtfX0Jh
+Y2tpbmdGaWVsZAA8R2VvZ3JhcGh5PmtfX0JhY2tpbmdGaWVsZAA8SGVhbHRoSW5zdXJhbmNlU3Rh
+dHVzPmtfX0JhY2tpbmdGaWVsZAA8SW5jb21lQW5kUG92ZXJ0eVN0YXR1cz5rX19CYWNraW5nRmll
+bGQAPEluZGljYXRvcklEPmtfX0JhY2tpbmdGaWVsZAA8TG9jYWxlPmtfX0JhY2tpbmdGaWVsZAA8
+TG9jYWxlQ291bnR5RklQU0NvZGU+a19fQmFja2luZ0ZpZWxkADxMb2NhbGVDb3VudHlTU0FDb2Rl
+PmtfX0JhY2tpbmdGaWVsZAA8TG9jYWxlSFJSQ29kZT5rX19CYWNraW5nRmllbGQAPExvY2FsZUxl
+dmVsPmtfX0JhY2tpbmdGaWVsZAA8TG9jYWxlU3RhdGVGSVBTQ29kZT5rX19CYWNraW5nRmllbGQA
+PE1hcml0YWxTdGF0dXM+a19fQmFja2luZ0ZpZWxkADxNaXNzaW5nVmFsdWVGbGFnPmtfX0JhY2tp
+bmdGaWVsZAA8TW9kaWZpZXIxPmtfX0JhY2tpbmdGaWVsZAA8TW9kaWZpZXIyPmtfX0JhY2tpbmdG
+aWVsZAA8TW9kaWZpZXIzPmtfX0JhY2tpbmdGaWVsZAA8TW9kaWZpZXI0PmtfX0JhY2tpbmdGaWVs
+ZAA8TW9kaWZpZXI1PmtfX0JhY2tpbmdGaWVsZAA8TnVtZXJhdG9yPmtfX0JhY2tpbmdGaWVsZAA8
+TnVtZXJpY1ZhbHVlPmtfX0JhY2tpbmdGaWVsZAA8T2Jlc2l0eVN0YXR1cz5rX19CYWNraW5nRmll
+bGQAPE90aGVyPmtfX0JhY2tpbmdGaWVsZAA8UmFjZUV0aG5pY2l0eT5rX19CYWNraW5nRmllbGQA
+PFNleD5rX19CYWNraW5nRmllbGQAPFNleHVhbE9yaWVudGF0aW9uPmtfX0JhY2tpbmdGaWVsZAA8
+U3RhbmRhcmRFcnJvcj5rX19CYWNraW5nRmllbGQAPFRpbWVmcmFtZT5rX19CYWNraW5nRmllbGQA
+PFRvdGFsPmtfX0JhY2tpbmdGaWVsZAA8VmV0ZXJhblN0YXR1cz5rX19CYWNraW5nRmllbGQAQWdl
+AENoYXJhY3RlcmlzdGljT2ZTY2hvb2xPclN0dWRlbnQAQ29uZmlkZW5jZUludGVydmFsSGlnaABD
+b25maWRlbmNlSW50ZXJ2YWxMb3cAQ291bnRyeU9mQmlydGgARGVub21pbmF0b3IARGltZW5zaW9u
+TGlzdABEaXNhYmlsaXR5U3RhdHVzAEVkdWNhdGlvbmFsQXR0YWlubWVudABGYW1pbHlUeXBlAEdl
+b2dyYXBoeQBIZWFsdGhJbnN1cmFuY2VTdGF0dXMASW5jb21lQW5kUG92ZXJ0eVN0YXR1cwBJbmRp
+Y2F0b3JJRABMb2NhbGUATG9jYWxlQ291bnR5RklQU0NvZGUATG9jYWxlQ291bnR5U1NBQ29kZQBM
+b2NhbGVIUlJDb2RlAExvY2FsZUxldmVsAExvY2FsZVN0YXRlRklQU0NvZGUATWFyaXRhbFN0YXR1
+cwBNaXNzaW5nVmFsdWVGbGFnAE1vZGlmaWVyMQBNb2RpZmllcjIATW9kaWZpZXIzAE1vZGlmaWVy
+NABNb2RpZmllcjUATnVtZXJhdG9yAE51bWVyaWNWYWx1ZQBPYmVzaXR5U3RhdHVzAE90aGVyAFJh
+Y2VFdGhuaWNpdHkAU2V4AFNleHVhbE9yaWVudGF0aW9uAFN0YW5kYXJkRXJyb3IAVGltZWZyYW1l
+AFRvdGFsAFZldGVyYW5TdGF0dXMAc2V0X090aGVyX0lzTnVsbABzZXRfT2Jlc2l0eVN0YXR1c19J
+c051bGwAc2V0X1ZldGVyYW5TdGF0dXNfSXNOdWxsAHNldF9Ub3RhbF9Jc051bGwAc2V0X1RpbWVm
+cmFtZV9Jc051bGwAc2V0X1N0YW5kYXJkRXJyb3JfSXNOdWxsAHNldF9TZXh1YWxPcmllbnRhdGlv
+bl9Jc051bGwAc2V0X051bWVyYXRvcl9Jc051bGwAc2V0X01vZGlmaWVyNV9Jc051bGwAc2V0X01v
+ZGlmaWVyNF9Jc051bGwAc2V0X01vZGlmaWVyM19Jc051bGwAc2V0X01vZGlmaWVyMl9Jc051bGwA
+c2V0X01vZGlmaWVyMV9Jc051bGwAc2V0X01pc3NpbmdWYWx1ZUZsYWdfSXNOdWxsAHNldF9NYXJp
+dGFsU3RhdHVzX0lzTnVsbABzZXRfTG9jYWxlU3RhdGVGSVBTQ29kZV9Jc051bGwAc2V0X0xvY2Fs
+ZUxldmVsX0lzTnVsbABzZXRfTG9jYWxlSFJSQ29kZV9Jc051bGwAc2V0X0xvY2FsZUNvdW50eVNT
+QUNvZGVfSXNOdWxsAHNldF9Mb2NhbGVDb3VudHlGSVBTQ29kZV9Jc051bGwAc2V0X0xvY2FsZV9J
+c051bGwAc2V0X0luZGljYXRvcklEX0lzTnVsbABzZXRfSW5jb21lQW5kUG92ZXJ0eVN0YXR1c19J
+c051bGwAc2V0X0hlYWx0aEluc3VyYW5jZVN0YXR1c19Jc051bGwAc2V0X0dlb2dyYXBoeV9Jc051
+bGwAc2V0X0ZhbWlseVR5cGVfSXNOdWxsAHNldF9BZ2VfSXNOdWxsAHNldF9SYWNlRXRobmljaXR5
+X0lzTnVsbABzZXRfTnVtZXJpY1ZhbHVlX0lzTnVsbABzZXRfU2V4X0lzTnVsbABzZXRfQ291bnRy
+eU9mQmlydGhfSXNOdWxsAHNldF9Db25maWRlbmNlSW50ZXJ2YWxMb3dfSXNOdWxsAHNldF9Db25m
+aWRlbmNlSW50ZXJ2YWxIaWdoX0lzTnVsbABzZXRfRWR1Y2F0aW9uYWxBdHRhaW5tZW50X0lzTnVs
+bABzZXRfRGlzYWJpbGl0eVN0YXR1c19Jc051bGwAc2V0X0RpbWVuc2lvbkxpc3RfSXNOdWxsAHNl
+dF9EZW5vbWluYXRvcl9Jc051bGwAc2V0X0NoYXJhY3RlcmlzdGljT2ZTY2hvb2xPclN0dWRlbnRf
+SXNOdWxsAEFkZFJvdwBTZXRFbmRPZlJvd3NldABFbmRPZlJvd3NldABPdGhlcl9Jc051bGwAT2Jl
+c2l0eVN0YXR1c19Jc051bGwAVmV0ZXJhblN0YXR1c19Jc051bGwAVG90YWxfSXNOdWxsAFRpbWVm
+cmFtZV9Jc051bGwAU3RhbmRhcmRFcnJvcl9Jc051bGwAU2V4dWFsT3JpZW50YXRpb25fSXNOdWxs
+AE51bWVyYXRvcl9Jc051bGwATW9kaWZpZXI1X0lzTnVsbABNb2RpZmllcjRfSXNOdWxsAE1vZGlm
+aWVyM19Jc051bGwATW9kaWZpZXIyX0lzTnVsbABNb2RpZmllcjFfSXNOdWxsAE1pc3NpbmdWYWx1
+ZUZsYWdfSXNOdWxsAE1hcml0YWxTdGF0dXNfSXNOdWxsAExvY2FsZVN0YXRlRklQU0NvZGVfSXNO
+dWxsAExvY2FsZUxldmVsX0lzTnVsbABMb2NhbGVIUlJDb2RlX0lzTnVsbABMb2NhbGVDb3VudHlT
+U0FDb2RlX0lzTnVsbABMb2NhbGVDb3VudHlGSVBTQ29kZV9Jc051bGwATG9jYWxlX0lzTnVsbABJ
+bmRpY2F0b3JJRF9Jc051bGwASW5jb21lQW5kUG92ZXJ0eVN0YXR1c19Jc051bGwASGVhbHRoSW5z
+dXJhbmNlU3RhdHVzX0lzTnVsbABHZW9ncmFwaHlfSXNOdWxsAEZhbWlseVR5cGVfSXNOdWxsAEFn
+ZV9Jc051bGwAUmFjZUV0aG5pY2l0eV9Jc051bGwATnVtZXJpY1ZhbHVlX0lzTnVsbABTZXhfSXNO
+dWxsAENvdW50cnlPZkJpcnRoX0lzTnVsbABDb25maWRlbmNlSW50ZXJ2YWxMb3dfSXNOdWxsAENv
+bmZpZGVuY2VJbnRlcnZhbEhpZ2hfSXNOdWxsAEVkdWNhdGlvbmFsQXR0YWlubWVudF9Jc051bGwA
+RGlzYWJpbGl0eVN0YXR1c19Jc051bGwARGltZW5zaW9uTGlzdF9Jc051bGwARGVub21pbmF0b3Jf
+SXNOdWxsAENoYXJhY3RlcmlzdGljT2ZTY2hvb2xPclN0dWRlbnRfSXNOdWxsAFBhcmVudENvbXBv
+bmVudABnZXRfUmVzdEFQSVVybABSZXN0QVBJVXJsAFN5c3RlbS5SZXNvdXJjZXMAUmVzb3VyY2VN
+YW5hZ2VyAHJlc291cmNlTWFuAFN5c3RlbS5HbG9iYWxpemF0aW9uAEN1bHR1cmVJbmZvAHJlc291
+cmNlQ3VsdHVyZQBnZXRfUmVzb3VyY2VNYW5hZ2VyAGdldF9DdWx0dXJlAHNldF9DdWx0dXJlAEN1
+bHR1cmUAZGVmYXVsdEluc3RhbmNlAGdldF9EZWZhdWx0AERlZmF1bHQAT3V0cHV0cwBPdXRwdXRJ
+RHMAQnVmZmVycwBPdXRwdXRNYXAAd1VybABlcnJvck1zZwB2YWx1ZQBCdWZmZXIAQnVmZmVyQ29s
+dW1uSW5kZXhlcwBDb21wb25lbnQAU3lzdGVtLlJ1bnRpbWUuVmVyc2lvbmluZwBUYXJnZXRGcmFt
+ZXdvcmtBdHRyaWJ1dGUAU3lzdGVtLlJlZmxlY3Rpb24AQXNzZW1ibHlUaXRsZUF0dHJpYnV0ZQBB
+c3NlbWJseURlc2NyaXB0aW9uQXR0cmlidXRlAEFzc2VtYmx5Q29uZmlndXJhdGlvbkF0dHJpYnV0
+ZQBBc3NlbWJseUNvbXBhbnlBdHRyaWJ1dGUAQXNzZW1ibHlQcm9kdWN0QXR0cmlidXRlAEFzc2Vt
+Ymx5Q29weXJpZ2h0QXR0cmlidXRlAEFzc2VtYmx5VHJhZGVtYXJrQXR0cmlidXRlAEFzc2VtYmx5
+Q3VsdHVyZUF0dHJpYnV0ZQBBc3NlbWJseVZlcnNpb25BdHRyaWJ1dGUAU3lzdGVtLlJ1bnRpbWUu
+Q29tcGlsZXJTZXJ2aWNlcwBDb21waWxhdGlvblJlbGF4YXRpb25zQXR0cmlidXRlAFJ1bnRpbWVD
+b21wYXRpYmlsaXR5QXR0cmlidXRlAFNDXzIzZDMwMGU1ODI2MDQ4MjdiMjJjZmU2NDJkY2ZiMTkz
+AEdldE91dHB1dElEAEdldENvbHVtbkluZGV4ZXMAU1NJU1NjcmlwdENvbXBvbmVudEVudHJ5UG9p
+bnRBdHRyaWJ1dGUASUVudW1lcmFibGVgMQBJRW51bWVyYXRvcmAxAEdldEVudW1lcmF0b3IAZ2V0
+X0N1cnJlbnQAU3lzdGVtLkNvbGxlY3Rpb25zAElFbnVtZXJhdG9yAE1vdmVOZXh0AElEaXNwb3Nh
+YmxlAERpc3Bvc2UAVG9TdHJpbmcARXhjZXB0aW9uAFN5c3RlbS5OZXQAV2ViUmVxdWVzdABDcmVh
+dGUASHR0cFdlYlJlcXVlc3QAV2ViUmVzcG9uc2UAR2V0UmVzcG9uc2UASHR0cFdlYlJlc3BvbnNl
+AExpc3RgMQBIdHRwU3RhdHVzQ29kZQBnZXRfU3RhdHVzQ29kZQBTeXN0ZW0uSU8AU3RyZWFtAEdl
+dFJlc3BvbnNlU3RyZWFtAFN0cmVhbVJlYWRlcgBUZXh0UmVhZGVyAFJlYWRUb0VuZABDbG9zZQBT
+eXN0ZW0uWG1sLkxpbnEAWERvY3VtZW50AFBhcnNlAFhOYW1lAG9wX0ltcGxpY2l0AFhDb250YWlu
+ZXIAWEVsZW1lbnQARGVzY2VuZGFudHMAVHlwZQBHZXRUeXBlAGdldF9OYW1lAGdldF9Mb2NhbE5h
+bWUAUHJvcGVydHlJbmZvAEJpbmRpbmdGbGFncwBHZXRQcm9wZXJ0eQBvcF9JbmVxdWFsaXR5AGdl
+dF9DYW5Xcml0ZQBnZXRfVmFsdWUAU2V0VmFsdWUASUNvbGxlY3Rpb25gMQBBZGQATWljcm9zb2Z0
+LlNxbFNlcnZlci5EVFNQaXBlbGluZVdyYXAATWljcm9zb2Z0LlNxbFNlcnZlci5EdHMuUGlwZWxp
+bmUuV3JhcHBlcgBJRFRTQ29tcG9uZW50TWV0YURhdGExMDAAZ2V0X0NvbXBvbmVudE1ldGFEYXRh
+AEZpcmVFcnJvcgBDb21waWxlckdlbmVyYXRlZEF0dHJpYnV0ZQBzZXRfSXRlbQBTZXROdWxsAElu
+dmFsaWRPcGVyYXRpb25FeGNlcHRpb24ATWljcm9zb2Z0LlNxbFNlcnZlci5EVFNSdW50aW1lV3Jh
+cABNaWNyb3NvZnQuU3FsU2VydmVyLkR0cy5SdW50aW1lLldyYXBwZXIASURUU1ZhcmlhYmxlczEw
+MABnZXRfUmVhZE9ubHlWYXJpYWJsZXMASURUU1ZhcmlhYmxlMTAwAGdldF9JdGVtAFNjcmlwdENv
+bXBvbmVudEV2YWxDb250ZXh0AGdldF9FdmFsdWF0b3JDb250ZXh0AElEVFNFdmFsdWF0b3JDb250
+ZXh0MTAwAEdldFZhbHVlV2l0aENvbnRleHQAU3RyaW5nAFN5c3RlbS5EaWFnbm9zdGljcwBEZWJ1
+Z2dlck5vblVzZXJDb2RlQXR0cmlidXRlAFJ1bnRpbWVUeXBlSGFuZGxlAEdldFR5cGVGcm9tSGFu
+ZGxlAEFzc2VtYmx5AGdldF9Bc3NlbWJseQBTeXN0ZW0uQ29tcG9uZW50TW9kZWwARWRpdG9yQnJv
+d3NhYmxlQXR0cmlidXRlAEVkaXRvckJyb3dzYWJsZVN0YXRlAC5jY3RvcgBTQ18yM2QzMDBlNTgy
+NjA0ODI3YjIyY2ZlNjQyZGNmYjE5My5Qcm9wZXJ0aWVzLlJlc291cmNlcy5yZXNvdXJjZXMAAAAA
+EU8AdQB0AHAAdQB0ACAAMAAAI0kAbgBkAGkAYwBhAHQAbwByAEQAYQB0AGEASQB0AGUAbQAAR0UA
+cgByAG8AcgAgAEcAZQB0AHQAaQBuAGcAIABEAGEAdABhACAARgByAG8AbQAgAFcAZQBiAHMAZQBy
+AHYAaQBjAGUAIQAAAQCAm0kAcwBOAHUAbABsACAAcAByAG8AcABlAHIAdAB5ACAAYwBhAG4AbgBv
+AHQAIABiAGUAIABzAGUAdAAgAHQAbwAgAEYAYQBsAHMAZQAuACAAQQBzAHMAaQBnAG4AIABhACAA
+dgBhAGwAdQBlACAAdABvACAAdABoAGUAIABjAG8AbAB1AG0AbgAgAGkAbgBzAHQAZQBhAGQALgAA
+FVIAZQBzAHQAQQBQAEkAVQByAGwAAHFTAEMAXwAyADMAZAAzADAAMABlADUAOAAyADYAMAA0ADgA
+MgA3AGIAMgAyAGMAZgBlADYANAAyAGQAYwBmAGIAMQA5ADMALgBQAHIAbwBwAGUAcgB0AGkAZQBz
+AC4AUgBlAHMAbwB1AHIAYwBlAHMAAAAA5IFJQAQMqky0JmlKFbgYWAAIiYRdzYCAzJEIt3pcVhk0
+4IkDBhIYAwYSHAMgAAEDBhIUCyAEAQgdCB0SFRIZCSABFRIdARIQDgQgAQEOAyAADgIGDgMoAA4J
+IAMBEhUdCBIZBCABAQIDIAACAygAAgMGEgUFIAEBEgUDBhIhAwYSJQQAABIhBAAAEiUFAAEBEiUE
+CAASIQQIABIlAwYSJAQAABIkBAgAEiQEIAEBCAYAAggSGQ4FIAEdCAgDBwEIBAEAAAAGFRJdARIQ
+CCAAFRJhARMABhUSYQESEAQgABMAEwcFDhUSHQESEBIQEm0VEmEBEhAFAAEScQ4EIAASeQcVEoCB
+ARIQBSAAEYCFBSAAEoCJBiABARKAiQYAARKAlQ4GAAESgJkODCABFRJdARKAoRKAmQcVEl0BEoCh
+BxUSYQESgKEJIAAVEl0BEoChBSAAEoClBSAAEoCZCSACEoCpDhGArQkAAgISgKkSgKkHIAMBHBwd
+HAcVEoCxARIQBSABARMAMQcOEnUSfRUSHQESEBKAiQ4SgI0SgJUSgKESEBKAoRKAqRJtFRJhARKA
+oRUSYQESgKEFIAASgLUKIAYBCA4ODggQAgYHAgISgLUFIAIBCBwFIAASgMEGIAESgMUcBQAAEoDJ
+BiABHBKAzQgAARKApRGA2QUgABKA3QcgAgEOEoDdBAcBEiEGIAEBEYDlCAEAAgAAAAAAAwAAAUcB
+ABouTkVURnJhbWV3b3JrLFZlcnNpb249djQuMAEAVA4URnJhbWV3b3JrRGlzcGxheU5hbWUQLk5F
+VCBGcmFtZXdvcmsgNCgBACNTQ18yM2QzMDBlNTgyNjA0ODI3YjIyY2ZlNjQyZGNmYjE5MwAABQEA
+AAAAFgEAEUNvcHlyaWdodCBAICAyMDE1AAAIAQAIAAAAAAAeAQABAFQCFldyYXBOb25FeGNlcHRp
+b25UaHJvd3MBAACwbQAAAAAAAAAAAADObQAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwG0AAAAA
+AAAAAAAAAAAAAAAAX0NvckRsbE1haW4AbXNjb3JlZS5kbGwAAAAAAP8lACAAEAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAEAAAABgAAIAAAAAAAAAAAAAAAAAAAAEA
+AQAAADAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAEgAAABYgAAAsAMAAAAAAAAAAAAAsAM0AAAAVgBT
+AF8AVgBFAFIAUwBJAE8ATgBfAEkATgBGAE8AAAAAAL0E7/4AAAEAAAABAFF0MRYAAAEAUXQxFj8A
+AAAAAAAABAAAAAIAAAAAAAAAAAAAAAAAAABEAAAAAQBWAGEAcgBGAGkAbABlAEkAbgBmAG8AAAAA
+ACQABAAAAFQAcgBhAG4AcwBsAGEAdABpAG8AbgAAAAAAAACwBBADAAABAFMAdAByAGkAbgBnAEYA
+aQBsAGUASQBuAGYAbwAAAOwCAAABADAAMAAwADAAMAA0AGIAMAAAAHAAJAABAEYAaQBsAGUARABl
+AHMAYwByAGkAcAB0AGkAbwBuAAAAAABTAEMAXwAyADMAZAAzADAAMABlADUAOAAyADYAMAA0ADgA
+MgA3AGIAMgAyAGMAZgBlADYANAAyAGQAYwBmAGIAMQA5ADMAAABAAA8AAQBGAGkAbABlAFYAZQBy
+AHMAaQBvAG4AAAAAADEALgAwAC4ANQA2ADgAMQAuADIAOQA3ADcANwAAAAAAcAAoAAEASQBuAHQA
+ZQByAG4AYQBsAE4AYQBtAGUAAABTAEMAXwAyADMAZAAzADAAMABlADUAOAAyADYAMAA0ADgAMgA3
+AGIAMgAyAGMAZgBlADYANAAyAGQAYwBmAGIAMQA5ADMALgBkAGwAbAAAAEgAEgABAEwAZQBnAGEA
+bABDAG8AcAB5AHIAaQBnAGgAdAAAAEMAbwBwAHkAcgBpAGcAaAB0ACAAQAAgACAAMgAwADEANQAA
+AHgAKAABAE8AcgBpAGcAaQBuAGEAbABGAGkAbABlAG4AYQBtAGUAAABTAEMAXwAyADMAZAAzADAA
+MABlADUAOAAyADYAMAA0ADgAMgA3AGIAMgAyAGMAZgBlADYANAAyAGQAYwBmAGIAMQA5ADMALgBk
+AGwAbAAAAGgAJAABAFAAcgBvAGQAdQBjAHQATgBhAG0AZQAAAAAAUwBDAF8AMgAzAGQAMwAwADAA
+ZQA1ADgAMgA2ADAANAA4ADIANwBiADIAMgBjAGYAZQA2ADQAMgBkAGMAZgBiADEAOQAzAAAARAAP
+AAEAUAByAG8AZAB1AGMAdABWAGUAcgBzAGkAbwBuAAAAMQAuADAALgA1ADYAOAAxAC4AMgA5ADcA
+NwA3AAAAAABIAA8AAQBBAHMAcwBlAG0AYgBsAHkAIABWAGUAcgBzAGkAbwBuAAAAMQAuADAALgA1
+ADYAOAAxAC4AMgA5ADcANwA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAYAAADAAAAOA9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAA==]]></arrayElement>
+                  </arrayElements>
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the Microsoft Visual Studio Tools for Applications project. Project names must be unique within a package."
+                  name="VSTAProjectName"
+                  typeConverter="NOTBROWSABLE">SC_23d300e582604827b22cfe642dcfb193</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the programming language used by the script."
+                  name="ScriptLanguage"
+                  typeConverter="Microsoft.SqlServer.VSTAHosting.ScriptingLanguages, Microsoft.SqlServer.VSTAScriptingLib, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">CSharp</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a comma-separated list of read-only variables."
+                  name="ReadOnlyVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIVariablePickerDlg, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">User::RestAPIUrl</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a comma-separated list of read/write variables."
+                  name="ReadWriteVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIWriteableVariablePickerDlg, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="List of breakpoints present on the script."
+                  isArray="true"
+                  name="BreakpointCollection"
+                  typeConverter="NOTBROWSABLE">
+                  <arrayElements
+                    arrayElementCount="2">
+                    <arrayElement
+                      dataType="System.String">&lt;SOAP-ENV:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"&gt;
+&lt;SOAP-ENV:Body&gt;
+&lt;a1:ScriptBreakpointInfo id="ref-1" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Microsoft.SqlServer.VSTAHosting/Microsoft.SqlServer.VSTAScriptingLib%2C%20Version%3D11.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3D89845dcd8080cc91"&gt;
+&lt;Enabled&gt;true&lt;/Enabled&gt;
+&lt;File id="ref-3"&gt;main.cs&lt;/File&gt;
+&lt;FileLine&gt;191&lt;/FileLine&gt;
+&lt;FileColumn&gt;13&lt;/FileColumn&gt;
+&lt;/a1:ScriptBreakpointInfo&gt;
+&lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;
+</arrayElement>
+                    <arrayElement
+                      dataType="System.String">&lt;SOAP-ENV:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"&gt;
+&lt;SOAP-ENV:Body&gt;
+&lt;a1:ScriptBreakpointInfo id="ref-1" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Microsoft.SqlServer.VSTAHosting/Microsoft.SqlServer.VSTAScriptingLib%2C%20Version%3D11.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3D89845dcd8080cc91"&gt;
+&lt;Enabled&gt;true&lt;/Enabled&gt;
+&lt;File id="ref-3"&gt;main.cs&lt;/File&gt;
+&lt;FileLine&gt;185&lt;/FileLine&gt;
+&lt;FileColumn&gt;9&lt;/FileColumn&gt;
+&lt;/a1:ScriptBreakpointInfo&gt;
+&lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;
+</arrayElement>
+                  </arrayElements>
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Checksum to match component metedata against compiled codes."
+                  name="MetadataChecksum"
+                  typeConverter="NOTBROWSABLE">4468ec79c2b9a807e274f726da2df39d</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.SqlServer.Dts.Pipeline.ScriptComponentHost, Microsoft.SqlServer.TxScript, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</property>
+              </properties>
+              <outputs>
+                <output
+                  refId="Package\Data From Rest API\Script Component.Outputs[Output 0]"
+                  hasSideEffects="true"
+                  name="Output 0">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Other]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Other]"
+                      name="Other" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[ObesityStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[ObesityStatus]"
+                      name="ObesityStatus" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[VeteranStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[VeteranStatus]"
+                      name="VeteranStatus" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Total]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Total]"
+                      name="Total" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Timeframe]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Timeframe]"
+                      name="Timeframe" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[StandardError]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[StandardError]"
+                      name="StandardError" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[SexualOrientation]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[SexualOrientation]"
+                      name="SexualOrientation" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Numerator]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Numerator]"
+                      name="Numerator" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Modifier5]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Modifier5]"
+                      name="Modifier5" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Modifier4]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Modifier4]"
+                      name="Modifier4" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Modifier3]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Modifier3]"
+                      name="Modifier3" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Modifier2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Modifier2]"
+                      name="Modifier2" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Modifier1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Modifier1]"
+                      name="Modifier1" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[MissingValueFlag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[MissingValueFlag]"
+                      name="MissingValueFlag" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[MaritalStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[MaritalStatus]"
+                      name="MaritalStatus" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[LocaleStateFIPSCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[LocaleStateFIPSCode]"
+                      name="LocaleStateFIPSCode" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[LocaleLevel]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[LocaleLevel]"
+                      name="LocaleLevel" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[LocaleHRRCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[LocaleHRRCode]"
+                      name="LocaleHRRCode" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[LocaleCountySSACode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[LocaleCountySSACode]"
+                      name="LocaleCountySSACode" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[LocaleCountyFIPSCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[LocaleCountyFIPSCode]"
+                      name="LocaleCountyFIPSCode" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Locale]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Locale]"
+                      name="Locale" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[IndicatorID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[IndicatorID]"
+                      name="IndicatorID" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[IncomeAndPovertyStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[IncomeAndPovertyStatus]"
+                      name="IncomeAndPovertyStatus" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[HealthInsuranceStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[HealthInsuranceStatus]"
+                      name="HealthInsuranceStatus" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Geography]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Geography]"
+                      name="Geography" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[FamilyType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[FamilyType]"
+                      name="FamilyType" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Age]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Age]"
+                      name="Age" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[RaceEthnicity]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[RaceEthnicity]"
+                      name="RaceEthnicity" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[NumericValue]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[NumericValue]"
+                      name="NumericValue" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Sex]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Sex]"
+                      name="Sex" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[CountryOfBirth]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[CountryOfBirth]"
+                      name="CountryOfBirth" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[ConfidenceIntervalLow]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[ConfidenceIntervalLow]"
+                      name="ConfidenceIntervalLow" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[ConfidenceIntervalHigh]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[ConfidenceIntervalHigh]"
+                      name="ConfidenceIntervalHigh" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[EducationalAttainment]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[EducationalAttainment]"
+                      name="EducationalAttainment" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[DisabilityStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[DisabilityStatus]"
+                      name="DisabilityStatus" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[DimensionList]"
+                      codePage="1252"
+                      dataType="str"
+                      length="200"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[DimensionList]"
+                      name="DimensionList" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Denominator]"
+                      codePage="1252"
+                      dataType="str"
+                      length="200"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[Denominator]"
+                      name="Denominator" />
+                    <outputColumn
+                      refId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[CharacteristicOfSchoolOrStudent]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data From Rest API\Script Component.Outputs[Output 0].Columns[CharacteristicOfSchoolOrStudent]"
+                      name="CharacteristicOfSchoolOrStudent" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data From Rest API.Paths[Output 0]"
+              endId="Package\Data From Rest API\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Output 0"
+              startId="Package\Data From Rest API\Script Component.Outputs[Output 0]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Delete All Rows"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Delete all rows before exporting"
+      DTS:DTSID="{C3FD9B5A-5665-48E7-8A5C-BDAF74207F8F}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete All Rows"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D23116FB-58BF-48B0-8799-FB19AE4DE768}"
+          SQLTask:SqlStatementSource="DELETE FROM [HealthDataSuicideIndicators_New]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Delete Rows Where Age is null"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{FFC9FA63-F735-42F4-9EEC-A30B30B9AD96}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete Rows Where Age is null"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D23116FB-58BF-48B0-8799-FB19AE4DE768}"
+          SQLTask:SqlStatementSource="DELETE FROM HealthDataSuicideIndicators_New&#xA;WHERE AGE IS NULL or Age =''" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{3BC4D7F1-E7B9-4E53-9FEC-D47BD887B542}"
+      DTS:From="Package\Delete All Rows"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Data From Rest API" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{C44D0C31-E604-48A2-A6B6-48C99F3C8B53}"
+      DTS:From="Package\Data From Rest API"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Delete Rows Where Age is null" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="172,42"
+          Id="Package\Data From Rest API"
+          TopLeft="390,164" />
+        <NodeLayout
+          Size="152,42"
+          Id="Package\Delete All Rows"
+          TopLeft="393,66" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="472.5,108">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,56"
+              Start="0,0"
+              End="0,48.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,48.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="223,42"
+          Id="Package\Delete Rows Where Age is null"
+          TopLeft="362,263" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="474.75,206">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,57"
+              Start="0,0"
+              End="0,49.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data From Rest API">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Data From Rest API\Script Component"
+          TopLeft="448,54" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Data From Rest API\OLE DB Destination"
+          TopLeft="450,237" />
+        <EdgeLayout
+          Id="Package\Data From Rest API.Paths[Output 0]"
+          TopLeft="532.5,96">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,141"
+              Start="0,0"
+              End="0,133.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,133.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data From Rest API\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

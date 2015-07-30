@@ -6,7 +6,7 @@ var dataFormatter = require('../../components/formatUtil/formatUtil.service.js')
 
 exports.index = function(req, res) {
 	/*Configure response header */
-	res.header("content-type: application/json");
+	//res.header("content-type: application/json");
 	
 	/*Configure and open database */
 	var dbc = require('../../config/db_connection/development.js');
@@ -18,7 +18,7 @@ exports.index = function(req, res) {
 		var request = new sql.Request(connection);
 			
 		/*Configure database query */
-		var query = "SELECT Age, Sex, Total, RaceEthnicity FROM dbo.HealthDataSuicideIndicators";
+		var query = "SELECT Age, ISNULL(Sex, '--') As Gender, ISNULL(NumericValue, '--') As Value, ISNULL(RaceEthnicity, '--') As Ethnicity FROM dbo.HealthDataSuicideIndicators WHERE Age IS NOT NULL";
 
 		/*Query database */
 		request.query(query, function(err, recordset) {

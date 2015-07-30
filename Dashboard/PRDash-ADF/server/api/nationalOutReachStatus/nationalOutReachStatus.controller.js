@@ -5,7 +5,7 @@ var sql = require('mssql');
 var dataFormatter = require('../../components/formatUtil/formatUtil.service.js');
 
 exports.index = function(req, res) {
-  res.header("content-type: application/json");
+  //res.header("content-type: application/json");
 
   var dbc = require('../../config/db_connection/development.js');
     var config = dbc.config;
