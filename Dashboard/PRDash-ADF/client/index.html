@@ -47,7 +47,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Perceptive Reach </a>
+    <p class="navbar-text">Perceptive Reach</p>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -56,7 +56,7 @@
         <!--ul class="nav navbar-nav">
           <li ng-repeat="(when, route) in $route.routes" ng-class="{ 'active': $route.current.$$route === route}"><a ng-href="{{'#' + route.originalPath}}">{{ route.title }}</a></li>
         </ul-->
-        <div style="float: right; color: #fff; cursor: default; padding-top: 10px;"> 
+        <div style="float: right; color: #fff; background-color: transparent; cursor: default; padding-top: 10px;"> 
           <span>{{$root.globals.userObj.UserName }}</span>
           <button ng-click="Logout()" class="btn btn-success" >Logout</button>
         </div>
@@ -109,19 +109,21 @@
       <script src="bower_components/ng-idle/angular-idle.js"></script>
       <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
       <script src="bower_components/es6-promise/promise.js"></script>
+      <script src="bower_components/matchmedia/matchMedia.js"></script>
       <script src="bower_components/angular-mocks/angular-mocks.js"></script>
       <script src="bower_components/showdown/src/showdown.js"></script>
       <script src="bower_components/angular-markdown-directive/markdown.js"></script>
       <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
       <!-- endbower -->
+      <script src="bower_components/ngSticky/lib/sticky.js"></script>
       <script src="bower_components/spin.js/spin.js"></script>
       <script src="bower_components/angular-datatables/dist/plugins/scroller/angular-datatables.scroller.js"></script>
       <script src="bower_components/forge/js/util.js"></script>
       <script src="bower_components/forge/js/cipher.js"></script>
       <script src="bower_components/forge/js/cipherModes.js"></script>
       <script src="bower_components/forge/js/aes.js"></script>
-      
       <script src="bower_components/forge/js/forge.js"></script>     
+      
       <script src="app/app.js"></script>
       <!-- injector:js -->
       <script src="app/account/account.js"></script>

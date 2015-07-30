@@ -67,7 +67,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/clinicalDecisionSupport/clinicalDecisionSupport.html",
-    "<div name=\"clinicalDecisionSupport\" style='overflow:auto; height:450px; widgth:auto'>\r" +
+    "<div name=\"clinicalDecisionSupport\" style=\"overflow:auto; height:450px; width:auto\">\r" +
     "\n" +
     "\t<div ng-repeat=\"cpg in cpgList\">\r" +
     "\n" +
@@ -117,7 +117,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
     "\n" +
-    "        <h4>No Data Found</h4>\r" +
+    "        <p font-size=\"12\"><b>No Data Found</b></p>\r" +
     "\n" +
     "    </div>\r" +
     "\n" +
@@ -189,7 +189,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
     "\n" +
-    "        <h4>No Data Found</h4>\r" +
+    "        <p font-size=\"12\"><br>No Data Found</b></p>\r" +
     "\n" +
     "    </div>\r" +
     "\n" +
@@ -587,38 +587,33 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalTopMidRisk/nationalTopMidRisk.html",
-    "\t<div ng-controller=\"wt-national-top-mid-risk\">\r" +
+    "<div class=\"nationalTopMidRisk\">\r" +
     "\n" +
-    "\t\t<nvd3-discrete-bar-chart\r" +
+    "\t<table id=\"tblTopMidRisk\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "\t\t\tdata=\"data\"\r" +
+    "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\tid=\"riskPatientNumbers\"\r" +
+    "\t\t\t<th>Risk Level Group</th>>\r" +
     "\n" +
-    "\t\t\tshowLegend=\"true\"\r" +
+    "\t\t\t<th>Total Number of Patients</th>\r" +
     "\n" +
-    "\t\t\twidth=\"300\" \r" +
+    "\t\t</thead>\r" +
     "\n" +
-    "\t\t\theight=\"300\"\r" +
+    "\t\t<tbody>\r" +
     "\n" +
-    "\t\t\tshowLabels=\"true\"\r" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
     "\n" +
-    "\t\t\tshowXAxis = \"true\"\r" +
+    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
     "\n" +
-    "\t\t\tshowYAxis = \"true\"\r" +
+    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
     "\n" +
-    "\t\t\tx=\"xFunction()\"\r" +
+    "\t\t\t</tr>\r" +
     "\n" +
-    "\t\t\ty=\"yFunction()\"\r" +
+    "\t\t</tbody>\r" +
     "\n" +
-    "\t\t\tnoData=\"Loading Data...\">\r" +
+    "\t</table>\r" +
     "\n" +
-    "\t\t\t<svg></svg>\r" +
-    "\n" +
-    "\t\t</nvd3-discrete-bar-chart>\r" +
-    "\n" +
-    "\t</div>\r" +
-    "\n"
+    "</div>"
   );
 
   $templateCache.put("client/components/widget/widgets/nationalVAClinicTwelveMonths/nationalVAClinicTwelveMonths.html",
@@ -772,49 +767,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/patientTable/patientTable.html",
     "<div>\r" +
     "\n" +
-    "\t<!--<div id=\"spinner\" style=\"height: 100px;\"> </div>-->\r" +
-    "\n" +
     "    <table id=\"tblPatient\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
-    "    \t<!--<thead>\r" +
-    "\n" +
-    "        <tr>\r" +
-    "\n" +
-    "        \t<th ng-repeat=\"column in columns\">{{column.Name}}</th>\r" +
-    "\n" +
-    "        </tr> \r" +
-    "\n" +
-    "        </thead>\r" +
-    "\n" +
-    "        <tbody>\r" +
-    "\n" +
-    "        <tr ng-repeat=\"patient in patientList\">\r" +
-    "\n" +
-    "            <td>{{ patient.Name }}</td>\r" +
-    "\n" +
-    "            <td>{{ patient.SSN }}</td>\r" +
-    "\n" +
-    "            <td>{{ patient.HomePhone }}</td>\r" +
-    "\n" +
-    "            <td>{{ patient.DateIdentifiedAsAtRisk}}</td>\r" +
-    "\n" +
-    "            <td>{{ patient.RiskLevel }}</td>\r" +
-    "\n" +
-    "            <td>\r" +
-    "\n" +
-    "\t\t\t<label alt=\"Patient ID Status\" for=\"vetPatientIDStatus\">Status</label>\r" +
-    "\n" +
-    "             <select ng-model=\"patient.OutreachStatus\" id=\"vet_{{patient.ReachID}}\" style='width: 180px;' name=\"vetPatientIDStatus\"\r" +
-    "\n" +
-    "                ng-options=\"opt.OutReachStatusID as opt.StatusDesc for opt in outreachStatusList\">\r" +
-    "\n" +
-    "             </select>\r" +
-    "\n" +
-    "            </td>\r" +
-    "\n" +
-    "        </tr>\r" +
-    "\n" +
-    "        </tbody>-->\r" +
+    "    \r" +
     "\n" +
     "    </table>\r" +
     "\n" +
@@ -824,9 +779,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/patientTable/patientTableWidgetSettingsTemplate.html",
     "<div class=\"modal-header\">\r" +
     "\n" +
-    "    <button name=\"btnClose\" type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
+    "    <button name=\"btnClose\" alt=\"close\" type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
     "\n" +
-    "  <h3>Widget Options<small>{{widget.title}}</small></h3>\r" +
+    "  <p font-size=\"12\"><b>Widget Options:  </b><small>{{widget.title}}</small></p>\r" +
     "\n" +
     "</div>\r" +
     "\n" +
@@ -842,7 +797,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <div class=\"col-sm-10\">\r" +
     "\n" +
-    "                <input alt=\"Result Title\" type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
+    "                <input alt=\"Result Title\" id=\"widgetTitle\" type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
@@ -850,7 +805,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <div class=\"col-sm-10\">\r" +
     "\n" +
-    "                <select class=\"form-control\" ng-model=\"result.dataModel.vamc\">\r" +
+    "                <select class=\"form-control\" id=\"widgetVAMC\" ng-model=\"result.dataModel.vamc\">\r" +
     "\n" +
     "                    <option ng-repeat=\"vamc in listOfVAMC\" value=\"{{vamc.STA3N}}\">{{vamc.VAMC_Name}}</option>\r" +
     "\n" +
@@ -874,9 +829,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "<div class=\"modal-footer\">\r" +
     "\n" +
-    "    <button name=\"btnCancel\" type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
+    "    <button name=\"btnCancel\" alt=\"cancel\" type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
     "\n" +
-    "    <button name=\"btnOK\" type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
+    "    <button name=\"btnOK\" alt=\"ok\" type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
     "\n" +
     "</div>"
   );
