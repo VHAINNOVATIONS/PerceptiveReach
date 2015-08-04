@@ -71,6 +71,9 @@ angular.module('ui.dashboard')
                 },
                 function() {
                   scope._makeLayoutActive(layout);
+                  $('div[dashboard-layouts=layoutOptions] li>a').filter(function () {
+                     return $(this).text().trim() == layout.title;
+                  }).click();
                 }
               );
             } else {
