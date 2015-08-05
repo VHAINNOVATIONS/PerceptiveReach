@@ -3520,6 +3520,7 @@ angular.module('ui.widgets')
                 return ( n.ReachID == vetId );
               });
               console.log("ReachID Vet Selected: ",vetId);
+              delete obj[0].OutreachStatusSelect;
               commonData.data.veteranObj = obj[0];
               console.log("CommonDataAfterClick: ", commonData);
               // broadcast message throughout system
