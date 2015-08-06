@@ -36,7 +36,15 @@ When(/^I open a new browser and navigate to http:\/\/localhost:(\d+)\/$/) do |ar
   page.driver.browser.navigate.to 'http://localhost:7003'
     page.driver.browser.switch_to.window(page.driver.browser.window_handles.last)
  
- 
+ Then(/^I select the veteran "(.*?)"$/) do |arg1|
+  #pending # express the regexp above with the code you wish you had
+  find(:xpath, '//*[@id="tblPatient"]/tbody/tr[1]/td[1]').click
+  #find(:xpath, '//td[contains(text(),{$arg1})]').click
+end
+Then(/^I click on save changes button$/) do
+  page.find(:xpath,"/html/body/div/div/div/div/div[1]/div/button[2]").click
+  
+end
  
  
   

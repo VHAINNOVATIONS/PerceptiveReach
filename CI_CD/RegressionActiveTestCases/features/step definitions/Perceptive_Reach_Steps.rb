@@ -30,6 +30,9 @@ When(/^I select middle risk veteran row in the widget$/) do
 	find(:xpath, '//td[contains(text(),"1966")]').click 
 	 #click_link('vet_566384')
 end
+Then(/^I select the veteran "(.*?)"$/) do |arg1|
+  #pending # express the regexp above with the code you wish you had
+  find(:xpath, '//*[@id="tblPatient"]/tbody/tr[1]/td[1]').click
 
 #To test active sessions
 When(/^I open a new browser and navigate to http:\/\/localhost:(\d+)\/$/) do |arg1|
@@ -80,8 +83,7 @@ When(/^I click on "(.*?)"$/) do |view|
   #page.save_screenshot('screenshot1.png')
 end
 Then(/^I click on save changes button$/) do
-  page.find(:xpath,"/html/body/div/div/div/div/div[1]/button[2]").click
-end
+  page.find(:xpath,"/html/body/div/div/div/div/div[1]/div/button[2]").click
 
 Then(/^I click on "(.*?)" button in the menu$/) do |arg1|
   title = arg1
