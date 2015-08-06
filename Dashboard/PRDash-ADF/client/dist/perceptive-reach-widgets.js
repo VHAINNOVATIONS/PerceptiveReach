@@ -1084,14 +1084,27 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];  
-
+      this.updateScope(data);
       $http.get('/api/nationalTopMidRisk')
         .success(function(dataset) {
-                data = dataset; 
-                this.updateScope(data);
+                 
+                  for (var i = 0; i < dataset.length; i++) {
+                    data.push({
+                      RiskLabel: dataset[i].RiskLevel,
+                      value: dataset[i].Total
+                    });
+                  }
+
+                  var widgetData=[
+                                    {
+                                      key: 'Top Mid Risk Levels',
+                                      values: data
+                                    }
+                                  ];
+
+                this.updateScope(widgetData);
             }.bind(this));
       },
-
       destroy: function () {
         WidgetDataModel.prototype.destroy.call(this);
       }
@@ -3158,44 +3171,16 @@ angular.module('ui.widgets')
       templateUrl: 'client/components/widget/widgets/nationalTopMidRisk/nationalTopMidRisk.html',
       scope: {
         data: '=data'
-      }, 
-	controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
-
-	$scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
-		.withScroller()
-		.withOption('deferRender', true)
-		// Do not forget to add the scrollY option!!!
-		.withOption('scrollY', 200)
-		.withOption('paging',false)
-		.withOption('order', [1, 'desc']);
-	//.withPaginationType('full_numbers').withDisplayLength(5);
-	$scope.dtColumnDefs = [
-		DTColumnDefBuilder.newColumnDef(0),
-		DTColumnDefBuilder.newColumnDef(1)
-	];
-  },
-  link: function postLink(scope) {
-	scope.$watch('data', function (data) {
-	  if (data) {
-		scope.data = data;
-	  }
-	});
-  }
-};
-});
-      /*controller: function ($scope) {
-		
-		$scope.toolTipContentFunction = function(){
-		return function(key, x, y, e, graph) {
-			return  'Super New Tooltip' +
-				'<h1>' + key + '</h1>' +
-				'<p>' +  y + ' at ' + x + '</p>'
-			};
-		};
-
+      },
+      controller: function ($scope) {
+        $scope.xAxisTickFormatFunction = function () {
+          return function(d) {
+          	return d;
+          };
+        };
         $scope.xFunction = function(){
           return function(d) {
-            return d.label;
+            return d.RiskLabel;
           };
         };
         $scope.yFunction = function(){
@@ -3205,7 +3190,8 @@ angular.module('ui.widgets')
         };
       }
     };
-  });*/
+});
+      
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -4491,29 +4477,27 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/nationalTopMidRisk/nationalTopMidRisk.html",
     "<div class=\"nationalTopMidRisk\">\r" +
     "\n" +
-    "\t<table id=\"tblTopMidRisk\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "    <nvd3-multi-bar-chart\r" +
     "\n" +
-    "\t\t<thead>\t\r" +
+    "            data=\"data\"\r" +
     "\n" +
-    "\t\t\t<th>Risk Level Group</th>>\r" +
+    "            xAxisTickFormat=\"xAxisTickFormatFunction()\"\r" +
     "\n" +
-    "\t\t\t<th>Total Number of Patients</th>\r" +
+    "            x=\"xFunction()\"\r" +
     "\n" +
-    "\t\t</thead>\r" +
+    "            y=\"yFunction()\"\r" +
     "\n" +
-    "\t\t<tbody>\r" +
+    "            showXAxis=\"true\"\r" +
     "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "            showYAxis=\"true\"\r" +
     "\n" +
-    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
+    "            showLegend=\"true\"\r" +
     "\n" +
-    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "            tooltips=\"true\">\r" +
     "\n" +
-    "\t\t\t</tr>\r" +
+    "            <svg></svg>\r" +
     "\n" +
-    "\t\t</tbody>\r" +
-    "\n" +
-    "\t</table>\r" +
+    "    </nvd3-multi-bar-chart>\r" +
     "\n" +
     "</div>"
   );

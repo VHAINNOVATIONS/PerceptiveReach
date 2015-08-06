@@ -589,29 +589,27 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/nationalTopMidRisk/nationalTopMidRisk.html",
     "<div class=\"nationalTopMidRisk\">\r" +
     "\n" +
-    "\t<table id=\"tblTopMidRisk\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "    <nvd3-multi-bar-chart\r" +
     "\n" +
-    "\t\t<thead>\t\r" +
+    "            data=\"data\"\r" +
     "\n" +
-    "\t\t\t<th>Risk Level Group</th>>\r" +
+    "            xAxisTickFormat=\"xAxisTickFormatFunction()\"\r" +
     "\n" +
-    "\t\t\t<th>Total Number of Patients</th>\r" +
+    "            x=\"xFunction()\"\r" +
     "\n" +
-    "\t\t</thead>\r" +
+    "            y=\"yFunction()\"\r" +
     "\n" +
-    "\t\t<tbody>\r" +
+    "            showXAxis=\"true\"\r" +
     "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "            showYAxis=\"true\"\r" +
     "\n" +
-    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
+    "            showLegend=\"true\"\r" +
     "\n" +
-    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "            tooltips=\"true\">\r" +
     "\n" +
-    "\t\t\t</tr>\r" +
+    "            <svg></svg>\r" +
     "\n" +
-    "\t\t</tbody>\r" +
-    "\n" +
-    "\t</table>\r" +
+    "    </nvd3-multi-bar-chart>\r" +
     "\n" +
     "</div>"
   );
