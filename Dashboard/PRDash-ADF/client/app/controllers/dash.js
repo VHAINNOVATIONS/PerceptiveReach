@@ -233,7 +233,7 @@ angular.module('app')
         },
         size: {
           width: '35%',
-          height: '350px'
+          height: '200px'
         }
       },
 	  {

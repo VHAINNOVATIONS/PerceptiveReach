@@ -745,14 +745,27 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];  
-
+      this.updateScope(data);
       $http.get('/api/nationalTopMidRisk')
         .success(function(dataset) {
-                data = dataset; 
-                this.updateScope(data);
+                 
+                  for (var i = 0; i < dataset.length; i++) {
+                    data.push({
+                      RiskLabel: dataset[i].RiskLevel,
+                      value: dataset[i].Total
+                    });
+                  }
+
+                  var widgetData=[
+                                    {
+                                      key: 'Top Mid Risk Levels',
+                                      values: data
+                                    }
+                                  ];
+
+                this.updateScope(widgetData);
             }.bind(this));
       },
-
       destroy: function () {
         WidgetDataModel.prototype.destroy.call(this);
       }
