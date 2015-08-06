@@ -776,66 +776,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
-  $templateCache.put("client/components/widget/widgets/patientTable/patientTableWidgetSettingsTemplate.html",
-    "<div class=\"modal-header\">\r" +
-    "\n" +
-    "    <button name=\"btnClose\" alt=\"close\" type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
-    "\n" +
-    "  <p font-size=\"12\"><b>Widget Options:  </b><small>{{widget.title}}</small></p>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div class=\"modal-body\">\r" +
-    "\n" +
-    "    <form name=\"form\" novalidate class=\"form-horizontal\">\r" +
-    "\n" +
-    "        <div class=\"form-group\">\r" +
-    "\n" +
-    "            <label id=\"lblTitle\" alt=\"Title\" for=\"widgetTitle\" class=\"col-sm-2 control-label\">Title</label>\r" +
-    "\n" +
-    "            <div class=\"col-sm-10\">\r" +
-    "\n" +
-    "                <input alt=\"Result Title\" id=\"widgetTitle\" type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "            <label id=\"lblVAMC\" alt=\"VAMC\" for=\"widgetVAMC\" class=\"col-sm-2 control-label\">VAMC</label>\r" +
-    "\n" +
-    "            <div class=\"col-sm-10\">\r" +
-    "\n" +
-    "                <select class=\"form-control\" id=\"widgetVAMC\" ng-model=\"result.dataModel.vamc\">\r" +
-    "\n" +
-    "                    <option ng-repeat=\"vamc in listOfVAMC\" value=\"{{vamc.STA3N}}\">{{vamc.VAMC_Name}}</option>\r" +
-    "\n" +
-    "                </select>\r" +
-    "\n" +
-    "                <!--<input type=\"text\" class=\"form-control\" name=\"widgetVAMC\" ng-model=\"result.dataModel.vamc\">-->\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
-    "        <div ng-if=\"widget.settingsModalOptions.partialTemplateUrl\"\r" +
-    "\n" +
-    "             ng-include=\"widget.settingsModalOptions.partialTemplateUrl\"></div>\r" +
-    "\n" +
-    "    </form>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div class=\"modal-footer\">\r" +
-    "\n" +
-    "    <button name=\"btnCancel\" alt=\"cancel\" type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
-    "\n" +
-    "    <button name=\"btnOK\" alt=\"ok\" type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
-    "\n" +
-    "</div>"
-  );
-
   $templateCache.put("client/components/widget/widgets/pieChart/pieChart.html",
     "<div>\r" +
     "\n" +
