@@ -17,7 +17,7 @@
 'use strict';
 
 angular.module('app')
-	.controller('LayoutsDemoExplicitSaveCtrl', function($scope, widgetDefinitions, LayoutStorage, Util, Auth, $interval, $timeout, IdleServ, DefaultWidgetService) {
+	.controller('LayoutsDemoExplicitSaveCtrl', function($scope, widgetDefinitions, LayoutStorage, Util, Auth, $interval, $timeout, IdleServ, DefaultWidgetService,$rootScope) {
     //console.log("UserObj inside main controller: ",$rootScope.globals['userObj']);
     // Start Idle Service
     IdleServ.start(Auth);
@@ -88,7 +88,7 @@ angular.module('app')
     $scope.common = {
       data: {
         stateSelected: '',
-        facilitySelected: 613,
+        facilitySelected: $rootScope.globals.userObj.UserHomeFacility,
         patientIdSelected: 1,
         userObj: {}
       }
