@@ -72,17 +72,6 @@ angular.module('app')
       {
         name: 'RosterTable',
         directive: 'wt-patient-roster-table',
-        settingsModalOptions: {
-        templateUrl: 'client/components/widget/widgets/patientTable/patientTableWidgetSettingsTemplate.html',
-        controller: 'patientTableWidgetSettingsCtrl'
-        },
-        /*onSettingsClose: function(resultFromModal, widgetModel, dashboardScope) {
-          // do something to update widgetModel, like the default implementation:
-          jQuery.extend(true, widget, result);
-        },
-        onSettingsDismiss: function(reasonForDismissal, dashboardScope) {
-          // probably do nothing here, since the user pressed cancel
-        },*/
         dataAttrName: 'data',
         dataModelType: PatientDataModel,
         title: 'Patient Roster by VAMC',

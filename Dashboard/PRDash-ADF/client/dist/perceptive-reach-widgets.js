@@ -3623,50 +3623,6 @@ angular.module('ui.widgets')
 
 'use strict';
 
-angular.module('ui.dashboard')
-  .controller('patientTableWidgetSettingsCtrl', ['$scope', '$modalInstance', '$http','widget', function ($scope, $modalInstance, $http, widget) {
-    // add widget to scope
-    $scope.widget = widget;
-    //console.log(widget);
-    // set up result object
-    $scope.result = jQuery.extend(true, {}, widget);
-    //console.log($scope.result);
-
-
-    $http.get('/api/getListOfVAMC')
-        .success(function(listOfVAMC) {
-          $scope.listOfVAMC = listOfVAMC;
-        });
-
-    $scope.ok = function () {      
-      $modalInstance.close($scope.result);
-      $scope.widget.dataModel.updateVAMC($scope.result.dataModel.STA3N);
-      $scope.widget.dataModel.getData();
-
-    };
-
-    $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
-    };
-  }]);
-/*
- * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
 angular.module('ui.widgets')
   .directive('wtPieChart', function () {
     return {
@@ -4718,66 +4674,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "    \r" +
     "\n" +
     "    </table>\r" +
-    "\n" +
-    "</div>"
-  );
-
-  $templateCache.put("client/components/widget/widgets/patientTable/patientTableWidgetSettingsTemplate.html",
-    "<div class=\"modal-header\">\r" +
-    "\n" +
-    "    <button name=\"btnClose\" alt=\"close\" type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
-    "\n" +
-    "  <p font-size=\"12\"><b>Widget Options:  </b><small>{{widget.title}}</small></p>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div class=\"modal-body\">\r" +
-    "\n" +
-    "    <form name=\"form\" novalidate class=\"form-horizontal\">\r" +
-    "\n" +
-    "        <div class=\"form-group\">\r" +
-    "\n" +
-    "            <label id=\"lblTitle\" alt=\"Title\" for=\"widgetTitle\" class=\"col-sm-2 control-label\">Title</label>\r" +
-    "\n" +
-    "            <div class=\"col-sm-10\">\r" +
-    "\n" +
-    "                <input alt=\"Result Title\" id=\"widgetTitle\" type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "            <label id=\"lblVAMC\" alt=\"VAMC\" for=\"widgetVAMC\" class=\"col-sm-2 control-label\">VAMC</label>\r" +
-    "\n" +
-    "            <div class=\"col-sm-10\">\r" +
-    "\n" +
-    "                <select class=\"form-control\" id=\"widgetVAMC\" ng-model=\"result.dataModel.vamc\">\r" +
-    "\n" +
-    "                    <option ng-repeat=\"vamc in listOfVAMC\" value=\"{{vamc.STA3N}}\">{{vamc.VAMC_Name}}</option>\r" +
-    "\n" +
-    "                </select>\r" +
-    "\n" +
-    "                <!--<input type=\"text\" class=\"form-control\" name=\"widgetVAMC\" ng-model=\"result.dataModel.vamc\">-->\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
-    "        <div ng-if=\"widget.settingsModalOptions.partialTemplateUrl\"\r" +
-    "\n" +
-    "             ng-include=\"widget.settingsModalOptions.partialTemplateUrl\"></div>\r" +
-    "\n" +
-    "    </form>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div class=\"modal-footer\">\r" +
-    "\n" +
-    "    <button name=\"btnCancel\" alt=\"cancel\" type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
-    "\n" +
-    "    <button name=\"btnOK\" alt=\"ok\" type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
     "\n" +
     "</div>"
   );
