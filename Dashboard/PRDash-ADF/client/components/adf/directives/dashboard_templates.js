@@ -108,17 +108,17 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"btn-toolbar\" ng-if=\"!options.hideToolbar\" style=\"padding-bottom:5px;padding-top:5px;border-bottom: 2px solid gray;\">\r" +
     "\n" +
-    "            <div class=\"btn-group\" ng-if=\"!options.widgetButtons\">\r" +
+    "\t\t<!--ul class=\"inline\"><li-->\r" +
     "\n" +
-    "                <span class=\"dropdown\" on-toggle=\"toggled(open)\">\r" +
+    "            <div class=\"btn-group\" ng-if=\"!options.widgetButtons\" data-ng-class=\"{open: open}\">\r" +
     "\n" +
-    "                  <button name=\"btnAddWidget\" type=\"button\" class=\"btn btn-primary dropdown-toggle\" data-toggle=\"dropdown\">\r" +
+    "                  <button name=\"btnAddWidget\" data-ng-click=\"open=!open\" class=\"btn btn-primary dropdown-toggle\">\r" +
     "\n" +
-    "                    Add a Widget<span class=\"caret\"></span>\r" +
+    "                    Add a Widget<span class=\"caret\">  </span>\r" +
     "\n" +
     "                  </button>\r" +
     "\n" +
-    "                  <ul class=\"dropdown-menu\" role=\"menu\">\r" +
+    "                  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu\">\r" +
     "\n" +
     "                    <li ng-repeat=\"widget in widgetDefs\">\r" +
     "\n" +
@@ -128,9 +128,9 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  </ul>\r" +
     "\n" +
-    "                </span>\r" +
+    "\t\t\t</div>\r" +
     "\n" +
-    "        </div>\r" +
+    "\t\t<!--/li></ul-->\r" +
     "\n" +
     "            <div class=\"btn-group\" ng-if=\"options.widgetButtons\">\r" +
     "\n" +

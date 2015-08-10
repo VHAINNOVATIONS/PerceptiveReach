@@ -1,18 +1,18 @@
 <div>
     <div offset="105" style="z-index:10001;background-color:white;" sticky>
         <div class="btn-toolbar" ng-if="!options.hideToolbar" style="padding-bottom:5px;padding-top:5px;border-bottom: 2px solid gray;">
-            <div class="btn-group" ng-if="!options.widgetButtons">
-                <span class="dropdown" on-toggle="toggled(open)">
-                  <button name="btnAddWidget" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                    Add a Widget<span class="caret"></span>
+		<!--ul class="inline"><li-->
+            <div class="btn-group" ng-if="!options.widgetButtons" data-ng-class="{open: open}">
+                  <button name="btnAddWidget" data-ng-click="open=!open" class="btn btn-primary dropdown-toggle">
+                    Add a Widget<span class="caret">  </span>
                   </button>
-                  <ul class="dropdown-menu" role="menu">
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                     <li ng-repeat="widget in widgetDefs">
                       <a name="liWidgetDropdown" href="#" ng-click="addWidgetInternal($event, widget);" class="dropdown-toggle"><span class="label label-primary">{{widget.name}}</span></a>
                     </li>
                   </ul>
-                </span>
-        </div>
+			</div>
+		<!--/li></ul-->
             <div class="btn-group" ng-if="options.widgetButtons">
                 <button name="btnWidgetName" ng-repeat="widget in widgetDefs"
                         ng-click="addWidgetInternal($event, widget);" type="button" class="btn btn-primary">
