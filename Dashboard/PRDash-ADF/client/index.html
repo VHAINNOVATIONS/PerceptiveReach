@@ -47,7 +47,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-    <p class="navbar-text">Perceptive Reach</p>
+    <p class="navbar-text" tabIndex="-1">Perceptive Reach</p>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -57,7 +57,7 @@
           <li ng-repeat="(when, route) in $route.routes" ng-class="{ 'active': $route.current.$$route === route}"><a ng-href="{{'#' + route.originalPath}}">{{ route.title }}</a></li>
         </ul-->
         <div style="float: right; color: #fff; background-color: transparent; cursor: default; padding-top: 10px;"> 
-          <span>{{$root.globals.userObj.UserName }}</span>
+          <span tabIndex="-1">{{$root.globals.userObj.UserName }}</span>
           <button ng-click="Logout()" class="btn btn-success" >Logout</button>
         </div>
       </div>
