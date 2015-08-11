@@ -190,11 +190,11 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                        <span class=\"label label-primary\" ng-if=\"!options.hideWidgetName\">{{widget.name}}</span>\r" +
     "\n" +
-    "                        <button ng-click=\"removeWidget(widget);\" style=\"background-color: transparent\" tabIndex=\"6\" class=\"btn glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
+    "                        <button ng-click=\"removeWidget(widget);\" style=\"background-color: transparent\" tabIndex=\"6\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
     "\n" +
-    "                        <button ng-click=\"openWidgetSettings(widget);\" style=\"background-color: transparent\" tabIndex=\"5\" class=\"btn glyphicon glyphicon-cog\" style=\"background-color: transparent\" ng-if=\"!options.hideWidgetSettings\"></button>\r" +
+    "                        <button ng-click=\"openWidgetSettings(widget);\" style=\"background-color: transparent\" tabIndex=\"5\" class=\"glyphicon glyphicon-cog\" style=\"background-color: transparent\" ng-if=\"!options.hideWidgetSettings\"></button>\r" +
     "\n" +
-    "                        <button ng-click=\"widget.contentStyle.display = widget.contentStyle.display === 'none' ? 'block' : 'none'\" style=\"background-color: transparent\" class=\"glyphicon\" ng-class=\"btn {'glyphicon-plus': widget.contentStyle.display === 'none', 'glyphicon-minus': widget.contentStyle.display !== 'none' }\" tabIndex=\"4\"></button>\r" +
+    "                        <button ng-click=\"widget.contentStyle.display = widget.contentStyle.display === 'none' ? 'block' : 'none'\" style=\"background-color: transparent\" class=\"glyphicon\" ng-class=\"{'glyphicon-plus': widget.contentStyle.display === 'none','glyphicon-minus': widget.contentStyle.display !== 'none'}\" tabIndex=\"4\"></button>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
