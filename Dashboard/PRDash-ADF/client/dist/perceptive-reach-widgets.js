@@ -1173,7 +1173,39 @@ angular.module('ui.models')
       }
     });
     return NationalVAMCDataModel;
-  }) ;
+  })
+  .factory('FacilityDataModel', function ($http, WidgetDataModel) {
+    function FacilityDataModel() {
+    }
+
+    FacilityDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    FacilityDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(FacilityDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+      $http.get('/api/facilityRoster')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    
+    return FacilityDataModel;
+  });
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -2302,6 +2334,70 @@ angular.module('ui.widgets')
       scope: {
         data: '=data'
       }     
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtFacilityRoster', function ($timeout) {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/facilityRoster/facilityRoster.html',
+      scope: {
+        data: '=',
+      },
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scrollY option!!!
+            .withOption('scrollY', 200)
+            .withOption('paging',false)
+            .withOption('order', [1, 'desc']);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+			      DTColumnDefBuilder.newColumnDef(2)
+          ];
+      },
+      link: function postLink(scope) {
+        scope.$on("bindEvents", function (){
+          $('#tblFacilityRoster tbody').on( 'click', 'tr', function (event) {
+            if($(this).hasClass('selected')){
+            }
+            else{
+              $('tr.selected').removeClass('selected');
+              $(this).addClass('selected');
+            }
+          });
+        });
+        scope.$watch('data', function(data){
+          if(data != null && data.length >0){
+              scope.data = data;
+              $timeout(function(){
+                scope.$emit('bindEvents');
+              },1500)            
+            }
+        });
+      }
     };
   });
 /*
@@ -3580,7 +3676,7 @@ angular.module('ui.widgets')
               {
                 $('#tblPatient').find( "tbody>tr td:contains('"+commonData.data.veteranObj.Name+"')" ).parent().click();
               }
-            },500)            
+            },1500)            
           }
         });
       }
@@ -4078,6 +4174,40 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "</div>\r" +
     "\n"
+  );
+
+  $templateCache.put("client/components/widget/widgets/facilityRoster/facilityRoster.html",
+    "<div class=\"facilityRoster\">\r" +
+    "\n" +
+    "\t<table id=\"tblFacilityRoster\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "\t\t<thead>\t\r" +
+    "\n" +
+    "\t\t\t<th>VAMC Name</th>\r" +
+    "\n" +
+    "\t\t\t<th>State</th>\r" +
+    "\n" +
+    "\t\t\t<th>VISN</th>\r" +
+    "\n" +
+    "\t\t</thead>\r" +
+    "\n" +
+    "\t\t<tbody>\r" +
+    "\n" +
+    "\t\t\t<tr ng-repeat=\"ind in data\">\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.VAMC_Name}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.StateAbbr}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.VISN}}</td>\r" +
+    "\n" +
+    "\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t</tbody>\r" +
+    "\n" +
+    "\t</table>\r" +
+    "\n" +
+    "</div>"
   );
 
   $templateCache.put("client/components/widget/widgets/fluid/fluid.html",

@@ -197,6 +197,40 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n"
   );
 
+  $templateCache.put("client/components/widget/widgets/facilityRoster/facilityRoster.html",
+    "<div class=\"facilityRoster\">\r" +
+    "\n" +
+    "\t<table id=\"tblFacilityRoster\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "\t\t<thead>\t\r" +
+    "\n" +
+    "\t\t\t<th>VAMC Name</th>\r" +
+    "\n" +
+    "\t\t\t<th>State</th>\r" +
+    "\n" +
+    "\t\t\t<th>VISN</th>\r" +
+    "\n" +
+    "\t\t</thead>\r" +
+    "\n" +
+    "\t\t<tbody>\r" +
+    "\n" +
+    "\t\t\t<tr ng-repeat=\"ind in data\">\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.VAMC_Name}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.StateAbbr}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.VISN}}</td>\r" +
+    "\n" +
+    "\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t</tbody>\r" +
+    "\n" +
+    "\t</table>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/fluid/fluid.html",
     "<div class=\"demo-widget-fluid\">\r" +
     "\n" +
