@@ -294,7 +294,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <li ng-repeat=\"layout in layouts\" ng-class=\"{ active: layout.active }\">\r" +
     "\n" +
-    "        <a ng-click=\"makeLayoutActive(layout)\">\r" +
+    "        <a ng-click=\"makeLayoutActive(layout)\" tabindex=\"0\">\r" +
     "\n" +
     "            <span ng-dblclick=\"editTitle(layout)\" ng-show=\"!layout.editingTitle\">{{layout.title}}</span>\r" +
     "\n" +
