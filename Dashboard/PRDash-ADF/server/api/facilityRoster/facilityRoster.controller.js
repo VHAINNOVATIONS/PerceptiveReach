@@ -16,23 +16,10 @@ exports.index = function(req, res) {
 		  console.dir(err);
 		  return; 
 		}
+
 		var request = new sql.Request(connection); 
-		
 		/*Configure database query */
-		var visnId = req.param("visnid");
-		var select = '';
-		if (visnId && validator.isInt(visnId)) {
-			request.input('visnId', sql.Int, visnId);
-			select += "SELECT vi.VISN,vi.NetworkName,vi.RegionServed,vm.VAMC_Name, COUNT(p.ReachID) FROM dbo.Patient p ";
-			select += "JOIN PatientStation ps ";
-			select += "ON p.ReachID = ps.ReachID ";
-			select += "JOIN Ref_VAMC vm ";
-			select += "ON ps.sta3N = vm.STA3N ";
-			select += "JOIN Ref_VISN vi ";
-			select += "ON vm.VISN = vi.VISN ";
-			select += "WHERE vi.VISN = @visnId ";
-			select += "GROUP BY	vi.VISN,vi.NetworkName,vi.RegionServed,vm.VAMC_Name";
-		}
+		var select = "select * from Ref_VAMC";
 
 		/*Query database */
 		if(select)
@@ -48,7 +35,7 @@ exports.index = function(req, res) {
 			var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
 			
 			/*Send the data */
-			res.send({visnRoster:jsonRecordSet });
+			res.send({facilityRoster:jsonRecordSet });
 		});
 		}
 		else
@@ -56,6 +43,5 @@ exports.index = function(req, res) {
 			res.send(401, 'Query Failed');
 			return; 
 		}
-		
   });   
 }
