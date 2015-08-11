@@ -955,4 +955,42 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/vismRoster/vismRoster.html",
+    "<div class=\"vismRoster\">\r" +
+    "\n" +
+    "\t<table id=\"tblVismRoster\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "\t\t<thead>\t\r" +
+    "\n" +
+    "\t\t\t<th>Network Name</th>\r" +
+    "\n" +
+    "\t\t\t<th>Region Served</th>\r" +
+    "\n" +
+    "\t\t\t<th>VAMC Name</th>\r" +
+    "\n" +
+    "\t\t\t<th>Total Patients</th>\r" +
+    "\n" +
+    "\t\t</thead>\r" +
+    "\n" +
+    "\t\t<tbody>\r" +
+    "\n" +
+    "\t\t\t<tr ng-repeat=\"ind in data\">\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.NetworkName}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.RegionServed}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.VAMC_Name}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
+    "\n" +
+    "\t\t\t</tr>\r" +
+    "\n" +
+    "\t\t</tbody>\r" +
+    "\n" +
+    "\t</table>\r" +
+    "\n" +
+    "</div>"
+  );
+
 }]);

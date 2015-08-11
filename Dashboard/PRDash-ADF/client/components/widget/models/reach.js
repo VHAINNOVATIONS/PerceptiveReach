@@ -866,4 +866,37 @@ angular.module('ui.models')
     });
     
     return FacilityDataModel;
+  })
+  .factory('VISNDataModel', function ($http, WidgetDataModel) {
+    function VISNDataModel() {
+    }
+
+    VISNDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    VISNDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(VISNDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        var user = JSON.parse(sessionStorage.user);
+
+        $http.get('/api/visnRoster?visnid='+user.VISN)
+          .success(function(dataset) {
+                  data = dataset; 
+                  this.updateScope(data);
+              }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    
+    return VISNDataModel;
   });
