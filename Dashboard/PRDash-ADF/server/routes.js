@@ -35,6 +35,7 @@ module.exports = function(app) {
   app.use('/api/medicationData', require('./api/medicationData'));
   app.use('/api/diagnosesData', require('./api/diagnosesData'));
   app.use('/api/appointmentData', require('./api/appointmentData'));
+  app.use('/api/visnRoster', require('./api/visnRoster'));
 
   app.use('/api/dashboard', require('./api/dashboard'));
 
