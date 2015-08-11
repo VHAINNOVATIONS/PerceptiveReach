@@ -6,8 +6,10 @@ angular.module('app')
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
                                     PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel,
-                                    AppointmentDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,NationalAgeGroupsDataModel, NationalGenderDistributionDataModel,NationalMilitaryBranchDataModel, NationalOutReachStatusDataModel,NationalTopMidRiskDataModel, NationalVAMCDataModel, FacilityDataModel /*, NationalCombatEraDataModel, NationalCurrentSafetyDataModel,NationalHighRiskFlagDataModel, NationalPTSDMDDSUDDataModel,NationalVAClinicTwelveMonthsModel,*/ 
-									) {
+                                    AppointmentDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,NationalAgeGroupsDataModel, 
+                                    NationalGenderDistributionDataModel,NationalMilitaryBranchDataModel, NationalOutReachStatusDataModel,
+                                    NationalTopMidRiskDataModel, NationalVAMCDataModel, FacilityDataModel,VISNDataModel
+					) {
     return [
       {
         name: 'time',
@@ -93,6 +95,21 @@ angular.module('app')
         dataModelOptions: {
           defaultWidget: true,
           layout: 'facility',
+          vamc: 1
+        },
+        style: {
+          width: '55%'
+        }
+      },
+      {
+        name: 'VISMTable',
+        directive: 'wt-Vism-Roster',
+        dataAttrName: 'data',
+        dataModelType: VISNDataModel,
+        title: 'VISM Roster by VAMC',
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'stateVISN',
           vamc: 1
         },
         style: {

@@ -23,7 +23,7 @@ exports.index = function(req, res) {
 		var select = '';
 		if (visnId && validator.isInt(visnId)) {
 			request.input('visnId', sql.Int, visnId);
-			select += "SELECT vi.VISN,vi.NetworkName,vi.RegionServed,vm.VAMC_Name, COUNT(p.ReachID) FROM dbo.Patient p ";
+			select += "SELECT vi.VISN,vi.NetworkName,vi.RegionServed,vm.VAMC_Name, COUNT(p.ReachID) AS Total FROM dbo.Patient p ";
 			select += "JOIN PatientStation ps ";
 			select += "ON p.ReachID = ps.ReachID ";
 			select += "JOIN Ref_VAMC vm ";
