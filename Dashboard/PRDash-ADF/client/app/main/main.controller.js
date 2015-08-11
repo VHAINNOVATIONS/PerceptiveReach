@@ -38,7 +38,7 @@ angular.module('app')
           layout.defaultWidgets = defaultWidgetsLayout.national;
           layout.widgetDefinitions = widgetsAllObj.national;
         }
-        else if(layout.title.indexOf("State") != -1){
+        else if(layout.title.indexOf("VISN") != -1){
           layout.defaultWidgets = defaultWidgetsLayout.stateVISN;
           layout.widgetDefinitions = widgetsAllObj.stateVISN;
         }
@@ -63,7 +63,7 @@ angular.module('app')
      
       if (user.VISN_State_Reg_View_Access){
         layouts.push({ title: 'National View', active: (role.match(/^(SUP|REP|ADM)$/)) ? true : false , defaultWidgets: defaultWidgetsLayout.national, widgetDefinitions: widgetsAllObj.national});
-        layouts.push({ title: 'State View', active: false, defaultWidgets: defaultWidgetsLayout.stateVISN, widgetDefinitions: widgetsAllObj.stateVISN});
+        layouts.push({ title: 'VISN View', active: false, defaultWidgets: defaultWidgetsLayout.stateVISN, widgetDefinitions: widgetsAllObj.stateVISN});
       }
       if (user.Facility_View_Access){
         layouts.push({ title: 'Facility View', active: (role.match(/^(CCT)$/)) ? true : false, defaultWidgets: defaultWidgetsLayout.facility, widgetDefinitions: widgetsAllObj.facility});  
