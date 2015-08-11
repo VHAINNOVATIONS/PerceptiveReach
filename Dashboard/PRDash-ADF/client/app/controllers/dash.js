@@ -6,7 +6,7 @@ angular.module('app')
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
                                     PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel,
-                                    AppointmentDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,NationalAgeGroupsDataModel, NationalGenderDistributionDataModel,NationalMilitaryBranchDataModel, NationalOutReachStatusDataModel,NationalTopMidRiskDataModel, NationalVAMCDataModel /*, NationalCombatEraDataModel, NationalCurrentSafetyDataModel,NationalHighRiskFlagDataModel, NationalPTSDMDDSUDDataModel,NationalVAClinicTwelveMonthsModel,*/ 
+                                    AppointmentDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,NationalAgeGroupsDataModel, NationalGenderDistributionDataModel,NationalMilitaryBranchDataModel, NationalOutReachStatusDataModel,NationalTopMidRiskDataModel, NationalVAMCDataModel, FacilityDataModel /*, NationalCombatEraDataModel, NationalCurrentSafetyDataModel,NationalHighRiskFlagDataModel, NationalPTSDMDDSUDDataModel,NationalVAClinicTwelveMonthsModel,*/ 
 									) {
     return [
       {
@@ -78,6 +78,21 @@ angular.module('app')
         dataModelOptions: {
           defaultWidget: true,
           layout: 'individual',
+          vamc: 1
+        },
+        style: {
+          width: '55%'
+        }
+      },
+      {
+        name: 'FacilityTable',
+        directive: 'wt-Facility-Roster',
+        dataAttrName: 'data',
+        dataModelType: FacilityDataModel,
+        title: 'Facility Roster by VAMC',
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'facility',
           vamc: 1
         },
         style: {

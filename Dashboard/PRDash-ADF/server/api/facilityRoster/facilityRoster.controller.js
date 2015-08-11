@@ -35,7 +35,7 @@ exports.index = function(req, res) {
 			var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
 			
 			/*Send the data */
-			res.send({facilityRoster:jsonRecordSet });
+			res.send(jsonRecordSet);
 		});
 		}
 		else

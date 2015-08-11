@@ -834,4 +834,36 @@ angular.module('ui.models')
       }
     });
     return NationalVAMCDataModel;
-  }) ;
+  })
+  .factory('FacilityDataModel', function ($http, WidgetDataModel) {
+    function FacilityDataModel() {
+    }
+
+    FacilityDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    FacilityDataModel.prototype.constructor = WidgetDataModel;
+
+    angular.extend(FacilityDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+      $http.get('/api/facilityRoster')
+        .success(function(dataset) {
+                data = dataset; 
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        WidgetDataModel.prototype.destroy.call(this);
+      }
+    });
+    
+    return FacilityDataModel;
+  });
