@@ -799,17 +799,41 @@ angular.module('ui.models')
     });
     return SuicideStatisticsDataModel;
   })
-  .factory('NationalAgeGroupsDataModel', function ($http, WidgetDataModel) {
-    function NationalAgeGroupsDataModel() {
+  .factory('AgeGroupsMetricsDataModel', function ($http, CommonDataModel) {
+    function AgeGroupsMetricsDataModel() {
     }
 
-    NationalAgeGroupsDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    NationalAgeGroupsDataModel.prototype.constructor = WidgetDataModel;
+    AgeGroupsMetricsDataModel.prototype = Object.create(CommonDataModel.prototype);
+    AgeGroupsMetricsDataModel.prototype.constructor = CommonDataModel;
 
-    angular.extend(NationalAgeGroupsDataModel.prototype, {
+    angular.extend(AgeGroupsMetricsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		
+        var currentID = null;
+
+        if(dataModelOptions.layout == "stateVISN"){
+          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+        }
+        if(dataModelOptions.layout == "facility"){
+          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+        }
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          
+          this.currentID = this.ID;
+
+          if(dataModelOptions.layout == "stateVISN"){
+            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+          }
+          if(dataModelOptions.layout == "facility"){
+            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+          }
+          
+          if(this.ID != this.currentID)
+            this.getData();          
+          
+        }.bind(this));
+
         this.updateScope('-');
         this.getData();
       },
@@ -817,21 +841,35 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        
+        var visn_or_facility = '';
 
-      $http.get('/api/nationalAgeGroups')
-        .success(function(dataset) {
-                data = dataset; 
-                this.updateScope(data);
-            }.bind(this));
+        if((that.dataModelOptions.layout == "stateVISN" || that.dataModelOptions.layout == "facility") && !this.ID) {
+          this.updateScope(data);
+        }
+        else {
+          if(that.dataModelOptions.layout == "stateVISN")
+            visn_or_facility = "-v";
+          else if(that.dataModelOptions.layout == "facility")
+            visn_or_facility = "-f";
+          var parameter = '';
+          if(this.ID)
+            parameter = "?ID=" + this.ID + visn_or_facility;
+          $http.get('/api/ageGroupsMetrics'+ parameter)
+          .success(function(dataset) {
+                  data = dataset;
+                  this.updateScope(data);
+              }.bind(this));
+        }
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
-    return NationalAgeGroupsDataModel;
+
+    return AgeGroupsMetricsDataModel;
   })
+  
   /* .factory('NationalCombatEraDataModel', function ($http, WidgetDataModel) {
     function NationalCombatEraDataModel() {
     }
@@ -900,18 +938,41 @@ angular.module('ui.models')
     });
     return NationalCurrentSafetyPlanDataModel;
   })*/
-   .factory('NationalGenderDistributionDataModel', function ($http, WidgetDataModel) {
-    function NationalGenderDistributionDataModel() {
+   .factory('GenderDistributionMetricsDataModel', function ($http, CommonDataModel) {
+    function GenderDistributionMetricsDataModel() {
     }
 
-    NationalGenderDistributionDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    NationalGenderDistributionDataModel.prototype.constructor = WidgetDataModel;
+    GenderDistributionMetricsDataModel.prototype = Object.create(CommonDataModel.prototype);
+    GenderDistributionMetricsDataModel.prototype.constructor = CommonDataModel;
 
-    angular.extend(NationalGenderDistributionDataModel.prototype, {
+    angular.extend(GenderDistributionMetricsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
-		
+        var currentID = null;
+
+        if(dataModelOptions.layout == "stateVISN"){
+          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+        }
+        if(dataModelOptions.layout == "facility"){
+          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+        }
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          
+          this.currentID = this.ID;
+
+          if(dataModelOptions.layout == "stateVISN"){
+            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+          }
+          if(dataModelOptions.layout == "facility"){
+            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+          }
+          
+          if(this.ID != this.currentID)
+            this.getData();          
+          
+        }.bind(this));
+
         this.updateScope('-');
         this.getData();
       },
@@ -919,20 +980,33 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        
+        var visn_or_facility = '';
 
-      $http.get('/api/nationalGenderDistribution')
-        .success(function(dataset) {
-                data = dataset; 
-                this.updateScope(data);
-            }.bind(this));
+        if((that.dataModelOptions.layout == "stateVISN" || that.dataModelOptions.layout == "facility") && !this.ID) {
+          this.updateScope(data);
+        }
+        else {
+          if(that.dataModelOptions.layout == "stateVISN")
+            visn_or_facility = "-v";
+          else if(that.dataModelOptions.layout == "facility")
+            visn_or_facility = "-f";
+          var parameter = '';
+          if(this.ID)
+            parameter = "?ID=" + this.ID + visn_or_facility;
+          $http.get('/api/genderDistributionMetrics'+ parameter)
+          .success(function(dataset) {
+                  data = dataset;
+                  this.updateScope(data);
+              }.bind(this));
+        }
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
-    return NationalGenderDistributionDataModel;
+
+    return GenderDistributionMetricsDataModel;
   })
   /*  .factory('NationalHighRiskFlagDataModel', function ($http, WidgetDataModel) {
     function NationalHighRiskFlagDataModel() {
@@ -967,50 +1041,41 @@ angular.module('ui.models')
     });
     return NationalHighRiskFlagDataModel;
   })*/
-   .factory('NationalMilitaryBranchDataModel', function ($http, WidgetDataModel) {
-    function NationalMilitaryBranchDataModel() {
+   .factory('MilitaryBranchMetricsDataModel', function ($http, CommonDataModel) {
+    function MilitaryBranchMetricsDataModel() {
     }
 
-    NationalMilitaryBranchDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    NationalMilitaryBranchDataModel.prototype.constructor = WidgetDataModel;
+    MilitaryBranchMetricsDataModel.prototype = Object.create(CommonDataModel.prototype);
+    MilitaryBranchMetricsDataModel.prototype.constructor = CommonDataModel;
 
-    angular.extend(NationalMilitaryBranchDataModel.prototype, {
+    angular.extend(MilitaryBranchMetricsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		
-        this.updateScope('-');
-        this.getData();
-      },
+        var currentID = null;
 
-      getData: function () {
-        var that = this;
-        var data = [];       
+        if(dataModelOptions.layout == "stateVISN"){
+          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+        }
+        if(dataModelOptions.layout == "facility"){
+          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+        }
 
-		$http.get('/api/nationalMilitaryBranch')
-        .success(function(dataset) {
-			console.log("militaryReachJS", dataset);
-                data = dataset; 
-                this.updateScope(data);
-            }.bind(this));
-      },
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          
+          this.currentID = this.ID;
 
-      destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
-      }
-    });
-    return NationalMilitaryBranchDataModel;
-  })
-   .factory('NationalOutReachStatusDataModel', function ($http, WidgetDataModel) {
-    function NationalOutReachStatusDataModel() {
-    }
+          if(dataModelOptions.layout == "stateVISN"){
+            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+          }
+          if(dataModelOptions.layout == "facility"){
+            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+          }
+          
+          if(this.ID != this.currentID)
+            this.getData();          
+          
+        }.bind(this));
 
-    NationalOutReachStatusDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    NationalOutReachStatusDataModel.prototype.constructor = WidgetDataModel;
-
-    angular.extend(NationalOutReachStatusDataModel.prototype, {
-       init: function () {
-        var dataModelOptions = this.dataModelOptions;
-		
         this.updateScope('-');
         this.getData();
       },
@@ -1018,20 +1083,33 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        
+        var visn_or_facility = '';
 
-      $http.get('/api/nationalOutReachStatus')
-        .success(function(dataset) {
-                data = dataset; 
-                this.updateScope(data);
-            }.bind(this));
+        if((that.dataModelOptions.layout == "stateVISN" || that.dataModelOptions.layout == "facility") && !this.ID) {
+          this.updateScope(data);
+        }
+        else {
+          if(that.dataModelOptions.layout == "stateVISN")
+            visn_or_facility = "-v";
+          else if(that.dataModelOptions.layout == "facility")
+            visn_or_facility = "-f";
+          var parameter = '';
+          if(this.ID)
+            parameter = "?ID=" + this.ID + visn_or_facility;
+          $http.get('/api/militaryBranchMetrics'+ parameter)
+          .success(function(dataset) {
+                  data = dataset;
+                  this.updateScope(data);
+              }.bind(this));
+        }
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
-    return NationalOutReachStatusDataModel;
+
+    return MilitaryBranchMetricsDataModel;
   })
   /* .factory('NationalPTSDMDDSUDDataModel', function ($http, WidgetDataModel) {
     function NationalPTSDMDDSUDDataModel() {
@@ -1067,27 +1145,64 @@ angular.module('ui.models')
     });
     return NationalPTSDMDDSUDDataModel;
   })*/
-   .factory('NationalTopMidRiskDataModel', function ($http, WidgetDataModel) {
-    function NationalTopMidRiskDataModel() {
+   .factory('TopMidRiskMetricsDataModel', function ($http, CommonDataModel) {
+    function TopMidRiskMetricsDataModel() {
     }
 
-    NationalTopMidRiskDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    NationalTopMidRiskDataModel.prototype.constructor = WidgetDataModel;
+    TopMidRiskMetricsDataModel.prototype = Object.create(CommonDataModel.prototype);
+    TopMidRiskMetricsDataModel.prototype.constructor = CommonDataModel;
 
-    angular.extend(NationalTopMidRiskDataModel.prototype, {
+    angular.extend(TopMidRiskMetricsDataModel.prototype, {
        init: function () {
-        var dataModelOptions = this.dataModelOptions;		
-        this.updateScope('-');
+        var dataModelOptions = this.dataModelOptions;
+        var currentID = null;
+
+        if(dataModelOptions.layout == "stateVISN"){
+          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+        }
+        if(dataModelOptions.layout == "facility"){
+          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+        }
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          
+          this.currentID = this.ID;
+
+          if(dataModelOptions.layout == "stateVISN"){
+            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+          }
+          if(dataModelOptions.layout == "facility"){
+            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+          }
+          
+          if(this.ID != this.currentID)
+            this.getData();          
+          
+        }.bind(this));
+
+        this.updateScope([]);
         this.getData();
       },
 
       getData: function () {
         var that = this;
-          
-      this.updateScope([]);
-      $http.get('/api/nationalTopMidRisk')
-        .success(function(dataset) {
-                 var data = [];
+        var data = [];
+        var visn_or_facility = '';
+
+        if((that.dataModelOptions.layout == "stateVISN" || that.dataModelOptions.layout == "facility") && !this.ID) {
+          this.updateScope(data);
+        }
+        else {
+          if(that.dataModelOptions.layout == "stateVISN")
+            visn_or_facility = "-v";
+          else if(that.dataModelOptions.layout == "facility")
+            visn_or_facility = "-f";
+          var parameter = '';
+          if(this.ID)
+            parameter = "?ID=" + this.ID + visn_or_facility;
+          $http.get('/api/topMidRiskMetrics'+ parameter)
+          .success(function(dataset) {
+                  var data = [];
                   for (var i = 0; i < dataset.length; i++) {
                     data.push({key:dataset[i].RiskLevel,
                                values:[{
@@ -1096,15 +1211,17 @@ angular.module('ui.models')
                                       }]
                               });
                   }
-         
-                this.updateScope(data);
-            }.bind(this));
+                  this.updateScope(data);
+              }.bind(this));
+        }
       },
+
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
-    return NationalTopMidRiskDataModel;
+
+    return TopMidRiskMetricsDataModel;
   })
   /* .factory('NationalVAClinicTwelveMonthsDataModel', function ($http, WidgetDataModel) {
     function NationalVAClinicTwelveMonthsDataModel() {
@@ -1140,18 +1257,41 @@ angular.module('ui.models')
     });
     return NationalVAClinicTwelveMonthsDataModel;
   })*/
-   .factory('NationalVAMCDataModel', function ($http, WidgetDataModel) {
-    function NationalVAMCDataModel() {
+   .factory('VAMCMetricsDataModel', function ($http, CommonDataModel) {
+    function VAMCMetricsDataModel() {
     }
 
-    NationalVAMCDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    NationalVAMCDataModel.prototype.constructor = WidgetDataModel;
+    VAMCMetricsDataModel.prototype = Object.create(CommonDataModel.prototype);
+    VAMCMetricsDataModel.prototype.constructor = CommonDataModel;
 
-    angular.extend(NationalVAMCDataModel.prototype, {
+    angular.extend(VAMCMetricsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
-		
+        var currentID = null;
+
+        if(dataModelOptions.layout == "stateVISN"){
+          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+        }
+        if(dataModelOptions.layout == "facility"){
+          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+        }
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          
+          this.currentID = this.ID;
+
+          if(dataModelOptions.layout == "stateVISN"){
+            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+          }
+          if(dataModelOptions.layout == "facility"){
+            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+          }
+          
+          if(this.ID != this.currentID)
+            this.getData();          
+          
+        }.bind(this));
+
         this.updateScope('-');
         this.getData();
       },
@@ -1159,20 +1299,103 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        
+        var visn_or_facility = '';
 
-      $http.get('/api/nationalVAMC')
-        .success(function(dataset) {
-                data = dataset; 
-                this.updateScope(data);
-            }.bind(this));
+        if((that.dataModelOptions.layout == "stateVISN" || that.dataModelOptions.layout == "facility") && !this.ID) {
+          this.updateScope(data);
+        }
+        else {
+          if(that.dataModelOptions.layout == "stateVISN")
+            visn_or_facility = "-v";
+          else if(that.dataModelOptions.layout == "facility")
+            visn_or_facility = "-f";
+          var parameter = '';
+          if(this.ID)
+            parameter = "?ID=" + this.ID + visn_or_facility;
+          $http.get('/api/VAMCMetrics'+ parameter)
+          .success(function(dataset) {
+                  data = dataset;
+                  this.updateScope(data);
+              }.bind(this));
+        }
       },
 
       destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
+        CommonDataModel.prototype.destroy.call(this);
       }
     });
-    return NationalVAMCDataModel;
+
+    return VAMCMetricsDataModel;
+  })
+  .factory('OutreachStatusMetricsDataModel', function ($http, CommonDataModel) {
+    function OutreachStatusMetricsDataModel() {
+    }
+
+    OutreachStatusMetricsDataModel.prototype = Object.create(CommonDataModel.prototype);
+    OutreachStatusMetricsDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(OutreachStatusMetricsDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        var currentID = null;
+
+        if(dataModelOptions.layout == "stateVISN"){
+          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+        }
+        if(dataModelOptions.layout == "facility"){
+          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+        }
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          
+          this.currentID = this.ID;
+
+          if(dataModelOptions.layout == "stateVISN"){
+            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+          }
+          if(dataModelOptions.layout == "facility"){
+            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+          }
+          
+          if(this.ID != this.currentID)
+            this.getData();          
+          
+        }.bind(this));
+
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        var visn_or_facility = '';
+
+        if((that.dataModelOptions.layout == "stateVISN" || that.dataModelOptions.layout == "facility") && !this.ID) {
+          this.updateScope(data);
+        }
+        else {
+          if(that.dataModelOptions.layout == "stateVISN")
+            visn_or_facility = "-v";
+          else if(that.dataModelOptions.layout == "facility")
+            visn_or_facility = "-f";
+          var parameter = '';
+          if(this.ID)
+            parameter = "?ID=" + this.ID + visn_or_facility;
+          $http.get('/api/outReachStatusMetrics'+ parameter)
+          .success(function(dataset) {
+                  data = dataset;
+                  this.updateScope(data);
+              }.bind(this));
+        }
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return OutreachStatusMetricsDataModel;
   })
   .factory('FacilityDataModel', function ($http, WidgetDataModel) {
     function FacilityDataModel() {

@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./nationalOutReachStatus.controller');
+var controller = require('./outReachStatusMetrics.controller');
 
 var router = express.Router();
 
