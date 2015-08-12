@@ -90,7 +90,7 @@ angular.module('ui.models')
         var currentRiskLevel = null;
         this.widgetScope.$on('commonDataChanged', function (event, data) {
           this.currentRiskLevel = this.riskLevel;
-          this.riskLevel = (dataModelOptions && dataModelOptions.common.data.veteranObj.RiskLevelID) ? dataModelOptions.common.data.veteranObj.RiskLevelID : null;
+          this.riskLevel = (dataModelOptions && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.RiskLevelID) ? dataModelOptions.common.data.veteranObj.RiskLevelID : null;
           this.guidelineType = (dataModelOptions && dataModelOptions.guidelineType) ? dataModelOptions.guidelineType : null;
           if(this.riskLevel != this.currentRiskLevel)
             this.getData();
@@ -193,7 +193,7 @@ angular.module('ui.models')
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
           this.currentReachID = this.reachID;
-          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
           if(this.reachID != this.currentReachID)
             this.getData();
         }.bind(this));
@@ -240,7 +240,7 @@ angular.module('ui.models')
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
           this.currentReachID = this.reachID;
-          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
           if(this.reachID != this.currentReachID)
             this.getData();
         }.bind(this));
@@ -321,7 +321,7 @@ angular.module('ui.models')
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
           this.currentReachID = this.reachID;
-          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
           if(this.reachID != this.currentReachID)
             this.getData();
         }.bind(this));
@@ -361,7 +361,7 @@ angular.module('ui.models')
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
           this.currentReachID = this.reachID;
-          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
           if(this.reachID != this.currentReachID)
             this.getData();
         }.bind(this));
@@ -401,7 +401,7 @@ angular.module('ui.models')
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
           this.currentReachID = this.reachID;
-          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
           if(this.reachID != this.currentReachID)
             this.getData();
         }.bind(this));
@@ -1075,12 +1075,11 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-
-      $http.get('/api/facilityRoster')
-        .success(function(dataset) {
-                data = dataset; 
-                this.updateScope(data);
-            }.bind(this));
+        $http.get('/api/facilityRoster')
+          .success(function(dataset) {
+                  data = dataset; 
+                  this.updateScope(data);
+              }.bind(this));
       },
 
       destroy: function () {
