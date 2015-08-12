@@ -90,12 +90,12 @@ angular.module('ui.dashboard')
           scope.options.stringifyStorage
         );
 
-        /*scope.$on('commonDataChanged', function (event, data) {
-        if(data.data.veteranObj.Name)
+        scope.$on('commonDataChanged', function (event, data) {
+        if(data.data.veteranObj && data.data.veteranObj.Name)
           scope.PatientName = data.data.veteranObj.Name;
         else
           scope.PatientName = '';
-        }.bind(this));*/
+        }.bind(this));
 
         /**
          * Instantiates a new widget on the dashboard
