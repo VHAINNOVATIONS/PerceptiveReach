@@ -6,9 +6,9 @@ angular.module('app')
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
                                     PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel,
-                                    AppointmentDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,NationalAgeGroupsDataModel, 
-                                    NationalGenderDistributionDataModel,NationalMilitaryBranchDataModel, NationalOutReachStatusDataModel,
-                                    NationalTopMidRiskDataModel, NationalVAMCDataModel, FacilityDataModel,VISNDataModel
+                                    AppointmentDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,AgeGroupsMetricsDataModel, 
+                                    GenderDistributionMetricsDataModel,MilitaryBranchMetricsDataModel, OutreachStatusMetricsDataModel,
+                                    TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel 
 					) {
     return [
       {
@@ -102,11 +102,11 @@ angular.module('app')
         }
       },
       {
-        name: 'VISMTable',
+        name: 'VISNTable',
         directive: 'wt-Vism-Roster',
         dataAttrName: 'data',
         dataModelType: VISNDataModel,
-        title: 'VISM Roster by VAMC',
+        title: 'VISN Roster by VAMC',
         dataModelOptions: {
           defaultWidget: true,
           layout: 'stateVISN',
@@ -196,7 +196,7 @@ angular.module('app')
         directive: 'wt-national-age-groups',
         dataAttrName: 'data',
         title: 'National Age Groups Data',
-        dataModelType: NationalAgeGroupsDataModel,
+        dataModelType: AgeGroupsMetricsDataModel,
         size: {
           width: '35%',
           height: '350px'
@@ -207,13 +207,14 @@ angular.module('app')
         }
         //}
       },
+      
 
-	  {
+	   {
         name: 'NationalGenderDistribution',
         directive: 'wt-national-gender-distribution',
         dataAttrName: 'data',
         title: 'National Gender Distribution Data',
-        dataModelType: NationalGenderDistributionDataModel,
+        dataModelType: GenderDistributionMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
           layout: 'national'
@@ -223,12 +224,12 @@ angular.module('app')
           height: '350px'
         }
       },
-	  {
+	   {
         name: 'NationalMilitaryBranch',
         directive: 'wt-national-military-branch',
         dataAttrName: 'data',
         title: 'National Military Branch Data',
-        dataModelType: NationalMilitaryBranchDataModel,
+        dataModelType: MilitaryBranchMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
           layout: 'national'
@@ -238,12 +239,12 @@ angular.module('app')
           height: '350px'
         }
       },
-	  {
+	   {
         name: 'NationalOutReachStatus',
         directive: 'wt-national-out-reach-status',
         dataAttrName: 'data',
         title: 'National Outreach Status Data',
-        dataModelType: NationalOutReachStatusDataModel,
+        dataModelType: OutreachStatusMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
           layout: 'national'
@@ -253,12 +254,12 @@ angular.module('app')
           height: '350px'
         }
       },
-	  {
+	   {
         name: 'NationalTopMidRisk',
         directive: 'wt-national-top-mid-risk',
         dataAttrName: 'data',
         title: 'National Top Mid Risk Data',
-        dataModelType: NationalTopMidRiskDataModel,
+        dataModelType: TopMidRiskMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
           layout: 'national'
@@ -268,12 +269,12 @@ angular.module('app')
           height: '200px'
         }
       },
-	  {
+	   {
         name: 'NationalVamc',
         directive: 'wt-national-vamc',
         dataAttrName: 'data',
         title: 'National VAMC Data',
-        dataModelType: NationalVAMCDataModel,
+        dataModelType: VAMCMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
           layout: 'national'
@@ -283,6 +284,178 @@ angular.module('app')
           height: '350px'
         }
       },
+      {
+        name: 'VISNAgeGroups',
+        directive: 'wt-national-age-groups',
+        dataAttrName: 'data',
+        title: 'VISN Age Groups Data',
+        dataModelType: AgeGroupsMetricsDataModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        },
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'stateVISN'
+        }
+        //}
+      },
+
+      {
+        name: 'VISNGenderDistribution',
+        directive: 'wt-national-gender-distribution',
+        dataAttrName: 'data',
+        title: 'VISN Gender Distribution Data',
+        dataModelType: GenderDistributionMetricsDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'stateVISN'
+        },
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+      {
+        name: 'VISNMilitaryBranch',
+        directive: 'wt-national-military-branch',
+        dataAttrName: 'data',
+        title: 'VISN Military Branch Data',
+        dataModelType: MilitaryBranchMetricsDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'stateVISN'
+        },
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+      {
+        name: 'VISNOutReachStatus',
+        directive: 'wt-national-out-reach-status',
+        dataAttrName: 'data',
+        title: 'VISN Outreach Status Data',
+        dataModelType: OutreachStatusMetricsDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'stateVISN'
+        },
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+      {
+        name: 'VISNTopMidRisk',
+        directive: 'wt-national-top-mid-risk',
+        dataAttrName: 'data',
+        title: 'VISN Top Mid Risk Data',
+        dataModelType: TopMidRiskMetricsDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'stateVISN'
+        },
+        size: {
+          width: '35%',
+          height: '200px'
+        }
+      },
+      {
+        name: 'VISNVamc',
+        directive: 'wt-national-vamc',
+        dataAttrName: 'data',
+        title: 'VISN VAMC Data',
+        dataModelType: VAMCMetricsDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'stateVISN'
+        },
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+
+      {
+        name: 'FacilityAgeGroups',
+        directive: 'wt-national-age-groups',
+        dataAttrName: 'data',
+        title: 'Facility Age Groups Data',
+        dataModelType: AgeGroupsMetricsDataModel,
+        size: {
+          width: '35%',
+          height: '350px'
+        },
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'facility'
+        }
+        //}
+      },
+      
+
+     {
+        name: 'FacilityGenderDistribution',
+        directive: 'wt-national-gender-distribution',
+        dataAttrName: 'data',
+        title: 'Facility Gender Distribution Data',
+        dataModelType: GenderDistributionMetricsDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'facility'
+        },
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+     {
+        name: 'FacilityMilitaryBranch',
+        directive: 'wt-national-military-branch',
+        dataAttrName: 'data',
+        title: 'Facility Military Branch Data',
+        dataModelType: MilitaryBranchMetricsDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'facility'
+        },
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+     {
+        name: 'FacilityOutReachStatus',
+        directive: 'wt-national-out-reach-status',
+        dataAttrName: 'data',
+        title: 'Facility Outreach Status Data',
+        dataModelType: OutreachStatusMetricsDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'facility'
+        },
+        size: {
+          width: '35%',
+          height: '350px'
+        }
+      },
+     {
+        name: 'FacilityTopMidRisk',
+        directive: 'wt-national-top-mid-risk',
+        dataAttrName: 'data',
+        title: 'Facility Top Mid Risk Data',
+        dataModelType: TopMidRiskMetricsDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'facility'
+        },
+        size: {
+          width: '35%',
+          height: '200px'
+        }
+      },
+
       /*
 	  {
         name: 'nationalCombatEra',
