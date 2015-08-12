@@ -87,8 +87,8 @@ angular.module('app')
     // initialize common data object and broadcast to widgets
     $scope.common = {
       data: {
-        stateSelected: '',
-        facilitySelected: $rootScope.globals.userObj.UserHomeFacility,
+        visnSelected: user.VISN,
+        facilitySelected: user.UserHomeFacility,
         patientIdSelected: 1,
         userObj: {}
       }

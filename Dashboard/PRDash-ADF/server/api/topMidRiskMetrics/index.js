@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./nationalMilitaryBranch.controller');
+var controller = require('./topMidRiskMetrics.controller');
 
 var router = express.Router();
 
