@@ -333,6 +333,8 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:dist',
+      'clean:templates',
+      'ngtemplates',
       'concat',
       'copy:dist',
       'env:all',  
