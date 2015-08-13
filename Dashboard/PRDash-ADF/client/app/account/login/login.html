@@ -17,11 +17,12 @@
           <label id="lblPassword" alt="Password" for="password">Password</label>
           <input type="password" id="password" name="password" autocomplete="off" class="form-control" ng-model="user.password" ng-pattern="/^\S*$/" ng-maxlength="32" required>
         </div>
+
 		<label id="lblConsent" alt="Consent" for="checky">Consent</label><br>
-        <input type="checkbox" id="checky" name="checky" required> I accept the terms and conditions for accessing the system described above
+        <input type="checkbox" id="checky" autocomplete="off" name="checky" required> I accept the terms and conditions for accessing the system described above
         <div class="form-group has-error">
-          <p class="help-block" ng-show="form.email.$error.required && form.password.$error.required && submitted">
-             Please enter your username and password. 
+          <p class="help-block" ng-show="form.email.$error.required || form.password.$error.required && submitted">
+             Please enter your username/Password. 
           </p>
           <p class="help-block" ng-show="form.email.$error.email && submitted">
              Please enter a valid username.

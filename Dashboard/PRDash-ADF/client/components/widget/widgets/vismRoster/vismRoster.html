@@ -1,0 +1,18 @@
+<div class="vismRoster">
+	<table id="tblVismRoster" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+		<thead>	
+			<th>VISN</th>
+			<th>Network Name</th>
+			<th>Region Served</th>
+			<th>Total Patients</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="ind in data">
+				<td>{{ind.VISN}}</td>
+				<td>{{ind.NetworkName}}</td>
+				<td>{{ind.RegionServed}}</td>
+				<td>{{ind.Total}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
