@@ -962,11 +962,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
+    "\t\t\t<th>VISN</th>\r" +
+    "\n" +
     "\t\t\t<th>Network Name</th>\r" +
     "\n" +
     "\t\t\t<th>Region Served</th>\r" +
-    "\n" +
-    "\t\t\t<th>VAMC Name</th>\r" +
     "\n" +
     "\t\t\t<th>Total Patients</th>\r" +
     "\n" +
@@ -976,11 +976,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<tr ng-repeat=\"ind in data\">\r" +
     "\n" +
+    "\t\t\t\t<td>{{ind.VISN}}</td>\r" +
+    "\n" +
     "\t\t\t\t<td>{{ind.NetworkName}}</td>\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.RegionServed}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.VAMC_Name}}</td>\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.Total}}</td>\r" +
     "\n" +
