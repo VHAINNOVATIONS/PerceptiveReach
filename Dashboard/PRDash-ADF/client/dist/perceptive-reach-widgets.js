@@ -4253,12 +4253,10 @@ angular.module('ui.widgets')
 angular.module('ui.widgets')
   .directive('wtVismRoster', function ($timeout) {
     return {
-      restrict: 'A',
+      restrict: 'EAC',
       replace: true,
       templateUrl: 'client/components/widget/widgets/vismRoster/vismRoster.html',
-      scope: {
-        data: '=',
-      },
+      
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
         $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
@@ -4267,7 +4265,7 @@ angular.module('ui.widgets')
             // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
             .withOption('paging',false)
-            .withOption('order', [1, 'desc']);
+            .withOption('order', [0, 'asc']);
         $scope.dtColumnDefs = [
             DTColumnDefBuilder.newColumnDef(0),
             DTColumnDefBuilder.newColumnDef(1),
@@ -4283,10 +4281,26 @@ angular.module('ui.widgets')
             else{
               $('tr.selected').removeClass('selected');
               $(this).addClass('selected');
+              // get common data object
+              var commonData = scope.widget.dataModelOptions.common;
+              console.log("commonData",commonData);
+              console.log("clickEvent",event);
+              // update common data object with new patient object
+              var visnId = event.currentTarget.cells[0];
+              /*var obj = jQuery.grep(scope.patientList, function( n, i ) {
+                return ( n.ReachID == vetId );
+              });*/
+              console.log("VISN ID Selected: ",visnId);
+              //delete obj[0].OutreachStatusSelect;
+              commonData.data.visnSelected = visnId;
+              console.log("CommonDataAfterClick: ", commonData);
+              // broadcast message throughout system
+              scope.$parent.$broadcast('commonDataChanged', commonData);
             }
+            scope.$apply();
           });
         });
-        scope.$watch('data', function(data){
+        scope.$watch('widgetData', function(data){
           if(data != null && data.length >0){
               scope.data = data;
               $timeout(function(){
@@ -5261,11 +5275,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
+    "\t\t\t<th>VISN</th>\r" +
+    "\n" +
     "\t\t\t<th>Network Name</th>\r" +
     "\n" +
     "\t\t\t<th>Region Served</th>\r" +
-    "\n" +
-    "\t\t\t<th>VAMC Name</th>\r" +
     "\n" +
     "\t\t\t<th>Total Patients</th>\r" +
     "\n" +
@@ -5275,11 +5289,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<tr ng-repeat=\"ind in data\">\r" +
     "\n" +
+    "\t\t\t\t<td>{{ind.VISN}}</td>\r" +
+    "\n" +
     "\t\t\t\t<td>{{ind.NetworkName}}</td>\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.RegionServed}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.VAMC_Name}}</td>\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.Total}}</td>\r" +
     "\n" +

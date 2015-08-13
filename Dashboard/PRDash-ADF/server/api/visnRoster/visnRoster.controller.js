@@ -19,20 +19,13 @@ exports.index = function(req, res) {
 		var request = new sql.Request(connection); 
 		
 		/*Configure database query */
-		var visnId = req.param("visnid");
-		var select = '';
-		if (visnId && validator.isInt(visnId)) {
-			request.input('visnId', sql.Int, visnId);
-			select += "SELECT vi.VISN,vi.NetworkName,vi.RegionServed,vm.VAMC_Name, COUNT(p.ReachID) AS Total FROM dbo.Patient p ";
-			select += "JOIN PatientStation ps ";
-			select += "ON p.ReachID = ps.ReachID ";
-			select += "JOIN Ref_VAMC vm ";
-			select += "ON ps.sta3N = vm.STA3N ";
-			select += "JOIN Ref_VISN vi ";
-			select += "ON vm.VISN = vi.VISN ";
-			select += "WHERE vi.VISN = @visnId ";
-			select += "GROUP BY	vi.VISN,vi.NetworkName,vi.RegionServed,vm.VAMC_Name";
-		}
+		var select =  "SELECT vsn.VISN, vsn.NetworkName, vsn.RegionServed,  Count (vsn.VISN) as Total";
+			select += " FROM Patient p";
+			select += " INNER JOIN PatientStation s ON s.ReachID = p.ReachID";
+			select += " INNER JOIN Ref_VAMC v ON s.sta3N = v.STA3N";
+			select += " INNER JOIN Ref_VISN vsn ON vsn.VISN = v.VISN";
+			select += " GROUP BY vsn.VISN, vsn.NetworkName, vsn.RegionServed";
+			select += " Order By vsn.VISN ASC";
 
 		/*Query database */
 		if(select)
