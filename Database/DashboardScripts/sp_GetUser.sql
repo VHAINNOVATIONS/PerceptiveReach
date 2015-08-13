@@ -75,7 +75,7 @@ BEGIN
 			RETURN
 		END
 
-		SELECT u.UserID, u.UserName, u.FirstName, u.LastName, u.UserStateLocation, u.UserHomeFacility, u.UserDomain, u.isActive, r.RoleCode AS UserRole, r.Individual_View_Access, r.Facility_View_Access, r.VISN_State_Reg_View_Access, r.Analytics_Reporting_Access, r.System_Admin_Access, u.UserDashboardID, d.DashboardData 
+		SELECT u.UserID, u.UserName, u.FirstName, u.LastName, u.UserStateLocation, u.UserHomeFacility, u.UserDomain, u.isActive, r.RoleCode AS UserRole, r.Individual_View_Access, r.Facility_View_Access, r.VISN_State_Reg_View_Access, r.Analytics_Reporting_Access, r.System_Admin_Access, u.UserDashboardID, d.DashboardData, v.VISN
 		FROM prsystem.Users u INNER JOIN prsystem.UserRole r ON u.UserRole = r.RoleID 
 		LEFT JOIN prsystem.UserDashboard d ON u.UserDashboardID = d.DashboardID 
 		INNER JOIN dbo.Ref_VAMC v ON u.UserHomeFacility = v.STA3N 

@@ -22,12 +22,12 @@ module.exports = function(app) {
   app.use('/api/getListOfVAMC', require('./api/getListOfVAMC'));
   app.use('/api/clinicalDecisionSupport', require('./api/clinicalDecisionSupport'));
   app.use('/api/suicideData', require('./api/suicideData'));
-  app.use('/api/nationalTopMidRisk', require('./api/nationalTopMidRisk'));
-  app.use('/api/nationalGenderDistribution', require('./api/nationalGenderDistribution'));
-  app.use('/api/nationalAgeGroups', require('./api/nationalAgeGroups'));
-  app.use('/api/nationalMilitaryBranch', require('./api/nationalMilitaryBranch'));
-  app.use('/api/nationalVAMC', require('./api/nationalVAMC'))
-  app.use('/api/nationalOutReachStatus', require('./api/nationalOutReachStatus'));
+  app.use('/api/topMidRiskMetrics', require('./api/topMidRiskMetrics'));
+  app.use('/api/genderDistributionMetrics', require('./api/genderDistributionMetrics'));
+  app.use('/api/ageGroupsMetrics', require('./api/ageGroupsMetrics'));
+  app.use('/api/militaryBranchMetrics', require('./api/militaryBranchMetrics'));
+  app.use('/api/VAMCMetrics', require('./api/VAMCMetrics'))
+  app.use('/api/outReachStatusMetrics', require('./api/outReachStatusMetrics'));
   
   app.use('/api/patientContact', require('./api/patientContact'));
   app.use('/api/emergencyContact', require('./api/emergencyContact'));
@@ -35,7 +35,9 @@ module.exports = function(app) {
   app.use('/api/medicationData', require('./api/medicationData'));
   app.use('/api/diagnosesData', require('./api/diagnosesData'));
   app.use('/api/appointmentData', require('./api/appointmentData'));
-
+  app.use('/api/visnRoster', require('./api/visnRoster'));
+  app.use('/api/facilityRoster', require('./api/facilityRoster'));
+  
   app.use('/api/dashboard', require('./api/dashboard'));
 
   app.use('/auth', require('./auth'));

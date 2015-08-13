@@ -91,7 +91,7 @@ angular.module('ui.dashboard')
         );
 
         scope.$on('commonDataChanged', function (event, data) {
-        if(data.data.veteranObj.Name)
+        if(data.data.veteranObj && data.data.veteranObj.Name)
           scope.PatientName = data.data.veteranObj.Name;
         else
           scope.PatientName = '';
@@ -435,6 +435,9 @@ angular.module('ui.dashboard')
                 },
                 function() {
                   scope._makeLayoutActive(layout);
+                  $('div[dashboard-layouts=layoutOptions] li>a').filter(function () {
+                     return $(this).text().trim() == layout.title;
+                  }).click();
                 }
               );
             } else {
@@ -620,17 +623,17 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"btn-toolbar\" ng-if=\"!options.hideToolbar\" style=\"padding-bottom:5px;padding-top:5px;border-bottom: 2px solid gray;\">\r" +
     "\n" +
-    "            <div class=\"btn-group\" ng-if=\"!options.widgetButtons\">\r" +
+    "\t\t<!--ul class=\"inline\"><li-->\r" +
     "\n" +
-    "                <span class=\"dropdown\" on-toggle=\"toggled(open)\">\r" +
+    "            <div class=\"btn-group\" ng-if=\"!options.widgetButtons\" data-ng-class=\"{open: open}\">\r" +
     "\n" +
-    "                  <button name=\"btnAddWidget\" type=\"button\" class=\"btn btn-primary dropdown-toggle\" data-toggle=\"dropdown\">\r" +
+    "                  <button name=\"btnAddWidget\" data-ng-click=\"open=!open\" class=\"btn btn-primary dropdown-toggle\">\r" +
     "\n" +
-    "                    Add a Widget<span class=\"caret\"></span>\r" +
+    "                    Add a Widget<span class=\"caret\">  </span>\r" +
     "\n" +
     "                  </button>\r" +
     "\n" +
-    "                  <ul class=\"dropdown-menu\" role=\"menu\">\r" +
+    "                  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu\">\r" +
     "\n" +
     "                    <li ng-repeat=\"widget in widgetDefs\">\r" +
     "\n" +
@@ -640,9 +643,9 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  </ul>\r" +
     "\n" +
-    "                </span>\r" +
+    "\t\t\t</div>\r" +
     "\n" +
-    "        </div>\r" +
+    "\t\t<!--/li></ul-->\r" +
     "\n" +
     "            <div class=\"btn-group\" ng-if=\"options.widgetButtons\">\r" +
     "\n" +
@@ -692,21 +695,21 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"panel-title\">\r" +
     "\n" +
-    "                        <span class=\"widget-title\" ng-dblclick=\"editTitle(widget)\" ng-hide=\"widget.editingTitle\">{{widget.title}}</span>\r" +
+    "                        <button style=\"background-color: transparent\" class=\"btn widget-title\" tabIndex=\"1\" ng-click=\"editTitle(widget)\" ng-hide=\"widget.editingTitle\">{{widget.title}}</button>\r" +
     "\n" +
-    "                        <form action=\"\" class=\"widget-title\" ng-show=\"widget.editingTitle\" ng-submit=\"saveTitleEdit(widget)\">\r" +
+    "                        <form action=\"\" tabIndex=\"2\" class=\"widget-title\" ng-show=\"widget.editingTitle\" ng-submit=\"saveTitleEdit(widget)\">\r" +
     "\n" +
-    "                            <input alt=\"Widget Title\" name=\"WidgetTitle\" type=\"text\" ng-model=\"widget.title\" class=\"form-control\">\r" +
+    "                            <input tabIndex =\"3\" alt=\"Widget Title\" name=\"WidgetTitle\" type=\"text\" ng-model=\"widget.title\" class=\"form-control\">\r" +
     "\n" +
     "                        </form>\r" +
     "\n" +
     "                        <span class=\"label label-primary\" ng-if=\"!options.hideWidgetName\">{{widget.name}}</span>\r" +
     "\n" +
-    "                        <span ng-click=\"removeWidget(widget);\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></span>\r" +
+    "                        <button ng-click=\"removeWidget(widget);\" style=\"background-color: transparent\" tabIndex=\"6\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
     "\n" +
-    "                        <span ng-click=\"openWidgetSettings(widget);\" class=\"glyphicon glyphicon-cog\" ng-if=\"!options.hideWidgetSettings\"></span>\r" +
+    "                        <button ng-click=\"openWidgetSettings(widget);\" style=\"background-color: transparent\" tabIndex=\"5\" class=\"glyphicon glyphicon-cog\" style=\"background-color: transparent\" ng-if=\"!options.hideWidgetSettings\"></button>\r" +
     "\n" +
-    "                        <span ng-click=\"widget.contentStyle.display = widget.contentStyle.display === 'none' ? 'block' : 'none'\" class=\"glyphicon\" ng-class=\"{'glyphicon-plus': widget.contentStyle.display === 'none', 'glyphicon-minus': widget.contentStyle.display !== 'none' }\"></span>\r" +
+    "                        <button ng-click=\"widget.contentStyle.display = widget.contentStyle.display === 'none' ? 'block' : 'none'\" style=\"background-color: transparent\" class=\"glyphicon\" ng-class=\"{'glyphicon-plus': widget.contentStyle.display === 'none','glyphicon-minus': widget.contentStyle.display !== 'none'}\" tabIndex=\"4\"></button>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -806,7 +809,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <li ng-repeat=\"layout in layouts\" ng-class=\"{ active: layout.active }\">\r" +
     "\n" +
-    "        <a ng-click=\"makeLayoutActive(layout)\">\r" +
+    "        <a ng-click=\"makeLayoutActive(layout)\" tabindex=\"0\">\r" +
     "\n" +
     "            <span ng-dblclick=\"editTitle(layout)\" ng-show=\"!layout.editingTitle\">{{layout.title}}</span>\r" +
     "\n" +
