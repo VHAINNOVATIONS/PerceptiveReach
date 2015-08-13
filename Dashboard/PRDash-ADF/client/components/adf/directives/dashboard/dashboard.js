@@ -91,7 +91,7 @@ angular.module('ui.dashboard')
         );
 
         scope.$on('commonDataChanged', function (event, data) {
-        if(data.data.veteranObj.Name)
+        if(data.data.veteranObj && data.data.veteranObj.Name)
           scope.PatientName = data.data.veteranObj.Name;
         else
           scope.PatientName = '';
