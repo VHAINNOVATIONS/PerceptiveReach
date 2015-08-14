@@ -627,13 +627,13 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <div class=\"btn-group\" ng-if=\"!options.widgetButtons\" data-ng-class=\"{open: open}\">\r" +
     "\n" +
-    "                  <button name=\"btnAddWidget\" data-ng-click=\"open=!open\" class=\"btn btn-primary dropdown-toggle\">\r" +
+    "                  <button name=\"btnAddWidget\" data-toggle=\"dropdown\" class=\"btn btn-primary dropdown-toggle\">\r" +
     "\n" +
-    "                    Add a Widget<span class=\"caret\">  </span>\r" +
+    "                    Add a Widget<span class=\"caret\"/>\r" +
     "\n" +
     "                  </button>\r" +
     "\n" +
-    "                  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu\">\r" +
+    "                  <ul class=\"dropdown-menu\">\r" +
     "\n" +
     "                    <li ng-repeat=\"widget in widgetDefs\">\r" +
     "\n" +
