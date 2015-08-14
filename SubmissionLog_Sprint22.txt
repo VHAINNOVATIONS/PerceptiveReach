@@ -1,0 +1,297 @@
+* commit c768427b3c296f7dcc207894c47882c946a9eccf (HEAD, origin/master, origin/HEAD, master)
+| Author: Monica Mohler <monica.mohler@us.pwc.com>
+| Date:   Fri Aug 14 18:25:02 2015 -0400
+| 
+|     Collaborative Deliverable Package Design Specs for Sprint 22.
+|    
+*   commit db41c0691fd3d85b266669168e75a598007c23b7
+|\  Merge: 37daf52 f7e0b15
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Thu Aug 13 19:05:38 2015 -0400
+| | 
+| |     Merge branch 'stable'
+| |     
+| *   commit f7e0b154431a42b354f13d8bfff14984d9507c2d (origin/stable)
+| |\  Merge: e19a8e5 3130eff
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Thu Aug 13 19:03:54 2015 -0400
+| | | 
+| | |     Merge branch 'test' into stable
+| | |    
+| * | commit e19a8e5d5a2ac3c32fcd67d55dcf65607d0ef691
+| | | Merge: e6e44c5 6d5913a
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Wed Aug 5 20:56:52 2015 -0400
+| | | 
+| | |     Merge branch 'test' into stable
+| | |    
+* | | commit 37daf524708c40ca8fff9b53d60eda2d5ba1e086
+| | | Author: Monica Mohler <monica.mohler@us.pwc.com>
+| | | Date:   Fri Jul 31 19:42:09 2015 -0400
+| | | 
+| | |     Sprint 21 submission log
+| | |    
+* | | commit 26f04534c71fc23fec05a4047b93eab9675a3a51
+ / /  Author: Monica Mohler <monica.mohler@us.pwc.com>
+| |   Date:   Fri Jul 31 19:37:40 2015 -0400
+| |   
+| |       CDP & design spec deliverables for sprint 21
+| |       
+| | *   commit 3b9b250883b62469ea84109373759dda1d7bbe3a (origin/test)
+| | |\  Merge: 3130eff cac3e40
+| |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |   Date:   Fri Aug 14 13:16:33 2015 -0400
+| | |   
+| | |       Merge commit 'cac3e404b005973747e3f7b7c79ddd478c8e6cb0' into HEAD
+| | |    
+| | * commit cac3e404b005973747e3f7b7c79ddd478c8e6cb0 (origin/dev)
+| | | Author: jarao <jaya.rao@us.pwc.com>
+| | | Date:   Fri Aug 14 13:13:13 2015 -0400
+| | | 
+| | |     PR-2837 Widget opens on first click and disappears after second click
+| | |      
+| * |   commit 3130eff65b6a7d7a0c4e78a0b1bcfd22ac8162dd
+| |\ \  Merge: 20d6e0f 633ee14
+| | |/  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |   Date:   Thu Aug 13 10:03:03 2015 -0400
+| | |   
+| | |       Merge commit '633ee14406b3ae784ad59bbd5dad5c99410d36d3' into HEAD
+| | |    
+| | * commit 633ee14406b3ae784ad59bbd5dad5c99410d36d3
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Thu Aug 13 09:59:48 2015 -0400
+| | | 
+| | |     PR-2808 PR-2807 Updated VISN Roster Widget according to feedback from the team.
+| | |      
+| * |   commit 20d6e0f9e77c064f1ff792405aa08814917a7691
+| |\ \  Merge: 45ae856 54688cc
+| | |/  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |   Date:   Thu Aug 13 09:18:47 2015 -0400
+| | |   
+| | |       Merge commit '54688cca74d6c6e1f073b842be603a44a24e8821' into HEAD
+| | |    
+| | * commit 54688cca74d6c6e1f073b842be603a44a24e8821
+| | | Author: jarao <jaya.rao@us.pwc.com>
+| | | Date:   Thu Aug 13 09:15:24 2015 -0400
+| | | 
+| | |     PR-2180 Added additional autocomplete to checkbox input
+| | |      
+| * |   commit 45ae856079da73b77ce519357f8588c1965ec8a8
+| |\ \  Merge: 5eae9a3 e7332f7
+| | |/  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |   Date:   Wed Aug 12 16:47:13 2015 -0400
+| | |   
+| | |       Merge commit 'e7332f79baf2a12e23049bfb5e1a44e5279ce008' into HEAD
+| | |    
+| | * commit e7332f79baf2a12e23049bfb5e1a44e5279ce008
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Wed Aug 12 16:43:52 2015 -0400
+| | | 
+| | |     PR-2814 Displaying error message when password is not entered. Fixed issue with patient name not being displayed on toolbar under "Individual View"
+| | |      
+| * |   commit 5eae9a3a9aaba7ba78e2e2f7c9171b03262a9e54
+| |\ \  Merge: d868c74 267eb43
+| | |/  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |   Date:   Wed Aug 12 06:39:47 2015 -0400
+| | |   
+| | |       Merge commit '267eb4352c3c0da7fb28d8b7b098d325f8330bc5' into HEAD
+| | |    
+| | * commit 267eb4352c3c0da7fb28d8b7b098d325f8330bc5
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Wed Aug 12 06:36:28 2015 -0400
+| | | 
+| | |     PR-2807 PR-2808 PR-2855 PR-2856 Refactored many API's and corresponding controllers. Modified the models so the code can be reused. Updated unit tests accordingly. Added Facility and VISN level widgets
+| | |      
+| * |   commit d868c74c489f0e077b31cf1d60ac6393a28f773d
+| |\ \  Merge: bf16a80 f90d06a
+| | |/  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |   Date:   Tue Aug 11 15:56:14 2015 -0400
+| | |   
+| | |       Merge commit 'f90d06aee9cb0aed73616111fe067c99e4ef1192' into HEAD
+| | |    
+| | * commit f90d06aee9cb0aed73616111fe067c99e4ef1192
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Tue Aug 11 15:52:57 2015 -0400
+| | | 
+| | |     PR-2801 Changes for VISN widget UI
+| | |      
+| * |   commit bf16a806749d1570530bc14e0d327df80f8b2c0c
+| |\ \  Merge: 183d319 6e3c288
+| | |/  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |   Date:   Tue Aug 11 14:09:38 2015 -0400
+| | |   
+| | |       Merge commit '6e3c288f9fdcadda24401ad53e0bdae61e61b9c4' into HEAD
+| | |    
+| | * commit 6e3c288f9fdcadda24401ad53e0bdae61e61b9c4
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Tue Aug 11 14:06:38 2015 -0400
+| | | 
+| | |     PR-2799 Changes for facility roster widget UI
+| | |      
+| * |   commit 183d319dde5c302824f29374147da1c2ff9be91d
+| |\ \  Merge: 8152757 c7e5d67
+| | |/  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |   Date:   Tue Aug 11 12:26:46 2015 -0400
+| | |   
+| | |       Merge commit 'c7e5d677c58d2bf37fb31848a6bb8baa0268d4b9' into HEAD
+| | |    
+| | * commit c7e5d677c58d2bf37fb31848a6bb8baa0268d4b9
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Tue Aug 11 12:23:19 2015 -0400
+| | | 
+| | |     PR-2718 Removed Formatting for Phone numbers until a consistent format can be applied on CDW data.
+| | |      
+| * |   commit 81527574712f11f06a35fdabd6bfce26761d996e
+| |\ \  Merge: 706f0d8 77b0f26
+| | |/  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |   Date:   Tue Aug 11 12:19:56 2015 -0400
+| | |   
+| | |       Merge commit '77b0f269c8c72c2560795ac4d8a7611c405211b7' into HEAD
+| | |    
+| | * commit 77b0f269c8c72c2560795ac4d8a7611c405211b7
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Tue Aug 11 12:16:36 2015 -0400
+| | | 
+| | |     PR-2710 Fixed bug related to navigation of the layout tabs using the tab key. Update Gruntfile to also build all dashboard and widget files during grunt serve operations.
+| | |      
+| * |   commit 706f0d86f5f8d3d6fadce0651fd4c7394a87484d
+| |\ \  Merge: af3e004 1f99343
+| | |/  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |   Date:   Tue Aug 11 12:04:31 2015 -0400
+| | |   
+| | |       Merge commit '1f99343a91a26fdaabc3557e21c248c0f2f31249' into HEAD
+| | |    
+| | * commit 1f99343a91a26fdaabc3557e21c248c0f2f31249
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Tue Aug 11 12:01:24 2015 -0400
+| | | 
+| | |     PR-2796 PR-2800 API changes/additions for Facility roster widget. Minor changes to VISN roster widget
+| | |      
+| * |   commit af3e00406d5ff71f95619423ccd6232950492c38
+| |\ \  Merge: 5690ef3 f46f998
+| | |/  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |   Date:   Tue Aug 11 11:47:06 2015 -0400
+| | |   
+| | |       Merge commit 'f46f998c92b977dd8f2c402918c25db61b70a9bd' into HEAD
+| | |    
+| | * commit f46f998c92b977dd8f2c402918c25db61b70a9bd
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Tue Aug 11 11:43:50 2015 -0400
+| | | 
+| | |     PR-2800 API changes for VISN roster view.
+| | |      
+| * |   commit 5690ef3a3fe08ab01667d17e79404148526bcbaa
+| |\ \  Merge: 4c63c4c c884d0b
+| | |/  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |   Date:   Tue Aug 11 00:00:19 2015 -0400
+| | |   
+| | |       Merge commit 'c884d0bd70f4af89d5663a65af6624b35ff37459' into HEAD
+| | |    
+| | * commit c884d0bd70f4af89d5663a65af6624b35ff37459
+| | | Author: jarao <jaya.rao@us.pwc.com>
+| | | Date:   Mon Aug 10 23:57:07 2015 -0400
+| | | 
+| | |     PR-2717 Resolved grunt test issue and cleaned up the widget setting buttons to look better
+| | |    
+| | * commit 39617fd2bf954199d30330eef3b26925845fbd3e
+| | | Author: jarao <jaya.rao@us.pwc.com>
+| | | Date:   Mon Aug 10 23:15:00 2015 -0400
+| | | 
+| | |     PR-2717 Widget settings are accessible via tab keys and when enter is hit, the intended action occurs.  Added the btn class to each widget control and made their backgrounds transparent.
+| | |      
+| * |   commit 4c63c4c47f8a22f624af8144bd6cb82beb133a37
+| |\ \  Merge: 61009ea 3305454
+| | |/  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |   Date:   Mon Aug 10 00:37:31 2015 -0400
+| | |   
+| | |       Merge commit '33054543dc308cbfc51a7bcafb8b554f467d3fa3' into HEAD
+| | |    
+| | * commit 33054543dc308cbfc51a7bcafb8b554f467d3fa3
+| | | Author: jarao <jaya.rao@us.pwc.com>
+| | | Date:   Mon Aug 10 00:34:13 2015 -0400
+| | | 
+| | |     PR-2178 Add widget button opens with one click
+| | |      
+| * |   commit 61009eaa7d52facf355baef2d1de39131b0aff75
+| |\ \  Merge: 06b8166 66db014
+| | |/  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |   Date:   Fri Aug 7 12:01:57 2015 -0400
+| | |   
+| | |       Merge commit '66db0140f668aa6a114683705aa300f7be10bcdf' into HEAD
+| | |    
+| | * commit 66db0140f668aa6a114683705aa300f7be10bcdf
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Fri Aug 7 11:58:49 2015 -0400
+| | | 
+| | |     PR-2802 Changes to national TopMid bar chart widgets.
+| | |      
+| * |   commit 06b8166fecdac30be87b984a3a3521684cf9a490
+| |\ \  Merge: 452843f 697a941
+| | |/  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |   Date:   Thu Aug 6 17:03:41 2015 -0400
+| | |   
+| | |       Merge commit '697a941a47e5538eaa264180ce21a4a81cebdc8a' into HEAD
+| | |    
+| | * commit 697a941a47e5538eaa264180ce21a4a81cebdc8a
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Thu Aug 6 17:00:25 2015 -0400
+| | | 
+| | |     PR-2430 PR-2802 National Widget - Top Mid Risk Level Bar chart
+| | |      
+| * |   commit 452843ff62d8be18c8d96d134c9c17296836d6e3
+| |\ \  Merge: 6d5913a 169d93c
+|/ / /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | _   Date:   Thu Aug 6 10:57:42 2015 -0400
+| |     
+| |         Merge commit '169d93cc0c5fe2af9b587b1ec3526090843e3ac9' into HEAD
+| |   
+| * commit 169d93cc0c5fe2af9b587b1ec3526090843e3ac9
+| | Author: varunn <varun.neelakantan@us.pwc.com>
+| | Date:   Thu Aug 6 10:54:36 2015 -0400
+| | 
+| |     PR-2720 Removed ability to change facility using the patient roster widget.
+| |     
+* |   commit 6d5913aa829b5402e908640d3a03d62b8f0f1cc6
+|\ \  Merge: 10838eb be4a172
+| |/  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| |   Date:   Wed Aug 5 16:29:06 2015 -0400
+| |   
+| |       Merge commit 'be4a17264e529e3433e93ac85be24fbde140105f' into HEAD
+| |     
+| *   commit be4a17264e529e3433e93ac85be24fbde140105f
+| |\  Merge: 5af5211 54c478d
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Wed Aug 5 16:25:31 2015 -0400
+| | | 
+| | |     Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | |    
+| * | commit 5af52119a9fc266ac47aea366bcb9577797757a2
+|  /  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| |   Date:   Wed Aug 5 16:25:13 2015 -0400
+| |   
+| |       PR-2806 Updated PatientTable.js to fix Loading of Users Custom Dashboard after login.
+| |   
+* | commit 10838eb80f2e0d7ecddfcd068d2e968e53398ec3
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Wed Aug 5 14:42:53 2015 -0400
+| | 
+| |     Updated step definitions  file
+| |   
+* | commit 04488530b8414874e199a8b4cfcb60c58393ddca
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Wed Aug 5 13:26:15 2015 -0400
+| | 
+| |     Added new feature file for PR-1927 and updated step defenition file
+| |   
+* | commit c2c98eecdaa4bec7b8e16876cf844bd4deebe5eb
+|/  Merge: 6e0dfb5 54c478d
+|   Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+|   Date:   Tue Aug 4 11:53:02 2015 -0400
+|   
+|       Merge commit '54c478d3fb9364c7b71d2cc7ad703af98b071355' into HEAD
+|  
+* commit 54c478d3fb9364c7b71d2cc7ad703af98b071355
+  Author: varunn <varun.neelakantan@us.pwc.com>
+  Date:   Tue Aug 4 11:49:07 2015 -0400
+  
+      PR-2712 Code changes to fix issue: After going to national view-->Make changes and reverting back to individual view(Without saving) the widgets are not loading data.
