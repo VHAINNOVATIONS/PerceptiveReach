@@ -3,10 +3,10 @@
         <div class="btn-toolbar" ng-if="!options.hideToolbar" style="padding-bottom:5px;padding-top:5px;border-bottom: 2px solid gray;">
 		<!--ul class="inline"><li-->
             <div class="btn-group" ng-if="!options.widgetButtons" data-ng-class="{open: open}">
-                  <button name="btnAddWidget" data-ng-click="open=!open" class="btn btn-primary dropdown-toggle">
-                    Add a Widget<span class="caret">  </span>
+                  <button name="btnAddWidget" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+                    Add a Widget<span class="caret"/>
                   </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                  <ul class="dropdown-menu">
                     <li ng-repeat="widget in widgetDefs">
                       <a name="liWidgetDropdown" href="#" ng-click="addWidgetInternal($event, widget);" class="dropdown-toggle"><span class="label label-primary">{{widget.name}}</span></a>
                     </li>
