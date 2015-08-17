@@ -30,10 +30,11 @@ When(/^I select middle risk veteran row in the widget$/) do
 	find(:xpath, '//td[contains(text(),"1966")]').click 
 	 #click_link('vet_566384')
 end
+
 Then(/^I select the veteran "(.*?)"$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
   find(:xpath, '//*[@id="tblPatient"]/tbody/tr[1]/td[1]').click
-  end
+end
 
 #To test active sessions
 When(/^I open a new browser and navigate to http:\/\/localhost:(\d+)\/$/) do |arg1|
@@ -44,11 +45,6 @@ When(/^I open a new browser and navigate to http:\/\/localhost:(\d+)\/$/) do |ar
   
   page.driver.browser.navigate.to 'http://localhost:7003'
     page.driver.browser.switch_to.window(page.driver.browser.window_handles.last)
- 
- 
- 
- 
-  
 end
 
 When(/^I select top risk veteran row in the widget$/) do 
@@ -65,8 +61,8 @@ end
 When(/^I select "(.*?)"$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
   find(:xpath, '//*[@id="sampleVet"]/tbody/tr[1]').click
-
 end
+
 Then(/^I click on check box "(.*?)"$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
    check(arg1)
@@ -76,16 +72,17 @@ end
 When(/^I leave the page inactive for (\d+) seconds$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
   sleep(912)
-  end
+end
 
 When(/^I click on "(.*?)"$/) do |view|
   title = view
   page.find(:xpath, "//span[contains(text(),'#{title}')]").click #find and click National/State/Facility/Individual View tabe
   #page.save_screenshot('screenshot1.png')
 end
+
 Then(/^I click on save changes button$/) do
   page.find(:xpath,"/html/body/div/div/div/div/div[1]/div/button[2]").click
-  end
+end
 
 Then(/^I click on "(.*?)" button in the menu$/) do |arg1|
   title = arg1
@@ -166,8 +163,6 @@ And(/^I add the "(.*?)" widget$/) do |widgetname|
   #find_button(widgetname).click
  title=widgetname
   page.find(:xpath, "//span[contains(text(),'#{title}')]").click  
-  
-  
 end
 
 And(/^I change the title to "(.*?)" on the pop\-up$/) do |widgetname|
