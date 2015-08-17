@@ -33,6 +33,7 @@ end
 Then(/^I select the veteran "(.*?)"$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
   find(:xpath, '//*[@id="tblPatient"]/tbody/tr[1]/td[1]').click
+  end
 
 #To test active sessions
 When(/^I open a new browser and navigate to http:\/\/localhost:(\d+)\/$/) do |arg1|
@@ -84,6 +85,7 @@ When(/^I click on "(.*?)"$/) do |view|
 end
 Then(/^I click on save changes button$/) do
   page.find(:xpath,"/html/body/div/div/div/div/div[1]/div/button[2]").click
+  end
 
 Then(/^I click on "(.*?)" button in the menu$/) do |arg1|
   title = arg1
@@ -146,6 +148,7 @@ Then(/^I should not see the "(.*?)" widget$/) do |pagecontent|
 end
 
 And(/^I should see "(.*?)"$/) do |pagecontent|
+  sleep(1)
   expect(page).to have_content(pagecontent)
 end
 
