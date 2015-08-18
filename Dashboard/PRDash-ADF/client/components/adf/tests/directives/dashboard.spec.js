@@ -22,7 +22,7 @@ describe('Directive: dashboard', function () {
 
   // mock UI Sortable
   beforeEach(function () {
-    angular.module('ui.sortable', []);
+    angular.module('gridster', []);
   });
 
   // load the directive's module
@@ -83,7 +83,7 @@ describe('Directive: dashboard', function () {
 
   it('should have UI.Sortable directive', function () {
     var widgetArea = element.find('.dashboard-widget-area');
-    expect(widgetArea.attr('ui-sortable')).toBeDefined();
+    expect(widgetArea.attr('gridster')).toBeDefined();
   });
 
   it('should render widgets', function () {

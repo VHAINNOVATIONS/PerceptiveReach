@@ -27,7 +27,8 @@
     "forge": "~0.6.30",
     "angular-loading-bar": "~0.8.0",
     "es6-promise": "~2.2.0",
-    "ngSticky": "~1.7.9"
+    "ngSticky": "~1.7.9",
+    "angular-gridster": "~0.13.5"
   },
   "devDependencies": {
     "angular-route": "~1.3",

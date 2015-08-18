@@ -529,7 +529,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th>Branch Description</th>>\r" +
+    "\t\t\t<th>Branch Description</th>\r" +
     "\n" +
     "\t\t\t<th>Total Number of Patients per Branch</th>\r" +
     "\n" +
@@ -621,7 +621,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalTopMidRisk/nationalTopMidRisk.html",
-    "<div class=\"nationalTopMidRisk\">\r" +
+    "<div class=\"nationalTopMidRisk\" style=\"height:100%;width:100%;\">\r" +
     "\n" +
     "    <nvd3-multi-bar-chart\r" +
     "\n" +
