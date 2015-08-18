@@ -102,15 +102,15 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/adf/directives/dashboard/dashboard.html",
-    "<div>\r" +
+    "<div tabindex=\"-1\">\r" +
     "\n" +
-    "    <div offset=\"105\" style=\"z-index:10001;background-color:white;\" sticky>\r" +
+    "    <div offset=\"105\" style=\"z-index:10001;background-color:white;\" sticky tabindex=\"-1\">\r" +
     "\n" +
     "        <div class=\"btn-toolbar\" ng-if=\"!options.hideToolbar\" style=\"padding-bottom:5px;padding-top:5px;border-bottom: 2px solid gray;\">\r" +
     "\n" +
     "\t\t<!--ul class=\"inline\"><li-->\r" +
     "\n" +
-    "            <div class=\"btn-group\" ng-if=\"!options.widgetButtons\" data-ng-class=\"{open: open}\">\r" +
+    "            <div class=\"btn-group\" ng-if=\"!options.widgetButtons\" data-ng-class=\"{open: open}\" tabindex=\"-1\">\r" +
     "\n" +
     "                  <button name=\"btnAddWidget\" data-toggle=\"dropdown\" class=\"btn btn-primary dropdown-toggle\">\r" +
     "\n" +
@@ -122,7 +122,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <li ng-repeat=\"widget in widgetDefs\">\r" +
     "\n" +
-    "                      <a name=\"liWidgetDropdown\" href=\"#\" ng-click=\"addWidgetInternal($event, widget);\" class=\"dropdown-toggle\"><span class=\"label label-primary\">{{widget.name}}</span></a>\r" +
+    "                      <a name=\"liWidgetDropdown\" href=\"#\" ng-click=\"addWidgetInternal($event, widget);\" class=\"dropdown-toggle\"><span class=\"label label-primary nav\">{{widget.name}}</span></a>\r" +
     "\n" +
     "                    </li>\r" +
     "\n" +
@@ -132,7 +132,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<!--/li></ul-->\r" +
     "\n" +
-    "            <div class=\"btn-group\" ng-if=\"options.widgetButtons\">\r" +
+    "            <div class=\"btn-group\" ng-if=\"options.widgetButtons\" tabindex=\"-1\">\r" +
     "\n" +
     "                <button name=\"btnWidgetName\" ng-repeat=\"widget in widgetDefs\"\r" +
     "\n" +
@@ -170,37 +170,37 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "    </div>\r" +
     "\n" +
-    "    <div ui-sortable=\"sortableOptions\" ng-model=\"widgets\" class=\"dashboard-widget-area\">\r" +
+    "    <div ui-sortable=\"sortableOptions\" ng-model=\"widgets\" class=\"dashboard-widget-area\" tabindex=\"-1\">\r" +
     "\n" +
-    "        <div ng-repeat=\"widget in widgets\" ng-style=\"widget.containerStyle\" class=\"widget-container\" widget>\r" +
+    "        <div ng-repeat=\"widget in widgets\" ng-style=\"widget.containerStyle\" tabindex=\"-1\" class=\"widget-container\" widget>\r" +
     "\n" +
-    "            <div class=\"widget panel panel-default\">\r" +
+    "            <div class=\"widget panel panel-default\" tabindex=\"-1\">\r" +
     "\n" +
-    "                <div class=\"widget-header panel-heading\">\r" +
+    "                <div class=\"widget-header panel-heading\" tabindex=\"-1\">\r" +
     "\n" +
     "                    <div class=\"panel-title\">\r" +
     "\n" +
-    "                        <button style=\"background-color: transparent\" class=\"btn widget-title\" tabIndex=\"1\" ng-click=\"editTitle(widget)\" ng-hide=\"widget.editingTitle\">{{widget.title}}</button>\r" +
+    "                        <button style=\"background-color: transparent\" class=\"btn widget-title nav\" ng-click=\"editTitle(widget)\" ng-hide=\"widget.editingTitle\">{{widget.title}} </button>\r" +
     "\n" +
-    "                        <form action=\"\" tabIndex=\"2\" class=\"widget-title\" ng-show=\"widget.editingTitle\" ng-submit=\"saveTitleEdit(widget)\">\r" +
+    "                        <form action=\"\" class=\"widget-title\" ng-show=\"widget.editingTitle\" ng-submit=\"saveTitleEdit(widget)\">\r" +
     "\n" +
-    "                            <input tabIndex =\"3\" alt=\"Widget Title\" name=\"WidgetTitle\" type=\"text\" ng-model=\"widget.title\" class=\"form-control\">\r" +
+    "                            <input alt=\"Widget Title\" name=\"WidgetTitle\" type=\"text\" ng-model=\"widget.title\" class=\"form-control\">\r" +
     "\n" +
     "                        </form>\r" +
     "\n" +
-    "                        <span class=\"label label-primary\" ng-if=\"!options.hideWidgetName\">{{widget.name}}</span>\r" +
+    "                        <span class=\"label label-primary\" ng-if=\"!options.hideWidgetName\" tabindex=\"-1\">{{widget.name}}</span>\t\r" +
     "\n" +
-    "                        <button ng-click=\"removeWidget(widget);\" style=\"background-color: transparent\" tabIndex=\"6\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
+    "\t\t\t\t\t\t<button ng-click=\"removeWidget(widget);\" alt=\"Remove\" style=\"background-color: transparent\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button> \r" +
     "\n" +
-    "                        <button ng-click=\"openWidgetSettings(widget);\" style=\"background-color: transparent\" tabIndex=\"5\" class=\"glyphicon glyphicon-cog\" style=\"background-color: transparent\" ng-if=\"!options.hideWidgetSettings\"></button>\r" +
+    "                        <button ng-click=\"openWidgetSettings(widget);\" alt=\"Open Widget Settings\" style=\"background-color: transparent\" class=\"glyphicon glyphicon-cog\" style=\"background-color: transparent\" ng-if=\"!options.hideWidgetSettings\"></button>\r" +
     "\n" +
-    "                        <button ng-click=\"widget.contentStyle.display = widget.contentStyle.display === 'none' ? 'block' : 'none'\" style=\"background-color: transparent\" class=\"glyphicon\" ng-class=\"{'glyphicon-plus': widget.contentStyle.display === 'none','glyphicon-minus': widget.contentStyle.display !== 'none'}\" tabIndex=\"4\"></button>\r" +
+    "\t\t\t\t\t\t<button ng-click=\"widget.contentStyle.display = widget.contentStyle.display === 'none' ? 'block' : 'none'\" alt=\"Minimize/Maximize Toggle\" style=\"background-color: transparent\" class=\"glyphicon\" ng-class=\"{'glyphicon-plus': widget.contentStyle.display === 'none','glyphicon-minus': widget.contentStyle.display !== 'none'}\"></button>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
     "                </div>\r" +
     "\n" +
-    "                <div class=\"panel-body widget-content\" ng-style=\"widget.contentStyle\"></div>\r" +
+    "                <div class=\"panel-body widget-content\" ng-style=\"widget.contentStyle\" tabindex=\"-1\"></div>\r" +
     "\n" +
     "                <div class=\"widget-ew-resizer\" ng-mousedown=\"grabResizer($event)\"></div>\r" +
     "\n" +

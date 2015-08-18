@@ -96,6 +96,7 @@ angular.module('ui.dashboard')
         else
           scope.PatientName = '';
         }.bind(this));
+		
 
         /**
          * Instantiates a new widget on the dashboard
