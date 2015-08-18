@@ -6,10 +6,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Perceptive Reach | Dashboard</title>
+    <title tabindex="-1">Perceptive Reach | Dashboard</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <base href="/">
+    <base href="/" tabindex="-1">
    <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
       <link rel="stylesheet" href="bower_components/datatables/media/css/jquery.dataTables.css" />
@@ -58,7 +58,7 @@
         </ul-->
         <div style="float: right; color: #fff; background-color: transparent; cursor: default; padding-top: 10px;"> 
           <span tabIndex="-1">{{$root.globals.userObj.UserName }}</span>
-          <button ng-click="Logout()" class="btn btn-success" >Logout</button>
+          <button ng-click="Logout()" class="btn btn-success" tabindex="1">Logout</button>
         </div>
       </div>
     </div><!-- /.navbar-collapse -->
