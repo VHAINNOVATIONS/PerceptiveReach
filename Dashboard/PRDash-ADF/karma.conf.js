@@ -41,7 +41,8 @@ module.exports = function(config) {
       'client/bower_components/pines-notify/pnotify.core.js',
       'client/bower_components/angular-pines-notify/src/pnotify.js',
       'client/bower_components/visibilityjs/lib/visibility.core.js',      
-      'client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',          
+      'client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js', 
+      'client/bower_components/angular-gridster/dist/angular-gridster.min.js',           
       'client/bower_components/spin.js/spin.js',
       'client/components/adf/directives/dashboard/dashboard.js', // old stuff -- /adf/src/directives/dashboard.js
       'client/components/adf/directives/{,*/}*.js', // old stuff -- /adf/src/directives/*.js

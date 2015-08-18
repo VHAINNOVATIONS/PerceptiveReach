@@ -15,7 +15,7 @@
  */
 'use strict';
 
-angular.module('ui.dashboard', ['ui.bootstrap', 'ui.sortable', 'ui.DashboardUtil']);
+angular.module('ui.dashboard', ['ui.bootstrap', 'ui.sortable', 'ui.DashboardUtil','gridster']);
 
 angular.module('ui.dashboard')
 
@@ -72,6 +72,44 @@ angular.module('ui.dashboard')
         };
         scope.sortableOptions = angular.extend({}, sortableDefaults, scope.options.sortableOptions || {});
 
+        scope.gridsterOpts = {
+            columns: 15, // the width of the grid, in columns
+            pushing: true, // whether to push other items out of the way on move or resize
+            floating: true, // whether to automatically float items up so they stack (you can temporarily disable if you are adding unsorted items with ng-repeat)
+            swapping: false, // whether or not to have items of the same size switch places instead of pushing down if they are the same size
+            width: 'auto', // can be an integer or 'auto'. 'auto' scales gridster to be the full width of its containing element
+            colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
+            rowHeight: 'match', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
+            //margins: [10, 10], // the pixel distance between each widget
+            outerMargin: true, // whether margins apply to outer edges of the grid
+            defaultSizeX: 5, // the default width of a gridster item, if not specifed
+            defaultSizeY: 4, // the default height of a gridster item, if not specified
+            minSizeX: 2, // minimum column width of an item
+            maxSizeX: null, // maximum column width of an item
+            minSizeY: 2, // minumum row height of an item
+            maxSizeY: null, // maximum row height of an item
+            resizable: {
+               enabled: true,
+               handles: ['n', 'e', 's', 'w', 'ne', 'se', 'sw', 'nw'],
+               start: function(event, $element, widget) {}, // optional callback fired when resize is started,
+               resize: function(event, $element, widget) {
+               }, 
+               // optional callback fired when item is resized,
+               stop: function(event, $element, widget) {
+                scope.saveDashboard();
+               } // optional callback fired when item is finished resizing
+            },
+            draggable: {
+               enabled: true, // whether dragging items is supported
+               handle: '.widget-header', // optional selector for resize handle
+               start: function(event, $element, widget) {}, // optional callback fired when drag is started,
+               drag: function(event, $element, widget) {}, // optional callback fired when item is moved,
+               stop: function(event, $element, widget) {
+                scope.saveDashboard();
+               } // optional callback fired when item is finished dragging
+            }
+        };
+
       }],
       link: function (scope) {
 
@@ -102,6 +140,8 @@ angular.module('ui.dashboard')
          * Instantiates a new widget on the dashboard
          * @param {Object} widgetToInstantiate The definition object of the widget to be instantiated
          */
+
+
         scope.addWidget = function (widgetToInstantiate, doNotSave) {
 
           if (typeof widgetToInstantiate === 'string') {
@@ -618,15 +658,15 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/adf/directives/dashboard/dashboard.html",
-    "<div tabindex=\"-1\">\r" +
+    "<div>\r" +
     "\n" +
-    "    <div offset=\"105\" style=\"z-index:10001;background-color:white;\" sticky tabindex=\"-1\">\r" +
+    "    <div offset=\"105\" style=\"z-index:10001;background-color:white;\" sticky>\r" +
     "\n" +
     "        <div class=\"btn-toolbar\" ng-if=\"!options.hideToolbar\" style=\"padding-bottom:5px;padding-top:5px;border-bottom: 2px solid gray;\">\r" +
     "\n" +
     "\t\t<!--ul class=\"inline\"><li-->\r" +
     "\n" +
-    "            <div class=\"btn-group\" ng-if=\"!options.widgetButtons\" data-ng-class=\"{open: open}\" tabindex=\"-1\">\r" +
+    "            <div class=\"btn-group\" ng-if=\"!options.widgetButtons\" data-ng-class=\"{open: open}\">\r" +
     "\n" +
     "                  <button name=\"btnAddWidget\" data-toggle=\"dropdown\" class=\"btn btn-primary dropdown-toggle\">\r" +
     "\n" +
@@ -638,7 +678,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <li ng-repeat=\"widget in widgetDefs\">\r" +
     "\n" +
-    "                      <a name=\"liWidgetDropdown\" href=\"#\" ng-click=\"addWidgetInternal($event, widget);\" class=\"dropdown-toggle\"><span class=\"label label-primary nav\">{{widget.name}}</span></a>\r" +
+    "                      <a name=\"liWidgetDropdown\" href=\"#\" ng-click=\"addWidgetInternal($event, widget);\" class=\"dropdown-toggle\"><span class=\"label label-primary\">{{widget.name}}</span></a>\r" +
     "\n" +
     "                    </li>\r" +
     "\n" +
@@ -648,7 +688,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<!--/li></ul-->\r" +
     "\n" +
-    "            <div class=\"btn-group\" ng-if=\"options.widgetButtons\" tabindex=\"-1\">\r" +
+    "            <div class=\"btn-group\" ng-if=\"options.widgetButtons\">\r" +
     "\n" +
     "                <button name=\"btnWidgetName\" ng-repeat=\"widget in widgetDefs\"\r" +
     "\n" +
@@ -686,37 +726,41 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "    </div>\r" +
     "\n" +
-    "    <div ui-sortable=\"sortableOptions\" ng-model=\"widgets\" class=\"dashboard-widget-area\" tabindex=\"-1\">\r" +
+    "\r" +
     "\n" +
-    "        <div ng-repeat=\"widget in widgets\" ng-style=\"widget.containerStyle\" tabindex=\"-1\" class=\"widget-container\" widget>\r" +
+    "    <div gridster=\"gridsterOpts\" style=\"margin-top:35px;\" class=\"dashboard-widget-area\">\r" +
     "\n" +
-    "            <div class=\"widget panel panel-default\" tabindex=\"-1\">\r" +
+    "    <ul ng-model=\"widgets\">\r" +
     "\n" +
-    "                <div class=\"widget-header panel-heading\" tabindex=\"-1\">\r" +
+    "        <li gridster-item=\"widget\" ng-repeat=\"widget in widgets\" class=\"gridsterContainer\" widget>\r" +
+    "\n" +
+    "              <div class=\"widget panel panel-default\">\r" +
+    "\n" +
+    "                <div class=\"widget-header panel-heading\">\r" +
     "\n" +
     "                    <div class=\"panel-title\">\r" +
     "\n" +
-    "                        <button style=\"background-color: transparent\" class=\"btn widget-title nav\" ng-click=\"editTitle(widget)\" ng-hide=\"widget.editingTitle\">{{widget.title}} </button>\r" +
+    "                        <button style=\"background-color: transparent\" class=\"btn widget-title\" tabIndex=\"1\" ng-click=\"editTitle(widget)\" ng-hide=\"widget.editingTitle\">{{widget.title}}</button>\r" +
     "\n" +
-    "                        <form action=\"\" class=\"widget-title\" ng-show=\"widget.editingTitle\" ng-submit=\"saveTitleEdit(widget)\">\r" +
+    "                        <form action=\"\" tabIndex=\"2\" class=\"widget-title\" ng-show=\"widget.editingTitle\" ng-submit=\"saveTitleEdit(widget)\">\r" +
     "\n" +
-    "                            <input alt=\"Widget Title\" name=\"WidgetTitle\" type=\"text\" ng-model=\"widget.title\" class=\"form-control\">\r" +
+    "                            <input tabIndex =\"3\" alt=\"Widget Title\" name=\"WidgetTitle\" type=\"text\" ng-model=\"widget.title\" class=\"form-control\">\r" +
     "\n" +
     "                        </form>\r" +
     "\n" +
-    "                        <span class=\"label label-primary\" ng-if=\"!options.hideWidgetName\" tabindex=\"-1\">{{widget.name}}</span>\t\r" +
+    "                        <span class=\"label label-primary\" ng-if=\"!options.hideWidgetName\">{{widget.name}}</span>\r" +
     "\n" +
-    "\t\t\t\t\t\t<button ng-click=\"removeWidget(widget);\" alt=\"Remove\" style=\"background-color: transparent\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button> \r" +
+    "                        <button ng-click=\"removeWidget(widget);\" style=\"background-color: transparent\" tabIndex=\"6\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
     "\n" +
-    "                        <button ng-click=\"openWidgetSettings(widget);\" alt=\"Open Widget Settings\" style=\"background-color: transparent\" class=\"glyphicon glyphicon-cog\" style=\"background-color: transparent\" ng-if=\"!options.hideWidgetSettings\"></button>\r" +
+    "                        <button ng-click=\"openWidgetSettings(widget);\" style=\"background-color: transparent\" tabIndex=\"5\" class=\"glyphicon glyphicon-cog\" style=\"background-color: transparent\" ng-if=\"!options.hideWidgetSettings\"></button>\r" +
     "\n" +
-    "\t\t\t\t\t\t<button ng-click=\"widget.contentStyle.display = widget.contentStyle.display === 'none' ? 'block' : 'none'\" alt=\"Minimize/Maximize Toggle\" style=\"background-color: transparent\" class=\"glyphicon\" ng-class=\"{'glyphicon-plus': widget.contentStyle.display === 'none','glyphicon-minus': widget.contentStyle.display !== 'none'}\"></button>\r" +
+    "                        <button ng-click=\"widget.contentStyle.display = widget.contentStyle.display === 'none' ? 'block' : 'none'\" style=\"background-color: transparent\" class=\"glyphicon\" ng-class=\"{'glyphicon-plus': widget.contentStyle.display === 'none','glyphicon-minus': widget.contentStyle.display !== 'none'}\" tabIndex=\"4\"></button>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
     "                </div>\r" +
     "\n" +
-    "                <div class=\"panel-body widget-content\" ng-style=\"widget.contentStyle\" tabindex=\"-1\"></div>\r" +
+    "                <div class=\"widget-content\" style=\"height:75%;\"></div>\r" +
     "\n" +
     "                <div class=\"widget-ew-resizer\" ng-mousedown=\"grabResizer($event)\"></div>\r" +
     "\n" +
@@ -724,9 +768,15 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "            </div>\r" +
     "\n" +
-    "        </div>\r" +
+    "        </li>\r" +
     "\n" +
-    "    </div>\r" +
+    "    </ul>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "\r" +
     "\n" +
     "</div>"
   );
@@ -1192,7 +1242,12 @@ angular.module('ui.dashboard')
         }
 
         var serialized = _.map(widgets, function (widget) {
-          return widget.serialize();
+          var w = widget.serialize();
+          w.col = widget.col;
+          w.row = widget.row;
+          w.sizeX = widget.sizeX;
+          w.sizeY = widget.sizeY;
+          return w;
         });
 
         var item = { widgets: serialized, hash: this.hash };

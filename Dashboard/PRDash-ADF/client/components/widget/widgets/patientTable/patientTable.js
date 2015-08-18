@@ -87,7 +87,7 @@ angular.module('ui.widgets')
               commonData.data.veteranObj = obj[0];
               console.log("CommonDataAfterClick: ", commonData);
               // broadcast message throughout system
-              scope.$parent.$broadcast('commonDataChanged', commonData);
+              scope.$parent.$parent.$parent.$broadcast('commonDataChanged', commonData);
             }
             scope.$apply();
           });  

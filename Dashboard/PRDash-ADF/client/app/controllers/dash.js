@@ -69,7 +69,8 @@ angular.module('app')
         },
         style: {
           width: '45%'
-        }
+        },
+        sizeY:3
       },
       {
         name: 'RosterTable',
@@ -84,7 +85,8 @@ angular.module('app')
         },
         style: {
           width: '55%'
-        }
+        },
+        sizeX:10
       },
       {
         name: 'FacilityTable',
@@ -99,7 +101,8 @@ angular.module('app')
         },
         style: {
           width: '55%'
-        }
+        },
+        sizeX:10
       },
       {
         name: 'VISNTable',
@@ -114,7 +117,8 @@ angular.module('app')
         },
         style: {
           width: '55%'
-        }
+        },
+        sizeX:10
       },
       {
         name: 'patientFlags',
@@ -189,7 +193,8 @@ angular.module('app')
         size: {
           width: '45%',
           height: '485px'
-        }
+        },
+        sizeX:10
       },
 	  {
         name: 'NationalAgeGroups',

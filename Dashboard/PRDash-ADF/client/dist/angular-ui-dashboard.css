@@ -1,5 +1,5 @@
 .dashboard-widget-area {
-  margin: 45px 0 30px;
+  margin-top: 35px;
   min-height: 200px;
 }
 .widget-container {
@@ -9,12 +9,12 @@
   padding-bottom: 1em;
 }
 .widget {
-  margin: 0 1em 0 0;
+  margin:5px 5px 0px 5px;
   background-color: white;
-  border: 2px solid #444;
   border-radius: 5px;
   position: relative;
-  height: 100%;
+  padding: 5px;
+  height: 98%;
 }
 .widget-header {
   overflow: hidden;
@@ -43,7 +43,7 @@
   display: inline-block;
 }
 .widget-content {
-  overflow: hidden;
+  overflow: auto;
 }
 .widget .widget-ew-resizer {
   position: absolute;
@@ -77,4 +77,10 @@
 }
 .layout-title {
   display: inline-block;
+}
+
+.gridsterContainer
+{
+  border: 2px solid #979797;  
+  border-radius: 4px;
 }

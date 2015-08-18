@@ -3366,8 +3366,6 @@ angular.module('ui.widgets')
 	$scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
 		.withScroller()
 		.withOption('deferRender', true)
-		// Do not forget to add the scrollY option!!!
-		.withOption('scrollY', 200)
 		.withOption('paging',false)
 		.withOption('order', [1, 'desc']);
 	//.withPaginationType('full_numbers').withDisplayLength(5);
@@ -3856,7 +3854,7 @@ angular.module('ui.widgets')
               commonData.data.veteranObj = obj[0];
               console.log("CommonDataAfterClick: ", commonData);
               // broadcast message throughout system
-              scope.$parent.$broadcast('commonDataChanged', commonData);
+              scope.$parent.$parent.$parent.$broadcast('commonDataChanged', commonData);
             }
             scope.$apply();
           });  
@@ -4842,7 +4840,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th>Branch Description</th>>\r" +
+    "\t\t\t<th>Branch Description</th>\r" +
     "\n" +
     "\t\t\t<th>Total Number of Patients per Branch</th>\r" +
     "\n" +
@@ -4934,7 +4932,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalTopMidRisk/nationalTopMidRisk.html",
-    "<div class=\"nationalTopMidRisk\">\r" +
+    "<div class=\"nationalTopMidRisk\" style=\"height:100%;width:100%;\">\r" +
     "\n" +
     "    <nvd3-multi-bar-chart\r" +
     "\n" +
