@@ -20,7 +20,7 @@ describe('Directive: dashboard', function () {
 
   var scope, element, childScope, DashboardState, mockModal, modalOptions, $compile, $q, mockLog;
 
-  // mock UI Sortable
+  // mock gridster
   beforeEach(function () {
     angular.module('ui.sortable', []);
   });
@@ -81,7 +81,7 @@ describe('Directive: dashboard', function () {
     expect(toolbar.length).toEqual(1);
   });
 
-  it('should have UI.Sortable directive', function () {
+  it('should have gridster directive', function () {
     var widgetArea = element.find('.dashboard-widget-area');
     expect(widgetArea.attr('ui-sortable')).toBeDefined();
   });

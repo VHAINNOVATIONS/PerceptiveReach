@@ -30,8 +30,6 @@ angular.module('ui.widgets')
 	$scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
 		.withScroller()
 		.withOption('deferRender', true)
-		// Do not forget to add the scrollY option!!!
-		.withOption('scrollY', 200)
 		.withOption('paging',false)
 		.withOption('order', [1, 'desc']);
 	//.withPaginationType('full_numbers').withDisplayLength(5);
