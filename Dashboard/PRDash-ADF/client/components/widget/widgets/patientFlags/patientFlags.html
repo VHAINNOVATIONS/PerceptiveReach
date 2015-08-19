@@ -2,12 +2,12 @@
     <table id="tblPatientFlags" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
         <thead> 
         <tr>
-            <th>Flag</th>
-            <th>Cat</th>
+            <th><a href="" ng-click="predicate = 'Flag'; reverse=false">Flag</a></th>
+            <th><a href="" ng-click="predicate = 'Cat'; reverse=false">Cat</a></th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="flags in data">
+        <tr ng-repeat="flags in data | orderBy:predicate:reverse">
             <td>{{ flags.FlagDesc }}</td>
             <td>{{ flags.Category }}</td>
         </tr>

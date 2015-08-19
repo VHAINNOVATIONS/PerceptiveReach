@@ -4320,9 +4320,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th>Date</th>\r" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
     "\n" +
-    "            <th>Cancelled</th>\r" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Cancelled'; reverse=!reverse\">Cancelled</a></th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -4330,7 +4330,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tbody>\r" +
     "\n" +
-    "        <tr ng-repeat=\"appt in data track by $index\">\r" +
+    "        <tr ng-repeat=\"appt in data track by $index | orderBy:predicate:reverse\">\r" +
     "\n" +
     "            <td>{{ appt.ApptDate }}</td>\r" +
     "\n" +
@@ -4444,11 +4444,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th>Diagnosis</th>\r" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Diagnosis'; reverse=false\">Diagnosis</a></th>\r" +
     "\n" +
-    "            <th>ICD</th>\r" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'ICD'; reverse=false\">ICD</a></th>\r" +
     "\n" +
-    "            <th>Date</th>\r" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -4456,7 +4456,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tbody>\r" +
     "\n" +
-    "        <tr ng-repeat=\"diagnosis in data track by $index\">\r" +
+    "        <tr ng-repeat=\"diagnosis in data track by $index | orderBy:predicate:reverse\">\r" +
     "\n" +
     "            <td>{{ diagnosis.ICD_Desc }}</td>\r" +
     "\n" +
@@ -4515,17 +4515,17 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th>VAMC Name</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'VAMC Name'; reverse=false\">VAMC Name</a></th>\r" +
     "\n" +
-    "\t\t\t<th>State</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'State'; reverse=false\">State</a></th>\r" +
     "\n" +
-    "\t\t\t<th>VISN</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'VISN'; reverse=false\">VISN</a></th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
     "\t\t<tbody>\r" +
     "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data\">\r" +
+    "\t\t\t<tr ng-repeat=\"ind in data | orderBy:predicate:reverse\">\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.VAMC_Name}}</td>\r" +
     "\n" +
@@ -4594,7 +4594,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th>Medication</th>\r" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Medication'; reverse=false\">Medication</a></th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -4602,7 +4602,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tbody>\r" +
     "\n" +
-    "        <tr ng-repeat=\"meds in data track by $index\">\r" +
+    "        <tr ng-repeat=\"meds in data track by $index | orderBy:predicate:reverse\">\r" +
     "\n" +
     "            <td>{{ meds.MedicationName }}</td>\r" +
     "\n" +
@@ -4670,17 +4670,17 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th>Age Groups</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Age Groups'; reverse=false\">Age Groups</a></th>\r" +
     "\n" +
-    "\t\t\t<th>Risk Level Group</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\r" +
     "\n" +
-    "\t\t\t<th>Total Number of Patients</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
     "\t\t<tbody>\r" +
     "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.AgeRange}}</td>\r" +
     "\n" +
@@ -4772,17 +4772,17 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th>Risk Level Group</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\r" +
     "\n" +
-    "\t\t\t<th>Gender</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Gender'; reverse=false\">Gender</a></th>\r" +
     "\n" +
-    "\t\t\t<th>Total Number of Patients</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
     "\t\t<tbody>\r" +
     "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
     "\n" +
@@ -4840,15 +4840,15 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th>Branch Description</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Branch Description'; reverse=false\">Branch Description</a></th>\r" +
     "\n" +
-    "\t\t\t<th>Total Number of Patients per Branch</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Total Number of Patients per Branch'; reverse=false\">Total Number of Patients per Branch</a></th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
     "\t\t<tbody>\r" +
     "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.BranchDesc}}</td>\r" +
     "\n" +
@@ -4870,17 +4870,17 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th>Outreach Status</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Outreach Status'; reverse=false\">Outreach Status</a></th>\r" +
     "\n" +
-    "\t\t\t<th>Risk Level Group</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\r" +
     "\n" +
-    "\t\t\t<th>Total Number of Patients</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
     "\t\t<tbody>\r" +
     "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.Status}}</td>\r" +
     "\n" +
@@ -5000,19 +5000,19 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th>VAMC Name</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'VAMC Name'; reverse=false\">VAMC Name</a></th>\r" +
     "\n" +
-    "\t\t\t<th>State</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'State'; reverse=false\">State</a></th>\r" +
     "\n" +
-    "\t\t\t<th>VISN</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'VISN'; reverse=false\">VISN</a></th>\r" +
     "\n" +
-    "\t\t\t<th>Total Number of Patients</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
     "\t\t<tbody>\r" +
     "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.VAMCName}}</td>\r" +
     "\n" +
@@ -5082,9 +5082,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th>Flag</th>\r" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Flag'; reverse=false\">Flag</a></th>\r" +
     "\n" +
-    "            <th>Cat</th>\r" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Cat'; reverse=false\">Cat</a></th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -5092,7 +5092,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tbody>\r" +
     "\n" +
-    "        <tr ng-repeat=\"flags in data\">\r" +
+    "        <tr ng-repeat=\"flags in data | orderBy:predicate:reverse\">\r" +
     "\n" +
     "            <td>{{ flags.FlagDesc }}</td>\r" +
     "\n" +
@@ -5201,13 +5201,13 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t<tr>\r" +
     "\n" +
-    "\t\t\t\t\t<th>Age Range</th>\r" +
+    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Age Range'; reverse=false\">Age Range</a></th>\r" +
     "\n" +
-    "\t\t\t\t\t<th>Gender</th>\r" +
+    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Gender'; reverse=false\">Gender</a></th>\r" +
     "\n" +
-    "\t\t\t\t\t<th>2013 Total Suicide Deaths Per 100K</th>\r" +
+    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = '2013 Total Suicide Deaths Per 100K'; reverse=false\">2013 Total Suicide Deaths Per 100K</a></th>\r" +
     "\n" +
-    "\t\t\t\t\t<th>Ethnicity</th>\r" +
+    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Ethnicity'; reverse=false\">Ethnicity</a></th>\r" +
     "\n" +
     "\t\t\t\t</tr>\r" +
     "\n" +
@@ -5215,7 +5215,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<tbody>\r" +
     "\n" +
-    "\t\t\t\t<tr ng-repeat=\"ind in data track by $index\">\r" +
+    "\t\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
     "\n" +
     "\t\t\t\t\t<td>{{ind.Age}}</td>\r" +
     "\n" +
@@ -5273,19 +5273,19 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th>VISN</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'VISN'; reverse=false\">VISN</a></th>\r" +
     "\n" +
-    "\t\t\t<th>Network Name</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Network Name'; reverse=false\">Network Name</a></th>\r" +
     "\n" +
-    "\t\t\t<th>Region Served</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Region Served'; reverse=false\">Region Served</a></th>\r" +
     "\n" +
-    "\t\t\t<th>Total Patients</th>\r" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Total Patients'; reverse=false\">Total Patients</a></th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
     "\t\t<tbody>\r" +
     "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data\">\r" +
+    "\t\t\t<tr ng-repeat=\"ind in data | orderBy:predicate:reverse\">\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.VISN}}</td>\r" +
     "\n" +

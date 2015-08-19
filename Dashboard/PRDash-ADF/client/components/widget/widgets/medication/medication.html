@@ -2,11 +2,11 @@
     <table id="tblMedication" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
         <thead> 
         <tr>
-            <th>Medication</th>
+            <th><a href="" ng-click="predicate = 'Medication'; reverse=false">Medication</a></th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="meds in data track by $index">
+        <tr ng-repeat="meds in data track by $index | orderBy:predicate:reverse">
             <td>{{ meds.MedicationName }}</td>
         </tr>
         </tbody>
