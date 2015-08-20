@@ -734,9 +734,9 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <li gridster-item=\"widget\" ng-repeat=\"widget in widgets\" class=\"gridsterContainer\" widget tabindex=\"-1\">\r" +
     "\n" +
-    "              <div class=\"widget panel panel-default\">\r" +
+    "              <div class=\"widget panel panel-default\" style=\"height:98%\">\r" +
     "\n" +
-    "                <div class=\"widget-header panel-heading\" tabindex=\"-1\">\r" +
+    "                <div class=\"widget-header panel-heading\" tabindex=\"-1\" style=\"height:20%\">\r" +
     "\n" +
     "                    <div class=\"panel-title\">\r" +
     "\n" +
@@ -754,7 +754,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                            <button ng-click=\"widget.contentStyle.display = widget.contentStyle.display === 'none' ? 'block' : 'none'\" style=\"background-color: transparent; float:left;\" class=\"glyphicon\" ng-class=\"{'glyphicon-plus': widget.contentStyle.display === 'none','glyphicon-minus': widget.contentStyle.display !== 'none'}\"></button>\r" +
     "\n" +
-    "                            <button ng-click=\"openWidgetSettings(widget);\" style=\"background-color: transparent; float:left;\" class=\"glyphicon glyphicon-cog\" ng-if=\"!options.hideWidgetSettings\"></button>\r" +
+    "                            <button ng-click=\"openWidgetSettings(widget);\" style=\"background-color: transparent; float:left;\" class=\"glyphicon glyphicon-cog\" ng-if=\"!options.hideWidgetSeyttings\"></button>\r" +
     "\n" +
     "                            <button ng-click=\"removeWidget(widget);\" style=\"background-color: transparent; float:right;\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
     "\n" +
@@ -764,7 +764,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                </div>\r" +
     "\n" +
-    "                <div class=\"widget-content\" style=\"height:75%;\"></div>\r" +
+    "                <div class=\"widget-content\" style=\"height:80%;\"></div>\r" +
     "\n" +
     "                <div class=\"widget-ew-resizer\" ng-mousedown=\"grabResizer($event)\"></div>\r" +
     "\n" +
