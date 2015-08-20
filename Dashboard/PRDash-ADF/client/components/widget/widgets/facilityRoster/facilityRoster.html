@@ -1,12 +1,12 @@
 <div class="facilityRoster">
 	<table id="tblFacilityRoster" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
 		<thead>	
-			<th>VAMC Name</th>
-			<th>State</th>
-			<th>VISN</th>
+			<th><a href="" ng-click="predicate = 'VAMC Name'; reverse=false">VAMC Name</a></th>
+			<th><a href="" ng-click="predicate = 'State'; reverse=false">State</a></th>
+			<th><a href="" ng-click="predicate = 'VISN'; reverse=false">VISN</a></th>
 		</thead>
 		<tbody>
-			<tr ng-repeat="ind in data">
+			<tr ng-repeat="ind in data | orderBy:predicate:reverse">
 				<td>{{ind.VAMC_Name}}</td>
 				<td>{{ind.StateAbbr}}</td>
 				<td>{{ind.VISN}}</td>

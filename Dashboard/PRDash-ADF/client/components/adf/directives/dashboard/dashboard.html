@@ -1,5 +1,5 @@
 <div>
-    <div offset="105" style="z-index:10001;background-color:white;" sticky tabindex="-1">
+    <div offset="105" style="z-index:5;background-color:white;" sticky tabindex="-1">
         <div class="btn-toolbar" ng-if="!options.hideToolbar" style="padding-bottom:5px;padding-top:5px;border-bottom: 2px solid gray;">
 		<!--ul class="inline"><li-->
             <div class="btn-group" ng-if="!options.widgetButtons" data-ng-class="{open: open}" tabindex="-1">
@@ -26,7 +26,7 @@
 
             <button name="btnClear" ng-click="clear();" type="button" class="btn btn-info">Clear</button>
             <div style="height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;" ng-show=" dashboardTitle == 'Individual View'">
-                <label>
+                <label style="font-weight:normal">
                     <span> {{ PatientName }}</span>
                 </label>
             </div>

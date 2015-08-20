@@ -3,14 +3,14 @@
 		<table id="tblSuicideStatistics" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">		
 			<thead>
 				<tr>
-					<th>Age Range</th>
-					<th>Gender</th>
-					<th>2013 Total Suicide Deaths Per 100K</th>
-					<th>Ethnicity</th>
+					<th><a href="" ng-click="predicate = 'Age Range'; reverse=false">Age Range</a></th>
+					<th><a href="" ng-click="predicate = 'Gender'; reverse=false">Gender</a></th>
+					<th><a href="" ng-click="predicate = '2013 Total Suicide Deaths Per 100K'; reverse=false">2013 Total Suicide Deaths Per 100K</a></th>
+					<th><a href="" ng-click="predicate = 'Ethnicity'; reverse=false">Ethnicity</a></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="ind in data track by $index">
+				<tr ng-repeat="ind in data track by $index | orderBy:predicate:reverse">
 					<td>{{ind.Age}}</td>
 					<td>{{ind.Gender}}</td>
 					<td>{{ind.Value}}</td>

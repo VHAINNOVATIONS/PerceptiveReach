@@ -1,4 +1,4 @@
-<ul ui-sortable="sortableOptions" ng-model="layouts" class="nav nav-tabs layout-tabs" offset="59" style="z-index:10002;background-color:white;" sticky>
+<ul ui-sortable="sortableOptions" ng-model="layouts" class="nav nav-tabs layout-tabs" offset="59" style="z-index:5;background-color:white;" sticky>
     <li ng-repeat="layout in layouts" ng-class="{ active: layout.active }">
         <a ng-click="makeLayoutActive(layout)" tabindex="0">
             <span ng-dblclick="editTitle(layout)" ng-show="!layout.editingTitle">{{layout.title}}</span>

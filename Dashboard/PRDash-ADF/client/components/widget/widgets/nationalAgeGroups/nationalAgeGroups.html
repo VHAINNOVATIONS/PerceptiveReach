@@ -1,12 +1,12 @@
 <div class="nationalAgeGroups">
 	<table id="tblAgeGroups" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
 		<thead>	
-			<th>Age Groups</th>
-			<th>Risk Level Group</th>
-			<th>Total Number of Patients</th>
+			<th><a href="" ng-click="predicate = 'Age Groups'; reverse=false">Age Groups</a></th>
+			<th><a href="" ng-click="predicate = 'Risk Level Group'; reverse=false">Risk Level Group</a></th>
+			<th><a href="" ng-click="predicate = 'Total Number of Patients'; reverse=false">Total Number of Patients</a></th>
 		</thead>
 		<tbody>
-			<tr ng-repeat="ind in data track by $index">
+			<tr ng-repeat="ind in data track by $index | orderBy:predicate:reverse">
 				<td>{{ind.AgeRange}}</td>
 				<td>{{ind.RiskLevelDescription}}</td>
 				<td>{{ind.Total}}</td>

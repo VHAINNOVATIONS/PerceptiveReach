@@ -130,7 +130,7 @@ angular.module('ui.dashboard')
 
         scope.$on('commonDataChanged', function (event, data) {
         if(data.data.veteranObj && data.data.veteranObj.Name)
-          scope.PatientName = data.data.veteranObj.Name;
+          scope.PatientName = data.data.veteranObj.Name +', SSN: '+ data.data.veteranObj.SSN;
         else
           scope.PatientName = '';
         }.bind(this));
@@ -660,7 +660,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/adf/directives/dashboard/dashboard.html",
     "<div>\r" +
     "\n" +
-    "    <div offset=\"105\" style=\"z-index:10001;background-color:white;\" sticky tabindex=\"-1\">\r" +
+    "    <div offset=\"105\" style=\"z-index:5;background-color:white;\" sticky tabindex=\"-1\">\r" +
     "\n" +
     "        <div class=\"btn-toolbar\" ng-if=\"!options.hideToolbar\" style=\"padding-bottom:5px;padding-top:5px;border-bottom: 2px solid gray;\">\r" +
     "\n" +
@@ -714,7 +714,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Individual View'\">\r" +
     "\n" +
-    "                <label>\r" +
+    "                <label style=\"font-weight:normal\">\r" +
     "\n" +
     "                    <span> {{ PatientName }}</span>\r" +
     "\n" +
@@ -860,7 +860,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/adf/directives/dashboardLayouts/dashboardLayouts.html",
-    "<ul ui-sortable=\"sortableOptions\" ng-model=\"layouts\" class=\"nav nav-tabs layout-tabs\" offset=\"59\" style=\"z-index:10002;background-color:white;\" sticky>\r" +
+    "<ul ui-sortable=\"sortableOptions\" ng-model=\"layouts\" class=\"nav nav-tabs layout-tabs\" offset=\"59\" style=\"z-index:5;background-color:white;\" sticky>\r" +
     "\n" +
     "    <li ng-repeat=\"layout in layouts\" ng-class=\"{ active: layout.active }\">\r" +
     "\n" +
