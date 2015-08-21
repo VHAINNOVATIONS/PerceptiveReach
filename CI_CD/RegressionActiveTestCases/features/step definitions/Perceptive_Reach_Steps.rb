@@ -117,13 +117,13 @@ When(/^I click on "(.*?)" button$/) do |buttonname|
 end
 
 Then(/^I click the Add a Widget button$/) do
-  find_button('Add a Widget').click 
+  #find_button('Add a Widget').click 
   find_button('Add a Widget').click 
 end
 
 Then(/^I click on the Add a widget button$/) do
   #pending # express the regexp above with the code you wish you had
-  find_button('Add a Widget').click
+  #find_button('Add a Widget').click
   find_button('Add a Widget').click
 end
 
