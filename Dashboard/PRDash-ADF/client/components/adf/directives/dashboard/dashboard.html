@@ -37,7 +37,7 @@
     <ul ng-model="widgets">
         <li gridster-item="widget" ng-repeat="widget in widgets" class="gridsterContainer" widget tabindex="-1">
               <div class="widget panel panel-default" style="height:98%">
-                <div class="widget-header panel-heading" tabindex="-1" style="height:16%">
+                <div class="widget-header panel-heading" tabindex="-1" style="height:45px;">
                     <div class="panel-title">
                         <button style="background-color: transparent" class="btn widget-title nav" ng-click="editTitle(widget)" ng-hide="widget.editingTitle">{{widget.title}}</button>
                         <form action="" class="widget-title" ng-show="widget.editingTitle" ng-submit="saveTitleEdit(widget)">
@@ -51,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="widget-content" style="height:84%;"></div>
+                <div class="widget-content" style="height:75%;"></div>
                 <div class="widget-ew-resizer" ng-mousedown="grabResizer($event)"></div>
                 <div ng-if="widget.enableVerticalResize" class="widget-s-resizer" ng-mousedown="grabSouthResizer($event)"></div>
             </div>
