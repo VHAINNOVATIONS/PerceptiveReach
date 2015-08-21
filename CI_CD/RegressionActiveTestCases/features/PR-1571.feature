@@ -10,10 +10,6 @@ Feature: As a SPC I want to Enable the background communications layer between a
   And I click on "Login" button
   When I click on "Individual View"
   Then I should see the "Patient Roster by VAMC" widget
-  When I click on edit on the "Patient Roster by VAMC" widget
-  And I choose "(V01)(518) Bedford,MA" as VAMC
-  And I click on "OK" button
-  Then I should see the "Patient Roster by VAMC" widget
   When I select middle risk veteran row in the widget
   Then I should see the "Clinical Decision Support" widget
   And I should see "Chronic MIDDLE Risk"
