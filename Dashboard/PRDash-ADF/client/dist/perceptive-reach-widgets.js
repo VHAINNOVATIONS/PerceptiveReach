@@ -380,6 +380,12 @@ angular.module('ui.models')
           if(this.sta3N != this.currentsta3N)
             this.getData();
         }.bind(this));
+
+        this.widgetScope.$on('defaultWidgetsSelected', function (event, data) {
+          this.dataModelOptions.common = data;
+          this.sta3N = data.data.facilitySelected;
+          this.getData();
+        }.bind(this));
       },
 
       getData: function () {
