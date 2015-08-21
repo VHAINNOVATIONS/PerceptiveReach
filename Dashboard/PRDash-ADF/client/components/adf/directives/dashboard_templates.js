@@ -180,7 +180,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "              <div class=\"widget panel panel-default\" style=\"height:98%\">\r" +
     "\n" +
-    "                <div class=\"widget-header panel-heading\" tabindex=\"-1\" style=\"height:16%\">\r" +
+    "                <div class=\"widget-header panel-heading\" tabindex=\"-1\" style=\"height:45px;\">\r" +
     "\n" +
     "                    <div class=\"panel-title\">\r" +
     "\n" +
@@ -208,7 +208,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                </div>\r" +
     "\n" +
-    "                <div class=\"widget-content\" style=\"height:84%;\"></div>\r" +
+    "                <div class=\"widget-content\" style=\"height:75%;\"></div>\r" +
     "\n" +
     "                <div class=\"widget-ew-resizer\" ng-mousedown=\"grabResizer($event)\"></div>\r" +
     "\n" +

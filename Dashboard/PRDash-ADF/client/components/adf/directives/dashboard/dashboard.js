@@ -19,7 +19,7 @@ angular.module('ui.dashboard', ['ui.bootstrap', 'ui.sortable', 'ui.DashboardUtil
 
 angular.module('ui.dashboard')
 
-  .directive('dashboard', ['WidgetModel', 'WidgetDefCollection', '$modal', 'DashboardState', '$log', function (WidgetModel, WidgetDefCollection, $modal, DashboardState, $log) {
+  .directive('dashboard', ['WidgetModel', 'WidgetDefCollection', '$modal', 'DashboardState', '$log','$timeout', function (WidgetModel, WidgetDefCollection, $modal, DashboardState, $log,$timeout) {
 
     return {
       restrict: 'A',
@@ -295,6 +295,11 @@ angular.module('ui.dashboard')
         scope.resetWidgetsToDefault = function () {
           scope.loadWidgets(scope.defaultWidgets);
           scope.saveDashboard();
+          $timeout(function(){
+           scope.$broadcast('defaultWidgetsSelected', scope.common);
+          },1000);
+
+
         };
 
         // Set default widgets array
