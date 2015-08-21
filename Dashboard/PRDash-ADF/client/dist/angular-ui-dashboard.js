@@ -102,9 +102,12 @@ angular.module('ui.dashboard')
             draggable: {
                enabled: true, // whether dragging items is supported
                handle: '.widget-header', // optional selector for resize handle
-               start: function(event, $element, widget) {}, // optional callback fired when drag is started,
+               start: function(event, $element, widget) {
+                scope.startPosition = $element.position();
+               }, // optional callback fired when drag is started,
                drag: function(event, $element, widget) {}, // optional callback fired when item is moved,
                stop: function(event, $element, widget) {
+                if(!angular.equals($element.position(),scope.startPosition))
                 scope.saveDashboard();
                } // optional callback fired when item is finished dragging
             }
