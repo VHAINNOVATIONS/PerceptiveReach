@@ -19,7 +19,7 @@ angular.module('ui.dashboard', ['ui.bootstrap', 'ui.sortable', 'ui.DashboardUtil
 
 angular.module('ui.dashboard')
 
-  .directive('dashboard', ['WidgetModel', 'WidgetDefCollection', '$modal', 'DashboardState', '$log', function (WidgetModel, WidgetDefCollection, $modal, DashboardState, $log) {
+  .directive('dashboard', ['WidgetModel', 'WidgetDefCollection', '$modal', 'DashboardState', '$log','$timeout', function (WidgetModel, WidgetDefCollection, $modal, DashboardState, $log,$timeout) {
 
     return {
       restrict: 'A',
@@ -102,9 +102,12 @@ angular.module('ui.dashboard')
             draggable: {
                enabled: true, // whether dragging items is supported
                handle: '.widget-header', // optional selector for resize handle
-               start: function(event, $element, widget) {}, // optional callback fired when drag is started,
+               start: function(event, $element, widget) {
+                scope.startPosition = $element.position();
+               }, // optional callback fired when drag is started,
                drag: function(event, $element, widget) {}, // optional callback fired when item is moved,
                stop: function(event, $element, widget) {
+                if(!angular.equals($element.position(),scope.startPosition))
                 scope.saveDashboard();
                } // optional callback fired when item is finished dragging
             }
@@ -313,6 +316,11 @@ angular.module('ui.dashboard')
         scope.resetWidgetsToDefault = function () {
           scope.loadWidgets(scope.defaultWidgets);
           scope.saveDashboard();
+          $timeout(function(){
+           scope.$broadcast('defaultWidgetsSelected', scope.common);
+          },1000);
+
+
         };
 
         // Set default widgets array
