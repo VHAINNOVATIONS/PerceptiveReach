@@ -129,10 +129,28 @@ angular.module('ui.dashboard')
         );
 
         scope.$on('commonDataChanged', function (event, data) {
-        if(data.data.veteranObj && data.data.veteranObj.Name)
-          scope.PatientName = data.data.veteranObj.Name +', SSN: '+ data.data.veteranObj.SSN;
-        else
-          scope.PatientName = '';
+          if (data.data.activeView == 'individual'){
+            if(data.data.veteranObj && data.data.veteranObj.Name)
+              scope.PatientName = data.data.veteranObj.Name +', SSN: '+ data.data.veteranObj.SSN;
+            else
+              scope.PatientName = '';
+          }
+          else if(data.data.activeView == 'facility'){
+            if(data.data.facilitySelected.facility != null)
+              scope.FacilityName = 'VAMC: ' + data.data.facilitySelected.facility;
+            else
+              scope.FacilityName = '';
+          }
+          else if(data.data.activeView == 'surveillance'){
+            if(data.data.facilitySelected.surveillance == null && data.data.visnSelected.surveillance == null)
+              scope.VISN_FacilityName = 'VISN:  VAMC: ';
+            else if (data.data.facilitySelected.surveillance == null)
+              scope.VISN_FacilityName = 'VISN: ' + data.data.visnSelected.surveillance + ' VAMC: ';
+            else if (data.data.visnSelected.surveillance == null)
+              scope.VISN_FacilityName = 'VISN:  VAMC: ' + data.data.facilitySelected.surveillance;
+            else
+              scope.VISN_FacilityName = 'VISN: ' + data.data.visnSelected.surveillance + ' VAMC: ' + data.data.facilitySelected.surveillance;
+          }        
         }.bind(this));
 		
 
@@ -717,6 +735,26 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "                <label style=\"font-weight:normal\">\r" +
     "\n" +
     "                    <span> {{ PatientName }}</span>\r" +
+    "\n" +
+    "                </label>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Facility View'\">\r" +
+    "\n" +
+    "                <label style=\"font-weight:normal\">\r" +
+    "\n" +
+    "                    <span> {{ FacilityName }}</span>\r" +
+    "\n" +
+    "                </label>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Surveillance View'\">\r" +
+    "\n" +
+    "                <label style=\"font-weight:normal\">\r" +
+    "\n" +
+    "                    <span> {{ VISN_FacilityName }}</span>\r" +
     "\n" +
     "                </label>\r" +
     "\n" +

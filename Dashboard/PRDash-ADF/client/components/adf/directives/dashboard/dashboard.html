@@ -30,6 +30,16 @@
                     <span> {{ PatientName }}</span>
                 </label>
             </div>
+            <div style="height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;" ng-show=" dashboardTitle == 'Facility View'">
+                <label style="font-weight:normal">
+                    <span> {{ FacilityName }}</span>
+                </label>
+            </div>
+            <div style="height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;" ng-show=" dashboardTitle == 'Surveillance View'">
+                <label style="font-weight:normal">
+                    <span> {{ VISN_FacilityName }}</span>
+                </label>
+            </div>
         </div>
     </div>
 

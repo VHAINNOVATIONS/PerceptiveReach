@@ -129,10 +129,28 @@ angular.module('ui.dashboard')
         );
 
         scope.$on('commonDataChanged', function (event, data) {
-        if(data.data.veteranObj && data.data.veteranObj.Name)
-          scope.PatientName = data.data.veteranObj.Name +', SSN: '+ data.data.veteranObj.SSN;
-        else
-          scope.PatientName = '';
+          if (data.data.activeView == 'individual'){
+            if(data.data.veteranObj && data.data.veteranObj.Name)
+              scope.PatientName = data.data.veteranObj.Name +', SSN: '+ data.data.veteranObj.SSN;
+            else
+              scope.PatientName = '';
+          }
+          else if(data.data.activeView == 'facility'){
+            if(data.data.facilitySelected.facility != null)
+              scope.FacilityName = 'VAMC: ' + data.data.facilitySelected.facility;
+            else
+              scope.FacilityName = '';
+          }
+          else if(data.data.activeView == 'surveillance'){
+            if(data.data.facilitySelected.surveillance == null && data.data.visnSelected.surveillance == null)
+              scope.VISN_FacilityName = 'VISN:  VAMC: ';
+            else if (data.data.facilitySelected.surveillance == null)
+              scope.VISN_FacilityName = 'VISN: ' + data.data.visnSelected.surveillance + ' VAMC: ';
+            else if (data.data.visnSelected.surveillance == null)
+              scope.VISN_FacilityName = 'VISN:  VAMC: ' + data.data.facilitySelected.surveillance;
+            else
+              scope.VISN_FacilityName = 'VISN: ' + data.data.visnSelected.surveillance + ' VAMC: ' + data.data.facilitySelected.surveillance;
+          }        
         }.bind(this));
 		
 
