@@ -37,7 +37,7 @@ angular.module('ui.models')
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
           this.currentsta3N = this.sta3N;
-          this.sta3N = (dataModelOptions && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : 9;
+          this.sta3N = (dataModelOptions && dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : 9;
           if(this.sta3N != this.currentsta3N)
             this.getData();
         }.bind(this));
@@ -478,24 +478,37 @@ angular.module('ui.models')
         var dataModelOptions = this.dataModelOptions;
         var currentID = null;
 
-        if(dataModelOptions.layout == "stateVISN"){
-          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+          if(dataModelOptions.common.data.facilitySelected.surveillance)
+            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
+          else if(dataModelOptions.common.data.visnSelected.surveillance)
+            currentID = dataModelOptions.common.data.visnSelected.surveillance;
         }
-        if(dataModelOptions.layout == "facility"){
-          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+          currentID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;   
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
           
           this.currentID = this.ID;
 
-          if(dataModelOptions.layout == "stateVISN"){
-            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+            if(dataModelOptions.common.data.facilitySelected.surveillance != null){
+              if (dataModelOptions.common.data.facilitySelected.surveillance.toString().length >0) this.ID = dataModelOptions.common.data.facilitySelected.surveillance;
+              else if(dataModelOptions.common.data.visnSelected.surveillance != null){
+                this.ID = (dataModelOptions.common.data.visnSelected.surveillance.toString().length >0) ? dataModelOptions.common.data.visnSelected.surveillance : null;  
+              }
+            }
+            else if(dataModelOptions.common.data.visnSelected.surveillance != null)
+              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
           }
-          if(dataModelOptions.layout == "facility"){
-            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
+            this.ID = (dataModelOptions.common.data.facilitySelected.facility != null) ? dataModelOptions.common.data.facilitySelected.facility : null;  
           }
-          
+          console.log("AgeGroupsMetricData commonDataChange - this", this);
+          console.log("AgeGroupsMetricData commonDataChange - currentId", this.currentID);
+          console.log("AgeGroupsMetricData commonDataChange - this.Id", this.ID);
+          console.log("AgeGroupsMetricData commonDataChange - facilitySelected.facility", dataModelOptions.common.data.facilitySelected.facility);
           if(this.ID != this.currentID)
             this.getData();          
           
@@ -509,15 +522,21 @@ angular.module('ui.models')
         var that = this;
         var data = [];
         var visn_or_facility = '';
+        var activeView = that.dataModelOptions.common.data.activeView;
 
-        if((that.dataModelOptions.layout == "stateVISN" || that.dataModelOptions.layout == "facility") && !this.ID) {
+        /*if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
           this.updateScope(data);
         }
-        else {
-          if(that.dataModelOptions.layout == "stateVISN")
-            visn_or_facility = "-v";
-          else if(that.dataModelOptions.layout == "facility")
-            visn_or_facility = "-f";
+        else {*/
+          if(activeView == "surveillance"){
+            if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
+            else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
+          }
+          else if(activeView == "facility"){
+            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
+            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
+          }
+          
           var parameter = '';
           if(this.ID)
             parameter = "?ID=" + this.ID + visn_or_facility;
@@ -526,7 +545,7 @@ angular.module('ui.models')
                   data = dataset;
                   this.updateScope(data);
               }.bind(this));
-        }
+        //}
       },
 
       destroy: function () {
@@ -536,7 +555,6 @@ angular.module('ui.models')
 
     return AgeGroupsMetricsDataModel;
   })
-  
   /* .factory('NationalCombatEraDataModel', function ($http, WidgetDataModel) {
     function NationalCombatEraDataModel() {
     }
@@ -605,7 +623,7 @@ angular.module('ui.models')
     });
     return NationalCurrentSafetyPlanDataModel;
   })*/
-   .factory('GenderDistributionMetricsDataModel', function ($http, CommonDataModel) {
+  .factory('GenderDistributionMetricsDataModel', function ($http, CommonDataModel) {
     function GenderDistributionMetricsDataModel() {
     }
 
@@ -617,22 +635,32 @@ angular.module('ui.models')
         var dataModelOptions = this.dataModelOptions;
         var currentID = null;
 
-        if(dataModelOptions.layout == "stateVISN"){
-          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+          if(dataModelOptions.common.data.facilitySelected.surveillance)
+            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
+          else if(dataModelOptions.common.data.visnSelected.surveillance)
+            currentID = dataModelOptions.common.data.visnSelected.surveillance;
         }
-        if(dataModelOptions.layout == "facility"){
-          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+          currentID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;   
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
           
           this.currentID = this.ID;
 
-          if(dataModelOptions.layout == "stateVISN"){
-            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+            if(dataModelOptions.common.data.facilitySelected.surveillance != null){
+              if (dataModelOptions.common.data.facilitySelected.surveillance.toString().length >0) this.ID = dataModelOptions.common.data.facilitySelected.surveillance;
+              else if(dataModelOptions.common.data.visnSelected.surveillance != null){
+                this.ID = (dataModelOptions.common.data.visnSelected.surveillance.toString().length >0) ? dataModelOptions.common.data.visnSelected.surveillance : null;  
+              }
+            }
+            else if(dataModelOptions.common.data.visnSelected.surveillance != null)
+              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
           }
-          if(dataModelOptions.layout == "facility"){
-            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
+            this.ID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;  
           }
           
           if(this.ID != this.currentID)
@@ -648,15 +676,21 @@ angular.module('ui.models')
         var that = this;
         var data = [];
         var visn_or_facility = '';
+        var activeView = that.dataModelOptions.common.data.activeView;
 
-        if((that.dataModelOptions.layout == "stateVISN" || that.dataModelOptions.layout == "facility") && !this.ID) {
+        /*if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
           this.updateScope(data);
         }
-        else {
-          if(that.dataModelOptions.layout == "stateVISN")
-            visn_or_facility = "-v";
-          else if(that.dataModelOptions.layout == "facility")
-            visn_or_facility = "-f";
+        else {*/
+          if(activeView == "surveillance"){
+            if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
+            else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
+          }
+          else if(activeView == "facility"){
+            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
+            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
+          }
+          
           var parameter = '';
           if(this.ID)
             parameter = "?ID=" + this.ID + visn_or_facility;
@@ -665,7 +699,7 @@ angular.module('ui.models')
                   data = dataset;
                   this.updateScope(data);
               }.bind(this));
-        }
+        //}
       },
 
       destroy: function () {
@@ -708,7 +742,7 @@ angular.module('ui.models')
     });
     return NationalHighRiskFlagDataModel;
   })*/
-   .factory('MilitaryBranchMetricsDataModel', function ($http, CommonDataModel) {
+  .factory('MilitaryBranchMetricsDataModel', function ($http, CommonDataModel) {
     function MilitaryBranchMetricsDataModel() {
     }
 
@@ -720,24 +754,34 @@ angular.module('ui.models')
         var dataModelOptions = this.dataModelOptions;
         var currentID = null;
 
-        if(dataModelOptions.layout == "stateVISN"){
-          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+          if(dataModelOptions.common.data.facilitySelected.surveillance)
+            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
+          else if(dataModelOptions.common.data.visnSelected.surveillance)
+            currentID = dataModelOptions.common.data.visnSelected.surveillance;
         }
-        if(dataModelOptions.layout == "facility"){
-          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+          currentID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;   
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
           
           this.currentID = this.ID;
 
-          if(dataModelOptions.layout == "stateVISN"){
-            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+            if(dataModelOptions.common.data.facilitySelected.surveillance != null){
+              if (dataModelOptions.common.data.facilitySelected.surveillance.toString().length >0) this.ID = dataModelOptions.common.data.facilitySelected.surveillance;
+              else if(dataModelOptions.common.data.visnSelected.surveillance != null){
+                this.ID = (dataModelOptions.common.data.visnSelected.surveillance.toString().length >0) ? dataModelOptions.common.data.visnSelected.surveillance : null;  
+              }
+            }
+            else if(dataModelOptions.common.data.visnSelected.surveillance != null)
+              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
           }
-          if(dataModelOptions.layout == "facility"){
-            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
+            this.ID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;  
           }
-          
+
           if(this.ID != this.currentID)
             this.getData();          
           
@@ -751,15 +795,21 @@ angular.module('ui.models')
         var that = this;
         var data = [];
         var visn_or_facility = '';
+        var activeView = that.dataModelOptions.common.data.activeView;
 
-        if((that.dataModelOptions.layout == "stateVISN" || that.dataModelOptions.layout == "facility") && !this.ID) {
+        /*if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
           this.updateScope(data);
         }
-        else {
-          if(that.dataModelOptions.layout == "stateVISN")
-            visn_or_facility = "-v";
-          else if(that.dataModelOptions.layout == "facility")
-            visn_or_facility = "-f";
+        else {*/
+          if(activeView == "surveillance"){
+            if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
+            else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
+          }
+          else if(activeView == "facility"){
+            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
+            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
+          }
+          
           var parameter = '';
           if(this.ID)
             parameter = "?ID=" + this.ID + visn_or_facility;
@@ -768,7 +818,7 @@ angular.module('ui.models')
                   data = dataset;
                   this.updateScope(data);
               }.bind(this));
-        }
+        //}
       },
 
       destroy: function () {
@@ -812,7 +862,7 @@ angular.module('ui.models')
     });
     return NationalPTSDMDDSUDDataModel;
   })*/
-   .factory('TopMidRiskMetricsDataModel', function ($http, CommonDataModel) {
+  .factory('TopMidRiskMetricsDataModel', function ($http, CommonDataModel) {
     function TopMidRiskMetricsDataModel() {
     }
 
@@ -824,24 +874,34 @@ angular.module('ui.models')
         var dataModelOptions = this.dataModelOptions;
         var currentID = null;
 
-        if(dataModelOptions.layout == "stateVISN"){
-          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+          if(dataModelOptions.common.data.facilitySelected.surveillance)
+            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
+          else if(dataModelOptions.common.data.visnSelected.surveillance)
+            currentID = dataModelOptions.common.data.visnSelected.surveillance;
         }
-        if(dataModelOptions.layout == "facility"){
-          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+          currentID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;   
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
           
           this.currentID = this.ID;
 
-          if(dataModelOptions.layout == "stateVISN"){
-            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+            if(dataModelOptions.common.data.facilitySelected.surveillance != null){
+              if (dataModelOptions.common.data.facilitySelected.surveillance.toString().length >0) this.ID = dataModelOptions.common.data.facilitySelected.surveillance;
+              else if(dataModelOptions.common.data.visnSelected.surveillance != null){
+                this.ID = (dataModelOptions.common.data.visnSelected.surveillance.toString().length >0) ? dataModelOptions.common.data.visnSelected.surveillance : null;  
+              }
+            }
+            else if(dataModelOptions.common.data.visnSelected.surveillance != null)
+              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
           }
-          if(dataModelOptions.layout == "facility"){
-            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
+            this.ID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;  
           }
-          
+
           if(this.ID != this.currentID)
             this.getData();          
           
@@ -855,15 +915,21 @@ angular.module('ui.models')
         var that = this;
         var data = [];
         var visn_or_facility = '';
+        var activeView = that.dataModelOptions.common.data.activeView;
 
-        if((that.dataModelOptions.layout == "stateVISN" || that.dataModelOptions.layout == "facility") && !this.ID) {
+        /*if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
           this.updateScope(data);
         }
-        else {
-          if(that.dataModelOptions.layout == "stateVISN")
-            visn_or_facility = "-v";
-          else if(that.dataModelOptions.layout == "facility")
-            visn_or_facility = "-f";
+        else {*/
+          if(activeView == "surveillance"){
+            if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
+            else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
+          }
+          else if(activeView == "facility"){
+            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
+            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
+          }
+          
           var parameter = '';
           if(this.ID)
             parameter = "?ID=" + this.ID + visn_or_facility;
@@ -880,7 +946,7 @@ angular.module('ui.models')
                   }
                   this.updateScope(data);
               }.bind(this));
-        }
+        //}
       },
 
       destroy: function () {
@@ -1006,23 +1072,198 @@ angular.module('ui.models')
         var dataModelOptions = this.dataModelOptions;
         var currentID = null;
 
-        if(dataModelOptions.layout == "stateVISN"){
-          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+          if(dataModelOptions.common.data.facilitySelected.surveillance)
+            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
+          else if(dataModelOptions.common.data.visnSelected.surveillance)
+            currentID = dataModelOptions.common.data.visnSelected.surveillance;
         }
-        if(dataModelOptions.layout == "facility"){
-          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+          currentID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;   
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
           
           this.currentID = this.ID;
 
-          if(dataModelOptions.layout == "stateVISN"){
-            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+            if(dataModelOptions.common.data.facilitySelected.surveillance != null){
+              if (dataModelOptions.common.data.facilitySelected.surveillance.toString().length >0) this.ID = dataModelOptions.common.data.facilitySelected.surveillance;
+              else if(dataModelOptions.common.data.visnSelected.surveillance != null){
+                this.ID = (dataModelOptions.common.data.visnSelected.surveillance.toString().length >0) ? dataModelOptions.common.data.visnSelected.surveillance : null;  
+              }
+            }
+            else if(dataModelOptions.common.data.visnSelected.surveillance != null)
+              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
           }
-          if(dataModelOptions.layout == "facility"){
-            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
+            this.ID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;  
           }
+
+          if(this.ID != this.currentID)
+            this.getData();          
+          
+        }.bind(this));
+
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        var visn_or_facility = '';
+        var activeView = that.dataModelOptions.common.data.activeView;
+
+        /*if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
+          this.updateScope(data);
+        }
+        else {*/
+          if(activeView == "surveillance"){
+            if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
+            else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
+          }
+          else if(activeView == "facility"){
+            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
+            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
+          }
+          
+          var parameter = '';
+          if(this.ID)
+            parameter = "?ID=" + this.ID + visn_or_facility;
+          $http.get('/api/outReachStatusMetrics'+ parameter)
+          .success(function(dataset) {
+                  data = dataset;
+                  this.updateScope(data);
+              }.bind(this));
+        //}
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return OutreachStatusMetricsDataModel;
+  })
+  .factory('FacilityDataModel', function ($http, CommonDataModel) {
+    function FacilityDataModel() {
+    }
+
+    FacilityDataModel.prototype = Object.create(CommonDataModel.prototype);
+    FacilityDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(FacilityDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        var currentID = null;
+
+        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+          if(dataModelOptions.common.data.facilitySelected.surveillance)
+            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
+          else if(dataModelOptions.common.data.visnSelected.surveillance)
+            currentID = dataModelOptions.common.data.visnSelected.surveillance;
+        }
+        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+          currentID = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;   
+        }
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentID = this.ID; 
+          
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+            /*if(dataModelOptions.common.data.facilitySelected.surveillance != null)
+              this.ID = dataModelOptions.common.data.facilitySelected.surveillance;*/
+            if(dataModelOptions.common.data.visnSelected.surveillance != null)
+              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
+          }
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
+            this.ID = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;  
+          }
+          /*console.log("FacilityDataModel commonDataChange - this", this);
+          console.log("FacilityDataModel commonDataChange - currentId", this.currentID);
+          console.log("FacilityDataModel commonDataChange - this.Id", this.ID);
+          console.log("FacilityDataModel commonDataChange - facilitySelected.facility", dataModelOptions.common.data.visnSelected.facility);*/
+          if(this.ID != this.currentID)
+            this.getData();          
+          
+        }.bind(this));
+        this.updateScope('-');
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        var visn_or_facility = '';
+        var activeView = that.dataModelOptions.common.data.activeView;
+  
+        /*if((activeView == "surveillance" || activeView == "facility") && !this.ID) {
+          this.updateScope(data);
+        }
+        else {*/
+          if(activeView == "surveillance"){
+            if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
+            else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
+          }
+          else if(activeView == "facility"){
+            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
+            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
+          }
+ 
+          var parameter = '';
+          if(this.ID)
+            parameter = "?ID=" + this.ID + visn_or_facility;
+          $http.get('/api/facilityRoster'+ parameter)
+          .success(function(dataset) {
+                  data = dataset;
+                  this.updateScope(data);
+              }.bind(this));
+        //}
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return FacilityDataModel;
+  })
+  .factory('VISNDataModel', function ($http, CommonDataModel) {
+    function VISNDataModel() {
+    }
+
+    VISNDataModel.prototype = Object.create(CommonDataModel.prototype);
+    VISNDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(VISNDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        var currentID = null;
+
+        /*if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+          if(dataModelOptions.common.data.facilitySelected)
+            currentID = dataModelOptions.common.data.facilitySelected;
+          else if(dataModelOptions.common.data.visnSelected)
+            currentID = dataModelOptions.common.data.visnSelected;
+        }
+        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+          currentID = (dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+        }*/
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          
+          this.currentID = this.ID;
+
+          /*if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+            if(dataModelOptions.common.data.facilitySelected)
+              this.ID = dataModelOptions.common.data.facilitySelected;
+            else if(dataModelOptions.common.data.visnSelected)
+              this.ID = dataModelOptions.common.data.visnSelected; 
+          }
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.ID = (dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+          }*/
           
           if(this.ID != this.currentID)
             this.getData();          
@@ -1037,24 +1278,25 @@ angular.module('ui.models')
         var that = this;
         var data = [];
         var visn_or_facility = '';
+        var activeView = that.dataModelOptions.common.data.activeView;
 
-        if((that.dataModelOptions.layout == "stateVISN" || that.dataModelOptions.layout == "facility") && !this.ID) {
+        /*if((activeView == "surveillance" || activeView == "facility" || activeView === undefined) && !this.ID) {
           this.updateScope(data);
         }
         else {
-          if(that.dataModelOptions.layout == "stateVISN")
-            visn_or_facility = "-v";
-          else if(that.dataModelOptions.layout == "facility")
+          if(that.dataModelOptions.common.data.facilitySelected)
             visn_or_facility = "-f";
+          else if(that.dataModelOptions.common.data.visnSelected == "facility")
+            visn_or_facility = "-v";*/
           var parameter = '';
           if(this.ID)
             parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/outReachStatusMetrics'+ parameter)
+          $http.get('/api/visnRoster'+ parameter)
           .success(function(dataset) {
                   data = dataset;
                   this.updateScope(data);
               }.bind(this));
-        }
+        //}
       },
 
       destroy: function () {
@@ -1062,69 +1304,5 @@ angular.module('ui.models')
       }
     });
 
-    return OutreachStatusMetricsDataModel;
-  })
-  .factory('FacilityDataModel', function ($http, WidgetDataModel) {
-    function FacilityDataModel() {
-    }
-
-    FacilityDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    FacilityDataModel.prototype.constructor = WidgetDataModel;
-
-    angular.extend(FacilityDataModel.prototype, {
-       init: function () {
-        var dataModelOptions = this.dataModelOptions;
-        this.updateScope('-');
-        this.getData();
-      },
-
-      getData: function () {
-        var that = this;
-        var data = [];
-        $http.get('/api/facilityRoster')
-          .success(function(dataset) {
-                  data = dataset; 
-                  this.updateScope(data);
-              }.bind(this));
-      },
-
-      destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
-      }
-    });
-    
-    return FacilityDataModel;
-  })
-  .factory('VISNDataModel', function ($http, WidgetDataModel) {
-    function VISNDataModel() {
-    }
-
-    VISNDataModel.prototype = Object.create(WidgetDataModel.prototype);
-    VISNDataModel.prototype.constructor = WidgetDataModel;
-
-    angular.extend(VISNDataModel.prototype, {
-       init: function () {
-        var dataModelOptions = this.dataModelOptions;
-        this.updateScope('-');
-        this.getData();
-      },
-
-      getData: function () {
-        var that = this;
-        var data = [];
-        var user = JSON.parse(sessionStorage.user);
-
-        $http.get('/api/visnRoster?visnid='+user.VISN)
-          .success(function(dataset) {
-                  data = dataset; 
-                  this.updateScope(data);
-              }.bind(this));
-      },
-
-      destroy: function () {
-        WidgetDataModel.prototype.destroy.call(this);
-      }
-    });
-    
     return VISNDataModel;
   });

@@ -166,6 +166,26 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "            </div>\r" +
     "\n" +
+    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Facility View'\">\r" +
+    "\n" +
+    "                <label style=\"font-weight:normal\">\r" +
+    "\n" +
+    "                    <span> {{ FacilityName }}</span>\r" +
+    "\n" +
+    "                </label>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Surveillance View'\">\r" +
+    "\n" +
+    "                <label style=\"font-weight:normal\">\r" +
+    "\n" +
+    "                    <span> {{ VISN_FacilityName }}</span>\r" +
+    "\n" +
+    "                </label>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
     "        </div>\r" +
     "\n" +
     "    </div>\r" +

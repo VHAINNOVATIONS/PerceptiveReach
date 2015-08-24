@@ -38,32 +38,52 @@ angular.module('ui.widgets')
 			      DTColumnDefBuilder.newColumnDef(2),
             DTColumnDefBuilder.newColumnDef(3)
           ];
+        $scope.eventTimer = null;
       },
       link: function postLink(scope) {
         scope.$on("bindEvents", function (){
-          $('#tblVismRoster tbody').on( 'click', 'tr', function (event) {
+          $('#tblVismRoster').on( 'click', 'tr', function (event) {
+            if(scope.eventTimer == event.timeStamp) return;
+
+            scope.eventTimer = event.timeStamp;
+            var visnId = null;
+            var commonData = scope.widget.dataModelOptions.common;
+            
+            //if(scope.previousSelectedRowIndex == event.currentTarget.rowIndex){
             if($(this).hasClass('selected')){
+              $(this).removeClass('selected');  
+              //$('tr.selected').removeClass('selected');
+              $(this).removeClass('selected').removeClass('selected');
+              visnId = '';
+              //scope.previousSelectedRowIndex = null;
             }
             else{
-              $('tr.selected').removeClass('selected');
-              $(this).addClass('selected');
-              // get common data object
-              var commonData = scope.widget.dataModelOptions.common;
-              console.log("commonData",commonData);
-              console.log("clickEvent",event);
+              //$('tr.selected').removeClass('selected');
+              //$(this).addClass('selected');      
+               $('#tblVismRoster tbody tr').filter(['.selected'].join()).removeClass('selected');
+              $(this).addClass('selected');      
               // update common data object with new patient object
-              var visnId = event.currentTarget.cells[0];
+              visnId = parseInt(event.currentTarget.cells[0].innerText);
               /*var obj = jQuery.grep(scope.patientList, function( n, i ) {
                 return ( n.ReachID == vetId );
               });*/
               console.log("VISN ID Selected: ",visnId);
-              //delete obj[0].OutreachStatusSelect;
-              commonData.data.visnSelected = visnId;
-              console.log("CommonDataAfterClick: ", commonData);
-              // broadcast message throughout system
-              scope.$parent.$broadcast('commonDataChanged', commonData);
+              //delete obj[0].OutreachStatusSelect;              
             }
-            scope.$apply();
+
+            var activeView = commonData.data.activeView;
+            if(activeView == "surveillance"){
+              commonData.data.visnSelected.surveillance = visnId;
+              commonData.data.facilitySelected.surveillance = null; 
+            }
+              
+            else if(activeView == "facility")
+              commonData.data.visnSelected.facility = visnId;
+            //console.log("CommonDataAfterClick: ", commonData);
+
+            // broadcast message throughout system
+            scope.$root.$broadcast('commonDataChanged', commonData);
+            //scope.$apply();
           });
         });
         scope.$watch('widgetData', function(data){

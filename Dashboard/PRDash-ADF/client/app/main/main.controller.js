@@ -25,48 +25,50 @@ angular.module('app')
     //user.DashboardData = JSON.parse(user.DashboardData);
     // initialize LayoutOptions depending on role or dashboard data
     var layouts = [];
+    var activeView = null;
     var defaultWidgetsLayout = DefaultWidgetService.getDefaultWidgetsObj(widgetDefinitions);
     var defaultWidgetsAll = DefaultWidgetService.getAllDefaultWidgets(widgetDefinitions);
     var widgetsAllObj = DefaultWidgetService.getAllWidgetsObj(widgetDefinitions);
-
+    
     if (user.DashboardData){      
       var layout = null;
       for (var layoutIdx in user.DashboardData.layouts){
         layout = user.DashboardData.layouts[layoutIdx];
 
-        if(layout.title.indexOf("National") != -1){
-          layout.defaultWidgets = defaultWidgetsLayout.national;
-          layout.widgetDefinitions = widgetsAllObj.national;
-        }
-        else if(layout.title.indexOf("VISN") != -1){
-          layout.defaultWidgets = defaultWidgetsLayout.stateVISN;
-          layout.widgetDefinitions = widgetsAllObj.stateVISN;
+        if(layout.title.indexOf("Surveillance") != -1){
+          layout.defaultWidgets = defaultWidgetsLayout.surveillance;
+          layout.widgetDefinitions = widgetsAllObj.surveillance;
+          if (layout.active) activeView = "surveillance";
         }
         else if(layout.title.indexOf("Facility") != -1){
           layout.defaultWidgets = defaultWidgetsLayout.facility;
           layout.widgetDefinitions = widgetsAllObj.facility;
+          if (layout.active) activeView = "facility";
         }
         else if(layout.title.indexOf("Individual") != -1){
           layout.defaultWidgets = defaultWidgetsLayout.individual;
           layout.widgetDefinitions = widgetsAllObj.individual;
+          if (layout.active) activeView = "individual";
         }
-        
+
         user.DashboardData.layouts[layoutIdx] = layout;
       }
       layouts = user.DashboardData.layouts;
-
       // populate local storage
       sessionStorage.setItem(user.UserDashboardID, JSON.stringify(user.DashboardData));
     }
     else{
       var role = user.UserRole;
-     
+      var layout = null;
       if (user.VISN_State_Reg_View_Access){
-        layouts.push({ title: 'National View', active: (role.match(/^(SUP|REP|ADM)$/)) ? true : false , defaultWidgets: defaultWidgetsLayout.national, widgetDefinitions: widgetsAllObj.national});
-        layouts.push({ title: 'VISN View', active: false, defaultWidgets: defaultWidgetsLayout.stateVISN, widgetDefinitions: widgetsAllObj.stateVISN});
+        layout = { title: 'Surveillance View', active: (role.match(/^(SUP|REP|ADM)$/)) ? true : false , defaultWidgets: defaultWidgetsLayout.surveillance, widgetDefinitions: widgetsAllObj.surveillance};
+        if (layout.active) activeView = "surveillance";
+        layouts.push(layout);
       }
       if (user.Facility_View_Access){
-        layouts.push({ title: 'Facility View', active: (role.match(/^(CCT)$/)) ? true : false, defaultWidgets: defaultWidgetsLayout.facility, widgetDefinitions: widgetsAllObj.facility});  
+        layout = { title: 'Facility View', active: (role.match(/^(CCT)$/)) ? true : false, defaultWidgets: defaultWidgetsLayout.facility, widgetDefinitions: widgetsAllObj.facility};
+        if (layout.active) activeView = "facility";
+        layouts.push(layout);  
       }
       if (user.Individual_View_Access){
         layouts.push({ title: 'Individual View', active: false, defaultWidgets: defaultWidgetsLayout.individual, widgetDefinitions: widgetsAllObj.individual});
@@ -87,18 +89,21 @@ angular.module('app')
     // initialize common data object and broadcast to widgets
     $scope.common = {
       data: {
-        visnSelected: user.VISN,
-        facilitySelected: user.UserHomeFacility,
+        visnSelected: {surveillance: null, facility: user.VISN},
+        facilitySelected: {surveillance: null, facility: user.UserHomeFacility},
         patientIdSelected: 1,
+        activeView: activeView,
         userObj: {}
       }
     };
-   
+   console.log("main.controller - commonData:", $scope.common);
+   console.log("main.controller - mainScope:", $scope);
+
     $timeout(function(){
       // Add listener for when layout is changed
       $('ul li a').click(function(e) 
       {
-        //alert("clickme");
+        $scope.common.data.activeView = e.currentTarget.innerText.replace(' View','').toLowerCase();
         $scope.$broadcast('commonDataChanged', $scope.common);
       });
 
