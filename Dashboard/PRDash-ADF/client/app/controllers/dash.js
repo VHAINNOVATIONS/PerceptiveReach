@@ -40,21 +40,7 @@ angular.module('app')
           width: '34%'
         }
       },*/
-      {
-        name: 'piechart',
-        directive: 'wt-pie-chart',
-        dataAttrName: 'data',
-        dataModelType: TotalRisksDataModel,
-        title: 'Total Risks by VAMC',
-        dataModelOptions: {
-          vamc: 1,
-          defaultWidget: false,
-          layout: 'facility'
-        },
-        style: {
-          width: '25%'
-        }
-      },
+      
       {
         name: 'ClinicalDecisionSupport',
         directive: 'wt-clinical-decision-support',
@@ -89,36 +75,35 @@ angular.module('app')
         sizeX:10
       },
       {
-        name: 'FacilityTable',
-        directive: 'wt-Facility-Roster',
+        name: 'contact',
+        directive: 'wt-contact',
         dataAttrName: 'data',
-        dataModelType: FacilityDataModel,
-        title: 'Facility Roster by VAMC',
+        dataModelType: ContactBaseDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          layout: 'facility',
-          vamc: 1
+          layout: 'individual'
         },
-        style: {
-          width: '55%'
-        },
-        sizeX:10
+        title: 'Patient Contact',
+        size: {
+          width: '25%',
+          height: '250px'
+        }
       },
       {
-        name: 'VISNTable',
-        directive: 'wt-Vism-Roster',
+        name: 'emergency',
+        directive: 'wt-emergency-contact',
         dataAttrName: 'data',
-        dataModelType: VISNDataModel,
-        title: 'VISN Roster by VAMC',
+        dataModelType: EmergencyContactDataModel,
+        title: 'Emergency Contact Information',
         dataModelOptions: {
           defaultWidget: true,
-          layout: 'stateVISN',
-          vamc: 1
+          layout: 'individual',
+          reachID: 16
         },
-        style: {
-          width: '55%'
-        },
-        sizeX:10
+        size: {
+          width: '25%',
+          height: '250px'
+        }
       },
       {
         name: 'patientFlags',
@@ -180,7 +165,40 @@ angular.module('app')
           height: '350px'
         }
       },
-	  {
+      {
+        name: 'VISNTable',
+        directive: 'wt-Vism-Roster',
+        dataAttrName: 'data',
+        dataModelType: VISNDataModel,
+        title: 'VISN Roster',
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'surveillance',
+          vamc: 1
+        },
+        style: {
+          width: '55%'
+        },
+        sizeX:7
+      },
+      {
+        name: 'FacilityTable',
+        directive: 'wt-Facility-Roster',
+        dataAttrName: 'data',
+        dataModelType: FacilityDataModel,
+        title: 'Facility Roster',
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'surveillance,facility',
+          vamc: 1
+        },
+        style: {
+          width: '55%'
+        },
+        sizeX:7
+      },     
+      
+	   {
         name: 'ExternalSuicideStatistics',
         directive: 'wt-external-suicide-statistics',
         dataAttrName: 'data',
@@ -188,7 +206,7 @@ angular.module('app')
         dataModelType: SuicideStatisticsDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          layout: 'national'
+          layout: 'surveillance'
         },
         size: {
           width: '45%',
@@ -196,11 +214,11 @@ angular.module('app')
         },
         sizeX:10
       },
-	  {
-        name: 'NationalAgeGroups',
+	   {
+        name: 'AgeGroups',
         directive: 'wt-national-age-groups',
         dataAttrName: 'data',
-        title: 'National Age Groups Data',
+        title: 'Age Groups Data',
         dataModelType: AgeGroupsMetricsDataModel,
         size: {
           width: '35%',
@@ -208,21 +226,20 @@ angular.module('app')
         },
         dataModelOptions: {
           defaultWidget: true,
-          layout: 'national'
+          layout: 'surveillance,facility'
         }
         //}
-      },
-      
+      },     
 
 	   {
-        name: 'NationalGenderDistribution',
+        name: 'GenderDistribution',
         directive: 'wt-national-gender-distribution',
         dataAttrName: 'data',
-        title: 'National Gender Distribution Data',
+        title: 'Gender Distribution Data',
         dataModelType: GenderDistributionMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          layout: 'national'
+          layout: 'surveillance,facility'
         },
         size: {
           width: '35%',
@@ -230,14 +247,14 @@ angular.module('app')
         }
       },
 	   {
-        name: 'NationalMilitaryBranch',
+        name: 'MilitaryBranch',
         directive: 'wt-national-military-branch',
         dataAttrName: 'data',
-        title: 'National Military Branch Data',
+        title: 'Military Branch Data',
         dataModelType: MilitaryBranchMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          layout: 'national'
+          layout: 'surveillance,facility'
         },
         size: {
           width: '35%',
@@ -245,14 +262,14 @@ angular.module('app')
         }
       },
 	   {
-        name: 'NationalOutReachStatus',
+        name: 'OutReachStatus',
         directive: 'wt-national-out-reach-status',
         dataAttrName: 'data',
-        title: 'National Outreach Status Data',
+        title: 'Outreach Status Data',
         dataModelType: OutreachStatusMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          layout: 'national'
+          layout: 'surveillance,facility'
         },
         size: {
           width: '35%',
@@ -260,21 +277,38 @@ angular.module('app')
         }
       },
 	   {
-        name: 'NationalTopMidRisk',
+        name: 'TopMidRisk',
         directive: 'wt-national-top-mid-risk',
         dataAttrName: 'data',
-        title: 'National Top Mid Risk Data',
+        title: 'Top Mid Risk Data',
         dataModelType: TopMidRiskMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          layout: 'national'
+          layout: 'surveillance,facility'
         },
         size: {
           width: '35%',
           height: '200px'
         }
       },
-	   {
+      //---------------------------------------------------------------------------------------------
+      /*{
+        name: 'piechart',
+        directive: 'wt-pie-chart',
+        dataAttrName: 'data',
+        dataModelType: TotalRisksDataModel,
+        title: 'Total Risks by VAMC',
+        dataModelOptions: {
+          vamc: 1,
+          defaultWidget: false,
+          layout: 'facility'
+        },
+        style: {
+          width: '25%'
+        }
+      },*/
+
+	   /*{
         name: 'NationalVamc',
         directive: 'wt-national-vamc',
         dataAttrName: 'data',
@@ -288,178 +322,7 @@ angular.module('app')
           width: '35%',
           height: '350px'
         }
-      },
-      {
-        name: 'VISNAgeGroups',
-        directive: 'wt-national-age-groups',
-        dataAttrName: 'data',
-        title: 'VISN Age Groups Data',
-        dataModelType: AgeGroupsMetricsDataModel,
-        size: {
-          width: '35%',
-          height: '350px'
-        },
-        dataModelOptions: {
-          defaultWidget: true,
-          layout: 'stateVISN'
-        }
-        //}
-      },
-
-      {
-        name: 'VISNGenderDistribution',
-        directive: 'wt-national-gender-distribution',
-        dataAttrName: 'data',
-        title: 'VISN Gender Distribution Data',
-        dataModelType: GenderDistributionMetricsDataModel,
-        dataModelOptions: {
-          defaultWidget: true,
-          layout: 'stateVISN'
-        },
-        size: {
-          width: '35%',
-          height: '350px'
-        }
-      },
-      {
-        name: 'VISNMilitaryBranch',
-        directive: 'wt-national-military-branch',
-        dataAttrName: 'data',
-        title: 'VISN Military Branch Data',
-        dataModelType: MilitaryBranchMetricsDataModel,
-        dataModelOptions: {
-          defaultWidget: true,
-          layout: 'stateVISN'
-        },
-        size: {
-          width: '35%',
-          height: '350px'
-        }
-      },
-      {
-        name: 'VISNOutReachStatus',
-        directive: 'wt-national-out-reach-status',
-        dataAttrName: 'data',
-        title: 'VISN Outreach Status Data',
-        dataModelType: OutreachStatusMetricsDataModel,
-        dataModelOptions: {
-          defaultWidget: true,
-          layout: 'stateVISN'
-        },
-        size: {
-          width: '35%',
-          height: '350px'
-        }
-      },
-      {
-        name: 'VISNTopMidRisk',
-        directive: 'wt-national-top-mid-risk',
-        dataAttrName: 'data',
-        title: 'VISN Top Mid Risk Data',
-        dataModelType: TopMidRiskMetricsDataModel,
-        dataModelOptions: {
-          defaultWidget: true,
-          layout: 'stateVISN'
-        },
-        size: {
-          width: '35%',
-          height: '200px'
-        }
-      },
-      {
-        name: 'VISNVamc',
-        directive: 'wt-national-vamc',
-        dataAttrName: 'data',
-        title: 'VISN VAMC Data',
-        dataModelType: VAMCMetricsDataModel,
-        dataModelOptions: {
-          defaultWidget: true,
-          layout: 'stateVISN'
-        },
-        size: {
-          width: '35%',
-          height: '350px'
-        }
-      },
-
-      {
-        name: 'FacilityAgeGroups',
-        directive: 'wt-national-age-groups',
-        dataAttrName: 'data',
-        title: 'Facility Age Groups Data',
-        dataModelType: AgeGroupsMetricsDataModel,
-        size: {
-          width: '35%',
-          height: '350px'
-        },
-        dataModelOptions: {
-          defaultWidget: true,
-          layout: 'facility'
-        }
-        //}
-      },
-      
-
-     {
-        name: 'FacilityGenderDistribution',
-        directive: 'wt-national-gender-distribution',
-        dataAttrName: 'data',
-        title: 'Facility Gender Distribution Data',
-        dataModelType: GenderDistributionMetricsDataModel,
-        dataModelOptions: {
-          defaultWidget: true,
-          layout: 'facility'
-        },
-        size: {
-          width: '35%',
-          height: '350px'
-        }
-      },
-     {
-        name: 'FacilityMilitaryBranch',
-        directive: 'wt-national-military-branch',
-        dataAttrName: 'data',
-        title: 'Facility Military Branch Data',
-        dataModelType: MilitaryBranchMetricsDataModel,
-        dataModelOptions: {
-          defaultWidget: true,
-          layout: 'facility'
-        },
-        size: {
-          width: '35%',
-          height: '350px'
-        }
-      },
-     {
-        name: 'FacilityOutReachStatus',
-        directive: 'wt-national-out-reach-status',
-        dataAttrName: 'data',
-        title: 'Facility Outreach Status Data',
-        dataModelType: OutreachStatusMetricsDataModel,
-        dataModelOptions: {
-          defaultWidget: true,
-          layout: 'facility'
-        },
-        size: {
-          width: '35%',
-          height: '350px'
-        }
-      },
-     {
-        name: 'FacilityTopMidRisk',
-        directive: 'wt-national-top-mid-risk',
-        dataAttrName: 'data',
-        title: 'Facility Top Mid Risk Data',
-        dataModelType: TopMidRiskMetricsDataModel,
-        dataModelOptions: {
-          defaultWidget: true,
-          layout: 'facility'
-        },
-        size: {
-          width: '35%',
-          height: '200px'
-        }
-      },
+      },*/
 
       /*
 	  {
@@ -517,37 +380,7 @@ angular.module('app')
           height: '350px'
         }
       },*/
-	  {
-        name: 'contact',
-        directive: 'wt-contact',
-        dataAttrName: 'data',
-        dataModelType: ContactBaseDataModel,
-        dataModelOptions: {
-          defaultWidget: true,
-          layout: 'individual'
-        },
-        title: 'Patient Contact',
-        size: {
-          width: '25%',
-          height: '250px'
-        }
-      },
-      {
-        name: 'emergency',
-        directive: 'wt-emergency-contact',
-        dataAttrName: 'data',
-        dataModelType: EmergencyContactDataModel,
-        title: 'Emergency Contact Information',
-        dataModelOptions: {
-          defaultWidget: true,
-          layout: 'individual',
-          reachID: 16
-        },
-        size: {
-          width: '25%',
-          height: '250px'
-        }
-      },
+	   
       /*{
         name: 'Metrics Chart',
         directive: 'wt-metrics-chart',
@@ -666,8 +499,7 @@ angular.module('app')
     getDefaultWidgetsObj: function(widgetDefinitions)
     {
         var defaultWidgetsObj = {};
-        var nationalViewDefault = [];
-        var stateVISNViewDefault = [];
+        var surveillanceViewDefault = [];
         var facilityViewDefault = [];
         var individualViewDefault = [];
         
@@ -675,21 +507,17 @@ angular.module('app')
         for(var widgetIdx in widgetDefinitions){
           widget = widgetDefinitions[widgetIdx];
           if(widget.dataModelOptions.defaultWidget)
-            if(widget.dataModelOptions.layout == "national"){
-              nationalViewDefault.push({name: widget.name});
+            if(widget.dataModelOptions.layout.indexOf("surveillance") != -1){
+              surveillanceViewDefault.push({name: widget.name});
             }
-            else if(widget.dataModelOptions.layout == "stateVISN"){
-              stateVISNViewDefault.push({name: widget.name});
-            }
-            else if(widget.dataModelOptions.layout == "facility"){
+            if(widget.dataModelOptions.layout.indexOf("facility") != -1){
               facilityViewDefault.push({name: widget.name});
             }
-            else if(widget.dataModelOptions.layout == "individual"){
+            if(widget.dataModelOptions.layout.indexOf("individual") != -1){
               individualViewDefault.push({name: widget.name});
             }            
         }
-        defaultWidgetsObj.national = nationalViewDefault;
-        defaultWidgetsObj.stateVISN = stateVISNViewDefault;
+        defaultWidgetsObj.surveillance = surveillanceViewDefault;
         defaultWidgetsObj.facility = facilityViewDefault;
         defaultWidgetsObj.individual = individualViewDefault;         
 
@@ -699,8 +527,7 @@ angular.module('app')
     getAllWidgetsObj: function(widgetDefinitions)
     {
         var widgetsObj = {};
-        var nationalView = [];
-        var stateVISNView = [];
+        var surveillanceView = [];
         var facilityView = [];
         var individualView = [];
         var allViews = widgetDefinitions;
@@ -708,27 +535,22 @@ angular.module('app')
         var widget = null;
         for(var widgetIdx in widgetDefinitions){
           widget = widgetDefinitions[widgetIdx];
-          if(widget.dataModelOptions.layout == "national"){
-            nationalView.push(widget);
+          if(widget.dataModelOptions.layout.indexOf("surveillance") != -1){
+            surveillanceView.push(widget);
           }
-          else if(widget.dataModelOptions.layout == "stateVISN"){
-            stateVISNView.push(widget);
-          }
-          else if(widget.dataModelOptions.layout == "facility"){
+          if(widget.dataModelOptions.layout.indexOf("facility") != -1){
             facilityView.push(widget);
           }
-          else if(widget.dataModelOptions.layout == "individual"){
+          if(widget.dataModelOptions.layout.indexOf("individual") != -1){
             individualView.push(widget);
           }
           else if(widget.dataModelOptions.layout == "all"){
-            nationalView.push(widget);
-            stateVISNView.push(widget);
+            surveillanceView.push(widget);
             facilityView.push(widget);
             individualView.push(widget);
           }            
         }
-        widgetsObj.national = nationalView;
-        widgetsObj.stateVISN = stateVISNView;
+        widgetsObj.surveillance = surveillanceView;
         widgetsObj.facility = facilityView;
         widgetsObj.individual = individualView; 
         widgetsObj.allViews = allViews;        

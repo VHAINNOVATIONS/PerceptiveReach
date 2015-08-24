@@ -202,7 +202,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t<table id=\"tblFacilityRoster\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "\t\t<thead>\t\r" +
+    "\t\t<thead>\r" +
+    "\n" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'VAMC'; reverse=false\">VAMC</a></th>\t\r" +
     "\n" +
     "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'VAMC Name'; reverse=false\">VAMC Name</a></th>\r" +
     "\n" +
@@ -210,17 +212,23 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'VISN'; reverse=false\">VISN</a></th>\r" +
     "\n" +
+    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Total'; reverse=false\">Total Patients</a></th>\r" +
+    "\n" +
     "\t\t</thead>\r" +
     "\n" +
     "\t\t<tbody>\r" +
     "\n" +
     "\t\t\t<tr ng-repeat=\"ind in data | orderBy:predicate:reverse\">\r" +
     "\n" +
+    "\t\t\t\t<td>{{ind.STA3N}}</td>\r" +
+    "\n" +
     "\t\t\t\t<td>{{ind.VAMC_Name}}</td>\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.StateAbbr}}</td>\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.VISN}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
     "\n" +
     "\t\t\t</tr>\r" +
     "\n" +
