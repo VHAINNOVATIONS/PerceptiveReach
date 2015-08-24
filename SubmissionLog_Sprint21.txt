@@ -1,0 +1,166 @@
+* commit 26f04534c71fc23fec05a4047b93eab9675a3a51 (HEAD, origin/master, origin/HEAD, master)
+| Author: Monica Mohler <monica.mohler@us.pwc.com>
+| Date:   Fri Jul 31 19:37:40 2015 -0400
+| 
+|     CDP & design spec deliverables for sprint 21
+|  
+* commit e9b6e1f7c078ae668a2ea7e22c895ead5cbb1989
+| Merge: b6d69d9 e6e44c5
+| Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| Date:   Thu Jul 30 11:49:45 2015 -0400
+| 
+|     Merge branch 'stable'
+|  
+* commit e6e44c56e269b8fad9aaacbd3d3180caf6d1b781 (origin/stable)
+| Merge: 60d962a 6e0dfb5
+| Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| Date:   Thu Jul 30 11:48:32 2015 -0400
+| 
+|     Merge branch 'test' into stable
+|    
+*   commit 6e0dfb516ecde186984ee1dc710215f3a07263e9 (origin/test)
+|\  Merge: 929eb51 cf34dfc
+| | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | Date:   Thu Jul 30 10:51:59 2015 -0400
+| | 
+| |     Merge branch 'dev' into test
+| |     
+| |     Conflicts:
+| |     	Dashboard/PRDash-ADF/client/components/adf/directives/dashboard/dashboard.html
+| |     	Dashboard/PRDash-ADF/client/components/adf/directives/dashboard/widget-settings-template.html
+| |     	Dashboard/PRDash-ADF/client/components/widget/widgets/patientTable/patientTableWidgetSettingsTemplate.html
+| |     
+| *   commit cf34dfc7b907a07dc71d8993c99e9453896b7f25 (origin/dev)
+| |\  Merge: 18f039f b1afcbe
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Thu Jul 30 08:55:40 2015 -0400
+| | | 
+| | |     Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | |    
+| | * commit b1afcbe9cc0c84c17fb7864cc85eb0c2cc819424
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Wed Jul 29 14:49:20 2015 -0400
+| | | 
+| | |     PR-2663 PR-2664 Select first row from patient roster widget, Persist user selected row on roster widget and display selected row on the grid when the user navigates back to Individual view.
+| | |    
+| * | commit 18f039f5ba3d42d2593fa945177f0bed06be3908
+| |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| |   Date:   Thu Jul 30 08:55:07 2015 -0400
+| |   
+| |       PR-2678 Updated files to add a new environment variable to handle the bypassAuthentication appropriately
+| |     
+| *   commit 0a2c8cef395d685ddd898bc246157ed550dd7327
+| |\  Merge: ebe87c6 21e214c
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Mon Jul 27 17:06:28 2015 -0400
+| | | 
+| | |     Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | |    
+| | * commit 21e214c10b79945a6eb2e9a443fe68c6622c492d
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Mon Jul 27 17:03:54 2015 -0400
+| | | 
+| | |     PR-2659 CSS changes to add border to toolbar.
+| | |    
+| * | commit ebe87c6932e337f554d0db275f72a5708d9b697c
+| |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| |   Date:   Mon Jul 27 17:05:50 2015 -0400
+| |   
+| |       PR-2671 PR-2673 PR-2675 PR-2680 Update various files to fix broken unit tests for API's and Dashboard functionality.
+| |   
+| * commit a36af51dc77d9273fba829fdff9388bdfc4cf131
+| | Author: varunn <varun.neelakantan@us.pwc.com>
+| | Date:   Mon Jul 27 16:55:34 2015 -0400
+| | 
+| |     PR-2454 PR-2677 Floating toolbar to display selected patient name in "individual View"
+| |   
+| * commit ea471e983fb9ef5b781508942a96e55564a31072
+| | Author: varunn <varun.neelakantan@us.pwc.com>
+| | Date:   Mon Jul 27 13:42:53 2015 -0400
+| | 
+| |     PR-2659 Fix for issue Outreach Status values not being updated in DB
+| |   
+| * commit ccede5d20b83bf2b4540e3966eea59f2d931918b
+| | Author: unknown <jrao012@i558dev.innovations.va.gov>
+| | Date:   Sun Jul 26 01:17:03 2015 -0400
+| | 
+| |     PR-2688 Reduced the number of 508 errors by altering widgets, removing non-header headers, text size
+| |   
+| * commit a9c799db9b9bad42438b7375a176d0f7cffd6d41
+| | Author: varunn <varun.neelakantan@us.pwc.com>
+| | Date:   Thu Jul 23 14:06:11 2015 -0400
+| | 
+| |     PR-2676 Adding ignore files for SSIS project
+| |   
+| * commit 13823a9bdcc751a52ad7f3f7abdf88daf95c994e
+| | Author: jarao <jaya.rao@us.pwc.com>
+| | Date:   Wed Jul 22 21:52:42 2015 -0400
+| | 
+| |     PR-2688 508 fixes for the navbar, headings, colors, and hidden items
+| |   
+| * commit a1778357d10be8516e9dd8a5d72626c785fa3401
+| | Author: varunn <varun.neelakantan@us.pwc.com>
+| | Date:   Wed Jul 22 17:56:57 2015 -0400
+| | 
+| |     PR-2676 PR-2658 Adding new project for HealthIndicator SSIS package.
+| |   
+* | commit 929eb51cc3955577055770c19605951b8dbc60d6
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Wed Jul 22 09:10:48 2015 -0400
+| | 
+| |     Updated feature file for PR-1571
+| |     
+* |   commit fc6cbe4e646c2bfd63c5b245877ef986df40fcf8
+|\ \  Merge: d04ab8a 0f29f4f
+| |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| |   Date:   Tue Jul 21 14:51:01 2015 -0400
+| |   
+| |       Merge commit '0f29f4f0de480597b7bc35b5e2018af45fd6a56f' into HEAD
+| |   
+| * commit 0f29f4f0de480597b7bc35b5e2018af45fd6a56f
+| | Author: jarao <jaya.rao@us.pwc.com>
+| | Date:   Tue Jul 21 12:50:17 2015 -0400
+| | 
+| |     PR-2490 PR-1991 Reapplied removal of navigator links for 508 dead-link issue resolution
+| |   
+| * commit 291ba789ad335480b01e3850c24b98966588c521
+| | Author: jarao <jaya.rao@us.pwc.com>
+| | Date:   Tue Jul 21 12:49:23 2015 -0400
+| | 
+| |     PR-2681 Healthdata.gov Widget updated to reflect DB
+| |   
+| * commit 4da618ce7ff5e79cbfa6a266aef00b208d47b0d6
+| | Author: jarao <jaya.rao@us.pwc.com>
+| | Date:   Tue Jul 21 12:36:35 2015 -0400
+| | 
+| |     PR-2490 PR-1991 508 Style display none added for navigation
+| |   
+| * commit a98ab728b5be7aeb9c5bd77a14c317ffc4714a0e
+| | Author: jarao <jaya.rao@us.pwc.com>
+| | Date:   Tue Jul 21 11:39:24 2015 -0400
+| | 
+| |     PR-2490 PR-1991 508 Issue correct, extra links in nav bar commented out
+| |   
+| * commit f043b0b61e2d45405b7cb60139be9f34e6c4f6b2
+|   Author: jarao <jaya.rao@us.pwc.com>
+|   Date:   Tue Jul 21 11:20:52 2015 -0400
+|   
+|       PR-2430 National data widget commented out spec files for unused widgets
+|  
+* commit d04ab8a83b12591c6669402ec01d55a86cd77f09
+| Author: cgattu <chandrakala.gattu@us.pwc.com>
+| Date:   Tue Jul 21 12:42:06 2015 -0400
+| 
+|     Updated user id step for PR-996
+|  
+* commit 8d56ec59f7012dbcd35cb4280baa717e41197fe5
+| Author: cgattu <chandrakala.gattu@us.pwc.com>
+| Date:   Tue Jul 21 12:39:28 2015 -0400
+| 
+|     Updated steps for PR-1268
+|  
+* commit 656ca308ee7e453ac3d55d57bbb87fe26b1e39e0
+  Author: cgattu <chandrakala.gattu@us.pwc.com>
+  Date:   Sat Jul 18 11:24:35 2015 -0400
+  
+      Updated test cases for PR-1317, PR-1571 and PR-876
