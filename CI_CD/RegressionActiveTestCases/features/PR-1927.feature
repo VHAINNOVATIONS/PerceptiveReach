@@ -9,6 +9,6 @@ Then I put in "password" field as "FeAn#011819"
 And I click on check box "checky"
 And I click on "Login" button
 Then I should see "Individual View"
-And I select the veteran "Veteran_109258,Vet109258"
+And I select the veteran "Veteran_109258,Vet109258, SSN XXX-XX-3799"
 Then I should see "Veteran_109258,Vet109258"
 And I click on "Logout" button
