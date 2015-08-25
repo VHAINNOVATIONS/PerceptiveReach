@@ -2522,7 +2522,6 @@ angular.module('ui.widgets')
             .withScroller()
             .withOption('deferRender', true)
             // Do not forget to add the scorllY option!!!
-            .withOption('scrollY', 200)
             .withOption('paging',false)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
@@ -4630,7 +4629,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/clinicalDecisionSupport/clinicalDecisionSupport.html",
-    "<div name=\"clinicalDecisionSupport\" style=\"overflow:auto; height:450px; width:auto\">\r" +
+    "<div name=\"clinicalDecisionSupport\" style=\"overflow:auto; height:auto; width:auto\">\r" +
     "\n" +
     "\t<div ng-repeat=\"cpg in cpgList\">\r" +
     "\n" +
