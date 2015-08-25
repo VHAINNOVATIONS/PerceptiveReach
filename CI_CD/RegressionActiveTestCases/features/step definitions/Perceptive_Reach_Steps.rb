@@ -1,8 +1,8 @@
 Given(/^I navigate to the http:\/\/localhost:(\d+)\/$/) do |arg1|
 #sleep(5)
   visit ('http://localhost:7003')
-  begin
-    scroll to top of page
+ begin
+    #scroll to top of page
     page.execute_script("scroll(250, 0)");
     find_button('Logout').click 
   rescue
