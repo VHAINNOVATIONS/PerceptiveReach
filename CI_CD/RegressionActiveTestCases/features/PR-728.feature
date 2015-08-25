@@ -12,7 +12,6 @@ And I click on "Login" button
 Then I should see "Individual View"
 And I should see "Facility View"
 And I should see "Surveillance View"
-And I should see "State"
 And I click on "Logout" button
 
 
