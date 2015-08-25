@@ -73,7 +73,7 @@ angular.module('ui.dashboard')
         scope.sortableOptions = angular.extend({}, sortableDefaults, scope.options.sortableOptions || {});
 
         scope.gridsterOpts = {
-            columns: 15, // the width of the grid, in columns
+            columns: 30, // the width of the grid, in columns
             pushing: true, // whether to push other items out of the way on move or resize
             floating: true, // whether to automatically float items up so they stack (you can temporarily disable if you are adding unsorted items with ng-repeat)
             swapping: false, // whether or not to have items of the same size switch places instead of pushing down if they are the same size
@@ -82,11 +82,11 @@ angular.module('ui.dashboard')
             rowHeight: 'match', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
             //margins: [10, 10], // the pixel distance between each widget
             outerMargin: true, // whether margins apply to outer edges of the grid
-            defaultSizeX: 5, // the default width of a gridster item, if not specifed
-            defaultSizeY: 4, // the default height of a gridster item, if not specified
-            minSizeX: 2, // minimum column width of an item
+            defaultSizeX: 10, // the default width of a gridster item, if not specifed
+            defaultSizeY: 6, // the default height of a gridster item, if not specified
+            minSizeX: 5, // minimum column width of an item
             maxSizeX: null, // maximum column width of an item
-            minSizeY: 2, // minumum row height of an item
+            minSizeY: 5, // minumum row height of an item
             maxSizeY: null, // maximum row height of an item
             resizable: {
                enabled: true,

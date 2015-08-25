@@ -53,10 +53,8 @@ angular.module('app')
           layout: 'individual',
           guidelineType: 'SRB'
         },
-        style: {
-          width: '45%'
-        },
-        sizeY:3
+        sizeX:12,
+        sizeY:10
       },
       {
         name: 'RosterTable',
@@ -72,7 +70,8 @@ angular.module('app')
         style: {
           width: '55%'
         },
-        sizeX:10
+        sizeX:18,
+        sizeY:10
       },
       {
         name: 'contact',
@@ -115,10 +114,7 @@ angular.module('app')
           defaultWidget: true,
           layout: 'individual'
         },
-        size: {
-          width: '25%',
-          height: '350px'
-        }
+        sizeY:9
       },
       {
         name: 'medication',
@@ -130,10 +126,7 @@ angular.module('app')
           defaultWidget: true,
           layout: 'individual'
         },
-        size: {
-          width: '20%',
-          height: '350px'
-        }
+        sizeY:9
       },
       {
         name: 'appointment',
@@ -160,10 +153,7 @@ angular.module('app')
           defaultWidget: true,
           layout: 'individual'
         },
-        size: {
-          //width: '25%',
-          height: '350px'
-        }
+        sizeY:9
       },
       {
         name: 'VISNTable',
@@ -176,10 +166,8 @@ angular.module('app')
           layout: 'surveillance',
           vamc: 1
         },
-        style: {
-          width: '55%'
-        },
-        sizeX:7
+        sizeX:15,
+        sizeY:9
       },
       {
         name: 'FacilityTable',
@@ -192,38 +180,16 @@ angular.module('app')
           layout: 'surveillance,facility',
           vamc: 1
         },
-        style: {
-          width: '55%'
-        },
-        sizeX:7
-      },     
-      
-	   {
-        name: 'ExternalSuicideStatistics',
-        directive: 'wt-external-suicide-statistics',
-        dataAttrName: 'data',
-        title: 'External Data HealthIndicators.gov Suicide Statistics',
-        dataModelType: SuicideStatisticsDataModel,
-        dataModelOptions: {
-          defaultWidget: true,
-          layout: 'surveillance'
-        },
-        size: {
-          width: '45%',
-          height: '485px'
-        },
-        sizeX:10
-      },
+        sizeX:15,
+        sizeY:9
+      },  
 	   {
         name: 'AgeGroups',
         directive: 'wt-national-age-groups',
         dataAttrName: 'data',
         title: 'Age Groups Data',
         dataModelType: AgeGroupsMetricsDataModel,
-        size: {
-          width: '35%',
-          height: '350px'
-        },
+        sizeY:10,
         dataModelOptions: {
           defaultWidget: true,
           layout: 'surveillance,facility'
@@ -241,10 +207,7 @@ angular.module('app')
           defaultWidget: true,
           layout: 'surveillance,facility'
         },
-        size: {
-          width: '35%',
-          height: '350px'
-        }
+        sizeY:9
       },
 	   {
         name: 'MilitaryBranch',
@@ -255,10 +218,6 @@ angular.module('app')
         dataModelOptions: {
           defaultWidget: true,
           layout: 'surveillance,facility'
-        },
-        size: {
-          width: '35%',
-          height: '350px'
         }
       },
 	   {
@@ -271,10 +230,7 @@ angular.module('app')
           defaultWidget: true,
           layout: 'surveillance,facility'
         },
-        size: {
-          width: '35%',
-          height: '350px'
-        }
+        sizeY:10
       },
 	   {
         name: 'TopMidRisk',
@@ -290,6 +246,22 @@ angular.module('app')
           width: '35%',
           height: '200px'
         }
+      },
+      {
+        name: 'ExternalSuicideStatistics',
+        directive: 'wt-external-suicide-statistics',
+        dataAttrName: 'data',
+        title: 'External Data HealthIndicators.gov Suicide Statistics',
+        dataModelType: SuicideStatisticsDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          layout: 'surveillance'
+        },
+        size: {
+          width: '45%',
+          height: '485px'
+        },
+        sizeX:10
       },
       //---------------------------------------------------------------------------------------------
       /*{

@@ -67,7 +67,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/clinicalDecisionSupport/clinicalDecisionSupport.html",
-    "<div name=\"clinicalDecisionSupport\" style=\"overflow:auto; height:450px; width:auto\">\r" +
+    "<div name=\"clinicalDecisionSupport\" style=\"overflow:auto; height:auto; width:auto\">\r" +
     "\n" +
     "\t<div ng-repeat=\"cpg in cpgList\">\r" +
     "\n" +
