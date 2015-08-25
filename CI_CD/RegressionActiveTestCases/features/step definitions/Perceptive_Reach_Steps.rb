@@ -1,13 +1,13 @@
 Given(/^I navigate to the http:\/\/localhost:(\d+)\/$/) do |arg1|
 #sleep(5)
   visit ('http://localhost:7003')
-  begin
+ # begin
     #scroll to top of page
-    page.execute_script("scroll(250, 0)");
-    find_button('Logout').click 
-  rescue
-    expect(page).to have_content 'I accept the terms and conditions for accessing the system described above'
-  end  
+    #page.execute_script("scroll(250, 0)");
+    #find_button('Logout').click 
+  #rescue
+    #expect(page).to have_content 'I accept the terms and conditions for accessing the system described above'
+  #end  
 end
 
 
@@ -97,12 +97,13 @@ end
 
 When(/^I click on close on the "(.*?)" widget$/) do |widgetname|
   title = widgetname
-  page.find(:xpath, "//span[normalize-space(text())='#{title}']/following-sibling::span[2]").click #find widget and click close button
+page.find(:xpath, "//span[normalize-space(text())='emergency']/following::button[3]",:match => :prefer_exact).click
+
 end
 
 When(/^I click on edit on the "(.*?)" widget$/) do |widgetname|
   title = widgetname
-  page.find(:xpath, "//span[normalize-space(text())='#{title}']/following-sibling::span[3]").click #find widget and click edit button
+   page.find(:xpath, "//span[normalize-space(text())='emergency']/following::button[2]",:match => :prefer_exact).click #find widget and click edit button
   expect(page).to have_content 'Widget Options'
 end
 
