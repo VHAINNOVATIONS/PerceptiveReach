@@ -20,25 +20,26 @@
 
 		<label id="lblConsent" tabindex="-1" alt="Consent" for="checky">Consent</label><br>
         <input type="checkbox" id="checky" autocomplete="off" name="checky" required> I accept the terms and conditions for accessing the system described above.  Hit the spacebar as needed to check this box.
-        <div class="form-group has-error">
-          <p class="help-block" tabindex="-1" ng-show="(form.email.$error.required || form.password.$error.required) && submitted">
-             Please enter your username/Password. 
+
+		<div class="form-group has-error" id="errorMessage">	
+          <p class="help-block" style="background-color:#FCDEDE; color:#662928;" ng-show="(form.email.$error.required || form.password.$error.required) && submitted">
+               Please enter your Username/Password. 
           </p>
-          <p class="help-block" tabindex="-1" ng-show="form.email.$error.email && submitted">
-             Please enter a valid username.
+          <p class="help-block" style="background-color:#FCDEDE color:#662928;" ng-show="form.email.$error.email && submitted">
+               Please enter a valid username.
           </p>
-          <p class="help-block" tabindex="-1" ng-show="form.email.$error.pattern && submitted">
-             Invalid username.
+          <p class="help-block" style="background-color:#FCDEDE color:#662928;" ng-show="form.email.$error.pattern && submitted">
+               Invalid username.
           </p>
-          <p class="help-block" tabindex="-1" ng-show="form.password.$error.pattern && submitted">
-             Invalid password.
+          <p class="help-block" style="background-color:#FCDEDE color:#662928;" ng-show="form.password.$error.pattern && submitted">
+               Invalid password.
           </p>
-          <p class="help-block" tabindex="-1" ng-show="form.email.$error.maxlength || form.password.$error.maxlength && submitted">
-             Username/Password should be less than or equal to 32 characters.
+          <p class="help-block" style="background-color:#FCDEDE color:#662928;" ng-show="form.email.$error.maxlength || form.password.$error.maxlength && submitted">
+               Username/Password should be less than or equal to 32 characters.
           </p>
-          <p class="help-block" tabindex="-1">
+          <p class="help-block" style="background-color:#FCDEDE color:#662928;">
   			   {{ errors.other }}
-  		    </p>
+  		  </p>
         </div>
 
         <div>
