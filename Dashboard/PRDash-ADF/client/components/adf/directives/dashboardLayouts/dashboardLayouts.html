@@ -10,10 +10,5 @@
             <!-- <span class="glyphicon glyphicon-remove"></span> -->
         </a>
     </li>
-    <li>
-        <a ng-click="createNewLayout()">
-            <span class="glyphicon glyphicon-plus"></span>
-        </a>
-    </li>
 </ul>
 <div ng-repeat="layout in layouts | filter:isActive" dashboard="layout.dashboard" template-url="client/components/adf/directives/dashboard/dashboard.html" dashboard-title="layout.title"></div>
