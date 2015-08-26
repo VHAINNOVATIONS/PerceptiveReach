@@ -44,7 +44,7 @@ angular.module('ui.models')
 
         this.widgetScope.$on('defaultWidgetsSelected', function (event, data) {
           this.dataModelOptions.common = data;
-          this.sta3N = data.data.facilitySelected;
+          this.sta3N = data.data.facilitySelected.facility;
           this.getData();
         }.bind(this));
       },
