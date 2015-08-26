@@ -348,16 +348,6 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "    </li>\r" +
     "\n" +
-    "    <li>\r" +
-    "\n" +
-    "        <a ng-click=\"createNewLayout()\">\r" +
-    "\n" +
-    "            <span class=\"glyphicon glyphicon-plus\"></span>\r" +
-    "\n" +
-    "        </a>\r" +
-    "\n" +
-    "    </li>\r" +
-    "\n" +
     "</ul>\r" +
     "\n" +
     "<div ng-repeat=\"layout in layouts | filter:isActive\" dashboard=\"layout.dashboard\" template-url=\"client/components/adf/directives/dashboard/dashboard.html\" dashboard-title=\"layout.title\"></div>"
