@@ -34,6 +34,10 @@ angular.module('app')
     $scope.user = {};
     $scope.errors = {};
     CipherService.getEncryptionObj();
+	
+	$(document).ready(function(){
+	$('[data-toggle="tooltip"]').tooltip(); 
+	});
 
     //Add listener to for checkbox
     $('.btn-login').attr("disabled","disabled");
