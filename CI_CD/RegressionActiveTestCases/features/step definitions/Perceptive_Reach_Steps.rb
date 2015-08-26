@@ -97,14 +97,16 @@ end
 
 When(/^I click on close on the "(.*?)" widget$/) do |widgetname|
   title = widgetname
-page.find(:xpath, "//span[normalize-space(text())='emergency']/following::button[3]",:match => :prefer_exact).click
+#page.find(:xpath, "//span[normalize-space(text())='emergency']/following::button[3]",:match => :prefer_exact).click
+all(:xpath, "//span[normalize-space(text())='#{title}']/following::button[3]")[1].click
 
 end
 
 When(/^I click on edit on the "(.*?)" widget$/) do |widgetname|
   title = widgetname
-   page.find(:xpath, "//span[normalize-space(text())='emergency']/following::button[2]",:match => :prefer_exact).click #find widget and click edit button
-  expect(page).to have_content 'Widget Options'
+   #page.find(:xpath, "//span[normalize-space(text())='emergency']/following::button[2]",:match => :prefer_exact).click #find widget and click edit button
+   all(:xpath, "//span[normalize-space(text())='#{title}']/following::button[2]")[1].click
+  #expect(page).to have_content 'Widget Options'
 end
 
 When(/^I click on "(.*?)" button$/) do |buttonname|
