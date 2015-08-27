@@ -158,7 +158,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <button name=\"btnClear\" ng-click=\"clear();\"  alt=\"Clear\" title=\"Clear\"  type=\"button\" class=\"btn btn-info\">Clear</button>\r" +
     "\n" +
-    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Individual View' title=\"Individual View Layout\" data-toggle=\"tooltip\" \">\r" +
+    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Individual View'\" title=\"Individual View Layout\">\r" +
     "\n" +
     "                <label alt=\"{{ PatientName }}\" style=\"font-weight:normal\">\r" +
     "\n" +
@@ -168,7 +168,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "            </div>\r" +
     "\n" +
-    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Facility View' title=\"Facility View Layout\" data-toggle=\"tooltip\" \">\r" +
+    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Facility View'\" title=\"Facility View Layout\" >\r" +
     "\n" +
     "                <label alt=\"{{ FacilityName }}\" style=\"font-weight:normal\">\r" +
     "\n" +
@@ -178,7 +178,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "            </div>\r" +
     "\n" +
-    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Surveillance View'  title=\"Surveillance View Layout\" data-toggle=\"tooltip\" \">\r" +
+    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Surveillance View'\"  title=\"Surveillance View Layout\" >\r" +
     "\n" +
     "                <label alt=\"{{VISN_FacilityName\" style=\"font-weight:normal\">\r" +
     "\n" +
