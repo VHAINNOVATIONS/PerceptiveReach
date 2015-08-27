@@ -73,7 +73,7 @@ angular.module('ui.dashboard')
         scope.sortableOptions = angular.extend({}, sortableDefaults, scope.options.sortableOptions || {});
 
         scope.gridsterOpts = {
-            columns: 15, // the width of the grid, in columns
+            columns: 30, // the width of the grid, in columns
             pushing: true, // whether to push other items out of the way on move or resize
             floating: true, // whether to automatically float items up so they stack (you can temporarily disable if you are adding unsorted items with ng-repeat)
             swapping: false, // whether or not to have items of the same size switch places instead of pushing down if they are the same size
@@ -82,11 +82,11 @@ angular.module('ui.dashboard')
             rowHeight: 'match', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
             //margins: [10, 10], // the pixel distance between each widget
             outerMargin: true, // whether margins apply to outer edges of the grid
-            defaultSizeX: 5, // the default width of a gridster item, if not specifed
-            defaultSizeY: 4, // the default height of a gridster item, if not specified
-            minSizeX: 2, // minimum column width of an item
+            defaultSizeX: 10, // the default width of a gridster item, if not specifed
+            defaultSizeY: 6, // the default height of a gridster item, if not specified
+            minSizeX: 5, // minimum column width of an item
             maxSizeX: null, // maximum column width of an item
-            minSizeY: 2, // minumum row height of an item
+            minSizeY: 5, // minumum row height of an item
             maxSizeY: null, // maximum row height of an item
             resizable: {
                enabled: true,
@@ -694,7 +694,9 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <div class=\"btn-group\" ng-if=\"!options.widgetButtons\" data-ng-class=\"{open: open}\" tabindex=\"-1\">\r" +
     "\n" +
-    "                  <button name=\"btnAddWidget\" data-toggle=\"dropdown\" class=\"btn btn-primary dropdown-toggle\">\r" +
+    "\t\t\t<span title=\"Add a Widget\">\r" +
+    "\n" +
+    "                  <button name=\"btnAddWidget\" data-toggle=\"dropdown\" alt=\"Add Widget\" class=\"btn btn-primary dropdown-toggle\">\r" +
     "\n" +
     "                    Add a Widget<span class=\"caret\"/>\r" +
     "\n" +
@@ -704,11 +706,13 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <li ng-repeat=\"widget in widgetDefs\">\r" +
     "\n" +
-    "                      <a name=\"liWidgetDropdown\" href=\"#\" ng-click=\"addWidgetInternal($event, widget);\" class=\"dropdown-toggle nav\"><span class=\"label label-primary\">{{widget.name}}</span></a>\r" +
+    "                      <a name=\"liWidgetDropdown\"  alt=\"Add Widget {{widget.name}}\" title=\"Add Widget {{widget.name}}\" data-toggle=\"tooltip\" href=\"#\" ng-click=\"addWidgetInternal($event, widget);\" class=\"dropdown-toggle nav\"><span class=\"label label-primary\">{{widget.name}}</span></a>\r" +
     "\n" +
     "                    </li>\r" +
     "\n" +
     "                  </ul>\r" +
+    "\n" +
+    "\t\t\t\t </span> \r" +
     "\n" +
     "\t\t\t</div>\r" +
     "\n" +
@@ -716,9 +720,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <div class=\"btn-group\" ng-if=\"options.widgetButtons\" tabindex=\"-1\">\r" +
     "\n" +
-    "                <button name=\"btnWidgetName\" ng-repeat=\"widget in widgetDefs\"\r" +
-    "\n" +
-    "                        ng-click=\"addWidgetInternal($event, widget);\" type=\"button\" class=\"btn btn-primary\">\r" +
+    "                <button name=\"btnWidgetName\"  alt=\"Widget Name {{widget.name}}\" title=\"Widget Name {{widget.name}}\" ng-repeat=\"widget in widgetDefs\" ng-click=\"addWidgetInternal($event, widget);\" type=\"button\" class=\"btn btn-primary\">\r" +
     "\n" +
     "                    {{widget.name}}\r" +
     "\n" +
@@ -728,19 +730,19 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\r" +
     "\n" +
-    "            <button name=\"btnDefaultWarning\" class=\"btn btn-warning\" ng-click=\"resetWidgetsToDefault()\">Default Widgets</button>\r" +
+    "            <button name=\"btnDefaultWarning\"  alt=\"Default Widgets\" title=\"Default Widgets\"  class=\"btn btn-warning\" ng-click=\"resetWidgetsToDefault()\">Default Widgets</button>\r" +
     "\n" +
     "\r" +
     "\n" +
-    "            <button name=\"btnSave\" ng-if=\"options.storage && options.explicitSave\" ng-click=\"options.saveDashboard()\" class=\"btn btn-success\" ng-disabled=\"!options.unsavedChangeCount\">{{ !options.unsavedChangeCount ? \"all saved\" : \"save changes (\" + options.unsavedChangeCount + \")\" }}</button>\r" +
+    "            <button name=\"btnSave\" title=\"Save\" alt=\"Save\"  ng-if=\"options.storage && options.explicitSave\" ng-click=\"options.saveDashboard()\" class=\"btn btn-success\" ng-disabled=\"!options.unsavedChangeCount\">{{ !options.unsavedChangeCount ? \"all saved\" : \"save changes (\" + options.unsavedChangeCount + \")\" }}</button>\r" +
     "\n" +
     "\r" +
     "\n" +
-    "            <button name=\"btnClear\" ng-click=\"clear();\" type=\"button\" class=\"btn btn-info\">Clear</button>\r" +
+    "            <button name=\"btnClear\" ng-click=\"clear();\"  alt=\"Clear\" title=\"Clear\"  type=\"button\" class=\"btn btn-info\">Clear</button>\r" +
     "\n" +
-    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Individual View'\">\r" +
+    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Individual View'\" title=\"Individual View Layout\">\r" +
     "\n" +
-    "                <label style=\"font-weight:normal\">\r" +
+    "                <label alt=\"{{ PatientName }}\" style=\"font-weight:normal\">\r" +
     "\n" +
     "                    <span> {{ PatientName }}</span>\r" +
     "\n" +
@@ -748,9 +750,9 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "            </div>\r" +
     "\n" +
-    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Facility View'\">\r" +
+    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Facility View'\" title=\"Facility View Layout\" >\r" +
     "\n" +
-    "                <label style=\"font-weight:normal\">\r" +
+    "                <label alt=\"{{ FacilityName }}\" style=\"font-weight:normal\">\r" +
     "\n" +
     "                    <span> {{ FacilityName }}</span>\r" +
     "\n" +
@@ -758,9 +760,9 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "            </div>\r" +
     "\n" +
-    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Surveillance View'\">\r" +
+    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Surveillance View'\"  title=\"Surveillance View Layout\" >\r" +
     "\n" +
-    "                <label style=\"font-weight:normal\">\r" +
+    "                <label alt=\"{{VISN_FacilityName\" style=\"font-weight:normal\">\r" +
     "\n" +
     "                    <span> {{ VISN_FacilityName }}</span>\r" +
     "\n" +
@@ -798,11 +800,11 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                        <div id=\"widgetSettings\" style=\"display:inline-block; float:right; position:relative;\">\r" +
     "\n" +
-    "                            <button ng-click=\"widget.contentStyle.display = widget.contentStyle.display === 'none' ? 'block' : 'none'\" style=\"background-color: transparent; float:left;\" class=\"glyphicon\" ng-class=\"{'glyphicon-plus': widget.contentStyle.display === 'none','glyphicon-minus': widget.contentStyle.display !== 'none'}\"></button>\r" +
+    "                            <!--button ng-click=\"widget.contentStyle.display = widget.contentStyle.display === 'none' ? 'block' : 'none'\" style=\"background-color: transparent; float:left;\" class=\"glyphicon\" ng-class=\"{'glyphicon-plus': widget.contentStyle.display === 'none','glyphicon-minus': widget.contentStyle.display !== 'none'}\"></button-->\r" +
     "\n" +
-    "                            <button ng-click=\"openWidgetSettings(widget);\" style=\"background-color: transparent; float:left;\" class=\"glyphicon glyphicon-cog\" ng-if=\"!options.hideWidgetSeyttings\"></button>\r" +
+    "                            <!--button ng-click=\"openWidgetSettings(widget);\" style=\"background-color: transparent; float:left;\" class=\"glyphicon glyphicon-cog\" ng-if=\"!options.hideWidgetSeyttings\"></button-->\r" +
     "\n" +
-    "                            <button ng-click=\"removeWidget(widget);\" style=\"background-color: transparent; float:right;\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
+    "                            <button ng-click=\"removeWidget(widget);\" title=\"Remove Widget\" alt=\"Remove Widget\" style=\"background-color: transparent; float:right;\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
     "\n" +
     "                        </div>\r" +
     "\n" +
@@ -910,9 +912,9 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <li ng-repeat=\"layout in layouts\" ng-class=\"{ active: layout.active }\">\r" +
     "\n" +
-    "        <a ng-click=\"makeLayoutActive(layout)\" tabindex=\"0\">\r" +
+    "        <a ng-click=\"makeLayoutActive(layout)\" alt=\"{{layout.title}}\" title=\"{{layout.title}}\" tabindex=\"0\">\r" +
     "\n" +
-    "            <span ng-dblclick=\"editTitle(layout)\" ng-show=\"!layout.editingTitle\">{{layout.title}}</span>\r" +
+    "            <span ng-dblclick=\"editTitle(layout)\"  ng-show=\"!layout.editingTitle\">{{layout.title}}</span>\r" +
     "\n" +
     "            <form action=\"\" class=\"layout-title\" ng-show=\"layout.editingTitle\" ng-submit=\"saveTitleEdit(layout)\">\r" +
     "\n" +
@@ -925,16 +927,6 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "            <!-- <span class=\"glyphicon glyphicon-pencil\"></span> -->\r" +
     "\n" +
     "            <!-- <span class=\"glyphicon glyphicon-remove\"></span> -->\r" +
-    "\n" +
-    "        </a>\r" +
-    "\n" +
-    "    </li>\r" +
-    "\n" +
-    "    <li>\r" +
-    "\n" +
-    "        <a ng-click=\"createNewLayout()\">\r" +
-    "\n" +
-    "            <span class=\"glyphicon glyphicon-plus\"></span>\r" +
     "\n" +
     "        </a>\r" +
     "\n" +
