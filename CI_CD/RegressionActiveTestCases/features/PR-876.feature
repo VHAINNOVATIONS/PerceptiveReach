@@ -9,7 +9,6 @@ And I click on check box "checky"
 And I click on "Login" button
 When I click on "Individual View"
 And I click on "Add a Widget" button
-And I click on "Add a Widget" button
 And I click on "RosterTable" button in the menu
 And I click on save changes button
 Then I should see the "Patient Roster by VAMC" widget
