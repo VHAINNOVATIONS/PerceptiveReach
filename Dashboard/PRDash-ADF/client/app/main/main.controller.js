@@ -26,10 +26,10 @@ angular.module('app')
     // initialize LayoutOptions depending on role or dashboard data
     var layouts = [];
     var activeView = null;
-    var defaultWidgetsLayout = DefaultWidgetService.getDefaultWidgetsObj(widgetDefinitions);
-    var defaultWidgetsAll = DefaultWidgetService.getAllDefaultWidgets(widgetDefinitions);
-    var widgetsAllObj = DefaultWidgetService.getAllWidgetsObj(widgetDefinitions);
-    
+    var defaultWidgetsLayout = DefaultWidgetService.getDefaultWidgetsObj(widgetDefinitions,user.UserRole);
+    var defaultWidgetsAll = DefaultWidgetService.getAllDefaultWidgets(widgetDefinitions,user.UserRole);
+    var widgetsAllObj = DefaultWidgetService.getAllWidgetsObj(widgetDefinitions,user.UserRole);
+
     if (user.DashboardData){      
       var layout = null;
       for (var layoutIdx in user.DashboardData.layouts){

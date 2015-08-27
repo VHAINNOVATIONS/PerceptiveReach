@@ -16,7 +16,8 @@ angular.module('app')
         directive: 'wt-time',
         dataModelOptions: {
           defaultWidget: false,
-          layout: 'all'
+          layout: 'all',
+          roleAccess: ''
         },
         style: {
           width: '33%'
@@ -51,6 +52,7 @@ angular.module('app')
           //riskLevel: 1,
           defaultWidget: true,
           layout: 'individual',
+          roleAccess: 'SUP,REP,ADM,CCT',
           guidelineType: 'SRB'
         },
         sizeX:12,
@@ -65,6 +67,7 @@ angular.module('app')
         dataModelOptions: {
           defaultWidget: true,
           layout: 'individual',
+          roleAccess: 'SUP,REP,ADM,CCT',
           vamc: 1
         },
         style: {
@@ -80,6 +83,7 @@ angular.module('app')
         dataModelType: ContactBaseDataModel,
         dataModelOptions: {
           defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM,CCT',
           layout: 'individual'
         },
         title: 'Patient Contact',
@@ -96,6 +100,7 @@ angular.module('app')
         title: 'Emergency Contact Information',
         dataModelOptions: {
           defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM,CCT',
           layout: 'individual',
           reachID: 16
         },
@@ -112,6 +117,7 @@ angular.module('app')
         dataModelType: PatientFlagDataModel,
         dataModelOptions: {
           defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM,CCT',
           layout: 'individual'
         },
         sizeY:9
@@ -124,6 +130,7 @@ angular.module('app')
         dataModelType: MedicationDataModel,
         dataModelOptions: {
           defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM,CCT',
           layout: 'individual'
         },
         sizeY:9
@@ -136,6 +143,7 @@ angular.module('app')
         dataModelType: AppointmentDataModel,
         dataModelOptions: {
           defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM,CCT',
           layout: 'individual'
         },
         size: {
@@ -151,6 +159,7 @@ angular.module('app')
         dataModelType: DiagnosesDataModel,
         dataModelOptions: {
           defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM,CCT',
           layout: 'individual'
         },
         sizeY:9
@@ -163,6 +172,7 @@ angular.module('app')
         title: 'VISN Roster',
         dataModelOptions: {
           defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM',
           layout: 'surveillance',
           vamc: 1
         },
@@ -177,12 +187,14 @@ angular.module('app')
         title: 'Facility Roster',
         dataModelOptions: {
           defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM',
           layout: 'surveillance,facility',
           vamc: 1
         },
         sizeX:15,
         sizeY:9
       },  
+
 	   {
         name: 'AgeGroups',
         directive: 'wt-national-age-groups',
@@ -192,6 +204,7 @@ angular.module('app')
         sizeY:10,
         dataModelOptions: {
           defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM,CCT',
           layout: 'surveillance,facility'
         }
         //}
@@ -205,6 +218,7 @@ angular.module('app')
         dataModelType: GenderDistributionMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM,CCT',
           layout: 'surveillance,facility'
         },
         sizeY:9
@@ -217,6 +231,7 @@ angular.module('app')
         dataModelType: MilitaryBranchMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM,CCT',
           layout: 'surveillance,facility'
         }
       },
@@ -228,6 +243,7 @@ angular.module('app')
         dataModelType: OutreachStatusMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM,CCT',
           layout: 'surveillance,facility'
         },
         sizeY:10
@@ -240,6 +256,7 @@ angular.module('app')
         dataModelType: TopMidRiskMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM,CCT',
           layout: 'surveillance,facility'
         },
         size: {
@@ -255,6 +272,7 @@ angular.module('app')
         dataModelType: SuicideStatisticsDataModel,
         dataModelOptions: {
           defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM',
           layout: 'surveillance'
         },
         size: {
@@ -409,6 +427,7 @@ angular.module('app')
         directive: 'wt-gauge',
         dataModelOptions: {
           defaultWidget: false,
+          roleAccess: '',
           layout: 'all'
         },
         attrs: {
@@ -423,6 +442,7 @@ angular.module('app')
         directive: 'wt-fluid',
         dataModelOptions: {
           defaultWidget: false,
+          roleAccess: '',
           layout: 'all'
         },
         size: {
@@ -468,7 +488,7 @@ angular.module('app')
   .factory('DefaultWidgetService', function(){
 
   return {
-    getDefaultWidgetsObj: function(widgetDefinitions)
+    getDefaultWidgetsObj: function(widgetDefinitions, userRole)
     {
         var defaultWidgetsObj = {};
         var surveillanceViewDefault = [];
@@ -479,13 +499,13 @@ angular.module('app')
         for(var widgetIdx in widgetDefinitions){
           widget = widgetDefinitions[widgetIdx];
           if(widget.dataModelOptions.defaultWidget)
-            if(widget.dataModelOptions.layout.indexOf("surveillance") != -1){
+            if(widget.dataModelOptions.layout.indexOf("surveillance") != -1 && widget.dataModelOptions.roleAccess.indexOf(userRole) != -1){
               surveillanceViewDefault.push({name: widget.name});
             }
-            if(widget.dataModelOptions.layout.indexOf("facility") != -1){
+            if(widget.dataModelOptions.layout.indexOf("facility") != -1 && widget.dataModelOptions.roleAccess.indexOf(userRole) != -1){
               facilityViewDefault.push({name: widget.name});
             }
-            if(widget.dataModelOptions.layout.indexOf("individual") != -1){
+            if(widget.dataModelOptions.layout.indexOf("individual") != -1 && widget.dataModelOptions.roleAccess.indexOf(userRole) != -1){
               individualViewDefault.push({name: widget.name});
             }            
         }
@@ -496,7 +516,7 @@ angular.module('app')
         return defaultWidgetsObj;
     },
 
-    getAllWidgetsObj: function(widgetDefinitions)
+    getAllWidgetsObj: function(widgetDefinitions, userRole)
     {
         var widgetsObj = {};
         var surveillanceView = [];
@@ -507,16 +527,16 @@ angular.module('app')
         var widget = null;
         for(var widgetIdx in widgetDefinitions){
           widget = widgetDefinitions[widgetIdx];
-          if(widget.dataModelOptions.layout.indexOf("surveillance") != -1){
+          if(widget.dataModelOptions.layout.indexOf("surveillance") != -1 && widget.dataModelOptions.roleAccess.indexOf(userRole) != -1){
             surveillanceView.push(widget);
           }
-          if(widget.dataModelOptions.layout.indexOf("facility") != -1){
+          if(widget.dataModelOptions.layout.indexOf("facility") != -1 && widget.dataModelOptions.roleAccess.indexOf(userRole) != -1){
             facilityView.push(widget);
           }
-          if(widget.dataModelOptions.layout.indexOf("individual") != -1){
+          if(widget.dataModelOptions.layout.indexOf("individual") != -1 && widget.dataModelOptions.roleAccess.indexOf(userRole) != -1){
             individualView.push(widget);
           }
-          else if(widget.dataModelOptions.layout == "all"){
+          else if(widget.dataModelOptions.layout == "all" && widget.dataModelOptions.roleAccess.indexOf(userRole) != -1){
             surveillanceView.push(widget);
             facilityView.push(widget);
             individualView.push(widget);
@@ -530,13 +550,13 @@ angular.module('app')
         return widgetsObj;
     },
 
-    getAllDefaultWidgets: function(widgetDefinitions)
+    getAllDefaultWidgets: function(widgetDefinitions, userRole)
     {
         var defaultWidgets = [];        
         var widget = null;
         for(var widgetIdx in widgetDefinitions){
-          widget = widget = widgetDefinitions[widgetIdx];
-          if(widget.dataModelOptions.defaultWidget){
+          widget = widgetDefinitions[widgetIdx];
+          if(widget.dataModelOptions.defaultWidget && widget.dataModelOptions.roleAccess.indexOf(userRole) != -1){
              defaultWidgets.push({name: widget.name}); 
           }
         }

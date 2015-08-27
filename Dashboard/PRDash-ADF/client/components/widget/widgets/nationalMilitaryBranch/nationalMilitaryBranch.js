@@ -19,29 +19,53 @@
 angular.module('ui.widgets')
   .directive('wtNationalMilitaryBranch', function () {
     return {
-      restrict: 'A',
+      restrict: 'EAC',
       replace: true,
       templateUrl: 'client/components/widget/widgets/nationalMilitaryBranch/nationalMilitaryBranch.html',
-      scope: {
-        data: '=data'
-      },  
-	controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+       
+	controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
 
-	$scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+	//$scope.dtOptions = DTOptionsBuilder.newOptions()
+	$scope.dtInstanceAbstract = DTInstances;
+        $scope.dtInstance = null;
+        $scope.militaryBranchList = $scope.widgetData;
+        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+          return new Promise( function(resolve, reject){
+            if ($scope.widgetData)
+              resolve($scope.widgetData);
+            else
+              resolve([]);
+          });
+        })
+		.withDOM('lfrti')
 		.withScroller()
 		.withOption('deferRender', true)
 		.withOption('paging',false)
 		.withOption('order', [1, 'desc']);
 	//.withPaginationType('full_numbers').withDisplayLength(5);
-	$scope.dtColumnDefs = [
-		DTColumnDefBuilder.newColumnDef(0),
-		DTColumnDefBuilder.newColumnDef(1)
+	$scope.dtColumns = [
+        DTColumnBuilder.newColumn('BranchDesc').withTitle('Branch'),
+        DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients per Branch')
 	];
   },
   link: function postLink(scope) {
-	scope.$watch('data', function (data) {
-	  if (data) {
+	scope.$watch('widgetData', function (data) {
+	  if (data != null && data.length >0) {
 		scope.data = data;
+		scope.militaryBranchList = data;
+        var promise = new Promise( function(resolve, reject){
+              if (scope.militaryBranchList)
+                resolve(scope.militaryBranchList);
+              else
+                resolve([]);
+            });
+        if(scope.dtInstance)
+          scope.dtInstance.changeData(promise);
+        else {
+          scope.dtInstanceAbstract.getList().then(function(dtInstances){
+            dtInstances.tblMilitaryBranch._renderer.changeData(promise)              
+          });
+        }
 	  }
 	});
   }
