@@ -98,8 +98,18 @@ end
 When(/^I click on close on the "(.*?)" widget$/) do |widgetname|
   title = widgetname
 #page.find(:xpath, "//span[normalize-space(text())='emergency']/following::button[3]",:match => :prefer_exact).click
-all(:xpath, "//span[normalize-space(text())='#{title}']/following::button[3]")[1].click
+all(:xpath, "//span[normalize-space(text())='#{title}']/following::button[1]")[1].click
 
+end
+
+When(/^I select VISN Roster "(.*?)" veteran row in the widget$/) do |arg1|
+  #pending # express the regexp above with the code you wish you had
+  page.find(:xpath,"//td[contains(text(),'#{arg1}')]").click
+end
+
+
+When(/^I Select VAMC facility "(.*?)" in facility roster widget$/) do |arg1|
+  page.find(:xpath,"//td[contains(text(),'#{arg1}')]").click
 end
 
 When(/^I click on edit on the "(.*?)" widget$/) do |widgetname|
