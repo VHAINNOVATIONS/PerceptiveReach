@@ -23,6 +23,10 @@ angular.module('ui.models')
       }
     };
 
+    CommonDataModel.prototype.destroy = function () {
+      WidgetDataModel.prototype.destroy.call(this);
+    };
+
     return CommonDataModel;
   })
   .factory('PatientDataModel', function ($http, CommonDataModel) {
@@ -487,7 +491,7 @@ angular.module('ui.models')
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
           currentID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;   
         }
-
+        console.log("AgeGroupsMetricData init - currentID:", currentID);
         this.widgetScope.$on('commonDataChanged', function (event, data) {
           
           this.currentID = this.ID;
@@ -514,7 +518,7 @@ angular.module('ui.models')
           
         }.bind(this));
 
-        this.updateScope('-');
+        this.updateScope([]);
         this.getData();
       },
 
@@ -668,7 +672,7 @@ angular.module('ui.models')
           
         }.bind(this));
 
-        this.updateScope('-');
+        this.updateScope([]);
         this.getData();
       },
 
@@ -753,7 +757,7 @@ angular.module('ui.models')
        init: function () {
         var dataModelOptions = this.dataModelOptions;
         var currentID = null;
-
+        console.log("MilitaryBranchMetricsData init - inside");
         if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
           if(dataModelOptions.common.data.facilitySelected.surveillance)
             currentID = dataModelOptions.common.data.facilitySelected.surveillance;
@@ -787,7 +791,7 @@ angular.module('ui.models')
           
         }.bind(this));
 
-        this.updateScope('-');
+        this.updateScope([]);
         this.getData();
       },
 
@@ -1025,7 +1029,7 @@ angular.module('ui.models')
           
         }.bind(this));
 
-        this.updateScope('-');
+        this.updateScope([]);
         this.getData();
       },
 
@@ -1105,7 +1109,7 @@ angular.module('ui.models')
           
         }.bind(this));
 
-        this.updateScope('-');
+        this.updateScope([]);
         this.getData();
       },
 
@@ -1188,7 +1192,7 @@ angular.module('ui.models')
             this.getData();          
           
         }.bind(this));
-        this.updateScope('-');
+        this.updateScope([]);
         this.getData();
       },
 
@@ -1203,8 +1207,8 @@ angular.module('ui.models')
         }
         else {*/
           if(activeView == "surveillance"){
-            if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
+            if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
+            else if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
           }
           else if(activeView == "facility"){
             if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
@@ -1270,7 +1274,7 @@ angular.module('ui.models')
           
         }.bind(this));
 
-        this.updateScope('-');
+        this.updateScope([]);
         this.getData();
       },
 

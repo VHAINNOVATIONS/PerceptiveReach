@@ -1,14 +1,4 @@
 <div class="nationalMilitaryBranch">
-	<table id="tblMilitaryBranch" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
-		<thead>	
-			<th><a href="" ng-click="predicate = 'Branch Description'; reverse=false">Branch Description</a></th>
-			<th><a href="" ng-click="predicate = 'Total Number of Patients per Branch'; reverse=false">Total Number of Patients per Branch</a></th>
-		</thead>
-		<tbody>
-			<tr ng-repeat="ind in data track by $index | orderBy:predicate:reverse">
-				<td>{{ind.BranchDesc}}</td>
-				<td>{{ind.Total}}</td>
-			</tr>
-		</tbody>
-	</table>
+	<table id="tblMilitaryBranch" datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance" class="row-border hover" width="100%">
+    </table>
 </div>

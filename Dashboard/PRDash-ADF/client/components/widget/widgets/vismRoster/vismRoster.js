@@ -23,21 +23,34 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/vismRoster/vismRoster.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+        //$scope.dtOptions = DTOptionsBuilder.newOptions()
+        $scope.dtInstanceAbstract = DTInstances;
+        $scope.dtInstance = null;
+        $scope.visnList = $scope.widgetData;
+        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+          return new Promise( function(resolve, reject){
+            if ($scope.widgetData)
+              resolve($scope.widgetData);
+            else
+              resolve([]);
+          });
+
+        })
+        .withDOM('lfrti')
             .withScroller()
             .withOption('deferRender', true)
             // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
             .withOption('paging',false)
             .withOption('order', [0, 'asc']);
-        $scope.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0),
-            DTColumnDefBuilder.newColumnDef(1),
-			      DTColumnDefBuilder.newColumnDef(2),
-            DTColumnDefBuilder.newColumnDef(3)
-          ];
+        $scope.dtColumns = [
+            DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
+            DTColumnBuilder.newColumn('NetworkName').withTitle('Network Name'),
+            DTColumnBuilder.newColumn('RegionServed').withTitle('Region Served'),
+            DTColumnBuilder.newColumn('Total').withTitle('Total Patients')
+        ];    
         $scope.eventTimer = null;
       },
       link: function postLink(scope) {
@@ -61,6 +74,7 @@ angular.module('ui.widgets')
               //$('tr.selected').removeClass('selected');
               //$(this).addClass('selected');      
                $('#tblVismRoster tbody tr').filter(['.selected'].join()).removeClass('selected');
+               console.log("VISNRoster selected:",$(this));
               $(this).addClass('selected');      
               // update common data object with new patient object
               visnId = parseInt(event.currentTarget.cells[0].innerText);
@@ -89,8 +103,37 @@ angular.module('ui.widgets')
         scope.$watch('widgetData', function(data){
           if(data != null && data.length >0){
               scope.data = data;
+              scope.visnList = data;
+              var promise = new Promise( function(resolve, reject){
+                    if (scope.visnList)
+                      resolve(scope.visnList);
+                    else
+                      resolve([]);
+                  });
+              if(scope.dtInstance)
+                scope.dtInstance.changeData(promise);
+              else {
+                scope.dtInstanceAbstract.getList().then(function(dtInstances){
+                  dtInstances.tblVismRoster._renderer.changeData(promise)              
+                });
+              }
               $timeout(function(){
                 scope.$emit('bindEvents');
+                var commonData = scope.widget.dataModelOptions.common;
+                var activeView = commonData.data.activeView;
+                if(activeView == "surveillance"){
+                  if(commonData.data.visnSelected.surveillance != null && commonData.data.visnSelected.surveillance.toString().length > 0)
+                  {
+                    var selectedRow = $('#tblVismRoster').find( "tbody>tr:contains('"+commonData.data.visnSelected.surveillance+"') td:eq(0)" ).parent();
+                    console.log("VISN Roster selected:", selectedRow);
+                    console.log("VISNRoster selected row index:", selectedRow[0].rowIndex);
+                    selectedRow.addClass('selected');//click();
+                    //selectedRow[0].click();//.dataTables_scrollBody
+                    $('.dataTables_scrollBody').animate({
+                      scrollTop: $('#tblVismRoster tbody tr').eq(selectedRow[0].rowIndex).offset().top
+                    },500)
+                  }    
+                }                
               },1500)            
             }
         });

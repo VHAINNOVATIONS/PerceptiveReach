@@ -23,19 +23,33 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/facilityRoster/facilityRoster.html',
      
-      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+        //$scope.dtOptions = DTOptionsBuilder.newOptions()
+        $scope.dtInstanceAbstract = DTInstances;
+        $scope.dtInstance = null;
+        $scope.facilityList = $scope.widgetData;
+        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+          return new Promise( function(resolve, reject){
+            if ($scope.widgetData)
+              resolve($scope.widgetData);
+            else
+              resolve([]);
+          });
+        })
+        .withDOM('lfrti')
             .withScroller()
             .withOption('deferRender', true)
             // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
             .withOption('paging',false)
             .withOption('order', [1, 'desc']);
-        $scope.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0),
-            DTColumnDefBuilder.newColumnDef(1),
-			      DTColumnDefBuilder.newColumnDef(2)
+        $scope.dtColumns = [
+            DTColumnBuilder.newColumn('STA3N').withTitle('VAMC'),
+            DTColumnBuilder.newColumn('VAMC_Name').withTitle('VAMC Name'),
+            DTColumnBuilder.newColumn('StateAbbr').withTitle('State'),
+            DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
+            DTColumnBuilder.newColumn('Total').withTitle('Total Patients')
           ];
       },
       link: function postLink(scope) {
@@ -46,14 +60,18 @@ angular.module('ui.widgets')
             scope.eventTimer = event.timeStamp;
             var facilityId = null;
             var commonData = scope.widget.dataModelOptions.common;
-            
+            var activeView = commonData.data.activeView;
             //if(scope.previousSelectedRowIndex == event.currentTarget.rowIndex){
             if($(this).hasClass('selected')){
-              $(this).removeClass('selected');  
-              //$('tr.selected').removeClass('selected');
-              $(this).removeClass('selected').removeClass('selected');
-              var activeView = commonData.data.activeView;
-              facilityId = '';
+              if(activeView != "facility"){
+                $(this).removeClass('selected');  
+                //$('tr.selected').removeClass('selected');
+                $(this).removeClass('selected').removeClass('selected');
+                var activeView = commonData.data.activeView;
+                facilityId = '';  
+              } 
+              else
+                facilityId = commonData.data.facilitySelected.facility;             
               //scope.previousSelectedRowIndex = null;
             }
             else{
@@ -73,8 +91,7 @@ angular.module('ui.widgets')
               console.log("Facility ID Selected: ",facilityId);
               //delete obj[0].OutreachStatusSelect;              
             }
-
-            var activeView = commonData.data.activeView;
+            
             if(activeView == "surveillance")
               commonData.data.facilitySelected.surveillance = facilityId;
             else if(activeView == "facility")
@@ -89,6 +106,20 @@ angular.module('ui.widgets')
         scope.$watch('widgetData', function(data){
           if(data != null && data.length >0){
               scope.data = data;
+              scope.facilityList = data;
+              var promise = new Promise( function(resolve, reject){
+                    if (scope.facilityList)
+                      resolve(scope.facilityList);
+                    else
+                      resolve([]);
+                  });
+              if(scope.dtInstance)
+                scope.dtInstance.changeData(promise);
+              else {
+                scope.dtInstanceAbstract.getList().then(function(dtInstances){
+                  dtInstances.tblFacilityRoster._renderer.changeData(promise)              
+                });
+              }
               $timeout(function(){
                 scope.$emit('bindEvents');
                 var commonData = scope.widget.dataModelOptions.common;
@@ -100,7 +131,26 @@ angular.module('ui.widgets')
                   }
                   else
                   {
-                    $('#tblFacilityRoster').find( "tbody>tr td:contains('"+commonData.data.facilitySelected.facility+"')" ).parent().click();
+                    var selectedRow = $('#tblFacilityRoster').find( "tbody>tr td:contains('"+commonData.data.facilitySelected.facility+"')" ).parent()[0];
+                    console.log("FacilityRoster selected:", selectedRow);
+                    console.log("FacilityRoster selected row index:", selectedRow.rowIndex);
+                    selectedRow.click();
+                    $('.dataTables_scrollBody').animate({
+                      scrollTop: $('#tblFacilityRoster tbody tr').eq(selectedRow.rowIndex-7).offset().top
+                    },500)
+                  }  
+                }
+                else if(activeView == "surveillance"){
+                  if(commonData.data.facilitySelected.surveillance != null && commonData.data.facilitySelected.surveillance.toString().length > 0)
+                  {
+                    var selectedRow = $('#tblFacilityRoster').find( "tbody>tr td:contains('"+commonData.data.facilitySelected.surveillance+"')" ).parent();
+                    console.log("FacilityRoster selected:", selectedRow);
+                    console.log("FacilityRoster selected row index:", selectedRow[0].rowIndex);           
+                    
+                    selectedRow.addClass('selected');//selectedRow.click();
+                    $('.dataTables_scrollBody').animate({
+                      scrollTop: $('#tblFacilityRoster tbody tr').eq(selectedRow[0].rowIndex-8).offset().top
+                    },500);                                      
                   }  
                 }
                 
