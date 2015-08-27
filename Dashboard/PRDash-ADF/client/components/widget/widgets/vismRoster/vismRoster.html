@@ -1,18 +1,4 @@
-<div class="vismRoster">
-	<table id="tblVismRoster" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
-		<thead>	
-			<th><a href="" ng-click="predicate = 'VISN'; reverse=false">VISN</a></th>
-			<th><a href="" ng-click="predicate = 'Network Name'; reverse=false">Network Name</a></th>
-			<th><a href="" ng-click="predicate = 'Region Served'; reverse=false">Region Served</a></th>
-			<th><a href="" ng-click="predicate = 'Total Patients'; reverse=false">Total Patients</a></th>
-		</thead>
-		<tbody>
-			<tr ng-repeat="ind in data | orderBy:predicate:reverse">
-				<td>{{ind.VISN}}</td>
-				<td>{{ind.NetworkName}}</td>
-				<td>{{ind.RegionServed}}</td>
-				<td>{{ind.Total}}</td>
-			</tr>
-		</tbody>
-	</table>
+<div>
+    <table id="tblVismRoster" datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance" class="row-border hover" width="100%">
+    </table>
 </div>

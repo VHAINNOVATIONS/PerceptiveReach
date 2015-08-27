@@ -19,15 +19,25 @@
 angular.module('ui.widgets')
   .directive('wtNationalOutReachStatus', function () {
     return {
-      restrict: 'A',
+      restrict: 'EAC',
       replace: true,
       templateUrl: 'client/components/widget/widgets/nationalOutReachStatus/nationalOutReachStatus.html',
-      scope: {
-        data: '=data'
-      },
-      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+      
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+        //$scope.dtOptions = DTOptionsBuilder.newOptions()
+        $scope.dtInstanceAbstract = DTInstances;
+        $scope.dtInstance = null;
+        $scope.outreachStatusList = $scope.widgetData;
+        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+          return new Promise( function(resolve, reject){
+            if ($scope.widgetData)
+              resolve($scope.widgetData);
+            else
+              resolve([]);
+          });
+        })
+          .withDOM('lfrti')
             .withScroller()
             .withOption('deferRender', true)
             // Do not forget to add the scrollY option!!!
@@ -35,16 +45,30 @@ angular.module('ui.widgets')
             .withOption('paging',false)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
-        $scope.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0),
-            DTColumnDefBuilder.newColumnDef(1),
-            DTColumnDefBuilder.newColumnDef(2)
+        $scope.dtColumns = [
+            DTColumnBuilder.newColumn('Status').withTitle('Outreach Status'),
+            DTColumnBuilder.newColumn('RiskLevelDesc').withTitle('Risk Level Group'),
+            DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients')
         ];
       },
       link: function postLink(scope) {
-        scope.$watch('data', function (data) {
-          if (data) {
+        scope.$watch('widgetData', function (data) {
+          if (data != null && data.length >0) {
             scope.data = data;
+            scope.outreachStatusList = data;
+            var promise = new Promise( function(resolve, reject){
+                  if (scope.outreachStatusList)
+                    resolve(scope.outreachStatusList);
+                  else
+                    resolve([]);
+                });
+            if(scope.dtInstance)
+              scope.dtInstance.changeData(promise);
+            else {
+              scope.dtInstanceAbstract.getList().then(function(dtInstances){
+                dtInstances.tblNationalOutReachStatus._renderer.changeData(promise)              
+              });
+            }
           }
         });
       }
