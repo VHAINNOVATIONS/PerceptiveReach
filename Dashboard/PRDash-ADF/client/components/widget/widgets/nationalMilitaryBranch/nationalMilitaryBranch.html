@@ -1,4 +1,14 @@
-<div class="nationalMilitaryBranch">
-	<table id="tblMilitaryBranch" datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance" class="row-border hover" width="100%">
-    </table>
+<div class="nationalMilitaryBranch" title="Tab and press enter to sort columns">
+	<table id="tblMilitaryBranch" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+		<thead>	
+			<th scope="col"><a alt="Branch Description" title="Sort by Branch Description" href="" ng-click="predicate = 'Branch Description'; reverse=false">Branch Description</a></th>
+			<th scope="col"><a alt="Total Num of Patients per Branch" title="Sort by Total Num of Patients per Branch" href="" ng-click="predicate = 'Total Number of Patients per Branch'; reverse=false">Total Number of Patients per Branch</a></th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="ind in data track by $index | orderBy:predicate:reverse">
+				<td>{{ind.BranchDesc}}</td>
+				<td>{{ind.Total}}</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
