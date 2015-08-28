@@ -2832,11 +2832,16 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('Total').withTitle('Total Patients')
           ];
       },
-      link: function postLink(scope) {
+      link: function postLink(scope, element, attr) {
         scope.$on("bindEvents", function (){
+		$($('#facilityRosterDiv table')[0]).find('th').each(function(){
+            $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+			$(this).attr('scope','col');
+        });
+		
           $('#tblFacilityRoster').on( 'click', 'tr', function (event) {
             if(scope.eventTimer == event.timeStamp) return;
-
+			
             scope.eventTimer = event.timeStamp;
             var facilityId = null;
             var commonData = scope.widget.dataModelOptions.common;
@@ -2883,6 +2888,8 @@ angular.module('ui.widgets')
             //scope.$apply();
           });
         });
+		
+
         scope.$watch('widgetData', function(data){
           if(data != null && data.length >0){
               scope.data = data;
@@ -4207,6 +4214,7 @@ angular.module('ui.widgets')
           {"Name" : "Statistical Risk Level"},
           {"Name" : "Outreach Status"}
         ];
+		
       },
       link: function postLink(scope, element, attr) {
         scope.$on("updateSelectMenu", function (){
@@ -4217,6 +4225,11 @@ angular.module('ui.widgets')
             var selectedreachId = $(e.currentTarget).attr('id').replace("vet_","");
             scope.widget.dataModel.saveOutreachData(parseInt(selectedIndex),selectedreachId);
           } );
+		  		 	  
+		  $($('#patientRosterDiv table')[0]).find('th').each(function(){
+                $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+				$(this).attr('scope','col');
+            });
 
           $('#tblPatient tbody').on( 'click', 'tr', function (event) {
             if($(this).hasClass('selected')){
@@ -4667,11 +4680,16 @@ angular.module('ui.widgets')
         ];    
         $scope.eventTimer = null;
       },
-      link: function postLink(scope) {
+      link: function postLink(scope, element, attr) {
         scope.$on("bindEvents", function (){
+		$($('#VISNRosterDiv table')[0]).find('th').each(function(){
+            $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+			$(this).attr('scope','col');
+        });
+		
           $('#tblVismRoster').on( 'click', 'tr', function (event) {
             if(scope.eventTimer == event.timeStamp) return;
-
+			
             scope.eventTimer = event.timeStamp;
             var visnId = null;
             var commonData = scope.widget.dataModelOptions.common;
@@ -4954,7 +4972,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/facilityRoster/facilityRoster.html",
-    "<div>\r" +
+    "<div id=\"facilityRosterDiv\" title=\"Tab and press enter to sort columns\">\r" +
     "\n" +
     "    <table id=\"tblFacilityRoster\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
@@ -5438,7 +5456,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/patientTable/patientTable.html",
-    "<div>\r" +
+    "<div id=\"patientRosterDiv\" title=\"Tab and press enter to sort columns\">\r" +
     "\n" +
     "    <table id=\"tblPatient\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
@@ -5599,7 +5617,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/vismRoster/vismRoster.html",
-    "<div>\r" +
+    "<div id=\"VISNRosterDiv\" title=\"Tab and press enter to sort columns\">\r" +
     "\n" +
     "    <table id=\"tblVismRoster\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +

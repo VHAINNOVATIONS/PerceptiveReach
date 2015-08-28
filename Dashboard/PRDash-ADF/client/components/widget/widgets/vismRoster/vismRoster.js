@@ -53,11 +53,16 @@ angular.module('ui.widgets')
         ];    
         $scope.eventTimer = null;
       },
-      link: function postLink(scope) {
+      link: function postLink(scope, element, attr) {
         scope.$on("bindEvents", function (){
+		$($('#VISNRosterDiv table')[0]).find('th').each(function(){
+            $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+			$(this).attr('scope','col');
+        });
+		
           $('#tblVismRoster').on( 'click', 'tr', function (event) {
             if(scope.eventTimer == event.timeStamp) return;
-
+			
             scope.eventTimer = event.timeStamp;
             var visnId = null;
             var commonData = scope.widget.dataModelOptions.common;

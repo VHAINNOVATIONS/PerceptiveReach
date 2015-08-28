@@ -198,7 +198,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/facilityRoster/facilityRoster.html",
-    "<div>\r" +
+    "<div id=\"facilityRosterDiv\" title=\"Tab and press enter to sort columns\">\r" +
     "\n" +
     "    <table id=\"tblFacilityRoster\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
@@ -682,7 +682,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/patientTable/patientTable.html",
-    "<div>\r" +
+    "<div id=\"patientRosterDiv\" title=\"Tab and press enter to sort columns\">\r" +
     "\n" +
     "    <table id=\"tblPatient\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
@@ -843,7 +843,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/vismRoster/vismRoster.html",
-    "<div>\r" +
+    "<div id=\"VISNRosterDiv\" title=\"Tab and press enter to sort columns\">\r" +
     "\n" +
     "    <table id=\"tblVismRoster\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
