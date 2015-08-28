@@ -4765,9 +4765,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th><a href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
+    "            <th scope=\"col\"><a alt=\"Date\" title=\"Sort by Date\" href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
     "\n" +
-    "            <th><a href=\"\" ng-click=\"predicate = 'Cancelled'; reverse=!reverse\">Cancelled</a></th>\r" +
+    "            <th scope=\"col\"><a alt=\"Cancellation Status\" title=\"Sort by Cancellation Status\" href=\"\" ng-click=\"predicate = 'Cancelled'; reverse=!reverse\">Cancelled</a></th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -4837,9 +4837,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<br>{{cpg.Action}}\r" +
     "\n" +
-    "\t\t<br><br>For more information visit the full Clinical Practice Guide at <a href=\"{{cpg.GuidelineURL}}\">{{cpg.GuidelineURL}}</a>\r" +
+    "\t\t<br><br>For more information visit the full Clinical Practice Guide at <a href=\"{{cpg.GuidelineURL}}\" title=\"Clinical Practice Guide\" alt=\"Clinical Practice Guide\">{{cpg.GuidelineURL}}</a>\r" +
     "\n" +
-    "\t\t<br><br>For guidance on proactive outreach and intervention strategies visit the Toolkit for Interventions <a href=\"{{cpg.ToolkitURL}}\">{{cpg.ToolkitURL}}</a><br><br>\r" +
+    "\t\t<br><br>For guidance on proactive outreach and intervention strategies visit the Toolkit for Interventions <a href=\"{{cpg.ToolkitURL}}\" title=\"Toolkit for Interventions\" alt=\"Toolkit for Interventions\">{{cpg.ToolkitURL}}</a><br><br>\r" +
     "\n" +
     "\t</div>\r" +
     "\n" +
@@ -4889,11 +4889,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th><a href=\"\" ng-click=\"predicate = 'Diagnosis'; reverse=false\">Diagnosis</a></th>\r" +
+    "            <th scope=\"col\"><a alt=\"Diagnosis\" title=\"Sort by Diagnosis\" href=\"\" ng-click=\"predicate = 'Diagnosis'; reverse=false\">Diagnosis</a></th>\r" +
     "\n" +
-    "            <th><a href=\"\" ng-click=\"predicate = 'ICD'; reverse=false\">ICD</a></th>\r" +
+    "            <th scope=\"col\"><a alt=\"ICD\" title=\"Sort by ICD\" href=\"\" ng-click=\"predicate = 'ICD'; reverse=false\">ICD</a></th>\r" +
     "\n" +
-    "            <th><a href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
+    "            <th scope=\"col\"><a alt=\"Date\" title=\"Sort by Date\" href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -5016,7 +5016,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th><a href=\"\" ng-click=\"predicate = 'Medication'; reverse=false\">Medication</a></th>\r" +
+    "            <th scope=\"col\"><a alt=\"Medication\" title=\"Sort by Medication\" href=\"\" ng-click=\"predicate = 'Medication'; reverse=false\">Medication</a></th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -5330,13 +5330,13 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'VAMC Name'; reverse=false\">VAMC Name</a></th>\r" +
+    "\t\t\t<th scope=\"col\"><a alt=\"VAMC Name\" title=\"Sort by VAMC Name\" href=\"\" ng-click=\"predicate = 'VAMC Name'; reverse=false\">VAMC Name</a></th>\r" +
     "\n" +
-    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'State'; reverse=false\">State</a></th>\r" +
+    "\t\t\t<th scope=\"col\"><a alt=\"State\" title=\"Sort by State\" href=\"\" ng-click=\"predicate = 'State'; reverse=false\">State</a></th>\r" +
     "\n" +
-    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'VISN'; reverse=false\">VISN</a></th>\r" +
+    "\t\t\t<th scope=\"col\"><a alt=\"VISN\" title=\"Sort by VISN\" href=\"\" ng-click=\"predicate = 'VISN'; reverse=false\">VISN</a></th>\r" +
     "\n" +
-    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
+    "\t\t\t<th scope=\"col\"><a alt=\"Total Number of Patients\" title=\"Sort by Total Number of Patients\" href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
@@ -5412,9 +5412,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th><a href=\"\" ng-click=\"predicate = 'Flag'; reverse=false\">Flag</a></th>\r" +
+    "            <th scope=\"col\"><a alt=\"Flag\" title=\"Sort by Flag\" href=\"\" ng-click=\"predicate = 'Flag'; reverse=false\">Flag</a></th>\r" +
     "\n" +
-    "            <th><a href=\"\" ng-click=\"predicate = 'Cat'; reverse=false\">Cat</a></th>\r" +
+    "            <th scope=\"col\"><a alt=\"Cat\" title=\"Sort by Cat\" href=\"\" ng-click=\"predicate = 'Cat'; reverse=false\">Cat</a></th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -5531,13 +5531,13 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t<tr>\r" +
     "\n" +
-    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Age Range'; reverse=false\">Age Range</a></th>\r" +
+    "\t\t\t\t\t<th scope=\"col\"><a alt=\"Age Range\" title=\"Sort by Age Range\" href=\"\" ng-click=\"predicate = 'Age Range'; reverse=false\">Age Range</a></th>\r" +
     "\n" +
-    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Gender'; reverse=false\">Gender</a></th>\r" +
+    "\t\t\t\t\t<th scope=\"col\"><a alt=\"Gender\" title=\"Sort by Gender\" href=\"\" ng-click=\"predicate = 'Gender'; reverse=false\">Gender</a></th>\r" +
     "\n" +
-    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = '2013 Total Suicide Deaths Per 100K'; reverse=false\">2013 Total Suicide Deaths Per 100K</a></th>\r" +
+    "\t\t\t\t\t<th scope=\"col\"><a alt=\"2013 Total Suicide Deaths Per 100K\" title=\"Sort by 2013 Total Suicide Deaths Per 100K\" href=\"\" ng-click=\"predicate = '2013 Total Suicide Deaths Per 100K'; reverse=false\">2013 Total Suicide Deaths Per 100K</a></th>\r" +
     "\n" +
-    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Ethnicity'; reverse=false\">Ethnicity</a></th>\r" +
+    "\t\t\t\t\t<th scope=\"col\"><a alt=\"Ethnicity\" title=\"Sort by Ethnicity\" href=\"\" ng-click=\"predicate = 'Ethnicity'; reverse=false\">Ethnicity</a></th>\r" +
     "\n" +
     "\t\t\t\t</tr>\r" +
     "\n" +
@@ -5565,7 +5565,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "<div>\r" +
     "\n" +
-    "\t<br>For more information visit the Suicide Deaths per 100000 indicator site at HealthIndicators.gov <a href=\"http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData\">http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData</a>\r" +
+    "\t<br>For more information visit the Suicide Deaths per 100000 indicator site at HealthIndicators.gov \r" +
+    "\n" +
+    "\t<a alt=\"Suicide Deaths per 100000 @ HealthIndicators.gov\" title=\"Suicide Deaths per 100000 @ HealthIndicators.gov\" href=\"http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData\">http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData</a>\r" +
     "\n" +
     "</div>"
   );
