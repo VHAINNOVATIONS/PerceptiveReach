@@ -1,10 +1,10 @@
-<div class="diagnoses">
+<div class="diagnoses" title="Tab and press enter to sort columns">
 	<table id="tblDiagnoses" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
         <thead>
         <tr>
-            <th><a href="" ng-click="predicate = 'Diagnosis'; reverse=false">Diagnosis</a></th>
-            <th><a href="" ng-click="predicate = 'ICD'; reverse=false">ICD</a></th>
-            <th><a href="" ng-click="predicate = 'Date'; reverse=false">Date</a></th>
+            <th scope="col"><a alt="Diagnosis" title="Sort by Diagnosis" href="" ng-click="predicate = 'Diagnosis'; reverse=false">Diagnosis</a></th>
+            <th scope="col"><a alt="ICD" title="Sort by ICD" href="" ng-click="predicate = 'ICD'; reverse=false">ICD</a></th>
+            <th scope="col"><a alt="Date" title="Sort by Date" href="" ng-click="predicate = 'Date'; reverse=false">Date</a></th>
         </tr>
         </thead>
         <tbody>

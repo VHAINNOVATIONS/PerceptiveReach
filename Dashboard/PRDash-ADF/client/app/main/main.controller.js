@@ -96,15 +96,15 @@ angular.module('app')
         userObj: {}
       }
     };
-   console.log("main.controller - commonData:", $scope.common);
-   console.log("main.controller - mainScope:", $scope);
 
     $timeout(function(){
       // Add listener for when layout is changed
       $('ul li a').click(function(e) 
       {
-        $scope.common.data.activeView = e.currentTarget.innerText.replace(' View','').toLowerCase();
-        $scope.$broadcast('commonDataChanged', $scope.common);
+        $timeout(function(){
+          $scope.common.data.activeView = e.currentTarget.innerText.replace(' View','').toLowerCase().replace(/(\r\n|\n|\r)/gm,"").trim(); //e.currentTarget.innerText.replace(' View','').toLowerCase();
+          $scope.$broadcast('commonDataChanged', $scope.common);  
+        },1500)        
       });
 
       // Broadcast message first time

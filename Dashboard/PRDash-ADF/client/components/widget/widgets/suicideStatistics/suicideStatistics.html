@@ -1,24 +1,6 @@
 <div class="suicideStatistics">
-		<br>This product uses the Health Indicators Warehouse API but is not endorsed or certified by the Health Indicators Warehouse or its associated Federal agencies.
-		<table id="tblSuicideStatistics" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">		
-			<thead>
-				<tr>
-					<th><a href="" ng-click="predicate = 'Age Range'; reverse=false">Age Range</a></th>
-					<th><a href="" ng-click="predicate = 'Gender'; reverse=false">Gender</a></th>
-					<th><a href="" ng-click="predicate = '2013 Total Suicide Deaths Per 100K'; reverse=false">2013 Total Suicide Deaths Per 100K</a></th>
-					<th><a href="" ng-click="predicate = 'Ethnicity'; reverse=false">Ethnicity</a></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="ind in data track by $index | orderBy:predicate:reverse">
-					<td>{{ind.Age}}</td>
-					<td>{{ind.Gender}}</td>
-					<td>{{ind.Value}}</td>
-					<td>{{ind.Ethnicity}}</td>
-				</tr>
-			</tbody>
-		<table>
-</div>
-<div>
+	<br>This product uses the Health Indicators Warehouse API but is not endorsed or certified by the Health Indicators Warehouse or its associated Federal agencies.
+	<table id="tblSuicideStatistics" datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance" class="row-border hover" width="100%">
+	</table>
 	<br>For more information visit the Suicide Deaths per 100000 indicator site at HealthIndicators.gov <a href="http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData">http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData</a>
 </div>
