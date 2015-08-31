@@ -1,9 +1,9 @@
-<div class="patient-flags">
+<div class="patient-flags" title="Tab and press enter to sort columns">
     <table id="tblPatientFlags" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
         <thead> 
         <tr>
-            <th><a href="" ng-click="predicate = 'Flag'; reverse=false">Flag</a></th>
-            <th><a href="" ng-click="predicate = 'Cat'; reverse=false">Cat</a></th>
+            <th scope="col"><a alt="Flag" title="Sort by Flag" href="" ng-click="predicate = 'Flag'; reverse=false">Flag</a></th>
+            <th scope="col"><a alt="Cat" title="Sort by Cat" href="" ng-click="predicate = 'Cat'; reverse=false">Cat</a></th>
         </tr>
         </thead>
         <tbody>

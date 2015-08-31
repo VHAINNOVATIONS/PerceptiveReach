@@ -52,11 +52,16 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('Total').withTitle('Total Patients')
           ];
       },
-      link: function postLink(scope) {
+      link: function postLink(scope, element, attr) {
         scope.$on("bindEvents", function (){
+		$($('#facilityRosterDiv table')[0]).find('th').each(function(){
+            $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+			$(this).attr('scope','col');
+        });
+		
           $('#tblFacilityRoster').on( 'click', 'tr', function (event) {
             if(scope.eventTimer == event.timeStamp) return;
-
+			
             scope.eventTimer = event.timeStamp;
             var facilityId = null;
             var commonData = scope.widget.dataModelOptions.common;
@@ -103,6 +108,8 @@ angular.module('ui.widgets')
             //scope.$apply();
           });
         });
+		
+
         scope.$watch('widgetData', function(data){
           if(data != null && data.length >0){
               scope.data = data;
