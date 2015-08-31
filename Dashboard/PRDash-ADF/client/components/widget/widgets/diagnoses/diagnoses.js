@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-'use strict';
+'use strict'; 
 
 angular.module('ui.widgets')
   .directive('wtDiagnoses', function () {

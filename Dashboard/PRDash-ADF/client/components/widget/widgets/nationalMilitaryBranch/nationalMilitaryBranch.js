@@ -48,7 +48,7 @@ angular.module('ui.widgets')
         DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients per Branch')
 	];
   },
-  link: function postLink(scope) {
+ link: function postLink(scope, element, attr) {
 	scope.$watch('widgetData', function (data) {
 	  if (data != null && data.length >0) {
 		scope.data = data;
