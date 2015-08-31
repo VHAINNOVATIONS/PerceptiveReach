@@ -787,7 +787,7 @@ angular.module('ui.models')
        init: function () {
         var dataModelOptions = this.dataModelOptions;
 		
-        this.updateScope('-');
+        this.updateScope([]);
         this.getData();
       },
 
@@ -4496,15 +4496,25 @@ angular.module('ui.widgets')
 angular.module('ui.widgets')
   .directive('wtExternalSuicideStatistics', function () {
     return {
-      restrict: 'A',
+      restrict: 'EAC',
       replace: true,
       templateUrl: 'client/components/widget/widgets/suicideStatistics/suicideStatistics.html',
-      scope: {
-        data: '=',
-      },
-      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+      
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+        //$scope.dtOptions = DTOptionsBuilder.newOptions()
+        $scope.dtInstanceAbstract = DTInstances;
+        $scope.dtInstance = null;
+        $scope.suicideStatusList = $scope.widgetData;
+        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+          return new Promise( function(resolve, reject){
+            if ($scope.widgetData)
+              resolve($scope.widgetData);
+            else
+              resolve([]);
+          });
+        })
+          .withDOM('lfrti')
             .withScroller()
             .withOption('deferRender', true)
             // Do not forget to add the scrollY option!!!
@@ -4512,17 +4522,31 @@ angular.module('ui.widgets')
             .withOption('paging',false)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
-        $scope.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0),
-            DTColumnDefBuilder.newColumnDef(1),
-            DTColumnDefBuilder.newColumnDef(2),
-			DTColumnDefBuilder.newColumnDef(3)
+        $scope.dtColumns = [
+          DTColumnBuilder.newColumn('Age').withTitle('Age Range'),
+          DTColumnBuilder.newColumn('Gender').withTitle('Gender'),
+          DTColumnBuilder.newColumn('Value').withTitle('2013 Total Suicide Deaths Per 100K'),
+          DTColumnBuilder.newColumn('Ethnicity').withTitle('Ethnicity')
         ];
       },
       link: function postLink(scope) {
-        scope.$watch('data', function (data) {
-          if (data) {
+        scope.$watch('widgetData', function (data) {
+          if (data != null && data.length >0) {
             scope.data = data;
+            scope.suicideStatusList = data;
+            var promise = new Promise( function(resolve, reject){
+              if (scope.suicideStatusList)
+                resolve(scope.suicideStatusList);
+              else
+                resolve([]);
+            });
+            if(scope.dtInstance)
+              scope.dtInstance.changeData(promise);
+            else {
+              scope.dtInstanceAbstract.getList().then(function(dtInstances){
+                dtInstances.tblSuicideStatistics._renderer.changeData(promise)              
+              });
+            }
           }
         });
       }
@@ -5523,51 +5547,16 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/suicideStatistics/suicideStatistics.html",
     "<div class=\"suicideStatistics\">\r" +
     "\n" +
-    "\t\t<br>This product uses the Health Indicators Warehouse API but is not endorsed or certified by the Health Indicators Warehouse or its associated Federal agencies.\r" +
+    "\t<br>This product uses the Health Indicators Warehouse API but is not endorsed or certified by the Health Indicators Warehouse or its associated Federal agencies.\r" +
     "\n" +
-    "\t\t<table id=\"tblSuicideStatistics\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\t\t\r" +
+    "\t<table id=\"tblSuicideStatistics\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
-    "\t\t\t<thead>\r" +
-    "\n" +
-    "\t\t\t\t<tr>\r" +
-    "\n" +
-    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Age Range'; reverse=false\">Age Range</a></th>\r" +
-    "\n" +
-    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Gender'; reverse=false\">Gender</a></th>\r" +
-    "\n" +
-    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = '2013 Total Suicide Deaths Per 100K'; reverse=false\">2013 Total Suicide Deaths Per 100K</a></th>\r" +
-    "\n" +
-    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Ethnicity'; reverse=false\">Ethnicity</a></th>\r" +
-    "\n" +
-    "\t\t\t\t</tr>\r" +
-    "\n" +
-    "\t\t\t</thead>\r" +
-    "\n" +
-    "\t\t\t<tbody>\r" +
-    "\n" +
-    "\t\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
-    "\n" +
-    "\t\t\t\t\t<td>{{ind.Age}}</td>\r" +
-    "\n" +
-    "\t\t\t\t\t<td>{{ind.Gender}}</td>\r" +
-    "\n" +
-    "\t\t\t\t\t<td>{{ind.Value}}</td>\r" +
-    "\n" +
-    "\t\t\t\t\t<td>{{ind.Ethnicity}}</td>\r" +
-    "\n" +
-    "\t\t\t\t</tr>\r" +
-    "\n" +
-    "\t\t\t</tbody>\r" +
-    "\n" +
-    "\t\t<table>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "<div>\r" +
+    "\t</table>\r" +
     "\n" +
     "\t<br>For more information visit the Suicide Deaths per 100000 indicator site at HealthIndicators.gov <a href=\"http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData\">http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData</a>\r" +
     "\n" +
-    "</div>"
+    "</div>\r" +
+    "\n"
   );
 
   $templateCache.put("client/components/widget/widgets/time/time.html",

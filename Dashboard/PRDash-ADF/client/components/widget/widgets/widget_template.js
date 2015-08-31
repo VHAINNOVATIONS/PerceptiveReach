@@ -767,51 +767,16 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/suicideStatistics/suicideStatistics.html",
     "<div class=\"suicideStatistics\">\r" +
     "\n" +
-    "\t\t<br>This product uses the Health Indicators Warehouse API but is not endorsed or certified by the Health Indicators Warehouse or its associated Federal agencies.\r" +
+    "\t<br>This product uses the Health Indicators Warehouse API but is not endorsed or certified by the Health Indicators Warehouse or its associated Federal agencies.\r" +
     "\n" +
-    "\t\t<table id=\"tblSuicideStatistics\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\t\t\r" +
+    "\t<table id=\"tblSuicideStatistics\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
-    "\t\t\t<thead>\r" +
-    "\n" +
-    "\t\t\t\t<tr>\r" +
-    "\n" +
-    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Age Range'; reverse=false\">Age Range</a></th>\r" +
-    "\n" +
-    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Gender'; reverse=false\">Gender</a></th>\r" +
-    "\n" +
-    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = '2013 Total Suicide Deaths Per 100K'; reverse=false\">2013 Total Suicide Deaths Per 100K</a></th>\r" +
-    "\n" +
-    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Ethnicity'; reverse=false\">Ethnicity</a></th>\r" +
-    "\n" +
-    "\t\t\t\t</tr>\r" +
-    "\n" +
-    "\t\t\t</thead>\r" +
-    "\n" +
-    "\t\t\t<tbody>\r" +
-    "\n" +
-    "\t\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
-    "\n" +
-    "\t\t\t\t\t<td>{{ind.Age}}</td>\r" +
-    "\n" +
-    "\t\t\t\t\t<td>{{ind.Gender}}</td>\r" +
-    "\n" +
-    "\t\t\t\t\t<td>{{ind.Value}}</td>\r" +
-    "\n" +
-    "\t\t\t\t\t<td>{{ind.Ethnicity}}</td>\r" +
-    "\n" +
-    "\t\t\t\t</tr>\r" +
-    "\n" +
-    "\t\t\t</tbody>\r" +
-    "\n" +
-    "\t\t<table>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "<div>\r" +
+    "\t</table>\r" +
     "\n" +
     "\t<br>For more information visit the Suicide Deaths per 100000 indicator site at HealthIndicators.gov <a href=\"http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData\">http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData</a>\r" +
     "\n" +
-    "</div>"
+    "</div>\r" +
+    "\n"
   );
 
   $templateCache.put("client/components/widget/widgets/time/time.html",
