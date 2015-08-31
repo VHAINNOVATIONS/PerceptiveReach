@@ -5,7 +5,7 @@
             <th scope="col"><a alt="Date" title="Sort by Date" href="" ng-click="predicate = 'Date'; reverse=false">Date</a></th>
             <th scope="col"><a alt="Cancellation Status" title="Sort by Cancellation Status" href="" ng-click="predicate = 'Cancelled'; reverse=!reverse">Cancelled</a></th>
         </tr>
-        </thead>
+        </thead> 
         <tbody>
         <tr ng-repeat="appt in data track by $index | orderBy:predicate:reverse">
             <td>{{ appt.ApptDate }}</td>
