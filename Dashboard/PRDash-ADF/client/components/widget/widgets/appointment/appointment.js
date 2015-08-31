@@ -15,7 +15,7 @@
  */
 
 'use strict';
-
+ 
 angular.module('ui.widgets')
   .directive('wtAppointment', function () {
     return {

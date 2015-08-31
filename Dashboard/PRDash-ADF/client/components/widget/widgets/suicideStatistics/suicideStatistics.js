@@ -43,8 +43,9 @@ angular.module('ui.widgets')
             // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
             .withOption('paging',false)
-            .withOption('order', [1, 'desc']);
-        //.withPaginationType('full_numbers').withDisplayLength(5);
+            .withOption('order', [0, 'asc']);
+            //.withPaginationType('full_numbers').withDisplayLength(100);
+			
         $scope.dtColumns = [
           DTColumnBuilder.newColumn('Age').withTitle('Age Range'),
           DTColumnBuilder.newColumn('Gender').withTitle('Gender'),
@@ -52,7 +53,15 @@ angular.module('ui.widgets')
           DTColumnBuilder.newColumn('Ethnicity').withTitle('Ethnicity')
         ];
       },
-      link: function postLink(scope) {
+     link: function postLink(scope, element, attr) {
+	
+        scope.$on("bindEvents", function (){
+		$($('#suicideStatisticsDiv table')[0]).find('th').each(function(){
+            $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+			$(this).attr('scope','col');
+        });
+		});
+		
         scope.$watch('widgetData', function (data) {
           if (data != null && data.length >0) {
             scope.data = data;

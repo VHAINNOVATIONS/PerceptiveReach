@@ -24,7 +24,7 @@ angular.module('ui.widgets')
       templateUrl: 'client/components/widget/widgets/medication/medication.html',
       scope: {
         data: '=',
-      },
+      }, 
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
         $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')

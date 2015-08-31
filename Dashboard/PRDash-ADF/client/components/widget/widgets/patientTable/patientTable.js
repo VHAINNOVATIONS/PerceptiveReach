@@ -34,7 +34,7 @@ angular.module('ui.widgets')
                 else
                   resolve([]);
               });
-
+ 
           })//.fromSource($scope.widgetData) newOptions().
             .withDOM('lfrti')
             .withScroller()
