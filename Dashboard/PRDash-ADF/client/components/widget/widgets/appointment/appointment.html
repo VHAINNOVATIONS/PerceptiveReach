@@ -1,9 +1,9 @@
-<div class="appointment">
+<div class="appointment" title="Tab and press enter to sort columns">
 	<table id="tblAppointment" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
         <thead>
         <tr>
-            <th><a href="" ng-click="predicate = 'Date'; reverse=false">Date</a></th>
-            <th><a href="" ng-click="predicate = 'Cancelled'; reverse=!reverse">Cancelled</a></th>
+            <th scope="col"><a alt="Date" title="Sort by Date" href="" ng-click="predicate = 'Date'; reverse=false">Date</a></th>
+            <th scope="col"><a alt="Cancellation Status" title="Sort by Cancellation Status" href="" ng-click="predicate = 'Cancelled'; reverse=!reverse">Cancelled</a></th>
         </tr>
         </thead>
         <tbody>

@@ -58,6 +58,7 @@ angular.module('ui.widgets')
           {"Name" : "Statistical Risk Level"},
           {"Name" : "Outreach Status"}
         ];
+		
       },
       link: function postLink(scope, element, attr) {
         scope.$on("updateSelectMenu", function (){
@@ -68,6 +69,11 @@ angular.module('ui.widgets')
             var selectedreachId = $(e.currentTarget).attr('id').replace("vet_","");
             scope.widget.dataModel.saveOutreachData(parseInt(selectedIndex),selectedreachId);
           } );
+		  		 	  
+		  $($('#patientRosterDiv table')[0]).find('th').each(function(){
+                $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+				$(this).attr('scope','col');
+            });
 
           $('#tblPatient tbody').on( 'click', 'tr', function (event) {
             if($(this).hasClass('selected')){

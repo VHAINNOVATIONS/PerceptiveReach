@@ -448,7 +448,7 @@ angular.module('ui.models')
        init: function () {
         var dataModelOptions = this.dataModelOptions;
 		
-        this.updateScope('-');
+        this.updateScope([]);
         this.getData();
       },
 

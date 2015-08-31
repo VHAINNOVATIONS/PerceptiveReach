@@ -787,7 +787,7 @@ angular.module('ui.models')
        init: function () {
         var dataModelOptions = this.dataModelOptions;
 		
-        this.updateScope('-');
+        this.updateScope([]);
         this.getData();
       },
 
@@ -2832,11 +2832,16 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('Total').withTitle('Total Patients')
           ];
       },
-      link: function postLink(scope) {
+      link: function postLink(scope, element, attr) {
         scope.$on("bindEvents", function (){
+		$($('#facilityRosterDiv table')[0]).find('th').each(function(){
+            $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+			$(this).attr('scope','col');
+        });
+		
           $('#tblFacilityRoster').on( 'click', 'tr', function (event) {
             if(scope.eventTimer == event.timeStamp) return;
-
+			
             scope.eventTimer = event.timeStamp;
             var facilityId = null;
             var commonData = scope.widget.dataModelOptions.common;
@@ -2883,6 +2888,8 @@ angular.module('ui.widgets')
             //scope.$apply();
           });
         });
+		
+
         scope.$watch('widgetData', function(data){
           if(data != null && data.length >0){
               scope.data = data;
@@ -4207,6 +4214,7 @@ angular.module('ui.widgets')
           {"Name" : "Statistical Risk Level"},
           {"Name" : "Outreach Status"}
         ];
+		
       },
       link: function postLink(scope, element, attr) {
         scope.$on("updateSelectMenu", function (){
@@ -4217,6 +4225,11 @@ angular.module('ui.widgets')
             var selectedreachId = $(e.currentTarget).attr('id').replace("vet_","");
             scope.widget.dataModel.saveOutreachData(parseInt(selectedIndex),selectedreachId);
           } );
+		  		 	  
+		  $($('#patientRosterDiv table')[0]).find('th').each(function(){
+                $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+				$(this).attr('scope','col');
+            });
 
           $('#tblPatient tbody').on( 'click', 'tr', function (event) {
             if($(this).hasClass('selected')){
@@ -4496,15 +4509,25 @@ angular.module('ui.widgets')
 angular.module('ui.widgets')
   .directive('wtExternalSuicideStatistics', function () {
     return {
-      restrict: 'A',
+      restrict: 'EAC',
       replace: true,
       templateUrl: 'client/components/widget/widgets/suicideStatistics/suicideStatistics.html',
-      scope: {
-        data: '=',
-      },
-      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+      
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+        //$scope.dtOptions = DTOptionsBuilder.newOptions()
+        $scope.dtInstanceAbstract = DTInstances;
+        $scope.dtInstance = null;
+        $scope.suicideStatusList = $scope.widgetData;
+        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+          return new Promise( function(resolve, reject){
+            if ($scope.widgetData)
+              resolve($scope.widgetData);
+            else
+              resolve([]);
+          });
+        })
+          .withDOM('lfrti')
             .withScroller()
             .withOption('deferRender', true)
             // Do not forget to add the scrollY option!!!
@@ -4512,17 +4535,31 @@ angular.module('ui.widgets')
             .withOption('paging',false)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
-        $scope.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0),
-            DTColumnDefBuilder.newColumnDef(1),
-            DTColumnDefBuilder.newColumnDef(2),
-			DTColumnDefBuilder.newColumnDef(3)
+        $scope.dtColumns = [
+          DTColumnBuilder.newColumn('Age').withTitle('Age Range'),
+          DTColumnBuilder.newColumn('Gender').withTitle('Gender'),
+          DTColumnBuilder.newColumn('Value').withTitle('2013 Total Suicide Deaths Per 100K'),
+          DTColumnBuilder.newColumn('Ethnicity').withTitle('Ethnicity')
         ];
       },
       link: function postLink(scope) {
-        scope.$watch('data', function (data) {
-          if (data) {
+        scope.$watch('widgetData', function (data) {
+          if (data != null && data.length >0) {
             scope.data = data;
+            scope.suicideStatusList = data;
+            var promise = new Promise( function(resolve, reject){
+              if (scope.suicideStatusList)
+                resolve(scope.suicideStatusList);
+              else
+                resolve([]);
+            });
+            if(scope.dtInstance)
+              scope.dtInstance.changeData(promise);
+            else {
+              scope.dtInstanceAbstract.getList().then(function(dtInstances){
+                dtInstances.tblSuicideStatistics._renderer.changeData(promise)              
+              });
+            }
           }
         });
       }
@@ -4667,11 +4704,16 @@ angular.module('ui.widgets')
         ];    
         $scope.eventTimer = null;
       },
-      link: function postLink(scope) {
+      link: function postLink(scope, element, attr) {
         scope.$on("bindEvents", function (){
+		$($('#VISNRosterDiv table')[0]).find('th').each(function(){
+            $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+			$(this).attr('scope','col');
+        });
+		
           $('#tblVismRoster').on( 'click', 'tr', function (event) {
             if(scope.eventTimer == event.timeStamp) return;
-
+			
             scope.eventTimer = event.timeStamp;
             var visnId = null;
             var commonData = scope.widget.dataModelOptions.common;
@@ -4757,7 +4799,7 @@ angular.module('ui.widgets')
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
-    "<div class=\"appointment\">\r" +
+    "<div class=\"appointment\" title=\"Tab and press enter to sort columns\">\r" +
     "\n" +
     "\t<table id=\"tblAppointment\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -4765,9 +4807,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th><a href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
+    "            <th scope=\"col\"><a alt=\"Date\" title=\"Sort by Date\" href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
     "\n" +
-    "            <th><a href=\"\" ng-click=\"predicate = 'Cancelled'; reverse=!reverse\">Cancelled</a></th>\r" +
+    "            <th scope=\"col\"><a alt=\"Cancellation Status\" title=\"Sort by Cancellation Status\" href=\"\" ng-click=\"predicate = 'Cancelled'; reverse=!reverse\">Cancelled</a></th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -4837,9 +4879,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<br>{{cpg.Action}}\r" +
     "\n" +
-    "\t\t<br><br>For more information visit the full Clinical Practice Guide at <a href=\"{{cpg.GuidelineURL}}\">{{cpg.GuidelineURL}}</a>\r" +
+    "\t\t<br><br>For more information visit the full Clinical Practice Guide at <a href=\"{{cpg.GuidelineURL}}\" title=\"Clinical Practice Guide\" alt=\"Clinical Practice Guide\">{{cpg.GuidelineURL}}</a>\r" +
     "\n" +
-    "\t\t<br><br>For guidance on proactive outreach and intervention strategies visit the Toolkit for Interventions <a href=\"{{cpg.ToolkitURL}}\">{{cpg.ToolkitURL}}</a><br><br>\r" +
+    "\t\t<br><br>For guidance on proactive outreach and intervention strategies visit the Toolkit for Interventions <a href=\"{{cpg.ToolkitURL}}\" title=\"Toolkit for Interventions\" alt=\"Toolkit for Interventions\">{{cpg.ToolkitURL}}</a><br><br>\r" +
     "\n" +
     "\t</div>\r" +
     "\n" +
@@ -4881,7 +4923,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/diagnoses/diagnoses.html",
-    "<div class=\"diagnoses\">\r" +
+    "<div class=\"diagnoses\" title=\"Tab and press enter to sort columns\">\r" +
     "\n" +
     "\t<table id=\"tblDiagnoses\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -4889,11 +4931,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th><a href=\"\" ng-click=\"predicate = 'Diagnosis'; reverse=false\">Diagnosis</a></th>\r" +
+    "            <th scope=\"col\"><a alt=\"Diagnosis\" title=\"Sort by Diagnosis\" href=\"\" ng-click=\"predicate = 'Diagnosis'; reverse=false\">Diagnosis</a></th>\r" +
     "\n" +
-    "            <th><a href=\"\" ng-click=\"predicate = 'ICD'; reverse=false\">ICD</a></th>\r" +
+    "            <th scope=\"col\"><a alt=\"ICD\" title=\"Sort by ICD\" href=\"\" ng-click=\"predicate = 'ICD'; reverse=false\">ICD</a></th>\r" +
     "\n" +
-    "            <th><a href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
+    "            <th scope=\"col\"><a alt=\"Date\" title=\"Sort by Date\" href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -4954,7 +4996,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/facilityRoster/facilityRoster.html",
-    "<div>\r" +
+    "<div id=\"facilityRosterDiv\" title=\"Tab and press enter to sort columns\">\r" +
     "\n" +
     "    <table id=\"tblFacilityRoster\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
@@ -5008,7 +5050,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
-    "<div class=\"medication\">\r" +
+    "<div class=\"medication\" title=\"Tab and press enter to sort columns\">\r" +
     "\n" +
     "    <table id=\"tblMedication\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -5016,7 +5058,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th><a href=\"\" ng-click=\"predicate = 'Medication'; reverse=false\">Medication</a></th>\r" +
+    "            <th scope=\"col\"><a alt=\"Medication\" title=\"Sort by Medication\" href=\"\" ng-click=\"predicate = 'Medication'; reverse=false\">Medication</a></th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -5086,7 +5128,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalAgeGroups/nationalAgeGroups.html",
-    "<div class=\"nationalAgeGroups\">\r" +
+    "<div class=\"nationalAgeGroups\" title=\"Tab and press enter to sort columns\">\r" +
     "\n" +
     "\t<table id=\"tblAgeGroups\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
@@ -5164,7 +5206,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalGenderDistribution/nationalGenderDistribution.html",
-    "<div class=\"nationalGenderDistribution\">\r" +
+    "<div class=\"nationalGenderDistribution\" title=\"Tab and press enter to sort columns\">\r" +
     "\n" +
     "\t<table id=\"tblGenderDistribution\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
@@ -5208,7 +5250,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalMilitaryBranch/nationalMilitaryBranch.html",
-    "<div class=\"nationalMilitaryBranch\">\r" +
+    "<div class=\"nationalMilitaryBranch\" title=\"Tab and press enter to sort columns\">\r" +
     "\n" +
     "\t<table id=\"tblMilitaryBranch\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
@@ -5218,7 +5260,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalOutReachStatus/nationalOutReachStatus.html",
-    "<div class=\"nationalOutReachStatus\">\r" +
+    "<div class=\"nationalOutReachStatus\" title=\"Tab and press enter to sort columns\">\r" +
     "\n" +
     "\t<table id=\"tblNationalOutReachStatus\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
@@ -5330,13 +5372,13 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'VAMC Name'; reverse=false\">VAMC Name</a></th>\r" +
+    "\t\t\t<th scope=\"col\"><a alt=\"VAMC Name\" title=\"Sort by VAMC Name\" href=\"\" ng-click=\"predicate = 'VAMC Name'; reverse=false\">VAMC Name</a></th>\r" +
     "\n" +
-    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'State'; reverse=false\">State</a></th>\r" +
+    "\t\t\t<th scope=\"col\"><a alt=\"State\" title=\"Sort by State\" href=\"\" ng-click=\"predicate = 'State'; reverse=false\">State</a></th>\r" +
     "\n" +
-    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'VISN'; reverse=false\">VISN</a></th>\r" +
+    "\t\t\t<th scope=\"col\"><a alt=\"VISN\" title=\"Sort by VISN\" href=\"\" ng-click=\"predicate = 'VISN'; reverse=false\">VISN</a></th>\r" +
     "\n" +
-    "\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
+    "\t\t\t<th scope=\"col\"><a alt=\"Total Number of Patients\" title=\"Sort by Total Number of Patients\" href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
@@ -5404,7 +5446,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
-    "<div class=\"patient-flags\">\r" +
+    "<div class=\"patient-flags\" title=\"Tab and press enter to sort columns\">\r" +
     "\n" +
     "    <table id=\"tblPatientFlags\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -5412,9 +5454,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th><a href=\"\" ng-click=\"predicate = 'Flag'; reverse=false\">Flag</a></th>\r" +
+    "            <th scope=\"col\"><a alt=\"Flag\" title=\"Sort by Flag\" href=\"\" ng-click=\"predicate = 'Flag'; reverse=false\">Flag</a></th>\r" +
     "\n" +
-    "            <th><a href=\"\" ng-click=\"predicate = 'Cat'; reverse=false\">Cat</a></th>\r" +
+    "            <th scope=\"col\"><a alt=\"Cat\" title=\"Sort by Cat\" href=\"\" ng-click=\"predicate = 'Cat'; reverse=false\">Cat</a></th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -5438,11 +5480,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/patientTable/patientTable.html",
-    "<div>\r" +
+    "<div id=\"patientRosterDiv\" title=\"Tab and press enter to sort columns\">\r" +
     "\n" +
     "    <table id=\"tblPatient\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
-    "\n" +
-    "    \r" +
     "\n" +
     "    </table>\r" +
     "\n" +
@@ -5523,47 +5563,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/suicideStatistics/suicideStatistics.html",
     "<div class=\"suicideStatistics\">\r" +
     "\n" +
-    "\t\t<br>This product uses the Health Indicators Warehouse API but is not endorsed or certified by the Health Indicators Warehouse or its associated Federal agencies.\r" +
+    "\t<br>This product uses the Health Indicators Warehouse API but is not endorsed or certified by the Health Indicators Warehouse or its associated Federal agencies.\r" +
     "\n" +
-    "\t\t<table id=\"tblSuicideStatistics\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\t\t\r" +
+    "\t<table id=\"tblSuicideStatistics\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
-    "\t\t\t<thead>\r" +
-    "\n" +
-    "\t\t\t\t<tr>\r" +
-    "\n" +
-    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Age Range'; reverse=false\">Age Range</a></th>\r" +
-    "\n" +
-    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Gender'; reverse=false\">Gender</a></th>\r" +
-    "\n" +
-    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = '2013 Total Suicide Deaths Per 100K'; reverse=false\">2013 Total Suicide Deaths Per 100K</a></th>\r" +
-    "\n" +
-    "\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Ethnicity'; reverse=false\">Ethnicity</a></th>\r" +
-    "\n" +
-    "\t\t\t\t</tr>\r" +
-    "\n" +
-    "\t\t\t</thead>\r" +
-    "\n" +
-    "\t\t\t<tbody>\r" +
-    "\n" +
-    "\t\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
-    "\n" +
-    "\t\t\t\t\t<td>{{ind.Age}}</td>\r" +
-    "\n" +
-    "\t\t\t\t\t<td>{{ind.Gender}}</td>\r" +
-    "\n" +
-    "\t\t\t\t\t<td>{{ind.Value}}</td>\r" +
-    "\n" +
-    "\t\t\t\t\t<td>{{ind.Ethnicity}}</td>\r" +
-    "\n" +
-    "\t\t\t\t</tr>\r" +
-    "\n" +
-    "\t\t\t</tbody>\r" +
-    "\n" +
-    "\t\t<table>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "<div>\r" +
+    "\t</table>\r" +
     "\n" +
     "\t<br>For more information visit the Suicide Deaths per 100000 indicator site at HealthIndicators.gov <a href=\"http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData\">http://www.healthindicators.gov/Indicators/Suicide-deaths-per-100000_1105/Profile/ClassicData</a>\r" +
     "\n" +
@@ -5597,7 +5601,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/vismRoster/vismRoster.html",
-    "<div>\r" +
+    "<div id=\"VISNRosterDiv\" title=\"Tab and press enter to sort columns\">\r" +
     "\n" +
     "    <table id=\"tblVismRoster\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
