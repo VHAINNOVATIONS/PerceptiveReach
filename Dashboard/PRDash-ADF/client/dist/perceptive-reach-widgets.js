@@ -4507,7 +4507,7 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtExternalSuicideStatistics', function () {
+  .directive('wtExternalSuicideStatistics', function ($timeout) {
     return {
       restrict: 'EAC',
       replace: true,
@@ -4553,6 +4553,8 @@ angular.module('ui.widgets')
 		});
 		
         scope.$watch('widgetData', function (data) {
+		$timeout(function(){
+                scope.$emit('bindEvents');
           if (data != null && data.length >0) {
             scope.data = data;
             scope.suicideStatusList = data;
@@ -4570,6 +4572,7 @@ angular.module('ui.widgets')
               });
             }
           }
+		  },1000)
         });
       }
     };
