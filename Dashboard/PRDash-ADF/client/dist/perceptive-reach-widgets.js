@@ -2837,6 +2837,7 @@ angular.module('ui.widgets')
 		$($('#facilityRosterDiv table')[0]).find('th').each(function(){
             $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
 			$(this).attr('scope','col');
+      $(this).attr('tabindex','-1');
         }); 
 		
           $('#tblFacilityRoster').on( 'click', 'tr', function (event) {
@@ -4229,6 +4230,7 @@ angular.module('ui.widgets')
 		  $($('#patientRosterDiv table')[0]).find('th').each(function(){
                 $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
 				$(this).attr('scope','col');
+        $(this).attr('tabindex','-1');
             });
 
           $('#tblPatient tbody').on( 'click', 'tr', function (event) {
@@ -4721,6 +4723,7 @@ angular.module('ui.widgets')
 		$($('#VISNRosterDiv table')[0]).find('th').each(function(){
             $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
 			$(this).attr('scope','col');
+      $(this).attr('tabindex','-1');
         });
 		
           $('#tblVismRoster').on( 'click', 'tr', function (event) {
@@ -4819,9 +4822,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th scope=\"col\"><a alt=\"Date\" title=\"Sort by Date\" href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
+    "            <th scope=\"col\" tabindex=\"-1\"><a alt=\"Date\" title=\"Sort by Date\" href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
     "\n" +
-    "            <th scope=\"col\"><a alt=\"Cancellation Status\" title=\"Sort by Cancellation Status\" href=\"\" ng-click=\"predicate = 'Cancelled'; reverse=!reverse\">Cancelled</a></th>\r" +
+    "            <th scope=\"col\" tabindex=\"-1\"><a alt=\"Cancellation Status\" title=\"Sort by Cancellation Status\" href=\"\" ng-click=\"predicate = 'Cancelled'; reverse=!reverse\">Cancelled</a></th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -4943,11 +4946,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th scope=\"col\"><a alt=\"Diagnosis\" title=\"Sort by Diagnosis\" href=\"\" ng-click=\"predicate = 'Diagnosis'; reverse=false\">Diagnosis</a></th>\r" +
+    "            <th scope=\"col\" tabindex=\"-1\"><a alt=\"Diagnosis\" title=\"Sort by Diagnosis\" href=\"\" ng-click=\"predicate = 'Diagnosis'; reverse=false\">Diagnosis</a></th>\r" +
     "\n" +
-    "            <th scope=\"col\"><a alt=\"ICD\" title=\"Sort by ICD\" href=\"\" ng-click=\"predicate = 'ICD'; reverse=false\">ICD</a></th>\r" +
+    "            <th scope=\"col\" tabindex=\"-1\"><a alt=\"ICD\" title=\"Sort by ICD\" href=\"\" ng-click=\"predicate = 'ICD'; reverse=false\">ICD</a></th>\r" +
     "\n" +
-    "            <th scope=\"col\"><a alt=\"Date\" title=\"Sort by Date\" href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
+    "            <th scope=\"col\" tabindex=\"-1\"><a alt=\"Date\" title=\"Sort by Date\" href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -5071,7 +5074,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th scope=\"col\"><a alt=\"Medication\" title=\"Sort by Medication\" href=\"\" ng-click=\"predicate = 'Medication'; reverse=false\">Medication</a></th>\r" +
+    "            <th scope=\"col\" tabindex=\"-1\"><a alt=\"Medication\" title=\"Sort by Medication\" href=\"\" ng-click=\"predicate = 'Medication'; reverse=false\">Medication</a></th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -5147,11 +5150,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th scope=\"col\"><a alt=\"Age Group\" title=\"Sort by Age Group\" href=\"\" ng-click=\"predicate = 'Age Groups'; reverse=false\">Age Groups</a></th>\r" +
+    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Age Group\" title=\"Sort by Age Group\" href=\"\" ng-click=\"predicate = 'Age Groups'; reverse=false\">Age Groups</a></th>\r" +
     "\n" +
-    "\t\t\t<th scope=\"col\"><a alt=\"Risk Level Group\" title=\"Sort by Risk Level Group\" href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\r" +
+    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Risk Level Group\" title=\"Sort by Risk Level Group\" href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\r" +
     "\n" +
-    "\t\t\t<th scope=\"col\"><a alt=\"Total Number Patients\" title=\"Sort by Total Num Patients\" href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
+    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Total Number Patients\" title=\"Sort by Total Num Patients\" href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
     "\n" +
     "\t\t</thead> \r" +
     "\n" +
@@ -5249,11 +5252,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th scope=\"col\"><a alt=\"Risk Level Group\" title=\"Sort by Risk Level Group\" href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\r" +
+    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Risk Level Group\" title=\"Sort by Risk Level Group\" href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\r" +
     "\n" +
-    "\t\t\t<th scope=\"col\"><a alt=\"Gender\" title=\"Sort by Gender\" href=\"\" ng-click=\"predicate = 'Gender'; reverse=false\">Gender</a></th>\r" +
+    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Gender\" title=\"Sort by Gender\" href=\"\" ng-click=\"predicate = 'Gender'; reverse=false\">Gender</a></th>\r" +
     "\n" +
-    "\t\t\t<th scope=\"col\"><a alt=\"Total Num of Patients\" title=\"Sort by Total Num of Patients\" href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
+    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Total Num of Patients\" title=\"Sort by Total Num of Patients\" href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
@@ -5317,9 +5320,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th scope=\"col\"><a alt=\"Branch Description\" title=\"Sort by Branch Description\" href=\"\" ng-click=\"predicate = 'Branch Description'; reverse=false\">Branch Description</a></th>\r" +
+    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Branch Description\" title=\"Sort by Branch Description\" href=\"\" ng-click=\"predicate = 'Branch Description'; reverse=false\">Branch Description</a></th>\r" +
     "\n" +
-    "\t\t\t<th scope=\"col\"><a alt=\"Total Num of Patients per Branch\" title=\"Sort by Total Num of Patients per Branch\" href=\"\" ng-click=\"predicate = 'Total Number of Patients per Branch'; reverse=false\">Total Number of Patients per Branch</a></th>\r" +
+    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Total Num of Patients per Branch\" title=\"Sort by Total Num of Patients per Branch\" href=\"\" ng-click=\"predicate = 'Total Number of Patients per Branch'; reverse=false\">Total Number of Patients per Branch</a></th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
@@ -5347,11 +5350,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th scope=\"col\"><a alt=\"Outreach Status\" title=\"Sort by Outreach Status\" href=\"\" ng-click=\"predicate = 'Outreach Status'; reverse=false\">Outreach Status</a></th>\r" +
+    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Outreach Status\" title=\"Sort by Outreach Status\" href=\"\" ng-click=\"predicate = 'Outreach Status'; reverse=false\">Outreach Status</a></th>\r" +
     "\n" +
-    "\t\t\t<th scope=\"col\"><a alt=\"Risk Level Group\" title=\"Sort by Risk Level Group\" href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\r" +
+    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Risk Level Group\" title=\"Sort by Risk Level Group\" href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\r" +
     "\n" +
-    "\t\t\t<th scope=\"col\"><a alt=\"Total Number of Patients\" title=\"Sort by Total Number of Patients\" href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
+    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Total Number of Patients\" title=\"Sort by Total Number of Patients\" href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
@@ -5477,13 +5480,13 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th scope=\"col\"><a alt=\"VAMC Name\" title=\"Sort by VAMC Name\" href=\"\" ng-click=\"predicate = 'VAMC Name'; reverse=false\">VAMC Name</a></th>\r" +
+    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"VAMC Name\" title=\"Sort by VAMC Name\" href=\"\" ng-click=\"predicate = 'VAMC Name'; reverse=false\">VAMC Name</a></th>\r" +
     "\n" +
-    "\t\t\t<th scope=\"col\"><a alt=\"State\" title=\"Sort by State\" href=\"\" ng-click=\"predicate = 'State'; reverse=false\">State</a></th>\r" +
+    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"State\" title=\"Sort by State\" href=\"\" ng-click=\"predicate = 'State'; reverse=false\">State</a></th>\r" +
     "\n" +
-    "\t\t\t<th scope=\"col\"><a alt=\"VISN\" title=\"Sort by VISN\" href=\"\" ng-click=\"predicate = 'VISN'; reverse=false\">VISN</a></th>\r" +
+    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"VISN\" title=\"Sort by VISN\" href=\"\" ng-click=\"predicate = 'VISN'; reverse=false\">VISN</a></th>\r" +
     "\n" +
-    "\t\t\t<th scope=\"col\"><a alt=\"Total Number of Patients\" title=\"Sort by Total Number of Patients\" href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
+    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Total Number of Patients\" title=\"Sort by Total Number of Patients\" href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
     "\n" +
     "\t\t</thead>\r" +
     "\n" +
@@ -5559,9 +5562,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th scope=\"col\"><a alt=\"Flag\" title=\"Sort by Flag\" href=\"\" ng-click=\"predicate = 'Flag'; reverse=false\">Flag</a></th>\r" +
+    "            <th scope=\"col\" tabindex=\"-1\"><a alt=\"Flag\" title=\"Sort by Flag\" href=\"\" ng-click=\"predicate = 'Flag'; reverse=false\">Flag</a></th>\r" +
     "\n" +
-    "            <th scope=\"col\"><a alt=\"Cat\" title=\"Sort by Cat\" href=\"\" ng-click=\"predicate = 'Cat'; reverse=false\">Cat</a></th>\r" +
+    "            <th scope=\"col\" tabindex=\"-1\"><a alt=\"Cat\" title=\"Sort by Cat\" href=\"\" ng-click=\"predicate = 'Cat'; reverse=false\">Cat</a></th>\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
