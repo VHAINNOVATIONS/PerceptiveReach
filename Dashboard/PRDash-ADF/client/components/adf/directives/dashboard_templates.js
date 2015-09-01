@@ -206,13 +206,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"panel-title\">\r" +
     "\n" +
-    "                        <button style=\"background-color: transparent\" class=\"btn widget-title nav\" ng-click=\"editTitle(widget)\" ng-hide=\"widget.editingTitle\">{{widget.title}}</button>\r" +
-    "\n" +
-    "                        <form action=\"\" class=\"widget-title\" ng-show=\"widget.editingTitle\" ng-submit=\"saveTitleEdit(widget)\">\r" +
-    "\n" +
-    "                            <input alt=\"Widget Title\" name=\"WidgetTitle\" type=\"text\" ng-model=\"widget.title\" class=\"form-control\">\r" +
-    "\n" +
-    "                        </form>\r" +
+    "                        <span style=\"background-color: transparent;\" class=\"label-primary widget-title nav\">{{widget.title}}</span>\r" +
     "\n" +
     "                        <span class=\"label label-primary\" ng-if=\"!options.hideWidgetName\" tabindex=\"-1\">{{widget.name}}</span>\r" +
     "\n" +

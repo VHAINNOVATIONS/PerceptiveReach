@@ -50,10 +50,7 @@
               <div class="widget panel panel-default" style="height:98%">
                 <div class="widget-header panel-heading" tabindex="-1" style="height:45px;">
                     <div class="panel-title">
-                        <button style="background-color: transparent" class="btn widget-title nav" ng-click="editTitle(widget)" ng-hide="widget.editingTitle">{{widget.title}}</button>
-                        <form action="" class="widget-title" ng-show="widget.editingTitle" ng-submit="saveTitleEdit(widget)">
-                            <input alt="Widget Title" name="WidgetTitle" type="text" ng-model="widget.title" class="form-control">
-                        </form>
+                        <span style="background-color: transparent;" class="label-primary widget-title nav">{{widget.title}}</span>
                         <span class="label label-primary" ng-if="!options.hideWidgetName" tabindex="-1">{{widget.name}}</span>
                         <div id="widgetSettings" style="display:inline-block; float:right; position:relative;">
                             <!--button ng-click="widget.contentStyle.display = widget.contentStyle.display === 'none' ? 'block' : 'none'" style="background-color: transparent; float:left;" class="glyphicon" ng-class="{'glyphicon-plus': widget.contentStyle.display === 'none','glyphicon-minus': widget.contentStyle.display !== 'none'}"></button-->
