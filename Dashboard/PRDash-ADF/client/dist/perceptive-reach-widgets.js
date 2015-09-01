@@ -4814,7 +4814,7 @@ angular.module('ui.widgets')
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
-    "<div class=\"appointment\" title=\"Tab and press enter to sort columns\">\r" +
+    "<div class=\"appointment\" title=\"Appointment Widget\">\r" +
     "\n" +
     "\t<table id=\"tblAppointment\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -4938,7 +4938,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/diagnoses/diagnoses.html",
-    "<div class=\"diagnoses\" title=\"Tab and press enter to sort columns\">\r" +
+    "<div class=\"diagnoses\" title=\"Diagnoses Widget\">\r" +
     "\n" +
     "\t<table id=\"tblDiagnoses\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -5011,7 +5011,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/facilityRoster/facilityRoster.html",
-    "<div id=\"facilityRosterDiv\" title=\"Tab and press enter to sort columns\">\r" +
+    "<div id=\"facilityRosterDiv\" title=\"Navigate to header and click down arrow to enter table, tab to leave table rows\">\r" +
     "\n" +
     "    <table id=\"tblFacilityRoster\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
@@ -5066,7 +5066,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
-    "<div class=\"medication\" title=\"Tab and press enter to sort columns\">\r" +
+    "<div class=\"medication\" title=\"Medication Widget\">\r" +
     "\n" +
     "    <table id=\"tblMedication\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -5144,7 +5144,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalAgeGroups/nationalAgeGroups.html",
-    "<div class=\"nationalAgeGroups\" title=\"Tab and press enter to sort columns\">\r" +
+    "<div class=\"nationalAgeGroups\" title=\"National Age Groups Widget\">\r" +
     "\n" +
     "\t<table id=\"tblAgeGroups\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -5246,7 +5246,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalGenderDistribution/nationalGenderDistribution.html",
-    "<div class=\"nationalGenderDistribution\" title=\"Tab and press enter to sort columns\">\r" +
+    "<div class=\"nationalGenderDistribution\" title=\"National Gender Widget\">\r" +
     "\n" +
     "\t<table id=\"tblGenderDistribution\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -5314,7 +5314,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalMilitaryBranch/nationalMilitaryBranch.html",
-    "<div class=\"nationalMilitaryBranch\" title=\"Tab and press enter to sort columns\">\r" +
+    "<div class=\"nationalMilitaryBranch\" title=\"Military Branch Widget\">\r" +
     "\n" +
     "\t<table id=\"tblMilitaryBranch\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -5344,7 +5344,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalOutReachStatus/nationalOutReachStatus.html",
-    "<div class=\"nationalOutReachStatus\" title=\"Tab and press enter to sort columns\">\r" +
+    "<div class=\"nationalOutReachStatus\" title=\"OutReach Status Widget\">\r" +
     "\n" +
     "\t<table id=\"tblNationalOutReachStatus\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -5474,7 +5474,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalVAMC/nationalVAMC.html",
-    "<div class=\"nationalVAMC\">\r" +
+    "<div class=\"nationalVAMC\" title=\"National VAMC Widget\">\r" +
     "\n" +
     "\t<table id=\"tblVAMC\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -5554,7 +5554,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
-    "<div class=\"patient-flags\" title=\"Tab and press enter to sort columns\">\r" +
+    "<div class=\"patient-flags\" title=\"Patient Flags Widget\">\r" +
     "\n" +
     "    <table id=\"tblPatientFlags\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -5588,7 +5588,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/patientTable/patientTable.html",
-    "<div id=\"patientRosterDiv\" title=\"Tab and press enter to sort columns\">\r" +
+    "<div id=\"patientRosterDiv\" title=\"Navigate to header and click down arrow to enter table, tab to leave table rows\">\r" +
     "\n" +
     "    <table id=\"tblPatient\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
@@ -5670,7 +5670,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/suicideStatistics/suicideStatistics.html",
-    "<div>\r" +
+    "<div title=\"Health Indicators Suicide Statistics Widget\">\r" +
     "\n" +
     "\t<br>This product uses the Health Indicators Warehouse API but is not endorsed or certified by the Health Indicators Warehouse or its associated Federal agencies.\r" +
     "\n" +
@@ -5718,7 +5718,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/vismRoster/vismRoster.html",
-    "<div id=\"VISNRosterDiv\" title=\"Tab and press enter to sort columns\"> \r" +
+    "<div id=\"VISNRosterDiv\" title=\"Navigate to header and click down arrow to enter table, tab to leave table rows\"> \r" +
     "\n" +
     "    <table id=\"tblVismRoster\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
