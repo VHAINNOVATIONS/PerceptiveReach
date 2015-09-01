@@ -73,6 +73,7 @@ angular.module('ui.widgets')
 		  $($('#patientRosterDiv table')[0]).find('th').each(function(){
                 $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
 				$(this).attr('scope','col');
+        $(this).attr('tabindex','-1');
             });
 
           $('#tblPatient tbody').on( 'click', 'tr', function (event) {
