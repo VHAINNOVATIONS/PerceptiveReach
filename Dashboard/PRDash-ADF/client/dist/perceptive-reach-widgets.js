@@ -2834,11 +2834,52 @@ angular.module('ui.widgets')
       },
       link: function postLink(scope, element, attr) {
         scope.$on("bindEvents", function (){
-		$($('#facilityRosterDiv table')[0]).find('th').each(function(){
+          $($('#facilityRosterDiv table')[0]).find('th').each(function(){
             $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
-			$(this).attr('scope','col');
-      $(this).attr('tabindex','-1');
-        }); 
+            $(this).attr('scope','col');
+            $(this).attr('tabindex','-1');
+          }); 
+
+          $($('#facilityRosterDiv table')[0]).find('th').keydown(function(event){ 
+          if (event.keyCode == 40 || event.key == 'Down' || event.keyCode == 38 || event.key == 'Up') {
+            var isRowAtFocus = $('#tblFacilityRoster').find('tr.rowAtFocus');
+            if(isRowAtFocus.length > 0)
+            {
+              isRowAtFocus.removeClass('rowAtFocus');
+              isRowAtFocus.css('backgroundColor','');
+              if(event.keyCode == 40)
+              {
+                if(isRowAtFocus.next())
+                {
+                  isRowAtFocus.next().addClass('rowAtFocus');
+                  isRowAtFocus.next().css('backgroundColor','#f5f5f5');  
+                }  
+              }
+              else
+              {
+                if(isRowAtFocus.prev())
+                {
+                  isRowAtFocus.prev().addClass('rowAtFocus');
+                  isRowAtFocus.prev().css('backgroundColor','#f5f5f5');  
+                }
+              }
+            }
+            else
+            {
+              $($('#tblFacilityRoster>tbody>tr')[0]).addClass('rowAtFocus');
+              $($('#tblFacilityRoster>tbody>tr')[0]).css('backgroundColor','#f5f5f5');
+            }
+            $('#facilityRosterDiv .dataTables_scrollBody').animate({ scrollTop: $('#tblFacilityRoster').find('tr.rowAtFocus')[0].offsetTop }, 500);
+            return false;
+          }
+
+          if (event.keyCode == '13' || event.key == 'Enter') {
+            $('#tblFacilityRoster').find('tr.rowAtFocus').css('backgroundColor','');
+            $('#tblFacilityRoster').find('tr.rowAtFocus').click();
+            return false;
+          }
+
+        });
 		
           $('#tblFacilityRoster').on( 'click', 'tr', function (event) {
             if(scope.eventTimer == event.timeStamp) return;
