@@ -43,6 +43,7 @@ angular.module('ui.widgets')
             // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
             .withOption('paging',false)
+            .withOption('bDestroy',true)
             .withOption('order', [1, 'desc']);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('STA3N').withTitle('VAMC'),
@@ -129,6 +130,7 @@ angular.module('ui.widgets')
               }
               $timeout(function(){
                 scope.$emit('bindEvents');
+                $.fn.dataTable.ext.errMode = 'throw';
                 var commonData = scope.widget.dataModelOptions.common;
                 var activeView = commonData.data.activeView;
                 if(activeView == "facility"){

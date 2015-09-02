@@ -41,6 +41,7 @@ angular.module('ui.widgets')
 		.withScroller()
 		.withOption('deferRender', true)
 		.withOption('paging',false)
+    .withOption('bDestroy',true)
 		.withOption('order', [1, 'desc']);
 	//.withPaginationType('full_numbers').withDisplayLength(5);
 	$scope.dtColumns = [
@@ -50,6 +51,7 @@ angular.module('ui.widgets')
   },
  link: function postLink(scope, element, attr) {
 	scope.$watch('widgetData', function (data) {
+    $.fn.dataTable.ext.errMode = 'throw';
 	  if (data != null && data.length >0) {
 		scope.data = data;
 		scope.militaryBranchList = data;

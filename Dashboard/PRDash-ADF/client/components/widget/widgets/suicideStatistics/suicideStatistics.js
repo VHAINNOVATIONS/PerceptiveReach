@@ -43,6 +43,7 @@ angular.module('ui.widgets')
             // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
             .withOption('paging',false)
+            .withOption('bDestroy',true)
             .withOption('order', [0, 'asc']);
             //.withPaginationType('full_numbers').withDisplayLength(100);
 			
@@ -64,6 +65,7 @@ angular.module('ui.widgets')
 		
         scope.$watch('widgetData', function (data) {
 		$timeout(function(){
+      $.fn.dataTable.ext.errMode = 'throw';
                 scope.$emit('bindEvents');
           if (data != null && data.length >0) {
             scope.data = data;

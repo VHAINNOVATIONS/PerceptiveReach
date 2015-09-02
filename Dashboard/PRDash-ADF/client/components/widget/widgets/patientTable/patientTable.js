@@ -41,6 +41,7 @@ angular.module('ui.widgets')
             .withOption('deferRender', true)
             // Do not forget to add the scorllY option!!!
             .withOption('scrollY', 200)
+            .withOption('bDestroy',true)
             .withOption('paging',false);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Name').withTitle('Name'),
@@ -158,6 +159,7 @@ angular.module('ui.widgets')
             }
             
             $timeout(function(){
+              $.fn.dataTable.ext.errMode = 'throw';
               scope.$emit('updateSelectMenu'); 
               var commonData = scope.widget.dataModelOptions.common;
               if(!commonData.data.veteranObj)

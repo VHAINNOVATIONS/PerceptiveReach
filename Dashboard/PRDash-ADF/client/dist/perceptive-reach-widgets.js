@@ -2527,6 +2527,7 @@ angular.module('ui.widgets')
             .withOption('deferRender', true)
             // Do not forget to add the scorllY option!!!
             .withOption('paging',false)
+            .withOption('bDestroy',true)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
@@ -2539,6 +2540,7 @@ angular.module('ui.widgets')
       },
       link: function postLink(scope) {
         scope.$watch('data', function (data) {
+          $.fn.dataTable.ext.errMode = 'throw';
           if (data) {
             scope.data = data;
           }
@@ -2729,6 +2731,7 @@ angular.module('ui.widgets')
             // Do not forget to add the scorllY option!!!
             .withOption('scrollY', 200)
             .withOption('paging',false)
+            .withOption('bDestroy',true)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
@@ -2742,6 +2745,7 @@ angular.module('ui.widgets')
       },
       link: function postLink(scope) {
         scope.$watch('data', function (data) {
+          $.fn.dataTable.ext.errMode = 'throw';
           if (data) {
             scope.data = data;
           }
@@ -2823,6 +2827,7 @@ angular.module('ui.widgets')
             // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
             .withOption('paging',false)
+            .withOption('bDestroy',true)
             .withOption('order', [1, 'desc']);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('STA3N').withTitle('VAMC'),
@@ -2909,6 +2914,7 @@ angular.module('ui.widgets')
               }
               $timeout(function(){
                 scope.$emit('bindEvents');
+                $.fn.dataTable.ext.errMode = 'throw';
                 var commonData = scope.widget.dataModelOptions.common;
                 var activeView = commonData.data.activeView;
                 if(activeView == "facility"){
@@ -3214,6 +3220,7 @@ angular.module('ui.widgets')
             .withOption('deferRender', true)
             // Do not forget to add the scorllY option!!!
             .withOption('scrollY', 200)
+            .withOption('bDestroy',true)
             .withOption('paging',false);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
@@ -3483,6 +3490,7 @@ angular.module('ui.widgets')
             // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
             .withOption('paging',false)
+            .withOption('bDestroy',true)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
@@ -3493,6 +3501,7 @@ angular.module('ui.widgets')
       },
       link: function postLink(scope) {
         scope.$watch('widgetData', function (data) {
+          $.fn.dataTable.ext.errMode = 'throw';
           if (data != null && data.length >0) {
             scope.data = data;
             scope.ageGroupsList = data;
@@ -3615,6 +3624,7 @@ angular.module('ui.widgets')
             .withOption('deferRender', true)
             // Do not forget to add the scrollY option!!!
             .withOption('paging',false)
+            .withOption('bDestroy',true)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
@@ -3625,6 +3635,7 @@ angular.module('ui.widgets')
       },
 	link: function postLink(scope, element, attr) {
         scope.$watch('widgetData', function (data) {
+          $.fn.dataTable.ext.errMode = 'throw';
           if (data != null && data.length >0) {
             scope.data = data;
             scope.genderDistributionList = data;
@@ -3718,6 +3729,7 @@ angular.module('ui.widgets')
 		.withScroller()
 		.withOption('deferRender', true)
 		.withOption('paging',false)
+    .withOption('bDestroy',true)
 		.withOption('order', [1, 'desc']);
 	//.withPaginationType('full_numbers').withDisplayLength(5);
 	$scope.dtColumns = [
@@ -3727,6 +3739,7 @@ angular.module('ui.widgets')
   },
  link: function postLink(scope, element, attr) {
 	scope.$watch('widgetData', function (data) {
+    $.fn.dataTable.ext.errMode = 'throw';
 	  if (data != null && data.length >0) {
 		scope.data = data;
 		scope.militaryBranchList = data;
@@ -3818,6 +3831,7 @@ angular.module('ui.widgets')
             // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
             .withOption('paging',false)
+            .withOption('bDestroy',true)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
@@ -3828,6 +3842,7 @@ angular.module('ui.widgets')
       },
      link: function postLink(scope, element, attr) {
         scope.$watch('widgetData', function (data) {
+          $.fn.dataTable.ext.errMode = 'throw';
           if (data != null && data.length >0) {
             scope.data = data;
             scope.outreachStatusList = data;
@@ -4133,6 +4148,7 @@ angular.module('ui.widgets')
             // Do not forget to add the scorllY option!!!
             .withOption('scrollY', 200)
             .withOption('paging',false)
+            .withOption('bDestroy',true)
             .withOption('order', [1, 'asc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
@@ -4146,6 +4162,7 @@ angular.module('ui.widgets')
       link: function postLink(scope) {
         scope.$watch('data', function (data) {
           if (data) {
+            $.fn.dataTable.ext.errMode = 'throw';
             scope.data = data;
           }
         });
@@ -4197,6 +4214,7 @@ angular.module('ui.widgets')
             .withOption('deferRender', true)
             // Do not forget to add the scorllY option!!!
             .withOption('scrollY', 200)
+            .withOption('bDestroy',true)
             .withOption('paging',false);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Name').withTitle('Name'),
@@ -4314,6 +4332,7 @@ angular.module('ui.widgets')
             }
             
             $timeout(function(){
+              $.fn.dataTable.ext.errMode = 'throw';
               scope.$emit('updateSelectMenu'); 
               var commonData = scope.widget.dataModelOptions.common;
               if(!commonData.data.veteranObj)
@@ -4533,6 +4552,7 @@ angular.module('ui.widgets')
             // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
             .withOption('paging',false)
+            .withOption('bDestroy',true)
             .withOption('order', [0, 'asc']);
             //.withPaginationType('full_numbers').withDisplayLength(100);
 			
@@ -4554,6 +4574,7 @@ angular.module('ui.widgets')
 		
         scope.$watch('widgetData', function (data) {
 		$timeout(function(){
+      $.fn.dataTable.ext.errMode = 'throw';
                 scope.$emit('bindEvents');
           if (data != null && data.length >0) {
             scope.data = data;
@@ -4707,6 +4728,7 @@ angular.module('ui.widgets')
             // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
             .withOption('paging',false)
+            .withOption('bDestroy',true)
             .withOption('order', [0, 'asc']);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
@@ -4787,6 +4809,7 @@ angular.module('ui.widgets')
               }
               $timeout(function(){
                 scope.$emit('bindEvents');
+                $.fn.dataTable.ext.errMode = 'throw';
                 var commonData = scope.widget.dataModelOptions.common;
                 var activeView = commonData.data.activeView;
                 if(activeView == "surveillance"){
