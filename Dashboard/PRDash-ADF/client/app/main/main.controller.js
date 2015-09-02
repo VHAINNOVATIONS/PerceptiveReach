@@ -81,7 +81,7 @@ angular.module('app')
       storageHash: (user.DashboardData) ? user.DashboardData.storageHash : Util.makeStorageID(),
       widgetDefinitions: widgetDefinitions,
       defaultWidgets: defaultWidgetsAll,
-      explicitSave: true,
+      explicitSave: false,
       lockDefaultLayouts: true,
       defaultLayouts: layouts      
     };

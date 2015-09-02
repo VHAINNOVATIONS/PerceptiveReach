@@ -5,7 +5,7 @@ angular.module('app')
                                     RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel, 
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
-                                    PatientFlagDataModel, MedicationDataModel, ClinicalDecisionSupportDataModel,
+                                    MedicationDataModel, ClinicalDecisionSupportDataModel,
                                     AppointmentDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,AgeGroupsMetricsDataModel, 
                                     GenderDistributionMetricsDataModel,MilitaryBranchMetricsDataModel, OutreachStatusMetricsDataModel,
                                     TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel 
@@ -110,19 +110,6 @@ angular.module('app')
         }
       },
       {
-        name: 'patientFlags',
-        directive: 'wt-patient-flags',
-        dataAttrName: 'data',
-        title: 'Patient Flags',
-        dataModelType: PatientFlagDataModel,
-        dataModelOptions: {
-          defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
-          layout: 'individual'
-        },
-        sizeY:9
-      },
-      {
         name: 'medication',
         directive: 'wt-medication',
         dataAttrName: 'data',
@@ -209,7 +196,6 @@ angular.module('app')
         }
         //}
       },     
-
 	   {
         name: 'GenderDistribution',
         directive: 'wt-national-gender-distribution',
@@ -459,8 +445,7 @@ angular.module('app')
       {name: 'diagnoses'},
       {name: 'appointment'},
       { name: 'ClinicalDecisionSupport' },
-      {name: 'medication'},
-      {name: 'patientFlags'}
+      {name: 'medication'}
       /*,
       { name: 'Metrics Chart' },
       { name: 'NVD3 Line Chart' },
