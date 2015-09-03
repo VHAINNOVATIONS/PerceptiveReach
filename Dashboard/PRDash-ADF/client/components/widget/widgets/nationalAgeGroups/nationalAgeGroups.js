@@ -43,6 +43,7 @@ angular.module('ui.widgets')
             // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
             .withOption('paging',false)
+            .withOption('bDestroy',true)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
@@ -54,32 +55,33 @@ angular.module('ui.widgets')
      link: function postLink(scope, element, attr) {
 	
         scope.$on("bindEvents", function (){
-		$($('#ageGroupDiv table')[0]).find('th').each(function(){
-			$(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort 			by '+ $(this).text()+'">'+$(this).text()+'</a>');
-			$(this).attr('scope','col');
-			$(this).attr('tabindex','-1');
-        });
-		});
+      		$($('#ageGroupDiv table')[0]).find('th').each(function(){
+      			$(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort 			by '+ $(this).text()+'">'+$(this).text()+'</a>');
+      			$(this).attr('scope','col');
+      			$(this).attr('tabindex','-1');
+          });
+    		});
         scope.$watch('widgetData', function (data) {
-        $timeout(function(){
-               scope.$emit('bindEvents');
-          if (data != null && data.length >0) {
-            scope.data = data;
-            scope.ageGroupsList = data;
-            var promise = new Promise( function(resolve, reject){
-                  if (scope.ageGroupsList)
-                    resolve(scope.ageGroupsList);
-                  else
-                    resolve([]);
+          $timeout(function(){
+            $.fn.dataTable.ext.errMode = 'throw';
+            scope.$emit('bindEvents');
+            if (data != null && data.length >0) {
+              scope.data = data;
+              scope.ageGroupsList = data;
+              var promise = new Promise( function(resolve, reject){
+                    if (scope.ageGroupsList)
+                      resolve(scope.ageGroupsList);
+                    else
+                      resolve([]);
+                  });
+              if(scope.dtInstance)
+                scope.dtInstance.changeData(promise);
+              else {
+                scope.dtInstanceAbstract.getList().then(function(dtInstances){
+                  dtInstances.tblAgeGroups._renderer.changeData(promise)              
                 });
-            if(scope.dtInstance)
-              scope.dtInstance.changeData(promise);
-            else {
-              scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                dtInstances.tblAgeGroups._renderer.changeData(promise)              
-              });
+              }
             }
-          }
           },1000)
         });
       }

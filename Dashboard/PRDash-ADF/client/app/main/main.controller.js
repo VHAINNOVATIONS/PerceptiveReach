@@ -98,11 +98,20 @@ angular.module('app')
     };
 
     $timeout(function(){
+      // Add listener for enter key on layout
+      $('ul li a').keydown(function(event){
+        if(event.KeyCode == '13' || event.key == 'Enter')
+        {
+          //tab.click();
+          $(this).click();
+        }
+      });
       // Add listener for when layout is changed
       $('ul li a').click(function(e) 
       {
         $timeout(function(){
-          $scope.common.data.activeView = e.currentTarget.innerText.replace(' View','').toLowerCase().replace(/(\r\n|\n|\r)/gm,"").trim(); //e.currentTarget.innerText.replace(' View','').toLowerCase();
+          var element = (e.currentTarget.innerText) ? e.currentTarget : e.currentTarget.activeElement;
+          $scope.common.data.activeView = element.innerText.replace(' View','').toLowerCase().replace(/(\r\n|\n|\r)/gm,"").trim(); //e.currentTarget.innerText.replace(' View','').toLowerCase();
           $scope.$broadcast('commonDataChanged', $scope.common);  
         },1500)        
       });
