@@ -33,6 +33,7 @@ angular.module('ui.widgets')
             // Do not forget to add the scorllY option!!!
             .withOption('scrollY', 200)
             .withOption('paging',false)
+            .withOption('bDestroy',true)
             .withOption('order', [1, 'asc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
@@ -49,15 +50,17 @@ angular.module('ui.widgets')
 			  $(this).attr('tabindex','-1');
 			});
 		});
-        scope.$watch('data', function (data) {
-          if (data) {
-			$timeout(function(){
-            scope.$emit('bindEvents');
+    scope.$watch('data', function (data) {
+      if (data) { 
+
+    		$timeout(function(){
+          $.fn.dataTable.ext.errMode = 'throw';
+          scope.$emit('bindEvents');
             scope.data = data;
-           },1500)            
-          }
-        });
-		scope.updateCategory
+        },1500)            
       }
-    };
-  });
+    });
+	  scope.updateCategory
+  }
+};
+});

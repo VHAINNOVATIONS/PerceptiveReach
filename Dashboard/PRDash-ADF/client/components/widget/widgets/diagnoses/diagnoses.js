@@ -33,6 +33,7 @@ angular.module('ui.widgets')
             // Do not forget to add the scorllY option!!!
             .withOption('scrollY', 200)
             .withOption('paging',false)
+            .withOption('bDestroy',true)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
@@ -51,6 +52,7 @@ angular.module('ui.widgets')
 			});
 		});
         scope.$watch('data', function (data) {
+          $.fn.dataTable.ext.errMode = 'throw';
           if (data) {
 			$timeout(function(){
             scope.$emit('bindEvents');
