@@ -35,7 +35,6 @@ Scenario: I open a web browser and use http://localhost:7003/ to delete/close th
   Then I should see "Patient Roster by VAMC" widget
   Then I should see "Emergency Contact Information" widget
   When I click on close on the "emergency" widget
-  And I click on save changes button
   Then I should not see the "Emergency Contact Information" widget
   And I click on "Add a Widget" button
   And I click on "emergency" button in the menu
