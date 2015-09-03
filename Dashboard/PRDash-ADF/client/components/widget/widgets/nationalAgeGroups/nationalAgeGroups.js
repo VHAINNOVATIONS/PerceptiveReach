@@ -17,7 +17,7 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtNationalAgeGroups', function () {
+  .directive('wtNationalAgeGroups', function ($timeout) {
     return {
       restrict: 'EAC',
       replace: true,
@@ -51,8 +51,18 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients')
         ];
       },
-      link: function postLink(scope) {
+     link: function postLink(scope, element, attr) {
+	
+        scope.$on("bindEvents", function (){
+		$($('#ageGroupDiv table')[0]).find('th').each(function(){
+			$(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort 			by '+ $(this).text()+'">'+$(this).text()+'</a>');
+			$(this).attr('scope','col');
+			$(this).attr('tabindex','-1');
+        });
+		});
         scope.$watch('widgetData', function (data) {
+        $timeout(function(){
+               scope.$emit('bindEvents');
           if (data != null && data.length >0) {
             scope.data = data;
             scope.ageGroupsList = data;
@@ -70,6 +80,7 @@ angular.module('ui.widgets')
               });
             }
           }
+          },1000)
         });
       }
     };
