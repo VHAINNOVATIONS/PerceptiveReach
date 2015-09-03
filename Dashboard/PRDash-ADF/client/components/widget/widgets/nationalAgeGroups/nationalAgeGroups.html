@@ -1,9 +1,9 @@
-<div class="nationalAgeGroups" title="Tab and press enter to sort columns">
+<div class="nationalAgeGroups" title="National Age Groups Widget">
 	<table id="tblAgeGroups" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
 		<thead>	
-			<th scope="col"><a alt="Age Group" title="Sort by Age Group" href="" ng-click="predicate = 'Age Groups'; reverse=false">Age Groups</a></th>
-			<th scope="col"><a alt="Risk Level Group" title="Sort by Risk Level Group" href="" ng-click="predicate = 'Risk Level Group'; reverse=false">Risk Level Group</a></th>
-			<th scope="col"><a alt="Total Number Patients" title="Sort by Total Num Patients" href="" ng-click="predicate = 'Total Number of Patients'; reverse=false">Total Number of Patients</a></th>
+			<th scope="col" tabindex="-1"><a alt="Age Group" title="Sort by Age Group" href="" ng-click="predicate = 'Age Groups'; reverse=false">Age Groups</a></th>
+			<th scope="col" tabindex="-1"><a alt="Risk Level Group" title="Sort by Risk Level Group" href="" ng-click="predicate = 'Risk Level Group'; reverse=false">Risk Level Group</a></th>
+			<th scope="col" tabindex="-1"><a alt="Total Number Patients" title="Sort by Total Num Patients" href="" ng-click="predicate = 'Total Number of Patients'; reverse=false">Total Number of Patients</a></th>
 		</thead> 
 		<tbody>
 			<tr ng-repeat="ind in data track by $index | orderBy:predicate:reverse">
