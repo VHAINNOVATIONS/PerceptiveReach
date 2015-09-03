@@ -266,6 +266,9 @@ angular.module('ui.dashboard')
         scope.addWidgetInternal = function (event, widgetDef) {
           event.preventDefault();
           scope.addWidget(widgetDef);
+          $timeout(function(){
+           scope.$broadcast('defaultWidgetsSelected', scope.common);
+          },1000);
         };
 
         /**

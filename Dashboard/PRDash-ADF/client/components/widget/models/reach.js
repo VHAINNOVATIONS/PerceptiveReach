@@ -1192,6 +1192,28 @@ angular.module('ui.models')
             this.getData();          
           
         }.bind(this));
+
+        this.widgetScope.$on('defaultWidgetsSelected', function (event, data) {
+          this.dataModelOptions.common = data;
+          this.currentID = this.ID;
+          
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+            /*if(dataModelOptions.common.data.facilitySelected.surveillance != null)
+              this.ID = dataModelOptions.common.data.facilitySelected.surveillance;*/
+            if(dataModelOptions.common.data.visnSelected.surveillance != null)
+              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
+          }
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
+            this.ID = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;  
+          }
+          /*console.log("FacilityDataModel commonDataChange - this", this);
+          console.log("FacilityDataModel commonDataChange - currentId", this.currentID);
+          console.log("FacilityDataModel commonDataChange - this.Id", this.ID);
+          console.log("FacilityDataModel commonDataChange - facilitySelected.facility", dataModelOptions.common.data.visnSelected.facility);*/ 
+          console.log("defaultWidgetsSelected again!!!!");
+          if(this.ID != this.currentID)
+            this.getData();
+        }.bind(this));
         this.updateScope([]);
         this.getData();
       },
@@ -1272,6 +1294,12 @@ angular.module('ui.models')
           if(this.ID != this.currentID)
             this.getData();          
           
+        }.bind(this));
+
+        this.widgetScope.$on('defaultWidgetsSelected', function (event, data) {
+          this.dataModelOptions.common = data;
+          this.currentID = this.ID;
+          this.getData();
         }.bind(this));
 
         this.updateScope([]);
