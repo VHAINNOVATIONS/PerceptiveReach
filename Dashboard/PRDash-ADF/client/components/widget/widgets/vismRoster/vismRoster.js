@@ -174,12 +174,18 @@ angular.module('ui.widgets')
                 if(activeView == "surveillance"){
                   if(commonData.data.visnSelected.surveillance != null && commonData.data.visnSelected.surveillance.toString().length > 0)
                   {
-                    var selectedRow = $('#tblVismRoster').find( "tbody>tr:contains('"+commonData.data.visnSelected.surveillance+"') td:eq(0)" ).parent();
+                    var selectedRow = null; 
+                    $('#tblVismRoster tbody tr').each(function(){
+                        var textcolumn = $(this).find('td').eq(0).text();
+                        if($(this).find('td').eq(0).text() == commonData.data.visnSelected.surveillance){
+                            selectedRow = $(this);
+                        }
+                    }); 
                     console.log("VISN Roster selected:", selectedRow);
                     console.log("VISNRoster selected row index:", selectedRow[0].rowIndex);
                     selectedRow.addClass('selected');//click();
                     //selectedRow[0].click();//.dataTables_scrollBody
-                    $('.dataTables_scrollBody').animate({
+                    $('#tblVismRoster_wrapper > div > div.dataTables_scrollBody').animate({
                       scrollTop: $('#tblVismRoster tbody tr').eq(selectedRow[0].rowIndex).offset().top
                     },500)
                   }    

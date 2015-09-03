@@ -141,24 +141,36 @@ angular.module('ui.widgets')
                   }
                   else
                   {
-                    var selectedRow = $('#tblFacilityRoster').find( "tbody>tr td:contains('"+commonData.data.facilitySelected.facility+"')" ).parent()[0];
+                    var selectedRow = null; 
+                    $('#tblFacilityRoster tbody tr').each(function(){
+                        var textcolumn = $(this).find('td').eq(0).text();
+                        if($(this).find('td').eq(0).text() == commonData.data.facilitySelected.facility){
+                            selectedRow = $(this)[0];
+                        }
+                    }); 
                     console.log("FacilityRoster selected:", selectedRow);
                     console.log("FacilityRoster selected row index:", selectedRow.rowIndex);
                     selectedRow.click();
-                    $('.dataTables_scrollBody').animate({
-                      scrollTop: $('#tblFacilityRoster tbody tr').eq(selectedRow.rowIndex-7).offset().top
+                    $('#tblFacilityRoster_wrapper > div > div.dataTables_scrollBody').animate({
+                      scrollTop: $('#tblFacilityRoster tbody tr').eq(selectedRow.rowIndex-9).offset().top
                     },500)
                   }  
                 }
                 else if(activeView == "surveillance"){
                   if(commonData.data.facilitySelected.surveillance != null && commonData.data.facilitySelected.surveillance.toString().length > 0)
                   {
-                    var selectedRow = $('#tblFacilityRoster').find( "tbody>tr td:contains('"+commonData.data.facilitySelected.surveillance+"')" ).parent();
+                    var selectedRow = null; 
+                    $('#tblFacilityRoster tbody tr').each(function(){
+                        var textcolumn = $(this).find('td').eq(0).text();
+                        if($(this).find('td').eq(0).text() == commonData.data.facilitySelected.surveillance){
+                            selectedRow = $(this);
+                        }
+                    }); 
                     console.log("FacilityRoster selected:", selectedRow);
                     console.log("FacilityRoster selected row index:", selectedRow[0].rowIndex);           
                     
                     selectedRow.addClass('selected');//selectedRow.click();
-                    $('.dataTables_scrollBody').animate({
+                    $('#tblFacilityRoster_wrapper > div > div.dataTables_scrollBody').animate({
                       scrollTop: $('#tblFacilityRoster tbody tr').eq(selectedRow[0].rowIndex-8).offset().top
                     },500);                                      
                   }  
