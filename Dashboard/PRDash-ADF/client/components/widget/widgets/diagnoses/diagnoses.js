@@ -46,19 +46,22 @@ angular.module('ui.widgets')
         });*/
       },
 	link: function postLink(scope, element) {
-		scope.$on("bindEvents", function (){
-			$($('#diagnosisDiv table')[0]).find('th').each(function(){
-			  $(this).attr('tabindex','-1');
-			});
-		});
+        scope.$on("bindEvents", function (){
+          $($('#diagnosisDiv table')[0]).find('th').each(function(){
+            $(this).attr('tabindex','-1');
+          });
+        });
+
+        $timeout(function(){
+            scope.$emit('bindEvents');
+        },1500);
+
         scope.$watch('data', function (data) {
           $.fn.dataTable.ext.errMode = 'throw';
           if (data) {
-			$timeout(function(){
-            scope.$emit('bindEvents');
-            scope.data = data;
-           },1500)            
-          }
+             scope.data = data;  
+        }
+
         });
       }
     };
