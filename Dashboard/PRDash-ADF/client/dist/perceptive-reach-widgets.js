@@ -2512,7 +2512,7 @@ function Gauge(element, configuration)
 'use strict';
  
 angular.module('ui.widgets')
-  .directive('wtAppointment', function () {
+  .directive('wtAppointment', function ($timeout) {
     return {
       restrict: 'A',
       replace: true,
@@ -2537,10 +2537,18 @@ angular.module('ui.widgets')
             vm.persons = persons;
         });*/
       },
-      link: function postLink(scope) {
+	link: function postLink(scope, element) {
+		scope.$on("bindEvents", function (){
+			$($('#appointmentDiv table')[0]).find('th').each(function(){
+			  $(this).attr('tabindex','-1');
+			});
+		});
         scope.$watch('data', function (data) {
           if (data) {
+			$timeout(function(){
+            scope.$emit('bindEvents');
             scope.data = data;
+           },1500)            
           }
         });
       }
@@ -2713,7 +2721,7 @@ angular.module('ui.widgets')
 'use strict'; 
 
 angular.module('ui.widgets')
-  .directive('wtDiagnoses', function () {
+  .directive('wtDiagnoses', function ($timeout) {
     return {
       restrict: 'A',
       replace: true,
@@ -2740,10 +2748,18 @@ angular.module('ui.widgets')
             vm.persons = persons;
         });*/
       },
-      link: function postLink(scope) {
+	link: function postLink(scope, element) {
+		scope.$on("bindEvents", function (){
+			$($('#diagnosisDiv table')[0]).find('th').each(function(){
+			  $(this).attr('tabindex','-1');
+			});
+		});
         scope.$watch('data', function (data) {
           if (data) {
+			$timeout(function(){
+            scope.$emit('bindEvents');
             scope.data = data;
+           },1500)            
           }
         });
       }
@@ -3241,7 +3257,7 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtMedication', function () {
+  .directive('wtMedication', function ($timeout) {
     return {
       restrict: 'A',
       replace: true,
@@ -3265,10 +3281,18 @@ angular.module('ui.widgets')
             vm.persons = persons;
         });*/
       },
-      link: function postLink(scope) {
+	link: function postLink(scope, element) {
+		scope.$on("bindEvents", function (){
+			$($('#medicationDiv table')[0]).find('th').each(function(){
+			  $(this).attr('tabindex','-1');
+			});
+		});
         scope.$watch('data', function (data) {
           if (data) {
+			$timeout(function(){
+            scope.$emit('bindEvents');
             scope.data = data;
+           },1500)            
           }
         });
       }
@@ -4159,7 +4183,7 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtPatientFlags', function () {
+  .directive('wtPatientFlags', function ($timeout) {
     return {
       restrict: 'A',
       replace: true,
@@ -4185,14 +4209,21 @@ angular.module('ui.widgets')
             vm.persons = persons;
         });*/
       },
-      link: function postLink(scope) {
+	link: function postLink(scope, element) {
+		scope.$on("bindEvents", function (){
+			$($('#patientFlagDiv table')[0]).find('th').each(function(){
+			  $(this).attr('tabindex','-1');
+			});
+		});
         scope.$watch('data', function (data) {
           if (data) {
+			$timeout(function(){
+            scope.$emit('bindEvents');
             scope.data = data;
+           },1500)            
           }
         });
-
-        scope.updateCategory
+		scope.updateCategory
       }
     };
   });
@@ -4607,6 +4638,7 @@ angular.module('ui.widgets')
 		$($('#suicideStatisticsDiv table')[0]).find('th').each(function(){
             $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
 			$(this).attr('scope','col');
+			$(this).attr('tabindex','-1');
         });
 		});
 		
@@ -4912,7 +4944,7 @@ angular.module('ui.widgets')
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
-    "<div class=\"appointment\" title=\"Appointment Widget\">\r" +
+    "<div id=\"appointmentDiv\" class=\"appointment\" title=\"Appointment Widget\">\r" +
     "\n" +
     "\t<table id=\"tblAppointment\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -5036,7 +5068,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/diagnoses/diagnoses.html",
-    "<div class=\"diagnoses\" title=\"Diagnoses Widget\">\r" +
+    "<div id=\"diagnosisDiv\" class=\"diagnoses\" title=\"Diagnoses Widget\">\r" +
     "\n" +
     "\t<table id=\"tblDiagnoses\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -5164,7 +5196,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
-    "<div class=\"medication\" title=\"Medication Widget\">\r" +
+    "<div id=\"medicationDiv\" class=\"medication\" title=\"Medication Widget\">\r" +
     "\n" +
     "    <table id=\"tblMedication\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -5652,7 +5684,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
-    "<div class=\"patient-flags\" title=\"Patient Flags Widget\">\r" +
+    "<div id=\"patientFlagDiv\" class=\"patient-flags\" title=\"Patient Flags Widget\">\r" +
     "\n" +
     "    <table id=\"tblPatientFlags\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
