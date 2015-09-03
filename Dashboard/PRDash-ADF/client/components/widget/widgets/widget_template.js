@@ -1,7 +1,7 @@
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
-    "<div class=\"appointment\" title=\"Appointment Widget\">\r" +
+    "<div id=\"appointmentDiv\" class=\"appointment\" title=\"Appointment Widget\">\r" +
     "\n" +
     "\t<table id=\"tblAppointment\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -125,7 +125,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/diagnoses/diagnoses.html",
-    "<div class=\"diagnoses\" title=\"Diagnoses Widget\">\r" +
+    "<div id=\"diagnosisDiv\" class=\"diagnoses\" title=\"Diagnoses Widget\">\r" +
     "\n" +
     "\t<table id=\"tblDiagnoses\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -253,7 +253,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
-    "<div class=\"medication\" title=\"Medication Widget\">\r" +
+    "<div id=\"medicationDiv\" class=\"medication\" title=\"Medication Widget\">\r" +
     "\n" +
     "    <table id=\"tblMedication\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -741,7 +741,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
-    "<div class=\"patient-flags\" title=\"Patient Flags Widget\">\r" +
+    "<div id=\"patientFlagDiv\" class=\"patient-flags\" title=\"Patient Flags Widget\">\r" +
     "\n" +
     "    <table id=\"tblPatientFlags\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
