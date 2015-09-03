@@ -95,7 +95,7 @@ angular.module('ui.widgets')
             return false;
           }
 
-          if (event.keyCode == '13' || event.key == 'Enter') {
+          if (event.keyCode == '32' || event.key == 'Spacebar') {
             $('#tblVismRoster').find('tr.rowAtFocus').css('backgroundColor','');
             $('#tblVismRoster').find('tr.rowAtFocus').click();
             return false;
