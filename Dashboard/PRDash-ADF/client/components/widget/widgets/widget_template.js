@@ -331,33 +331,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalAgeGroups/nationalAgeGroups.html",
-    "<div class=\"nationalAgeGroups\" title=\"National Age Groups Widget\">\r" +
+    "<div id=\"ageGroupDiv\" class=\"nationalAgeGroups\" title=\"National Age Groups Widget\">\r" +
     "\n" +
-    "\t<table id=\"tblAgeGroups\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
-    "\n" +
-    "\t\t<thead>\t\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Age Group\" title=\"Sort by Age Group\" href=\"\" ng-click=\"predicate = 'Age Groups'; reverse=false\">Age Groups</a></th>\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Risk Level Group\" title=\"Sort by Risk Level Group\" href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Total Number Patients\" title=\"Sort by Total Num Patients\" href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
-    "\n" +
-    "\t\t</thead> \r" +
-    "\n" +
-    "\t\t<tbody>\r" +
-    "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.AgeRange}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.RiskLevelDescription}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
-    "\n" +
-    "\t\t\t</tr>\r" +
-    "\n" +
-    "\t\t</tbody>\r" +
+    "\t<table id=\"tblAgeGroups\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
     "\t</table>\r" +
     "\n" +
@@ -433,33 +409,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalGenderDistribution/nationalGenderDistribution.html",
-    "<div class=\"nationalGenderDistribution\" title=\"National Gender Widget\">\r" +
+    "<div id=\"nationalGenderDiv\" class=\"nationalGenderDistribution\" title=\"National Gender Widget\">\r" +
     "\n" +
-    "\t<table id=\"tblGenderDistribution\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
-    "\n" +
-    "\t\t<thead>\t\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Risk Level Group\" title=\"Sort by Risk Level Group\" href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Gender\" title=\"Sort by Gender\" href=\"\" ng-click=\"predicate = 'Gender'; reverse=false\">Gender</a></th>\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Total Num of Patients\" title=\"Sort by Total Num of Patients\" href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
-    "\n" +
-    "\t\t</thead>\r" +
-    "\n" +
-    "\t\t<tbody>\r" +
-    "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.Gender}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
-    "\n" +
-    "\t\t\t</tr>\r" +
-    "\n" +
-    "\t\t</tbody>\r" +
+    "\t<table id=\"tblGenderDistribution\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
     "\t</table>\r" +
     "\n" +
@@ -501,29 +453,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalMilitaryBranch/nationalMilitaryBranch.html",
-    "<div class=\"nationalMilitaryBranch\" title=\"Military Branch Widget\">\r" +
+    "<div id=\"militaryBranchDiv\" class=\"nationalMilitaryBranch\" title=\"Military Branch Widget\">\r" +
     "\n" +
-    "\t<table id=\"tblMilitaryBranch\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
-    "\n" +
-    "\t\t<thead>\t\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Branch Description\" title=\"Sort by Branch Description\" href=\"\" ng-click=\"predicate = 'Branch Description'; reverse=false\">Branch Description</a></th>\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Total Num of Patients per Branch\" title=\"Sort by Total Num of Patients per Branch\" href=\"\" ng-click=\"predicate = 'Total Number of Patients per Branch'; reverse=false\">Total Number of Patients per Branch</a></th>\r" +
-    "\n" +
-    "\t\t</thead>\r" +
-    "\n" +
-    "\t\t<tbody>\r" +
-    "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.BranchDesc}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
-    "\n" +
-    "\t\t\t</tr>\r" +
-    "\n" +
-    "\t\t</tbody>\r" +
+    "\t<table id=\"tblMilitaryBranch\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
     "\t</table>\r" +
     "\n" +
@@ -531,33 +463,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalOutReachStatus/nationalOutReachStatus.html",
-    "<div class=\"nationalOutReachStatus\" title=\"OutReach Status Widget\">\r" +
+    "<div id=\"outReachDiv\" class=\"nationalOutReachStatus\" title=\"OutReach Status Widget\">\r" +
     "\n" +
-    "\t<table id=\"tblNationalOutReachStatus\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
-    "\n" +
-    "\t\t<thead>\t\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Outreach Status\" title=\"Sort by Outreach Status\" href=\"\" ng-click=\"predicate = 'Outreach Status'; reverse=false\">Outreach Status</a></th>\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Risk Level Group\" title=\"Sort by Risk Level Group\" href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Total Number of Patients\" title=\"Sort by Total Number of Patients\" href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
-    "\n" +
-    "\t\t</thead>\r" +
-    "\n" +
-    "\t\t<tbody>\r" +
-    "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.Status}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.RiskLevelDesc}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
-    "\n" +
-    "\t\t\t</tr>\r" +
-    "\n" +
-    "\t\t</tbody>\r" +
+    "\t<table id=\"tblNationalOutReachStatus\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
     "\t</table>\r" +
     "\n" +
