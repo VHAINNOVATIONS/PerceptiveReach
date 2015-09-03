@@ -439,9 +439,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t<thead>\t\r" +
     "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Risk Level Group\" title=\"Sort by Risk Level Group\" href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\r" +
-    "\n" +
     "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Gender\" title=\"Sort by Gender\" href=\"\" ng-click=\"predicate = 'Gender'; reverse=false\">Gender</a></th>\r" +
+    "\n" +
+    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Risk Level Group\" title=\"Sort by Risk Level Group\" href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\t\t\t\r" +
     "\n" +
     "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Total Num of Patients\" title=\"Sort by Total Num of Patients\" href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
     "\n" +
@@ -451,9 +451,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
     "\n" +
-    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
-    "\n" +
     "\t\t\t\t<td>{{ind.Gender}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.Total}}</td>\r" +
     "\n" +
@@ -509,6 +509,8 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Branch Description\" title=\"Sort by Branch Description\" href=\"\" ng-click=\"predicate = 'Branch Description'; reverse=false\">Branch Description</a></th>\r" +
     "\n" +
+    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Risk Level Group\" title=\"Sort by Risk Level Group\" href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\r" +
+    "\n" +
     "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Total Num of Patients per Branch\" title=\"Sort by Total Num of Patients per Branch\" href=\"\" ng-click=\"predicate = 'Total Number of Patients per Branch'; reverse=false\">Total Number of Patients per Branch</a></th>\r" +
     "\n" +
     "\t\t</thead>\r" +
@@ -518,6 +520,8 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.BranchDesc}}</td>\r" +
+    "\n" +
+    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
     "\n" +
     "\t\t\t\t<td>{{ind.Total}}</td>\r" +
     "\n" +

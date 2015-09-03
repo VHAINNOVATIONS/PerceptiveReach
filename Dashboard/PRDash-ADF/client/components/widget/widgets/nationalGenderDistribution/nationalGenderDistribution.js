@@ -45,9 +45,9 @@ angular.module('ui.widgets')
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
-            DTColumnBuilder.newColumn('RiskLevel').withTitle('Risk Level Group'),
-            DTColumnBuilder.newColumn('Gender').withTitle('Gender'),
-            DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients')
+          DTColumnBuilder.newColumn('Gender').withTitle('Gender'),
+          DTColumnBuilder.newColumn('RiskLevel').withTitle('Risk Level Group'),  
+          DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients')
         ];
       },
 	link: function postLink(scope, element, attr) {

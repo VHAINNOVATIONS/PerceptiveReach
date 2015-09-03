@@ -46,6 +46,7 @@ angular.module('ui.widgets')
 	//.withPaginationType('full_numbers').withDisplayLength(5);
 	$scope.dtColumns = [
         DTColumnBuilder.newColumn('BranchDesc').withTitle('Branch'),
+        DTColumnBuilder.newColumn('RiskLevel').withTitle('Risk Level Group'),
         DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients per Branch')
 	];
   },
