@@ -95,7 +95,7 @@ angular.module('ui.widgets')
           }
 
           if (event.keyCode == '32' || event.key == 'Spacebar') {
-            $('#tblFacilityRoster').find('tr.rowAtFocus').czss('backgroundColor','');
+            $('#tblFacilityRoster').find('tr.rowAtFocus').css('backgroundColor','');
             $('#tblFacilityRoster').find('tr.rowAtFocus').click();
             return false;
           }
