@@ -66,6 +66,7 @@ exports.update = function(req, res) {
 		
 		/*Configure database query */
         var outreachStatus = req.param("outreachStatus");
+        outreachStatus = outreachStatus? outreachStatus:0;
         var vetReachID = req.param("vetReachID");
         var userID = req.param("UserID");
         var query = '';
@@ -79,7 +80,7 @@ exports.update = function(req, res) {
             request.input('vetReachID', sql.Int, vetReachID);
             var value = '';
             if (outreachStatus == null || outreachStatus.length == 0 || outreachStatus == 0)
-                value = "NULL";
+                value = undefined;
             else
                 value = outreachStatus;
             request.input('value', sql.Int, value);
