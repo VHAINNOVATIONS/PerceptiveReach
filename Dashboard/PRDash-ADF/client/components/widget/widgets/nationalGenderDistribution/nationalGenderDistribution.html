@@ -1,16 +1,4 @@
-<div class="nationalGenderDistribution" title="National Gender Widget">
-	<table id="tblGenderDistribution" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
-		<thead>	
-			<th scope="col" tabindex="-1"><a alt="Gender" title="Sort by Gender" href="" ng-click="predicate = 'Gender'; reverse=false">Gender</a></th>
-			<th scope="col" tabindex="-1"><a alt="Risk Level Group" title="Sort by Risk Level Group" href="" ng-click="predicate = 'Risk Level Group'; reverse=false">Risk Level Group</a></th>			
-			<th scope="col" tabindex="-1"><a alt="Total Num of Patients" title="Sort by Total Num of Patients" href="" ng-click="predicate = 'Total Number of Patients'; reverse=false">Total Number of Patients</a></th>
-		</thead>
-		<tbody>
-			<tr ng-repeat="ind in data track by $index | orderBy:predicate:reverse">
-				<td>{{ind.Gender}}</td>
-				<td>{{ind.RiskLevel}}</td>
-				<td>{{ind.Total}}</td>
-			</tr>
-		</tbody>
+<div id="nationalGenderDiv" class="nationalGenderDistribution" title="National Gender Widget">
+	<table id="tblGenderDistribution" datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance" class="row-border hover" width="100%">
 	</table>
 </div>

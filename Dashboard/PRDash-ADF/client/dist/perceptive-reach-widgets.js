@@ -2512,7 +2512,7 @@ function Gauge(element, configuration)
 'use strict';
  
 angular.module('ui.widgets')
-  .directive('wtAppointment', function () {
+  .directive('wtAppointment', function ($timeout) {
     return {
       restrict: 'A',
       replace: true,
@@ -2538,11 +2538,19 @@ angular.module('ui.widgets')
             vm.persons = persons;
         });*/
       },
-      link: function postLink(scope) {
+	link: function postLink(scope, element) {
+		scope.$on("bindEvents", function (){
+			$($('#appointmentDiv table')[0]).find('th').each(function(){
+			  $(this).attr('tabindex','-1');
+			});
+		});
         scope.$watch('data', function (data) {
           $.fn.dataTable.ext.errMode = 'throw';
           if (data) {
+			$timeout(function(){
+            scope.$emit('bindEvents');
             scope.data = data;
+           },1500)            
           }
         });
       }
@@ -2715,7 +2723,7 @@ angular.module('ui.widgets')
 'use strict'; 
 
 angular.module('ui.widgets')
-  .directive('wtDiagnoses', function () {
+  .directive('wtDiagnoses', function ($timeout) {
     return {
       restrict: 'A',
       replace: true,
@@ -2743,11 +2751,19 @@ angular.module('ui.widgets')
             vm.persons = persons;
         });*/
       },
-      link: function postLink(scope) {
+	link: function postLink(scope, element) {
+		scope.$on("bindEvents", function (){
+			$($('#diagnosisDiv table')[0]).find('th').each(function(){
+			  $(this).attr('tabindex','-1');
+			});
+		});
         scope.$watch('data', function (data) {
           $.fn.dataTable.ext.errMode = 'throw';
           if (data) {
+			$timeout(function(){
+            scope.$emit('bindEvents');
             scope.data = data;
+           },1500)            
           }
         });
       }
@@ -2839,11 +2855,52 @@ angular.module('ui.widgets')
       },
       link: function postLink(scope, element, attr) {
         scope.$on("bindEvents", function (){
-		$($('#facilityRosterDiv table')[0]).find('th').each(function(){
+          $($('#facilityRosterDiv table')[0]).find('th').each(function(){
             $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
-			$(this).attr('scope','col');
-      $(this).attr('tabindex','-1');
-        }); 
+            $(this).attr('scope','col');
+            $(this).attr('tabindex','-1');
+          }); 
+
+          $($('#facilityRosterDiv table')[0]).find('th').keydown(function(event){ 
+          if (event.keyCode == 40 || event.key == 'Down' || event.keyCode == 38 || event.key == 'Up') {
+            var isRowAtFocus = $('#tblFacilityRoster').find('tr.rowAtFocus');
+            if(isRowAtFocus.length > 0)
+            {
+              isRowAtFocus.removeClass('rowAtFocus');
+              isRowAtFocus.css('backgroundColor','');
+              if(event.keyCode == 40)
+              {
+                if(isRowAtFocus.next())
+                {
+                  isRowAtFocus.next().addClass('rowAtFocus');
+                  isRowAtFocus.next().css('backgroundColor','#f5f5f5');  
+                }  
+              }
+              else
+              {
+                if(isRowAtFocus.prev())
+                {
+                  isRowAtFocus.prev().addClass('rowAtFocus');
+                  isRowAtFocus.prev().css('backgroundColor','#f5f5f5');  
+                }
+              }
+            }
+            else
+            {
+              $($('#tblFacilityRoster>tbody>tr')[0]).addClass('rowAtFocus');
+              $($('#tblFacilityRoster>tbody>tr')[0]).css('backgroundColor','#f5f5f5');
+            }
+            $('#facilityRosterDiv .dataTables_scrollBody').animate({ scrollTop: $('#tblFacilityRoster').find('tr.rowAtFocus')[0].offsetTop }, 500);
+            return false;
+          }
+
+          if (event.keyCode == '13' || event.key == 'Enter') {
+            $('#tblFacilityRoster').find('tr.rowAtFocus').css('backgroundColor','');
+            $('#tblFacilityRoster').find('tr.rowAtFocus').click();
+            return false;
+          }
+
+        });
 		
           $('#tblFacilityRoster').on( 'click', 'tr', function (event) {
             if(scope.eventTimer == event.timeStamp) return;
@@ -3218,7 +3275,7 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtMedication', function () {
+  .directive('wtMedication', function ($timeout) {
     return {
       restrict: 'A',
       replace: true,
@@ -3243,10 +3300,18 @@ angular.module('ui.widgets')
             vm.persons = persons;
         });*/
       },
-      link: function postLink(scope) {
+	link: function postLink(scope, element) {
+		scope.$on("bindEvents", function (){
+			$($('#medicationDiv table')[0]).find('th').each(function(){
+			  $(this).attr('tabindex','-1');
+			});
+		});
         scope.$watch('data', function (data) {
           if (data) {
+			$timeout(function(){
+            scope.$emit('bindEvents');
             scope.data = data;
+           },1500)            
           }
         });
       }
@@ -3477,7 +3542,7 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtNationalAgeGroups', function () {
+  .directive('wtNationalAgeGroups', function ($timeout) {
     return {
       restrict: 'EAC',
       replace: true,
@@ -3512,26 +3577,37 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients')
         ];
       },
-      link: function postLink(scope) {
+     link: function postLink(scope, element, attr) {
+	
+        scope.$on("bindEvents", function (){
+      		$($('#ageGroupDiv table')[0]).find('th').each(function(){
+      			$(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort 			by '+ $(this).text()+'">'+$(this).text()+'</a>');
+      			$(this).attr('scope','col');
+      			$(this).attr('tabindex','-1');
+          });
+    		});
         scope.$watch('widgetData', function (data) {
-          $.fn.dataTable.ext.errMode = 'throw';
-          if (data != null && data.length >0) {
-            scope.data = data;
-            scope.ageGroupsList = data;
-            var promise = new Promise( function(resolve, reject){
-                  if (scope.ageGroupsList)
-                    resolve(scope.ageGroupsList);
-                  else
-                    resolve([]);
+          $timeout(function(){
+            $.fn.dataTable.ext.errMode = 'throw';
+            scope.$emit('bindEvents');
+            if (data != null && data.length >0) {
+              scope.data = data;
+              scope.ageGroupsList = data;
+              var promise = new Promise( function(resolve, reject){
+                    if (scope.ageGroupsList)
+                      resolve(scope.ageGroupsList);
+                    else
+                      resolve([]);
+                  });
+              if(scope.dtInstance)
+                scope.dtInstance.changeData(promise);
+              else {
+                scope.dtInstanceAbstract.getList().then(function(dtInstances){
+                  dtInstances.tblAgeGroups._renderer.changeData(promise)              
                 });
-            if(scope.dtInstance)
-              scope.dtInstance.changeData(promise);
-            else {
-              scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                dtInstances.tblAgeGroups._renderer.changeData(promise)              
-              });
+              }
             }
-          }
+          },1000)
         });
       }
     };
@@ -3613,7 +3689,7 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtNationalGenderDistribution', function () {
+  .directive('wtNationalGenderDistribution', function ($timeout) {
     return {
       restrict: 'EAC',
       replace: true,
@@ -3646,26 +3722,38 @@ angular.module('ui.widgets')
           DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients')
         ];
       },
-	link: function postLink(scope, element, attr) {
+     link: function postLink(scope, element, attr) {
+	
+        scope.$on("bindEvents", function (){
+      		$($('#nationalGenderDiv table')[0]).find('th').each(function(){
+      			$(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+      			$(this).attr('scope','col');
+      			$(this).attr('tabindex','-1');
+          });
+    		});
         scope.$watch('widgetData', function (data) {
-          $.fn.dataTable.ext.errMode = 'throw';
-          if (data != null && data.length >0) {
-            scope.data = data;
-            scope.genderDistributionList = data;
-            var promise = new Promise( function(resolve, reject){
-                  if (scope.genderDistributionList)
-                    resolve(scope.genderDistributionList);
-                  else
-                    resolve([]);
+
+          $timeout(function(){
+            $.fn.dataTable.ext.errMode = 'throw';
+            scope.$emit('bindEvents');
+            if (data != null && data.length >0) {
+              scope.data = data;
+              scope.genderDistributionList = data;
+              var promise = new Promise( function(resolve, reject){
+                    if (scope.genderDistributionList)
+                      resolve(scope.genderDistributionList);
+                    else
+                      resolve([]);
+                  });
+              if(scope.dtInstance)
+                scope.dtInstance.changeData(promise);
+              else {
+                scope.dtInstanceAbstract.getList().then(function(dtInstances){
+                  dtInstances.tblGenderDistribution._renderer.changeData(promise)              
                 });
-            if(scope.dtInstance)
-              scope.dtInstance.changeData(promise);
-            else {
-              scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                dtInstances.tblGenderDistribution._renderer.changeData(promise)              
-              });
+              }
             }
-          }
+          },1000)
         });
       }
     };
@@ -3718,7 +3806,7 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtNationalMilitaryBranch', function () {
+  .directive('wtNationalMilitaryBranch', function ($timeout) {
     return {
       restrict: 'EAC',
       replace: true,
@@ -3751,12 +3839,21 @@ angular.module('ui.widgets')
         DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients per Branch')
 	];
   },
- link: function postLink(scope, element, attr) {
+link: function postLink(scope, element, attr) {	
+    scope.$on("bindEvents", function (){
+  		$($('#militaryBranchDiv table')[0]).find('th').each(function(){
+  			$(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+  			$(this).attr('scope','col');
+  			$(this).attr('tabindex','-1');
+      });
+		});
 	scope.$watch('widgetData', function (data) {
-    $.fn.dataTable.ext.errMode = 'throw';
-	  if (data != null && data.length >0) {
-		scope.data = data;
-		scope.militaryBranchList = data;
+    $timeout(function(){
+      $.fn.dataTable.ext.errMode = 'throw';
+      scope.$emit('bindEvents');
+  	  if (data != null && data.length >0) {
+  		  scope.data = data;
+  		  scope.militaryBranchList = data;
         var promise = new Promise( function(resolve, reject){
               if (scope.militaryBranchList)
                 resolve(scope.militaryBranchList);
@@ -3770,10 +3867,11 @@ angular.module('ui.widgets')
             dtInstances.tblMilitaryBranch._renderer.changeData(promise)              
           });
         }
-	  }
+  	  }
+     },1000)
 	});
-  }
-};
+}
+}
 });
 	 /* controller: function ($scope) {
 		console.log("First log stmt:", $scope.data);
@@ -3819,7 +3917,7 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtNationalOutReachStatus', function () {
+  .directive('wtNationalOutReachStatus', function ($timeout) {
     return {
       restrict: 'EAC',
       replace: true,
@@ -3854,26 +3952,37 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients')
         ];
       },
-     link: function postLink(scope, element, attr) {
-        scope.$watch('widgetData', function (data) {
-          $.fn.dataTable.ext.errMode = 'throw';
-          if (data != null && data.length >0) {
-            scope.data = data;
-            scope.outreachStatusList = data;
-            var promise = new Promise( function(resolve, reject){
-                  if (scope.outreachStatusList)
-                    resolve(scope.outreachStatusList);
-                  else
-                    resolve([]);
+     link: function postLink(scope, element, attr) {	
+        scope.$on("bindEvents", function (){
+      		$($('#outReachDiv table')[0]).find('th').each(function(){
+      			$(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+      			$(this).attr('scope','col');
+      			$(this).attr('tabindex','-1');
+          });
+		    });
+        scope.$watch('widgetData', function (data) {  
+          $timeout(function(){
+            $.fn.dataTable.ext.errMode = 'throw';
+            scope.$emit('bindEvents');
+
+            if (data != null && data.length >0) {
+              scope.data = data;
+              scope.outreachStatusList = data;
+              var promise = new Promise( function(resolve, reject){
+                    if (scope.outreachStatusList)
+                      resolve(scope.outreachStatusList);
+                    else
+                      resolve([]);
+                  });
+              if(scope.dtInstance)
+                scope.dtInstance.changeData(promise);
+              else {
+                scope.dtInstanceAbstract.getList().then(function(dtInstances){
+                  dtInstances.tblNationalOutReachStatus._renderer.changeData(promise)              
                 });
-            if(scope.dtInstance)
-              scope.dtInstance.changeData(promise);
-            else {
-              scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                dtInstances.tblNationalOutReachStatus._renderer.changeData(promise)              
-              });
+              }
             }
-          }
+          },1000)
         });
       }
     };
@@ -4146,7 +4255,7 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtPatientFlags', function () {
+  .directive('wtPatientFlags', function ($timeout) {
     return {
       restrict: 'A',
       replace: true,
@@ -4173,18 +4282,26 @@ angular.module('ui.widgets')
             vm.persons = persons;
         });*/
       },
-      link: function postLink(scope) {
-        scope.$watch('data', function (data) {
-          if (data) {
-            $.fn.dataTable.ext.errMode = 'throw';
-            scope.data = data;
-          }
-        });
+	link: function postLink(scope, element) {
+		scope.$on("bindEvents", function (){
+			$($('#patientFlagDiv table')[0]).find('th').each(function(){
+			  $(this).attr('tabindex','-1');
+			});
+		});
+    scope.$watch('data', function (data) {
+      if (data) { 
 
-        scope.updateCategory
+    		$timeout(function(){
+          $.fn.dataTable.ext.errMode = 'throw';
+          scope.$emit('bindEvents');
+            scope.data = data;
+        },1500)            
       }
-    };
-  });
+    });
+	  scope.updateCategory
+  }
+};
+});
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -4599,6 +4716,7 @@ angular.module('ui.widgets')
 		$($('#suicideStatisticsDiv table')[0]).find('th').each(function(){
             $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
 			$(this).attr('scope','col');
+			$(this).attr('tabindex','-1');
         });
 		});
 		
@@ -4913,7 +5031,7 @@ angular.module('ui.widgets')
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
-    "<div class=\"appointment\" title=\"Appointment Widget\">\r" +
+    "<div id=\"appointmentDiv\" class=\"appointment\" title=\"Appointment Widget\">\r" +
     "\n" +
     "\t<table id=\"tblAppointment\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -5037,7 +5155,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/diagnoses/diagnoses.html",
-    "<div class=\"diagnoses\" title=\"Diagnoses Widget\">\r" +
+    "<div id=\"diagnosisDiv\" class=\"diagnoses\" title=\"Diagnoses Widget\">\r" +
     "\n" +
     "\t<table id=\"tblDiagnoses\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -5165,7 +5283,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/medication/medication.html",
-    "<div class=\"medication\" title=\"Medication Widget\">\r" +
+    "<div id=\"medicationDiv\" class=\"medication\" title=\"Medication Widget\">\r" +
     "\n" +
     "    <table id=\"tblMedication\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -5243,33 +5361,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalAgeGroups/nationalAgeGroups.html",
-    "<div class=\"nationalAgeGroups\" title=\"National Age Groups Widget\">\r" +
+    "<div id=\"ageGroupDiv\" class=\"nationalAgeGroups\" title=\"National Age Groups Widget\">\r" +
     "\n" +
-    "\t<table id=\"tblAgeGroups\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
-    "\n" +
-    "\t\t<thead>\t\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Age Group\" title=\"Sort by Age Group\" href=\"\" ng-click=\"predicate = 'Age Groups'; reverse=false\">Age Groups</a></th>\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Risk Level Group\" title=\"Sort by Risk Level Group\" href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Total Number Patients\" title=\"Sort by Total Num Patients\" href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
-    "\n" +
-    "\t\t</thead> \r" +
-    "\n" +
-    "\t\t<tbody>\r" +
-    "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.AgeRange}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.RiskLevelDescription}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
-    "\n" +
-    "\t\t\t</tr>\r" +
-    "\n" +
-    "\t\t</tbody>\r" +
+    "\t<table id=\"tblAgeGroups\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
     "\t</table>\r" +
     "\n" +
@@ -5345,33 +5439,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalGenderDistribution/nationalGenderDistribution.html",
-    "<div class=\"nationalGenderDistribution\" title=\"National Gender Widget\">\r" +
+    "<div id=\"nationalGenderDiv\" class=\"nationalGenderDistribution\" title=\"National Gender Widget\">\r" +
     "\n" +
-    "\t<table id=\"tblGenderDistribution\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
-    "\n" +
-    "\t\t<thead>\t\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Gender\" title=\"Sort by Gender\" href=\"\" ng-click=\"predicate = 'Gender'; reverse=false\">Gender</a></th>\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Risk Level Group\" title=\"Sort by Risk Level Group\" href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\t\t\t\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Total Num of Patients\" title=\"Sort by Total Num of Patients\" href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
-    "\n" +
-    "\t\t</thead>\r" +
-    "\n" +
-    "\t\t<tbody>\r" +
-    "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.Gender}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
-    "\n" +
-    "\t\t\t</tr>\r" +
-    "\n" +
-    "\t\t</tbody>\r" +
+    "\t<table id=\"tblGenderDistribution\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
     "\t</table>\r" +
     "\n" +
@@ -5413,33 +5483,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalMilitaryBranch/nationalMilitaryBranch.html",
-    "<div class=\"nationalMilitaryBranch\" title=\"Military Branch Widget\">\r" +
+    "<div id=\"militaryBranchDiv\" class=\"nationalMilitaryBranch\" title=\"Military Branch Widget\">\r" +
     "\n" +
-    "\t<table id=\"tblMilitaryBranch\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
-    "\n" +
-    "\t\t<thead>\t\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Branch Description\" title=\"Sort by Branch Description\" href=\"\" ng-click=\"predicate = 'Branch Description'; reverse=false\">Branch Description</a></th>\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Risk Level Group\" title=\"Sort by Risk Level Group\" href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Total Num of Patients per Branch\" title=\"Sort by Total Num of Patients per Branch\" href=\"\" ng-click=\"predicate = 'Total Number of Patients per Branch'; reverse=false\">Total Number of Patients per Branch</a></th>\r" +
-    "\n" +
-    "\t\t</thead>\r" +
-    "\n" +
-    "\t\t<tbody>\r" +
-    "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.BranchDesc}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.RiskLevel}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
-    "\n" +
-    "\t\t\t</tr>\r" +
-    "\n" +
-    "\t\t</tbody>\r" +
+    "\t<table id=\"tblMilitaryBranch\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
     "\t</table>\r" +
     "\n" +
@@ -5447,33 +5493,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/nationalOutReachStatus/nationalOutReachStatus.html",
-    "<div class=\"nationalOutReachStatus\" title=\"OutReach Status Widget\">\r" +
+    "<div id=\"outReachDiv\" class=\"nationalOutReachStatus\" title=\"OutReach Status Widget\">\r" +
     "\n" +
-    "\t<table id=\"tblNationalOutReachStatus\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
-    "\n" +
-    "\t\t<thead>\t\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Outreach Status\" title=\"Sort by Outreach Status\" href=\"\" ng-click=\"predicate = 'Outreach Status'; reverse=false\">Outreach Status</a></th>\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Risk Level Group\" title=\"Sort by Risk Level Group\" href=\"\" ng-click=\"predicate = 'Risk Level Group'; reverse=false\">Risk Level Group</a></th>\r" +
-    "\n" +
-    "\t\t\t<th scope=\"col\" tabindex=\"-1\"><a alt=\"Total Number of Patients\" title=\"Sort by Total Number of Patients\" href=\"\" ng-click=\"predicate = 'Total Number of Patients'; reverse=false\">Total Number of Patients</a></th>\r" +
-    "\n" +
-    "\t\t</thead>\r" +
-    "\n" +
-    "\t\t<tbody>\r" +
-    "\n" +
-    "\t\t\t<tr ng-repeat=\"ind in data track by $index | orderBy:predicate:reverse\">\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.Status}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.RiskLevelDesc}}</td>\r" +
-    "\n" +
-    "\t\t\t\t<td>{{ind.Total}}</td>\r" +
-    "\n" +
-    "\t\t\t</tr>\r" +
-    "\n" +
-    "\t\t</tbody>\r" +
+    "\t<table id=\"tblNationalOutReachStatus\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
     "\n" +
     "\t</table>\r" +
     "\n" +
@@ -5657,7 +5679,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/patientFlags/patientFlags.html",
-    "<div class=\"patient-flags\" title=\"Patient Flags Widget\">\r" +
+    "<div id=\"patientFlagDiv\" class=\"patient-flags\" title=\"Patient Flags Widget\">\r" +
     "\n" +
     "    <table id=\"tblPatientFlags\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +

@@ -1,16 +1,4 @@
-<div class="nationalMilitaryBranch" title="Military Branch Widget">
-	<table id="tblMilitaryBranch" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
-		<thead>	
-			<th scope="col" tabindex="-1"><a alt="Branch Description" title="Sort by Branch Description" href="" ng-click="predicate = 'Branch Description'; reverse=false">Branch Description</a></th>
-			<th scope="col" tabindex="-1"><a alt="Risk Level Group" title="Sort by Risk Level Group" href="" ng-click="predicate = 'Risk Level Group'; reverse=false">Risk Level Group</a></th>
-			<th scope="col" tabindex="-1"><a alt="Total Num of Patients per Branch" title="Sort by Total Num of Patients per Branch" href="" ng-click="predicate = 'Total Number of Patients per Branch'; reverse=false">Total Number of Patients per Branch</a></th>
-		</thead>
-		<tbody>
-			<tr ng-repeat="ind in data track by $index | orderBy:predicate:reverse">
-				<td>{{ind.BranchDesc}}</td>
-				<td>{{ind.RiskLevel}}</td>
-				<td>{{ind.Total}}</td>
-			</tr>
-		</tbody>
+<div id="militaryBranchDiv" class="nationalMilitaryBranch" title="Military Branch Widget">
+	<table id="tblMilitaryBranch" datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance" class="row-border hover" width="100%">
 	</table>
 </div>

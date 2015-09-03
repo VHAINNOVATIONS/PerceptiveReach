@@ -17,7 +17,7 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtNationalGenderDistribution', function () {
+  .directive('wtNationalGenderDistribution', function ($timeout) {
     return {
       restrict: 'EAC',
       replace: true,
@@ -50,26 +50,38 @@ angular.module('ui.widgets')
           DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients')
         ];
       },
-	link: function postLink(scope, element, attr) {
+     link: function postLink(scope, element, attr) {
+	
+        scope.$on("bindEvents", function (){
+      		$($('#nationalGenderDiv table')[0]).find('th').each(function(){
+      			$(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+      			$(this).attr('scope','col');
+      			$(this).attr('tabindex','-1');
+          });
+    		});
         scope.$watch('widgetData', function (data) {
-          $.fn.dataTable.ext.errMode = 'throw';
-          if (data != null && data.length >0) {
-            scope.data = data;
-            scope.genderDistributionList = data;
-            var promise = new Promise( function(resolve, reject){
-                  if (scope.genderDistributionList)
-                    resolve(scope.genderDistributionList);
-                  else
-                    resolve([]);
+
+          $timeout(function(){
+            $.fn.dataTable.ext.errMode = 'throw';
+            scope.$emit('bindEvents');
+            if (data != null && data.length >0) {
+              scope.data = data;
+              scope.genderDistributionList = data;
+              var promise = new Promise( function(resolve, reject){
+                    if (scope.genderDistributionList)
+                      resolve(scope.genderDistributionList);
+                    else
+                      resolve([]);
+                  });
+              if(scope.dtInstance)
+                scope.dtInstance.changeData(promise);
+              else {
+                scope.dtInstanceAbstract.getList().then(function(dtInstances){
+                  dtInstances.tblGenderDistribution._renderer.changeData(promise)              
                 });
-            if(scope.dtInstance)
-              scope.dtInstance.changeData(promise);
-            else {
-              scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                dtInstances.tblGenderDistribution._renderer.changeData(promise)              
-              });
+              }
             }
-          }
+          },1000)
         });
       }
     };

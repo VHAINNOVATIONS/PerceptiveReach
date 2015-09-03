@@ -17,7 +17,7 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtPatientFlags', function () {
+  .directive('wtPatientFlags', function ($timeout) {
     return {
       restrict: 'A',
       replace: true,
@@ -44,15 +44,23 @@ angular.module('ui.widgets')
             vm.persons = persons;
         });*/
       },
-      link: function postLink(scope) {
-        scope.$watch('data', function (data) {
-          if (data) {
-            $.fn.dataTable.ext.errMode = 'throw';
-            scope.data = data;
-          }
-        });
+	link: function postLink(scope, element) {
+		scope.$on("bindEvents", function (){
+			$($('#patientFlagDiv table')[0]).find('th').each(function(){
+			  $(this).attr('tabindex','-1');
+			});
+		});
+    scope.$watch('data', function (data) {
+      if (data) { 
 
-        scope.updateCategory
+    		$timeout(function(){
+          $.fn.dataTable.ext.errMode = 'throw';
+          scope.$emit('bindEvents');
+            scope.data = data;
+        },1500)            
       }
-    };
-  });
+    });
+	  scope.updateCategory
+  }
+};
+});
