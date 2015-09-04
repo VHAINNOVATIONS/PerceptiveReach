@@ -68,10 +68,14 @@ exports.update = function(req, res) {
         var outreachStatus = req.param("outreachStatus");
         outreachStatus = outreachStatus? outreachStatus:0;
         var vetReachID = req.param("vetReachID");
+        var facilityID = req.param("facilityID");
         var userID = req.param("UserID");
         var query = '';
         if (userID && validator.isInt(userID)) {
           request.input('userID', sql.Int, userID);
+        }
+        if (facilityID && validator.isInt(facilityID)) {
+          request.input('facilityID', sql.Int, facilityID);
         }
 		if (outreachStatus && validator.isInt(outreachStatus)) {
 			request.input('outreachStatus', sql.Int, outreachStatus);
@@ -84,7 +88,7 @@ exports.update = function(req, res) {
             else
                 value = outreachStatus;
             request.input('value', sql.Int, value);
-            query += "exec dbo.sp_SaveOutreachStatus @User=@userId, @ReachID=@vetReachID, @Status=@value";
+            query += "exec dbo.sp_SaveOutreachStatus @User=@userId, @ReachID=@vetReachID, @Status=@value, @sta3n_input=@facilityID";
         }
         else {
             res.send("ERROR: vetReach ID is required.");
