@@ -69,9 +69,9 @@ angular.module('ui.models')
         }.bind(this));
       },
 
-      saveOutreachData: function (outreachStatus, veteranID) {
+      saveOutreachData: function (outreachStatus, veteranID, facilityID) {
         var user = JSON.parse(sessionStorage.user);
-        $http.put('/api/patient?vetReachID=' + veteranID, {'outreachStatus': outreachStatus, 'UserID':user.UserID})
+        $http.put('/api/patient?vetReachID=' + veteranID, {'outreachStatus': outreachStatus, 'UserID':user.UserID, 'facilityID':facilityID})
         .success(function(data) {
         });  
       },

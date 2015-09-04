@@ -68,7 +68,8 @@ angular.module('ui.widgets')
           $( "select[id^='vet_']" ).on("change",function(e,ui){
             var selectedIndex = this.value;
             var selectedreachId = $(e.currentTarget).attr('id').replace("vet_","");
-            scope.widget.dataModel.saveOutreachData(parseInt(selectedIndex),selectedreachId);
+            var commonData = scope.widget.dataModelOptions.common;
+            scope.widget.dataModel.saveOutreachData(parseInt(selectedIndex),selectedreachId,commonData.data.facilitySelected.facility);
           } );
 		  		 	  
 		  $($('#patientRosterDiv table')[0]).find('th').each(function(){
