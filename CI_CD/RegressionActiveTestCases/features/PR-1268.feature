@@ -38,6 +38,5 @@ Scenario: I open a web browser and use http://localhost:7003/ to delete/close th
   Then I should not see the "Emergency Contact Information" widget
   And I click on "Add a Widget" button
   And I click on "emergency" button in the menu
-  And I click on save changes button
   Then I should see the "Emergency Contact Information" widget
   And I click on "Logout" button

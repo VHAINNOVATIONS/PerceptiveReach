@@ -16,6 +16,5 @@ Feature: As a SPC I want customize my widget page PR-1317 1.1.24
 	Then I should not see the "Medication" widget
 	And I click on "Add a Widget" button
     And I click on "medication" button in the menu
-    And I click on save changes button
     Then I should see the "Medication" widget
 	And I click on "Logout" button
