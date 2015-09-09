@@ -2883,7 +2883,8 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('VAMC_Name').withTitle('VAMC Name'),
             DTColumnBuilder.newColumn('StateAbbr').withTitle('State'),
             DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
-            DTColumnBuilder.newColumn('Total').withTitle('Total Patients')
+            DTColumnBuilder.newColumn('Total').withTitle('Patients'),
+            DTColumnBuilder.newColumn('AtRisk').withTitle('At-Risk Persons')
           ];
       },
       link: function postLink(scope, element, attr) {
@@ -3608,7 +3609,7 @@ angular.module('ui.widgets')
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('AgeRange').withTitle('Age Groups'),
             DTColumnBuilder.newColumn('RiskLevelDescription').withTitle('Risk Level Group'),
-            DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients')
+            DTColumnBuilder.newColumn('Total').withTitle('At-Risk Persons')
         ];
       },
      link: function postLink(scope, element, attr) {
@@ -3753,7 +3754,7 @@ angular.module('ui.widgets')
         $scope.dtColumns = [
           DTColumnBuilder.newColumn('Gender').withTitle('Gender'),
           DTColumnBuilder.newColumn('RiskLevel').withTitle('Risk Level Group'),  
-          DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients')
+          DTColumnBuilder.newColumn('Total').withTitle('At-Risk Persons')
         ];
       },
      link: function postLink(scope, element, attr) {
@@ -3870,7 +3871,7 @@ angular.module('ui.widgets')
 	$scope.dtColumns = [
         DTColumnBuilder.newColumn('BranchDesc').withTitle('Branch'),
         DTColumnBuilder.newColumn('RiskLevel').withTitle('Risk Level Group'),
-        DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients per Branch')
+        DTColumnBuilder.newColumn('Total').withTitle('At-Risk Persons')
 	];
   },
 link: function postLink(scope, element, attr) {	
@@ -3983,7 +3984,7 @@ angular.module('ui.widgets')
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Status').withTitle('Outreach Status'),
             DTColumnBuilder.newColumn('RiskLevelDesc').withTitle('Risk Level Group'),
-            DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients')
+            DTColumnBuilder.newColumn('Total').withTitle('At-Risk Persons')
         ];
       },
      link: function postLink(scope, element, attr) {	
@@ -4917,7 +4918,8 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
             DTColumnBuilder.newColumn('NetworkName').withTitle('Network Name'),
             DTColumnBuilder.newColumn('RegionServed').withTitle('Region Served'),
-            DTColumnBuilder.newColumn('Total').withTitle('Total Patients')
+            DTColumnBuilder.newColumn('Total').withTitle('Patients'),
+            DTColumnBuilder.newColumn('AtRisk').withTitle('At-Risk Persons')
         ];    
         $scope.eventTimer = null;
       },
