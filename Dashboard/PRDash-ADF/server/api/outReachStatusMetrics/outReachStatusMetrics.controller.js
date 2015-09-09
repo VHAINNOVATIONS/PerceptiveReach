@@ -39,7 +39,7 @@ exports.index = function(req, res) {
 
         query += 'SELECT m.Status as Status, d.RiskLevelDesc, m.Total as Total FROM(';
         query += " SELECT CASE WHEN os.StatusDesc IS NULL THEN 'Uninitiated'";
-        query += ' ELSE os.StatusDesc END as Status, COUNT(p.ReachID) Total, p.RiskLevel';
+        query += ' ELSE os.StatusDesc END as Status, COUNT(DISTINCT p.ReachID) Total, p.RiskLevel';
         query += ' FROM dbo.Patient p LEFT JOIN dbo.Ref_OutreachStatus os';
         query += ' ON p.OutreachStatus = os.OutReachStatusID ';
         query += " INNER JOIN PatientStation s ON s.ReachID = p.ReachID";
