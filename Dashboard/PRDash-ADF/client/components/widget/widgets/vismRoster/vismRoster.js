@@ -50,7 +50,8 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
             DTColumnBuilder.newColumn('NetworkName').withTitle('Network Name'),
             DTColumnBuilder.newColumn('RegionServed').withTitle('Region Served'),
-            DTColumnBuilder.newColumn('Total').withTitle('Total Patients')
+            DTColumnBuilder.newColumn('Total').withTitle('Patients'),
+            DTColumnBuilder.newColumn('AtRisk').withTitle('At-Risk Persons')
         ];    
         $scope.eventTimer = null;
       },
