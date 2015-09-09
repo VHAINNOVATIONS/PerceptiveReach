@@ -49,7 +49,7 @@ angular.module('ui.widgets')
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Status').withTitle('Outreach Status'),
             DTColumnBuilder.newColumn('RiskLevelDesc').withTitle('Risk Level Group'),
-            DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients')
+            DTColumnBuilder.newColumn('Total').withTitle('At-Risk Persons')
         ];
       },
      link: function postLink(scope, element, attr) {	

@@ -50,7 +50,8 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('VAMC_Name').withTitle('VAMC Name'),
             DTColumnBuilder.newColumn('StateAbbr').withTitle('State'),
             DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
-            DTColumnBuilder.newColumn('Total').withTitle('Total Patients')
+            DTColumnBuilder.newColumn('Total').withTitle('Patients'),
+            DTColumnBuilder.newColumn('AtRisk').withTitle('At-Risk Persons')
           ];
       },
       link: function postLink(scope, element, attr) {
