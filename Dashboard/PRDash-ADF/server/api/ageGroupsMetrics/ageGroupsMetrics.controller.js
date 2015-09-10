@@ -41,7 +41,7 @@ exports.index = function(req, res) {
         query += " WHEN DOB < DATEADD(year, -29, getdate()) AND DOB >= DATEADD(year, -44, getdate()) THEN '30 - 44'";
         query += " WHEN DOB < DATEADD(year, -44, getdate()) AND DOB >= DATEADD(year, -69, getdate()) THEN '45 - 69'";
         query += " WHEN DOB < DATEADD(year, -69, getdate()) then '70+'";
-        query += " END as AgeRange, d.RiskLevelDesc as RiskLevelDescription, COUNT(*) as Total";
+        query += " END as AgeRange, d.RiskLevelDesc as RiskLevelDescription, COUNT(DISTINCT p.ReachID) as Total";
         query += " FROM dbo.Patient p INNER JOIN Ref_RiskLevel d ON p.RiskLevel = d.RiskLevelID";
         query += " INNER JOIN PatientStation s ON s.ReachID = p.ReachID";
         query += " INNER JOIN Ref_VAMC v ON s.sta3N = v.STA3N";

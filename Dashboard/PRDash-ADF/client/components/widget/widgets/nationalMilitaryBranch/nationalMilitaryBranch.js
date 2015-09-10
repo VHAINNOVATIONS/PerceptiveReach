@@ -17,7 +17,7 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtNationalMilitaryBranch', function () {
+  .directive('wtNationalMilitaryBranch', function ($timeout) {
     return {
       restrict: 'EAC',
       replace: true,
@@ -41,18 +41,30 @@ angular.module('ui.widgets')
 		.withScroller()
 		.withOption('deferRender', true)
 		.withOption('paging',false)
+    .withOption('bDestroy',true)
 		.withOption('order', [1, 'desc']);
 	//.withPaginationType('full_numbers').withDisplayLength(5);
 	$scope.dtColumns = [
         DTColumnBuilder.newColumn('BranchDesc').withTitle('Branch'),
-        DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients per Branch')
+        DTColumnBuilder.newColumn('RiskLevel').withTitle('Risk Level Group'),
+        DTColumnBuilder.newColumn('Total').withTitle('At-Risk Persons')
 	];
   },
-  link: function postLink(scope) {
+link: function postLink(scope, element, attr) {	
+    scope.$on("bindEvents", function (){
+  		$($('#militaryBranchDiv table')[0]).find('th').each(function(){
+  			$(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+  			$(this).attr('scope','col');
+  			$(this).attr('tabindex','-1');
+      });
+		});
 	scope.$watch('widgetData', function (data) {
-	  if (data != null && data.length >0) {
-		scope.data = data;
-		scope.militaryBranchList = data;
+    $timeout(function(){
+      $.fn.dataTable.ext.errMode = 'throw';
+      scope.$emit('bindEvents');
+  	  if (data != null && data.length >0) {
+  		  scope.data = data;
+  		  scope.militaryBranchList = data;
         var promise = new Promise( function(resolve, reject){
               if (scope.militaryBranchList)
                 resolve(scope.militaryBranchList);
@@ -66,10 +78,11 @@ angular.module('ui.widgets')
             dtInstances.tblMilitaryBranch._renderer.changeData(promise)              
           });
         }
-	  }
+  	  }
+     },1000)
 	});
-  }
-};
+}
+}
 });
 	 /* controller: function ($scope) {
 		console.log("First log stmt:", $scope.data);

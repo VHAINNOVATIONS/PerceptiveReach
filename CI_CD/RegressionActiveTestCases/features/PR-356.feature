@@ -8,9 +8,7 @@ Given I navigate to the http://localhost:7003/
   And I click on check box "checky"
   And I click on "Login" button
   When I click on "Individual View" 
-  And I click the Add a Widget button
-  And I click on "time" button in the menu
-  And I click on save changes button
-  Then I should see "time" widget
+  Then I should see the "Patient Roster by VAMC" widget
+  And I should see "Clinical Decision Support" widget
   And I click on "Logout" button
 

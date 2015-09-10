@@ -36,12 +36,13 @@ exports.index = function(req, res) {
         if (trueID && validator.isInt(trueID)) {
             request.input('trueID', sql.Int, trueID);              
         }
-        query += 'SELECT DISTINCT me.BranchDesc, COUNT(p.MilitaryBranch) as Total FROM dbo.Patient p';
+        query += 'SELECT DISTINCT me.BranchDesc, r.RiskLevelDesc as RiskLevel, COUNT(DISTINCT p.ReachID) as Total FROM dbo.Patient p';
+        query += ' INNER JOIN dbo.Ref_RiskLevel r ON p.RiskLevel = r.RiskLevelID'
         query += ' INNER JOIN dbo.Ref_MilitaryBranch me ON p.MilitaryBranch = me.BranchID';
-        query += " INNER JOIN PatientStation s ON s.ReachID = p.ReachID";
-        query += " INNER JOIN Ref_VAMC v ON s.sta3N = v.STA3N";
+        query += ' INNER JOIN PatientStation s ON s.ReachID = p.ReachID';
+        query += ' INNER JOIN Ref_VAMC v ON s.sta3N = v.STA3N';
         query += whereClause;
-        query += ' GROUP BY me.BranchDesc, p.MilitaryBranch'; 
+        query += ' GROUP BY me.BranchDesc, r.RiskLevelDesc, p.MilitaryBranch'; 
         
         // Query the database
         request.query(query, function(err, recordset) {

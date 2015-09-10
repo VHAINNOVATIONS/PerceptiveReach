@@ -18,7 +18,7 @@ exports.index = function(req, res) {
 		var request = new sql.Request(connection);
 			
 		/*Configure database query */
-		var query = "SELECT Age, ISNULL(Sex, '--') As Gender, ISNULL(NumericValue, '--') As Value, ISNULL(RaceEthnicity, '--') As Ethnicity FROM dbo.HealthDataSuicideIndicators WHERE Age IS NOT NULL";
+		var query = "SELECT Age, ISNULL(Sex, '--') As Gender, ISNULL(NumericValue, '--') As Value, ISNULL(RaceEthnicity, '--') As Ethnicity FROM dbo.HealthDataSuicideIndicators WHERE Age IS NOT NULL and Locale = 'National' ORDER BY Age, Sex, RaceEthnicity;";
 
 		/*Query database */
 		request.query(query, function(err, recordset) {

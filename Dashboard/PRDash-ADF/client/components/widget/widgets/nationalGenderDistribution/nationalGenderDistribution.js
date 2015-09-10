@@ -17,7 +17,7 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtNationalGenderDistribution', function () {
+  .directive('wtNationalGenderDistribution', function ($timeout) {
     return {
       restrict: 'EAC',
       replace: true,
@@ -41,33 +41,47 @@ angular.module('ui.widgets')
             .withOption('deferRender', true)
             // Do not forget to add the scrollY option!!!
             .withOption('paging',false)
+            .withOption('bDestroy',true)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
-            DTColumnBuilder.newColumn('RiskLevel').withTitle('Risk Level Group'),
-            DTColumnBuilder.newColumn('Gender').withTitle('Gender'),
-            DTColumnBuilder.newColumn('Total').withTitle('Total Number of Patients')
+          DTColumnBuilder.newColumn('Gender').withTitle('Gender'),
+          DTColumnBuilder.newColumn('RiskLevel').withTitle('Risk Level Group'),  
+          DTColumnBuilder.newColumn('Total').withTitle('At-Risk Persons')
         ];
       },
-      link: function postLink(scope) {
+     link: function postLink(scope, element, attr) {
+	
+        scope.$on("bindEvents", function (){
+      		$($('#nationalGenderDiv table')[0]).find('th').each(function(){
+      			$(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+      			$(this).attr('scope','col');
+      			$(this).attr('tabindex','-1');
+          });
+    		});
         scope.$watch('widgetData', function (data) {
-          if (data != null && data.length >0) {
-            scope.data = data;
-            scope.genderDistributionList = data;
-            var promise = new Promise( function(resolve, reject){
-                  if (scope.genderDistributionList)
-                    resolve(scope.genderDistributionList);
-                  else
-                    resolve([]);
+
+          $timeout(function(){
+            $.fn.dataTable.ext.errMode = 'throw';
+            scope.$emit('bindEvents');
+            if (data != null && data.length >0) {
+              scope.data = data;
+              scope.genderDistributionList = data;
+              var promise = new Promise( function(resolve, reject){
+                    if (scope.genderDistributionList)
+                      resolve(scope.genderDistributionList);
+                    else
+                      resolve([]);
+                  });
+              if(scope.dtInstance)
+                scope.dtInstance.changeData(promise);
+              else {
+                scope.dtInstanceAbstract.getList().then(function(dtInstances){
+                  dtInstances.tblGenderDistribution._renderer.changeData(promise)              
                 });
-            if(scope.dtInstance)
-              scope.dtInstance.changeData(promise);
-            else {
-              scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                dtInstances.tblGenderDistribution._renderer.changeData(promise)              
-              });
+              }
             }
-          }
+          },1000)
         });
       }
     };

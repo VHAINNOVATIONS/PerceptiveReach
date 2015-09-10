@@ -18,7 +18,6 @@ Feature: As a SPC I want to Enable the background communications layer between a
   And I should see "Chronic TOP Risk "
   And I click on "Add a Widget" button
   And I click on "medication" button in the menu
-  And I click on save changes button
   Then I should see the "medication" widget
   And I click on "Logout" button
   
