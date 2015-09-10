@@ -34,13 +34,14 @@ angular.module('ui.widgets')
                 else
                   resolve([]);
               });
-
+ 
           })//.fromSource($scope.widgetData) newOptions().
             .withDOM('lfrti')
             .withScroller()
             .withOption('deferRender', true)
             // Do not forget to add the scorllY option!!!
             .withOption('scrollY', 200)
+            .withOption('bDestroy',true)
             .withOption('paging',false);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Name').withTitle('Name'),
@@ -58,6 +59,7 @@ angular.module('ui.widgets')
           {"Name" : "Statistical Risk Level"},
           {"Name" : "Outreach Status"}
         ];
+		
       },
       link: function postLink(scope, element, attr) {
         scope.$on("updateSelectMenu", function (){
@@ -66,8 +68,30 @@ angular.module('ui.widgets')
           $( "select[id^='vet_']" ).on("change",function(e,ui){
             var selectedIndex = this.value;
             var selectedreachId = $(e.currentTarget).attr('id').replace("vet_","");
-            scope.widget.dataModel.saveOutreachData(parseInt(selectedIndex),selectedreachId);
+            var commonData = scope.widget.dataModelOptions.common;
+            scope.widget.dataModel.saveOutreachData(parseInt(selectedIndex),selectedreachId,commonData.data.facilitySelected.facility);
           } );
+		  		 	  
+		  $($('#patientRosterDiv table')[0]).find('th').each(function(){
+                $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+				$(this).attr('scope','col');
+        $(this).attr('tabindex','-1');
+            });
+			
+		$('#tblPatient_info').attr('title','Patient Table: Tab to move to the next control');
+             
+		  
+		  $('#tblPatient tbody>tr select').keydown(function(event){ 
+            if (event.keyCode == '13' || event.key == 'Enter') {
+				$(this).closest('tr').click();
+				return false; 
+			} 
+			if (event.keyCode == '27' || event.key == 'Cancel') {
+				$('#tblPatient_info').focus();
+				$('#tblPatient_info').tooltip().mouseover();
+				return false; 
+			} 		  
+          });
 
           $('#tblPatient tbody').on( 'click', 'tr', function (event) {
             if($(this).hasClass('selected')){
@@ -152,6 +176,7 @@ angular.module('ui.widgets')
             }
             
             $timeout(function(){
+              $.fn.dataTable.ext.errMode = 'throw';
               scope.$emit('updateSelectMenu'); 
               var commonData = scope.widget.dataModelOptions.common;
               if(!commonData.data.veteranObj)

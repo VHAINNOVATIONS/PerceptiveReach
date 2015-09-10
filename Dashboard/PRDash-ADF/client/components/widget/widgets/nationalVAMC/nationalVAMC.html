@@ -1,10 +1,10 @@
-<div class="nationalVAMC">
+<div class="nationalVAMC" title="National VAMC Widget">
 	<table id="tblVAMC" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
 		<thead>	
-			<th><a href="" ng-click="predicate = 'VAMC Name'; reverse=false">VAMC Name</a></th>
-			<th><a href="" ng-click="predicate = 'State'; reverse=false">State</a></th>
-			<th><a href="" ng-click="predicate = 'VISN'; reverse=false">VISN</a></th>
-			<th><a href="" ng-click="predicate = 'Total Number of Patients'; reverse=false">Total Number of Patients</a></th>
+			<th scope="col" tabindex="-1"><a alt="VAMC Name" title="Sort by VAMC Name" href="" ng-click="predicate = 'VAMC Name'; reverse=false">VAMC Name</a></th>
+			<th scope="col" tabindex="-1"><a alt="State" title="Sort by State" href="" ng-click="predicate = 'State'; reverse=false">State</a></th>
+			<th scope="col" tabindex="-1"><a alt="VISN" title="Sort by VISN" href="" ng-click="predicate = 'VISN'; reverse=false">VISN</a></th>
+			<th scope="col" tabindex="-1"><a alt="Total Number of Patients" title="Sort by Total Number of Patients" href="" ng-click="predicate = 'Total Number of Patients'; reverse=false">Total Number of Patients</a></th>
 		</thead>
 		<tbody>
 			<tr ng-repeat="ind in data track by $index | orderBy:predicate:reverse">

@@ -15,9 +15,9 @@
  */
 
 'use strict';
-
+ 
 angular.module('ui.widgets')
-  .directive('wtAppointment', function () {
+  .directive('wtAppointment', function ($timeout) {
     return {
       restrict: 'A',
       replace: true,
@@ -32,6 +32,7 @@ angular.module('ui.widgets')
             .withOption('deferRender', true)
             // Do not forget to add the scorllY option!!!
             .withOption('paging',false)
+            .withOption('bDestroy',true)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
@@ -42,10 +43,21 @@ angular.module('ui.widgets')
             vm.persons = persons;
         });*/
       },
-      link: function postLink(scope) {
+	link: function postLink(scope, element) {
+    		scope.$on("bindEvents", function (){
+    			$($('#appointmentDiv table')[0]).find('th').each(function(){
+    			  $(this).attr('tabindex','-1');
+    			});
+    		});
+
+        $timeout(function(){
+            scope.$emit('bindEvents');
+        },1500)
+
         scope.$watch('data', function (data) {
+          $.fn.dataTable.ext.errMode = 'throw';
           if (data) {
-            scope.data = data;
+            scope.data = data;   
           }
         });
       }

@@ -25,25 +25,26 @@ exports.index = function(req, res) {
         var trueID = '';
         if(ID != null && ID.indexOf("-v") != -1){
             trueID = ID.split("-v")[0];
-            whereClause = " WHERE v.VISN = @trueID";
+            whereClause = " WHERE VISN = @trueID";
         }
-        else if(ID != null && ID.indexOf("-f") != -1){
-            trueID = ID.split("-f")[0];
-            whereClause = " WHERE s.sta3N = @trueID";
-        }
+       
 
         // Configure Database Query
         var query = '';
         if (trueID && validator.isInt(trueID)) {
             request.input('trueID', sql.Int, trueID);            
         }
-        query =  "SELECT v.STA3N, v.VAMC_Name, v.StateAbbr,v.VISN, Count(v.VAMC_Name) as Total";
-		query += " FROM Patient p";
-		query += " INNER JOIN PatientStation s ON s.ReachID = p.ReachID";
-		query += " INNER JOIN Ref_VAMC v on s.sta3N = v.STA3N";
-		query += whereClause;
-		query += " GROUP BY v.STA3N, v.VAMC_Name, v.StateAbbr, v.VISN";
-		query += " ORDER BY v.STA3N ASC";
+
+        query =  "SELECT [TotalPatients] AS Total"
+        query += " ,[AtRisk]"
+        query += " ,[VISN]"
+        query += " ,[STA3N]"
+        query += " ,[VAMC_Name]"
+        query += " ,[StateAbbr]"
+        query += " FROM [dbo].[vw_FacilityRoster]"
+        query += whereClause;
+        query += " ORDER BY STA3N ASC";
+
     
         // Query the database
         request.query(query, function(err, recordset) {

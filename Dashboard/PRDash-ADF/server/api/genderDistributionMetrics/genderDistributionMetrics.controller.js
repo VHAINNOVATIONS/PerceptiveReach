@@ -19,15 +19,15 @@ exports.index = function(req, res) {
         var ID = req.param("ID");
 
         // Configure WHERE clause if needed
-        var whereClause = '';
+        var andClause = '';
         var trueID = '';
         if(ID != null && ID.indexOf("-v") != -1){
             trueID = ID.split("-v")[0];
-            whereClause = " WHERE v.VISN = @trueID";
+            andClause = " AND v.VISN = @trueID";
         }
         else if(ID != null && ID.indexOf("-f") != -1){
             trueID = ID.split("-f")[0];
-            whereClause = " WHERE s.sta3N = @trueID";
+            andClause = " AND s.sta3N = @trueID";
         }
 
         // Configure Database Query
@@ -35,13 +35,15 @@ exports.index = function(req, res) {
         if (trueID && validator.isInt(trueID)) {
             request.input('trueID', sql.Int, trueID);            
         }
-        query += "SELECT r.RiskLevelDesc as RiskLevel, Gender, COUNT(Gender) as Total"
+        query += "SELECT r.RiskLevelDesc as RiskLevel, Gender, COUNT(DISTINCT p.ReachID) as Total"
         query += " FROM dbo.Patient p INNER JOIN dbo.Ref_RiskLevel r "
         query += " ON p.RiskLevel = r.RiskLevelID "
         query += " INNER JOIN PatientStation s ON s.ReachID = p.ReachID";
         query += " INNER JOIN Ref_VAMC v ON s.sta3N = v.STA3N";
-        query += whereClause;
-        query += " AND Gender IS NOT NULL GROUP BY r.RiskLevelDesc, p.Gender";
+        query += " WHERE Gender IS NOT NULL";
+        query += andClause;
+        query += " GROUP BY r.RiskLevelDesc, p.Gender";
+
         
         // Query the database
         request.query(query, function(err, recordset) {

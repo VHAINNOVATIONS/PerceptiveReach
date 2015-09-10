@@ -36,7 +36,7 @@ exports.index = function(req, res) {
             request.input('trueID', sql.Int, trueID);            
         }
 
-        query += 'SELECT rl.RiskLevelDesc as RiskLevel, COUNT(rl.RiskLevelDesc) as Total FROM dbo.Patient p'; 
+        query += 'SELECT rl.RiskLevelDesc as RiskLevel, COUNT(DISTINCT p.ReachID) as Total FROM dbo.Patient p'; 
         query += ' INNER JOIN dbo.Ref_RiskLevel rl ON p.RiskLevel = rl.RiskLevelID';
         query += " INNER JOIN PatientStation s ON s.ReachID = p.ReachID";
         query += " INNER JOIN Ref_VAMC v ON s.sta3N = v.STA3N";

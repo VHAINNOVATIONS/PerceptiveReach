@@ -17,36 +17,75 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtExternalSuicideStatistics', function () {
+  .directive('wtExternalSuicideStatistics', function ($timeout) {
     return {
-      restrict: 'A',
+      restrict: 'EAC',
       replace: true,
       templateUrl: 'client/components/widget/widgets/suicideStatistics/suicideStatistics.html',
-      scope: {
-        data: '=',
-      },
-      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+      
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
+        //$scope.dtOptions = DTOptionsBuilder.newOptions()
+        $scope.dtInstanceAbstract = DTInstances;
+        $scope.dtInstance = null;
+        $scope.suicideStatusList = $scope.widgetData;
+        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+          return new Promise( function(resolve, reject){
+            if ($scope.widgetData)
+              resolve($scope.widgetData);
+            else
+              resolve([]);
+          });
+        })
+          .withDOM('lfrti')
             .withScroller()
             .withOption('deferRender', true)
             // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
             .withOption('paging',false)
-            .withOption('order', [1, 'desc']);
-        //.withPaginationType('full_numbers').withDisplayLength(5);
-        $scope.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0),
-            DTColumnDefBuilder.newColumnDef(1),
-            DTColumnDefBuilder.newColumnDef(2),
-			DTColumnDefBuilder.newColumnDef(3)
+            .withOption('bDestroy',true)
+            .withOption('order', [0, 'asc']);
+            //.withPaginationType('full_numbers').withDisplayLength(100);
+			
+        $scope.dtColumns = [
+          DTColumnBuilder.newColumn('Age').withTitle('Age Range'),
+          DTColumnBuilder.newColumn('Gender').withTitle('Gender'),
+          DTColumnBuilder.newColumn('Value').withTitle('2013 Total Suicide Deaths Per 100K'),
+          DTColumnBuilder.newColumn('Ethnicity').withTitle('Ethnicity')
         ];
       },
-      link: function postLink(scope) {
-        scope.$watch('data', function (data) {
-          if (data) {
+     link: function postLink(scope, element, attr) {
+	
+        scope.$on("bindEvents", function (){
+		$($('#suicideStatisticsDiv table')[0]).find('th').each(function(){
+            $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+			$(this).attr('scope','col');
+			$(this).attr('tabindex','-1');
+        });
+		});
+		
+        scope.$watch('widgetData', function (data) {
+		$timeout(function(){
+      $.fn.dataTable.ext.errMode = 'throw';
+                scope.$emit('bindEvents');
+          if (data != null && data.length >0) {
             scope.data = data;
+            scope.suicideStatusList = data;
+            var promise = new Promise( function(resolve, reject){
+              if (scope.suicideStatusList)
+                resolve(scope.suicideStatusList);
+              else
+                resolve([]);
+            });
+            if(scope.dtInstance)
+              scope.dtInstance.changeData(promise);
+            else {
+              scope.dtInstanceAbstract.getList().then(function(dtInstances){
+                dtInstances.tblSuicideStatistics._renderer.changeData(promise)              
+              });
+            }
           }
+		  },1000)
         });
       }
     };

@@ -17,14 +17,14 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtMedication', function () {
+  .directive('wtMedication', function ($timeout) {
     return {
       restrict: 'A',
       replace: true,
       templateUrl: 'client/components/widget/widgets/medication/medication.html',
       scope: {
         data: '=',
-      },
+      }, 
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
         $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
@@ -32,6 +32,7 @@ angular.module('ui.widgets')
             .withOption('deferRender', true)
             // Do not forget to add the scorllY option!!!
             .withOption('scrollY', 200)
+            .withOption('bDestroy',true)
             .withOption('paging',false);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
@@ -41,7 +42,16 @@ angular.module('ui.widgets')
             vm.persons = persons;
         });*/
       },
-      link: function postLink(scope) {
+	link: function postLink(scope, element) {
+    		scope.$on("bindEvents", function (){
+    			$($('#medicationDiv table')[0]).find('th').each(function(){
+    			  $(this).attr('tabindex','-1');
+    			});
+    		});
+        $timeout(function(){
+          scope.$emit('bindEvents');      
+        },1500);          
+
         scope.$watch('data', function (data) {
           if (data) {
             scope.data = data;
