@@ -41,7 +41,7 @@ exports.index = function(req, res) {
         query += " ,[STA3N]"
         query += " ,[VAMC_Name]"
         query += " ,[StateAbbr]"
-        query += " FROM [Reach_Dev].[dbo].[vw_FacilityRoster]"
+        query += " FROM [dbo].[vw_FacilityRoster]"
         query += whereClause;
         query += " ORDER BY STA3N ASC";
 

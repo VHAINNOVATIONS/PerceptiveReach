@@ -26,7 +26,7 @@ exports.index = function(req, res) {
         query += ",[RegionServed]"
         query += ",[TotalPatients] AS Total"
         query += ",[AtRisk]"
-        query += " FROM [Reach_Dev].[dbo].[vw_VISNRoster]"
+        query += " FROM [dbo].[vw_VISNRoster]"
         query += " ORDER BY VISN"
     
         // Query the database
