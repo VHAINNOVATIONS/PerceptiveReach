@@ -1,0 +1,386 @@
+* commit a38762b2c9c9a3c27ef6399859dfde2216d20e7e (origin/attemptPrediction)
+| Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+| Date:   Thu Sep 10 18:40:45 2015 -0400
+| 
+|     Full commit.  To be cleaned up later.
+|    
+| * commit 772bfdb58c28bdb4e5806083dbc46b7cc26979a3 (origin/test)
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Thu Sep 10 15:20:45 2015 -0400
+| | 
+| |     Updated feature file PR-876
+| |   
+| * commit d7e14ee788d68bf933dfe2e7500ccf1c8dc01b20
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Thu Sep 10 15:16:16 2015 -0400
+| | 
+| |     Updated feature file PR-2993
+| |       
+| | *   commit 84abcec0a24440691415587bf3d16745eff2638f (HEAD, origin/master, origin/HEAD, master)
+| | |\  Merge: 673327d 8713968
+| | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| |/|   Date:   Thu Sep 10 12:30:58 2015 -0400
+| | |   
+| | |       Merge branch 'stable'
+| | |      
+| * |   commit 8713968708d2827f32fb1bcf6cfc507783e1f5ce (origin/stable)
+| |\ \  Merge: a57d7e9 8aa4cf0
+| |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+|/| |   Date:   Thu Sep 10 10:33:18 2015 -0400
+| | |   
+| | |       Merge commit '8aa4cf0d74600bef7f1a943745da6652e1746e31' into HEAD
+| | |    
+* | | commit 8aa4cf0d74600bef7f1a943745da6652e1746e31 (origin/dev)
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Thu Sep 10 10:31:37 2015 -0400
+| | | 
+| | |     PR-3097 #comment Needed to remove the database instance from the code and allow the .DBO to work in IT Pilot.
+| | |      
+| * |   commit a57d7e9263509a4d6539f7b08128a9f3d09e5cbc
+| |\ \  Merge: 6ea76e6 b4e15d9
+| |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+|/| |   Date:   Wed Sep 9 10:50:29 2015 -0400
+| | |   
+| | |       Merge commit 'b4e15d9cc90451a802c77c008404b1eaf8650d76' into HEAD
+| | |    
+* | | commit b4e15d9cc90451a802c77c008404b1eaf8650d76
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Wed Sep 9 10:49:00 2015 -0400
+| | | 
+| | |     PR-3097 #comment  Added At-Risk column to VISN and Facility roster. Added new SQL views to return records for VISN and facility roster widgets.
+| | |    
+* | | commit 5937c18d9acc4e23676137ffcc010cd66afe3ddf
+| | | Author: unknown <vhaisdsnellr@IST-LTSNELLROB.vha.med.va.gov>
+| | | Date:   Wed Sep 9 01:30:26 2015 -0500
+| | | 
+| | |     PR-3096 #time 4h #comment The queries have all been modified to return distinct results.
+| | |      
+| * |   commit 6ea76e6347d76b444c17d2266edf3076f866725e
+| |\ \  Merge: 6d241dc dec0938
+| |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+|/| |   Date:   Fri Sep 4 16:20:04 2015 -0400
+| | |   
+| | |       Merge commit 'dec09382801d19d8721fe360353f39d198ed2af6' into HEAD
+| | |    
+* | | commit dec09382801d19d8721fe360353f39d198ed2af6
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Fri Sep 4 11:29:15 2015 -0400
+| | | 
+| | |     PR-3091 #comment The store procedure for saving the outreach status (sp_SaveOutreachStatus) needed to be modified to accommodate a change for when the user is an admin user.  This involved adding a new parameter to the stored proc to pass in facilityID.
+| | |    
+| * | commit 6d241dcda1fd04ccf74bc5bbc0ce796418d840b5
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Fri Sep 4 08:53:19 2015 -0400
+| | | 
+| | |     Updated feature files PR-1268 and PR-1317
+| | |    
+| * | commit cfdd512b98e792ea82f036f0cdbd4254c3a0b670
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Thu Sep 3 18:37:35 2015 -0400
+| | | 
+| | |     Updated feature flies PR-1268, PR-1317, PR-1405,PR-1406, PR-1571 and PR-876
+| | |      
+| * |   commit bc9b2885c1d2a480bef00d6eed168197d967c23a
+| |\ \  Merge: 31150f8 a353690
+| |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+|/| |   Date:   Thu Sep 3 18:25:29 2015 -0400
+| | |   
+| | |       Merge commit 'a353690322138762e40bda0bfb852398ae1dfd28' into HEAD
+| | |    
+* | | commit a353690322138762e40bda0bfb852398ae1dfd28
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Thu Sep 3 18:23:22 2015 -0400
+| | | 
+| | |     PR-3069 Minor fix for facility roster.
+| | |      
+| * |   commit 31150f8cf0ab6044ffce303e31a469d746197e06
+| |\ \  Merge: 450c244 023f192
+| |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+|/| |   Date:   Thu Sep 3 18:18:44 2015 -0400
+| | |   
+| | |       Merge commit '023f192a4367892896f44f6afd32bfb267949b40' into HEAD
+| | |    
+* | | commit 023f192a4367892896f44f6afd32bfb267949b40
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Thu Sep 3 18:16:47 2015 -0400
+| | | 
+| | |     PR-3069 Changed row selection to happen on spaceBar instead of Enter for facility and roster
+| | |      
+| * |   commit 450c244b57a5086d8f0487196e2e43bd454da383
+| |\ \  Merge: a423b61 213e952
+| |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+|/| |   Date:   Thu Sep 3 18:11:39 2015 -0400
+| | |   
+| | |       Merge commit '213e9525aee0bfbd0af35ba59f818c72fe2687e2' into HEAD
+| | |    
+* | | commit 213e9525aee0bfbd0af35ba59f818c72fe2687e2
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Thu Sep 3 18:09:19 2015 -0400
+| | | 
+| | |     PR-3090 Updated Facility/ VISN Roster widgets to listen to be updated when default wdigets selected event occurs
+| | |      
+| * |   commit a423b61c644faab27afffb3141b2aea91efae9ba
+| |\ \  Merge: 05514e2 6de3bd9
+| |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+|/| |   Date:   Thu Sep 3 16:47:08 2015 -0400
+| | |   
+| | |       Merge commit '6de3bd9863fb3311658f08fd492be7d5318a4610' into HEAD
+| | |    
+* | | commit 6de3bd9863fb3311658f08fd492be7d5318a4610
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Thu Sep 3 16:45:21 2015 -0400
+| | | 
+| | |     PR-3085 Fixed issue where user was logged out when blank outreach status is selected.
+| | |      
+| * |   commit 05514e2a9932d9faf018e0fc6c963392de47e45d
+| |\ \  Merge: ee16281 fbef263
+| |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+|/| |   Date:   Thu Sep 3 15:55:48 2015 -0400
+| | |   
+| | |       Merge commit 'fbef26363507f9f2b70e42bc9d3bcd26329a8d0f' into HEAD
+| | |    
+* | | commit fbef26363507f9f2b70e42bc9d3bcd26329a8d0f
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Thu Sep 3 15:54:07 2015 -0400
+| | | 
+| | |     PR-3089 Fixed Flickering issue  in Medication, Appointment and diagnoses widgets.
+| | |      
+| * |   commit ee1628105641a4f01343b14236cd97796b0384fa
+| |\ \  Merge: 722c66b 14140ca
+| |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+|/| |   Date:   Thu Sep 3 12:53:16 2015 -0400
+| | |   
+| | |       Merge commit '14140cae653edfb8d3a33a260deac9d263e89a8e' into HEAD
+| | |      
+* | |   commit 14140cae653edfb8d3a33a260deac9d263e89a8e
+|\ \ \  Merge: 2f29ef7 dd46d66
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Thu Sep 3 12:48:49 2015 -0400
+| | | | 
+| | | |     Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | | |     
+| | | |     Conflicts:
+| | | |     	Dashboard/PRDash-ADF/client/components/widget/widgets/nationalAgeGroups/nationalAgeGroups.js
+| | | |     	Dashboard/PRDash-ADF/client/components/widget/widgets/nationalGenderDistribution/nationalGenderDistribution.html
+| | | |     	Dashboard/PRDash-ADF/client/components/widget/widgets/nationalGenderDistribution/nationalGenderDistribution.js
+| | | |     	Dashboard/PRDash-ADF/client/components/widget/widgets/nationalMilitaryBranch/nationalMilitaryBranch.html
+| | | |     	Dashboard/PRDash-ADF/client/components/widget/widgets/nationalMilitaryBranch/nationalMilitaryBranch.js
+| | | |     	Dashboard/PRDash-ADF/client/components/widget/widgets/nationalOutReachStatus/nationalOutReachStatus.js
+| | | |     	Dashboard/PRDash-ADF/client/components/widget/widgets/patientFlags/patientFlags.js
+| | | |     	Dashboard/PRDash-ADF/client/components/widget/widgets/widget_template.js
+| | | |     	Dashboard/PRDash-ADF/client/dist/perceptive-reach-widgets.js
+| | | |     	Dashboard/PRDash-ADF/test-results.xml
+| | | |     
+* | | | commit 2f29ef738cf050dcc951217e02fa56f50bc781de
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Thu Sep 3 12:08:31 2015 -0400
+| | | | 
+| | | |     PR-3068 Updated VISN and Facility Roster such that it displays selected rows after navigating between views.
+| | | |     
+* | | | commit 90a76671c1ba4670e3d7e5eb31f740a817120105
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Thu Sep 3 09:45:59 2015 -0400
+| | | | 
+| | | |     PR-2710 Updated main.controller.js to add keydown listener for Enter key when dashboard tabs are navigated using keyboard.
+| | | |     
+* | | | commit 2e67f0adacb34990cbbecb5220ba183b0c53281b
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Thu Sep 3 08:56:23 2015 -0400
+| | | | 
+| | | |     PR-3083 Updated GenderDistribution and MilitaryBranch widgets according to requirements by adding a RiskLevelGroup column.
+| | | |     
+* | | | commit 63bc2e4f1c3bcfe28795a229a18a2765e712076e
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Thu Sep 3 08:36:27 2015 -0400
+| | | | 
+| | | |     PR-3084 Updated Query to pull national suicide data only
+| | | |       
+* | | |   commit 9a7245a01625001fe20999d05054fec166c3f924
+|\ \ \ \  Merge: b0ece9a 6c7bfd1
+| | | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | | Date:   Thu Sep 3 08:35:35 2015 -0400
+| | | | | 
+| | | | |     Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | | | |     
+| | | | |     Conflicts:
+| | | | |     	Dashboard/PRDash-ADF/test-results.xml
+| | | | |      
+* | | | | commit b0ece9abec98acaf4e68ed9eb982461b15d1f9e2
+| | | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | | Date:   Wed Sep 2 16:25:18 2015 -0400
+| | | | | 
+| | | | |     PR-2972 PR-2989 Updated every widget that had a datatable to modify how warnings and errors are handled. Replaced alert driven events with displaying errors as Javascript errors
+| | | | |        
+| | | * |   commit 722c66b0e40b2a65e18138010ae8daaffee57663
+| | | |\ \  Merge: 6e9f7c9 dd46d66
+| | | |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |/| |   Date:   Wed Sep 2 20:39:11 2015 -0400
+| | | | |   
+| | | | |       Merge commit 'dd46d66efe12430cee611dec1548c4dc6150cda1' into HEAD
+| | | | |      
+| | * | | commit dd46d66efe12430cee611dec1548c4dc6150cda1
+| | | | | Author: jarao <jaya.rao@us.pwc.com>
+| | | | | Date:   Wed Sep 2 20:37:28 2015 -0400
+| | | | | 
+| | | | |     PR-2838 converted files to run from js file and added negative tab index to headers
+| | | | |        
+| | | * |   commit 6e9f7c92059cb84bade877b99f53ca2645c4b19b
+| | | |\ \  Merge: b78de7b 0fb26f3
+| | | |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |/| |   Date:   Wed Sep 2 20:03:01 2015 -0400
+| | | | |   
+| | | | |       Merge commit '0fb26f3b03339b271ae289ecdbf4d3c38e00992c' into HEAD
+| | | | |      
+| | * | | commit 0fb26f3b03339b271ae289ecdbf4d3c38e00992c
+| | | | | Author: jarao <jaya.rao@us.pwc.com>
+| | | | | Date:   Wed Sep 2 20:01:15 2015 -0400
+| | | | | 
+| | | | |     PR-2838 Programmatically disabled navigation for select widgets
+| | | | |        
+| | | * |   commit b78de7b9bedb4282e6036d05ae3426a0656ebd39
+| | | |\ \  Merge: 8c30de2 254daef
+| | | |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | |/| |   Date:   Wed Sep 2 16:46:44 2015 -0400
+| | | | |   
+| | | | |       Merge commit '254daef863e4d789a5d2f03b90393a1a65b28489' into HEAD
+| | | | |      
+| | * | | commit 254daef863e4d789a5d2f03b90393a1a65b28489
+| |/ / /  Author: varunn <varun.neelakantan@us.pwc.com>
+| | | |   Date:   Wed Sep 2 16:45:04 2015 -0400
+| | | |   
+| | | |       PR-3069 : 508 Compliance fix for Facility Roster
+| | | |       
+| | * |   commit 8c30de254fe587dc25d929e2e0b20088f8b8999d
+| | |\ \  Merge: a610373 6c7bfd1
+| | |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| |/| |   Date:   Wed Sep 2 15:57:48 2015 -0400
+| | | |   
+| | | |       Merge commit '6c7bfd1c119514cd651105f2aa12178e94a84abe' into HEAD
+| | | |     
+| * | | commit 6c7bfd1c119514cd651105f2aa12178e94a84abe
+| | | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | | Date:   Wed Sep 2 15:56:08 2015 -0400
+| | | | 
+| | | |     PR-3069 : 508 Compliance fix for VISN Roster.
+| | | |       
+| | * |   commit a61037399ba0d05bf588e1b0eeaf93884c7cbb6d
+| | |\ \  Merge: 0a83285 f5ff9ae
+| | |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| |/| |   Date:   Wed Sep 2 15:08:08 2015 -0400
+| | | |   
+| | | |       Merge commit 'f5ff9ae3a6fab8c0b033e6ca450cfd3ddec8188a' into HEAD
+| | | |     
+| * | | commit f5ff9ae3a6fab8c0b033e6ca450cfd3ddec8188a
+| | | | Author: jarao <jaya.rao@us.pwc.com>
+| | | | Date:   Wed Sep 2 15:06:22 2015 -0400
+| | | | 
+| | | |     PR-2714 Patient Roster Widget patient selectable, able to esc out of table
+| | | |       
+| | * |   commit 0a832858b51ac2a5849dae72ba675ea8b639464b
+| | |\ \  Merge: 3e80474 3411f26
+| | |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| |/| |   Date:   Wed Sep 2 00:49:40 2015 -0400
+| | | |   
+| | | |       Merge commit '3411f2617c040da553c54d0bb6360c98f4a524df' into HEAD
+| | | |     
+| * | | commit 3411f2617c040da553c54d0bb6360c98f4a524df
+| | | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | | Date:   Wed Sep 2 00:47:14 2015 -0400
+| | | | 
+| | | |     PR-3027 PR-3079 #time 2h #comment Removed the Patient Flags widget. Turned on auto save for the dashboard which removed the save button and resolved the bugs with the save popup.
+| | | |       
+| | * |   commit 3e80474127cda76a1962c439f04b6726881263e5
+| | |\ \  Merge: b4caf41 156a0f0
+| | |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| |/| |   Date:   Tue Sep 1 17:33:00 2015 -0400
+| | | |   
+| | | |       Merge commit '156a0f067f7817cb938f3f083016f325d62f5eba' into HEAD
+| | | |     
+| * | | commit 156a0f067f7817cb938f3f083016f325d62f5eba
+| | | | Author: jarao <jaya.rao@us.pwc.com>
+| | | | Date:   Tue Sep 1 17:30:33 2015 -0400
+| | | | 
+| | | |     PR-2714 Included Navigation Instructions on Hover
+| | | |       
+| | * |   commit b4caf41e4491609c26caa5e69ffa3a5d4cf71577
+| | |\ \  Merge: 81c77de a52bbdb
+| | |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| |/| |   Date:   Tue Sep 1 16:54:50 2015 -0400
+| | | |   
+| | | |       Merge commit 'a52bbdb77c45a1c8eb4f64cdf877937f6d4e37f2' into HEAD
+| | | |     
+| * | | commit a52bbdb77c45a1c8eb4f64cdf877937f6d4e37f2
+|/ / /  Author: jarao <jaya.rao@us.pwc.com>
+| | |   Date:   Tue Sep 1 16:52:52 2015 -0400
+| | |   
+| | |       PR-2838 Removed table headers from navigation of table
+| | |      
+| * |   commit 81c77de4f4c6a53668223ca81cd685b097384949
+| |\ \  Merge: c18da50 08b98f5
+| |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+|/| |   Date:   Tue Sep 1 00:03:10 2015 -0400
+| | |   
+| | |       Merge commit '08b98f593824d68b7e8866d5db2067e6557c087d' into HEAD
+| | |    
+* | | commit 08b98f593824d68b7e8866d5db2067e6557c087d
+| | | Author: unknown <jrao012@i558dev.innovations.va.gov>
+| | | Date:   Tue Sep 1 00:01:18 2015 -0400
+| | | 
+| | |     PR-2838 PR-3053 Remove the ability to edit a widget title, remove from navigation path
+| | |      
+| * |   commit c18da50653dcbb548c814df5c022482466cccf39
+| |\ \  Merge: 600b0aa 65ddb5c
+| |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+|/| |   Date:   Mon Aug 31 17:42:11 2015 -0400
+| | |   
+| | |       Merge commit '65ddb5c6e4e380725b6321f51d5e00764ad92ad0' into HEAD
+| | |    
+* | | commit 65ddb5c6e4e380725b6321f51d5e00764ad92ad0
+| | | Author: unknown <jrao012@i558dev.innovations.va.gov>
+| | | Date:   Mon Aug 31 17:40:12 2015 -0400
+| | | 
+| | |     PR-3043 PR-3047 Added timeout to suicideStatistics
+| | |      
+| * |   commit 600b0aa340681bdfb02cd60995c8fb535e584612
+| |\ \  Merge: 1ac8e73 1ee072c
+| |/ /  Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+|/| |   Date:   Mon Aug 31 17:10:15 2015 -0400
+| | |   
+| | |       Merge commit '1ee072c73c223ca892590488cc7a81f48f6ea6a2' into HEAD
+| | |    
+* | | commit 1ee072c73c223ca892590488cc7a81f48f6ea6a2
+| | | Author: unknown <jrao012@i558dev.innovations.va.gov>
+| | | Date:   Mon Aug 31 17:08:24 2015 -0400
+| | | 
+| | |     PR-3043 PR-3047 Reapplied the tooltips, titles, sorting, etc...
+| | |    
+| * | commit 1ac8e7334c227f92a414fe5929c0ab478184c72f
+|/ /  Merge: 53a27bd 94f8f56
+| |   Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| |   Date:   Mon Aug 31 14:14:29 2015 -0400
+| |   
+| |       Merge commit '94f8f5639c2130b91eee35fa08c57d74812cd147' into HEAD
+| |   
+* | commit 94f8f5639c2130b91eee35fa08c57d74812cd147
+| | Merge: d2de3c9 b74092b
+| | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | Date:   Mon Aug 31 14:11:56 2015 -0400
+| | 
+| |     Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| |     
+| |     Conflicts:
+| |     	Dashboard/PRDash-ADF/client/components/widget/widgets/suicideStatistics/suicideStatistics.html
+| |     	Dashboard/PRDash-ADF/client/components/widget/widgets/widget_template.js
+| |     	Dashboard/PRDash-ADF/client/dist/perceptive-reach-widgets.js
+| |   
+* | commit d2de3c9eb296f6582336859218060e5597ce7483
+ /  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+|   Date:   Mon Aug 31 12:39:48 2015 -0400
+|   
+|       PR-3076 PR-3077 Updated various files to resolve Surveillance View navigation and Suicide Indicators loading bugs
+|  
+* commit 673327dac8ef9af78607278427db46f3b4964eae
+  Author: Monica Mohler <monica.mohler@us.pwc.com>
+  Date:   Fri Aug 28 18:46:22 2015 -0400
+  
+      Sprint 23 Submission Log
