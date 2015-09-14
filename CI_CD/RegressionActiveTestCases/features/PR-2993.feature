@@ -13,7 +13,8 @@ Then I should see "VISN Roster" widget
 And I should see "VISN"
 And I should see "Network Name"
 And I should see "Region Served"
-And I should see "Total Patients" 
+And I should see "Patients" 
+And I should see "At-Risk Persons" 
 When I select VISN Roster "VA New England Health Care System" veteran row in the widget
 Then I should see "VISN: 1 VAMC"
 When I Select VAMC facility "(V01) (689) VA Connecticut HCS, CT" in facility roster widget
