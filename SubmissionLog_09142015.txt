@@ -1,0 +1,69 @@
+* commit 3c0c84ecbe70bb30d80f74977822915f24e23c3c (HEAD, origin/master, origin/HEAD, master)
+| Author: Monica Mohler <monica.mohler@us.pwc.com>
+| Date:   Tue Sep 15 00:15:30 2015 -0400
+| 
+|     Collaborative Deliverable package documents. Final submission for Base Period.
+|    
+*   commit ad2e00d5e00fb815060aa6126399b54eb16bc670 (tag: v1.0.0)
+|\  Merge: 3e4c8d3 2772b08
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Mon Sep 14 16:48:58 2015 -0400
+| | 
+| |     Merge branch 'stable'
+| |     
+| *   commit 2772b085853351ec58abdd73ce8d0bcf0778f40f (origin/test, origin/stable)
+| |\  Merge: 772bfdb e07b72d
+| | | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | | Date:   Sun Sep 13 18:28:30 2015 -0400
+| | | 
+| | |     Merge commit 'e07b72dc93cc4ed289f3a400a5b17c17d3338097' into HEAD
+| | |    
+| | * commit e07b72dc93cc4ed289f3a400a5b17c17d3338097 (origin/dev)
+| | | Author: unknown <rsnelling037@i558dev.innovations.va.gov>
+| | | Date:   Sun Sep 13 18:23:24 2015 -0400
+| | | 
+| | |     This is the latest version of the Reach Dev Database
+| | |    
+| * | commit 772bfdb58c28bdb4e5806083dbc46b7cc26979a3
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Thu Sep 10 15:20:45 2015 -0400
+| | | 
+| | |     Updated feature file PR-876
+| | |    
+| * | commit d7e14ee788d68bf933dfe2e7500ccf1c8dc01b20
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Thu Sep 10 15:16:16 2015 -0400
+| | | 
+| | |     Updated feature file PR-2993
+| | |    
+* | | commit 3e4c8d3347a26982183cfa71c816100b0ec829e4
+| | | Author: Monica Mohler <monica.mohler@us.pwc.com>
+| | | Date:   Fri Sep 11 18:41:58 2015 -0400
+| | | 
+| | |     Sprint 24 submission log
+| | |    
+* | | commit 84abcec0a24440691415587bf3d16745eff2638f
+|/ /  Merge: 673327d 8713968
+| |   Author: Robert Snelling <robert.snelling@us.pwc.com>
+| |   Date:   Thu Sep 10 12:30:58 2015 -0400
+| |   
+| |       Merge branch 'stable'
+| |   
+* | commit 8713968708d2827f32fb1bcf6cfc507783e1f5ce
+|/  Merge: a57d7e9 8aa4cf0
+|   Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+|   Date:   Thu Sep 10 10:33:18 2015 -0400
+|   
+|       Merge commit '8aa4cf0d74600bef7f1a943745da6652e1746e31' into HEAD
+|    
+| * commit a38762b2c9c9a3c27ef6399859dfde2216d20e7e (origin/attemptPrediction)
+|/  Author: Afsin Ustundag <afsin.ustundag@us.pwc.com>
+|   Date:   Thu Sep 10 18:40:45 2015 -0400
+|   
+|       Full commit.  To be cleaned up later.
+|  
+* commit 8aa4cf0d74600bef7f1a943745da6652e1746e31
+  Author: Robert Snelling <robert.snelling@us.pwc.com>
+  Date:   Thu Sep 10 10:31:37 2015 -0400
+  
+      PR-3097 #comment Needed to remove the database instance from the code and allow the .DBO to work in IT Pilot.
