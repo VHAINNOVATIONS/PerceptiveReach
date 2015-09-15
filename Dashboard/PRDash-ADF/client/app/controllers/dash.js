@@ -208,6 +208,28 @@ angular.module('app')
           layout: 'surveillance,facility'
         },
         sizeY:9
+      }, {
+        name: 'PredictionChart',
+        directive: 'prediction-chart',
+        dataAttrName: 'data',
+        dataModelType: RandomNVD3TimeSeriesDataModel,
+        title: 'Prediction Chart',
+        dataModelOptions: {
+          defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM',
+          layout: 'facility'
+        },
+        dataModelArgs: {
+          rate: 40
+        },
+        attrs: {
+          'show-time-range': true
+        },
+        style: {
+          width: '100%'
+        },
+        sizeX:18,
+        sizeY:10
       },
 	   {
         name: 'MilitaryBranch',
