@@ -211,8 +211,8 @@ angular.module('app')
       }, {
         name: 'PredictionChart',
         directive: 'prediction-chart',
-        dataAttrName: 'data',
-        dataModelType: RandomNVD3TimeSeriesDataModel,
+        //dataAttrName: 'data',
+        //dataModelType: RandomNVD3TimeSeriesDataModel,
         title: 'Prediction Chart',
         dataModelOptions: {
           defaultWidget: true,
