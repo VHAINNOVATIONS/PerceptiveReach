@@ -1,6 +1,7 @@
 <div class="prediction-chart">
     <nvd3-line-chart
-            data="data"
+            data="data",
+            height="450"
             xAxisTickFormat="xAxisTickFormatFunction()"
             yAxisTickFormat="yAxisTickFormatFunction()"
             x="xFunction()"
@@ -8,7 +9,6 @@
             showXAxis="true"
             showYAxis="true"
             reduceXTicks="true"
-            forcey="[0,100]"
             transitionduration="0"
             useInteractiveGuideline="true"
             showLegend="{{showLegend}}"

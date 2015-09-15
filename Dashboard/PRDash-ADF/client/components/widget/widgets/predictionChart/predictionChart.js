@@ -8,206 +8,101 @@ angular.module('ui.widgets')
       templateUrl: 'client/components/widget/widgets/predictionChart/predictionChart.html',
       scope: {
         //data: '=data',
-        showLegend: '@',
-        timeAxisFormat: '=?'
+        showLegend: '@'
       },
       controller: function ($scope) {
-        var filter = $filter('date');
         var numberFilter = $filter('number');
 
         $scope.xAxisTickFormatFunction = function () {
           return function (d) {
-            return filter(d, $scope.timeAxisFormat);
+            return d3.format('.02f')(d);
           };
         };
 
         $scope.yAxisTickFormatFunction = function () {
           return function (d) {
-            if (d > 999) {
-              var value;
-              var scale;
-              if (d < 999999) {
-                value = Math.round(d/1000);
-                scale = 'k';
-              } else {
-                value = Math.round(d/1000000);
-                scale = 'm';
-              }
-              return numberFilter(value) + scale;
-            } else {
-              return numberFilter(d);
-            }
+            return d3.format('.02f')(d);
           };
         };
 
         $scope.xFunction = function () {
           return function (d) {
-            return d.timestamp;
+            return d.x;
           };
         };
         $scope.yFunction = function () {
           return function (d) {
-            return d.value;
+            return d.y;
           };
         };
       },
       link: function postLink(scope, element, attrs) {
-        scope.timeAxisFormat = scope.timeAxisFormat || 'HH:mm';
+        /* Random Data Generator (took from nvd3.org) */
+        var generateData = function(groups, points) { //# groups,# points per group
+            var data = [];
+            //var shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'];
+            var random = Math.random;
 
-        
-        var mockData = [{
-          "key": "Data",
-          "values": [{
-              "timestamp": 1426519070387,
-              "value": 79,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519071389,
-              "value": 59,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519072390,
-              "value": 54,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519073391,
-              "value": 58,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519074392,
-              "value": 41,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519075394,
-              "value": 33,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519076395,
-              "value": 23,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519077396,
-              "value": 39,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519078398,
-              "value": 44,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519079399,
-              "value": 52,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519080400,
-              "value": 42,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519081401,
-              "value": 25,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519082400,
-              "value": 8,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519083402,
-              "value": 0,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519084404,
-              "value": 20,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519085405,
-              "value": 14,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519086407,
-              "value": 31,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519087409,
-              "value": 35,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519088410,
-              "value": 35,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519089412,
-              "value": 36,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519090412,
-              "value": 19,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519091414,
-              "value": 38,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519092416,
-              "value": 51,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519093417,
-              "value": 45,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519094418,
-              "value": 47,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519095420,
-              "value": 55,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519096421,
-              "value": 46,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519097422,
-              "value": 38,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519098424,
-              "value": 18,
-              "series": 0
-          },
-          {
-              "timestamp": 1426519099425,
-              "value": 22
-          }]
-        }]
+            data = [{
+              key: 'Upper Limit',
+              values: []
+            }, {
+              key: 'Lower Limit',
+              values: []
+            }, {
+              key: 'Prediction',
+              values: []
+            }, {
+              key: 'Actual',
+              values: []
+            }, {
+              key: 'Comparison',
+              values: []
+            }];
 
+            for (var ju = 1; ju < 16; ++ju) {
+              var yu = 70.0 + 30.0 * (ju / 16.0);
+              data[0].values.push({
+                x: ju,
+                y: yu
+              });
+            }
+
+            for (var jl = 1; jl < 16; ++jl) {
+              var yl = 30.0 - 30.0 * (jl / 16.0);
+              data[1].values.push({
+                x: jl,
+                y: yl
+              });
+            }
+
+            for (var jp = 1; jp < 16; ++jp) {
+              data[2].values.push({
+                x: jp,
+                y: 50
+              });
+            }
+
+            for (var ja = 1; ja < 13; ++ja) {
+                var ya = 30.0 + random() * 40;
+                data[3].values.push({
+                    x: ja,
+                    y: ya
+                });
+            }
+
+            for (var jc = 13; jc < 16; ++jc) {
+                var yc = 30.0 + random() * 40;
+                data[4].values.push({
+                    x: jc,
+                    y: yc
+                });
+            }
+
+            return data;
+        };
+
+        var mockData = generateData(4, 40);
         scope.data = mockData;
 
         if (mockData && mockData[0] && mockData[0].values && (mockData[0].values.length > 1)) {

@@ -226,10 +226,10 @@ angular.module('app')
           'show-time-range': true
         },
         style: {
-          width: '100%'
+          width: '100%',
+          height: '100%'
         },
-        sizeX:18,
-        sizeY:10
+        sizeX:15
       },
 	   {
         name: 'MilitaryBranch',
