@@ -7,8 +7,7 @@ return {
     replace: true,
     templateUrl: 'client/components/widget/widgets/predictionChart/predictionChart.html',
     scope: {
-      data: '=data',
-      showLegend: '@'
+      data: '=data'
     },
     controller: function ($scope) {
       $scope.xAxisTickFormatFunction = function () {

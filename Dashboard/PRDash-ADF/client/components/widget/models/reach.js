@@ -1,64 +1,5 @@
 'use strict';
 
-var generatePredictionData = function(groups, points) { //# groups,# points per group
-    var data = [];
-    //var shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'];
-    var random = Math.random;
-    data = [{
-      key: 'Upper Limit',
-      values: []
-    }, {
-      key: 'Lower Limit',
-      values: []
-    }, {
-      key: 'Prediction',
-      values: []
-    }, {
-      key: 'Actual',
-      values: []
-    }, {
-      key: 'Comparison',
-      values: []
-    }];
-    for (var ju = 1; ju < 16; ++ju) {
-      var yu = 40.0 - 40.0 * (ju / 16.0);
-      data[0].values.push({
-        x: ju,
-        y: yu
-      });
-    }
-    for (var jl = 1; jl < 16; ++jl) {
-      var yl = 30.0 - 30.0 * (jl / 16.0);
-      data[1].values.push({
-        x: jl,
-        y: yl
-      });
-    }
-    for (var jp = 1; jp < 16; ++jp) {
-      data[2].values.push({
-        x: jp,
-        y: 50
-      });
-    }
-    for (var ja = 1; ja < 13; ++ja) {
-        var ya = 30.0 + random() * 40;
-        data[3].values.push({
-            x: ja,
-            y: ya
-        });
-    }
-    for (var jc = 13; jc < 16; ++jc) {
-        var yc = 30.0 + random() * 40;
-        data[4].values.push({
-            x: jc,
-            y: yc
-        });
-    }
-    return data;
-};
-
-
-
 angular.module('ui.models')
   .factory('CommonDataModel', function (WidgetDataModel) {
     function CommonDataModel() {}
@@ -780,63 +721,50 @@ angular.module('ui.models')
     PredictionChartDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(PredictionChartDataModel.prototype, {
-       init: function () {
+      init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentID = null;
 
-        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+        var view = _.get(dataModelOptions, 'common.data.activeView');
+        if (view === "facility") {
+          this.ID = _.get(dataModelOptions, 'common.data.facilitySelected.facility', null);
+        } else {
+          this.ID = null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          
-          this.currentID = this.ID;
-
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
-            this.ID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;  
+          var view = _.get(dataModelOptions, 'common.data.activeView');
+          if(view === "facility") {
+            var ID = _.get(dataModelOptions, 'common.data.facilitySelected.facility', null);
+            if (this.ID !== ID) {
+              this.ID = ID;
+              this.getData();
+            }
           }
-
-          if(this.ID != this.currentID)
-            this.getData();
         }.bind(this));
 
-        this.updateScope([]);
         this.getData();
       },
 
-      getData: function() {
-        this.updateScope(generatePredictionData(4, 40));
-      },
-
-      getDataXXXX: function () {
-        var that = this;
-        var data = [];
-        var visn_or_facility = '';
-        var activeView = that.dataModelOptions.common.data.activeView;
-
-
-          if(activeView == "facility"){
-            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
-          }
-
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/prediction'+ parameter)
-          .success(function(dataset) {
-                  var data = [];
-                  for (var i = 0; i < dataset.length; i++) {
-                    data.push({key:dataset[i].RiskLevel,
-                               values:[{
-                                        RiskLabel: dataset[i].RiskLevel,
-                                        value: dataset[i].Total
-                                      }]
-                              });
-                  }
-                  this.updateScope(data);
+      getData: function () {
+        if (this.ID) {
+          var activeView = _.get(this.dataModelOptions, 'common.data.activeView');
+          if (activeView === "facility"){
+            var visn_or_facility = null;
+            if (this.dataModelOptions.common.data.facilitySelected.facility) {
+              visn_or_facility = "-f";
+            } else if (this.dataModelOptions.common.data.visnSelected.facility) {
+              visn_or_facility = "-v";
+            }
+            if (visn_or_facility) {
+              var parameter = "?ID=" + this.ID + visn_or_facility;
+              $http.get('/api/prediction'+ parameter).success(function(predictionData) {
+                this.updateScope(predictionData);
               }.bind(this));
-        //}
+              return;
+            }
+          }
+        }
+        this.updateScope([]);
       },
 
       destroy: function () {
