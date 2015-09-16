@@ -2,13 +2,14 @@
 
 angular.module('app')
   .factory('widgetDefinitions', function(RandomDataModel,RandomTopNDataModel, RandomTimeSeriesDataModel,
-                                    RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel, 
+                                    RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel,
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
                                     MedicationDataModel, ClinicalDecisionSupportDataModel,
                                     AppointmentDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,AgeGroupsMetricsDataModel, 
-                                    GenderDistributionMetricsDataModel,MilitaryBranchMetricsDataModel, OutreachStatusMetricsDataModel,
-                                    TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel 
+                                    GenderDistributionMetricsDataModel, PredictionChartDataModel,
+                                    MilitaryBranchMetricsDataModel, OutreachStatusMetricsDataModel,
+                                    TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel
 					) {
     return [
       {
@@ -211,8 +212,8 @@ angular.module('app')
       }, {
         name: 'PredictionChart',
         directive: 'prediction-chart',
-        //dataAttrName: 'data',
-        //dataModelType: RandomNVD3TimeSeriesDataModel,
+        dataAttrName: 'data',
+        dataModelType: PredictionChartDataModel,
         title: 'Prediction Chart',
         dataModelOptions: {
           defaultWidget: true,
