@@ -1,6 +1,6 @@
 outFileName = function(name, facilityId) {
-  directory = "/Work/git/sasconversion/testout/"
-  result = paste(directory, name, "_", facilityId, ".csv", sep="")
+  directory = rsd
+  result = paste(directory, 'testout/', name, "_", facilityId, ".csv", sep="")
 }
 
 monthWeights = function(delay) {
@@ -224,7 +224,7 @@ prPredictor = function(params, facilityId) {
       facilityPlot$SA_new = c(rep(NA, numMonthsToFit), expectationData$sumattempters)
 
       write.csv(facilityPlot, file = params$outputPlotFileName, row.names = FALSE)
-      write.csv(facilityPlot, file = "/Work/git/sasconversion/testout/fit_1.csv", row.names = FALSE)
+      write.csv(facilityPlot, file =  outFileName("fit", facilityId), row.names = FALSE)
       
       return(facilityPlot)
     } else {
