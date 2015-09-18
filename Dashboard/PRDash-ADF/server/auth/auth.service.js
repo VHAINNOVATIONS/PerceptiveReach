@@ -8,7 +8,6 @@ var expressJwt = require('express-jwt');
 var compose = require('composable-middleware');
 var User = require('../api/user/user.model');
 var validateJwt = expressJwt({ secret: config.secrets.session });
-var nodeSSPI = require('node-sspi');
 var forge = require('node-forge');
 
 /**
@@ -80,6 +79,7 @@ function setTokenCookie(req, res) {
  */
 function authenticate(req, res, user, callback) {
   console.log("inside authenticate first - nodesspi");
+  var nodeSSPI = require('node-sspi');  // To make it work from MAC during development
   var cb = callback;
   var nodeSSPIObj = new nodeSSPI({
     offerSSPI: false,
