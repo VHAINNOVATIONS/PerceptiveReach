@@ -223,7 +223,6 @@ prPredictor = function(params, facilityId) {
       facilityPlot$facsize = rep(facilitySize, monthRange)
       facilityPlot$SA_new = c(rep(NA, numMonthsToFit), expectationData$sumattempters)
 
-      write.csv(facilityPlot, file = params$outputPlotFileName, row.names = FALSE)
       write.csv(facilityPlot, file =  outFileName("fit", facilityId), row.names = FALSE)
       
       return(facilityPlot)
@@ -296,7 +295,6 @@ prPredictor = function(params, facilityId) {
       facilityPlot$facsize = rep(facilitySize, monthRange)
       facilityPlot$SA_new = c(rep(NA, numMonthsToFit), expectationData$sumattempters)
     
-      write.csv(facilityPlot, file = params$outputPlotFileName, row.names = FALSE)
       write.csv(facilityPlot, file = outFileName("fit", facilityId), row.names = FALSE)
     
       return(facilityPlot)    
@@ -379,7 +377,6 @@ prPredictor = function(params, facilityId) {
       facilityPlot$facsize = rep(facilitySize, monthRange)
       facilityPlot$SA_new = c(rep(NA, numMonthsToFit), expectationData$sumattempters)
       
-      write.csv(facilityPlot, file = params$outputPlotFileName, row.names = FALSE)
       write.csv(facilityPlot, file = outFileName("fit", facilityId), row.names = FALSE)
       
       #debugEnv$facilityPlot = facilityPlot

@@ -12,10 +12,6 @@ runParams = list(monthColName='mn_num', dataCols=4:17, numFacilities=139)
 runParams$attemptsFileName = paste(rsd, 'R/fn_mnthrpting_fac_updt_3.csv', sep='')
 runParams$facilitySizeFileName = paste(rsd, 'R/facsize.csv', sep='')
 runParams$facilityNameFileName = paste(rsd, 'R/vacount.csv', sep='')
-runParams$outputFileName = paste(rsd, 'out/inputtomain.csv', sep='')
-runParams$outputInputFileName = paste(rsd, 'out/SecondStepInput.csv', sep='')
-runParams$outputExpectedFileName =  paste(rsd, 'out/SecondStepExpected.csv', sep='')
-runParams$outputPlotFileName =  paste(rsd, 'out/plot_c_R.csv', sep='')
 
 runParams$monthRange = 17
 runParams$numMonthsToFit = 14
