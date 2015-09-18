@@ -53,9 +53,9 @@ arrangeData = function(params) {
   attemptsData = read.csv(params$attemptsFileName, TRUE, check.names=FALSE, row.names = NULL)
   attemptsData = reduceVADataToRange(attemptsData[order(attemptsData$new_facility),], params$monthRange)
   
-  facilitySizeData = read.csv(runParams$facilitySizeFileName, TRUE, check.names=FALSE, row.names = NULL)
-  
   weights = facilityMonthWeights(attemptsData, params)
+  
+  facilitySizeData = read.csv(runParams$facilitySizeFileName, TRUE, check.names=FALSE, row.names = NULL)
   
   result = data.frame(new_facility=attemptsData$new_facility, New_VISN=attemptsData$New_VISN)
   result$covariate1 = facilitySizeData$covariate1
@@ -79,7 +79,7 @@ arrangeData = function(params) {
   expected = subset(result, Month_No < 18 & Month_No > 14)
   expected = expected[c("new_facility", "sumattempters", "Month_No", "LogMonth")]
   
-  return(list(result=result, input=input, expected=expected, size=facilitySizeData))
+  return(list(result=result, input=input, expected=expected))
 }
 
 getPredictorInfo = function(predictionData) {
@@ -145,14 +145,14 @@ prPredictor = function(params, facilityId) {
   fullData = arrangedData$result
   input = arrangedData$input
   expected = arrangedData$expected
-  sizeVector = subset(arrangedData$size, new_facility == facilityId);
-  
+
   predictionData = subset(input, new_facility == facilityId)
   expectationData = subset(expected, new_facility == facilityId)
 
+  print(names(predictionData))
+  
   predictionInfo = getPredictorInfo(predictionData)
-  predictionInfo$size = sizeVector$covariate1[1]
-  facilitySize = sizeVector$covariate[1]
+  facilitySize = predictionData$covariate[1]
   
   print(paste("size", facilitySize))
   
