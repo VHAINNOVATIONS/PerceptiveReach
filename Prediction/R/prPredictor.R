@@ -49,22 +49,21 @@ facilityMonthWeights = function(vaDataInRange, params) {
 arrangeData = function(params) {
   cwd = dirname(sys.frame(1) $ofile)
   
-  #fileAttempts = paste(cwd, '/input.csv', sep='')
-  attemptsData = read.csv(params$attemptsFileName, TRUE, check.names=FALSE, row.names = NULL)
+  fileAttempts = paste(cwd, '/input.csv', sep='')
+  attemptsData = read.csv(fileAttempts, TRUE, check.names=FALSE, row.names = NULL)
   attemptsData = reduceVADataToRange(attemptsData[order(attemptsData$new_facility),], params$monthRange)
   
   weights = facilityMonthWeights(attemptsData, params)
   
-  facilitySizeData = read.csv(runParams$facilitySizeFileName, TRUE, check.names=FALSE, row.names = NULL)
-  
   result = data.frame(new_facility=attemptsData$new_facility, New_VISN=attemptsData$New_VISN)
-  result$covariate1 = facilitySizeData$covariate1
+  
+  result$covariate1 = attemptsData$covariate1
   result$sumattempters = attemptsData$attempters
   result$Month = attemptsData$Month
   result$Month_No = attemptsData$Month_No
   result$weight = weights$weight
   result$id = 1:nrow(attemptsData)
-  result$lcov1 = log(facilitySizeData$covariate1)
+  result$lcov1 = log(attemptsData$covariate1)
   result$IPWResponse = round(attemptsData$attempters * weights$weight)
 
   result$LogMonth = log(result$Month_No)
@@ -149,12 +148,8 @@ prPredictor = function(params, facilityId) {
   predictionData = subset(input, new_facility == facilityId)
   expectationData = subset(expected, new_facility == facilityId)
 
-  print(names(predictionData))
-  
   predictionInfo = getPredictorInfo(predictionData)
   facilitySize = predictionData$covariate[1]
-  
-  print(paste("size", facilitySize))
   
   if (predictionInfo$distribution == 'Poisson') {
     if (predictionInfo$type == 'LogMonth') {

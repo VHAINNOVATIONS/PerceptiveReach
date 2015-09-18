@@ -20,8 +20,10 @@ legacyToInput = function() {
   facilitySizeData = unique(facilitySizeData)
   facilitySizeData = facilitySizeData[order(facilitySizeData$new_facility),]
   
-  attemptsData = merge(attemptsData, facilitySizeData)
-
+  attemptsDataMerged = merge(attemptsData, facilitySizeData)
+  attemptsData$covariate1 = attemptsDataMerged$covariate1
+  attemptsData = attemptsData[order(attemptsData$new_facility, attemptsData$mn_num),]
+  
   fileOutput = paste(cwd, '/input.csv', sep='')
   write.csv(attemptsData, file =  fileOutput, row.names = FALSE)
   
