@@ -202,7 +202,6 @@ prPredictor = function(params, facilityId) {
       facilityPlot = rbind.fill(pred, var)
       facilityPlot$LogMonth = log(facilityPlot$Month_No)
       facilityPlot$New_facility = rep(1, monthRange)
-      facilityPlot$value = rep('OUTM_POI', monthRange)
       facilityPlot$predictor = rep('LogMonth', monthRange)
       facilityPlot$dist = rep('Poisson', monthRange)
       facilityPlot$New_VISN = rep(116, monthRange)
@@ -214,8 +213,6 @@ prPredictor = function(params, facilityId) {
       facilityPlot$IPWResponse = c(predictionData$IPWResponse, rep(NA, numMonthsToPredict)) 
       facilityPlot$Real_VISN = rep(4, monthRange)
       facilityPlot$Real_facility = rep(529, monthRange)
-      facilityPlot$Name = rep('BUTLER', monthRange)
-      facilityPlot$Fac_Name = rep('BUTLER', monthRange)
       facilityPlot$VISN = rep(116, monthRange)
       facilityPlot$R_VISN = rep(4, monthRange)
       facilityPlot$R_Facility = rep(529, monthRange)
@@ -274,7 +271,6 @@ prPredictor = function(params, facilityId) {
       facilityPlot = rbind.fill(pred, var)
       facilityPlot$LogMonth = log(facilityPlot$Month_No)
       facilityPlot$New_facility = rep(1, monthRange)
-      facilityPlot$value = rep('OUTM_POI', monthRange)
       facilityPlot$predictor = rep('LogMonth', monthRange)
       facilityPlot$dist = rep('NB', monthRange)
       facilityPlot$New_VISN = rep(116, monthRange)
@@ -286,8 +282,6 @@ prPredictor = function(params, facilityId) {
       facilityPlot$IPWResponse = c(predictionData$IPWResponse, rep(NA, numMonthsToPredict)) 
       facilityPlot$Real_VISN = rep(4, monthRange)
       facilityPlot$Real_facility = rep(529, monthRange)
-      facilityPlot$Name = rep('BUTLER', monthRange)
-      facilityPlot$Fac_Name = rep('BUTLER', monthRange)
       facilityPlot$VISN = rep(116, monthRange)
       facilityPlot$R_VISN = rep(4, monthRange)
       facilityPlot$R_Facility = rep(529, monthRange)
@@ -356,7 +350,6 @@ prPredictor = function(params, facilityId) {
       facilityPlot = rbind.fill(pred, var)
       facilityPlot$LogMonth = log(facilityPlot$Month_No)
       facilityPlot$New_facility = rep(1, monthRange)
-      facilityPlot$value = rep('OUTM_POI', monthRange)
       facilityPlot$predictor = rep('Month_No', monthRange)
       facilityPlot$dist = rep('NB', monthRange)
       facilityPlot$New_VISN = rep(116, monthRange)
@@ -368,8 +361,6 @@ prPredictor = function(params, facilityId) {
       facilityPlot$IPWResponse = c(predictionData$IPWResponse, rep(NA, numMonthsToPredict)) 
       facilityPlot$Real_VISN = rep(4, monthRange)
       facilityPlot$Real_facility = rep(529, monthRange)
-      facilityPlot$Name = rep('BUTLER', monthRange)
-      facilityPlot$Fac_Name = rep('BUTLER', monthRange)
       facilityPlot$VISN = rep(116, monthRange)
       facilityPlot$R_VISN = rep(4, monthRange)
       facilityPlot$R_Facility = rep(529, monthRange)
@@ -379,9 +370,7 @@ prPredictor = function(params, facilityId) {
       
       write.csv(facilityPlot, file = outFileName("fit", facilityId), row.names = FALSE)
       
-      #debugEnv$facilityPlot = facilityPlot
-
-      return(rx)
+      return(facilityPlot)
     }
   }
 }
