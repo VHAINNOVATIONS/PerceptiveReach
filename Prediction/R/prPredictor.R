@@ -47,14 +47,13 @@ facilityMonthWeights = function(vaDataInRange, params) {
 }
 
 arrangeData = function(params) {
+  cwd = dirname(sys.frame(1) $ofile)
+  
+  #fileAttempts = paste(cwd, '/input.csv', sep='')
   attemptsData = read.csv(params$attemptsFileName, TRUE, check.names=FALSE, row.names = NULL)
   attemptsData = reduceVADataToRange(attemptsData[order(attemptsData$new_facility),], params$monthRange)
   
   facilitySizeData = read.csv(runParams$facilitySizeFileName, TRUE, check.names=FALSE, row.names = NULL)
-  
-  facilityNameData = read.csv(runParams$facilityNameFileName, TRUE, check.names=FALSE, row.names = NULL)
-  facilityNameData = unique(facilityNameData[c('new_facility', 'Name')])
-  facilityNameData = facilityNameData[order(facilityNameData$new_facility),]
   
   weights = facilityMonthWeights(attemptsData, params)
   
@@ -68,17 +67,13 @@ arrangeData = function(params) {
   result$lcov1 = log(facilitySizeData$covariate1)
   result$IPWResponse = round(attemptsData$attempters * weights$weight)
 
-  result = merge(result, runParams$visns)
-  result = merge(result, runParams$facility)
-  result = merge(result, facilityNameData)
-  
   result$LogMonth = log(result$Month_No)
   
   resultOrder = order(result$new_facility, result$Month_No)
   result = result[resultOrder,]
   
   input = subset(result, Month_No < 15)
-  input = input[c("new_facility", "New_VISN", "covariate1", "sumattempters", "Month_No", "weight", "id", "lcov1", "IPWResponse", "Real_VISN", "Real_facility", "Name", "LogMonth")]
+  input = input[c("new_facility", "New_VISN", "covariate1", "sumattempters", "Month_No", "weight", "id", "lcov1", "IPWResponse", "LogMonth")]
   input = input[order(input$Month_No),]
   
   expected = subset(result, Month_No < 18 & Month_No > 14)
@@ -158,6 +153,8 @@ prPredictor = function(params, facilityId) {
   predictionInfo = getPredictorInfo(predictionData)
   predictionInfo$size = sizeVector$covariate1[1]
   facilitySize = sizeVector$covariate[1]
+  
+  print(paste("size", facilitySize))
   
   if (predictionInfo$distribution == 'Poisson') {
     if (predictionInfo$type == 'LogMonth') {
