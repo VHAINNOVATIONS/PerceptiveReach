@@ -11,3 +11,4 @@ Prediction/dataTransform/.env
 Prediction/dataTransform/node_modules
 Prediction/*.RData
 Prediction/*.Rout
+Prediction/R/testout

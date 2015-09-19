@@ -21,6 +21,7 @@ legacyToInput = function() {
   facilitySizeData = facilitySizeData[order(facilitySizeData$new_facility),]
   
   attemptsDataMerged = merge(attemptsData, facilitySizeData)
+  attemptsDataMerged = attemptsDataMerged[order(attemptsDataMerged$new_facility),]
   attemptsData$covariate1 = attemptsDataMerged$covariate1
   attemptsData = attemptsData[order(attemptsData$new_facility, attemptsData$mn_num),]
   

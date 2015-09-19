@@ -1,6 +1,6 @@
-outFileName = function(name, facilityId) {
-  directory = rsd
-  result = paste(directory, 'testout/', name, "_", facilityId, ".csv", sep="")
+outFileName = function(directory, name, facilityId) {
+  fullName = paste(name, "_", facilityId, ".csv", sep="")
+  result = file.path(directory, 'testout', fullName)
 }
 
 monthWeights = function(delay) {
@@ -56,7 +56,7 @@ arrangeData = function(params) {
   weights = facilityMonthWeights(attemptsData, params)
   
   result = data.frame(new_facility=attemptsData$new_facility, New_VISN=attemptsData$New_VISN)
-  
+
   result$covariate1 = attemptsData$covariate1
   result$sumattempters = attemptsData$attempters
   result$Month = attemptsData$Month
@@ -70,7 +70,7 @@ arrangeData = function(params) {
   
   resultOrder = order(result$new_facility, result$Month_No)
   result = result[resultOrder,]
-  
+
   input = subset(result, Month_No < 15)
   input = input[c("new_facility", "New_VISN", "covariate1", "sumattempters", "Month_No", "weight", "id", "lcov1", "IPWResponse", "LogMonth")]
   input = input[order(input$Month_No),]
@@ -207,8 +207,6 @@ prPredictor = function(params, facilityId) {
       facilityPlot$facsize = rep(facilitySize, monthRange)
       facilityPlot$SA_new = c(rep(NA, numMonthsToFit), expectationData$sumattempters)
 
-      write.csv(facilityPlot, file =  outFileName("fit", facilityId), row.names = FALSE)
-      
       return(facilityPlot)
     } else {
       print('XXXXXXXXXXXXX222222222222222XXXXXXXXXX')
@@ -270,8 +268,6 @@ prPredictor = function(params, facilityId) {
       facilityPlot$Scale = rep(1.0/rx$theta, monthRange)
       facilityPlot$facsize = rep(facilitySize, monthRange)
       facilityPlot$SA_new = c(rep(NA, numMonthsToFit), expectationData$sumattempters)
-    
-      write.csv(facilityPlot, file = outFileName("fit", facilityId), row.names = FALSE)
     
       return(facilityPlot)    
     } else {
@@ -345,21 +341,24 @@ prPredictor = function(params, facilityId) {
       facilityPlot$facsize = rep(facilitySize, monthRange)
       facilityPlot$SA_new = c(rep(NA, numMonthsToFit), expectationData$sumattempters)
       
-      write.csv(facilityPlot, file = outFileName("fit", facilityId), row.names = FALSE)
-      
       return(facilityPlot)
     }
   }
 }
 
 predictAttempts = function(params, facilityId) {
+  cwd = dirname(sys.frame(1) $ofile)
+  outDir = file.path(cwd, 'testout')
+  dir.create(outDir, showWarnings = FALSE)
+
   monthRange = params$monthRange
   numMonthsToFit = params$numMonthsToFit
 
   r = prPredictor(params, facilityId)
-  q = predictInR(r[(numMonthsToFit+1):monthRange,])
+  write.csv(r, file = outFileName(cwd, "fit", facilityId), row.names = FALSE)
   
-  write.csv(q, file = outFileName("prediction", facilityId), row.names=FALSE)
+  q = predictInR(r[(numMonthsToFit+1):monthRange,])
+  write.csv(q, file = outFileName(cwd, "prediction", facilityId), row.names=FALSE)
 
   result = data.frame(LogMonth=r$LogMonth, Pred=r$pred)
   result$Lower = c(r$lower[1:numMonthsToFit], q$L) 
@@ -371,7 +370,7 @@ predictAttempts = function(params, facilityId) {
   result[result$Lower < 0]  = 0
   result[result$Upper < 0] = 0
   
-  write.csv(result, file = outFileName("plot", facilityId), row.names=FALSE)
+  write.csv(result, file = outFileName(cwd, "plot", facilityId), row.names=FALSE)
   
   return(result);
 }
