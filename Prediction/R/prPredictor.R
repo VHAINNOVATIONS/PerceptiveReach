@@ -230,10 +230,7 @@ prPredictor = function(params, facilityId) {
   facilityPlot$id = c(fitMonthsRange, rep(NA, numMonthsToPredict))
   facilityPlot$lcov1 = c(rep(log(facilitySize), numMonthsToFit), rep(NA, numMonthsToPredict))
   facilityPlot$IPWResponse = c(predictionData$IPWResponse, rep(NA, numMonthsToPredict)) 
-  facilityPlot$Real_VISN = rep(4, monthRange)
-  facilityPlot$Real_facility = rep(529, monthRange)
   facilityPlot$Scale = rep(scale, monthRange)
-  facilityPlot$facsize = rep(facilitySize, monthRange)
   facilityPlot$SA_new = c(rep(NA, numMonthsToFit), expectationData$sumattempters)
   return(facilityPlot)
 }
