@@ -1,9 +1,9 @@
-sd = '/Work/git/PerceptiveReach/Prediction/R/'
+sd = dirname(sys.frame(1) $ofile)
 
-source(paste(sd, 'startup.R', sep=''))
-source(paste(sd, 'PIandPValue_Rcode_v1.R', sep=''))
-source(paste(sd, 'prPredictor.R', sep=''))
-source(paste(sd, 'predictionPlot.R', sep=''))
+source(file.path(sd, 'startup.R'))
+source(file.path(sd, 'PIandPValue_Rcode_v1.R'))
+source(file.path(sd, 'prPredictor.R'))
+source(file.path(sd, 'predictionPlot.R'))
 
 r = predictAttempts(runParams, 1)
 r = predictAttempts(runParams, 4)
