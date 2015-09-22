@@ -1,4 +1,4 @@
-"Month_No","pred","lower","upper","esteta","stdeta","LogMonth","predictor","dist","covariate1","sumattempters","weight","id","lcov1","IPWResponse","Scale","SA_new","new_facility","New_VISN"
+"Month_No","pred","lower","upper","esteta","stdeta","LogMonth","predictor","dist","covariate1","sumattempters","weight","id","lcov1","IPWResponse","Scale","SA_new","VAMC","VISN"
 1,0.930590920690746,0.31052566787355,2.78881762607714,NA,NA,0,"LogMonth","Poisson",16822,0,1,1,9.73044283252238,0,NA,NA,1,116
 2,1.23012114264543,0.571957156513824,2.64564924363898,NA,NA,0.693147180559945,"LogMonth","Poisson",16822,3,1,2,9.73044283252238,3,NA,NA,1,116
 3,1.44823468837271,0.813138461868944,2.57936846380953,NA,NA,1.09861228866811,"LogMonth","Poisson",16822,1,1,3,9.73044283252238,1,NA,NA,1,116

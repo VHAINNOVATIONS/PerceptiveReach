@@ -609,3 +609,30 @@ regressionTest = function(directory) {
   r = predictAttempts(params, arrangedData, directory, 1, 'testout')
   r = predictAttempts(params, arrangedData, directory, 4, 'testout')
 }
+
+blackbox = function(directory, outDirectory) {
+  params = list(dataCols=4:17, monthRange = 17, numMonthsToFit = 14)
+  arrangedData = arrangeData(directory, params)
+  VAMCS = unique(arrangedData$input$VAMC)
+  VAMCS = order(VAMCS)
+  result = NULL
+  for (VAMC in VAMCS) {
+    try({
+      fr = predictAttempts(params, arrangedData, directory, VAMC)
+      if (is.null(result)) {
+        result = fr
+      } else {
+        result = rbind(result, fr)
+      }
+    })
+  }
+
+  if (! missing(outDirectory)) {
+    outDir = file.path(directory, outDirectory)
+    dir.create(outDir, showWarnings = FALSE)
+    filePath = file.path(directory, outDirectory, 'output.csv')
+    write.csv(result, file = filePath, row.names=FALSE)
+  }
+  
+  return(result)
+}
