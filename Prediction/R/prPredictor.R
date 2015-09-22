@@ -386,7 +386,7 @@ facilityMonthWeights = function(vaDataInRange, params) {
 }
 
 arrangeData = function(cwd, params) {
-  fileAttempts = paste(cwd, '/input.csv', sep='')
+  fileAttempts = file.path(cwd, '/input.csv')
   attemptsData = read.csv(fileAttempts, TRUE, check.names=FALSE, row.names = NULL)
   attemptsData = reduceVADataToRange(attemptsData[order(attemptsData$new_facility),], params$monthRange)
   
@@ -470,7 +470,7 @@ getPredictorInfo = function(predictionData) {
   return(result);
 }
 
-prPredictor = function(cwd, params, facilityId) {
+prPredictor = function(arrangedData, params, facilityId) {
   monthRange = params$monthRange
   numMonthsToFit = params$numMonthsToFit
   numMonthsToPredict = monthRange - numMonthsToFit 
@@ -478,7 +478,6 @@ prPredictor = function(cwd, params, facilityId) {
   fitMonthsRange = 1:numMonthsToFit
   predictMonthsRange = (numMonthsToFit+1):monthRange
   
-  arrangedData = arrangeData(cwd, params)
   fullData = arrangedData$result
   input = arrangedData$input
   expected = arrangedData$expected
@@ -488,6 +487,7 @@ prPredictor = function(cwd, params, facilityId) {
 
   predictionInfo = getPredictorInfo(predictionData)
   facilitySize = predictionData$covariate[1]
+  facilityVISN = predictionData$New_VISN[1]
   rx = predictionInfo$glm
   
   if (predictionInfo$distribution == 'Poisson') {
@@ -560,40 +560,53 @@ prPredictor = function(cwd, params, facilityId) {
   facilityPlot$IPWResponse = c(predictionData$IPWResponse, rep(NA, numMonthsToPredict)) 
   facilityPlot$Scale = rep(scale, monthRange)
   facilityPlot$SA_new = c(rep(NA, numMonthsToFit), expectationData$sumattempters)
+  facilityPlot$new_facility = rep(facilityId, monthRange)
+  facilityPlot$New_VISN = rep(facilityVISN, monthRange)
   return(facilityPlot)
 }
 
-predictAttempts = function(cwd, facilityId) {
+predictAttempts = function(cwd, facilityId, outDirectory) {
   params = list(dataCols=4:17, monthRange = 17, numMonthsToFit = 14)
-  
-  outDir = file.path(cwd, 'testout')
-  dir.create(outDir, showWarnings = FALSE)
+  arrangedData = arrangeData(cwd, params)
 
+  if (! missing(outDirectory)) {
+    outDir = file.path(cwd, outDirectory)
+    dir.create(outDir, showWarnings = FALSE)
+  }
+  
   monthRange = params$monthRange
   numMonthsToFit = params$numMonthsToFit
 
-  r = prPredictor(cwd, params, facilityId)
-  write.csv(r, file = outFileName(cwd, "fit", facilityId), row.names = FALSE)
+  r = prPredictor(arrangedData, params, facilityId)
+  if (! missing(outDirectory)) {
+    write.csv(r, file = outFileName(cwd, "fit", facilityId), row.names = FALSE)
+  }
   
   q = predictInR(r[(numMonthsToFit+1):monthRange,])
-  write.csv(q, file = outFileName(cwd, "prediction", facilityId), row.names=FALSE)
-
+  if (! missing(outDirectory)) {
+    write.csv(q, file = outFileName(cwd, "prediction", facilityId), row.names=FALSE)
+  }
+  
   result = data.frame(LogMonth=r$LogMonth, Pred=r$pred)
   result$Lower = c(r$lower[1:numMonthsToFit], q$L) 
   result$Upper = c(r$upper[1:numMonthsToFit], q$R)
   result$IPWResponse = r$IPWResponse
   result$SA_new = r$SA_new
+  result$new_facility = r$new_facility
+  result$New_VISN = r$New_VISN
   
   result[result$Pred < 0] = 0
   result[result$Lower < 0]  = 0
   result[result$Upper < 0] = 0
   
-  write.csv(result, file = outFileName(cwd, "plot", facilityId), row.names=FALSE)
+  if (! missing(outDirectory)) {
+    write.csv(result, file = outFileName(cwd, "plot", facilityId), row.names=FALSE)
+  }
   
   return(result);
 }
 
 regressionTest = function(directory) {
-  r = predictAttempts(directory, 1)
-  r = predictAttempts(directory, 4)
+  r = predictAttempts(directory, 1, 'testout')
+  r = predictAttempts(directory, 4, 'testout')
 }
