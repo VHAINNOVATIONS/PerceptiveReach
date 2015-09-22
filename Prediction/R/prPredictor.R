@@ -383,7 +383,7 @@ facilityMonthWeights = function(vaDataInRange, params) {
 }
 
 arrangeData = function(params) {
-  cwd = dirname(sys.frame(1) $ofile)
+  cwd = getSrcDirectory(function(x) {x})
   
   fileAttempts = paste(cwd, '/input.csv', sep='')
   attemptsData = read.csv(fileAttempts, TRUE, check.names=FALSE, row.names = NULL)
@@ -565,7 +565,7 @@ prPredictor = function(params, facilityId) {
 predictAttempts = function(facilityId) {
   params = list(dataCols=4:17, monthRange = 17, numMonthsToFit = 14)
   
-  cwd = dirname(sys.frame(1) $ofile)
+  cwd = getSrcDirectory(function(x) {x})
   outDir = file.path(cwd, 'testout')
   dir.create(outDir, showWarnings = FALSE)
 
@@ -591,4 +591,9 @@ predictAttempts = function(facilityId) {
   write.csv(result, file = outFileName(cwd, "plot", facilityId), row.names=FALSE)
   
   return(result);
+}
+
+regressionTest = function() {
+  r = predictAttempts(1)
+  r = predictAttempts(4)
 }
