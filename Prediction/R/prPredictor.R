@@ -1,3 +1,6 @@
+library('MASS')
+library('geeM')
+
 predictInR = function(rdata3) {
   
   ##-------------------------------------------------------------------------------------------------------------------
@@ -386,6 +389,9 @@ arrangeData = function(params) {
   attemptsData = read.csv(fileAttempts, TRUE, check.names=FALSE, row.names = NULL)
   attemptsData = reduceVADataToRange(attemptsData[order(attemptsData$new_facility),], params$monthRange)
   
+  facilities = unique(attemptsData$new_facility)
+  params$numFacilities = length(facilities) 
+
   weights = facilityMonthWeights(attemptsData, params)
   
   result = data.frame(new_facility=attemptsData$new_facility, New_VISN=attemptsData$New_VISN)
@@ -556,7 +562,9 @@ prPredictor = function(params, facilityId) {
   return(facilityPlot)
 }
 
-predictAttempts = function(params, facilityId) {
+predictAttempts = function(facilityId) {
+  params = list(dataCols=4:17, monthRange = 17, numMonthsToFit = 14)
+  
   cwd = dirname(sys.frame(1) $ofile)
   outDir = file.path(cwd, 'testout')
   dir.create(outDir, showWarnings = FALSE)
