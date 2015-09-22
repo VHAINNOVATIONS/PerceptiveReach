@@ -388,14 +388,14 @@ facilityMonthWeights = function(vaDataInRange, params) {
 arrangeData = function(cwd, params) {
   fileAttempts = file.path(cwd, '/input.csv')
   attemptsData = read.csv(fileAttempts, TRUE, check.names=FALSE, row.names = NULL)
-  attemptsData = reduceVADataToRange(attemptsData[order(attemptsData$new_facility),], params$monthRange)
+  attemptsData = reduceVADataToRange(attemptsData[order(attemptsData$VAMC),], params$monthRange)
   
-  facilities = unique(attemptsData$new_facility)
+  facilities = unique(attemptsData$VAMC)
   params$numFacilities = length(facilities) 
 
   weights = facilityMonthWeights(attemptsData, params)
   
-  result = data.frame(new_facility=attemptsData$new_facility, New_VISN=attemptsData$New_VISN)
+  result = data.frame(VAMC=attemptsData$VAMC, VISN=attemptsData$VISN)
 
   result$covariate1 = attemptsData$covariate1
   result$sumattempters = attemptsData$attempters
@@ -408,15 +408,15 @@ arrangeData = function(cwd, params) {
 
   result$LogMonth = log(result$Month_No)
   
-  resultOrder = order(result$new_facility, result$Month_No)
+  resultOrder = order(result$VAMC, result$Month_No)
   result = result[resultOrder,]
 
   input = subset(result, Month_No < 15)
-  input = input[c("new_facility", "New_VISN", "covariate1", "sumattempters", "Month_No", "weight", "id", "lcov1", "IPWResponse", "LogMonth")]
+  input = input[c("VAMC", "VISN", "covariate1", "sumattempters", "Month_No", "weight", "id", "lcov1", "IPWResponse", "LogMonth")]
   input = input[order(input$Month_No),]
   
   expected = subset(result, Month_No < 18 & Month_No > 14)
-  expected = expected[c("new_facility", "sumattempters", "Month_No", "LogMonth")]
+  expected = expected[c("VAMC", "sumattempters", "Month_No", "LogMonth")]
   
   return(list(result=result, input=input, expected=expected))
 }
@@ -482,12 +482,12 @@ prPredictor = function(arrangedData, params, facilityId) {
   input = arrangedData$input
   expected = arrangedData$expected
 
-  predictionData = subset(input, new_facility == facilityId)
-  expectationData = subset(expected, new_facility == facilityId)
+  predictionData = subset(input, VAMC == facilityId)
+  expectationData = subset(expected, VAMC == facilityId)
 
   predictionInfo = getPredictorInfo(predictionData)
   facilitySize = predictionData$covariate[1]
-  facilityVISN = predictionData$New_VISN[1]
+  facilityVISN = predictionData$VISN[1]
   rx = predictionInfo$glm
   
   if (predictionInfo$distribution == 'Poisson') {
@@ -560,15 +560,12 @@ prPredictor = function(arrangedData, params, facilityId) {
   facilityPlot$IPWResponse = c(predictionData$IPWResponse, rep(NA, numMonthsToPredict)) 
   facilityPlot$Scale = rep(scale, monthRange)
   facilityPlot$SA_new = c(rep(NA, numMonthsToFit), expectationData$sumattempters)
-  facilityPlot$new_facility = rep(facilityId, monthRange)
-  facilityPlot$New_VISN = rep(facilityVISN, monthRange)
+  facilityPlot$VAMC = rep(facilityId, monthRange)
+  facilityPlot$VISN = rep(facilityVISN, monthRange)
   return(facilityPlot)
 }
 
-predictAttempts = function(cwd, facilityId, outDirectory) {
-  params = list(dataCols=4:17, monthRange = 17, numMonthsToFit = 14)
-  arrangedData = arrangeData(cwd, params)
-
+predictAttempts = function(params, arrangedData, cwd, facilityId, outDirectory) {
   if (! missing(outDirectory)) {
     outDir = file.path(cwd, outDirectory)
     dir.create(outDir, showWarnings = FALSE)
@@ -587,13 +584,13 @@ predictAttempts = function(cwd, facilityId, outDirectory) {
     write.csv(q, file = outFileName(cwd, "prediction", facilityId), row.names=FALSE)
   }
   
-  result = data.frame(LogMonth=r$LogMonth, Pred=r$pred)
+  result = data.frame(Month_No=r$Month_No, LogMonth=r$LogMonth, Pred=r$pred)
   result$Lower = c(r$lower[1:numMonthsToFit], q$L) 
   result$Upper = c(r$upper[1:numMonthsToFit], q$R)
   result$IPWResponse = r$IPWResponse
   result$SA_new = r$SA_new
-  result$new_facility = r$new_facility
-  result$New_VISN = r$New_VISN
+  result$VAMC = r$VAMC
+  result$VISN = r$VISN
   
   result[result$Pred < 0] = 0
   result[result$Lower < 0]  = 0
@@ -607,6 +604,8 @@ predictAttempts = function(cwd, facilityId, outDirectory) {
 }
 
 regressionTest = function(directory) {
-  r = predictAttempts(directory, 1, 'testout')
-  r = predictAttempts(directory, 4, 'testout')
+  params = list(dataCols=4:17, monthRange = 17, numMonthsToFit = 14)
+  arrangedData = arrangeData(directory, params)
+  r = predictAttempts(params, arrangedData, directory, 1, 'testout')
+  r = predictAttempts(params, arrangedData, directory, 4, 'testout')
 }

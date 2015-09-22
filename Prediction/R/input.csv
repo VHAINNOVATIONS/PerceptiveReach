@@ -1,4 +1,4 @@
-"","mn_num","attempters","mnth_diff0","mnth_diff1","mnth_diff2","mnth_diff3","mnth_diff4","mnth_diff5","mnth_diff6","mnth_diff7","mnth_diff8","mnth_diff9","mnth_diff10","mnth_diff11","mnth_diff12","mnth_diff_gt12","mn_yr","new_facility","New_VISN","covariate1"
+"","mn_num","attempters","mnth_diff0","mnth_diff1","mnth_diff2","mnth_diff3","mnth_diff4","mnth_diff5","mnth_diff6","mnth_diff7","mnth_diff8","mnth_diff9","mnth_diff10","mnth_diff11","mnth_diff12","mnth_diff_gt12","mn_yr","VAMC","VISN","covariate1"
 1,23,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18489,1,116,16822
 2,24,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,18520,1,116,16822
 3,25,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,18550,1,116,16822

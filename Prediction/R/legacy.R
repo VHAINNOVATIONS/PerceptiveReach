@@ -1,9 +1,13 @@
 # Converts legacy data into input format
 
+library('base')
+library('plyr')
+library('methods')
+
 legacyToInput = function() {
   cwd = dirname(sys.frame(1) $ofile)
   
-  fileAttempts = paste(cwd, '/legacyinput/fn_mnthrpting_fac_updt_3.csv', sep='')
+  fileAttempts = file.path(cwd, 'legacyinput', 'fn_mnthrpting_fac_updt_3.csv')
   attemptsData = read.csv(fileAttempts, TRUE, check.names=FALSE, row.names = NULL)
   attemptsData = attemptsData[order(attemptsData$new_facility),]
 
@@ -15,8 +19,8 @@ legacyToInput = function() {
   facility_real = c(402,405,436,437,442,452,438,459,460,463,500,501,502,503,504,506,508,509,512,514,515,516,517,518,519,520,521,523,526,528,529,531,532,534,537,538,539,540,541,542,543,544,546,548,549,550,552,553,554,555,556,557,558,561,562,564,565,568,570,573,575,578,580,581,583,584,585,586,589,590,593,595,596,598,600,603,605,607,608,609,610,612,613,614,618,619,620,621,623,626,629,630,631,632,635,636,637,640,642,644,646,647,648,649,650,652,653,654,655,656,657,658,659,660,662,663,664,666,667,668,670,671,672,673,674,675,676,677,678,679,687,688,689,691,692,693,695,756,757)
   facilityMap = data.frame(new_facility=facility_new, Real_facility=facility_real)  
   
-  fileSize = paste(cwd, '/legacyinput/facsize', sep='')
-  facilitySizeData = read.csv(runParams$facilitySizeFileName, TRUE, check.names=FALSE, row.names = NULL)
+  fileSize = file.path(cwd, 'legacyinput', 'facsize.csv')
+  facilitySizeData = read.csv(fileSize, TRUE, check.names=FALSE, row.names = NULL)
   facilitySizeData = unique(facilitySizeData)
   facilitySizeData = facilitySizeData[order(facilitySizeData$new_facility),]
   
@@ -24,8 +28,9 @@ legacyToInput = function() {
   attemptsDataMerged = attemptsDataMerged[order(attemptsDataMerged$new_facility),]
   attemptsData$covariate1 = attemptsDataMerged$covariate1
   attemptsData = attemptsData[order(attemptsData$new_facility, attemptsData$mn_num),]
+  attemptsData = rename(attemptsData, c('new_facility'='VAMC', 'New_VISN'='VISN'))
   
-  fileOutput = paste(cwd, '/input.csv', sep='')
+  fileOutput = file.path(cwd, 'input.csv')
   write.csv(attemptsData, file =  fileOutput, row.names = FALSE)
   
   return(attemptsData)
