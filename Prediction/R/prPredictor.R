@@ -92,7 +92,7 @@ getPredictorInfo = function(predictionData) {
   table = data.frame(sumf=rep(n, n))
   result = list()
   
-  if (dism0 <= 0) {
+  if ((dism0 <= 0) || (dislm0 <= 0)) {
     rL = glm(IPWResponse ~ LogMonth, data=predictionData, family = poisson(), offset=lcov1)
     r = glm(IPWResponse ~ Month_No, data=predictionData, family = poisson(), offset=lcov1)
     
@@ -100,8 +100,6 @@ getPredictorInfo = function(predictionData) {
     table$l2 = dpois(predictionData$IPWResponse, r$fitted.values, TRUE)
     
     result$distribution = 'Poisson'
-  } else if (dislm0 <= 0) {
-    print('OTH here I am')
   } else {
     probNB = 1.0 / (1.0 + dism0 * r$fitted.values)
     probNBL = 1.0 / (1.0 + dislm0 * rL$fitted.values)
@@ -132,11 +130,6 @@ getPredictorInfo = function(predictionData) {
   return(result);
 }
 
-populatePlot = function(facilityPlot) {
-  
-  return(facilityPlot)
-}
-
 prPredictor = function(params, facilityId) {
   monthRange = params$monthRange
   numMonthsToFit = params$numMonthsToFit
@@ -155,39 +148,34 @@ prPredictor = function(params, facilityId) {
 
   predictionInfo = getPredictorInfo(predictionData)
   facilitySize = predictionData$covariate[1]
+  rx = predictionInfo$glm
   
   if (predictionInfo$distribution == 'Poisson') {
     if (predictionInfo$type == 'LogMonth') {
-      r = gee(IPWResponse ~ LogMonth + offset(lcov1), data=predictionData, id = Month_No, family = poisson)
-      rx = predictionInfo$glm
+      r = geem(IPWResponse ~ LogMonth + offset(lcov1), data=predictionData, id = Month_No, family = poisson, tol=0.000000001, maxit = 200)
       x1 = rep(1.0, monthRange)
       x2 = log(1:monthRange)
-      varB = r$robust.variance
-      B = cbind(r$coefficients)
-      scale = NA
     } else {
-      print('XXXXXXXXXXXXX222222222222222XXXXXXXXXX')
-      return(2)
+      r = geem(IPWResponse ~ Month_No + offset(lcov1), data=predictionData, id = Month_No, family = poisson, tol=0.000000001, maxit = 200)
+      x1 = rep(1.0, monthRange)
+      x2 = 1:(monthRange)
     }
+    varB = r$var
+    B = cbind(r$beta)
+    scale = NA
   } else {
     if (predictionInfo$type == 'LogMonth') {
-      rx = predictionInfo$glm
-      r = geem(IPWResponse ~ LogMonth + offset(lcov1), data=predictionData, id = Month_No, family = negative.binomial(rx$theta), sandwich = TRUE)
+      r = geem(IPWResponse ~ LogMonth + offset(lcov1), data=predictionData, id = Month_No, family = negative.binomial(rx$theta), tol=0.000000001, maxit = 200)
       x1 = rep(1.0, monthRange)
       x2 = log(1:monthRange)
-      varB = r$var
-      B = cbind(r$beta)
-      scale = 1.0/rx$theta
     } else {
-      rx = predictionInfo$glm
-      #r = geem(IPWResponse ~ Month_No + offset(lcov1), data=predictionData, id = Month_No, family = poisson, sandwich = TRUE)
-      r = geeglm(IPWResponse ~ Month_No, offset(lcov1), data=predictionData, id = Month_No, family = negative.binomial(rx$theta))
-      x1 = rep(1.0, monthRange-3)
-      x2 = 1:(monthRange-3)
-      varB = vcov(rx)   #r$var
-      B = cbind(rx$coefficients)
-      scale = 1.0/rx$theta
+      r = geem(IPWResponse ~ Month_No + offset(lcov1), data=predictionData, id = Month_No, family = negative.binomial(rx$theta), tol=0.000000001, maxit = 200)
+      x1 = rep(1.0, monthRange)
+      x2 = 1:(monthRange)
     }
+    varB = r$var
+    B = cbind(r$beta)
+    scale = 1.0/rx$theta
   }
   
   x = cbind(x1, x2)

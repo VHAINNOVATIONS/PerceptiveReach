@@ -12,3 +12,5 @@ Prediction/dataTransform/node_modules
 Prediction/*.RData
 Prediction/*.Rout
 Prediction/R/testout
+Prediction/R/*.Rout
+Prediction/R/*.RData
