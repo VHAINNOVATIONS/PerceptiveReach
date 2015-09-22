@@ -1,7 +1,6 @@
 sd = dirname(sys.frame(1) $ofile)
 
 source(file.path(sd, 'startup.R'))
-source(file.path(sd, 'PIandPValue_Rcode_v1.R'))
 source(file.path(sd, 'prPredictor.R'))
 source(file.path(sd, 'predictionPlot.R'))
 
