@@ -630,9 +630,11 @@ blackbox = function(directory, outDirectory) {
   if (! missing(outDirectory)) {
     outDir = file.path(directory, outDirectory)
     dir.create(outDir, showWarnings = FALSE)
-    filePath = file.path(directory, outDirectory, 'output.csv')
-    write.csv(result, file = filePath, row.names=FALSE)
+  } else {
+    outDir = directory
   }
+  filePath = file.path(outDir, 'output.csv')
+  write.csv(result, file = filePath, row.names=FALSE)
   
   return(result)
 }
