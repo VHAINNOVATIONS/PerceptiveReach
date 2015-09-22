@@ -1,3 +1,6 @@
+library('base')
+library('plyr')
+library('methods')
 library('MASS')
 library('geeM')
 
@@ -382,9 +385,7 @@ facilityMonthWeights = function(vaDataInRange, params) {
   return(result)  
 }
 
-arrangeData = function(params) {
-  cwd = getSrcDirectory(function(x) {x})
-  
+arrangeData = function(cwd, params) {
   fileAttempts = paste(cwd, '/input.csv', sep='')
   attemptsData = read.csv(fileAttempts, TRUE, check.names=FALSE, row.names = NULL)
   attemptsData = reduceVADataToRange(attemptsData[order(attemptsData$new_facility),], params$monthRange)
@@ -469,7 +470,7 @@ getPredictorInfo = function(predictionData) {
   return(result);
 }
 
-prPredictor = function(params, facilityId) {
+prPredictor = function(cwd, params, facilityId) {
   monthRange = params$monthRange
   numMonthsToFit = params$numMonthsToFit
   numMonthsToPredict = monthRange - numMonthsToFit 
@@ -477,7 +478,7 @@ prPredictor = function(params, facilityId) {
   fitMonthsRange = 1:numMonthsToFit
   predictMonthsRange = (numMonthsToFit+1):monthRange
   
-  arrangedData = arrangeData(params)
+  arrangedData = arrangeData(cwd, params)
   fullData = arrangedData$result
   input = arrangedData$input
   expected = arrangedData$expected
@@ -562,17 +563,16 @@ prPredictor = function(params, facilityId) {
   return(facilityPlot)
 }
 
-predictAttempts = function(facilityId) {
+predictAttempts = function(cwd, facilityId) {
   params = list(dataCols=4:17, monthRange = 17, numMonthsToFit = 14)
   
-  cwd = getSrcDirectory(function(x) {x})
   outDir = file.path(cwd, 'testout')
   dir.create(outDir, showWarnings = FALSE)
 
   monthRange = params$monthRange
   numMonthsToFit = params$numMonthsToFit
 
-  r = prPredictor(params, facilityId)
+  r = prPredictor(cwd, params, facilityId)
   write.csv(r, file = outFileName(cwd, "fit", facilityId), row.names = FALSE)
   
   q = predictInR(r[(numMonthsToFit+1):monthRange,])
@@ -593,7 +593,7 @@ predictAttempts = function(facilityId) {
   return(result);
 }
 
-regressionTest = function() {
-  r = predictAttempts(1)
-  r = predictAttempts(4)
+regressionTest = function(directory) {
+  r = predictAttempts(directory, 1)
+  r = predictAttempts(directory, 4)
 }
