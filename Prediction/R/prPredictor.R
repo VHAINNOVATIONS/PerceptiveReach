@@ -2,7 +2,7 @@ library('base')
 library('plyr')
 library('methods')
 library('MASS')
-library('geeM')
+library('sandwich')
 
 predictInR = function(rdata3) {
   
@@ -411,6 +411,8 @@ arrangeData = function(cwd, params) {
   resultOrder = order(result$VAMC, result$Month_No)
   result = result[resultOrder,]
 
+  debug$result = result
+  
   input = subset(result, Month_No < 15)
   input = input[c("VAMC", "VISN", "covariate1", "sumattempters", "Month_No", "weight", "id", "lcov1", "IPWResponse", "LogMonth")]
   input = input[order(input$Month_No),]
@@ -489,34 +491,30 @@ prPredictor = function(arrangedData, params, facilityId) {
   facilitySize = predictionData$covariate[1]
   facilityVISN = predictionData$VISN[1]
   rx = predictionInfo$glm
+  debug$rx = rx
   
   if (predictionInfo$distribution == 'Poisson') {
     if (predictionInfo$type == 'LogMonth') {
-      r = geem(IPWResponse ~ LogMonth + offset(lcov1), data=predictionData, id = Month_No, family = poisson, tol=0.000000001, maxit = 200)
       x1 = rep(1.0, monthRange)
       x2 = log(1:monthRange)
     } else {
-      r = geem(IPWResponse ~ Month_No + offset(lcov1), data=predictionData, id = Month_No, family = poisson, tol=0.000000001, maxit = 200)
       x1 = rep(1.0, monthRange)
       x2 = 1:(monthRange)
     }
-    varB = r$var
-    B = cbind(r$beta)
     scale = NA
   } else {
     if (predictionInfo$type == 'LogMonth') {
-      r = geem(IPWResponse ~ LogMonth + offset(lcov1), data=predictionData, id = Month_No, family = negative.binomial(rx$theta), tol=0.000000001, maxit = 200)
       x1 = rep(1.0, monthRange)
       x2 = log(1:monthRange)
     } else {
-      r = geem(IPWResponse ~ Month_No + offset(lcov1), data=predictionData, id = Month_No, family = negative.binomial(rx$theta), tol=0.000000001, maxit = 200)
       x1 = rep(1.0, monthRange)
       x2 = 1:(monthRange)
     }
-    varB = r$var
-    B = cbind(r$beta)
     scale = 1.0/rx$theta
   }
+  
+  varB = sandwich(rx)
+  B = rx$coefficients
   
   x = cbind(x1, x2)
   
@@ -606,8 +604,11 @@ predictAttempts = function(params, arrangedData, cwd, facilityId, outDirectory) 
 regressionTest = function(directory) {
   params = list(dataCols=4:17, monthRange = 17, numMonthsToFit = 14)
   arrangedData = arrangeData(directory, params)
-  r = predictAttempts(params, arrangedData, directory, 1, 'testout')
-  r = predictAttempts(params, arrangedData, directory, 4, 'testout')
+  for (VAMC in 1:139) {
+    try({
+      r = predictAttempts(params, arrangedData, directory, VAMC, 'testout')
+    })
+  }
 }
 
 blackbox = function(directory, outDirectory) {
