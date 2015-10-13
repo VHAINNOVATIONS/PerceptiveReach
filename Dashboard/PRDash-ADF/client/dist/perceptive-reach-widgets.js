@@ -4654,12 +4654,12 @@ return {
     controller: function ($scope) {
       $scope.xAxisTickFormatFunction = function () {
         return function (d) {
-          return d3.format('.02f')(d);
+          return d;
         };
       };
       $scope.yAxisTickFormatFunction = function () {
         return function (d) {
-          return d3.format('.02f')(d);
+          return d;
         };
       };
       $scope.xFunction = function () {

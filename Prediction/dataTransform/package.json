@@ -6,7 +6,9 @@
     "dotenv": "^1.2.0",
     "mssql": "^2.2.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "node-csv": "^0.1.2"
+  },
   "engines": {
     "node": ">=0.8.0"
   },
