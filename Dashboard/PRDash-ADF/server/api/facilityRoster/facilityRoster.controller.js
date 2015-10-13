@@ -54,8 +54,56 @@ exports.index = function(req, res) {
                 return; 
             }
 
+
             var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
-            res.send(jsonRecordSet);
+
+
+            query = 'SELECT VAMC, Upper, Lower, SA_new FROM staging.FacilityResults WHERE Month_no > 14';
+            request.query(query, function(err, prrecordset) {
+                if (err) {
+                    console.dir(err);
+                    res.send(401, 'Query Failed.');
+                    return;
+                }
+               var predictionAlert = prrecordset.reduce(function(r, p) {
+                    var e = r[p.VAMC];
+                    if (! e) {
+                        r[p.VAMC] = e = {
+                            higher: 0,
+                            lower: 0
+                        };
+                    }
+                    if (p.SA_new >= 0) {
+                        if (p.SA_new < p.Lower) {
+                            ++e.lower;
+                        }
+                        if (p.SA_new > p.Upper) {
+                            ++e.higher;
+                        }
+                    }
+                    return r;
+                }, {});
+
+                jsonRecordSet.forEach(function(r) {
+                    var vamc = r.STA3N;
+                    if (vamc && predictionAlert[vamc]) {
+                        var pa = predictionAlert[vamc];
+                        if (pa.higher + pa.lower === 0) {
+                            r.Prediction = "Within limits"
+                        } else if (pa.higher && pa.lower) {
+                            r.Prediction = "Too high and low"
+                        } else if (pa.higher) {
+                            r.Prediction = "Too high"
+                        } else if (pa.higher && pa.lower) {
+                            r.Prediction = "Too low"
+                        }
+                    } else {
+                        r.Prediction = "No data"
+                    }
+                });
+
+                res.send(jsonRecordSet);
+            });
         });
 
     });
