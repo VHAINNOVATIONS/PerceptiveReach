@@ -46,27 +46,33 @@ exports.index = function(req, res) {
             if (jsonRecordSet && jsonRecordSet.length) {
                 var result = jsonRecordSet.reduce(function(r, v, index) {
                     r[0].values.push({
-                        x: index,
-                        y: v.Upper
+                        x: index + 1,
+                        y: v.Upper,
+                        size: 0
                     });
                     r[1].values.push({
-                        x: index,
-                        y: v.Lower
+                        x: index + 1,
+                        y: v.Lower,
+                        size: 0
                     });
                     r[2].values.push({
-                        x: index,
-                        y: v.Pred
+                        x: index + 1,
+                        y: v.Pred,
+                        size: 0
                     });
                     if (v.IPWResponse > -1) {
                         r[3].values.push({
-                            x: index,
-                            y: v.IPWResponse
+                            x: index + 1,
+                            y: v.IPWResponse,
+                            size: 64
                         });
                     }
                     if (v.SA_new > -1) {
-                        r[4].values.push({
-                            x: index,
-                            y: v.SA_new
+                        r[3].values.push({
+                            x: index + 1,
+                            y: v.SA_new,
+                            size: 64,
+                            color: "#FF0000"
                         });
                     }
                     return r;
@@ -87,10 +93,6 @@ exports.index = function(req, res) {
                     key: 'Actual',
                     values: [],
                     color: "#0000FF"
-                }, {
-                    key: 'Comparison',
-                    values: [],
-                    color: "#FF0000"
                 }]);
                 console.log(result);
                 res.send(result);
