@@ -214,7 +214,7 @@ angular.module('app')
         directive: 'prediction-chart',
         dataAttrName: 'data',
         dataModelType: PredictionChartDataModel,
-        title: 'Prediction Chart',
+        title: 'Attempt Prediction Chart',
         dataModelOptions: {
           defaultWidget: true,
           roleAccess: 'SUP,REP,ADM',
@@ -230,7 +230,8 @@ angular.module('app')
           width: '100%',
           height: '100%'
         },
-        sizeX:15
+        sizeX:15,
+        sizeY:12
       },
 	   {
         name: 'MilitaryBranch',

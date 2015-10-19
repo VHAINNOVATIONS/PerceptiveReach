@@ -4673,6 +4673,11 @@ return {
           return d.y;
         };
       };
+      $scope.xAxisTickValuesFunction = function () {
+        return function () {
+          return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 15, 16, 17];
+        };
+      };
     }
   };
 });
@@ -5581,8 +5586,14 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "    <nvd3-line-chart\n" +
     "            data=\"data\",\n" +
     "            height=\"450\"\n" +
+    "            forcex=\"[0.5,17.5]\"\n" +
+    "            xAxisTickValues=\"xAxisTickValuesFunction()\"\n" +
     "            xAxisTickFormat=\"xAxisTickFormatFunction()\"\n" +
+    "            xAxisShowMaxMin=\"false\"\n" +
+    "            xAxisLabel=\"Month\"\n" +
     "            yAxisTickFormat=\"yAxisTickFormatFunction()\"\n" +
+    "            yAxisLabel=\"Attempts\"\n" +
+    "            yAxisRotateLabels=\"true\"\n" +
     "            x=\"xFunction()\"\n" +
     "            y=\"yFunction()\"\n" +
     "            showXAxis=\"true\"\n" +

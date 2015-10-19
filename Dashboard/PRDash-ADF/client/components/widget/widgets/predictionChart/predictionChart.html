@@ -2,8 +2,14 @@
     <nvd3-line-chart
             data="data",
             height="450"
+            forcex="[0.5,17.5]"
+            xAxisTickValues="xAxisTickValuesFunction()"
             xAxisTickFormat="xAxisTickFormatFunction()"
+            xAxisShowMaxMin="false"
+            xAxisLabel="Month"
             yAxisTickFormat="yAxisTickFormatFunction()"
+            yAxisLabel="Attempts"
+            yAxisRotateLabels="true"
             x="xFunction()"
             y="yFunction()"
             showXAxis="true"
