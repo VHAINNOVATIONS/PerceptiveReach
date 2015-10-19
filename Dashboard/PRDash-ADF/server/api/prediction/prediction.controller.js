@@ -4,6 +4,10 @@ var _ = require('lodash');
 var validator = require('validator');
 var sql = require('mssql');
 
+var round = function(r) {
+    return Math.round((r + 0.000001) * 100) / 100;
+};
+
 exports.index = function(req, res) {
      //res.header("content-type: application/json");
     var dbc = require('../../config/db_connection/development.js');
@@ -47,17 +51,17 @@ exports.index = function(req, res) {
                 var result = jsonRecordSet.reduce(function(r, v, index) {
                     r[0].values.push({
                         x: index + 1,
-                        y: v.Upper,
+                        y: round(v.Upper),
                         size: 0
                     });
                     r[1].values.push({
                         x: index + 1,
-                        y: v.Lower,
+                        y: round(v.Lower),
                         size: 0
                     });
                     r[2].values.push({
                         x: index + 1,
-                        y: v.Pred,
+                        y: round(v.Pred),
                         size: 0
                     });
                     if (v.IPWResponse > -1) {
@@ -86,7 +90,7 @@ exports.index = function(req, res) {
                     values: [],
                     color: "#000000"
                 }, {
-                    key: 'Prediction',
+                    key: 'Best Fit',
                     values: [],
                     color: "#000000"
                 }, {
