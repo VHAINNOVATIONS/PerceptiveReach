@@ -411,8 +411,6 @@ arrangeData = function(cwd, params) {
   resultOrder = order(result$VAMC, result$Month_No)
   result = result[resultOrder,]
 
-  debug$result = result
-  
   input = subset(result, Month_No < 15)
   input = input[c("VAMC", "VISN", "covariate1", "sumattempters", "Month_No", "weight", "id", "lcov1", "IPWResponse", "LogMonth")]
   input = input[order(input$Month_No),]
@@ -491,8 +489,7 @@ prPredictor = function(arrangedData, params, facilityId) {
   facilitySize = predictionData$covariate[1]
   facilityVISN = predictionData$VISN[1]
   rx = predictionInfo$glm
-  debug$rx = rx
-  
+
   if (predictionInfo$distribution == 'Poisson') {
     if (predictionInfo$type == 'LogMonth') {
       x1 = rep(1.0, monthRange)
@@ -615,7 +612,7 @@ blackbox = function(directory, outDirectory) {
   params = list(dataCols=4:17, monthRange = 17, numMonthsToFit = 14)
   arrangedData = arrangeData(directory, params)
   VAMCS = unique(arrangedData$input$VAMC)
-  VAMCS = order(VAMCS)
+  VAMCS = VAMCS[order(VAMCS)]
   result = NULL
   for (VAMC in VAMCS) {
     try({
