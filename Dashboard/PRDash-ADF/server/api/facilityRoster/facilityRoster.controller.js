@@ -94,7 +94,7 @@ exports.index = function(req, res) {
                             r.Prediction = "Too high and low"
                         } else if (pa.higher) {
                             r.Prediction = "Too high"
-                        } else if (pa.higher && pa.lower) {
+                        } else if (pa.lower) {
                             r.Prediction = "Too low"
                         }
                     } else {
