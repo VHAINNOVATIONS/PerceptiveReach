@@ -1,15 +1,19 @@
-<div id="appointmentDiv" class="appointment" title="Appointment Widget">
+<div class="appointment">
 	<table id="tblAppointment" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
         <thead> 
         <tr>
-            <th scope="col" tabindex="-1"><a alt="Date" title="Sort by Date" href="" ng-click="predicate = 'Date'; reverse=false">Date</a></th>
-            <th scope="col" tabindex="-1"><a alt="Cancellation Status" title="Sort by Cancellation Status" href="" ng-click="predicate = 'Cancelled'; reverse=!reverse">Cancelled</a></th>
+            <th><a href="" ng-click="predicate = 'Date'; reverse=false">Date</a></th>
+            <th><a href="" ng-click="predicate = 'Type'; reverse=!reverse">Type</a></th>
+            <th><a href="" ng-click="predicate = 'Cancelled'; reverse=!reverse">Cancelled</a></th>
+            
         </tr>
-        </thead> 
+        </thead>
         <tbody>
         <tr ng-repeat="appt in data track by $index | orderBy:predicate:reverse">
             <td>{{ appt.ApptDate }}</td>
+             <td>{{ appt.PrimarySecondaryStopCodeName }}</td>
             <td>{{ appt.CancelNoShowCodeDesc }}</td>
+
         </tr>
         </tbody>
     </table>
