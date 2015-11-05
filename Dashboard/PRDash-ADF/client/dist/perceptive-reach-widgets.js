@@ -408,9 +408,9 @@ angular.module('ui.models')
         }.bind(this));
       },
 
-      saveOutreachData: function (outreachStatus, veteranID, facilityID) {
+      saveOutreachData: function (outreachStatus, veteranID) {
         var user = JSON.parse(sessionStorage.user);
-        $http.put('/api/patient?vetReachID=' + veteranID, {'outreachStatus': outreachStatus, 'UserID':user.UserID, 'facilityID':facilityID})
+        $http.put('/api/patient?vetReachID=' + veteranID, {'outreachStatus': outreachStatus, 'UserID':user.UserID})
         .success(function(data) {
         });  
       },
@@ -787,7 +787,7 @@ angular.module('ui.models')
        init: function () {
         var dataModelOptions = this.dataModelOptions;
 		
-        this.updateScope([]);
+        this.updateScope('-');
         this.getData();
       },
 
@@ -809,7 +809,7 @@ angular.module('ui.models')
     });
     return SuicideStatisticsDataModel;
   })
-  .factory('AgeGroupsMetricsDataModel', function ($http, CommonDataModel) {
+  /*.factory('AgeGroupsMetricsDataModel', function ($http, CommonDataModel) {
     function AgeGroupsMetricsDataModel() {
     }
 
@@ -867,10 +867,10 @@ angular.module('ui.models')
         var visn_or_facility = '';
         var activeView = that.dataModelOptions.common.data.activeView;
 
-        /*if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
-          this.updateScope(data);
-        }
-        else {*/
+        //if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
+          //this.updateScope(data);
+        }//
+        //else {
           if(activeView == "surveillance"){
             if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
             else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
@@ -897,7 +897,76 @@ angular.module('ui.models')
     });
 
     return AgeGroupsMetricsDataModel;
+  }) */
+  .factory('AgeGroupsMetricsDataModel', function ($http, CommonDataModel) {
+    function AgeGroupsMetricsDataModel() {
+    }
+
+    AgeGroupsMetricsDataModel.prototype = Object.create(CommonDataModel.prototype);
+    AgeGroupsMetricsDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(AgeGroupsMetricsDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+
+        var currentSta3NID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected && dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+        var  currentVISNID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected && dataModelOptions.common.data.visnSelected.facility) ? dataModelOptions.common.data.visnSelected.facility : null;
+
+        console.log("AgeGroupsMetricData init - current sta3NID:", currentSta3NID);
+        console.log("AgeGroupsMetricData init -  current VISNID:", currentVISNID);
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+
+        this.currentVISNID = this.VISNID;
+        this.currentSta3NID = this.sta3NID;
+        if(dataModelOptions.common.data.facilitySelected.facility != null )
+          this.VISNID = (dataModelOptions.common.data.visnSelected.facility.toString().length >0) ? dataModelOptions.common.data.visnSelected.facility : null;
+
+        if(dataModelOptions.common.data.visnSelected.facility != null)
+          this.sta3NID = (dataModelOptions.common.data.facilitySelected.facility.toString().length >0) ? dataModelOptions.common.data.facilitySelected.facility : null;
+
+          console.log("AgeGroupsMetricData commonDataChange - this", this);
+          console.log("AgeGroupsMetricData commonDataChange - this.sta3NID ", this.sta3NID);
+          console.log("AgeGroupsMetricData commonDataChange - this.VISNID", this.VISNID);
+          
+          if(this.VISNID != this.currentVISNID  || this.sta3NID != this.currentSta3NID )
+            this.getData();
+
+        }.bind(this));
+
+        this.updateScope([]);
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        var visn_or_facility = '';
+        var activeView = that.dataModelOptions.common.data.activeView;
+  
+          var parameter = '';
+          if(this.Sta3NID )
+            parameter = "Sta3NID=" + this.Sta3NID ;
+          if(this.VISNID)
+            parameter = "VISNID="+ this.VISNID;
+          if(this.Sta3NID && this.VISNID)
+            parameter = "Sta3NID=" + this.Sta3NID + " &&VISNID="+ this.VISNID;
+
+          $http.get('/api/ageGroupsMetrics?'+ parameter)
+          .success(function(dataset) {
+                  data = dataset;
+                  this.updateScope(data);
+              }.bind(this));
+        
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+   return AgeGroupsMetricsDataModel;
   })
+
   /* .factory('NationalCombatEraDataModel', function ($http, WidgetDataModel) {
     function NationalCombatEraDataModel() {
     }
@@ -966,7 +1035,7 @@ angular.module('ui.models')
     });
     return NationalCurrentSafetyPlanDataModel;
   })*/
-  .factory('GenderDistributionMetricsDataModel', function ($http, CommonDataModel) {
+ /* .factory('GenderDistributionMetricsDataModel', function ($http, CommonDataModel) {
     function GenderDistributionMetricsDataModel() {
     }
 
@@ -1021,10 +1090,10 @@ angular.module('ui.models')
         var visn_or_facility = '';
         var activeView = that.dataModelOptions.common.data.activeView;
 
-        /*if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
-          this.updateScope(data);
-        }
-        else {*/
+        //if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
+          //this.updateScope(data);
+        //}
+        //else {
           if(activeView == "surveillance"){
             if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
             else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
@@ -1051,6 +1120,74 @@ angular.module('ui.models')
     });
 
     return GenderDistributionMetricsDataModel;
+  })*/
+   .factory('GenderDistributionMetricsDataModel', function ($http, CommonDataModel) {
+    function GenderDistributionMetricsDataModel() {
+    }
+
+    GenderDistributionMetricsDataModel.prototype = Object.create(CommonDataModel.prototype);
+    GenderDistributionMetricsDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(GenderDistributionMetricsDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+
+        var currentSta3NID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected && dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+        var  currentVISNID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected && dataModelOptions.common.data.visnSelected.facility) ? dataModelOptions.common.data.visnSelected.facility : null;
+
+        console.log("GenderDistributionMetricsDataModel init - current sta3NID:", currentSta3NID);
+        console.log("GenderDistributionMetricsDataModel init -  current VISNID:", currentVISNID);
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+
+        this.currentVISNID = this.VISNID;
+        this.currentSta3NID = this.sta3NID;
+        if(dataModelOptions.common.data.facilitySelected.facility != null )
+          this.VISNID = (dataModelOptions.common.data.visnSelected.facility.toString().length >0) ? dataModelOptions.common.data.visnSelected.facility : null;
+
+        if(dataModelOptions.common.data.visnSelected.facility != null)
+          this.sta3NID = (dataModelOptions.common.data.facilitySelected.facility.toString().length >0) ? dataModelOptions.common.data.facilitySelected.facility : null;
+
+          console.log("GenderDistributionMetricsDataModel commonDataChange - this", this);
+          console.log("GenderDistributionMetricsDataModel commonDataChange - this.sta3NID ", this.sta3NID);
+          console.log("GenderDistributionMetricsDataModel commonDataChange - this.VISNID", this.VISNID);
+          
+          if(this.VISNID != this.currentVISNID  || this.sta3NID != this.currentSta3NID )
+            this.getData();
+
+        }.bind(this));
+
+        this.updateScope([]);
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+        var visn_or_facility = '';
+        var activeView = that.dataModelOptions.common.data.activeView;
+  
+          var parameter = '';
+          if(this.Sta3NID )
+            parameter = "Sta3NID=" + this.Sta3NID ;
+          if(this.VISNID)
+            parameter = "VISNID="+ this.VISNID;
+          if(this.Sta3NID && this.VISNID)
+            parameter = "Sta3NID=" + this.Sta3NID + " &&VISNID="+ this.VISNID;
+
+          $http.get('/api/genderDistributionMetrics?'+ parameter)
+          .success(function(dataset) {
+                  data = dataset;
+                  this.updateScope(data);
+              }.bind(this));
+        
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+   return GenderDistributionMetricsDataModel;
   })
   /*  .factory('NationalHighRiskFlagDataModel', function ($http, WidgetDataModel) {
     function NationalHighRiskFlagDataModel() {
@@ -1526,28 +1663,6 @@ angular.module('ui.models')
             this.getData();          
           
         }.bind(this));
-
-        this.widgetScope.$on('defaultWidgetsSelected', function (event, data) {
-          this.dataModelOptions.common = data;
-          this.currentID = this.ID;
-          
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            /*if(dataModelOptions.common.data.facilitySelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.facilitySelected.surveillance;*/
-            if(dataModelOptions.common.data.visnSelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
-          }
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
-            this.ID = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;  
-          }
-          /*console.log("FacilityDataModel commonDataChange - this", this);
-          console.log("FacilityDataModel commonDataChange - currentId", this.currentID);
-          console.log("FacilityDataModel commonDataChange - this.Id", this.ID);
-          console.log("FacilityDataModel commonDataChange - facilitySelected.facility", dataModelOptions.common.data.visnSelected.facility);*/ 
-          console.log("defaultWidgetsSelected again!!!!");
-          if(this.ID != this.currentID)
-            this.getData();
-        }.bind(this));
         this.updateScope([]);
         this.getData();
       },
@@ -1628,12 +1743,6 @@ angular.module('ui.models')
           if(this.ID != this.currentID)
             this.getData();          
           
-        }.bind(this));
-
-        this.widgetScope.$on('defaultWidgetsSelected', function (event, data) {
-          this.dataModelOptions.common = data;
-          this.currentID = this.ID;
-          this.getData();
         }.bind(this));
 
         this.updateScope([]);
@@ -2533,9 +2642,9 @@ function Gauge(element, configuration)
  */
 
 'use strict';
- 
+
 angular.module('ui.widgets')
-  .directive('wtAppointment', function ($timeout) {
+  .directive('wtAppointment', function () {
     return {
       restrict: 'A',
       replace: true,
@@ -2550,32 +2659,21 @@ angular.module('ui.widgets')
             .withOption('deferRender', true)
             // Do not forget to add the scorllY option!!!
             .withOption('paging',false)
-            .withOption('bDestroy',true)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
             DTColumnDefBuilder.newColumnDef(0),
-            DTColumnDefBuilder.newColumnDef(1)
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2)
         ];
         /*$resource('data.json').query().$promise.then(function(persons) {
             vm.persons = persons;
         });*/
       },
-	link: function postLink(scope, element) {
-    		scope.$on("bindEvents", function (){
-    			$($('#appointmentDiv table')[0]).find('th').each(function(){
-    			  $(this).attr('tabindex','-1');
-    			});
-    		});
-
-        $timeout(function(){
-            scope.$emit('bindEvents');
-        },1500)
-
+      link: function postLink(scope) {
         scope.$watch('data', function (data) {
-          $.fn.dataTable.ext.errMode = 'throw';
           if (data) {
-            scope.data = data;   
+            scope.data = data;
           }
         });
       }
@@ -5063,7 +5161,7 @@ angular.module('ui.widgets')
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
-    "<div id=\"appointmentDiv\" class=\"appointment\" title=\"Appointment Widget\">\r" +
+    "<div class=\"appointment\">\r" +
     "\n" +
     "\t<table id=\"tblAppointment\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -5071,13 +5169,17 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th scope=\"col\" tabindex=\"-1\"><a alt=\"Date\" title=\"Sort by Date\" href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
     "\n" +
-    "            <th scope=\"col\" tabindex=\"-1\"><a alt=\"Cancellation Status\" title=\"Sort by Cancellation Status\" href=\"\" ng-click=\"predicate = 'Cancelled'; reverse=!reverse\">Cancelled</a></th>\r" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Type'; reverse=!reverse\">Type</a></th>\r" +
+    "\n" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Cancelled'; reverse=!reverse\">Cancelled</a></th>\r" +
+    "\n" +
+    "            \r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
-    "        </thead> \r" +
+    "        </thead>\r" +
     "\n" +
     "        <tbody>\r" +
     "\n" +
@@ -5085,7 +5187,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <td>{{ appt.ApptDate }}</td>\r" +
     "\n" +
+    "             <td>{{ appt.PrimarySecondaryStopCodeName }}</td>\r" +
+    "\n" +
     "            <td>{{ appt.CancelNoShowCodeDesc }}</td>\r" +
+    "\n" +
+    "\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
