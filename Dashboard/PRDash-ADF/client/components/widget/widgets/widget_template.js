@@ -1,7 +1,7 @@
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
-    "<div id=\"appointmentDiv\" class=\"appointment\" title=\"Appointment Widget\">\r" +
+    "<div class=\"appointment\">\r" +
     "\n" +
     "\t<table id=\"tblAppointment\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
@@ -9,13 +9,17 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th scope=\"col\" tabindex=\"-1\"><a alt=\"Date\" title=\"Sort by Date\" href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
     "\n" +
-    "            <th scope=\"col\" tabindex=\"-1\"><a alt=\"Cancellation Status\" title=\"Sort by Cancellation Status\" href=\"\" ng-click=\"predicate = 'Cancelled'; reverse=!reverse\">Cancelled</a></th>\r" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Type'; reverse=!reverse\">Type</a></th>\r" +
+    "\n" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Cancelled'; reverse=!reverse\">Cancelled</a></th>\r" +
+    "\n" +
+    "            \r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
-    "        </thead> \r" +
+    "        </thead>\r" +
     "\n" +
     "        <tbody>\r" +
     "\n" +
@@ -23,7 +27,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <td>{{ appt.ApptDate }}</td>\r" +
     "\n" +
+    "             <td>{{ appt.PrimarySecondaryStopCodeName }}</td>\r" +
+    "\n" +
     "            <td>{{ appt.CancelNoShowCodeDesc }}</td>\r" +
+    "\n" +
+    "\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
