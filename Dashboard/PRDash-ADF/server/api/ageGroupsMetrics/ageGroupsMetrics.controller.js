@@ -17,7 +17,9 @@ exports.index = function(req, res) {
             return; 
         }
         var request = new sql.Request(connection);
+         /*
         var ID = req.param("ID");
+
 
         // Configure WHERE clause if needed
         var whereClause = '';
@@ -36,6 +38,30 @@ exports.index = function(req, res) {
         if (trueID && validator.isInt(trueID)) {
             request.input('trueID', sql.Int, trueID);            
         }
+
+        */
+
+         // Configure WHERE clause if needed
+         var query = '';
+
+          var sta3N = req.param("sta3N");
+          var VISN = req.param("VISN");
+  
+          var whereClause = ' ';
+  
+
+          
+          if(VISN && validator.isInt(VISN)){
+              whereClause = " where v.VISN = @VISN ";
+              request.input('VISN', sql.Int,VISN);
+          }    
+          if(sta3N && validator.isInt(sta3N)){
+                  whereClause += " and  s.sta3N = @sta3N ";
+                  request.input('sta3N', sql.Int,sta3N);
+          }
+          
+
+
         query += "SELECT CASE";
         query += " WHEN DOB < DATEADD(year, -18, getdate()) AND DOB >= DATEADD(year, -29, getdate()) THEN '18 - 29'";
         query += " WHEN DOB < DATEADD(year, -29, getdate()) AND DOB >= DATEADD(year, -44, getdate()) THEN '30 - 44'";
@@ -44,7 +70,7 @@ exports.index = function(req, res) {
         query += " END as AgeRange, d.RiskLevelDesc as RiskLevelDescription, COUNT(DISTINCT p.ReachID) as Total";
         query += " FROM dbo.Patient p INNER JOIN Ref_RiskLevel d ON p.RiskLevel = d.RiskLevelID";
         query += " INNER JOIN PatientStation s ON s.ReachID = p.ReachID";
-        query += " INNER JOIN Ref_VAMC v ON s.sta3N = v.STA3N";
+        query += " INNER JOIN Ref_VAMC v ON s.sta3N = v.STA3N ";
         query += whereClause;
         query += " GROUP BY CASE";
         query += " WHEN DOB < DATEADD(year, -18, getdate()) AND DOB >= DATEADD(year, -29, getdate()) THEN '18 - 29'";
