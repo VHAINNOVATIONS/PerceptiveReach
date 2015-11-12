@@ -412,7 +412,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/predictionChart/predictionChart.html",
-    "<div class=\"prediction-chart\">\n" +
+    "<div class=\"prediction-chart\" style=\"height:100%;width:100%;\">\n" +
     "    <nvd3-line-chart\n" +
     "            data=\"data\",\n" +
     "            height=\"450\"\n" +

@@ -14,3 +14,4 @@ Prediction/*.Rout
 Prediction/R/testout
 Prediction/R/*.Rout
 Prediction/R/*.RData
+.project
