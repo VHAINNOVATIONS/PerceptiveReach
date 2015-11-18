@@ -17,51 +17,28 @@ exports.index = function(req, res) {
             return; 
         }
         var request = new sql.Request(connection);
-         /*
-        var ID = req.param("ID");
-
-
-        // Configure WHERE clause if needed
+        var VISN = req.param("VISN");
+        var STA3N = req.param("STA3N");
         var whereClause = '';
-        var trueID = '';
-        if(ID != null && ID.indexOf("-v") != -1){
-            trueID = ID.split("-v")[0];
-            whereClause = " WHERE v.VISN = @trueID";
-        }
-        else if(ID != null && ID.indexOf("-f") != -1){
-            trueID = ID.split("-f")[0];
-            whereClause = " WHERE s.sta3N = @trueID";
+        var where = ' WHERE';
+        var and = ' AND';
+
+        if (VISN && validator.isInt(VISN)) {
+            request.input('VISN', sql.Int, VISN);
+            whereClause += where + ' v.VISN = @VISN ';
         }
 
+        if (STA3N && validator.isInt(STA3N)) {
+            request.input('STA3N', sql.Int, STA3N);
+            if (VISN) {
+                whereClause += and;
+            } else {
+                whereClause += where;
+            }
+            whereClause += ' s.sta3N = @STA3N ';
+        }         
         // Configure Database Query
         var query = '';
-        if (trueID && validator.isInt(trueID)) {
-            request.input('trueID', sql.Int, trueID);            
-        }
-
-        */
-
-         // Configure WHERE clause if needed
-         var query = '';
-
-          var sta3N = req.param("sta3N");
-          var VISN = req.param("VISN");
-  
-          var whereClause = ' ';
-  
-
-          
-          if(VISN && validator.isInt(VISN)){
-              whereClause = " where v.VISN = @VISN ";
-              request.input('VISN', sql.Int,VISN);
-          }    
-          if(sta3N && validator.isInt(sta3N)){
-                  whereClause += " and  s.sta3N = @sta3N ";
-                  request.input('sta3N', sql.Int,sta3N);
-          }
-          
-
-
         query += "SELECT CASE";
         query += " WHEN DOB < DATEADD(year, -18, getdate()) AND DOB >= DATEADD(year, -29, getdate()) THEN '18 - 29'";
         query += " WHEN DOB < DATEADD(year, -29, getdate()) AND DOB >= DATEADD(year, -44, getdate()) THEN '30 - 44'";

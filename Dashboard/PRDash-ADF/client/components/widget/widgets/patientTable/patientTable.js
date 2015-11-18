@@ -68,6 +68,7 @@ angular.module('ui.widgets')
           $( "select[id^='vet_']" ).on("change",function(e,ui){
             var selectedIndex = this.value;
             var selectedreachId = $(e.currentTarget).attr('id').replace("vet_","");
+            document.getElementById('Outreach_' + selectedreachId).innerHTML=selectedIndex;
             var commonData = scope.widget.dataModelOptions.common;
             scope.widget.dataModel.saveOutreachData(parseInt(selectedIndex),selectedreachId,commonData.data.facilitySelected.facility);
           } );
@@ -157,7 +158,8 @@ angular.module('ui.widgets')
                 options += temp;                
               }
               var select = "<select class='form-control' style='width: 180px;' id='vet_" + patientsBysta3N[patient].ReachID + "'><option value=''></option>"+ options+ "</select>";
-              patientsBysta3N[patient].OutreachStatusSelect = select;
+              //patientsBysta3N[patient].OutreachStatusSelect = select;
+              patientsBysta3N[patient].OutreachStatusSelect = "<span id='Outreach_" + patientsBysta3N[patient].ReachID + "' hidden>"+ patientsBysta3N[patient].OutreachStatus +"</span> " +  select;
             }
             
             scope.patientList = patientsBysta3N;
