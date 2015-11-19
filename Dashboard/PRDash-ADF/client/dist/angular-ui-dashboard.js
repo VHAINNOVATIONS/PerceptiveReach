@@ -1468,7 +1468,7 @@ angular.module('ui.dashboard')
 
       angular.extend(defaults, options);
       angular.extend(options, defaults);
-
+       
       this.id = options.storageId;
       this.storage = options.storage;
       this.storageHash = options.storageHash;
@@ -1535,6 +1535,14 @@ angular.module('ui.dashboard')
           states: this.states,
           storageHash: this.storageHash
         };
+
+        var sessionStore = JSON.parse(sessionStorage.getItem('user'));
+        
+        if(sessionStore)
+        {
+          sessionStore.DashboardData = state;
+          sessionStorage.setItem("user", JSON.stringify(sessionStore)); 
+        }
 
         if (this.stringifyStorage) {
           state = JSON.stringify(state);
