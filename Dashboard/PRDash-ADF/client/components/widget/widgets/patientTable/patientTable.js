@@ -108,8 +108,9 @@ angular.module('ui.widgets')
                 return ( n.ReachID == vetId );
               });
               console.log("ReachID Vet Selected: ",vetId);
-              //delete obj[0].OutreachStatus;
+              delete obj[0].OutreachStatus;
               commonData.data.veteranObj = obj[0];
+              commonData.data.veteranObj.OutreachStatus = $('#Outreach_' + vetId).text();
               console.log("CommonDataAfterClick: ", commonData);
               // broadcast message throughout system
               scope.$parent.$parent.$parent.$broadcast('commonDataChanged', commonData);
