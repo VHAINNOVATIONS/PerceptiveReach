@@ -10,32 +10,36 @@ exports.index = function(req, res) {
 
     var dbc = require('../../config/db_connection/development.js');
     var config = dbc.config;
-    var connection = new sql.Connection(config, function(err) {        
-        if (err) { 
+    var connection = new sql.Connection(config, function(err) {
+        if (err) {
             console.dir(err);
             res.send(401, 'DB Connection Error.');
-            return; 
+            return;
         }
         var request = new sql.Request(connection);
-        var ID = req.param("ID");
+		var VISN = req.param("VISN");
+		var STA3N = req.param("STA3N");
+		var whereClause = '';
+		var where = ' WHERE';
+		var and = ' AND';
 
-        // Configure WHERE clause if needed
-        var whereClause = '';
-        var trueID = '';
-        if(ID != null && ID.indexOf("-v") != -1){
-            trueID = ID.split("-v")[0];
-            whereClause = " WHERE v.VISN = @trueID";
-        }
-        else if(ID != null && ID.indexOf("-f") != -1){
-            trueID = ID.split("-f")[0];
-            whereClause = " WHERE s.sta3N = @trueID";
-        }
+		if (VISN && validator.isInt(VISN)) {
+			request.input('VISN', sql.Int, VISN);
+			whereClause += where + ' v.VISN = @VISN ';
+		}
 
-        // Configure Database Query
+		if (STA3N && validator.isInt(STA3N)) {
+			request.input('STA3N', sql.Int, STA3N);
+			if (VISN) {
+				whereClause += and;
+			} else {
+				whereClause += where;
+			}
+			whereClause += ' s.sta3N = @STA3N ';
+}
+
+// Configure Database Query
         var query = '';
-        if (trueID && validator.isInt(trueID)) {
-            request.input('trueID', sql.Int, trueID);             
-        }
 
         query += 'SELECT m.Status as Status, d.RiskLevelDesc, m.Total as Total FROM(';
         query += " SELECT CASE WHEN os.StatusDesc IS NULL THEN 'Uninitiated'";
@@ -46,15 +50,15 @@ exports.index = function(req, res) {
         query += " INNER JOIN Ref_VAMC v ON s.sta3N = v.STA3N";
         query += whereClause;
         query += ' GROUP BY os.StatusDesc, p.RiskLevel) m';
-        query += ' INNER JOIN dbo.Ref_RiskLevel d ON m.RiskLevel = d.RiskLevelID'; 
-        query += ' GROUP BY Status, Total, d.RiskLevelDesc ORDER BY Status';  
-        
+        query += ' INNER JOIN dbo.Ref_RiskLevel d ON m.RiskLevel = d.RiskLevelID';
+        query += ' GROUP BY Status, Total, d.RiskLevelDesc ORDER BY Status';
+
         // Query the database
         request.query(query, function(err, recordset) {
-            if (err) { 
+            if (err) {
                 console.dir(err);
                 res.send(401, 'Query Failed.');
-                return; 
+                return;
             }
 
             var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
@@ -62,5 +66,5 @@ exports.index = function(req, res) {
         });
 
     });
-  
+
 };
