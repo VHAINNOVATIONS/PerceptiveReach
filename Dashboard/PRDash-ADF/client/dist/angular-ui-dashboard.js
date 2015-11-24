@@ -203,6 +203,34 @@ angular.module('ui.dashboard')
           scope.saveDashboard();
         };
 
+        scope.keyDown = function(e)
+        {
+          var sizex = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX;
+          var sizey = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY;
+          var sizeIncrement = 1;
+          switch(e.which) {
+          case 40:
+              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY = sizey+sizeIncrement;
+              return false;
+              break;
+          case 37:
+              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX = sizex-sizeIncrement;
+              return false;
+              break;
+          case 39:
+              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX = sizex+sizeIncrement;
+              return false;
+              break;
+          case 38:
+              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY = sizey-sizeIncrement;
+              return false;
+              break;
+          default:
+              return;
+          } 
+
+        }
+
         /**
          * Opens a dialog for setting and changing widget properties
          * @param  {Object} widget The widget instance object
@@ -801,7 +829,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                            <!--button ng-click=\"openWidgetSettings(widget);\" style=\"background-color: transparent; float:left;\" class=\"glyphicon glyphicon-cog\" ng-if=\"!options.hideWidgetSeyttings\"></button-->\r" +
     "\n" +
-    "                            <button ng-click=\"removeWidget(widget);\" title=\"Remove Widget\" alt=\"Remove Widget\" style=\"background-color: transparent; float:right;\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
+    "                            <button ng-click=\"removeWidget(widget);\" ng-keydown=\"keyDown($event)\" title=\"Remove Widget Or Resize Widget\" alt=\"Remove Widget\" style=\"background-color: transparent; float:right;\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
     "\n" +
     "                        </div>\r" +
     "\n" +
