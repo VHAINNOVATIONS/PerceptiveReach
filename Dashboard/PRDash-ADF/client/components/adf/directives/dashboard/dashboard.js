@@ -203,6 +203,34 @@ angular.module('ui.dashboard')
           scope.saveDashboard();
         };
 
+        scope.keyDown = function(e)
+        {
+          var sizex = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX;
+          var sizey = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY;
+          var sizeIncrement = 1;
+          switch(e.which) {
+          case 40:
+              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY = sizey+sizeIncrement;
+              return false;
+              break;
+          case 37:
+              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX = sizex-sizeIncrement;
+              return false;
+              break;
+          case 39:
+              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX = sizex+sizeIncrement;
+              return false;
+              break;
+          case 38:
+              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY = sizey-sizeIncrement;
+              return false;
+              break;
+          default:
+              return;
+          } 
+
+        }
+
         /**
          * Opens a dialog for setting and changing widget properties
          * @param  {Object} widget The widget instance object
