@@ -1064,16 +1064,16 @@ angular.module('ui.models')
         var dataModelOptions = this.dataModelOptions;
 
         var view = _.get(dataModelOptions, 'common.data.activeView');
-        if (view === "facility") {
-          this.ID = _.get(dataModelOptions, 'common.data.facilitySelected.facility', null);
+        if (view === "surveillance") {
+          this.ID = _.get(dataModelOptions, 'common.data.facilitySelected.surveillance', null);
         } else {
           this.ID = null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
           var view = _.get(dataModelOptions, 'common.data.activeView');
-          if(view === "facility") {
-            var ID = _.get(dataModelOptions, 'common.data.facilitySelected.facility', null);
+          if(view === "surveillance") {
+            var ID = _.get(dataModelOptions, 'common.data.facilitySelected.surveillance', null);
             if (this.ID !== ID) {
               this.ID = ID;
               this.getData();
@@ -1087,11 +1087,11 @@ angular.module('ui.models')
       getData: function () {
         if (this.ID) {
           var activeView = _.get(this.dataModelOptions, 'common.data.activeView');
-          if (activeView === "facility"){
+          if (activeView === "surveillance"){
             var visn_or_facility = null;
-            if (this.dataModelOptions.common.data.facilitySelected.facility) {
+            if (this.dataModelOptions.common.data.facilitySelected.surveillance) {
               visn_or_facility = "-f";
-            } else if (this.dataModelOptions.common.data.visnSelected.facility) {
+            } else if (this.dataModelOptions.common.data.visnSelected.surveillance) {
               visn_or_facility = "-v";
             }
             if (visn_or_facility) {

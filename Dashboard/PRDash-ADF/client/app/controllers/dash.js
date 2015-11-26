@@ -218,7 +218,7 @@ angular.module('app')
         dataModelOptions: {
           defaultWidget: true,
           roleAccess: 'SUP,REP,ADM',
-          layout: 'facility'
+          layout: 'surveillance'
         },
         dataModelArgs: {
           rate: 40
