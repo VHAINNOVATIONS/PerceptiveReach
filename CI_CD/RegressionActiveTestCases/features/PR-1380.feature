@@ -8,7 +8,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
   Then I put in "password" field as "FeAn#011819"
   And I click on check box "checky"
   And I click on "Login" button
-  When I click on "Individual View" 
+  When I click on "Survelliance View" 
   Then I should see the "Patient Roster by VAMC" widget
   And I should see "Outreach Status" column
   And I should see "Not Contacted" 
