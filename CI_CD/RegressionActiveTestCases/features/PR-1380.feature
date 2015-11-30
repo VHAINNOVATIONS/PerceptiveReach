@@ -8,12 +8,12 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
   Then I put in "password" field as "FeAn#011819"
   And I click on check box "checky"
   And I click on "Login" button
-  When I click on "Survelliance View" 
+  And I click on "Individual View"
   Then I should see the "Patient Roster by VAMC" widget
-  And I should see "Outreach Status" column
-  And I should see "Not Contacted" 
-  And I should see "Outreach Initiated" 
-  And I should see "Outreach Attempted" 
-  And I should see "Services Refused" 
-  And I should see "No Additional Outreach Required" 
+  And I should see "Name" column
+  And I should see "SSN" 
+  And I should see "Phone" 
+  And I should see "Date First Identified" 
+  And I should see "Statistical Risk Level" 
+  And I should see "Outreach Status" 
   And I click on "Logout" button
