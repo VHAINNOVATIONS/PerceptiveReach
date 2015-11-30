@@ -4,7 +4,7 @@ Feature: As a Administrator/Supervisor, I want to access widgets in a Consolidat
 Scenario: I open a web browser and navigate to http://localhost:7003/ where I can view Consolidated Surveillance View widgets
 Given I navigate to the http://localhost:7003/
 Then I should see "Perceptive Reach"
-When I put in "email" field as "TESTER175"
+When I put in "email" field as "TESTER123"
 And I put in "password" field as "FeAn#011819"
 And I click on check box "checky"
 And I click on "Login" button
