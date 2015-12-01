@@ -1520,7 +1520,6 @@ angular.module('ui.models')
       }
 
       
-
           $http.get('/api/facilityRoster'+ parameter)
           .success(function(dataset) {
                   data = dataset;
