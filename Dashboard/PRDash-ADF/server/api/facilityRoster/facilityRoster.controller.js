@@ -43,6 +43,7 @@ exports.index = function(req, res) {
         query += whereClause;
         query += " ORDER BY STA3N ASC";
 
+
     
         // Query the database
         request.query(query, function(err, recordset) {
