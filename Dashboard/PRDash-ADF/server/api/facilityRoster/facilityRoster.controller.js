@@ -18,20 +18,22 @@ exports.index = function(req, res) {
             return; 
         }
         var request = new sql.Request(connection);
-        var VISN = req.param("VISN");
-        var whereClause = '';
-        var where = ' WHERE';
-        var and = ' AND';
-
-        if (VISN && validator.isInt(VISN)) {
-            request.input('VISN', sql.Int, VISN);
-            whereClause += where + ' v.VISN = @VISN ';
+        var ID = req.param("ID");
+  
+          // Configure WHERE clause if needed
+          var whereClause = '';
+          var trueID = '';
+          if(ID != null && ID.indexOf("-v") != -1){
+              trueID = ID.split("-v")[0];
+              whereClause = " WHERE VISN = @trueID";
+          }
+         
+  
+          // Configure Database Query
+          var query = '';
+          if (trueID && validator.isInt(trueID)) {
+              request.input('trueID', sql.Int, trueID);            
         }
-
-        
-        
-        // Configure Database Query
-        var query = '';
 
         query =  "SELECT [TotalPatients] AS Total"
         query += " ,[AtRisk]"
