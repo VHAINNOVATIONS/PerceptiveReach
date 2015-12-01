@@ -29,6 +29,7 @@ exports.index = function(req, res) {
         }
 
         
+        
         // Configure Database Query
         var query = '';
 
