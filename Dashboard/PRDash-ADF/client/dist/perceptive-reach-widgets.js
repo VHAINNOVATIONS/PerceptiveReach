@@ -1466,7 +1466,7 @@ angular.module('ui.models')
 
     return OutreachStatusMetricsDataModel;
   })
- .factory('FacilityDataModel', function ($http, CommonDataModel) {
+  .factory('FacilityDataModel', function ($http, CommonDataModel) {
     function FacilityDataModel() {
     }
 
@@ -1596,7 +1596,6 @@ angular.module('ui.models')
         this.widgetScope.$on('commonDataChanged', function (event, data) {
 
           this.currentID = this.ID;
-          
 
           /*if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
             if(dataModelOptions.common.data.facilitySelected)

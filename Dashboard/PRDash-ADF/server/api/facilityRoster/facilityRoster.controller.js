@@ -18,20 +18,22 @@ exports.index = function(req, res) {
             return; 
         }
         var request = new sql.Request(connection);
-        var VISN = req.param("VISN");
+        var ID = req.param("ID");
+
+        // Configure WHERE clause if needed
         var whereClause = '';
-        var where = ' WHERE';
-        var and = ' AND';
-
-        if (VISN && validator.isInt(VISN)) {
-            request.input('VISN', sql.Int, VISN);
-            whereClause += where + ' v.VISN = @VISN ';
+        var trueID = '';
+        if(ID != null && ID.indexOf("-v") != -1){
+            trueID = ID.split("-v")[0];
+            whereClause = " WHERE VISN = @trueID";
         }
+       
 
-        
-        
         // Configure Database Query
         var query = '';
+        if (trueID && validator.isInt(trueID)) {
+            request.input('trueID', sql.Int, trueID);            
+        }
 
         query =  "SELECT [TotalPatients] AS Total"
         query += " ,[AtRisk]"
@@ -42,7 +44,6 @@ exports.index = function(req, res) {
         query += " FROM [dbo].[vw_FacilityRoster]"
         query += whereClause;
         query += " ORDER BY STA3N ASC";
-
 
     
         // Query the database
