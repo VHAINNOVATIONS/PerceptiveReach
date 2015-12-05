@@ -700,6 +700,67 @@ angular.module('ui.models')
 
     return GenderDistributionMetricsDataModel;
   })
+  .factory('PredictionChartDataModel', function ($http, CommonDataModel) {
+    function PredictionChartDataModel() {
+    }
+
+    PredictionChartDataModel.prototype = Object.create(CommonDataModel.prototype);
+    PredictionChartDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(PredictionChartDataModel.prototype, {
+      init: function () {
+        var dataModelOptions = this.dataModelOptions;
+
+        var view = _.get(dataModelOptions, 'common.data.activeView');
+        if (view === "surveillance") {
+          this.ID = _.get(dataModelOptions, 'common.data.facilitySelected.surveillance', null);
+        } else {
+          this.ID = null;
+        }
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          var view = _.get(dataModelOptions, 'common.data.activeView');
+          if(view === "surveillance") {
+            var ID = _.get(dataModelOptions, 'common.data.facilitySelected.surveillance', null);
+            if (this.ID !== ID) {
+              this.ID = ID;
+              this.getData();
+            }
+          }
+        }.bind(this));
+
+        this.getData();
+      },
+
+      getData: function () {
+        if (this.ID) {
+          var activeView = _.get(this.dataModelOptions, 'common.data.activeView');
+          if (activeView === "surveillance"){
+            var visn_or_facility = null;
+            if (this.dataModelOptions.common.data.facilitySelected.surveillance) {
+              visn_or_facility = "-f";
+            } else if (this.dataModelOptions.common.data.visnSelected.surveillance) {
+              visn_or_facility = "-v";
+            }
+            if (visn_or_facility) {
+              var parameter = "?ID=" + this.ID + visn_or_facility;
+              $http.get('/api/prediction'+ parameter).success(function(predictionData) {
+                this.updateScope(predictionData);
+              }.bind(this));
+              return;
+            }
+          }
+        }
+        this.updateScope([]);
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return PredictionChartDataModel;
+  })
   /*  .factory('NationalHighRiskFlagDataModel', function ($http, WidgetDataModel) {
     function NationalHighRiskFlagDataModel() {
     }
