@@ -1039,6 +1039,67 @@ angular.module('ui.models')
 
     return GenderDistributionMetricsDataModel;
   })
+  .factory('PredictionChartDataModel', function ($http, CommonDataModel) {
+    function PredictionChartDataModel() {
+    }
+
+    PredictionChartDataModel.prototype = Object.create(CommonDataModel.prototype);
+    PredictionChartDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(PredictionChartDataModel.prototype, {
+      init: function () {
+        var dataModelOptions = this.dataModelOptions;
+
+        var view = _.get(dataModelOptions, 'common.data.activeView');
+        if (view === "surveillance") {
+          this.ID = _.get(dataModelOptions, 'common.data.facilitySelected.surveillance', null);
+        } else {
+          this.ID = null;
+        }
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          var view = _.get(dataModelOptions, 'common.data.activeView');
+          if(view === "surveillance") {
+            var ID = _.get(dataModelOptions, 'common.data.facilitySelected.surveillance', null);
+            if (this.ID !== ID) {
+              this.ID = ID;
+              this.getData();
+            }
+          }
+        }.bind(this));
+
+        this.getData();
+      },
+
+      getData: function () {
+        if (this.ID) {
+          var activeView = _.get(this.dataModelOptions, 'common.data.activeView');
+          if (activeView === "surveillance"){
+            var visn_or_facility = null;
+            if (this.dataModelOptions.common.data.facilitySelected.surveillance) {
+              visn_or_facility = "-f";
+            } else if (this.dataModelOptions.common.data.visnSelected.surveillance) {
+              visn_or_facility = "-v";
+            }
+            if (visn_or_facility) {
+              var parameter = "?ID=" + this.ID + visn_or_facility;
+              $http.get('/api/prediction'+ parameter).success(function(predictionData) {
+                this.updateScope(predictionData);
+              }.bind(this));
+              return;
+            }
+          }
+        }
+        this.updateScope([]);
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return PredictionChartDataModel;
+  })
   /*  .factory('NationalHighRiskFlagDataModel', function ($http, WidgetDataModel) {
     function NationalHighRiskFlagDataModel() {
     }
@@ -2850,7 +2911,8 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('StateAbbr').withTitle('State'),
             DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
             DTColumnBuilder.newColumn('Total').withTitle('Patients'),
-            DTColumnBuilder.newColumn('AtRisk').withTitle('At-Risk Persons')
+            DTColumnBuilder.newColumn('AtRisk').withTitle('At-Risk Persons'),
+            DTColumnBuilder.newColumn('Prediction').withTitle('Prediction Alert'),
           ];
       },
       link: function postLink(scope, element, attr) {
@@ -4549,6 +4611,47 @@ angular.module('ui.widgets')
       }
     };
   });
+/* globals d3 */
+'use strict';
+
+angular.module('ui.widgets').directive('predictionChart', function () {
+return {
+    restrict: 'A',
+    replace: true,
+    templateUrl: 'client/components/widget/widgets/predictionChart/predictionChart.html',
+    scope: {
+      data: '=data'
+    },
+    controller: function ($scope) {
+      $scope.xAxisTickFormatFunction = function () {
+        return function (d) {
+          return d;
+        };
+      };
+      $scope.yAxisTickFormatFunction = function () {
+        return function (d) {
+          return d;
+        };
+      };
+      $scope.xFunction = function () {
+        return function (d) {
+          return d.x;
+        };
+      };
+      $scope.yFunction = function () {
+        return function (d) {
+          return d.y;
+        };
+      };
+      $scope.xAxisTickValuesFunction = function () {
+        return function () {
+          return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 15, 16, 17];
+        };
+      };
+    }
+  };
+});
+
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -5768,6 +5871,52 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "</div>\r" +
     "\n"
+  );
+
+  $templateCache.put("client/components/widget/widgets/predictionChart/predictionChart.html",
+    "<div class=\"prediction-chart\" style=\"height:100%;width:100%;\">\r" +
+    "\n" +
+    "    <nvd3-line-chart\r" +
+    "\n" +
+    "            data=\"data\",\r" +
+    "\n" +
+    "            height=\"450\"\r" +
+    "\n" +
+    "            forcex=\"[0.5,17.5]\"\r" +
+    "\n" +
+    "            xAxisTickValues=\"xAxisTickValuesFunction()\"\r" +
+    "\n" +
+    "            xAxisTickFormat=\"xAxisTickFormatFunction()\"\r" +
+    "\n" +
+    "            xAxisShowMaxMin=\"false\"\r" +
+    "\n" +
+    "            xAxisLabel=\"Month\"\r" +
+    "\n" +
+    "            yAxisTickFormat=\"yAxisTickFormatFunction()\"\r" +
+    "\n" +
+    "            yAxisLabel=\"Attempts\"\r" +
+    "\n" +
+    "            yAxisRotateLabels=\"true\"\r" +
+    "\n" +
+    "            x=\"xFunction()\"\r" +
+    "\n" +
+    "            y=\"yFunction()\"\r" +
+    "\n" +
+    "            showXAxis=\"true\"\r" +
+    "\n" +
+    "            showYAxis=\"true\"\r" +
+    "\n" +
+    "            reduceXTicks=\"true\"\r" +
+    "\n" +
+    "            transitionduration=\"0\"\r" +
+    "\n" +
+    "            useInteractiveGuideline=\"true\"\r" +
+    "\n" +
+    "            tooltips=\"true\">\r" +
+    "\n" +
+    "    </nvd3-line-chart>\r" +
+    "\n" +
+    "</div>"
   );
 
   $templateCache.put("client/components/widget/widgets/random/random.html",

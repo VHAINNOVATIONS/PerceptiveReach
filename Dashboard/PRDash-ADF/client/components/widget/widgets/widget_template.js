@@ -733,6 +733,52 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n"
   );
 
+  $templateCache.put("client/components/widget/widgets/predictionChart/predictionChart.html",
+    "<div class=\"prediction-chart\" style=\"height:100%;width:100%;\">\r" +
+    "\n" +
+    "    <nvd3-line-chart\r" +
+    "\n" +
+    "            data=\"data\",\r" +
+    "\n" +
+    "            height=\"450\"\r" +
+    "\n" +
+    "            forcex=\"[0.5,17.5]\"\r" +
+    "\n" +
+    "            xAxisTickValues=\"xAxisTickValuesFunction()\"\r" +
+    "\n" +
+    "            xAxisTickFormat=\"xAxisTickFormatFunction()\"\r" +
+    "\n" +
+    "            xAxisShowMaxMin=\"false\"\r" +
+    "\n" +
+    "            xAxisLabel=\"Month\"\r" +
+    "\n" +
+    "            yAxisTickFormat=\"yAxisTickFormatFunction()\"\r" +
+    "\n" +
+    "            yAxisLabel=\"Attempts\"\r" +
+    "\n" +
+    "            yAxisRotateLabels=\"true\"\r" +
+    "\n" +
+    "            x=\"xFunction()\"\r" +
+    "\n" +
+    "            y=\"yFunction()\"\r" +
+    "\n" +
+    "            showXAxis=\"true\"\r" +
+    "\n" +
+    "            showYAxis=\"true\"\r" +
+    "\n" +
+    "            reduceXTicks=\"true\"\r" +
+    "\n" +
+    "            transitionduration=\"0\"\r" +
+    "\n" +
+    "            useInteractiveGuideline=\"true\"\r" +
+    "\n" +
+    "            tooltips=\"true\">\r" +
+    "\n" +
+    "    </nvd3-line-chart>\r" +
+    "\n" +
+    "</div>"
+  );
+
   $templateCache.put("client/components/widget/widgets/random/random.html",
     "<div>\r" +
     "\n" +
