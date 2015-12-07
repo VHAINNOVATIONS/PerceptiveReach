@@ -2,13 +2,14 @@
 
 angular.module('app')
   .factory('widgetDefinitions', function(RandomDataModel,RandomTopNDataModel, RandomTimeSeriesDataModel,
-                                    RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel, 
+                                    RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel,
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
                                     MedicationDataModel, ClinicalDecisionSupportDataModel,
                                     AppointmentDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,AgeGroupsMetricsDataModel, 
-                                    GenderDistributionMetricsDataModel,MilitaryBranchMetricsDataModel, OutreachStatusMetricsDataModel,
-                                    TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel 
+                                    GenderDistributionMetricsDataModel, PredictionChartDataModel,
+                                    MilitaryBranchMetricsDataModel, OutreachStatusMetricsDataModel,
+                                    TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel
 					) {
     return [
       {
@@ -208,6 +209,29 @@ angular.module('app')
           layout: 'surveillance,facility'
         },
         sizeY:9
+      }, {
+        name: 'PredictionChart',
+        directive: 'prediction-chart',
+        dataAttrName: 'data',
+        dataModelType: PredictionChartDataModel,
+        title: 'Attempt Prediction Chart',
+        dataModelOptions: {
+          defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM',
+          layout: 'surveillance'
+        },
+        dataModelArgs: {
+          rate: 40
+        },
+        attrs: {
+          'show-time-range': true
+        },
+        style: {
+          width: '100%',
+          height: '100%'
+        },
+        sizeX:15,
+        sizeY:12
       },
 	   {
         name: 'MilitaryBranch',
