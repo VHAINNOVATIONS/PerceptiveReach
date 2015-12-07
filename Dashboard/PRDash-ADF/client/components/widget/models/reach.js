@@ -710,46 +710,41 @@ angular.module('ui.models')
     angular.extend(PredictionChartDataModel.prototype, {
       init: function () {
         var dataModelOptions = this.dataModelOptions;
+        var currentSTA3N = null;
 
-        var view = _.get(dataModelOptions, 'common.data.activeView');
-        if (view === "surveillance") {
-          this.ID = _.get(dataModelOptions, 'common.data.facilitySelected.surveillance', null);
-        } else {
-          this.ID = null;
+        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+          if(dataModelOptions.common.data.facilitySelected.surveillance) {
+            currentSTA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+          }
+        }
+        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+          currentSTA3N = null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          var view = _.get(dataModelOptions, 'common.data.activeView');
-          if(view === "surveillance") {
-            var ID = _.get(dataModelOptions, 'common.data.facilitySelected.surveillance', null);
-            if (this.ID !== ID) {
-              this.ID = ID;
+
+          this.currentSTA3N = this.STA3N;
+
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
+            if(this.STA3N != this.currentSTA3N) {
               this.getData();
             }
           }
+
         }.bind(this));
 
         this.getData();
       },
 
       getData: function () {
-        if (this.ID) {
-          var activeView = _.get(this.dataModelOptions, 'common.data.activeView');
-          if (activeView === "surveillance"){
-            var visn_or_facility = null;
-            if (this.dataModelOptions.common.data.facilitySelected.surveillance) {
-              visn_or_facility = "-f";
-            } else if (this.dataModelOptions.common.data.visnSelected.surveillance) {
-              visn_or_facility = "-v";
-            }
-            if (visn_or_facility) {
-              var parameter = "?ID=" + this.ID + visn_or_facility;
-              $http.get('/api/prediction'+ parameter).success(function(predictionData) {
-                this.updateScope(predictionData);
-              }.bind(this));
-              return;
-            }
-          }
+
+        if (this.STA3N) {
+          var parameter = "?STA3N=" + this.STA3N;
+          $http.get('/api/prediction'+ parameter).success(function(predictionData) {
+            this.updateScope(predictionData);
+          }.bind(this));
+          return;
         }
         this.updateScope([]);
       },
@@ -1207,25 +1202,19 @@ angular.module('ui.models')
             currentID = dataModelOptions.common.data.visnSelected.surveillance;
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;
+          currentID = null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
           this.currentID = this.ID;
 
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            /*if(dataModelOptions.common.data.facilitySelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.facilitySelected.surveillance;*/
             if(dataModelOptions.common.data.visnSelected.surveillance != null)
               this.ID = dataModelOptions.common.data.visnSelected.surveillance;
           }
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-            this.ID = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;
+            this.ID = null;
           }
-          /*console.log("FacilityDataModel commonDataChange - this", this);
-          console.log("FacilityDataModel commonDataChange - currentId", this.currentID);
-          console.log("FacilityDataModel commonDataChange - this.Id", this.ID);
-          console.log("FacilityDataModel commonDataChange - facilitySelected.facility", dataModelOptions.common.data.visnSelected.facility);*/
           if(this.ID != this.currentID)
             this.getData();
 
@@ -1236,19 +1225,12 @@ angular.module('ui.models')
           this.currentID = this.ID;
 
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            /*if(dataModelOptions.common.data.facilitySelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.facilitySelected.surveillance;*/
             if(dataModelOptions.common.data.visnSelected.surveillance != null)
               this.ID = dataModelOptions.common.data.visnSelected.surveillance;
           }
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
             this.ID = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;
           }
-          /*console.log("FacilityDataModel commonDataChange - this", this);
-          console.log("FacilityDataModel commonDataChange - currentId", this.currentID);
-          console.log("FacilityDataModel commonDataChange - this.Id", this.ID);
-          console.log("FacilityDataModel commonDataChange - facilitySelected.facility", dataModelOptions.common.data.visnSelected.facility);*/
-          console.log("defaultWidgetsSelected again!!!!");
           if(this.ID != this.currentID)
             this.getData();
         }.bind(this));
@@ -1262,28 +1244,23 @@ angular.module('ui.models')
         var visn_or_facility = '';
         var activeView = that.dataModelOptions.common.data.activeView;
 
-        /*if((activeView == "surveillance" || activeView == "facility") && !this.ID) {
-          this.updateScope(data);
+        if(activeView == "surveillance"){
+          if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
+          else if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
         }
-        else {*/
-          if(activeView == "surveillance"){
-            if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
-            else if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
-          }
-          else if(activeView == "facility"){
-            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
-          }
+        else if(activeView == "facility"){
+          if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
+          else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
+        }
 
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/facilityRoster'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        //}
+        var parameter = '';
+        if(this.ID)
+          parameter = "?ID=" + this.ID + visn_or_facility;
+        $http.get('/api/facilityRoster'+ parameter)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
       },
 
       destroy: function () {
