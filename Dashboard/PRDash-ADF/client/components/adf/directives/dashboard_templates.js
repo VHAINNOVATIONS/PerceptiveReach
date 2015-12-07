@@ -11,7 +11,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "              <button name=\"btnDropdown\" type=\"button\" class=\"btn btn-primary dropdown-toggle\" ng-disabled=\"disabled\">\r" +
     "\n" +
-    "                Button dropdown<span class=\"caret\"></span>\r" +
+    "                Button dropdown <span class=\"caret\"></span>\r" +
     "\n" +
     "              </button>\r" +
     "\n" +

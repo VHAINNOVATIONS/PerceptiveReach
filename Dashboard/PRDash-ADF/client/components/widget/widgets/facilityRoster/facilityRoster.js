@@ -51,7 +51,8 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('StateAbbr').withTitle('State'),
             DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
             DTColumnBuilder.newColumn('Total').withTitle('Patients'),
-            DTColumnBuilder.newColumn('AtRisk').withTitle('At-Risk Persons')
+            DTColumnBuilder.newColumn('AtRisk').withTitle('At-Risk Persons'),
+            DTColumnBuilder.newColumn('Prediction').withTitle('Prediction Alert'),
           ];
       },
       link: function postLink(scope, element, attr) {

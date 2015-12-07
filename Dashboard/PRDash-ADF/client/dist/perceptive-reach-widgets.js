@@ -1039,6 +1039,62 @@ angular.module('ui.models')
 
     return GenderDistributionMetricsDataModel;
   })
+  .factory('PredictionChartDataModel', function ($http, CommonDataModel) {
+    function PredictionChartDataModel() {
+    }
+
+    PredictionChartDataModel.prototype = Object.create(CommonDataModel.prototype);
+    PredictionChartDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(PredictionChartDataModel.prototype, {
+      init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        var currentSTA3N = null;
+
+        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+          if(dataModelOptions.common.data.facilitySelected.surveillance) {
+            currentSTA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+          }
+        }
+        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+          currentSTA3N = null;
+        }
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+
+          this.currentSTA3N = this.STA3N;
+
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
+            if(this.STA3N != this.currentSTA3N) {
+              this.getData();
+            }
+          }
+
+        }.bind(this));
+
+        this.getData();
+      },
+
+      getData: function () {
+
+        if (this.STA3N) {
+          var parameter = "?STA3N=" + this.STA3N;
+          $http.get('/api/prediction'+ parameter).success(function(predictionData) {
+            this.updateScope(predictionData);
+          }.bind(this));
+          return;
+        }
+        this.updateScope([]);
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return PredictionChartDataModel;
+  })
   /*  .factory('NationalHighRiskFlagDataModel', function ($http, WidgetDataModel) {
     function NationalHighRiskFlagDataModel() {
     }
@@ -1466,7 +1522,7 @@ angular.module('ui.models')
 
     return OutreachStatusMetricsDataModel;
   })
-.factory('FacilityDataModel', function ($http, CommonDataModel) {
+  .factory('FacilityDataModel', function ($http, CommonDataModel) {
     function FacilityDataModel() {
     }
 
@@ -1485,25 +1541,19 @@ angular.module('ui.models')
             currentID = dataModelOptions.common.data.visnSelected.surveillance;
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;
+          currentID = null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
           this.currentID = this.ID;
 
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            /*if(dataModelOptions.common.data.facilitySelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.facilitySelected.surveillance;*/
             if(dataModelOptions.common.data.visnSelected.surveillance != null)
               this.ID = dataModelOptions.common.data.visnSelected.surveillance;
           }
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-            this.ID = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;
+            this.ID = null;
           }
-          /*console.log("FacilityDataModel commonDataChange - this", this);
-          console.log("FacilityDataModel commonDataChange - currentId", this.currentID);
-          console.log("FacilityDataModel commonDataChange - this.Id", this.ID);
-          console.log("FacilityDataModel commonDataChange - facilitySelected.facility", dataModelOptions.common.data.visnSelected.facility);*/
           if(this.ID != this.currentID)
             this.getData();
 
@@ -1514,19 +1564,12 @@ angular.module('ui.models')
           this.currentID = this.ID;
 
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            /*if(dataModelOptions.common.data.facilitySelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.facilitySelected.surveillance;*/
             if(dataModelOptions.common.data.visnSelected.surveillance != null)
               this.ID = dataModelOptions.common.data.visnSelected.surveillance;
           }
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
             this.ID = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;
           }
-          /*console.log("FacilityDataModel commonDataChange - this", this);
-          console.log("FacilityDataModel commonDataChange - currentId", this.currentID);
-          console.log("FacilityDataModel commonDataChange - this.Id", this.ID);
-          console.log("FacilityDataModel commonDataChange - facilitySelected.facility", dataModelOptions.common.data.visnSelected.facility);*/
-          console.log("defaultWidgetsSelected again!!!!");
           if(this.ID != this.currentID)
             this.getData();
         }.bind(this));
@@ -1540,28 +1583,23 @@ angular.module('ui.models')
         var visn_or_facility = '';
         var activeView = that.dataModelOptions.common.data.activeView;
 
-        /*if((activeView == "surveillance" || activeView == "facility") && !this.ID) {
-          this.updateScope(data);
+        if(activeView == "surveillance"){
+          if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
+          else if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
         }
-        else {*/
-          if(activeView == "surveillance"){
-            if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
-            else if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
-          }
-          else if(activeView == "facility"){
-            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
-          }
+        else if(activeView == "facility"){
+          if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
+          else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
+        }
 
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/facilityRoster'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        //}
+        var parameter = '';
+        if(this.ID)
+          parameter = "?ID=" + this.ID + visn_or_facility;
+        $http.get('/api/facilityRoster'+ parameter)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
       },
 
       destroy: function () {
@@ -2850,7 +2888,8 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('StateAbbr').withTitle('State'),
             DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
             DTColumnBuilder.newColumn('Total').withTitle('Patients'),
-            DTColumnBuilder.newColumn('AtRisk').withTitle('At-Risk Persons')
+            DTColumnBuilder.newColumn('AtRisk').withTitle('At-Risk Persons'),
+            DTColumnBuilder.newColumn('Prediction').withTitle('Prediction Alert'),
           ];
       },
       link: function postLink(scope, element, attr) {
@@ -4549,6 +4588,47 @@ angular.module('ui.widgets')
       }
     };
   });
+/* globals d3 */
+'use strict';
+
+angular.module('ui.widgets').directive('predictionChart', function () {
+return {
+    restrict: 'A',
+    replace: true,
+    templateUrl: 'client/components/widget/widgets/predictionChart/predictionChart.html',
+    scope: {
+      data: '=data'
+    },
+    controller: function ($scope) {
+      $scope.xAxisTickFormatFunction = function () {
+        return function (d) {
+          return d;
+        };
+      };
+      $scope.yAxisTickFormatFunction = function () {
+        return function (d) {
+          return d;
+        };
+      };
+      $scope.xFunction = function () {
+        return function (d) {
+          return d.x;
+        };
+      };
+      $scope.yFunction = function () {
+        return function (d) {
+          return d.y;
+        };
+      };
+      $scope.xAxisTickValuesFunction = function () {
+        return function () {
+          return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 15, 16, 17];
+        };
+      };
+    }
+  };
+});
+
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -5768,6 +5848,52 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "</div>\r" +
     "\n"
+  );
+
+  $templateCache.put("client/components/widget/widgets/predictionChart/predictionChart.html",
+    "<div class=\"prediction-chart\" style=\"height:100%;width:100%;\">\r" +
+    "\n" +
+    "    <nvd3-line-chart\r" +
+    "\n" +
+    "            data=\"data\",\r" +
+    "\n" +
+    "            height=\"450\"\r" +
+    "\n" +
+    "            forcex=\"[0.5,17.5]\"\r" +
+    "\n" +
+    "            xAxisTickValues=\"xAxisTickValuesFunction()\"\r" +
+    "\n" +
+    "            xAxisTickFormat=\"xAxisTickFormatFunction()\"\r" +
+    "\n" +
+    "            xAxisShowMaxMin=\"false\"\r" +
+    "\n" +
+    "            xAxisLabel=\"Month\"\r" +
+    "\n" +
+    "            yAxisTickFormat=\"yAxisTickFormatFunction()\"\r" +
+    "\n" +
+    "            yAxisLabel=\"Attempts\"\r" +
+    "\n" +
+    "            yAxisRotateLabels=\"true\"\r" +
+    "\n" +
+    "            x=\"xFunction()\"\r" +
+    "\n" +
+    "            y=\"yFunction()\"\r" +
+    "\n" +
+    "            showXAxis=\"true\"\r" +
+    "\n" +
+    "            showYAxis=\"true\"\r" +
+    "\n" +
+    "            reduceXTicks=\"true\"\r" +
+    "\n" +
+    "            transitionduration=\"0\"\r" +
+    "\n" +
+    "            useInteractiveGuideline=\"true\"\r" +
+    "\n" +
+    "            tooltips=\"true\">\r" +
+    "\n" +
+    "    </nvd3-line-chart>\r" +
+    "\n" +
+    "</div>"
   );
 
   $templateCache.put("client/components/widget/widgets/random/random.html",
