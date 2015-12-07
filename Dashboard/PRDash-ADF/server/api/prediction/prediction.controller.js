@@ -19,22 +19,20 @@ exports.index = function(req, res) {
             return; 
         }
         var request = new sql.Request(connection);
-        var ID = req.param("ID");
+        var STA3N = req.param("STA3N");
 
         // Configure WHERE clause if needed
         var whereClause = '';
-        var trueID = '';
-        if (ID !== null && ID.indexOf("-f") !== -1){
-            trueID = ID.split("-f")[0];
-            whereClause = " WHERE VAMC = @trueID";
+        if (STA3N !== null){
+            whereClause = " WHERE VAMC = @STA3N";
         } else {
             res.send(401, []);
             return;
         }
 
         // Configure Database Query
-         if (trueID && validator.isInt(trueID)) {
-            request.input('trueID', sql.Int, trueID);
+         if (STA3N && validator.isInt(STA3N)) {
+            request.input('STA3N', sql.Int, STA3N);
         }
 
         var query = 'SELECT * FROM staging.FacilityResults ' + whereClause;
