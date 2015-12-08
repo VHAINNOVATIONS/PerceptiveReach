@@ -12,5 +12,4 @@ Then I should see "External Data HealthIndicators.gov Suicide Statistics" widget
 And I should see "Age Range"
 And I should see "Gender"
 And I should see " 2013 Total Suicide Deaths Per 100K"
-And I should see "Ethnicity"
 And I click on "Logout" button
