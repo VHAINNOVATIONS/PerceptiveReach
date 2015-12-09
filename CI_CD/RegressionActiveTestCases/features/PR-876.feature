@@ -16,5 +16,4 @@ And I should see "SSN" column
 And I should see "Phone" column
 And I should see "Date First Identified" column
 And I should see "Statistical Risk Level" column
-And I should see "Outreach Status" column
 And I click on "Logout" button

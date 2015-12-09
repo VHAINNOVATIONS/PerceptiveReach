@@ -8,6 +8,5 @@ Feature: As a Dashboard User, I want to be presented "Clinical Decision Support"
   And I click on check box "checky"
   And I click on "Login" button
   When I click on "Individual View"
-  Then I should see the "Patient Roster by VAMC" widget
   And I should see "Clinical Decision Support" widget
   And I click on "Logout" button
