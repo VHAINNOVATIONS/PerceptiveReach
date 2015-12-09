@@ -3,8 +3,8 @@ Feature: As a Dashboard User, I want to be presented "Clinical Decision Support"
   Scenario: I open a web browser and use http://localhost:7003/ to see the Clinical practice Guideline widget
   Given I navigate to the http://localhost:7003/ 
   Then I should see "Perceptive Reach"
-  Then I put in "email" field as "TESTER251"
-  Then I put in "password" field as "M1n@h3s4f9"
+  Then I put in "email" field as "TESTER256"
+  Then I put in "password" field as "TE8#4k2m9d"
   And I click on check box "checky"
   And I click on "Login" button
   When I click on "Individual View"
