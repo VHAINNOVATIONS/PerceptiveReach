@@ -15,10 +15,6 @@ And I should see "Network Name"
 And I should see "Region Served"
 And I should see "Patients" 
 And I should see "At-Risk Persons" 
-When I select VISN Roster "VA New England Health Care System" veteran row in the widget
-Then I should see "VISN: 1 VAMC"
-When I Select VAMC facility "(V01) (689) VA Connecticut HCS, CT" in Facility Roster widget
-Then I should see "VISN: 1 VAMC: 689"
 And I should see "Age Groups Data" widget
 And I should see "Gender Distribution Data" widget
 And I should see "Military Branch Data" widget
