@@ -10,11 +10,7 @@ And I click on check box "checky"
 And I click on "Login" button
 And I click on "Surveillance View"
 Then I should see "VISN Roster" widget
-And I should see "VISN"
-And I should see "Network Name"
-And I should see "Region Served"
-And I should see "Patients" 
-And I should see "At-Risk Persons" 
+And I should see "Facility Roster" widget
 And I should see "Age Groups Data" widget
 And I should see "Gender Distribution Data" widget
 And I should see "Military Branch Data" widget
