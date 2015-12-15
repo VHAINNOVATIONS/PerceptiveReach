@@ -16,5 +16,4 @@ And I should see "Gender Distribution Data" widget
 And I should see "Military Branch Data" widget
 And I should see "Outreach Status Data" widget
 And I should see "Top Mid Risk Data" widget
-And I should see "External Data HealthIndicator.gov Suicide Statistics" widget
 And I click on "Logout" button
