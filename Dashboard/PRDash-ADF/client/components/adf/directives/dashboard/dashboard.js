@@ -207,22 +207,60 @@ angular.module('ui.dashboard')
         {
           var sizex = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX;
           var sizey = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY;
+          var col = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.col;
+          var row = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.row;
           var sizeIncrement = 1;
           switch(e.which) {
           case 40:
               $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY = sizey+sizeIncrement;
+              scope.saveDashboard();
               return false;
               break;
           case 37:
               $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX = sizex-sizeIncrement;
+              scope.saveDashboard();
               return false;
               break;
           case 39:
-              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX = sizex+sizeIncrement;
+              if(col + sizex < 30)
+              {
+                $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX = sizex+sizeIncrement;
+                scope.saveDashboard();
+              }
               return false;
               break;
           case 38:
               $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY = sizey-sizeIncrement;
+              scope.saveDashboard();
+              return false;
+              break;
+          case 65:
+              if(col > 0)
+              {
+                $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.col = col-1;
+                scope.saveDashboard();
+              }
+              return false;
+              break;
+          case 68:
+              if(col + sizex < 30)
+              {
+                $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.col = col+1;
+                scope.saveDashboard();
+              }
+              return false;
+              break;
+          case 83:
+              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.row = row+1;
+              scope.saveDashboard();
+              return false;
+              break;
+          case 87:
+              if(row > 0)
+              {
+                $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.row = row-1;
+                scope.saveDashboard();
+              }
               return false;
               break;
           default:
