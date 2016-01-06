@@ -149,6 +149,8 @@ angular.module('ui.widgets')
             scope.$root.$broadcast('commonDataChanged', commonData);
             //scope.$apply();
           });
+
+          $('#VISNRosterDiv .dataTables_scrollHeadInner,#VISNRosterDiv table').css({'width':''}); 
         });
         scope.$watch('widgetData', function(data){
           if(data != null && data.length >0){
