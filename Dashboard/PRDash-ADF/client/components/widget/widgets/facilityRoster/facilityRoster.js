@@ -152,6 +152,8 @@ angular.module('ui.widgets')
             scope.$root.$broadcast('commonDataChanged', commonData);
             //scope.$apply();
           });
+
+          $('#facilityRosterDiv .dataTables_scrollHeadInner,#facilityRosterDiv table').css({'width':''});
         });
 		
 
