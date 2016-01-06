@@ -2760,18 +2760,25 @@ angular.module('ui.widgets')
           $($('#diagnosisDiv table')[0]).find('th').each(function(){
             $(this).attr('tabindex','-1');
           });
+         
+          $timeout(function(){
+            $('#diagnosisDiv .dataTables_scrollHeadInner,#diagnosisDiv table').css({'width':''});    
+          },2500);
         });
 
         $timeout(function(){
             scope.$emit('bindEvents');
+            
         },1500);
+
+       
+        
 
         scope.$watch('data', function (data) {
           $.fn.dataTable.ext.errMode = 'throw';
           if (data) {
              scope.data = data;  
         }
-
         });
       }
     };
@@ -2959,6 +2966,8 @@ angular.module('ui.widgets')
             scope.$root.$broadcast('commonDataChanged', commonData);
             //scope.$apply();
           });
+
+          $('#facilityRosterDiv .dataTables_scrollHeadInner,#facilityRosterDiv table').css({'width':''});
         });
 		
 
@@ -3319,6 +3328,10 @@ angular.module('ui.widgets')
           scope.$emit('bindEvents');      
         },1500);          
 
+        $timeout(function(){
+          $('#medicationDiv .dataTables_scrollHeadInner,#medicationDiv table').css({'width':''});
+        },2500);
+
         scope.$watch('data', function (data) {
           if (data) {
             scope.data = data;
@@ -3595,6 +3608,10 @@ angular.module('ui.widgets')
       			$(this).attr('scope','col');
       			$(this).attr('tabindex','-1');
           });
+          
+          $timeout(function(){
+            $('#ageGroupDiv .dataTables_scrollHeadInner,#ageGroupDiv table').css({'width':''});
+          },2500);
     		});
         scope.$watch('widgetData', function (data) {
           $timeout(function(){
@@ -3619,6 +3636,8 @@ angular.module('ui.widgets')
             }
           },1000)
         });
+
+       
       }
     };
   });
@@ -3969,6 +3988,11 @@ angular.module('ui.widgets')
       			$(this).attr('scope','col');
       			$(this).attr('tabindex','-1');
           });
+
+          $timeout(function(){
+            $('#outReachDiv .dataTables_scrollHeadInner,#outReachDiv table').css({'width':''});
+          },2500);
+
 		    });
         scope.$watch('widgetData', function (data) {  
           $timeout(function(){
@@ -3994,6 +4018,8 @@ angular.module('ui.widgets')
             }
           },1000)
         });
+
+
       }
     };
   });
@@ -4394,7 +4420,8 @@ angular.module('ui.widgets')
             });
 			
 		$('#tblPatient_info').attr('title','Patient Table: Tab to move to the next control');
-             
+    
+    $('#patientRosterDiv .dataTables_scrollHeadInner,#patientRosterDiv .dataTables_scrollHeadInner table').css({'width':''});       
 		  
 		  $('#tblPatient tbody>tr select').keydown(function(event){ 
             if (event.keyCode == '13' || event.key == 'Enter') {
@@ -4797,8 +4824,12 @@ angular.module('ui.widgets')
               });
             }
           }
-		  },1000)
+		      },1000)
         });
+
+        $timeout(function(){
+          $('#suicideStatisticsDiv .dataTables_scrollHeadInner,#suicideStatisticsDiv table').css({'width':''});
+        },2500);
       }
     };
   });
@@ -5037,6 +5068,8 @@ angular.module('ui.widgets')
             scope.$root.$broadcast('commonDataChanged', commonData);
             //scope.$apply();
           });
+
+          $('#VISNRosterDiv .dataTables_scrollHeadInner,#VISNRosterDiv table').css({'width':''}); 
         });
         scope.$watch('widgetData', function(data){
           if(data != null && data.length >0){
