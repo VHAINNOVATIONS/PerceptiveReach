@@ -85,8 +85,12 @@ angular.module('ui.widgets')
               });
             }
           }
-		  },1000)
+		      },1000)
         });
+
+        $timeout(function(){
+          $('#suicideStatisticsDiv .dataTables_scrollHeadInner,#suicideStatisticsDiv table').css({'width':''});
+        },2500);
       }
     };
   });

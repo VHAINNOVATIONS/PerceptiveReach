@@ -52,6 +52,10 @@ angular.module('ui.widgets')
           scope.$emit('bindEvents');      
         },1500);          
 
+        $timeout(function(){
+          $('#medicationDiv .dataTables_scrollHeadInner,#medicationDiv table').css({'width':''});
+        },2500);
+
         scope.$watch('data', function (data) {
           if (data) {
             scope.data = data;
