@@ -62,6 +62,8 @@ angular.module('ui.widgets')
 
           $timeout(function(){
             $('#outReachDiv .dataTables_scrollHeadInner,#outReachDiv table').css({'width':''});
+            var containerHeight = parseInt($('#outReachDiv').parent().css('height'),10);
+            $('#outReachDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
           },2500);
 
 		    });

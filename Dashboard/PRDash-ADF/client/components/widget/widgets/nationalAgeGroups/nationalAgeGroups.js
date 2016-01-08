@@ -63,6 +63,8 @@ angular.module('ui.widgets')
           
           $timeout(function(){
             $('#ageGroupDiv .dataTables_scrollHeadInner,#ageGroupDiv table').css({'width':''});
+            var containerHeight = parseInt($('#ageGroupDiv').parent().css('height'),10);
+            $('#ageGroupDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
           },2500);
     		});
         scope.$watch('widgetData', function (data) {

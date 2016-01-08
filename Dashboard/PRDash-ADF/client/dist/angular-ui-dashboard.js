@@ -96,6 +96,8 @@ angular.module('ui.dashboard')
                }, 
                // optional callback fired when item is resized,
                stop: function(event, $element, widget) {
+                var containerHeight = parseInt($($element).find('.widget-content').css('height'),10);
+                $($element).find('.dataTables_scrollBody').css('height',.78 * containerHeight);
                 scope.saveDashboard();
                } // optional callback fired when item is finished resizing
             },
@@ -875,7 +877,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                </div>\r" +
     "\n" +
-    "                <div class=\"widget-content\" style=\"height:75%;\"></div>\r" +
+    "                <div class=\"widget-content\" style=\"height:85%;\"></div>\r" +
     "\n" +
     "                <div class=\"widget-ew-resizer\" ng-mousedown=\"grabResizer($event)\"></div>\r" +
     "\n" +
