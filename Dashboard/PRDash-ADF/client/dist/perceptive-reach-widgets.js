@@ -2762,7 +2762,9 @@ angular.module('ui.widgets')
           });
          
           $timeout(function(){
-            $('#diagnosisDiv .dataTables_scrollHeadInner,#diagnosisDiv table').css({'width':''});    
+            $('#diagnosisDiv .dataTables_scrollHeadInner,#diagnosisDiv table').css({'width':''});  
+            var containerHeight = parseInt($('#diagnosisDiv').parent().css('height'),10);
+            $('#diagnosisDiv .dataTables_scrollBody').css('height',.78 * containerHeight);  
           },2500);
         });
 
@@ -2968,6 +2970,8 @@ angular.module('ui.widgets')
           });
 
           $('#facilityRosterDiv .dataTables_scrollHeadInner,#facilityRosterDiv table').css({'width':''});
+          var containerHeight = parseInt($('#facilityRosterDiv').parent().css('height'),10);
+          $('#facilityRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
         });
 		
 
@@ -3330,6 +3334,8 @@ angular.module('ui.widgets')
 
         $timeout(function(){
           $('#medicationDiv .dataTables_scrollHeadInner,#medicationDiv table').css({'width':''});
+          var containerHeight = parseInt($('#medicationDiv').parent().css('height'),10);
+          $('#medicationDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
         },2500);
 
         scope.$watch('data', function (data) {
@@ -3611,6 +3617,8 @@ angular.module('ui.widgets')
           
           $timeout(function(){
             $('#ageGroupDiv .dataTables_scrollHeadInner,#ageGroupDiv table').css({'width':''});
+            var containerHeight = parseInt($('#ageGroupDiv').parent().css('height'),10);
+            $('#ageGroupDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
           },2500);
     		});
         scope.$watch('widgetData', function (data) {
@@ -3991,6 +3999,8 @@ angular.module('ui.widgets')
 
           $timeout(function(){
             $('#outReachDiv .dataTables_scrollHeadInner,#outReachDiv table').css({'width':''});
+            var containerHeight = parseInt($('#outReachDiv').parent().css('height'),10);
+            $('#outReachDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
           },2500);
 
 		    });
@@ -4421,7 +4431,9 @@ angular.module('ui.widgets')
 			
 		$('#tblPatient_info').attr('title','Patient Table: Tab to move to the next control');
     
-    $('#patientRosterDiv .dataTables_scrollHeadInner,#patientRosterDiv .dataTables_scrollHeadInner table').css({'width':''});       
+    $('#patientRosterDiv .dataTables_scrollHeadInner,#patientRosterDiv .dataTables_scrollHeadInner table').css({'width':''});   
+    var containerHeight = parseInt($('#patientRosterDiv').parent().css('height'),10);
+    $('#patientRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);    
 		  
 		  $('#tblPatient tbody>tr select').keydown(function(event){ 
             if (event.keyCode == '13' || event.key == 'Enter') {
@@ -4829,6 +4841,8 @@ angular.module('ui.widgets')
 
         $timeout(function(){
           $('#suicideStatisticsDiv .dataTables_scrollHeadInner,#suicideStatisticsDiv table').css({'width':''});
+          var containerHeight = parseInt($('#suicideStatisticsDiv').parent().css('height'),10);
+          $('#suicideStatisticsDiv .dataTables_scrollBody').css('height',.78 * containerHeight);  
         },2500);
       }
     };
@@ -5070,6 +5084,8 @@ angular.module('ui.widgets')
           });
 
           $('#VISNRosterDiv .dataTables_scrollHeadInner,#VISNRosterDiv table').css({'width':''}); 
+          var containerHeight = parseInt($('#VISNRosterDiv').parent().css('height'),10);
+          $('#VISNRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
         });
         scope.$watch('widgetData', function(data){
           if(data != null && data.length >0){
