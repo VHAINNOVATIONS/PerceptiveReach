@@ -54,6 +54,8 @@ angular.module('ui.widgets')
 
         $timeout(function(){
           $('#medicationDiv .dataTables_scrollHeadInner,#medicationDiv table').css({'width':''});
+          var containerHeight = parseInt($('#medicationDiv').parent().css('height'),10);
+          $('#medicationDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
         },2500);
 
         scope.$watch('data', function (data) {

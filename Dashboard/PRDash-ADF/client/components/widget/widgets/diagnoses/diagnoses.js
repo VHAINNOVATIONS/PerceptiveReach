@@ -52,7 +52,9 @@ angular.module('ui.widgets')
           });
          
           $timeout(function(){
-            $('#diagnosisDiv .dataTables_scrollHeadInner,#diagnosisDiv table').css({'width':''});    
+            $('#diagnosisDiv .dataTables_scrollHeadInner,#diagnosisDiv table').css({'width':''});  
+            var containerHeight = parseInt($('#diagnosisDiv').parent().css('height'),10);
+            $('#diagnosisDiv .dataTables_scrollBody').css('height',.78 * containerHeight);  
           },2500);
         });
 
