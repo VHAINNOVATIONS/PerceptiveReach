@@ -25,7 +25,7 @@
                       <fieldset style="border:1px solid lightgray;border-radius:5px;">
                         Please choose the specific symptoms, diagnoses, or conditions the Veteran is facing.  After all selections have been made please press <strong>‘Next’</strong>.
                       </fieldset>
-                      <div style="margin:10px;padding:5px;overflow-y:scroll;" class="conditionsList">
+                      <div class="cdsUIList" style="margin:10px;padding:5px;overflow-y:scroll;">
                         <label ng-repeat="condition in data.conditions" style="display:block;">
                               <input type="checkbox" id="chkbx{{condition.Condition_ID}}" name="chkbx_{{condition.Condition_ID}}"> {{condition.Condition}}
                         </label>
@@ -38,21 +38,23 @@
 
             <div id="cdsQuestionDiv" class="hidden">
                <legend>Question(s):</legend>
-               <div ng-repeat="question in filteredQuestions">
-                  <label>{{$index+1}}. {{question.Question}}  </label>
-                   <div class="dropdown" id="dropdownMenu2">
-                          <button class="btn btn-default"
-                                  data-toggle="dropdown">
-                              <span id="dropdown_title2">Select</span>
-                              <span class="caret"></span>
-                          </button>
-                          <ul class="dropdown-menu" >
-                              <li><a tabindex="-1" href="#">Yes</a></li>
-                              <li><a tabindex="-1" href="#">No</a></li>
-                              <li><a tabindex="-1" href="#">N/A</a></li>
-                          </ul>
-                    </div>
-               </div>
+               <div class="cdsUIList" style="margin:10px;padding:5px;overflow-y:scroll;">
+                 <div ng-repeat="question in filteredQuestions">
+                    <label>{{$index+1}}. {{question.Question}}  </label>
+                     <div class="dropdown" id="dropdownMenu2">
+                            <button class="btn btn-default"
+                                    data-toggle="dropdown">
+                                <span id="dropdown_title2">Select</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" >
+                                <li><a tabindex="-1" href="#">Yes</a></li>
+                                <li><a tabindex="-1" href="#">No</a></li>
+                                <li><a tabindex="-1" href="#">N/A</a></li>
+                            </ul>
+                      </div>
+                 </div>
+              </div>
                <div style="height:40px;padding:5px;">
                   <button ng-click="BacktoConditions()" alt="Back(Conditions)" title="Back(Conditions)" class="btn btn-primary pull-left" tabindex="1">Back</button>
                   <button ng-click="GotoTreatments()" alt="Next(Treatment)" title="Next(Treatment)" class="btn btn-primary pull-right" tabindex="1">Next</button>
@@ -61,12 +63,14 @@
 
             <div id="cdsTreatmentDiv" class="hidden">
                 <legend>Treatment(s):</legend>
-                <div ng-repeat="treatment in filteredTreatments">
-                  <label>{{$index+1}}. {{treatment.Treatment}}</label>
+                <div class="cdsUIList" style="margin:10px;padding:5px;overflow-y:scroll;">
+                  <div ng-repeat="treatment in filteredTreatments">
+                    <label>{{$index+1}}. {{treatment.Treatment}}</label>
+                  </div>
                 </div>
-              <div style="height:40px;padding:5px;">
-                <button ng-click="BacktoQuestions()" alt="Back(Questions)" title="Back(Questions)" class="btn btn-primary pull-left" tabindex="1">Back</button>
-              </div>
+                <div style="height:40px;padding:5px;">
+                  <button ng-click="BacktoQuestions()" alt="Back(Questions)" title="Back(Questions)" class="btn btn-primary pull-left" tabindex="1">Back</button>
+                </div>
             </div>
           </div>
           <div class="tab-pane fade" id="options">
