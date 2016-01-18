@@ -9,7 +9,7 @@ angular.module('app')
                                     AppointmentDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,AgeGroupsMetricsDataModel, 
                                     GenderDistributionMetricsDataModel, PredictionChartDataModel,
                                     MilitaryBranchMetricsDataModel, OutreachStatusMetricsDataModel,
-                                    TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel
+                                    TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel,CDSQuestionnaireDataModel
 					) {
     return [
       {
@@ -280,6 +280,24 @@ angular.module('app')
         dataAttrName: 'data',
         title: 'External Data HealthIndicators.gov Suicide Statistics',
         dataModelType: SuicideStatisticsDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM',
+          layout: 'surveillance'
+        },
+        size: {
+          width: '45%',
+          height: '485px'
+        },
+        sizeX:10,
+        sizeY:20
+      },
+      {
+        name: 'CDSQuestionnaire',
+        directive: 'wt-cds-questionnaire',
+        dataAttrName: 'data',
+        title: 'CDS Questionnaire',
+        dataModelType: CDSQuestionnaireDataModel,
         dataModelOptions: {
           defaultWidget: true,
           roleAccess: 'SUP,REP,ADM',
