@@ -96,6 +96,7 @@ angular.module('ui.dashboard')
                }, 
                // optional callback fired when item is resized,
                stop: function(event, $element, widget) {
+                scope.$broadcast('gridsterResized');
                 var containerHeight = parseInt($($element).find('.widget-content').css('height'),10);
                 $($element).find('.dataTables_scrollBody').css('height',.78 * containerHeight);
                 scope.saveDashboard();
