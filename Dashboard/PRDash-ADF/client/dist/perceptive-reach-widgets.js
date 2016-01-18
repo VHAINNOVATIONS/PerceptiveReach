@@ -2597,7 +2597,7 @@ angular.module('ui.widgets')
 
         $scope.resizeConditionList = function(){
           var containerHeight = parseInt($('#cdsQuestionnaire').parent().css('height'),10);
-          $('#cdsQuestionnaire .conditionsList').css('height',.50 * containerHeight);
+          $('#cdsQuestionnaire .cdsUIList').css('height',.50 * containerHeight);
         }   
 
         $scope.AnswerSelected = function(){
@@ -5330,7 +5330,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                      </fieldset>\r" +
     "\n" +
-    "                      <div style=\"margin:10px;padding:5px;overflow-y:scroll;\" class=\"conditionsList\">\r" +
+    "                      <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
     "\n" +
     "                        <label ng-repeat=\"condition in data.conditions\" style=\"display:block;\">\r" +
     "\n" +
@@ -5356,35 +5356,39 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "               <legend>Question(s):</legend>\r" +
     "\n" +
-    "               <div ng-repeat=\"question in filteredQuestions\">\r" +
+    "               <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
     "\n" +
-    "                  <label>{{$index+1}}. {{question.Question}}  </label>\r" +
+    "                 <div ng-repeat=\"question in filteredQuestions\">\r" +
     "\n" +
-    "                   <div class=\"dropdown\" id=\"dropdownMenu2\">\r" +
+    "                    <label>{{$index+1}}. {{question.Question}}  </label>\r" +
     "\n" +
-    "                          <button class=\"btn btn-default\"\r" +
+    "                     <div class=\"dropdown\" id=\"dropdownMenu2\">\r" +
     "\n" +
-    "                                  data-toggle=\"dropdown\">\r" +
+    "                            <button class=\"btn btn-default\"\r" +
     "\n" +
-    "                              <span id=\"dropdown_title2\">Select</span>\r" +
+    "                                    data-toggle=\"dropdown\">\r" +
     "\n" +
-    "                              <span class=\"caret\"></span>\r" +
+    "                                <span id=\"dropdown_title2\">Select</span>\r" +
     "\n" +
-    "                          </button>\r" +
+    "                                <span class=\"caret\"></span>\r" +
     "\n" +
-    "                          <ul class=\"dropdown-menu\" >\r" +
+    "                            </button>\r" +
     "\n" +
-    "                              <li><a tabindex=\"-1\" href=\"#\">Yes</a></li>\r" +
+    "                            <ul class=\"dropdown-menu\" >\r" +
     "\n" +
-    "                              <li><a tabindex=\"-1\" href=\"#\">No</a></li>\r" +
+    "                                <li><a tabindex=\"-1\" href=\"#\">Yes</a></li>\r" +
     "\n" +
-    "                              <li><a tabindex=\"-1\" href=\"#\">N/A</a></li>\r" +
+    "                                <li><a tabindex=\"-1\" href=\"#\">No</a></li>\r" +
     "\n" +
-    "                          </ul>\r" +
+    "                                <li><a tabindex=\"-1\" href=\"#\">N/A</a></li>\r" +
     "\n" +
-    "                    </div>\r" +
+    "                            </ul>\r" +
     "\n" +
-    "               </div>\r" +
+    "                      </div>\r" +
+    "\n" +
+    "                 </div>\r" +
+    "\n" +
+    "              </div>\r" +
     "\n" +
     "               <div style=\"height:40px;padding:5px;\">\r" +
     "\n" +
@@ -5402,17 +5406,21 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                <legend>Treatment(s):</legend>\r" +
     "\n" +
-    "                <div ng-repeat=\"treatment in filteredTreatments\">\r" +
+    "                <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
     "\n" +
-    "                  <label>{{$index+1}}. {{treatment.Treatment}}</label>\r" +
+    "                  <div ng-repeat=\"treatment in filteredTreatments\">\r" +
+    "\n" +
+    "                    <label>{{$index+1}}. {{treatment.Treatment}}</label>\r" +
+    "\n" +
+    "                  </div>\r" +
     "\n" +
     "                </div>\r" +
     "\n" +
-    "              <div style=\"height:40px;padding:5px;\">\r" +
+    "                <div style=\"height:40px;padding:5px;\">\r" +
     "\n" +
-    "                <button ng-click=\"BacktoQuestions()\" alt=\"Back(Questions)\" title=\"Back(Questions)\" class=\"btn btn-primary pull-left\" tabindex=\"1\">Back</button>\r" +
+    "                  <button ng-click=\"BacktoQuestions()\" alt=\"Back(Questions)\" title=\"Back(Questions)\" class=\"btn btn-primary pull-left\" tabindex=\"1\">Back</button>\r" +
     "\n" +
-    "              </div>\r" +
+    "                </div>\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
