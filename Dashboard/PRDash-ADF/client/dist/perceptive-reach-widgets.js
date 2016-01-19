@@ -4005,6 +4005,7 @@ angular.module('ui.widgets')
 		.withDOM('lfrti')
 		.withScroller()
 		.withOption('deferRender', true)
+    .withOption('scrollY', 200)
 		.withOption('paging',false)
     .withOption('bDestroy',true)
 		.withOption('order', [1, 'desc']);
