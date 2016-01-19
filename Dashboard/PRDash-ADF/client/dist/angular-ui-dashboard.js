@@ -97,8 +97,10 @@ angular.module('ui.dashboard')
                // optional callback fired when item is resized,
                stop: function(event, $element, widget) {
                 scope.$broadcast('gridsterResized');
-                var containerHeight = parseInt($($element).find('.widget-content').css('height'),10);
-                $($element).find('.dataTables_scrollBody').css('height',.78 * containerHeight);
+                $timeout(function(){
+                  var containerHeight = parseInt($($element).find('.widget-content').css('height'),10);
+                  $($element).find('.dataTables_scrollBody').css('height',.78 * containerHeight);
+                },800);
                 scope.saveDashboard();
                } // optional callback fired when item is finished resizing
             },
@@ -121,7 +123,8 @@ angular.module('ui.dashboard')
 
         // Save default widget config for reset
         scope.defaultWidgets = scope.options.defaultWidgets;
-
+        scope.IsCtrlKeyPressed = false;
+        scope.RowIncrement = 0;
         scope.widgetDefs = new WidgetDefCollection(scope.options.widgetDefinitions);
         var count = 1;
 
@@ -212,64 +215,82 @@ angular.module('ui.dashboard')
           var sizey = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY;
           var col = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.col;
           var row = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.row;
+          var gridsterContainer = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController;
+          var gridsterEle = $($(e)[0].currentTarget).closest('.gridsterContainer');
           var sizeIncrement = 1;
           switch(e.which) {
+          case 16:
+              scope.IsCtrlKeyPressed = true;
+              return false;
           case 40:
-              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY = sizey+sizeIncrement;
-              scope.saveDashboard();
+              gridsterContainer.sizeY = sizey+sizeIncrement;
+              //scope.saveDashboard();
+              gridsterContainer.gridster.resizable.stop({},gridsterEle,{});
               return false;
-              break;
           case 37:
-              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX = sizex-sizeIncrement;
-              scope.saveDashboard();
+              gridsterContainer.sizeX = sizex-sizeIncrement;
+              //scope.saveDashboard();
+              gridsterContainer.gridster.resizable.stop({},gridsterEle,{});
               return false;
-              break;
           case 39:
               if(col + sizex < 30)
               {
-                $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX = sizex+sizeIncrement;
-                scope.saveDashboard();
+                gridsterContainer.sizeX = sizex+sizeIncrement;
+                //scope.saveDashboard();
+                gridsterContainer.gridster.resizable.stop({},gridsterEle,{});
               }
               return false;
-              break;
           case 38:
-              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY = sizey-sizeIncrement;
-              scope.saveDashboard();
+              gridsterContainer.sizeY = sizey-sizeIncrement;
+              //scope.saveDashboard();
+              gridsterContainer.gridster.resizable.stop({},gridsterEle,{});
               return false;
-              break;
           case 65:
               if(col > 0)
               {
-                $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.col = col-1;
+                gridsterContainer.col = col-1;
                 scope.saveDashboard();
               }
               return false;
-              break;
           case 68:
               if(col + sizex < 30)
               {
-                $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.col = col+1;
+                gridsterContainer.col = col+1;
                 scope.saveDashboard();
               }
               return false;
-              break;
           case 83:
-              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.row = row+1;
+            if(scope.IsCtrlKeyPressed)
+            {
+              scope.RowIncrement += 5;
+              gridsterContainer.row = row + scope.RowIncrement;
               scope.saveDashboard();
-              return false;
-              break;
+            }
+            return false;
           case 87:
-              if(row > 0)
-              {
-                $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.row = row-1;
-                scope.saveDashboard();
-              }
-              return false;
-              break;
+            if(row > 0)
+            {
+              gridsterContainer.row = row-1;
+              scope.saveDashboard();
+            }
+            return false;
           default:
               return;
           } 
 
+        }
+
+        scope.keyUp = function(e)
+        {
+          switch(e.which) {
+            case 16:
+              scope.IsCtrlKeyPressed = false;
+              scope.RowIncrement = 0;
+              return;
+            default:
+              return;
+
+          }
         }
 
         /**
@@ -870,7 +891,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                            <!--button ng-click=\"openWidgetSettings(widget);\" style=\"background-color: transparent; float:left;\" class=\"glyphicon glyphicon-cog\" ng-if=\"!options.hideWidgetSeyttings\"></button-->\r" +
     "\n" +
-    "                            <button ng-click=\"removeWidget(widget);\" ng-keydown=\"keyDown($event)\" title=\"Remove Widget Or Resize Widget\" alt=\"Remove Widget\" style=\"background-color: transparent; float:right;\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
+    "                            <button ng-click=\"removeWidget(widget);\" ng-keydown=\"keyDown($event)\" ng-keyup=\"keyUp($event)\" title=\"Remove Widget Or Resize Widget\" alt=\"Remove Widget\" style=\"background-color: transparent; float:right;\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
     "\n" +
     "                        </div>\r" +
     "\n" +
