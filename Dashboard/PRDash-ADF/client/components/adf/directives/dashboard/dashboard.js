@@ -123,7 +123,7 @@ angular.module('ui.dashboard')
 
         // Save default widget config for reset
         scope.defaultWidgets = scope.options.defaultWidgets;
-        scope.IsCtrlKeyPressed = false;
+        scope.IsShiftKeyPressed = false;
         scope.RowIncrement = 0;
         scope.widgetDefs = new WidgetDefCollection(scope.options.widgetDefinitions);
         var count = 1;
@@ -220,7 +220,7 @@ angular.module('ui.dashboard')
           var sizeIncrement = 1;
           switch(e.which) {
           case 16:
-              scope.IsCtrlKeyPressed = true;
+              scope.IsShiftKeyPressed = true;
               return false;
           case 40:
               gridsterContainer.sizeY = sizey+sizeIncrement;
@@ -246,34 +246,47 @@ angular.module('ui.dashboard')
               gridsterContainer.gridster.resizable.stop({},gridsterEle,{});
               return false;
           case 65:
-              if(col > 0)
+              if(scope.IsShiftKeyPressed)
               {
-                gridsterContainer.col = col-1;
-                scope.saveDashboard();
+                if(col > 0)
+                {
+                  gridsterContainer.col = col-1;
+                  scope.saveDashboard();
+                }
+                return false;
               }
-              return false;
+              break;
           case 68:
-              if(col + sizex < 30)
+              if(scope.IsShiftKeyPressed)
               {
-                gridsterContainer.col = col+1;
-                scope.saveDashboard();
+                if(col + sizex < 30)
+                {
+                  gridsterContainer.col = col+1;
+                  scope.saveDashboard();
+                }
+                return false;
               }
-              return false;
+              break;
           case 83:
-            if(scope.IsCtrlKeyPressed)
+            if(scope.IsShiftKeyPressed)
             {
               scope.RowIncrement += 5;
               gridsterContainer.row = row + scope.RowIncrement;
               scope.saveDashboard();
+              return false;
             }
-            return false;
+            break;
           case 87:
-            if(row > 0)
+            if(scope.IsShiftKeyPressed)
             {
-              gridsterContainer.row = row-1;
-              scope.saveDashboard();
+              if(row > 0)
+              {
+                gridsterContainer.row = row-1;
+                scope.saveDashboard();
+              }
+              return false;  
             }
-            return false;
+            break;
           default:
               return;
           } 
@@ -284,7 +297,7 @@ angular.module('ui.dashboard')
         {
           switch(e.which) {
             case 16:
-              scope.IsCtrlKeyPressed = false;
+              scope.IsShiftKeyPressed = false;
               scope.RowIncrement = 0;
               return;
             default:
