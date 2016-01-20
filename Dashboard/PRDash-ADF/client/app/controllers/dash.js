@@ -290,7 +290,7 @@ angular.module('app')
           height: '485px'
         },
         sizeX:10,
-        sizeY:20
+        sizeY:10
       },
       {
         name: 'CDSQuestionnaire',
