@@ -58,7 +58,21 @@ angular.module('ui.widgets')
           var platform = $(this).text();
           $("#dropdown_title2").html(platform);
           $('#printPlatform').html(platform);
-        }    
+        } 
+
+        $scope.ChkbxClicked = function(){
+         $('#cdsConditionDiv input:checkbox').each(function(){
+            if($(this).is(':checked'))
+            {
+              $scope.IsChecked = true;
+              return false;
+            }
+            $scope.IsChecked = false;
+         });
+         return false;
+        }
+
+        $scope.IsChecked = false;
 
       },
      link: function postLink(scope, element, attr) {
