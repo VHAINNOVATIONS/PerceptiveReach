@@ -2604,7 +2604,21 @@ angular.module('ui.widgets')
           var platform = $(this).text();
           $("#dropdown_title2").html(platform);
           $('#printPlatform').html(platform);
-        }    
+        } 
+
+        $scope.ChkbxClicked = function(){
+         $('#cdsConditionDiv input:checkbox').each(function(){
+            if($(this).is(':checked'))
+            {
+              $scope.IsChecked = true;
+              return false;
+            }
+            $scope.IsChecked = false;
+         });
+         return false;
+        }
+
+        $scope.IsChecked = false;
 
       },
      link: function postLink(scope, element, attr) {
@@ -5286,7 +5300,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "   <!-- Nav Pills -->\r" +
     "\n" +
-    "        <ul class=\"nav nav-pills\" role=\"tablist\" id=\"cdsTabs\">\r" +
+    "        <ul class=\"nav nav-pills\" role=\"tablist\" id=\"cdsTabs\" style=\"margin-top:5px;\">\r" +
     "\n" +
     "          <li class=\"active\">\r" +
     "\n" +
@@ -5340,7 +5354,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                        <label ng-repeat=\"condition in data.conditions\" style=\"display:block;\">\r" +
     "\n" +
-    "                              <input type=\"checkbox\" id=\"chkbx{{condition.Condition_ID}}\" name=\"chkbx_{{condition.Condition_ID}}\"> {{condition.Condition}}\r" +
+    "                              <input type=\"checkbox\" ng-click=\"ChkbxClicked()\" name=\"chkbx_{{condition.Condition_ID}}\"> {{condition.Condition}}\r" +
     "\n" +
     "                        </label>\r" +
     "\n" +
@@ -5348,7 +5362,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                      <div style=\"height:40px;padding:5px;\">\r" +
     "\n" +
-    "                         <button ng-click=\"GotoQuestions()\" alt=\"Next(Questions)\" title=\"Next(Questions)\" class=\"btn btn-primary pull-right\" tabindex=\"1\">Next</button>\r" +
+    "                         <button ng-click=\"GotoQuestions()\" alt=\"Next(Questions)\" title=\"Next(Questions)\" ng-disabled=\"!IsChecked\" class=\"btn btn-primary pull-right\" tabindex=\"1\">Next</button>\r" +
     "\n" +
     "                      </div>\r" +
     "\n" +
