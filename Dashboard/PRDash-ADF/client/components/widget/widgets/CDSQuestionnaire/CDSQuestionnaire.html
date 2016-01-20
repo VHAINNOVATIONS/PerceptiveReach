@@ -1,6 +1,6 @@
 <div id="cdsQuestionnaire" title="CDS Questionnaire">
    <!-- Nav Pills -->
-        <ul class="nav nav-pills" role="tablist" id="cdsTabs">
+        <ul class="nav nav-pills" role="tablist" id="cdsTabs" style="margin-top:5px;">
           <li class="active">
               <a href="#home" role="tab" data-toggle="tab">
                    Home
@@ -27,11 +27,11 @@
                       </fieldset>
                       <div class="cdsUIList" style="margin:10px;padding:5px;overflow-y:scroll;">
                         <label ng-repeat="condition in data.conditions" style="display:block;">
-                              <input type="checkbox" id="chkbx{{condition.Condition_ID}}" name="chkbx_{{condition.Condition_ID}}"> {{condition.Condition}}
+                              <input type="checkbox" ng-click="ChkbxClicked()" name="chkbx_{{condition.Condition_ID}}"> {{condition.Condition}}
                         </label>
                       </div>
                       <div style="height:40px;padding:5px;">
-                         <button ng-click="GotoQuestions()" alt="Next(Questions)" title="Next(Questions)" class="btn btn-primary pull-right" tabindex="1">Next</button>
+                         <button ng-click="GotoQuestions()" alt="Next(Questions)" title="Next(Questions)" ng-disabled="!IsChecked" class="btn btn-primary pull-right" tabindex="1">Next</button>
                       </div>
                 </div>
             </div>
