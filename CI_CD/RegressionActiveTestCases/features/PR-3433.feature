@@ -1,7 +1,7 @@
 PR-3433 As a clinical care team member, I want to click a “Back” button if I want to go back to the initial conditions checklist.
 
-Scenario: I open a web browser and navigate to http://localhost:7003/ where I can view Consolidated Surveillance View widgets
-Given I navigate to the http://localhost:7003/
+Scenario: I open a web browser and navigate to http://localhost:7001/ where I can view Consolidated Surveillance View widgets
+Given I navigate to the http://localhost:7001/
 Then I should see "Perceptive Reach"
 When I put in "email" field as "TESTER255"
 And I put in "password" field as "C4g&nJ@9h)"
