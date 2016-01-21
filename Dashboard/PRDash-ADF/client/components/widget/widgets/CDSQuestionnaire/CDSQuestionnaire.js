@@ -27,14 +27,30 @@ angular.module('ui.widgets')
       },
       controller: function ($scope) {
         $scope.GotoQuestions =  function () {
-          var test = $scope;
-          $scope.filteredQuestions = $scope.data.questions;
+          $scope.filteredQuestions = [];
+          $('#cdsConditionDiv input:checkbox:checked').each(function(){
+            var conditionId = $(this).attr('name').replace('chkbx_','');
+            var filteredQs= jQuery.grep($scope.data.questions, function( n, i ) {
+                                  return ( n.Condition_ID == conditionId );
+                          });
+            $.merge($scope.filteredQuestions,filteredQs);
+          });
           $('#cdsConditionDiv').toggleClass('hidden');
           $('#cdsQuestionDiv').toggleClass('hidden');
         }
 
         $scope.GotoTreatments  =  function () {
-          $scope.filteredTreatments = $scope.data.treatments;
+          $scope.filteredTreatments = [];
+          $('#cdsQuestionDiv .cdsUIList button').each(function(){
+             if($(this).find('span:first').text() == 'Yes')
+             {
+               var questionId = $(this).attr('name').replace('question_','');
+               var filterTrtmnts = jQuery.grep($scope.data.treatments, function( n, i ) {
+                                      return ( n.Question_ID == questionId);
+                                   });
+               $.merge($scope.filteredTreatments,filterTrtmnts);
+             }
+          })
           $('#cdsQuestionDiv').toggleClass('hidden');
           $('#cdsTreatmentDiv').toggleClass('hidden');
         }
@@ -54,22 +70,21 @@ angular.module('ui.widgets')
           $('#cdsQuestionnaire .cdsUIList').css('height',.50 * containerHeight);
         }   
 
-        $scope.AnswerSelected = function(){
-          var platform = $(this).text();
-          $("#dropdown_title2").html(platform);
-          $('#printPlatform').html(platform);
+        $scope.AnswerSelected = function(e){
+          var selectedText = $(e.currentTarget).text();
+          $(e.currentTarget).parent().parent().find('button>span:first').text(selectedText);
+          return false;
         } 
 
         $scope.ChkbxClicked = function(){
-         $('#cdsConditionDiv input:checkbox').each(function(){
-            if($(this).is(':checked'))
-            {
-              $scope.IsChecked = true;
-              return false;
-            }
+          if($('#cdsConditionDiv input:checkbox:checked').length > 0)
+          {
+            $scope.IsChecked = true;
+          }
+          else
+          {
             $scope.IsChecked = false;
-         });
-         return false;
+          }
         }
 
         $scope.IsChecked = false;
