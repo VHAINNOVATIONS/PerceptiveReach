@@ -1,4 +1,4 @@
-Feature: PR-3429-3434 As a clinical care team member, I want to click a “Next” button once I have selected all the conditions I think are present. 
+Feature: As a clinical care team member, I want to click a “Next” button once I have selected all the conditions I think are present. PR-3429-3434
 
 Scenario: I open a web browser and navigate to http://localhost:7001/ where I can view CDS Questionnaire widget and select conditions and follow up Questions
 Given I navigate to the http://localhost:7001/
