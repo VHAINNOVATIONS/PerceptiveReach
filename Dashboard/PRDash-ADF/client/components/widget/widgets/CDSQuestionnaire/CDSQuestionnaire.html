@@ -41,16 +41,16 @@
                <div class="cdsUIList" style="margin:10px;padding:5px;overflow-y:scroll;">
                  <div ng-repeat="question in filteredQuestions">
                     <label>{{$index+1}}. {{question.Question}}  </label>
-                     <div class="dropdown" id="dropdownMenu2">
+                     <div class="dropdown">
                             <button class="btn btn-default"
-                                    data-toggle="dropdown">
-                                <span id="dropdown_title2">Select</span>
+                                    data-toggle="dropdown" name="question_{{question.Question_ID}}">
+                                <span>Select</span>
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" >
-                                <li><a tabindex="-1" href="#">Yes</a></li>
-                                <li><a tabindex="-1" href="#">No</a></li>
-                                <li><a tabindex="-1" href="#">N/A</a></li>
+                                <li ng-click="AnswerSelected($event)"><a tabindex="-1" href="#">Yes</a></li>
+                                <li ng-click="AnswerSelected($event)"><a tabindex="-1" href="#">No</a></li>
+                                <li ng-click="AnswerSelected($event)"><a tabindex="-1" href="#">N/A</a></li>
                             </ul>
                       </div>
                  </div>
