@@ -8,8 +8,8 @@ And I put in "password" field as "M1n@h3s4f9"
 And I click on check box "checky"
 And I click on "Login" button
 And I click on "Survellience" View 
-And I click on "Clinical Decision Support" Widget 
-Then I should see "Clinical Decision Support" Wiget
+And I click on "CDS Questionnaire" Widget 
+Then I should see "CDS Questionnaire" Wiget
 And I should see "Alcohol Use Disorder"
 And I click on check box "checky"
 And I should see "Antidepressants"
