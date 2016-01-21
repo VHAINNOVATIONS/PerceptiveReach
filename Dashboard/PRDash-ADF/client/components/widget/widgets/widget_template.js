@@ -87,13 +87,13 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <label>{{$index+1}}. {{question.Question}}  </label>\r" +
     "\n" +
-    "                     <div class=\"dropdown\" id=\"dropdownMenu2\">\r" +
+    "                     <div class=\"dropdown\">\r" +
     "\n" +
     "                            <button class=\"btn btn-default\"\r" +
     "\n" +
-    "                                    data-toggle=\"dropdown\">\r" +
+    "                                    data-toggle=\"dropdown\" name=\"question_{{question.Question_ID}}\">\r" +
     "\n" +
-    "                                <span id=\"dropdown_title2\">Select</span>\r" +
+    "                                <span>Select</span>\r" +
     "\n" +
     "                                <span class=\"caret\"></span>\r" +
     "\n" +
@@ -101,11 +101,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                            <ul class=\"dropdown-menu\" >\r" +
     "\n" +
-    "                                <li><a tabindex=\"-1\" href=\"#\">Yes</a></li>\r" +
+    "                                <li ng-click=\"AnswerSelected($event)\"><a tabindex=\"-1\" href=\"#\">Yes</a></li>\r" +
     "\n" +
-    "                                <li><a tabindex=\"-1\" href=\"#\">No</a></li>\r" +
+    "                                <li ng-click=\"AnswerSelected($event)\"><a tabindex=\"-1\" href=\"#\">No</a></li>\r" +
     "\n" +
-    "                                <li><a tabindex=\"-1\" href=\"#\">N/A</a></li>\r" +
+    "                                <li ng-click=\"AnswerSelected($event)\"><a tabindex=\"-1\" href=\"#\">N/A</a></li>\r" +
     "\n" +
     "                            </ul>\r" +
     "\n" +

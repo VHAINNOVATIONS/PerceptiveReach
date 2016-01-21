@@ -2573,14 +2573,30 @@ angular.module('ui.widgets')
       },
       controller: function ($scope) {
         $scope.GotoQuestions =  function () {
-          var test = $scope;
-          $scope.filteredQuestions = $scope.data.questions;
+          $scope.filteredQuestions = [];
+          $('#cdsConditionDiv input:checkbox:checked').each(function(){
+            var conditionId = $(this).attr('name').replace('chkbx_','');
+            var filteredQs= jQuery.grep($scope.data.questions, function( n, i ) {
+                                  return ( n.Condition_ID == conditionId );
+                          });
+            $.merge($scope.filteredQuestions,filteredQs);
+          });
           $('#cdsConditionDiv').toggleClass('hidden');
           $('#cdsQuestionDiv').toggleClass('hidden');
         }
 
         $scope.GotoTreatments  =  function () {
-          $scope.filteredTreatments = $scope.data.treatments;
+          $scope.filteredTreatments = [];
+          $('#cdsQuestionDiv .cdsUIList button').each(function(){
+             if($(this).find('span:first').text() == 'Yes')
+             {
+               var questionId = $(this).attr('name').replace('question_','');
+               var filterTrtmnts = jQuery.grep($scope.data.treatments, function( n, i ) {
+                                      return ( n.Question_ID == questionId);
+                                   });
+               $.merge($scope.filteredTreatments,filterTrtmnts);
+             }
+          })
           $('#cdsQuestionDiv').toggleClass('hidden');
           $('#cdsTreatmentDiv').toggleClass('hidden');
         }
@@ -2600,22 +2616,21 @@ angular.module('ui.widgets')
           $('#cdsQuestionnaire .cdsUIList').css('height',.50 * containerHeight);
         }   
 
-        $scope.AnswerSelected = function(){
-          var platform = $(this).text();
-          $("#dropdown_title2").html(platform);
-          $('#printPlatform').html(platform);
+        $scope.AnswerSelected = function(e){
+          var selectedText = $(e.currentTarget).text();
+          $(e.currentTarget).parent().parent().find('button>span:first').text(selectedText);
+          return false;
         } 
 
         $scope.ChkbxClicked = function(){
-         $('#cdsConditionDiv input:checkbox').each(function(){
-            if($(this).is(':checked'))
-            {
-              $scope.IsChecked = true;
-              return false;
-            }
+          if($('#cdsConditionDiv input:checkbox:checked').length > 0)
+          {
+            $scope.IsChecked = true;
+          }
+          else
+          {
             $scope.IsChecked = false;
-         });
-         return false;
+          }
         }
 
         $scope.IsChecked = false;
@@ -5382,13 +5397,13 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <label>{{$index+1}}. {{question.Question}}  </label>\r" +
     "\n" +
-    "                     <div class=\"dropdown\" id=\"dropdownMenu2\">\r" +
+    "                     <div class=\"dropdown\">\r" +
     "\n" +
     "                            <button class=\"btn btn-default\"\r" +
     "\n" +
-    "                                    data-toggle=\"dropdown\">\r" +
+    "                                    data-toggle=\"dropdown\" name=\"question_{{question.Question_ID}}\">\r" +
     "\n" +
-    "                                <span id=\"dropdown_title2\">Select</span>\r" +
+    "                                <span>Select</span>\r" +
     "\n" +
     "                                <span class=\"caret\"></span>\r" +
     "\n" +
@@ -5396,11 +5411,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                            <ul class=\"dropdown-menu\" >\r" +
     "\n" +
-    "                                <li><a tabindex=\"-1\" href=\"#\">Yes</a></li>\r" +
+    "                                <li ng-click=\"AnswerSelected($event)\"><a tabindex=\"-1\" href=\"#\">Yes</a></li>\r" +
     "\n" +
-    "                                <li><a tabindex=\"-1\" href=\"#\">No</a></li>\r" +
+    "                                <li ng-click=\"AnswerSelected($event)\"><a tabindex=\"-1\" href=\"#\">No</a></li>\r" +
     "\n" +
-    "                                <li><a tabindex=\"-1\" href=\"#\">N/A</a></li>\r" +
+    "                                <li ng-click=\"AnswerSelected($event)\"><a tabindex=\"-1\" href=\"#\">N/A</a></li>\r" +
     "\n" +
     "                            </ul>\r" +
     "\n" +
