@@ -8,6 +8,7 @@ And I put in "password" field as "M1n@h3s4f9"
 And I click on check box "checky"
 And I click on "Login" button
 And I click on "Survellience" View 
+And I click on "Add a Widget" button
 And I click on "CDSQuestionnaire" Widget 
 Then I should see "CDS Questionnaire" Wiget
 And I should see "Alcohol Use Disorder"
