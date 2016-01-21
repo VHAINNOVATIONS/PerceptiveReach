@@ -1,9 +1,4 @@
-PR-3429 As a clinical care team member, I want to click a “Next” button once I have selected all the conditions I think are present. 
-PR-3430 As a clinical care team member, I want to see a series of follow up questions based on the conditions I have selected. 
-PR-3431 As a clinical care team member, I want to answer the series of follow up questions based on the conditions I have selected. 
-PR-3432 As a clinical care team member, I want to click a “Next” button after I have answered all follow up questions. 
-PR-3427 As a clinical care team member, I want to select conditions via a checklist that I think are present in a patient. 
-PR-3434 As a clinical care team member, I want to view a list of recommended clinical CDS treatment options based on my input to a) the conditions checklist and b) the follow up questions.  
+PR-3429-3434 As a clinical care team member, I want to click a “Next” button once I have selected all the conditions I think are present. 
 
 Scenario: I open a web browser and navigate to http://localhost:7001/ where I can view CDS Questionnaire widget and select conditions and follow up Questions
 Given I navigate to the http://localhost:7001/
@@ -13,7 +8,7 @@ And I put in "password" field as "M1n@h3s4f9"
 And I click on check box "checky"
 And I click on "Login" button
 And I click on "Survellience" View 
-And I click on "CDS Questionnaire" Widget 
+And I click on "CDSQuestionnaire" Widget 
 Then I should see "CDS Questionnaire" Wiget
 And I should see "Alcohol Use Disorder"
 And I click on check box "checky"
