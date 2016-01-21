@@ -1,4 +1,4 @@
-Feature:  PR-3427  As a clinical care team member, I want to select conditions via a checklist that I think are present in a patient. 
+Feature: As a clinical care team member, I want to select conditions via a checklist that I think are present in a patient. PR-3427
 
 Scenario: I open a web browser and navigate to http://localhost:7001/ where I can view CDS Questionnaire widget
 Given I navigate to the http://localhost:7001/

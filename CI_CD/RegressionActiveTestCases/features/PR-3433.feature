@@ -1,4 +1,4 @@
-Feature: PR-3433 As a clinical care team member, I want to click a “Back” button if I want to go back to the initial conditions checklist.
+Feature:  As a clinical care team member, I want to click a “Back” button if I want to go back to the initial conditions checklist.PR-3433
 
 Scenario: I open a web browser and navigate to http://localhost:7001/ where I can view CDS Questionnaire widget and select conditions via the back button
 Given I navigate to the http://localhost:7001/
