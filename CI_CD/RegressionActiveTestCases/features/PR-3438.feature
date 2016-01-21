@@ -1,6 +1,5 @@
 Feature: PR-3438  As a Administrator/Supervisor, I want to access Clinican Decision Support in the Survellience View
 
-
 Scenario: I open a web browser and navigate to http://localhost:7001/ where I can view CDS Questionnaire widgens
 Given I navigate to the http://localhost:7001/
 Then I should see "Perceptive Reach"
