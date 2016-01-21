@@ -8,8 +8,8 @@ And I put in "password" field as "C4g&nJ@9h)"
 And I click on check box "checky"
 And I click on "Login" button
 And I click on "Survellience" View 
-And I click on "Clinical Decision Support" Widget 
-Then I should see "Clinical Decision Support" Wiget
+And I click on "CDS Questionnaire" Widget 
+Then I should see "CDS Questionnaire" Wiget
 And I should see "Alcohol Use Disorder"
 And I click on check box "checky"
 And I should see "Antidepressants"
@@ -19,7 +19,7 @@ And I should see "1. Has there been a suicide attempt within the past year?"
 And I should see "2.Have there ever been two or more suicide attempts?"
 And I should see "3. Is there a diagnosis of a mood or anxiety disorder"
 And I should click on "back"button
-Then I should see "Clinical Decision Support" Wiget
+Then I should see "CDS Questionnaire" Wiget
 And I should see "Alcohol Use Disorder"
 And I should see "Antidepressants"
 And I click on "Logout" button
