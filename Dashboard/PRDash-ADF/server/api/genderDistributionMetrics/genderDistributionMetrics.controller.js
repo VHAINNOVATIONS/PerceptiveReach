@@ -16,34 +16,31 @@ exports.index = function(req, res) {
             return; 
         }
         var request = new sql.Request(connection);
-        var ID = req.param("ID");
-
-        // Configure WHERE clause if needed
+        var VISN = req.param("VISN");
+        var STA3N = req.param("STA3N");
         var andClause = '';
-        var trueID = '';
-        if(ID != null && ID.indexOf("-v") != -1){
-            trueID = ID.split("-v")[0];
-            andClause = " AND v.VISN = @trueID";
-        }
-        else if(ID != null && ID.indexOf("-f") != -1){
-            trueID = ID.split("-f")[0];
-            andClause = " AND s.sta3N = @trueID";
+        var and = ' AND';
+
+        if (VISN && validator.isInt(VISN)) {
+            request.input('VISN', sql.Int, VISN);
+            andClause += and + ' v.VISN = @VISN';
         }
 
+        if (STA3N && validator.isInt(STA3N)) {
+            request.input('STA3N', sql.Int, STA3N);
+            andClause += and + ' s.sta3N = @STA3N';
+        }         
+           
         // Configure Database Query
         var query = '';
-        if (trueID && validator.isInt(trueID)) {
-            request.input('trueID', sql.Int, trueID);            
-        }
-        query += "SELECT r.RiskLevelDesc as RiskLevel, Gender, COUNT(DISTINCT p.ReachID) as Total"
+        query += "SELECT r.RiskLevelDesc as RiskLevel, Gender, COUNT(Gender) as Total"
         query += " FROM dbo.Patient p INNER JOIN dbo.Ref_RiskLevel r "
         query += " ON p.RiskLevel = r.RiskLevelID "
         query += " INNER JOIN PatientStation s ON s.ReachID = p.ReachID";
-        query += " INNER JOIN Ref_VAMC v ON s.sta3N = v.STA3N";
+        query += " INNER JOIN Ref_VAMC v ON s.sta3N = v.STA3N ";
         query += " WHERE Gender IS NOT NULL";
         query += andClause;
         query += " GROUP BY r.RiskLevelDesc, p.Gender";
-
         
         // Query the database
         request.query(query, function(err, recordset) {

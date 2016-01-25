@@ -49,7 +49,7 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('HomePhone').withTitle('Phone'),
             DTColumnBuilder.newColumn('DateIdentifiedAsAtRisk').withTitle('Date First Identified'),
             DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level'),
-            DTColumnBuilder.newColumn('OutreachStatusSelect').withTitle('Outreach Status')
+            DTColumnBuilder.newColumn('OutreachStatus').withTitle('Outreach Status')
         ];
         $scope.columns = [
           {"Name" : "Name"},
@@ -68,6 +68,7 @@ angular.module('ui.widgets')
           $( "select[id^='vet_']" ).on("change",function(e,ui){
             var selectedIndex = this.value;
             var selectedreachId = $(e.currentTarget).attr('id').replace("vet_","");
+            $('#Outreach_' + selectedreachId).text(selectedIndex);
             var commonData = scope.widget.dataModelOptions.common;
             scope.widget.dataModel.saveOutreachData(parseInt(selectedIndex),selectedreachId,commonData.data.facilitySelected.facility);
           } );
@@ -79,7 +80,10 @@ angular.module('ui.widgets')
             });
 			
 		$('#tblPatient_info').attr('title','Patient Table: Tab to move to the next control');
-             
+    
+    $('#patientRosterDiv .dataTables_scrollHeadInner,#patientRosterDiv .dataTables_scrollHeadInner table').css({'width':''});   
+    var containerHeight = parseInt($('#patientRosterDiv').parent().css('height'),10);
+    $('#patientRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);    
 		  
 		  $('#tblPatient tbody>tr select').keydown(function(event){ 
             if (event.keyCode == '13' || event.key == 'Enter') {
@@ -102,13 +106,14 @@ angular.module('ui.widgets')
               // get common data object
               var commonData = scope.widget.dataModelOptions.common;
               // update common data object with new patient object
-              var vetId = event.currentTarget.cells[5].children[0].id.replace("vet_","");
+              var vetId = event.currentTarget.cells[5].children[1].id.replace("vet_","");
               var obj = jQuery.grep(scope.patientList, function( n, i ) {
                 return ( n.ReachID == vetId );
               });
               console.log("ReachID Vet Selected: ",vetId);
-              delete obj[0].OutreachStatusSelect;
+              delete obj[0].OutreachStatus;
               commonData.data.veteranObj = obj[0];
+              commonData.data.veteranObj.OutreachStatus = $('#Outreach_' + vetId).text();
               console.log("CommonDataAfterClick: ", commonData);
               // broadcast message throughout system
               scope.$parent.$parent.$parent.$broadcast('commonDataChanged', commonData);
@@ -157,7 +162,9 @@ angular.module('ui.widgets')
                 options += temp;                
               }
               var select = "<select class='form-control' style='width: 180px;' id='vet_" + patientsBysta3N[patient].ReachID + "'><option value=''></option>"+ options+ "</select>";
-              patientsBysta3N[patient].OutreachStatusSelect = select;
+              //patientsBysta3N[patient].OutreachStatusSelect = select;
+              patientsBysta3N[patient].OutreachStatus = "<span id='Outreach_" + patientsBysta3N[patient].ReachID + "' hidden>"+ patientsBysta3N[patient].OutreachStatus +"</span> " +  select;
+              
             }
             
             scope.patientList = patientsBysta3N;

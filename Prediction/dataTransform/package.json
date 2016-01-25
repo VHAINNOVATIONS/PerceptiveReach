@@ -1,0 +1,16 @@
+{
+  "name": "prediction-data",
+  "version": "0.0.1",
+  "license": "Apache License, v2.0",
+  "dependencies": {
+    "dotenv": "^1.2.0",
+    "mssql": "^2.2.0"
+  },
+  "devDependencies": {
+    "node-csv": "^0.1.2"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {}
+}

@@ -4,16 +4,11 @@
 Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran's Outreach Status in veteran roaster widget
   Given I navigate to the http://localhost:7003/
   Then I should see "Perceptive Reach"
-  Then I put in "email" field as "TESTER138"
-  Then I put in "password" field as "FeAn#011819"
+  Then I put in "email" field as "TESTER252"
+  Then I put in "password" field as "M2n#f5s4f7"
   And I click on check box "checky"
   And I click on "Login" button
-  When I click on "Individual View" 
+  And I click on "Individual View"
   Then I should see the "Patient Roster by VAMC" widget
   And I should see "Outreach Status" column
-  And I should see "Not Contacted" 
-  And I should see "Outreach Initiated" 
-  And I should see "Outreach Attempted" 
-  And I should see "Services Refused" 
-  And I should see "No Additional Outreach Required" 
   And I click on "Logout" button
