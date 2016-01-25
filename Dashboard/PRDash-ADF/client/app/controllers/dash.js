@@ -6,7 +6,7 @@ angular.module('app')
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
                                     MedicationDataModel, ClinicalDecisionSupportDataModel,
-                                    AppointmentDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,AgeGroupsMetricsDataModel, 
+                                    AppointmentDataModel, EnterDataDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,AgeGroupsMetricsDataModel, 
                                     GenderDistributionMetricsDataModel, PredictionChartDataModel,
                                     MilitaryBranchMetricsDataModel, OutreachStatusMetricsDataModel,
                                     TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel
@@ -77,6 +77,20 @@ angular.module('app')
         sizeX:18,
         sizeY:10
       },
+        {
+        name: 'enterdata',
+        directive: 'wt-enter-data',
+        dataAttrName: 'data',
+        dataModelType: EnterDataDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM,CCT',
+          layout: 'individual'
+        },          
+        sizeX:18,
+        sizeY:20
+      },
+      
       {
         name: 'contact',
         directive: 'wt-contact',
