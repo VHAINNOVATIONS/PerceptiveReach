@@ -17,25 +17,32 @@ exports.index = function(req, res) {
             return; 
         }
         var request = new sql.Request(connection);
-        var ID = req.param("ID");
-
-        // Configure WHERE clause if needed
+        var VISN = req.param("VISN");
+        var STA3N = req.param("STA3N");
         var whereClause = '';
-        var trueID = '';
-        if(ID != null && ID.indexOf("-v") != -1){
-            trueID = ID.split("-v")[0];
-            whereClause = " WHERE v.VISN = @trueID";
+        var where = ' WHERE';
+        var and = ' AND';
+
+        if (VISN && validator.isInt(VISN)) {
+            request.input('VISN', sql.Int, VISN);
+            whereClause += where + ' v.VISN = @VISN ';
         }
-        else if(ID != null && ID.indexOf("-f") != -1){
-            trueID = ID.split("-f")[0];
-            whereClause = " WHERE s.sta3N = @trueID";
+
+        if (STA3N && validator.isInt(STA3N)) {
+            request.input('STA3N', sql.Int, STA3N);
+            if (VISN) {
+                whereClause += and;
+            } else {
+                whereClause += where;
+            }
+            whereClause += ' s.sta3N = @STA3N ';
         }
+
+        console.log("MilitaryBranchAPI whereClause: ", whereClause);
+
 
         // Configure Database Query
         var query = '';
-        if (trueID && validator.isInt(trueID)) {
-            request.input('trueID', sql.Int, trueID);              
-        }
         query += 'SELECT DISTINCT me.BranchDesc, r.RiskLevelDesc as RiskLevel, COUNT(DISTINCT p.ReachID) as Total FROM dbo.Patient p';
         query += ' INNER JOIN dbo.Ref_RiskLevel r ON p.RiskLevel = r.RiskLevelID'
         query += ' INNER JOIN dbo.Ref_MilitaryBranch me ON p.MilitaryBranch = me.BranchID';

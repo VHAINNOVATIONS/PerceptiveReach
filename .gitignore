@@ -7,3 +7,11 @@ Database/SSIS/HealthData/HealthIndicators.suo
 Database/SSIS/HealthData/HealthIndicators.dtproj.user
 Database/SSIS/HealthData/HealthIndicators/bin
 Database/SSIS/HealthData/HealthIndicators/obj
+Prediction/dataTransform/.env
+Prediction/dataTransform/node_modules
+Prediction/*.RData
+Prediction/*.Rout
+Prediction/R/testout
+Prediction/R/*.Rout
+Prediction/R/*.RData
+.project

@@ -96,6 +96,8 @@ angular.module('ui.dashboard')
                }, 
                // optional callback fired when item is resized,
                stop: function(event, $element, widget) {
+                var containerHeight = parseInt($($element).find('.widget-content').css('height'),10);
+                $($element).find('.dataTables_scrollBody').css('height',.78 * containerHeight);
                 scope.saveDashboard();
                } // optional callback fired when item is finished resizing
             },
@@ -202,6 +204,72 @@ angular.module('ui.dashboard')
           scope.widgets.splice(_.indexOf(scope.widgets, widget), 1);
           scope.saveDashboard();
         };
+
+        scope.keyDown = function(e)
+        {
+          var sizex = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX;
+          var sizey = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY;
+          var col = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.col;
+          var row = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.row;
+          var sizeIncrement = 1;
+          switch(e.which) {
+          case 40:
+              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY = sizey+sizeIncrement;
+              scope.saveDashboard();
+              return false;
+              break;
+          case 37:
+              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX = sizex-sizeIncrement;
+              scope.saveDashboard();
+              return false;
+              break;
+          case 39:
+              if(col + sizex < 30)
+              {
+                $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX = sizex+sizeIncrement;
+                scope.saveDashboard();
+              }
+              return false;
+              break;
+          case 38:
+              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY = sizey-sizeIncrement;
+              scope.saveDashboard();
+              return false;
+              break;
+          case 65:
+              if(col > 0)
+              {
+                $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.col = col-1;
+                scope.saveDashboard();
+              }
+              return false;
+              break;
+          case 68:
+              if(col + sizex < 30)
+              {
+                $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.col = col+1;
+                scope.saveDashboard();
+              }
+              return false;
+              break;
+          case 83:
+              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.row = row+1;
+              scope.saveDashboard();
+              return false;
+              break;
+          case 87:
+              if(row > 0)
+              {
+                $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.row = row-1;
+                scope.saveDashboard();
+              }
+              return false;
+              break;
+          default:
+              return;
+          } 
+
+        }
 
         /**
          * Opens a dialog for setting and changing widget properties
@@ -596,7 +664,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "              <button name=\"btnDropdown\" type=\"button\" class=\"btn btn-primary dropdown-toggle\" ng-disabled=\"disabled\">\r" +
     "\n" +
-    "                Button dropdown<span class=\"caret\"></span>\r" +
+    "                Button dropdown <span class=\"caret\"></span>\r" +
     "\n" +
     "              </button>\r" +
     "\n" +
@@ -801,7 +869,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                            <!--button ng-click=\"openWidgetSettings(widget);\" style=\"background-color: transparent; float:left;\" class=\"glyphicon glyphicon-cog\" ng-if=\"!options.hideWidgetSeyttings\"></button-->\r" +
     "\n" +
-    "                            <button ng-click=\"removeWidget(widget);\" title=\"Remove Widget\" alt=\"Remove Widget\" style=\"background-color: transparent; float:right;\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
+    "                            <button ng-click=\"removeWidget(widget);\" ng-keydown=\"keyDown($event)\" title=\"Remove Widget Or Resize Widget\" alt=\"Remove Widget\" style=\"background-color: transparent; float:right;\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
     "\n" +
     "                        </div>\r" +
     "\n" +
@@ -809,7 +877,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                </div>\r" +
     "\n" +
-    "                <div class=\"widget-content\" style=\"height:75%;\"></div>\r" +
+    "                <div class=\"widget-content\" style=\"height:85%;\"></div>\r" +
     "\n" +
     "                <div class=\"widget-ew-resizer\" ng-mousedown=\"grabResizer($event)\"></div>\r" +
     "\n" +
@@ -1468,7 +1536,7 @@ angular.module('ui.dashboard')
 
       angular.extend(defaults, options);
       angular.extend(options, defaults);
-
+       
       this.id = options.storageId;
       this.storage = options.storage;
       this.storageHash = options.storageHash;
@@ -1535,6 +1603,14 @@ angular.module('ui.dashboard')
           states: this.states,
           storageHash: this.storageHash
         };
+
+        var sessionStore = JSON.parse(sessionStorage.getItem('user'));
+        
+        if(sessionStore)
+        {
+          sessionStore.DashboardData = state;
+          sessionStorage.setItem("user", JSON.stringify(sessionStore)); 
+        }
 
         if (this.stringifyStorage) {
           state = JSON.stringify(state);
