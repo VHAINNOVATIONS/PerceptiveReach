@@ -171,6 +171,18 @@ angular.module('ui.dashboard')
 
         scope.addWidget = function (widgetToInstantiate, doNotSave) {
 
+          var widgetExists =  jQuery.grep(scope.widgets, function( n, i ) {  return ( n.name == widgetToInstantiate.name);});
+          if(widgetExists.length > 0 && !doNotSave)
+          {
+            $(".snoAlertBox").fadeIn();
+            window.setTimeout(function () {
+              $(".snoAlertBox").fadeOut(300)
+            }, 4000);
+            return false;   
+          }
+          
+
+
           if (typeof widgetToInstantiate === 'string') {
             widgetToInstantiate = {
               name: widgetToInstantiate

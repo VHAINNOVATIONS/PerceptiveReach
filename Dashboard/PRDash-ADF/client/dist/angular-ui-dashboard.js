@@ -171,6 +171,18 @@ angular.module('ui.dashboard')
 
         scope.addWidget = function (widgetToInstantiate, doNotSave) {
 
+          var widgetExists =  jQuery.grep(scope.widgets, function( n, i ) {  return ( n.name == widgetToInstantiate.name);});
+          if(widgetExists.length > 0 && !doNotSave)
+          {
+            $(".snoAlertBox").fadeIn();
+            window.setTimeout(function () {
+              $(".snoAlertBox").fadeOut(300)
+            }, 4000);
+            return false;   
+          }
+          
+
+
           if (typeof widgetToInstantiate === 'string') {
             widgetToInstantiate = {
               name: widgetToInstantiate
@@ -791,6 +803,8 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("client/components/adf/directives/dashboard/dashboard.html",
     "<div>\r" +
+    "\n" +
+    "    <div class=\"alert alert-success snoAlertBox\" data-alert=\"alert\">We're sorry-this widget has already been added to your dashboard. Please select a different widget to add.</div>\r" +
     "\n" +
     "    <div offset=\"105\" style=\"z-index:5;background-color:white;\" sticky tabindex=\"-1\">\r" +
     "\n" +
