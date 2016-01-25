@@ -2,6 +2,20 @@ body {
     margin: 15px;
     padding-top: 50px;
 }
+
+
+.snoAlertBox{
+  position:absolute;
+  z-index:1400;
+  top:10%;
+  right:30%;
+  margin:0px auto;
+  text-align:center;
+  display:none;
+  border: 2px solid red;
+  font-weight: bold;
+}
+
 a{
     cursor: pointer;
 }
@@ -434,3 +448,4 @@ position: relative;
 .ui-pnotify .ui-pnotify-shadow {
 -webkit-box-shadow: 0px 2px 10px rgba(50, 50, 50, 0.5);
 }
+
