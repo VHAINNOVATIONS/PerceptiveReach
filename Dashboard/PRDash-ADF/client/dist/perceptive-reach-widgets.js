@@ -736,6 +736,46 @@ angular.module('ui.models')
 
     return AppointmentDataModel;
   })
+.factory('EnterDataDataModel', function ($http, CommonDataModel) {
+    function EnterDataDataModel() {
+    }
+
+    EnterDataDataModel.prototype = Object.create(CommonDataModel.prototype);
+    EnterDataDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(EnterDataDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
+
+        this.updateScope('-');
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/enterdata?reachID='+ this.reachID)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return EnterDataDataModel;
+  })
 .factory('DiagnosesDataModel', function ($http, CommonDataModel) {
     function DiagnosesDataModel() {
     }
@@ -2835,6 +2875,231 @@ angular.module('ui.widgets')
       }     
     };
   });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtEnterData', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/enterdata/enterdata.html', 
+      controller: function ($scope) {
+        $scope.x = 0;
+        $scope.oneAtATime = false;
+        $scope.yesOpen = false;
+        $scope.isOpen= true;
+        $scope.isCollapsed = true;
+        $scope.isCollapsed1 = true;
+        $scope.isCollapsed2 = true;
+        $scope.isCollapsed3 = true;
+        $scope.isCollapsed4 = true;
+        $scope.isCollapsed5 = true;
+
+        $scope.goBack= function() {
+            $scope.currentComment = $scope.comment[$scope.x+1].value;
+            $scope.x+=1;
+        };
+        $scope.goForward= function(){
+            $scope.currentComment = $scope.comment[$scope.x-1].value;
+            $scope.x-=1;
+        };
+        $scope.goBackRisk= function() {
+            $scope.currentRisk = $scope.com[$scope.x+1].value;
+            $scope.x+=1;
+        };
+        $scope.goForwardRisk= function(){
+            $scope.currentRisk = $scope.com[$scope.x-1].value;
+            $scope.x-=1;
+        };
+
+         $scope.comment= [
+            {
+             value: "This is the first comment",
+             date: "10-01-2015"
+            },
+            {
+             value: "This is the second comment",
+             date: "10-01-2015"
+            },
+            {
+             value: "This is the third comment",
+             date: "10-01-2015"
+            },
+            {
+             value: "This is the 4 comment",
+             date: "10-01-2015"
+            },
+            {
+             value: "This is the 5 comment",
+             date: "10-01-2015"
+            }
+          ];
+         $scope.dataEntry = [
+              {
+               entry: "1.High Risk Flag Added",
+               date: "01-01-2016"
+              },
+              {
+               entry: "2.High Risk Flag Removed",
+               date: "12-01-2015"
+              },
+              {
+               entry: "3.High Risk Flag Cleared",
+               date: "11-01-2015"
+              },
+              {
+               entry: "4.High Risk Flag Added",
+               date: "11-01-2015"
+              }
+            ];
+            
+          $scope.sorData = [
+            {
+             entry: "1.High Risk Flag ",
+             date: "Date Initiated: 03-02-2001",
+             newdate: "Date Cleared: 02-03-2004"
+            },
+            {
+             entry: "2.High Risk Flag",
+             date: "Date Initiated: 03-02-2001",
+             newdate: "Date Cleared: 02-03-2004"
+            },
+            {
+             entry: "3.High Risk Flag ",
+             date: "Date Initiated: 03-02-2001",
+             newdate: "Date Cleared: 02-03-2004"
+            }
+          ];
+          $scope.healthEntry = [
+              {
+               entry: "1.George Doe, PhD",
+               date: "01-01-2016"
+              },
+              {
+               entry: "2.John Smith, MD",
+               date: "12-01-2015"
+              },
+              {
+               entry: "3.Charlie Brown, DPT",
+               date: "11-01-2015"
+              }
+            ];
+            
+          $scope.providerData = [
+            {
+             entry: "1.John Doe M.D.",
+             date: "10-01-2015"
+            },
+            {
+             entry: "2.Charlie Brown, DPT",
+             date: "10-01-2015"
+            }, 
+            {
+             entry: "3.Bill Brown, DPT",
+             date: "10-01-2015"
+            }
+          ];
+          
+          $scope.safetyEntry = [
+              {
+               entry: "1.Safety Plan Updated",
+               date: "01-01-2016"
+              },
+              {
+               entry: "2.Safety Plan Removed",
+               date: "12-01-2015"
+              },
+              {
+               entry: "3.Safety Plan Cleared",
+               date: "11-01-2015"
+              }
+            ];
+            
+          $scope.planData = [
+            {
+             entry: "1.Safety Plan",
+            date: "Date Completed: 06-07-2008",
+            },
+            {
+              entry: "2.Safety Plan",
+            date: "Date Completed: 06-07-2008",
+            },
+            {
+              entry: "3.Safety Plan",
+            date: "Date Completed: 06-07-2008",
+            }
+          ];
+          
+          $scope.items = ['Item 1', 'Item 2', 'Item 3'];
+
+          $scope.addItem = function() {
+            var newItemNo = $scope.items.length + 1;
+            $scope.items.push('Item ' + newItemNo);
+          };
+
+          $scope.status = {
+            isFirstOpen: true,
+            isFirstDisabled: false
+          };
+           $scope.myNewData = '';
+            
+            $scope.overwrite = function ($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+                
+                $scope.myData = ' ';
+            };
+            
+            $scope.addHRData = function() {
+              if ($scope.hrData) {
+                $scope.dataEntry.unshift({entry: $scope.hrData, date: "01-08-2016"}) 
+             $scope.hrData= $scope.dataEntry[$scope.x].entry;
+              
+              }
+              if ($scope.mhData) {
+                $scope.healthEntry.unshift({entry: $scope.mhData, date: "01-08-2016"})
+                $scope.mhData= $scope.healthEntry[$scope.x].entry;
+              }
+              if ($scope.spData) {
+                $scope.safetyEntry.unshift({entry: $scope.spData, date: "01-08-2016"})
+                $scope.spData= $scope.safetyEntry[$scope.x].entry; 
+              }
+              if ($scope.currentComment != $scope.comment[$scope.x].value) {
+                $scope.comment.unshift({value: $scope.currentComment, date: "01-08-2016"}) 
+                $scope.currentComment= $scope.comment[0].value;
+              }
+            }
+            
+            $scope.currentComment = $scope.comment[$scope.x].value;
+            $scope.hrData =$scope.dataEntry[$scope.x].entry;
+            $scope.mhData = $scope.healthEntry[$scope.x].entry;
+            $scope.spData = $scope.safetyEntry[$scope.x].entry;            
+          },
+          link: function postLink(scope, element, attr) {
+            scope.$watch('widgetData', function(data){
+              var test = data;
+            });
+
+          }
+        }
+  });
+
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -5320,6 +5585,285 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "    </div>\r" +
     "\n" +
     "</div>\r" +
+    "\n"
+  );
+
+  $templateCache.put("client/components/widget/widgets/enterdata/enterdata.html",
+    "\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "  <div>\r" +
+    "\n" +
+    "    <script type=\"text/ng-template\" id=\"group-template.html\">\r" +
+    "\n" +
+    "      <div class=\"panel {{panelClass || 'panel-default'}}\">\r" +
+    "\n" +
+    "        <div class=\"panel-heading\">\r" +
+    "\n" +
+    "          <h4 class=\"panel-title\" style=\"color:#fa39c3\">\r" +
+    "\n" +
+    "          <a href tabindex=\"0\" class=\"accordion-toggle\" ng-click=\"toggleOpen()\" uib-accordion-transclude=\"heading\"><span\r" +
+    "\n" +
+    "            ng-class=\"{'text-muted': isDisabled}\">{{heading}}</span></a>\r" +
+    "\n" +
+    "        </h4>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"panel-collapse collapse\" uib-collapse=\"!isOpen\">\r" +
+    "\n" +
+    "          <div class=\"panel-body\" style=\"text-align: right\" ng-transclude></div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "    </script>\r" +
+    "\n" +
+    "    <div ng-form=\"TestForm\">\r" +
+    "\n" +
+    "      <div class=\"panel panel-default\">\r" +
+    "\n" +
+    "        <div class=\"panel-heading\">\r" +
+    "\n" +
+    "          <h3 class=\"panel-title\">Data Entry Widget Option 1</h3>\r" +
+    "\n" +
+    "          <h5>Patient Name: Paul Brown</h5></div></div>\r" +
+    "\n" +
+    "        <div class=\"panel-body\">\r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-xs-6\">\r" +
+    "\n" +
+    "              <label><b>Enter High Risk Flag:</b>\r" +
+    "\n" +
+    "                <br>\r" +
+    "\n" +
+    "                <input style=\"width:180px\" type=\"text\" ng-model=\"hrData\"  ng-required=\"true\" placeholder=\"{{dataEntry[0].entry}}\">\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                <!--Valid: {{TestForm.$valid}}-->\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed = !isCollapsed\">History</button>\r" +
+    "\n" +
+    "                <div uib-collapse=\"isCollapsed\">\r" +
+    "\n" +
+    "                  <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
+    "\n" +
+    "                    <div ng-repeat=\"d in dataEntry\">{{d.entry}}<hr></div>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <br>\r" +
+    "\n" +
+    "                <p style=\"padding-top:4px\"><b>High Risk SPAN History:</b>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                </p>\r" +
+    "\n" +
+    "                <div>{{sorData[0].entry}}\r" +
+    "\n" +
+    "                  <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed1 = !isCollapsed1\">History</button>\r" +
+    "\n" +
+    "                  <div uib-collapse=\"isCollapsed1\">\r" +
+    "\n" +
+    "                    <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
+    "\n" +
+    "                      <div ng-repeat=\"s in sorData\">{{s.entry}}\r" +
+    "\n" +
+    "                        <br>{{s.date}}\r" +
+    "\n" +
+    "                        <br>{{s.newdate}}\r" +
+    "\n" +
+    "                        <hr>\r" +
+    "\n" +
+    "                      </div>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <div class=\"col-xs-6\">\r" +
+    "\n" +
+    "              <label><b>Enter Principal MH Provider:</b>\r" +
+    "\n" +
+    "                <br>\r" +
+    "\n" +
+    "                <input style=\"width:180px\" type=\"text\" ng-model=\"mhData\"  ng-required=\"true\" placeholder=\"{{healthEntry[0].entry}}\">\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                <!--Valid: {{TestForm.$valid}}-->\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed2 = !isCollapsed2\">History</button>\r" +
+    "\n" +
+    "                <div uib-collapse=\"isCollapsed2\">\r" +
+    "\n" +
+    "                  <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
+    "\n" +
+    "                    <div ng-repeat=\"h in healthEntry\">{{h.entry}}<hr></div>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <p style=\"padding-top:8px\"><b>Provider CPRS History:</b>\r" +
+    "\n" +
+    "                </p>\r" +
+    "\n" +
+    "                <div>\r" +
+    "\n" +
+    "                  \r" +
+    "\n" +
+    "                    <label>No Data Available</label>\r" +
+    "\n" +
+    "                      </div>\r" +
+    "\n" +
+    "                    \r" +
+    "\n" +
+    "                   \r" +
+    "\n" +
+    "                 \r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <br>\r" +
+    "\n" +
+    "          <br>\r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-xs-6\">\r" +
+    "\n" +
+    "              <label><b>Enter Safety Plan Date:</b>\r" +
+    "\n" +
+    "                <br>\r" +
+    "\n" +
+    "                <input style=\"width:180px\" type=\"text\" ng-model=\"spData\"  ng-required=\"true\" placeholder=\"{{safetyEntry[0].entry}}\">\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                <!--Valid: {{TestForm.$valid}}-->\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed4 = !isCollapsed4\">History</button>\r" +
+    "\n" +
+    "                <div uib-collapse=\"isCollapsed4\">\r" +
+    "\n" +
+    "                  <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
+    "\n" +
+    "                    <div ng-repeat=\"s in safetyEntry\">{{s.entry}}<hr></div>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <p style=\"padding-top:4px\"><b>Safety Plan SPAN History:</b>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                </p>\r" +
+    "\n" +
+    "                <div>{{planData[0].entry}}\r" +
+    "\n" +
+    "                  <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed5 = !isCollapsed5\">History</button>\r" +
+    "\n" +
+    "                  <div uib-collapse=\"isCollapsed5\">\r" +
+    "\n" +
+    "                    <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
+    "\n" +
+    "                      <div ng-repeat=\"p in planData\">{{p.entry}}\r" +
+    "\n" +
+    "                        <br>{{p.date}}\r" +
+    "\n" +
+    "                        <hr>\r" +
+    "\n" +
+    "                      </div>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <br>\r" +
+    "\n" +
+    "          <br>\r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-xs-12\">\r" +
+    "\n" +
+    "              <label><b>Record a General Comment:</b>\r" +
+    "\n" +
+    "               <div class=\"btn-group btn-group-xs\" role=\"group\" aria-label=\"Buttons\" style=\"float:right\">\r" +
+    "\n" +
+    "                <button type=\"button\" class=\"btn btn-default\"   ng-click=\"goBack()\"><i class=\"fa fa-arrow-left\" style=\"font-size:13px\"></i></button>\r" +
+    "\n" +
+    "                <button type=\"button\" class=\"btn btn-default\"  ng-click=\"goForward()\"><i class=\"fa fa-arrow-right\" style=\"font-size:13px\"></i></button>\r" +
+    "\n" +
+    "              </div> \r" +
+    "\n" +
+    "                <textarea ng-model=\"currentComment\" class=\"form-control\" rows=\"5\" id=\"comment\" style=\"font-size:10pt;height:150px;width:600px;\" placeholder=\"Text here...\">{{x}}</textarea>\r" +
+    "\n" +
+    "              </label>\r" +
+    "\n" +
+    "              \r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "           Record Count: {{x+1}}\r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-xs-2 col-xs-offset-10\">\r" +
+    "\n" +
+    "              <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"addHRData()\">Add Data</button>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    " \r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "\r" +
     "\n"
   );
 

@@ -206,6 +206,285 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n"
   );
 
+  $templateCache.put("client/components/widget/widgets/enterdata/enterdata.html",
+    "\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "  <div>\r" +
+    "\n" +
+    "    <script type=\"text/ng-template\" id=\"group-template.html\">\r" +
+    "\n" +
+    "      <div class=\"panel {{panelClass || 'panel-default'}}\">\r" +
+    "\n" +
+    "        <div class=\"panel-heading\">\r" +
+    "\n" +
+    "          <h4 class=\"panel-title\" style=\"color:#fa39c3\">\r" +
+    "\n" +
+    "          <a href tabindex=\"0\" class=\"accordion-toggle\" ng-click=\"toggleOpen()\" uib-accordion-transclude=\"heading\"><span\r" +
+    "\n" +
+    "            ng-class=\"{'text-muted': isDisabled}\">{{heading}}</span></a>\r" +
+    "\n" +
+    "        </h4>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"panel-collapse collapse\" uib-collapse=\"!isOpen\">\r" +
+    "\n" +
+    "          <div class=\"panel-body\" style=\"text-align: right\" ng-transclude></div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "    </script>\r" +
+    "\n" +
+    "    <div ng-form=\"TestForm\">\r" +
+    "\n" +
+    "      <div class=\"panel panel-default\">\r" +
+    "\n" +
+    "        <div class=\"panel-heading\">\r" +
+    "\n" +
+    "          <h3 class=\"panel-title\">Data Entry Widget Option 1</h3>\r" +
+    "\n" +
+    "          <h5>Patient Name: Paul Brown</h5></div></div>\r" +
+    "\n" +
+    "        <div class=\"panel-body\">\r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-xs-6\">\r" +
+    "\n" +
+    "              <label><b>Enter High Risk Flag:</b>\r" +
+    "\n" +
+    "                <br>\r" +
+    "\n" +
+    "                <input style=\"width:180px\" type=\"text\" ng-model=\"hrData\"  ng-required=\"true\" placeholder=\"{{dataEntry[0].entry}}\">\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                <!--Valid: {{TestForm.$valid}}-->\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed = !isCollapsed\">History</button>\r" +
+    "\n" +
+    "                <div uib-collapse=\"isCollapsed\">\r" +
+    "\n" +
+    "                  <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
+    "\n" +
+    "                    <div ng-repeat=\"d in dataEntry\">{{d.entry}}<hr></div>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <br>\r" +
+    "\n" +
+    "                <p style=\"padding-top:4px\"><b>High Risk SPAN History:</b>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                </p>\r" +
+    "\n" +
+    "                <div>{{sorData[0].entry}}\r" +
+    "\n" +
+    "                  <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed1 = !isCollapsed1\">History</button>\r" +
+    "\n" +
+    "                  <div uib-collapse=\"isCollapsed1\">\r" +
+    "\n" +
+    "                    <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
+    "\n" +
+    "                      <div ng-repeat=\"s in sorData\">{{s.entry}}\r" +
+    "\n" +
+    "                        <br>{{s.date}}\r" +
+    "\n" +
+    "                        <br>{{s.newdate}}\r" +
+    "\n" +
+    "                        <hr>\r" +
+    "\n" +
+    "                      </div>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <div class=\"col-xs-6\">\r" +
+    "\n" +
+    "              <label><b>Enter Principal MH Provider:</b>\r" +
+    "\n" +
+    "                <br>\r" +
+    "\n" +
+    "                <input style=\"width:180px\" type=\"text\" ng-model=\"mhData\"  ng-required=\"true\" placeholder=\"{{healthEntry[0].entry}}\">\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                <!--Valid: {{TestForm.$valid}}-->\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed2 = !isCollapsed2\">History</button>\r" +
+    "\n" +
+    "                <div uib-collapse=\"isCollapsed2\">\r" +
+    "\n" +
+    "                  <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
+    "\n" +
+    "                    <div ng-repeat=\"h in healthEntry\">{{h.entry}}<hr></div>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <p style=\"padding-top:8px\"><b>Provider CPRS History:</b>\r" +
+    "\n" +
+    "                </p>\r" +
+    "\n" +
+    "                <div>\r" +
+    "\n" +
+    "                  \r" +
+    "\n" +
+    "                    <label>No Data Available</label>\r" +
+    "\n" +
+    "                      </div>\r" +
+    "\n" +
+    "                    \r" +
+    "\n" +
+    "                   \r" +
+    "\n" +
+    "                 \r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <br>\r" +
+    "\n" +
+    "          <br>\r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-xs-6\">\r" +
+    "\n" +
+    "              <label><b>Enter Safety Plan Date:</b>\r" +
+    "\n" +
+    "                <br>\r" +
+    "\n" +
+    "                <input style=\"width:180px\" type=\"text\" ng-model=\"spData\"  ng-required=\"true\" placeholder=\"{{safetyEntry[0].entry}}\">\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                <!--Valid: {{TestForm.$valid}}-->\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed4 = !isCollapsed4\">History</button>\r" +
+    "\n" +
+    "                <div uib-collapse=\"isCollapsed4\">\r" +
+    "\n" +
+    "                  <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
+    "\n" +
+    "                    <div ng-repeat=\"s in safetyEntry\">{{s.entry}}<hr></div>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <p style=\"padding-top:4px\"><b>Safety Plan SPAN History:</b>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                </p>\r" +
+    "\n" +
+    "                <div>{{planData[0].entry}}\r" +
+    "\n" +
+    "                  <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed5 = !isCollapsed5\">History</button>\r" +
+    "\n" +
+    "                  <div uib-collapse=\"isCollapsed5\">\r" +
+    "\n" +
+    "                    <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
+    "\n" +
+    "                      <div ng-repeat=\"p in planData\">{{p.entry}}\r" +
+    "\n" +
+    "                        <br>{{p.date}}\r" +
+    "\n" +
+    "                        <hr>\r" +
+    "\n" +
+    "                      </div>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <br>\r" +
+    "\n" +
+    "          <br>\r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-xs-12\">\r" +
+    "\n" +
+    "              <label><b>Record a General Comment:</b>\r" +
+    "\n" +
+    "               <div class=\"btn-group btn-group-xs\" role=\"group\" aria-label=\"Buttons\" style=\"float:right\">\r" +
+    "\n" +
+    "                <button type=\"button\" class=\"btn btn-default\"   ng-click=\"goBack()\"><i class=\"fa fa-arrow-left\" style=\"font-size:13px\"></i></button>\r" +
+    "\n" +
+    "                <button type=\"button\" class=\"btn btn-default\"  ng-click=\"goForward()\"><i class=\"fa fa-arrow-right\" style=\"font-size:13px\"></i></button>\r" +
+    "\n" +
+    "              </div> \r" +
+    "\n" +
+    "                <textarea ng-model=\"currentComment\" class=\"form-control\" rows=\"5\" id=\"comment\" style=\"font-size:10pt;height:150px;width:600px;\" placeholder=\"Text here...\">{{x}}</textarea>\r" +
+    "\n" +
+    "              </label>\r" +
+    "\n" +
+    "              \r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "           Record Count: {{x+1}}\r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-xs-2 col-xs-offset-10\">\r" +
+    "\n" +
+    "              <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"addHRData()\">Add Data</button>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    " \r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "\r" +
+    "\n"
+  );
+
   $templateCache.put("client/components/widget/widgets/facilityRoster/facilityRoster.html",
     "<div id=\"facilityRosterDiv\" title=\"Navigate to header and click down arrow to enter table, tab to leave table rows\">\r" +
     "\n" +
