@@ -1,0 +1,138 @@
+
+
+  <div>
+    <script type="text/ng-template" id="group-template.html">
+      <div class="panel {{panelClass || 'panel-default'}}">
+        <div class="panel-heading">
+          <h4 class="panel-title" style="color:#fa39c3">
+          <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading"><span
+            ng-class="{'text-muted': isDisabled}">{{heading}}</span></a>
+        </h4>
+        </div>
+        <div class="panel-collapse collapse" uib-collapse="!isOpen">
+          <div class="panel-body" style="text-align: right" ng-transclude></div>
+        </div>
+      </div>
+    </script>
+    <div ng-form="TestForm">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Data Entry Widget Option 1</h3>
+          <h5>Patient Name: Paul Brown</h5></div></div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-6">
+              <label><b>Enter High Risk Flag:</b>
+                <br>
+                <input style="width:180px" type="text" ng-model="hrData"  ng-required="true" placeholder="{{dataEntry[0].entry}}">
+
+
+                <!--Valid: {{TestForm.$valid}}-->
+
+                <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">History</button>
+                <div uib-collapse="isCollapsed">
+                  <div class="box" style="height:90px; overflow-y:scroll;">
+                    <div ng-repeat="d in dataEntry">{{d.entry}}<hr></div>
+                  </div>
+                </div>
+                <br>
+                <p style="padding-top:4px"><b>High Risk SPAN History:</b>
+
+                </p>
+                <div>{{sorData[0].entry}}
+                  <button type="button" class="btn btn-default" ng-click="isCollapsed1 = !isCollapsed1">History</button>
+                  <div uib-collapse="isCollapsed1">
+                    <div class="box" style="height:90px; overflow-y:scroll;">
+                      <div ng-repeat="s in sorData">{{s.entry}}
+                        <br>{{s.date}}
+                        <br>{{s.newdate}}
+                        <hr>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+              <label><b>Enter Principal MH Provider:</b>
+                <br>
+                <input style="width:180px" type="text" ng-model="mhData"  ng-required="true" placeholder="{{healthEntry[0].entry}}">
+
+                <!--Valid: {{TestForm.$valid}}-->
+
+                <button type="button" class="btn btn-default" ng-click="isCollapsed2 = !isCollapsed2">History</button>
+                <div uib-collapse="isCollapsed2">
+                  <div class="box" style="height:90px; overflow-y:scroll;">
+                    <div ng-repeat="h in healthEntry">{{h.entry}}<hr></div>
+                  </div>
+                </div>
+                <p style="padding-top:8px"><b>Provider CPRS History:</b>
+                </p>
+                <div>
+                  
+                    <label>No Data Available</label>
+                      </div>
+                    
+                   
+                 
+            </div>
+          </div>
+          <br>
+          <br>
+          <div class="row">
+            <div class="col-xs-6">
+              <label><b>Enter Safety Plan Date:</b>
+                <br>
+                <input style="width:180px" type="text" ng-model="spData"  ng-required="true" placeholder="{{safetyEntry[0].entry}}">
+
+
+                <!--Valid: {{TestForm.$valid}}-->
+
+                <button type="button" class="btn btn-default" ng-click="isCollapsed4 = !isCollapsed4">History</button>
+                <div uib-collapse="isCollapsed4">
+                  <div class="box" style="height:90px; overflow-y:scroll;">
+                    <div ng-repeat="s in safetyEntry">{{s.entry}}<hr></div>
+                  </div>
+
+                </div>
+                <p style="padding-top:4px"><b>Safety Plan SPAN History:</b>
+
+                </p>
+                <div>{{planData[0].entry}}
+                  <button type="button" class="btn btn-default" ng-click="isCollapsed5 = !isCollapsed5">History</button>
+                  <div uib-collapse="isCollapsed5">
+                    <div class="box" style="height:90px; overflow-y:scroll;">
+                      <div ng-repeat="p in planData">{{p.entry}}
+                        <br>{{p.date}}
+                        <hr>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <br>
+          <br>
+          <div class="row">
+            <div class="col-xs-12">
+              <label><b>Record a General Comment:</b>
+               <div class="btn-group btn-group-xs" role="group" aria-label="Buttons" style="float:right">
+                <button type="button" class="btn btn-default"   ng-click="goBack()"><i class="fa fa-arrow-left" style="font-size:13px"></i></button>
+                <button type="button" class="btn btn-default"  ng-click="goForward()"><i class="fa fa-arrow-right" style="font-size:13px"></i></button>
+              </div> 
+                <textarea ng-model="currentComment" class="form-control" rows="5" id="comment" style="font-size:10pt;height:150px;width:600px;" placeholder="Text here...">{{x}}</textarea>
+              </label>
+              
+            </div>
+          </div>
+           Record Count: {{x+1}}
+          <div class="row">
+            <div class="col-xs-2 col-xs-offset-10">
+              <button type="button" class="btn btn-default btn-sm" ng-click="addHRData()">Add Data</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+
+
