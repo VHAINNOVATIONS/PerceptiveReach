@@ -104,7 +104,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/adf/directives/dashboard/dashboard.html",
     "<div>\r" +
     "\n" +
-    "    <div class=\"alert alert-success snoAlertBox\" data-alert=\"alert\">We're sorry-this widget has already been added to your dashboard. Please select a different widget to add.</div>\r" +
+    "    <div class=\"alert alert-success snoAlertBox\" data-alert=\"alert\">This widget has already been added to your dashboard. Please select a different widget to add.</div>\r" +
     "\n" +
     "    <div offset=\"105\" style=\"z-index:5;background-color:white;\" sticky tabindex=\"-1\">\r" +
     "\n" +

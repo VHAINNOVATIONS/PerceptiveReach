@@ -170,19 +170,6 @@ angular.module('ui.dashboard')
 
 
         scope.addWidget = function (widgetToInstantiate, doNotSave) {
-
-          var widgetExists =  jQuery.grep(scope.widgets, function( n, i ) {  return ( n.name == widgetToInstantiate.name);});
-          if(widgetExists.length > 0 && !doNotSave)
-          {
-            $(".snoAlertBox").fadeIn();
-            window.setTimeout(function () {
-              $(".snoAlertBox").fadeOut(300)
-            }, 4000);
-            return false;   
-          }
-          
-
-
           if (typeof widgetToInstantiate === 'string') {
             widgetToInstantiate = {
               name: widgetToInstantiate
@@ -380,6 +367,15 @@ angular.module('ui.dashboard')
          */
         scope.addWidgetInternal = function (event, widgetDef) {
           event.preventDefault();
+          var widgetExists =  jQuery.grep(scope.widgets, function( n, i ) {  return ( n.name == widgetDef.name);});
+          if(widgetExists.length)
+          {
+            $(".snoAlertBox").fadeIn();
+            window.setTimeout(function () {
+              $(".snoAlertBox").fadeOut(300)
+            }, 4000);
+            return false;   
+          }
           scope.addWidget(widgetDef);
           $timeout(function(){
            scope.$broadcast('defaultWidgetsSelected', scope.common);
