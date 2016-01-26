@@ -67,7 +67,7 @@ angular.module('ui.widgets')
 
         $scope.resizeConditionList = function(){
           var containerHeight = parseInt($('#cdsQuestionnaire').parent().css('height'),10);
-          $('#cdsQuestionnaire .cdsUIList').css('height',.50 * containerHeight);
+          $('#cdsQuestionnaire .cdsUIList').css('height',.65 * containerHeight);
         }   
 
         $scope.AnswerSelected = function(e){
