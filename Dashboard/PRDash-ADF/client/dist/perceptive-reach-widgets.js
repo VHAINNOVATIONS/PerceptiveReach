@@ -2577,7 +2577,10 @@ angular.module('ui.widgets')
           $('#cdsConditionDiv input:checkbox:checked').each(function(){
             var conditionId = $(this).attr('name').replace('chkbx_','');
             var filteredQs= jQuery.grep($scope.data.questions, function( n, i ) {
-                                  return ( n.Condition_ID == conditionId );
+                                  var isAlreadyAdded = $.grep($scope.filteredQuestions, function (elem) {
+                                                          return elem.Question === n.Question;
+                                                      }).length > 0;
+                                  return (!isAlreadyAdded  && n.Condition_ID == conditionId );
                           });
             $.merge($scope.filteredQuestions,filteredQs);
           });
@@ -2592,11 +2595,15 @@ angular.module('ui.widgets')
              {
                var questionId = $(this).attr('name').replace('question_','');
                var filterTrtmnts = jQuery.grep($scope.data.treatments, function( n, i ) {
-                                      return ( n.Question_ID == questionId);
+                                      var isAlreadyAdded = $.grep($scope.filteredTreatments, function (elem) {
+                                          return elem.Treatment === n.Treatment;
+                                      }).length > 0;
+                                      return ( !isAlreadyAdded  && n.Question_ID == questionId);
                                    });
                $.merge($scope.filteredTreatments,filterTrtmnts);
              }
           })
+
           $('#cdsQuestionDiv').toggleClass('hidden');
           $('#cdsTreatmentDiv').toggleClass('hidden');
         }
