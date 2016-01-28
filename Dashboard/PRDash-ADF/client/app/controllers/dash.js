@@ -301,7 +301,7 @@ angular.module('app')
         dataModelOptions: {
           defaultWidget: true,
           roleAccess: 'SUP,REP,ADM',
-          layout: 'surveillance'
+          layout: 'individual'
         },
         size: {
           width: '45%',
