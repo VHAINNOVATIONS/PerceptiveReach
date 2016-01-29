@@ -145,20 +145,20 @@ angular.module('ui.dashboard')
               scope.PatientName = '';
           }
           else if(data.data.activeView == 'facility'){
-            if(data.data.facilitySelected.facility != null)
-              scope.FacilityName = 'VAMC: ' + data.data.facilitySelected.facility;
+            if(data.data.facilitySelected.facilityName != null)
+              scope.FacilityName = 'VAMC: ' + data.data.facilitySelected.facilityName;
             else
               scope.FacilityName = '';
           }
           else if(data.data.activeView == 'surveillance'){
-            if(data.data.facilitySelected.surveillance == null && data.data.visnSelected.surveillance == null)
+            if(data.data.facilitySelected.surveillanceName == null && data.data.visnSelected.surveillance == null)
               scope.VISN_FacilityName = 'VISN:  VAMC: ';
-            else if (data.data.facilitySelected.surveillance == null)
+            else if (data.data.facilitySelected.surveillanceName == null)
               scope.VISN_FacilityName = 'VISN: ' + data.data.visnSelected.surveillance + ' VAMC: ';
             else if (data.data.visnSelected.surveillance == null)
-              scope.VISN_FacilityName = 'VISN:  VAMC: ' + data.data.facilitySelected.surveillance;
+              scope.VISN_FacilityName = 'VISN:  VAMC: ' + data.data.facilitySelected.surveillanceName;
             else
-              scope.VISN_FacilityName = 'VISN: ' + data.data.visnSelected.surveillance + ' VAMC: ' + data.data.facilitySelected.surveillance;
+              scope.VISN_FacilityName = 'VISN: ' + data.data.visnSelected.surveillance + ' VAMC: ' + data.data.facilitySelected.surveillanceName;
           }        
         }.bind(this));
 		
