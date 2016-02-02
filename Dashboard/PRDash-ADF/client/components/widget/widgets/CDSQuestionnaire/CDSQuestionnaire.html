@@ -53,7 +53,7 @@
                 </label>
               </div>
               <div style="height:40px;padding:5px;">
-                 <button ng-click="GotoQuestions()" alt="Next(Questions)" title="Next(Questions)" ng-disabled="!IsChecked" class="btn btn-primary pull-right" tabindex="1">Next</button>
+                 <button ng-click="GotoQuestions()" alt="Next(Questions)" title="Next(Questions)" ng-disabled="!IsChecked" class="btn btn-primary pull-right">Next</button>
               </div>
         </div>
     </div>
@@ -70,16 +70,16 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" >
-                        <li ng-click="AnswerSelected($event)"><a tabindex="-1" href="#">Yes</a></li>
-                        <li ng-click="AnswerSelected($event)"><a tabindex="-1" href="#">No</a></li>
-                        <li ng-click="AnswerSelected($event)"><a tabindex="-1" href="#">N/A</a></li>
+                        <li ng-click="AnswerSelected($event)"><a href="#">Yes</a></li>
+                        <li ng-click="AnswerSelected($event)"><a href="#">No</a></li>
+                        <li ng-click="AnswerSelected($event)"><a href="#">N/A</a></li>
                     </ul>
               </div>
          </div>
       </div>
        <div style="height:40px;padding:5px;">
-          <button ng-click="BacktoConditions()" alt="Back(Conditions)" title="Back(Conditions)" class="btn btn-primary pull-left" tabindex="1">Back</button>
-          <button ng-click="GotoTreatments()" alt="Next(Treatment)" title="Next(Treatment)" class="btn btn-primary pull-right" tabindex="1">Next</button>
+          <button ng-click="BacktoConditions()" alt="Back(Conditions)" title="Back(Conditions)" class="btn btn-primary pull-left" >Back</button>
+          <button ng-click="GotoTreatments()" alt="Next(Treatment)" title="Next(Treatment)" class="btn btn-primary pull-right" >Next</button>
        </div>
     </div>
 
@@ -91,7 +91,7 @@
           </div>
         </div>
         <div style="height:40px;padding:5px;">
-          <button ng-click="BacktoQuestions()" alt="Back(Questions)" title="Back(Questions)" class="btn btn-primary pull-left" tabindex="1">Back</button>
+          <button ng-click="BacktoQuestions()" alt="Back(Questions)" title="Back(Questions)" class="btn btn-primary pull-left">Back</button>
         </div>
     </div>
         
