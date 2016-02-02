@@ -5437,7 +5437,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "              <div style=\"height:40px;padding:5px;\">\r" +
     "\n" +
-    "                 <button ng-click=\"GotoQuestions()\" alt=\"Next(Questions)\" title=\"Next(Questions)\" ng-disabled=\"!IsChecked\" class=\"btn btn-primary pull-right\" tabindex=\"1\">Next</button>\r" +
+    "                 <button ng-click=\"GotoQuestions()\" alt=\"Next(Questions)\" title=\"Next(Questions)\" ng-disabled=\"!IsChecked\" class=\"btn btn-primary pull-right\">Next</button>\r" +
     "\n" +
     "              </div>\r" +
     "\n" +
@@ -5471,11 +5471,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <ul class=\"dropdown-menu\" >\r" +
     "\n" +
-    "                        <li ng-click=\"AnswerSelected($event)\"><a tabindex=\"-1\" href=\"#\">Yes</a></li>\r" +
+    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">Yes</a></li>\r" +
     "\n" +
-    "                        <li ng-click=\"AnswerSelected($event)\"><a tabindex=\"-1\" href=\"#\">No</a></li>\r" +
+    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">No</a></li>\r" +
     "\n" +
-    "                        <li ng-click=\"AnswerSelected($event)\"><a tabindex=\"-1\" href=\"#\">N/A</a></li>\r" +
+    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">N/A</a></li>\r" +
     "\n" +
     "                    </ul>\r" +
     "\n" +
@@ -5487,9 +5487,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "       <div style=\"height:40px;padding:5px;\">\r" +
     "\n" +
-    "          <button ng-click=\"BacktoConditions()\" alt=\"Back(Conditions)\" title=\"Back(Conditions)\" class=\"btn btn-primary pull-left\" tabindex=\"1\">Back</button>\r" +
+    "          <button ng-click=\"BacktoConditions()\" alt=\"Back(Conditions)\" title=\"Back(Conditions)\" class=\"btn btn-primary pull-left\" >Back</button>\r" +
     "\n" +
-    "          <button ng-click=\"GotoTreatments()\" alt=\"Next(Treatment)\" title=\"Next(Treatment)\" class=\"btn btn-primary pull-right\" tabindex=\"1\">Next</button>\r" +
+    "          <button ng-click=\"GotoTreatments()\" alt=\"Next(Treatment)\" title=\"Next(Treatment)\" class=\"btn btn-primary pull-right\" >Next</button>\r" +
     "\n" +
     "       </div>\r" +
     "\n" +
@@ -5513,7 +5513,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div style=\"height:40px;padding:5px;\">\r" +
     "\n" +
-    "          <button ng-click=\"BacktoQuestions()\" alt=\"Back(Questions)\" title=\"Back(Questions)\" class=\"btn btn-primary pull-left\" tabindex=\"1\">Back</button>\r" +
+    "          <button ng-click=\"BacktoQuestions()\" alt=\"Back(Questions)\" title=\"Back(Questions)\" class=\"btn btn-primary pull-left\">Back</button>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
