@@ -1158,7 +1158,6 @@ angular.module('ui.models')
 		   }.bind(this));
 
 		   this.updateScope([]);
-		   this.getData();
 		 },
 
 			getData: function () {
