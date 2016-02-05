@@ -6,7 +6,7 @@ var request = require('supertest');
 
 describe('GET /api/enterdata', function() {
 
-  it('should respond with JSON', function(done) {
+  it('should respond with JSON array', function(done) {
     request(app)
       .get('/api/enterdata')
       .expect(200)

@@ -207,11 +207,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/enterdata/enterdata.html",
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "  <div>\r" +
+    "<div>\r" +
     "\n" +
     "    <script type=\"text/ng-template\" id=\"group-template.html\">\r" +
     "\n" +
@@ -227,6 +223,8 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        </h4>\r" +
     "\n" +
+    "\r" +
+    "\n" +
     "        </div>\r" +
     "\n" +
     "        <div class=\"panel-collapse collapse\" uib-collapse=\"!isOpen\">\r" +
@@ -241,231 +239,285 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <div ng-form=\"TestForm\">\r" +
     "\n" +
-    "      <div class=\"panel panel-default\">\r" +
+    "      <div class=\"panel panel-default\" style=\"width: 98%\">\r" +
     "\n" +
-    "        <div class=\"panel-heading\">\r" +
-    "\n" +
-    "          <h3 class=\"panel-title\">Data Entry Widget Option 1</h3>\r" +
-    "\n" +
-    "          <h5>Patient Name: Paul Brown</h5></div></div>\r" +
-    "\n" +
-    "        <div class=\"panel-body\">\r" +
+    "        <div class=\"panel-body\" style=\"padding-left:40px\">\r" +
     "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
-    "            <div class=\"col-xs-6\">\r" +
+    "            <div class=\"col-md-12 bs-example hr-text\" style=\"padding: 10px; border-radius: 25px; border: 0.5px solid;\">\r" +
     "\n" +
-    "              <label><b>Enter High Risk Flag:</b>\r" +
+    "              <div class=\"panel-body\">\r" +
     "\n" +
-    "                <br>\r" +
+    "                <div class=\"col-md-6\">\r" +
     "\n" +
-    "                <input style=\"width:180px\" type=\"text\" ng-model=\"hrData\"  ng-required=\"true\" placeholder=\"{{dataEntry[0].entry}}\">\r" +
+    "                  <label style=\"font-weight:normal\">User Notes:\r" +
     "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                <!--Valid: {{TestForm.$valid}}-->\r" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
     "\r" +
     "\n" +
-    "                <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed = !isCollapsed\">History</button>\r" +
+    "                      <button type=\"button\" name=\"hrBack\" class=\"btn btn-default pull-left\" ng-click=\"HighRiskBack()\"><i class=\"glyphicon glyphicon-arrow-left\"\r" +
     "\n" +
-    "                <div uib-collapse=\"isCollapsed\">\r" +
+    "                        style=\"font-size:13px;width: 18px;\"></i></button>\r" +
     "\n" +
-    "                  <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
+    "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                    <div ng-repeat=\"d in dataEntry\">{{d.entry}}<hr></div>\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "                <br>\r" +
-    "\n" +
-    "                <p style=\"padding-top:4px\"><b>High Risk SPAN History:</b>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                </p>\r" +
-    "\n" +
-    "                <div>{{sorData[0].entry}}\r" +
-    "\n" +
-    "                  <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed1 = !isCollapsed1\">History</button>\r" +
-    "\n" +
-    "                  <div uib-collapse=\"isCollapsed1\">\r" +
-    "\n" +
-    "                    <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
-    "\n" +
-    "                      <div ng-repeat=\"s in sorData\">{{s.entry}}\r" +
-    "\n" +
-    "                        <br>{{s.date}}\r" +
-    "\n" +
-    "                        <br>{{s.newdate}}\r" +
-    "\n" +
-    "                        <hr>\r" +
-    "\n" +
-    "                      </div>\r" +
+    "                      <input type=\"text\" style=\"width:20px\" id=\"jumpToHR\" title=\"{{data.HighRisk_UserNotes[x].EntryDate}}\" value=\"{{x+1}}\"></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
+    "                      <button type=\"button\" name=\"hrFwd\" class=\"btn btn-default pull-left\" ng-click=\"goForwardRisk()\"><i class=\"glyphicon glyphicon-arrow-right\"\r" +
+    "\n" +
+    "                        style=\"font-size:13px;width: 18px;\"></i></button>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                  </div><br/>\r" +
+    "\n" +
+    "                  <input class=\"box col-md-12\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" id=\"hrData\" value=\"{{data.HighRisk_UserNotes[x].UserNotes}}\">\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">SPAN Records</label>\r" +
+    "\n" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goBackProvider()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" style=\"width:20px\" id=\"nextNew\" title=\"{{data.HighRisk_SPANImport[c].ImportDate}}\" value=\"{{c+1}}\"></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goForwardProvider()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px';width: 18px;\"></i></button>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                  <div class=\"col-md-12 box\" style=\"background-color:#FBFBFB; border-style:solid;padding-bottom: 0px;\r" +
+    "\n" +
+    "                    border-width:1px;\" value=\"\">\r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">High Risk: {{data.HighRisk_SPANImport[c].HighRisk}}</label>\r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">Date First Identified: {{data.HighRisk_SPANImport[c].DateFirstIdentifiedAsHighRisk}}</label>\r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">Date Last Updated: {{data.HighRisk_SPANImport[c].DateHighRiskLastUpdated}}</label>\r" +
+    "\n" +
     "                  </div>\r" +
     "\n" +
     "                </div>\r" +
     "\n" +
-    "            </div>\r" +
-    "\n" +
-    "            <div class=\"col-xs-6\">\r" +
-    "\n" +
-    "              <label><b>Enter Principal MH Provider:</b>\r" +
-    "\n" +
-    "                <br>\r" +
-    "\n" +
-    "                <input style=\"width:180px\" type=\"text\" ng-model=\"mhData\"  ng-required=\"true\" placeholder=\"{{healthEntry[0].entry}}\">\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                <!--Valid: {{TestForm.$valid}}-->\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed2 = !isCollapsed2\">History</button>\r" +
-    "\n" +
-    "                <div uib-collapse=\"isCollapsed2\">\r" +
-    "\n" +
-    "                  <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
-    "\n" +
-    "                    <div ng-repeat=\"h in healthEntry\">{{h.entry}}<hr></div>\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "                <p style=\"padding-top:8px\"><b>Provider CPRS History:</b>\r" +
-    "\n" +
-    "                </p>\r" +
-    "\n" +
-    "                <div>\r" +
-    "\n" +
-    "                  \r" +
-    "\n" +
-    "                    <label>No Data Available</label>\r" +
-    "\n" +
-    "                      </div>\r" +
-    "\n" +
-    "                    \r" +
-    "\n" +
-    "                   \r" +
-    "\n" +
-    "                 \r" +
+    "              </div>\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
     "          </div>\r" +
     "\n" +
-    "          <br>\r" +
-    "\n" +
-    "          <br>\r" +
-    "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
-    "            <div class=\"col-xs-6\">\r" +
+    "            <div class=\"col-md-12 bs-example mh-text\" style=\"padding: 10px; border-radius: 25px; border: 0.5px solid;\">\r" +
     "\n" +
-    "              <label><b>Enter Safety Plan Date:</b>\r" +
+    "              <div class=\"panel-body\">\r" +
     "\n" +
-    "                <br>\r" +
+    "                <div class=\"col-md-6\">\r" +
     "\n" +
-    "                <input style=\"width:180px\" type=\"text\" ng-model=\"spData\"  ng-required=\"true\" placeholder=\"{{safetyEntry[0].entry}}\">\r" +
+    "                  <label style=\"font-weight:normal\">User Notes:\r" +
     "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                <!--Valid: {{TestForm.$valid}}-->\r" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
     "\r" +
     "\n" +
-    "                <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed4 = !isCollapsed4\">History</button>\r" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goBackSOR()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
     "\n" +
-    "                <div uib-collapse=\"isCollapsed4\">\r" +
+    "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                  <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
-    "\n" +
-    "                    <div ng-repeat=\"s in safetyEntry\">{{s.entry}}<hr></div>\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "                <p style=\"padding-top:4px\"><b>Safety Plan SPAN History:</b>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                </p>\r" +
-    "\n" +
-    "                <div>{{planData[0].entry}}\r" +
-    "\n" +
-    "                  <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed5 = !isCollapsed5\">History</button>\r" +
-    "\n" +
-    "                  <div uib-collapse=\"isCollapsed5\">\r" +
-    "\n" +
-    "                    <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
-    "\n" +
-    "                      <div ng-repeat=\"p in planData\">{{p.entry}}\r" +
-    "\n" +
-    "                        <br>{{p.date}}\r" +
-    "\n" +
-    "                        <hr>\r" +
-    "\n" +
-    "                      </div>\r" +
+    "                      <input type=\"text\" style=\"width:20px\" title=\"{{data.PrimaryHealthProvider[z].EntryDate}}\" value=\"{{z+1}}\"></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
+    "\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goForwardSOR()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
+    "\n" +
+    "                  </div><br/>\r" +
+    "\n" +
+    "                  <input class=\"box col-md-12\" style=\"font-weight:normal\" type=\"text\"  ng-required=\"true\"  id=\"mhData\" value=\"{{data.PrimaryHealthProvider_UserNotes[z]}}\">\r" +
+    "\n" +
+    "\r" +
+    "\n" +
     "                  </div>\r" +
     "\n" +
-    "                </div>\r" +
+    "\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                   <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">VistA Records</label>\r" +
+    "\n" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\"   ng-click=\"\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" style=\"width:20px\" title=\"\" value=\"{{1}}\"></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                 <input class=\"col-md-12 box\" style=\"font-weight:normal;background-color:#FBFBFB;padding-bottom: 46px;\" ng-model=\"currentProviderRecords\"\r" +
+    "\n" +
+    "                    ng-required=\"true\" id=\"mpData\" type=\"text\" placeholder=\"{{providerData[0].entry}\" disabled> </input>\r" +
+    "\n" +
+    "              </div>\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
     "          </div>\r" +
     "\n" +
-    "          <br>\r" +
+    "          <div class=\"row\" style=\"padding: 14px;\">\r" +
     "\n" +
-    "          <br>\r" +
+    "            <div class=\"col-md-12 sp-text\" style=\"border-radius: 25px; border: 0.5px solid;position: relative;\r" +
     "\n" +
-    "          <div class=\"row\">\r" +
+    "                padding: 7px -1px 0px; margin: 0 -15px 5px; box-shadow: inset 0 3px 6px rgba(0,0,0,.05);\">\r" +
     "\n" +
-    "            <div class=\"col-xs-12\">\r" +
+    "              <div class=\"panel-body\">\r" +
     "\n" +
-    "              <label><b>Record a General Comment:</b>\r" +
+    "\r" +
+    "\n" +
+    "                <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">User Notes:\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                   <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goBackSafety()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width:18px\"></i></button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" style=\"width:20px\" id=\"goToSafety\" title=\"{{data.SafetyPlan_UserNotes[a].EntryDate}}\" value=\"{{a+1}}\"></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\"  ng-click=\"goForwardSafety()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px; width:18px\"></i></button>\r" +
+    "\n" +
+    "                  </div><br>\r" +
+    "\n" +
+    "                    <input class=\"box col-md-12\" style=\"font-weight:normal\" type=\"text\"\r" +
+    "\n" +
+    "                    ng-required=\"true\" id=\"spData\" value=\"{{data.SafetyPlan_UserNotes[a].UserNotes}}\">\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">VistA Records </label>\r" +
+    "\n" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\"   ng-click=\"goBackMHP()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width:18px\"></i></button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" style=\"width:20px\" id=\"safetyPlanGo\" title=\"{{data.SafetyPlan_SPANImport[b].ImportDate}}\" value=\"{{b+1}}\"></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\"  ng-click=\"goForwardMHP()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width:18px\"></i></button>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                  <div class=\"col-md-12 box\" style=\"background-color:#FBFBFB; border-style:solid;padding-bottom: 14px;\r" +
+    "\n" +
+    "                    border-width:1px;\" value=\"\">\r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">Safety Plan: {{data.SafetyPlan_SPANImport[b].SafetyPlanCurrent}}</label>\r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">Date Completed: {{data.SafetyPlan_SPANImport[b].DateSafetyPlanCompletedOrUpdated}}</label>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "          <div class=\"row\" style=\"padding: 15px;\">\r" +
+    "\n" +
+    "            <div class=\"col-md-12 bs-example comment-text\" style=\"border-radius: 25px; border: 0.5px solid;\"\">\r" +
+    "\n" +
+    "              <div class=\"panel-body\">\r" +
+    "\n" +
+    "              <label style=\"font-weight:normal\">User Notes:</label>\r" +
     "\n" +
     "               <div class=\"btn-group btn-group-xs\" role=\"group\" aria-label=\"Buttons\" style=\"float:right\">\r" +
     "\n" +
-    "                <button type=\"button\" class=\"btn btn-default\"   ng-click=\"goBack()\"><i class=\"fa fa-arrow-left\" style=\"font-size:13px\"></i></button>\r" +
+    "                <button type=\"button\" class=\"btn btn-default pull-left\"   ng-click=\"goBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width:18px\"></i></button>\r" +
     "\n" +
-    "                <button type=\"button\" class=\"btn btn-default\"  ng-click=\"goForward()\"><i class=\"fa fa-arrow-right\" style=\"font-size:13px\"></i></button>\r" +
+    "                <div class=\"pull-left\">\r" +
     "\n" +
-    "              </div> \r" +
+    "                  <input type=\"text\" style=\"width:20px\" id=\"commentAhead\" title=\"{{data.GeneralComments[y].EntryDate}}\" value=\"{{y+1}}\"></input>\r" +
     "\n" +
-    "                <textarea ng-model=\"currentComment\" class=\"form-control\" rows=\"5\" id=\"comment\" style=\"font-size:10pt;height:150px;width:600px;\" placeholder=\"Text here...\">{{x}}</textarea>\r" +
+    "                </div>\r" +
     "\n" +
-    "              </label>\r" +
+    "\r" +
     "\n" +
-    "              \r" +
+    "                <button type=\"button\" class=\"btn btn-default pull-left\"  ng-click=\"goForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width:18px\"></i></button>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                <textarea class=\"form-control col-md-12\" rows=\"5\" id=\"comment\" style=\"outline:0.5px solid;font-size:10pt;font-weight:normal\"\r" +
+    "\n" +
+    "                placeholder=\"Text here...\">\"{{data.GeneralComments[y].Comment}}\"</textarea>\r" +
+    "\n" +
+    "\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
     "          </div>\r" +
     "\n" +
-    "           Record Count: {{x+1}}\r" +
+    "\r" +
     "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
     "            <div class=\"col-xs-2 col-xs-offset-10\">\r" +
     "\n" +
-    "              <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"addHRData()\">Add Data</button>\r" +
+    "              <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"addNewData()\">Add Data</button>\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
@@ -477,11 +529,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    </div>\r" +
     "\n" +
-    " \r" +
+    "   </div>\r" +
     "\n" +
-    "\r" +
+    "  </div>\r" +
     "\n" +
-    "\r" +
+    "</div>\r" +
     "\n"
   );
 

@@ -429,7 +429,9 @@ angular.module('ui.models')
                 this.updateScope(data);
             }.bind(this));
       },
-
+      saveNewUserData: function(jsonData){
+        $http.put('/api/enterdata',{'UpdatedUserData':jsonData});
+      },
       destroy: function () {
         CommonDataModel.prototype.destroy.call(this);
       }
