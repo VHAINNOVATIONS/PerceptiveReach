@@ -768,7 +768,9 @@ angular.module('ui.models')
                 this.updateScope(data);
             }.bind(this));
       },
-
+      saveNewUserData: function(jsonData){
+        $http.put('/api/enterdata',{'UpdatedUserData':jsonData});
+      },
       destroy: function () {
         CommonDataModel.prototype.destroy.call(this);
       }
@@ -1732,6 +1734,7 @@ angular.module('ui.models')
 
     return VISNDataModel;
   });
+
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -2891,6 +2894,8 @@ angular.module('ui.widgets')
  * limitations under the License.
  */
 
+
+
 'use strict';
 
 angular.module('ui.widgets')
@@ -2898,154 +2903,177 @@ angular.module('ui.widgets')
     return {
       restrict: 'A',
       replace: true,
-      templateUrl: 'client/components/widget/widgets/enterdata/enterdata.html', 
+      templateUrl: 'client/components/widget/widgets/enterdata/enterdata.html',
       controller: function ($scope) {
         $scope.x = 0;
-        $scope.oneAtATime = false;
-        $scope.yesOpen = false;
-        $scope.isOpen= true;
-        $scope.isCollapsed = true;
-        $scope.isCollapsed1 = true;
-        $scope.isCollapsed2 = true;
-        $scope.isCollapsed3 = true;
-        $scope.isCollapsed4 = true;
-        $scope.isCollapsed5 = true;
+        $scope.y = 0;
+        $scope.z = 0;
+        $scope.a = 0;
+        $scope.b = 0;
+        $scope.c = 0;
 
-        $scope.goBack= function() {
-            $scope.currentComment = $scope.comment[$scope.x+1].value;
-            $scope.x+=1;
-        };
-        $scope.goForward= function(){
-            $scope.currentComment = $scope.comment[$scope.x-1].value;
-            $scope.x-=1;
-        };
-        $scope.goBackRisk= function() {
-            $scope.currentRisk = $scope.com[$scope.x+1].value;
-            $scope.x+=1;
-        };
-        $scope.goForwardRisk= function(){
-            $scope.currentRisk = $scope.com[$scope.x-1].value;
-            $scope.x-=1;
-        };
+    $scope.HighRiskBack = function() {
 
-         $scope.comment= [
-            {
-             value: "This is the first comment",
-             date: "10-01-2015"
-            },
-            {
-             value: "This is the second comment",
-             date: "10-01-2015"
-            },
-            {
-             value: "This is the third comment",
-             date: "10-01-2015"
-            },
-            {
-             value: "This is the 4 comment",
-             date: "10-01-2015"
-            },
-            {
-             value: "This is the 5 comment",
-             date: "10-01-2015"
-            }
-          ];
-         $scope.dataEntry = [
-              {
-               entry: "1.High Risk Flag Added",
-               date: "01-01-2016"
-              },
-              {
-               entry: "2.High Risk Flag Removed",
-               date: "12-01-2015"
-              },
-              {
-               entry: "3.High Risk Flag Cleared",
-               date: "11-01-2015"
-              },
-              {
-               entry: "4.High Risk Flag Added",
-               date: "11-01-2015"
-              }
-            ];
-            
-          $scope.sorData = [
-            {
-             entry: "1.High Risk Flag ",
-             date: "Date Initiated: 03-02-2001",
-             newdate: "Date Cleared: 02-03-2004"
-            },
-            {
-             entry: "2.High Risk Flag",
-             date: "Date Initiated: 03-02-2001",
-             newdate: "Date Cleared: 02-03-2004"
-            },
-            {
-             entry: "3.High Risk Flag ",
-             date: "Date Initiated: 03-02-2001",
-             newdate: "Date Cleared: 02-03-2004"
-            }
-          ];
-          $scope.healthEntry = [
-              {
-               entry: "1.George Doe, PhD",
-               date: "01-01-2016"
-              },
-              {
-               entry: "2.John Smith, MD",
-               date: "12-01-2015"
-              },
-              {
-               entry: "3.Charlie Brown, DPT",
-               date: "11-01-2015"
-              }
-            ];
-            
-          $scope.providerData = [
-            {
-             entry: "1.John Doe M.D.",
-             date: "10-01-2015"
-            },
-            {
-             entry: "2.Charlie Brown, DPT",
-             date: "10-01-2015"
-            }, 
-            {
-             entry: "3.Bill Brown, DPT",
-             date: "10-01-2015"
-            }
-          ];
-          
-          $scope.safetyEntry = [
-              {
-               entry: "1.Safety Plan Updated",
-               date: "01-01-2016"
-              },
-              {
-               entry: "2.Safety Plan Removed",
-               date: "12-01-2015"
-              },
-              {
-               entry: "3.Safety Plan Cleared",
-               date: "11-01-2015"
-              }
-            ];
-            
-          $scope.planData = [
-            {
-             entry: "1.Safety Plan",
-            date: "Date Completed: 06-07-2008",
-            },
-            {
-              entry: "2.Safety Plan",
-            date: "Date Completed: 06-07-2008",
-            },
-            {
-              entry: "3.Safety Plan",
-            date: "Date Completed: 06-07-2008",
-            }
-          ];
-          
+      if($scope.x + 1 <= $scope.data.HighRisk_UserNotes.length - 1)
+      {
+          $scope.x += 1;
+      }
+       $('#hrData').val($scope.data.HighRisk_UserNotes[$scope.x].UserNotes);
+    };
+    $scope.goForwardRisk = function() {
+ if($scope.x - 1 >= 0)
+ {
+   $scope.x -=   1;
+ }
+ $('#hrData').val($scope.data.HighRisk_UserNotes[$scope.x].UserNotes);
+
+ };
+    $scope.goBackProvider = function() {
+
+      if($scope.c + 1 <= $scope.data.HighRisk_SPANImport.length - 1)
+      {
+           $scope.c += 1;
+      }
+       $('#soData').val($scope.data.HighRisk_SPANImport[$scope.c].HighRisk);
+    };
+
+    $scope.goForwardProvider = function() {
+      if($scope.c - 1 >= 0)
+      {
+        $scope.c -=   1;
+      }
+      $('#soData').val($scope.data.HighRisk_SPANImport[$scope.c].HighRisk);
+ };
+
+  $scope.goBackSOR = function() {
+
+    if($scope.z + 1 <= $scope.data.PrimaryHealthProvider_UserNotes.length - 1)
+    {
+         $scope.z += 1;
+    }
+     $('#mhData').val($scope.data.PrimaryHealthProvider_UserNotes[$scope.z].UserNotes);
+  };
+
+  $scope.goForwardSOR = function() {
+    if($scope.z - 1 >= 0)
+    {
+      $scope.z -=   1;
+    }
+    $('#mhData').val($scope.data.PrimaryHealthProvider_UserNotes[$scope.z].UserNotes);
+
+};
+  $scope.goBackSafety = function() {
+
+    if($scope.a + 1 <= $scope.data.SafetyPlan_UserNotes.length - 1)
+    {
+         $scope.a += 1;
+    }
+     $('#spData').val($scope.data.SafetyPlan_UserNotes[$scope.a].UserNotes);
+  };
+
+  $scope.goForwardSafety = function() {
+    if($scope.a - 1 >= 0)
+    {
+      $scope.a -=   1;
+    }
+    $('#spData').val($scope.data.SafetyPlan_UserNotes[$scope.a].UserNotes);
+
+};
+  $scope.goBackMHP = function() {
+    if($scope.b + 1 <= $scope.data.SafetyPlan_SPANImport.length - 1)
+    {
+         $scope.b += 1;
+    }
+     $('#spsorData').val($scope.data.SafetyPlan_SPANImport[$scope.b].SafetyPlanCurrent);
+  };
+
+  $scope.goForwardMHP = function() {
+    if($scope.b + 1 <= $scope.data.SafetyPlan_SPANImport.length - 1)
+    {
+         $scope.b += 1;
+    }
+    $('#spsorData').val($scope.data.SafetyPlan_SPANImport[$scope.b].SafetyPlanCurrent);
+
+};
+  $scope.goBack = function() {
+    if($scope.y + 1 <= $scope.data.GeneralComments.length - 1)
+    {
+         $scope.y += 1;
+    }
+     $('#comment').val($scope.data.GeneralComments[$scope.y].Comment);
+  };
+  $scope.goForward = function() {
+    if($scope.y + 1 <= $scope.data.GeneralComments.length - 1)
+    {
+         $scope.y += 1;
+    }
+    $('#comment').val($scope.data.GeneralComments[$scope.y].Comment);
+
+};
+
+  $scope.comment = [{
+    value: "Individual arrested for disorderly contact and public intoxication.  Sister caring for individual and bringing him to appointments.",
+    date: "10-01-2015"
+  }, {
+    value: "This is the second comment",
+    date: "10-01-2015"
+  }, {
+    value: "This is the third comment",
+    date: "10-01-2015"
+  }, {
+    value: "This is the 4 comment",
+    date: "10-01-2015"
+  }, {
+    value: "This is the 5 comment",
+    date: "10-01-2015"
+  }];
+  $scope.dataEntry = [{
+    entry: "High Risk Flag set to \"Yes\" on 12/15/2015",
+    date: "01-01-2016"
+  }, {
+    entry: "High Risk Flag set to \"No\" on 12/15/2013",
+    date: "12-01-2015"
+  }, {
+    entry: "High Risk Flag set to \"Yes\" on 12/15/2010",
+    date: "11-01-2015"
+  }];
+
+  $scope.sorData = [{
+    entry: "High Risk Flag: No",
+    date: "1st Identified as High Risk: 03-02-2001",
+    newdate: "Last Updated: 02-03-2004"
+  }];
+  $scope.healthEntry = [{
+    entry: "John Winters is primary MH provider",
+    date: "01-01-2016"
+  }, {
+    entry: "Robin Williams is primary MH provider",
+    date: "12-01-2014"
+  }, {
+    entry: "Robert Hope is primary MH provider",
+    date: "11-01-2013"
+  }];
+
+  $scope.providerData = [{
+    entry: "No Data Available",
+  }];
+
+  $scope.safetyEntry = [{
+    entry: "Safety Plan established on 12/29/2015",
+    date: "01-01-2016"
+  }, {
+    entry: "Safety Plan established on 12/29/2013",
+    date: "12-01-2015"
+  }, {
+    entry: "Safety Plan established on 12/29/2012",
+    date: "11-01-2015"
+  }];
+
+  $scope.planData = [{
+    entry: "Safety Plan: No",
+    date: "Date Completed: N/A"
+    }];
+
           $scope.items = ['Item 1', 'Item 2', 'Item 3'];
 
           $scope.addItem = function() {
@@ -3053,51 +3081,203 @@ angular.module('ui.widgets')
             $scope.items.push('Item ' + newItemNo);
           };
 
-          $scope.status = {
-            isFirstOpen: true,
-            isFirstDisabled: false
-          };
+
            $scope.myNewData = '';
-            
+
             $scope.overwrite = function ($event) {
                 $event.preventDefault();
                 $event.stopPropagation();
-                
+
                 $scope.myData = ' ';
             };
-            
-            $scope.addHRData = function() {
-              if ($scope.hrData) {
-                $scope.dataEntry.unshift({entry: $scope.hrData, date: "01-08-2016"}) 
-             $scope.hrData= $scope.dataEntry[$scope.x].entry;
-              
-              }
-              if ($scope.mhData) {
-                $scope.healthEntry.unshift({entry: $scope.mhData, date: "01-08-2016"})
-                $scope.mhData= $scope.healthEntry[$scope.x].entry;
-              }
-              if ($scope.spData) {
-                $scope.safetyEntry.unshift({entry: $scope.spData, date: "01-08-2016"})
-                $scope.spData= $scope.safetyEntry[$scope.x].entry; 
-              }
-              if ($scope.currentComment != $scope.comment[$scope.x].value) {
-                $scope.comment.unshift({value: $scope.currentComment, date: "01-08-2016"}) 
-                $scope.currentComment= $scope.comment[0].value;
-              }
-            }
-            
-            $scope.currentComment = $scope.comment[$scope.x].value;
-            $scope.hrData =$scope.dataEntry[$scope.x].entry;
-            $scope.mhData = $scope.healthEntry[$scope.x].entry;
-            $scope.spData = $scope.safetyEntry[$scope.x].entry;            
-          },
-          link: function postLink(scope, element, attr) {
-            scope.$watch('widgetData', function(data){
-              var test = data;
-            });
 
-          }
-        }
+        $scope.addNewData = function() {
+            if ($scope.hrData) {
+              $scope.dataEntry.unshift({
+                entry: $scope.hrData,
+                date: "01-08-2016"
+              })
+              $scope.hrData = '';
+            }
+            if ($scope.mhData) {
+              $scope.healthEntry.unshift({
+                entry: $scope.mhData,
+                date: "01-08-2016"
+              })
+              $scope.mhData = '';
+            }
+            if ($scope.spData) {
+              $scope.safetyEntry.unshift({
+                entry: $scope.spData,
+                date: "01-08-2016"
+              })
+              $scope.spData = '';
+            }
+            if ($scope.soData) {
+              $scope.sorData.unshift({
+                entry: $scope.soData,
+                date: "01-08-2016"
+              })
+              $scope.soData = '';
+            }
+            if ($scope.spsorData) {
+              $scope.sorspData.unshift({
+                entry: $scope.soData,
+                date: "01-08-2016"
+              })
+              $scope.spsoData = '';
+            }
+             if ($scope.mpData) {
+              $scope.planData.unshift({
+                entry: $scope.mpData,
+                date: "01-08-2016"
+              })
+              $scope.mpData = '';
+            }
+            if ($scope.currentComment != $scope.comment[$scope.x].value) {
+              $scope.comment.unshift({
+                value: $scope.currentComment,
+                date: "01-08-2016"
+              })
+              $scope.currentComment = $scope.comment[0].value;
+            }
+            if ($scope.currentRisk != $scope.dataEntry[$scope.x].entry) {
+              $scope.dataEntry.unshift({
+                entry: $scope.currentRisk,
+                date: "01-08-2016"
+              })
+              $scope.currentRisk = $scope.dataEntry[$scope.x].entry;
+            }
+            if ($scope.currentProvider != $scope.healthEntry[$scope.x].entry) {
+              $scope.healthEntry.unshift({
+                entry: $scope.currentProvider,
+                date: "01-08-2016"
+              })
+              $scope.currentProvider = $scope.healthEntry[$scope.x].entry;
+            }
+            if ($scope.currentSafety != $scope.safetyEntry[$scope.x].entry) {
+              $scope.safetyEntry.unshift({
+                entry: $scope.currentSafety,
+                date: "01-08-2016"
+              })
+              $scope.currentSafety = $scope.safetyEntry[$scope.x].entry;
+            }
+             if ($scope.currentProviderRecords != $scope.providerData[$scope.x].entry) {
+              $scope.providerData.unshift({
+                entry: $scope.currentProviderRecords,
+                date: "01-08-2016"
+              })
+              $scope.currentProviderRecords = $scope.providerData[$scope.x].entry;
+            }
+
+
+  }
+
+  $scope.currentComment = $scope.comment[$scope.x].value;
+  $scope.currentRisk = $scope.dataEntry[$scope.x].entry;
+  $scope.currentProvider = $scope.healthEntry[$scope.x].entry;
+  $scope.currentSafety = $scope.safetyEntry[$scope.x].entry;
+   $scope.currentProviderRecords = $scope.providerData[$scope.x].entry;
+
+          },
+      link: function postLink(scope, element, attr) {
+        scope.$watch('widgetData', function(data){
+          scope.data = data;
+        });
+
+        $('#jumpToHR').on('keydown', function(e){
+              var code = (e.keyCode? e.keyCode: e.which)
+              if(code==13)
+              {
+                var userValue = parseInt($('#jumpToHR').val());
+                var maxValue = scope.data.HighRisk_UserNotes.length;
+                if(userValue > maxValue)
+                {
+                  scope.x = maxValue;
+                  $('#hrData').val(scope.data.HighRisk_UserNotes[maxValue - 1].UserNotes);
+                  $('#jumpToHR').val(scope.x);
+                }
+                else {
+                  scope.x = userValue;
+                  $('#hrData').val(scope.data.HighRisk_UserNotes[userValue - 1].UserNotes);
+                }
+              }
+        });
+        $('#nextNew').on('keydown', function(e){
+              var code = (e.keyCode? e.keyCode: e.which)
+              if(code==13)
+              {
+                var userValue = parseInt($('#nextNew').val());
+                var maxValue = scope.data.HighRisk_SPANImport.length;
+                if(userValue > maxValue)
+                {
+                  scope.x = maxValue;
+                  $('#soData').val(scope.data.HighRisk_SPANImport[maxValue - 1].HighRisk);
+                  $('#nextNew').val(scope.x);
+                }
+                else {
+                  scope.x = userValue;
+                  $('#soData').val(scope.data.HighRisk_SPANImport[userValue - 1].HighRisk);
+                }
+              }
+        });
+        $('#goToSafety').on('keydown', function(e){
+              var code = (e.keyCode? e.keyCode: e.which)
+              if(code==13)
+              {
+                var userValue = parseInt($('#goToSafety').val());
+                var maxValue = scope.data.SafetyPlan_UserNotes.length;
+                if(userValue > maxValue)
+                {
+                  scope.x = maxValue;
+                  $('#spData').val(scope.data.SafetyPlan_UserNotes[maxValue - 1].UserNotes);
+                  $('#goToSafety').val(scope.x);
+                }
+                else {
+                  scope.x = userValue;
+                  $('#spData').val(scope.data.SafetyPlan_UserNotes[userValue - 1].UserNotes);
+                }
+              }
+        });
+        $('#commentAhead').on('keydown', function(e){
+              var code = (e.keyCode? e.keyCode: e.which)
+              if(code==13)
+              {
+                var userValue = parseInt($('#commentAhead').val());
+                var maxValue = scope.data.GeneralComments.length;
+                if(userValue > maxValue)
+                {
+                  scope.x = maxValue;
+                  $('#comment').val(scope.data.GeneralComments[maxValue - 1].Comment);
+                  $('#commentAhead').val(scope.x);
+                }
+                else {
+                  scope.x = userValue;
+                  $('#comment').val(scope.data.GeneralComments[userValue - 1].Comment);
+                }
+              }
+        });
+        $('#safetyPlanGo').on('keydown', function(e){
+              var code = (e.keyCode? e.keyCode: e.which)
+              if(code==13)
+              {
+                var userValue = parseInt($('#safetyPlanGo').val());
+                var maxValue = scope.data.SafetyPlan_SPANImport.length;
+                if(userValue > maxValue)
+                {
+                  scope.x = maxValue;
+                  $('#spsorData').val(scope.data.SafetyPlan_SPANImport[maxValue - 1].SafetyPlanCurrent);
+                  $('#safetyPlanGo').val(scope.x);
+                }
+                else {
+                  scope.x = userValue;
+                  $('#spsorData').val(scope.data.SafetyPlan_SPANImport[userValue - 1].SafetyPlanCurrent);
+                }
+              }
+        });
+spsorData
+      }
+    }
   });
 
 /*
@@ -5589,11 +5769,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/enterdata/enterdata.html",
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "  <div>\r" +
+    "<div>\r" +
     "\n" +
     "    <script type=\"text/ng-template\" id=\"group-template.html\">\r" +
     "\n" +
@@ -5609,6 +5785,8 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        </h4>\r" +
     "\n" +
+    "\r" +
+    "\n" +
     "        </div>\r" +
     "\n" +
     "        <div class=\"panel-collapse collapse\" uib-collapse=\"!isOpen\">\r" +
@@ -5623,231 +5801,285 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <div ng-form=\"TestForm\">\r" +
     "\n" +
-    "      <div class=\"panel panel-default\">\r" +
+    "      <div class=\"panel panel-default\" style=\"width: 98%\">\r" +
     "\n" +
-    "        <div class=\"panel-heading\">\r" +
-    "\n" +
-    "          <h3 class=\"panel-title\">Data Entry Widget Option 1</h3>\r" +
-    "\n" +
-    "          <h5>Patient Name: Paul Brown</h5></div></div>\r" +
-    "\n" +
-    "        <div class=\"panel-body\">\r" +
+    "        <div class=\"panel-body\" style=\"padding-left:40px\">\r" +
     "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
-    "            <div class=\"col-xs-6\">\r" +
+    "            <div class=\"col-md-12 bs-example hr-text\" style=\"padding: 10px; border-radius: 25px; border: 0.5px solid;\">\r" +
     "\n" +
-    "              <label><b>Enter High Risk Flag:</b>\r" +
+    "              <div class=\"panel-body\">\r" +
     "\n" +
-    "                <br>\r" +
+    "                <div class=\"col-md-6\">\r" +
     "\n" +
-    "                <input style=\"width:180px\" type=\"text\" ng-model=\"hrData\"  ng-required=\"true\" placeholder=\"{{dataEntry[0].entry}}\">\r" +
+    "                  <label style=\"font-weight:normal\">User Notes:\r" +
     "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                <!--Valid: {{TestForm.$valid}}-->\r" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
     "\r" +
     "\n" +
-    "                <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed = !isCollapsed\">History</button>\r" +
+    "                      <button type=\"button\" name=\"hrBack\" class=\"btn btn-default pull-left\" ng-click=\"HighRiskBack()\"><i class=\"glyphicon glyphicon-arrow-left\"\r" +
     "\n" +
-    "                <div uib-collapse=\"isCollapsed\">\r" +
+    "                        style=\"font-size:13px;width: 18px;\"></i></button>\r" +
     "\n" +
-    "                  <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
+    "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                    <div ng-repeat=\"d in dataEntry\">{{d.entry}}<hr></div>\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "                <br>\r" +
-    "\n" +
-    "                <p style=\"padding-top:4px\"><b>High Risk SPAN History:</b>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                </p>\r" +
-    "\n" +
-    "                <div>{{sorData[0].entry}}\r" +
-    "\n" +
-    "                  <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed1 = !isCollapsed1\">History</button>\r" +
-    "\n" +
-    "                  <div uib-collapse=\"isCollapsed1\">\r" +
-    "\n" +
-    "                    <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
-    "\n" +
-    "                      <div ng-repeat=\"s in sorData\">{{s.entry}}\r" +
-    "\n" +
-    "                        <br>{{s.date}}\r" +
-    "\n" +
-    "                        <br>{{s.newdate}}\r" +
-    "\n" +
-    "                        <hr>\r" +
-    "\n" +
-    "                      </div>\r" +
+    "                      <input type=\"text\" style=\"width:20px\" id=\"jumpToHR\" title=\"{{data.HighRisk_UserNotes[x].EntryDate}}\" value=\"{{x+1}}\"></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
+    "                      <button type=\"button\" name=\"hrFwd\" class=\"btn btn-default pull-left\" ng-click=\"goForwardRisk()\"><i class=\"glyphicon glyphicon-arrow-right\"\r" +
+    "\n" +
+    "                        style=\"font-size:13px;width: 18px;\"></i></button>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                  </div><br/>\r" +
+    "\n" +
+    "                  <input class=\"box col-md-12\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" id=\"hrData\" value=\"{{data.HighRisk_UserNotes[x].UserNotes}}\">\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">SPAN Records</label>\r" +
+    "\n" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goBackProvider()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" style=\"width:20px\" id=\"nextNew\" title=\"{{data.HighRisk_SPANImport[c].ImportDate}}\" value=\"{{c+1}}\"></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goForwardProvider()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px';width: 18px;\"></i></button>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                  <div class=\"col-md-12 box\" style=\"background-color:#FBFBFB; border-style:solid;padding-bottom: 0px;\r" +
+    "\n" +
+    "                    border-width:1px;\" value=\"\">\r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">High Risk: {{data.HighRisk_SPANImport[c].HighRisk}}</label>\r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">Date First Identified: {{data.HighRisk_SPANImport[c].DateFirstIdentifiedAsHighRisk}}</label>\r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">Date Last Updated: {{data.HighRisk_SPANImport[c].DateHighRiskLastUpdated}}</label>\r" +
+    "\n" +
     "                  </div>\r" +
     "\n" +
     "                </div>\r" +
     "\n" +
-    "            </div>\r" +
-    "\n" +
-    "            <div class=\"col-xs-6\">\r" +
-    "\n" +
-    "              <label><b>Enter Principal MH Provider:</b>\r" +
-    "\n" +
-    "                <br>\r" +
-    "\n" +
-    "                <input style=\"width:180px\" type=\"text\" ng-model=\"mhData\"  ng-required=\"true\" placeholder=\"{{healthEntry[0].entry}}\">\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                <!--Valid: {{TestForm.$valid}}-->\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed2 = !isCollapsed2\">History</button>\r" +
-    "\n" +
-    "                <div uib-collapse=\"isCollapsed2\">\r" +
-    "\n" +
-    "                  <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
-    "\n" +
-    "                    <div ng-repeat=\"h in healthEntry\">{{h.entry}}<hr></div>\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "                <p style=\"padding-top:8px\"><b>Provider CPRS History:</b>\r" +
-    "\n" +
-    "                </p>\r" +
-    "\n" +
-    "                <div>\r" +
-    "\n" +
-    "                  \r" +
-    "\n" +
-    "                    <label>No Data Available</label>\r" +
-    "\n" +
-    "                      </div>\r" +
-    "\n" +
-    "                    \r" +
-    "\n" +
-    "                   \r" +
-    "\n" +
-    "                 \r" +
+    "              </div>\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
     "          </div>\r" +
     "\n" +
-    "          <br>\r" +
-    "\n" +
-    "          <br>\r" +
-    "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
-    "            <div class=\"col-xs-6\">\r" +
+    "            <div class=\"col-md-12 bs-example mh-text\" style=\"padding: 10px; border-radius: 25px; border: 0.5px solid;\">\r" +
     "\n" +
-    "              <label><b>Enter Safety Plan Date:</b>\r" +
+    "              <div class=\"panel-body\">\r" +
     "\n" +
-    "                <br>\r" +
+    "                <div class=\"col-md-6\">\r" +
     "\n" +
-    "                <input style=\"width:180px\" type=\"text\" ng-model=\"spData\"  ng-required=\"true\" placeholder=\"{{safetyEntry[0].entry}}\">\r" +
+    "                  <label style=\"font-weight:normal\">User Notes:\r" +
     "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                <!--Valid: {{TestForm.$valid}}-->\r" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
     "\r" +
     "\n" +
-    "                <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed4 = !isCollapsed4\">History</button>\r" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goBackSOR()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
     "\n" +
-    "                <div uib-collapse=\"isCollapsed4\">\r" +
+    "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                  <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
-    "\n" +
-    "                    <div ng-repeat=\"s in safetyEntry\">{{s.entry}}<hr></div>\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "                <p style=\"padding-top:4px\"><b>Safety Plan SPAN History:</b>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                </p>\r" +
-    "\n" +
-    "                <div>{{planData[0].entry}}\r" +
-    "\n" +
-    "                  <button type=\"button\" class=\"btn btn-default\" ng-click=\"isCollapsed5 = !isCollapsed5\">History</button>\r" +
-    "\n" +
-    "                  <div uib-collapse=\"isCollapsed5\">\r" +
-    "\n" +
-    "                    <div class=\"box\" style=\"height:90px; overflow-y:scroll;\">\r" +
-    "\n" +
-    "                      <div ng-repeat=\"p in planData\">{{p.entry}}\r" +
-    "\n" +
-    "                        <br>{{p.date}}\r" +
-    "\n" +
-    "                        <hr>\r" +
-    "\n" +
-    "                      </div>\r" +
+    "                      <input type=\"text\" style=\"width:20px\" title=\"{{data.PrimaryHealthProvider[z].EntryDate}}\" value=\"{{z+1}}\"></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
+    "\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goForwardSOR()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
+    "\n" +
+    "                  </div><br/>\r" +
+    "\n" +
+    "                  <input class=\"box col-md-12\" style=\"font-weight:normal\" type=\"text\"  ng-required=\"true\"  id=\"mhData\" value=\"{{data.PrimaryHealthProvider_UserNotes[z]}}\">\r" +
+    "\n" +
+    "\r" +
+    "\n" +
     "                  </div>\r" +
     "\n" +
-    "                </div>\r" +
+    "\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                   <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">VistA Records</label>\r" +
+    "\n" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\"   ng-click=\"\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" style=\"width:20px\" title=\"\" value=\"{{1}}\"></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                 <input class=\"col-md-12 box\" style=\"font-weight:normal;background-color:#FBFBFB;padding-bottom: 46px;\" ng-model=\"currentProviderRecords\"\r" +
+    "\n" +
+    "                    ng-required=\"true\" id=\"mpData\" type=\"text\" placeholder=\"{{providerData[0].entry}\" disabled> </input>\r" +
+    "\n" +
+    "              </div>\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
     "          </div>\r" +
     "\n" +
-    "          <br>\r" +
+    "          <div class=\"row\" style=\"padding: 14px;\">\r" +
     "\n" +
-    "          <br>\r" +
+    "            <div class=\"col-md-12 sp-text\" style=\"border-radius: 25px; border: 0.5px solid;position: relative;\r" +
     "\n" +
-    "          <div class=\"row\">\r" +
+    "                padding: 7px -1px 0px; margin: 0 -15px 5px; box-shadow: inset 0 3px 6px rgba(0,0,0,.05);\">\r" +
     "\n" +
-    "            <div class=\"col-xs-12\">\r" +
+    "              <div class=\"panel-body\">\r" +
     "\n" +
-    "              <label><b>Record a General Comment:</b>\r" +
+    "\r" +
+    "\n" +
+    "                <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">User Notes:\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                   <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goBackSafety()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width:18px\"></i></button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" style=\"width:20px\" id=\"goToSafety\" title=\"{{data.SafetyPlan_UserNotes[a].EntryDate}}\" value=\"{{a+1}}\"></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\"  ng-click=\"goForwardSafety()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px; width:18px\"></i></button>\r" +
+    "\n" +
+    "                  </div><br>\r" +
+    "\n" +
+    "                    <input class=\"box col-md-12\" style=\"font-weight:normal\" type=\"text\"\r" +
+    "\n" +
+    "                    ng-required=\"true\" id=\"spData\" value=\"{{data.SafetyPlan_UserNotes[a].UserNotes}}\">\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">VistA Records </label>\r" +
+    "\n" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\"   ng-click=\"goBackMHP()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width:18px\"></i></button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" style=\"width:20px\" id=\"safetyPlanGo\" title=\"{{data.SafetyPlan_SPANImport[b].ImportDate}}\" value=\"{{b+1}}\"></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                    <button type=\"button\" class=\"btn btn-default pull-left\"  ng-click=\"goForwardMHP()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width:18px\"></i></button>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                  <div class=\"col-md-12 box\" style=\"background-color:#FBFBFB; border-style:solid;padding-bottom: 14px;\r" +
+    "\n" +
+    "                    border-width:1px;\" value=\"\">\r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">Safety Plan: {{data.SafetyPlan_SPANImport[b].SafetyPlanCurrent}}</label>\r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">Date Completed: {{data.SafetyPlan_SPANImport[b].DateSafetyPlanCompletedOrUpdated}}</label>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "          <div class=\"row\" style=\"padding: 15px;\">\r" +
+    "\n" +
+    "            <div class=\"col-md-12 bs-example comment-text\" style=\"border-radius: 25px; border: 0.5px solid;\"\">\r" +
+    "\n" +
+    "              <div class=\"panel-body\">\r" +
+    "\n" +
+    "              <label style=\"font-weight:normal\">User Notes:</label>\r" +
     "\n" +
     "               <div class=\"btn-group btn-group-xs\" role=\"group\" aria-label=\"Buttons\" style=\"float:right\">\r" +
     "\n" +
-    "                <button type=\"button\" class=\"btn btn-default\"   ng-click=\"goBack()\"><i class=\"fa fa-arrow-left\" style=\"font-size:13px\"></i></button>\r" +
+    "                <button type=\"button\" class=\"btn btn-default pull-left\"   ng-click=\"goBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width:18px\"></i></button>\r" +
     "\n" +
-    "                <button type=\"button\" class=\"btn btn-default\"  ng-click=\"goForward()\"><i class=\"fa fa-arrow-right\" style=\"font-size:13px\"></i></button>\r" +
+    "                <div class=\"pull-left\">\r" +
     "\n" +
-    "              </div> \r" +
+    "                  <input type=\"text\" style=\"width:20px\" id=\"commentAhead\" title=\"{{data.GeneralComments[y].EntryDate}}\" value=\"{{y+1}}\"></input>\r" +
     "\n" +
-    "                <textarea ng-model=\"currentComment\" class=\"form-control\" rows=\"5\" id=\"comment\" style=\"font-size:10pt;height:150px;width:600px;\" placeholder=\"Text here...\">{{x}}</textarea>\r" +
+    "                </div>\r" +
     "\n" +
-    "              </label>\r" +
+    "\r" +
     "\n" +
-    "              \r" +
+    "                <button type=\"button\" class=\"btn btn-default pull-left\"  ng-click=\"goForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width:18px\"></i></button>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                <textarea class=\"form-control col-md-12\" rows=\"5\" id=\"comment\" style=\"outline:0.5px solid;font-size:10pt;font-weight:normal\"\r" +
+    "\n" +
+    "                placeholder=\"Text here...\">\"{{data.GeneralComments[y].Comment}}\"</textarea>\r" +
+    "\n" +
+    "\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
     "          </div>\r" +
     "\n" +
-    "           Record Count: {{x+1}}\r" +
+    "\r" +
     "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
     "            <div class=\"col-xs-2 col-xs-offset-10\">\r" +
     "\n" +
-    "              <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"addHRData()\">Add Data</button>\r" +
+    "              <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"addNewData()\">Add Data</button>\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
@@ -5859,11 +6091,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    </div>\r" +
     "\n" +
-    " \r" +
+    "   </div>\r" +
     "\n" +
-    "\r" +
+    "  </div>\r" +
     "\n" +
-    "\r" +
+    "</div>\r" +
     "\n"
   );
 
