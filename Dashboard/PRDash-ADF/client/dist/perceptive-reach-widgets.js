@@ -2912,38 +2912,39 @@ angular.module('ui.widgets')
         $scope.b = 0;
         $scope.c = 0;
 
-    $scope.HighRiskBack = function() {
+  $scope.HighRiskBack = function() {
+    $('#hrData').removeClass('hrDirty');
+    if($scope.x + 1 <= $scope.data.HighRisk_UserNotes.length - 1)
+    {
+        $scope.x += 1;
+    }
+     $('#hrData').val($scope.data.HighRisk_UserNotes[$scope.x].UserNotes);
+  };
+  $scope.goForwardRisk = function() {
+   $('#hrData').removeClass('hrDirty');
+   if($scope.x - 1 >= 0)
+   {
+     $scope.x -=   1;
+   }
+   $('#hrData').val($scope.data.HighRisk_UserNotes[$scope.x].UserNotes);
 
-      if($scope.x + 1 <= $scope.data.HighRisk_UserNotes.length - 1)
-      {
-          $scope.x += 1;
-      }
-       $('#hrData').val($scope.data.HighRisk_UserNotes[$scope.x].UserNotes);
-    };
-    $scope.goForwardRisk = function() {
- if($scope.x - 1 >= 0)
- {
-   $scope.x -=   1;
- }
- $('#hrData').val($scope.data.HighRisk_UserNotes[$scope.x].UserNotes);
+   };
+  $scope.goBackProvider = function() {
+    $('#hrData').css('border-color','');
+    if($scope.c + 1 <= $scope.data.HighRisk_SPANImport.length - 1)
+    {
+         $scope.c += 1;
+    }
+     $('#soData').val($scope.data.HighRisk_SPANImport[$scope.c].HighRisk);
+  };
 
- };
-    $scope.goBackProvider = function() {
-
-      if($scope.c + 1 <= $scope.data.HighRisk_SPANImport.length - 1)
-      {
-           $scope.c += 1;
-      }
-       $('#soData').val($scope.data.HighRisk_SPANImport[$scope.c].HighRisk);
-    };
-
-    $scope.goForwardProvider = function() {
-      if($scope.c - 1 >= 0)
-      {
-        $scope.c -=   1;
-      }
-      $('#soData').val($scope.data.HighRisk_SPANImport[$scope.c].HighRisk);
- };
+  $scope.goForwardProvider = function() {
+    if($scope.c - 1 >= 0)
+    {
+      $scope.c -=   1;
+    }
+    $('#soData').val($scope.data.HighRisk_SPANImport[$scope.c].HighRisk);
+  };
 
   $scope.goBackSOR = function() {
 
@@ -2961,7 +2962,7 @@ angular.module('ui.widgets')
     }
     $('#mhData').val($scope.data.PrimaryHealthProvider_UserNotes[$scope.z].UserNotes);
 
-};
+  };
   $scope.goBackSafety = function() {
 
     if($scope.a + 1 <= $scope.data.SafetyPlan_UserNotes.length - 1)
@@ -2978,7 +2979,7 @@ angular.module('ui.widgets')
     }
     $('#spData').val($scope.data.SafetyPlan_UserNotes[$scope.a].UserNotes);
 
-};
+  };
   $scope.goBackMHP = function() {
     if($scope.b + 1 <= $scope.data.SafetyPlan_SPANImport.length - 1)
     {
@@ -2994,7 +2995,7 @@ angular.module('ui.widgets')
     }
     $('#spsorData').val($scope.data.SafetyPlan_SPANImport[$scope.b].SafetyPlanCurrent);
 
-};
+  };
   $scope.goBack = function() {
     if($scope.y + 1 <= $scope.data.GeneralComments.length - 1)
     {
@@ -3009,7 +3010,15 @@ angular.module('ui.widgets')
     }
     $('#comment').val($scope.data.GeneralComments[$scope.y].Comment);
 
-};
+  };
+
+  $scope.NewHRDataAdded = function(){
+    $('#hrData').removeClass('hrDirty');
+    if($.trim( $('#hrData').val()).length > 1)
+    {
+      $('#hrData').addClass('hrDirty');
+    }
+  };
 
   $scope.comment = [{
     value: "Individual arrested for disorderly contact and public intoxication.  Sister caring for individual and bringing him to appointments.",
@@ -3092,6 +3101,15 @@ angular.module('ui.widgets')
             };
 
         $scope.addNewData = function() {
+
+            if($('#hrData').hasClass('hrDirty'))
+            {
+               $scope.data.HighRisk_UserNotes.unshift({
+                  entry: $('#hrData').val(),
+                  date: new Date().toLocaleDateString()
+                })
+            }
+
             if ($scope.hrData) {
               $scope.dataEntry.unshift({
                 entry: $scope.hrData,
@@ -5837,7 +5855,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  </div><br/>\r" +
     "\n" +
-    "                  <input class=\"box col-md-12\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" id=\"hrData\" value=\"{{data.HighRisk_UserNotes[x].UserNotes}}\">\r" +
+    "                  <textarea class=\"col-md-12\" rows=\"3\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" id=\"hrData\" ng-keyup=\"NewHRDataAdded()\">{{data.HighRisk_UserNotes[x].UserNotes}}</textarea>\r" +
     "\n" +
     "                </div>\r" +
     "\n" +

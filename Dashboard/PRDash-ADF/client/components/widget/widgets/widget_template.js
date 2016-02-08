@@ -275,7 +275,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  </div><br/>\r" +
     "\n" +
-    "                  <input class=\"box col-md-12\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" id=\"hrData\" value=\"{{data.HighRisk_UserNotes[x].UserNotes}}\">\r" +
+    "                  <textarea class=\"col-md-12\" rows=\"3\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" id=\"hrData\" ng-keyup=\"NewHRDataAdded()\">{{data.HighRisk_UserNotes[x].UserNotes}}</textarea>\r" +
     "\n" +
     "                </div>\r" +
     "\n" +
