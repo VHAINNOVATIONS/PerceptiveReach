@@ -40,6 +40,12 @@ a{
     height: 21px;
     overflow: hidden;
 }
+
+.hrDirty
+{
+  border-color: red !important;
+}
+
 .box {
   border-style:solid;
   border-width:1px;
@@ -481,3 +487,4 @@ position: relative;
 .ui-pnotify .ui-pnotify-shadow {
 -webkit-box-shadow: 0px 2px 10px rgba(50, 50, 50, 0.5);
 }
+
