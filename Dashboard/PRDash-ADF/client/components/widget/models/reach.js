@@ -430,7 +430,10 @@ angular.module('ui.models')
             }.bind(this));
       },
       saveNewUserData: function(jsonData){
-        $http.put('/api/enterdata',{'UpdatedUserData':jsonData});
+        $http.put('/api/enterdata?reachID='+this.reachID,{'UpdatedUserData':jsonData})
+        .success(function(){
+          this.getData();
+        }.bind(this));
       },
       destroy: function () {
         CommonDataModel.prototype.destroy.call(this);

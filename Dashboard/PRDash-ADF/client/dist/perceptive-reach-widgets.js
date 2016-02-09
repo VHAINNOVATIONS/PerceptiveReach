@@ -769,7 +769,10 @@ angular.module('ui.models')
             }.bind(this));
       },
       saveNewUserData: function(jsonData){
-        $http.put('/api/enterdata',{'UpdatedUserData':jsonData});
+        $http.put('/api/enterdata?reachID='+this.reachID,{'UpdatedUserData':jsonData})
+        .success(function(){
+          this.getData();
+        }.bind(this));
       },
       destroy: function () {
         CommonDataModel.prototype.destroy.call(this);
@@ -2911,296 +2914,217 @@ angular.module('ui.widgets')
         $scope.a = 0;
         $scope.b = 0;
         $scope.c = 0;
+       
+        $scope.HighRiskBack = function() {
+          $('#hrData').removeClass('hrDirty');
+          if($scope.x + 1 <= $scope.data.HighRisk_UserNotes.length - 1)
+          {
+              $scope.x += 1;
+          }
+           //$('#hrData').html($scope.data.HighRisk_UserNotes[$scope.x].UserNotes);
+        };
+        $scope.goForwardRisk = function() {
+         $('#hrData').removeClass('hrDirty');
+         if($scope.x - 1 >= 0)
+         {
+           $scope.x -=   1;
+         }
+         //$('#hrData').html($scope.data.HighRisk_UserNotes[$scope.x].UserNotes);
 
-  $scope.HighRiskBack = function() {
-    $('#hrData').removeClass('hrDirty');
-    if($scope.x + 1 <= $scope.data.HighRisk_UserNotes.length - 1)
-    {
-        $scope.x += 1;
-    }
-     $('#hrData').val($scope.data.HighRisk_UserNotes[$scope.x].UserNotes);
-  };
-  $scope.goForwardRisk = function() {
-   $('#hrData').removeClass('hrDirty');
-   if($scope.x - 1 >= 0)
-   {
-     $scope.x -=   1;
-   }
-   $('#hrData').val($scope.data.HighRisk_UserNotes[$scope.x].UserNotes);
+         };
+        $scope.goBackProvider = function() {
 
-   };
-  $scope.goBackProvider = function() {
-    $('#hrData').css('border-color','');
-    if($scope.c + 1 <= $scope.data.HighRisk_SPANImport.length - 1)
-    {
-         $scope.c += 1;
-    }
-     $('#soData').val($scope.data.HighRisk_SPANImport[$scope.c].HighRisk);
-  };
+          if($scope.c + 1 <= $scope.data.HighRisk_SPANImport.length - 1)
+          {
+               $scope.c += 1;
+          }
+        };
 
-  $scope.goForwardProvider = function() {
-    if($scope.c - 1 >= 0)
-    {
-      $scope.c -=   1;
-    }
-    $('#soData').val($scope.data.HighRisk_SPANImport[$scope.c].HighRisk);
-  };
+        $scope.goForwardProvider = function() {
+          if($scope.c - 1 >= 0)
+          {
+            $scope.c -=   1;
+          }
+        };
 
-  $scope.goBackSOR = function() {
+        $scope.goBackSOR = function() {
+        $('#mhData').removeClass('mhDirty');
+          if($scope.z + 1 <= $scope.data.PrimaryHealthProvider_UserNotes.length - 1)
+          {
+               $scope.z += 1;
+          }
+           $('#mhData').html($scope.data.PrimaryHealthProvider_UserNotes[$scope.z].UserNotes);
+        };
 
-    if($scope.z + 1 <= $scope.data.PrimaryHealthProvider_UserNotes.length - 1)
-    {
-         $scope.z += 1;
-    }
-     $('#mhData').val($scope.data.PrimaryHealthProvider_UserNotes[$scope.z].UserNotes);
-  };
+        $scope.goForwardSOR = function() {
+          $('#mhData').removeClass('mhDirty');
+          if($scope.z - 1 >= 0)
+          {
+            $scope.z -=   1;
+          }
+          $('#mhData').html($scope.data.PrimaryHealthProvider_UserNotes[$scope.z].UserNotes);
 
-  $scope.goForwardSOR = function() {
-    if($scope.z - 1 >= 0)
-    {
-      $scope.z -=   1;
-    }
-    $('#mhData').val($scope.data.PrimaryHealthProvider_UserNotes[$scope.z].UserNotes);
+        };
+        $scope.goBackSafety = function() {
 
-  };
-  $scope.goBackSafety = function() {
+          $('#spData').removeClass('spDirty');
+          if($scope.a + 1 <= $scope.data.SafetyPlan_UserNotes.length - 1)
+          {
+               $scope.a += 1;
+          }
+           $('#spData').html($scope.data.SafetyPlan_UserNotes[$scope.a].UserNotes);
+        };
 
-    if($scope.a + 1 <= $scope.data.SafetyPlan_UserNotes.length - 1)
-    {
-         $scope.a += 1;
-    }
-     $('#spData').val($scope.data.SafetyPlan_UserNotes[$scope.a].UserNotes);
-  };
+        $scope.goForwardSafety = function() {
+          $('#spData').removeClass('spDirty');
+          if($scope.a - 1 >= 0)
+          {
+            $scope.a -=   1;
+          }
+          $('#spData').html($scope.data.SafetyPlan_UserNotes[$scope.a].UserNotes);
 
-  $scope.goForwardSafety = function() {
-    if($scope.a - 1 >= 0)
-    {
-      $scope.a -=   1;
-    }
-    $('#spData').val($scope.data.SafetyPlan_UserNotes[$scope.a].UserNotes);
+        };
+        $scope.goBackMHP = function() {
+          if($scope.b + 1 <= $scope.data.SafetyPlan_SPANImport.length - 1)
+          {
+               $scope.b += 1;
+          }
+        };
 
-  };
-  $scope.goBackMHP = function() {
-    if($scope.b + 1 <= $scope.data.SafetyPlan_SPANImport.length - 1)
-    {
-         $scope.b += 1;
-    }
-     $('#spsorData').val($scope.data.SafetyPlan_SPANImport[$scope.b].SafetyPlanCurrent);
-  };
+        $scope.goForwardMHP = function() {
+          if($scope.b + 1 <= $scope.data.SafetyPlan_SPANImport.length - 1)
+          {
+               $scope.b += 1;
+          }
+        };
+        $scope.goBack = function() {
 
-  $scope.goForwardMHP = function() {
-    if($scope.b + 1 <= $scope.data.SafetyPlan_SPANImport.length - 1)
-    {
-         $scope.b += 1;
-    }
-    $('#spsorData').val($scope.data.SafetyPlan_SPANImport[$scope.b].SafetyPlanCurrent);
+          $('#comment').removeClass('commentDirty');
 
-  };
-  $scope.goBack = function() {
-    if($scope.y + 1 <= $scope.data.GeneralComments.length - 1)
-    {
-         $scope.y += 1;
-    }
-     $('#comment').val($scope.data.GeneralComments[$scope.y].Comment);
-  };
-  $scope.goForward = function() {
-    if($scope.y + 1 <= $scope.data.GeneralComments.length - 1)
-    {
-         $scope.y += 1;
-    }
-    $('#comment').val($scope.data.GeneralComments[$scope.y].Comment);
+          if($scope.y + 1 <= $scope.data.GeneralComments.length - 1)
+          {
+               $scope.y += 1;
+          }
+          $('#comment').html($scope.data.GeneralComments[$scope.y].Comment);
+        };
+        $scope.goForward = function() {
+            $('#comment').removeClass('commentDirty');
+          if($scope.y + 1 <= $scope.data.GeneralComments.length - 1)
+          {
+               $scope.y += 1;
+          }
+          $('#comment').html($scope.data.GeneralComments[$scope.y].Comment);
+        };
 
-  };
+        $scope.NewHRDataAdded = function(){
+          $('#hrData').removeClass('hrDirty');
+          if($.trim( $('#hrData').val()).length > 1)
+          {
+            $('#hrData').addClass('hrDirty');
+          }
+        };
+        $scope.NewMHDataAdded = function(){
+          $('#mhData').removeClass('mhDirty');
+          if($.trim( $('#mhData').val()).length > 1)
+          {
+            $('#mhData').addClass('mhDirty');
+          }
+        };
+        $scope.NewSPDataAdded = function(){
+          $('#spData').removeClass('spDirty');
+          if($.trim( $('#spData').val()).length > 1)
+          {
+            $('#spData').addClass('spDirty');
+          }
+        };
+        $scope.NewCommentDataAdded = function(){
+          $('#comment').removeClass('commentDirty');
+          if($.trim( $('#comment').val()).length > 1)
+          {
+            $('#comment').addClass('commentDirty');
+          }
+        };
 
-  $scope.NewHRDataAdded = function(){
-    $('#hrData').removeClass('hrDirty');
-    if($.trim( $('#hrData').val()).length > 1)
-    {
-      $('#hrData').addClass('hrDirty');
-    }
-  };
-
-  $scope.comment = [{
-    value: "Individual arrested for disorderly contact and public intoxication.  Sister caring for individual and bringing him to appointments.",
-    date: "10-01-2015"
-  }, {
-    value: "This is the second comment",
-    date: "10-01-2015"
-  }, {
-    value: "This is the third comment",
-    date: "10-01-2015"
-  }, {
-    value: "This is the 4 comment",
-    date: "10-01-2015"
-  }, {
-    value: "This is the 5 comment",
-    date: "10-01-2015"
-  }];
-  $scope.dataEntry = [{
-    entry: "High Risk Flag set to \"Yes\" on 12/15/2015",
-    date: "01-01-2016"
-  }, {
-    entry: "High Risk Flag set to \"No\" on 12/15/2013",
-    date: "12-01-2015"
-  }, {
-    entry: "High Risk Flag set to \"Yes\" on 12/15/2010",
-    date: "11-01-2015"
-  }];
-
-  $scope.sorData = [{
-    entry: "High Risk Flag: No",
-    date: "1st Identified as High Risk: 03-02-2001",
-    newdate: "Last Updated: 02-03-2004"
-  }];
-  $scope.healthEntry = [{
-    entry: "John Winters is primary MH provider",
-    date: "01-01-2016"
-  }, {
-    entry: "Robin Williams is primary MH provider",
-    date: "12-01-2014"
-  }, {
-    entry: "Robert Hope is primary MH provider",
-    date: "11-01-2013"
-  }];
-
-  $scope.providerData = [{
-    entry: "No Data Available",
-  }];
-
-  $scope.safetyEntry = [{
-    entry: "Safety Plan established on 12/29/2015",
-    date: "01-01-2016"
-  }, {
-    entry: "Safety Plan established on 12/29/2013",
-    date: "12-01-2015"
-  }, {
-    entry: "Safety Plan established on 12/29/2012",
-    date: "11-01-2015"
-  }];
-
-  $scope.planData = [{
-    entry: "Safety Plan: No",
-    date: "Date Completed: N/A"
-    }];
-
-          $scope.items = ['Item 1', 'Item 2', 'Item 3'];
-
-          $scope.addItem = function() {
-            var newItemNo = $scope.items.length + 1;
-            $scope.items.push('Item ' + newItemNo);
-          };
-
-
-           $scope.myNewData = '';
-
-            $scope.overwrite = function ($event) {
-                $event.preventDefault();
-                $event.stopPropagation();
-
-                $scope.myData = ' ';
-            };
+        $scope.providerData = [{
+          entry: "No Data Available",
+        }];
 
         $scope.addNewData = function() {
+            var UpdatedHR_UserNotes = {isNew: false};
+            var UpdatedMH_UserNotes = {isNew:  false};
+            var UpdatedSP_UserNotes = {isNew: false};
+            var UpdatedGC_UserNotes = {isNew: false};
 
             if($('#hrData').hasClass('hrDirty'))
             {
-               $scope.data.HighRisk_UserNotes.unshift({
+               UpdatedHR_UserNotes = {
                   entry: $('#hrData').val(),
-                  date: new Date().toLocaleDateString()
-                })
+                  date: new Date().toLocaleDateString(),
+                  isNew: true
+                }
             }
 
-            if ($scope.hrData) {
-              $scope.dataEntry.unshift({
-                entry: $scope.hrData,
-                date: "01-08-2016"
-              })
-              $scope.hrData = '';
-            }
-            if ($scope.mhData) {
-              $scope.healthEntry.unshift({
-                entry: $scope.mhData,
-                date: "01-08-2016"
-              })
-              $scope.mhData = '';
-            }
-            if ($scope.spData) {
-              $scope.safetyEntry.unshift({
-                entry: $scope.spData,
-                date: "01-08-2016"
-              })
-              $scope.spData = '';
-            }
-            if ($scope.soData) {
-              $scope.sorData.unshift({
-                entry: $scope.soData,
-                date: "01-08-2016"
-              })
-              $scope.soData = '';
-            }
-            if ($scope.spsorData) {
-              $scope.sorspData.unshift({
-                entry: $scope.soData,
-                date: "01-08-2016"
-              })
-              $scope.spsoData = '';
-            }
-             if ($scope.mpData) {
-              $scope.planData.unshift({
-                entry: $scope.mpData,
-                date: "01-08-2016"
-              })
-              $scope.mpData = '';
-            }
-            if ($scope.currentComment != $scope.comment[$scope.x].value) {
-              $scope.comment.unshift({
-                value: $scope.currentComment,
-                date: "01-08-2016"
-              })
-              $scope.currentComment = $scope.comment[0].value;
-            }
-            if ($scope.currentRisk != $scope.dataEntry[$scope.x].entry) {
-              $scope.dataEntry.unshift({
-                entry: $scope.currentRisk,
-                date: "01-08-2016"
-              })
-              $scope.currentRisk = $scope.dataEntry[$scope.x].entry;
-            }
-            if ($scope.currentProvider != $scope.healthEntry[$scope.x].entry) {
-              $scope.healthEntry.unshift({
-                entry: $scope.currentProvider,
-                date: "01-08-2016"
-              })
-              $scope.currentProvider = $scope.healthEntry[$scope.x].entry;
-            }
-            if ($scope.currentSafety != $scope.safetyEntry[$scope.x].entry) {
-              $scope.safetyEntry.unshift({
-                entry: $scope.currentSafety,
-                date: "01-08-2016"
-              })
-              $scope.currentSafety = $scope.safetyEntry[$scope.x].entry;
-            }
-             if ($scope.currentProviderRecords != $scope.providerData[$scope.x].entry) {
-              $scope.providerData.unshift({
-                entry: $scope.currentProviderRecords,
-                date: "01-08-2016"
-              })
-              $scope.currentProviderRecords = $scope.providerData[$scope.x].entry;
+            if($('#mhData').hasClass('mhDirty'))
+            {
+              UpdatedMH_UserNotes = {
+                entry: $('#mhData').val(),
+                date: new Date().toLocaleDateString(),
+                isNew: true
+              }
             }
 
+            if($('#spData').hasClass('spDirty'))
+            {
+              UpdatedSP_UserNotes = {
+              entry: $('#spData').val(),
+              date: new Date().toLocaleDateString(),
+              isNew: true
+              }
+            }
 
-  }
+            // if ($scope.soData) {
+            //   $scope.sorData.unshift({
+            //     entry: $scope.soData,
+            //     date: "01-08-2016"
+            //   })
+            //   $scope.soData = '';
+            // }
+            // if ($scope.spsorData) {
+            //   $scope.sorspData.unshift({
+            //     entry: $scope.soData,
+            //     date: "01-08-2016"
+            //   })
+            //   $scope.spsoData = '';
+            // }
+            //  if ($scope.mpData) {
+            //   $scope.planData.unshift({
+            //     entry: $scope.mpData,
+            //     date: "01-08-2016"
+            //   })
+            //   $scope.mpData = '';
+            // }
 
-  $scope.currentComment = $scope.comment[$scope.x].value;
-  $scope.currentRisk = $scope.dataEntry[$scope.x].entry;
-  $scope.currentProvider = $scope.healthEntry[$scope.x].entry;
-  $scope.currentSafety = $scope.safetyEntry[$scope.x].entry;
-   $scope.currentProviderRecords = $scope.providerData[$scope.x].entry;
+            if($('#comment').hasClass('commentDirty'))
+            {
+              UpdatedGC_UserNotes = {
+              entry: $('#comment').val(),
+              date: new Date().toLocaleDateString(),
+              isNew: true
+            }
+          }
 
-          },
+          $scope.widget.dataModel.saveNewUserData({
+                                                    hrUserNotes: UpdatedHR_UserNotes,
+                                                    mhUserNotes: UpdatedMH_UserNotes,
+                                                    spUserNotes: UpdatedSP_UserNotes,
+                                                    gcUserNotes: UpdatedGC_UserNotes
+                                                  });
+          }
+      },
       link: function postLink(scope, element, attr) {
         scope.$watch('widgetData', function(data){
           scope.data = data;
+          //$('#hrData').html(scope.data.HighRisk_UserNotes[scope.x].UserNotes);
         });
 
         $('#jumpToHR').on('keydown', function(e){
@@ -3293,7 +3217,6 @@ angular.module('ui.widgets')
                 }
               }
         });
-spsorData
       }
     }
   });
@@ -5807,12 +5730,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        </div>\r" +
     "\n" +
-    "        <div class=\"panel-collapse collapse\" uib-collapse=\"!isOpen\">\r" +
-    "\n" +
-    "          <div class=\"panel-body\" style=\"text-align: right\" ng-transclude></div>\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
     "      </div>\r" +
     "\n" +
     "    </script>\r" +
@@ -5843,7 +5760,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" style=\"width:20px\" id=\"jumpToHR\" title=\"{{data.HighRisk_UserNotes[x].EntryDate}}\" value=\"{{x+1}}\"></input>\r" +
+    "                      <input type=\"text\" style=\"width:20px\" id=\"jumpToHR\"  value=\"{{x+1}}\"></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -5855,7 +5772,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  </div><br/>\r" +
     "\n" +
-    "                  <textarea class=\"col-md-12\" rows=\"3\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" id=\"hrData\" ng-keyup=\"NewHRDataAdded()\">{{data.HighRisk_UserNotes[x].UserNotes}}</textarea>\r" +
+    "                  <textarea class=\"col-md-12\" rows=\"3\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" id=\"hrData\" ng-keyup=\"NewHRDataAdded()\" ng-attr-placeholder=\"{{data.HighRisk_UserNotes[x].UserNotes}}\"></textarea>\r" +
     "\n" +
     "                </div>\r" +
     "\n" +
@@ -5871,7 +5788,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" style=\"width:20px\" id=\"nextNew\" title=\"{{data.HighRisk_SPANImport[c].ImportDate}}\" value=\"{{c+1}}\"></input>\r" +
+    "                      <input type=\"text\" style=\"width:20px\" id=\"nextNew\" value=\"{{c+1}}\"></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -5919,7 +5836,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" style=\"width:20px\" title=\"{{data.PrimaryHealthProvider[z].EntryDate}}\" value=\"{{z+1}}\"></input>\r" +
+    "                      <input type=\"text\" style=\"width:20px\"  value=\"{{z+1}}\"></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -5929,7 +5846,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  </div><br/>\r" +
     "\n" +
-    "                  <input class=\"box col-md-12\" style=\"font-weight:normal\" type=\"text\"  ng-required=\"true\"  id=\"mhData\" value=\"{{data.PrimaryHealthProvider_UserNotes[z]}}\">\r" +
+    "                  <textarea class=\"col-md-12\" rows=\"3\" style=\"font-weight:normal\" type=\"text\"  ng-required=\"true\"  id=\"mhData\" ng-keyup=\"NewMHDataAdded()\"></textarea>\r" +
     "\n" +
     "\r" +
     "\n" +
@@ -5965,7 +5882,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                 <input class=\"col-md-12 box\" style=\"font-weight:normal;background-color:#FBFBFB;padding-bottom: 46px;\" ng-model=\"currentProviderRecords\"\r" +
     "\n" +
-    "                    ng-required=\"true\" id=\"mpData\" type=\"text\" placeholder=\"{{providerData[0].entry}\" disabled> </input>\r" +
+    "                    ng-required=\"true\" id=\"mpData\" type=\"text\" placeholder=\"No Data Available \"disabled></input>\r" +
     "\n" +
     "              </div>\r" +
     "\n" +
@@ -6005,9 +5922,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  </div><br>\r" +
     "\n" +
-    "                    <input class=\"box col-md-12\" style=\"font-weight:normal\" type=\"text\"\r" +
-    "\n" +
-    "                    ng-required=\"true\" id=\"spData\" value=\"{{data.SafetyPlan_UserNotes[a].UserNotes}}\">\r" +
+    "                    <textarea class=\"col-md-12\"  rows=\"3\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" id=\"spData\" ng-keyup=\"NewSPDataAdded()\">{{data.SafetyPlan_UserNotes[0].UserNotes}}</textarea>\r" +
     "\n" +
     "\r" +
     "\n" +
@@ -6083,7 +5998,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                <textarea class=\"form-control col-md-12\" rows=\"5\" id=\"comment\" style=\"outline:0.5px solid;font-size:10pt;font-weight:normal\"\r" +
     "\n" +
-    "                placeholder=\"Text here...\">\"{{data.GeneralComments[y].Comment}}\"</textarea>\r" +
+    "                ng-keyup=\"NewCommentDataAdded()\">{{data.GeneralComments[0].Comment}}</textarea>\r" +
     "\n" +
     "\r" +
     "\n" +
