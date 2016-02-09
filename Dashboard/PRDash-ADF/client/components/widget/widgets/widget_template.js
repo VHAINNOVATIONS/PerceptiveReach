@@ -227,12 +227,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        </div>\r" +
     "\n" +
-    "        <div class=\"panel-collapse collapse\" uib-collapse=\"!isOpen\">\r" +
-    "\n" +
-    "          <div class=\"panel-body\" style=\"text-align: right\" ng-transclude></div>\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
     "      </div>\r" +
     "\n" +
     "    </script>\r" +
@@ -263,7 +257,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" style=\"width:20px\" id=\"jumpToHR\" title=\"{{data.HighRisk_UserNotes[x].EntryDate}}\" value=\"{{x+1}}\"></input>\r" +
+    "                      <input type=\"text\" style=\"width:20px\" id=\"jumpToHR\"  value=\"{{x+1}}\"></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -275,7 +269,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  </div><br/>\r" +
     "\n" +
-    "                  <textarea class=\"col-md-12\" rows=\"3\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" id=\"hrData\" ng-keyup=\"NewHRDataAdded()\">{{data.HighRisk_UserNotes[x].UserNotes}}</textarea>\r" +
+    "                  <textarea class=\"col-md-12\" rows=\"3\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" id=\"hrData\" ng-keyup=\"NewHRDataAdded()\" ng-attr-placeholder=\"{{data.HighRisk_UserNotes[x].UserNotes}}\"></textarea>\r" +
     "\n" +
     "                </div>\r" +
     "\n" +
@@ -291,7 +285,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" style=\"width:20px\" id=\"nextNew\" title=\"{{data.HighRisk_SPANImport[c].ImportDate}}\" value=\"{{c+1}}\"></input>\r" +
+    "                      <input type=\"text\" style=\"width:20px\" id=\"nextNew\" value=\"{{c+1}}\"></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -339,7 +333,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" style=\"width:20px\" title=\"{{data.PrimaryHealthProvider[z].EntryDate}}\" value=\"{{z+1}}\"></input>\r" +
+    "                      <input type=\"text\" style=\"width:20px\"  value=\"{{z+1}}\"></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -349,7 +343,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  </div><br/>\r" +
     "\n" +
-    "                  <input class=\"box col-md-12\" style=\"font-weight:normal\" type=\"text\"  ng-required=\"true\"  id=\"mhData\" value=\"{{data.PrimaryHealthProvider_UserNotes[z]}}\">\r" +
+    "                  <textarea class=\"col-md-12\" rows=\"3\" style=\"font-weight:normal\" type=\"text\"  ng-required=\"true\"  id=\"mhData\" ng-keyup=\"NewMHDataAdded()\"></textarea>\r" +
     "\n" +
     "\r" +
     "\n" +
@@ -385,7 +379,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                 <input class=\"col-md-12 box\" style=\"font-weight:normal;background-color:#FBFBFB;padding-bottom: 46px;\" ng-model=\"currentProviderRecords\"\r" +
     "\n" +
-    "                    ng-required=\"true\" id=\"mpData\" type=\"text\" placeholder=\"{{providerData[0].entry}\" disabled> </input>\r" +
+    "                    ng-required=\"true\" id=\"mpData\" type=\"text\" placeholder=\"No Data Available \"disabled></input>\r" +
     "\n" +
     "              </div>\r" +
     "\n" +
@@ -425,9 +419,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  </div><br>\r" +
     "\n" +
-    "                    <input class=\"box col-md-12\" style=\"font-weight:normal\" type=\"text\"\r" +
-    "\n" +
-    "                    ng-required=\"true\" id=\"spData\" value=\"{{data.SafetyPlan_UserNotes[a].UserNotes}}\">\r" +
+    "                    <textarea class=\"col-md-12\"  rows=\"3\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" id=\"spData\" ng-keyup=\"NewSPDataAdded()\">{{data.SafetyPlan_UserNotes[0].UserNotes}}</textarea>\r" +
     "\n" +
     "\r" +
     "\n" +
@@ -503,7 +495,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                <textarea class=\"form-control col-md-12\" rows=\"5\" id=\"comment\" style=\"outline:0.5px solid;font-size:10pt;font-weight:normal\"\r" +
     "\n" +
-    "                placeholder=\"Text here...\">\"{{data.GeneralComments[y].Comment}}\"</textarea>\r" +
+    "                ng-keyup=\"NewCommentDataAdded()\">{{data.GeneralComments[0].Comment}}</textarea>\r" +
     "\n" +
     "\r" +
     "\n" +
