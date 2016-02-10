@@ -1125,12 +1125,12 @@ angular.module('ui.models')
 		   var currentVISN = null;
 		   var currentSTA3N = null;
 		   if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-			 if(dataModelOptions.common.data.facilitySelected.surveillance) {
-			   currentSTA3N = dataModelOptions.common.data.facilitySelected.surveillance;
-			 }
+  			 if(dataModelOptions.common.data.facilitySelected.surveillance) {
+  			   currentSTA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+  			 }
 
-			 if(dataModelOptions.common.data.visnSelected.surveillance) {
-			   currentVISN = dataModelOptions.common.data.visnSelected.surveillance;
+  			 if(dataModelOptions.common.data.visnSelected.surveillance) {
+  			   currentVISN = dataModelOptions.common.data.visnSelected.surveillance;
 			 }
 		   }
 		   else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
@@ -1151,13 +1151,15 @@ angular.module('ui.models')
 			   this.VISN = null;
 			 }
 
-			 if(this.STA3N != this.currentSTA3N || this.VISN != this.currentVISN) {
-			   this.getData();
-			 }
+			 this.getData();
 
 		   }.bind(this));
 
 		   this.updateScope([]);
+       if(this.widgetScope.common.data.activeView == "surveillance")
+       {
+         this.getData();
+       }
 		 },
 
 			getData: function () {
