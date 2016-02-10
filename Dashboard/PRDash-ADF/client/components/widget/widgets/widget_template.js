@@ -209,29 +209,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/enterdata/enterdata.html",
     "<div>\r" +
     "\n" +
-    "    <script type=\"text/ng-template\" id=\"group-template.html\">\r" +
-    "\n" +
-    "      <div class=\"panel {{panelClass || 'panel-default'}}\">\r" +
-    "\n" +
-    "        <div class=\"panel-heading\">\r" +
-    "\n" +
-    "          <h4 class=\"panel-title\" style=\"color:#fa39c3\">\r" +
-    "\n" +
-    "          <a href tabindex=\"0\" class=\"accordion-toggle\" ng-click=\"toggleOpen()\" uib-accordion-transclude=\"heading\"><span\r" +
-    "\n" +
-    "            ng-class=\"{'text-muted': isDisabled}\">{{heading}}</span></a>\r" +
-    "\n" +
-    "        </h4>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
-    "      </div>\r" +
-    "\n" +
-    "    </script>\r" +
-    "\n" +
-    "    <div ng-form=\"TestForm\">\r" +
+    "    <div ng-form=\"enterWdgtForm\">\r" +
     "\n" +
     "      <div class=\"panel panel-default\" style=\"width: 98%\">\r" +
     "\n" +
@@ -245,67 +223,31 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                <div class=\"col-md-6\">\r" +
     "\n" +
-    "                  <label style=\"font-weight:normal\">User Notes:\r" +
+    "                  <label style=\"font-weight:normal\">User Notes:</label>\r" +
     "\n" +
     "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
-    "\r" +
+    "                    <button type=\"button\" name=\"hrBack\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex >= data.HighRisk_UserNotes.length-1\" ng-click=\"goBack()\"><i class=\"glyphicon glyphicon-arrow-left\" \r" +
     "\n" +
-    "                      <button type=\"button\" name=\"hrBack\" class=\"btn btn-default pull-left\" ng-click=\"HighRiskBack()\"><i class=\"glyphicon glyphicon-arrow-left\"\r" +
+    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
-    "                        style=\"font-size:13px;width: 18px;\"></i></button>\r" +
+    "                    </button>\r" +
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" style=\"width:20px\" id=\"jumpToHR\"  value=\"{{x+1}}\"></input>\r" +
+    "                      <input type=\"text\" min=\"0\" ng-change=\"hrIndexChange(hrIndex)\" style=\"width:40px; height:22px;\" ng-model=\"hrIndex\" ></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
-    "                      <button type=\"button\" name=\"hrFwd\" class=\"btn btn-default pull-left\" ng-click=\"goForwardRisk()\"><i class=\"glyphicon glyphicon-arrow-right\"\r" +
+    "                    <button type=\"button\" name=\"hrFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex === 0\" ng-click=\"goForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
     "\n" +
-    "                        style=\"font-size:13px;width: 18px;\"></i></button>\r" +
+    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
-    "\r" +
+    "                    </button>\r" +
     "\n" +
     "                  </div><br/>\r" +
     "\n" +
-    "                  <textarea class=\"col-md-12\" rows=\"3\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" id=\"hrData\" ng-keyup=\"NewHRDataAdded()\" ng-attr-placeholder=\"{{data.HighRisk_UserNotes[x].UserNotes}}\"></textarea>\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "                <div class=\"col-md-6\">\r" +
-    "\n" +
-    "                  <label style=\"font-weight:normal\">SPAN Records</label>\r" +
-    "\n" +
-    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goBackProvider()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
-    "\n" +
-    "                    <div class=\"pull-left\">\r" +
-    "\n" +
-    "                      <input type=\"text\" style=\"width:20px\" id=\"nextNew\" value=\"{{c+1}}\"></input>\r" +
-    "\n" +
-    "                    </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goForwardProvider()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px';width: 18px;\"></i></button>\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "                  <div class=\"col-md-12 box\" style=\"background-color:#FBFBFB; border-style:solid;padding-bottom: 0px;\r" +
-    "\n" +
-    "                    border-width:1px;\" value=\"\">\r" +
-    "\n" +
-    "                    <label style=\"font-weight:normal\">High Risk: {{data.HighRisk_SPANImport[c].HighRisk}}</label>\r" +
-    "\n" +
-    "                    <label style=\"font-weight:normal\">Date First Identified: {{data.HighRisk_SPANImport[c].DateFirstIdentifiedAsHighRisk}}</label>\r" +
-    "\n" +
-    "                    <label style=\"font-weight:normal\">Date Last Updated: {{data.HighRisk_SPANImport[c].DateHighRiskLastUpdated}}</label>\r" +
-    "\n" +
-    "                  </div>\r" +
+    "                  <textarea class=\"col-md-12\" rows=\"3\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" ng-model=\"hrText\" name=\"highRiskTxt\" ng-class=\"{hrDirty: enterWdgtForm.highRiskTxt.$dirty && enterWdgtForm.highRiskTxt.$valid}\" id=\"hrText\"></textarea>\r" +
     "\n" +
     "                </div>\r" +
     "\n" +
@@ -314,196 +256,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "            </div>\r" +
     "\n" +
     "          </div>\r" +
-    "\n" +
-    "          <div class=\"row\">\r" +
-    "\n" +
-    "            <div class=\"col-md-12 bs-example mh-text\" style=\"padding: 10px; border-radius: 25px; border: 0.5px solid;\">\r" +
-    "\n" +
-    "              <div class=\"panel-body\">\r" +
-    "\n" +
-    "                <div class=\"col-md-6\">\r" +
-    "\n" +
-    "                  <label style=\"font-weight:normal\">User Notes:\r" +
-    "\n" +
-    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goBackSOR()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
-    "\n" +
-    "                    <div class=\"pull-left\">\r" +
-    "\n" +
-    "                      <input type=\"text\" style=\"width:20px\"  value=\"{{z+1}}\"></input>\r" +
-    "\n" +
-    "                    </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goForwardSOR()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
-    "\n" +
-    "                  </div><br/>\r" +
-    "\n" +
-    "                  <textarea class=\"col-md-12\" rows=\"3\" style=\"font-weight:normal\" type=\"text\"  ng-required=\"true\"  id=\"mhData\" ng-keyup=\"NewMHDataAdded()\"></textarea>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                   <div class=\"col-md-6\">\r" +
-    "\n" +
-    "                  <label style=\"font-weight:normal\">VistA Records</label>\r" +
-    "\n" +
-    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\"   ng-click=\"\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
-    "\n" +
-    "                    <div class=\"pull-left\">\r" +
-    "\n" +
-    "                      <input type=\"text\" style=\"width:20px\" title=\"\" value=\"{{1}}\"></input>\r" +
-    "\n" +
-    "                    </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "                 <input class=\"col-md-12 box\" style=\"font-weight:normal;background-color:#FBFBFB;padding-bottom: 46px;\" ng-model=\"currentProviderRecords\"\r" +
-    "\n" +
-    "                    ng-required=\"true\" id=\"mpData\" type=\"text\" placeholder=\"No Data Available \"disabled></input>\r" +
-    "\n" +
-    "              </div>\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "          </div>\r" +
-    "\n" +
-    "          <div class=\"row\" style=\"padding: 14px;\">\r" +
-    "\n" +
-    "            <div class=\"col-md-12 sp-text\" style=\"border-radius: 25px; border: 0.5px solid;position: relative;\r" +
-    "\n" +
-    "                padding: 7px -1px 0px; margin: 0 -15px 5px; box-shadow: inset 0 3px 6px rgba(0,0,0,.05);\">\r" +
-    "\n" +
-    "              <div class=\"panel-body\">\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                <div class=\"col-md-6\">\r" +
-    "\n" +
-    "                  <label style=\"font-weight:normal\">User Notes:\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                   <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goBackSafety()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width:18px\"></i></button>\r" +
-    "\n" +
-    "                    <div class=\"pull-left\">\r" +
-    "\n" +
-    "                      <input type=\"text\" style=\"width:20px\" id=\"goToSafety\" title=\"{{data.SafetyPlan_UserNotes[a].EntryDate}}\" value=\"{{a+1}}\"></input>\r" +
-    "\n" +
-    "                    </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\"  ng-click=\"goForwardSafety()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px; width:18px\"></i></button>\r" +
-    "\n" +
-    "                  </div><br>\r" +
-    "\n" +
-    "                    <textarea class=\"col-md-12\"  rows=\"3\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" id=\"spData\" ng-keyup=\"NewSPDataAdded()\">{{data.SafetyPlan_UserNotes[0].UserNotes}}</textarea>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "                <div class=\"col-md-6\">\r" +
-    "\n" +
-    "                  <label style=\"font-weight:normal\">VistA Records </label>\r" +
-    "\n" +
-    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\"   ng-click=\"goBackMHP()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width:18px\"></i></button>\r" +
-    "\n" +
-    "                    <div class=\"pull-left\">\r" +
-    "\n" +
-    "                      <input type=\"text\" style=\"width:20px\" id=\"safetyPlanGo\" title=\"{{data.SafetyPlan_SPANImport[b].ImportDate}}\" value=\"{{b+1}}\"></input>\r" +
-    "\n" +
-    "                    </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\"  ng-click=\"goForwardMHP()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width:18px\"></i></button>\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "                  <div class=\"col-md-12 box\" style=\"background-color:#FBFBFB; border-style:solid;padding-bottom: 14px;\r" +
-    "\n" +
-    "                    border-width:1px;\" value=\"\">\r" +
-    "\n" +
-    "                    <label style=\"font-weight:normal\">Safety Plan: {{data.SafetyPlan_SPANImport[b].SafetyPlanCurrent}}</label>\r" +
-    "\n" +
-    "                    <label style=\"font-weight:normal\">Date Completed: {{data.SafetyPlan_SPANImport[b].DateSafetyPlanCompletedOrUpdated}}</label>\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "              </div>\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "          </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "          <div class=\"row\" style=\"padding: 15px;\">\r" +
-    "\n" +
-    "            <div class=\"col-md-12 bs-example comment-text\" style=\"border-radius: 25px; border: 0.5px solid;\"\">\r" +
-    "\n" +
-    "              <div class=\"panel-body\">\r" +
-    "\n" +
-    "              <label style=\"font-weight:normal\">User Notes:</label>\r" +
-    "\n" +
-    "               <div class=\"btn-group btn-group-xs\" role=\"group\" aria-label=\"Buttons\" style=\"float:right\">\r" +
-    "\n" +
-    "                <button type=\"button\" class=\"btn btn-default pull-left\"   ng-click=\"goBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width:18px\"></i></button>\r" +
-    "\n" +
-    "                <div class=\"pull-left\">\r" +
-    "\n" +
-    "                  <input type=\"text\" style=\"width:20px\" id=\"commentAhead\" title=\"{{data.GeneralComments[y].EntryDate}}\" value=\"{{y+1}}\"></input>\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                <button type=\"button\" class=\"btn btn-default pull-left\"  ng-click=\"goForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width:18px\"></i></button>\r" +
-    "\n" +
-    "              </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                <textarea class=\"form-control col-md-12\" rows=\"5\" id=\"comment\" style=\"outline:0.5px solid;font-size:10pt;font-weight:normal\"\r" +
-    "\n" +
-    "                ng-keyup=\"NewCommentDataAdded()\">{{data.GeneralComments[0].Comment}}</textarea>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "          </div>\r" +
-    "\n" +
-    "\r" +
     "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
@@ -520,10 +272,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "      </div>\r" +
     "\n" +
     "    </div>\r" +
-    "\n" +
-    "   </div>\r" +
-    "\n" +
-    "  </div>\r" +
     "\n" +
     "</div>\r" +
     "\n"
