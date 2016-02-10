@@ -2908,210 +2908,56 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/enterdata/enterdata.html',
       controller: function ($scope) {
-        $scope.x = 0;
-        $scope.y = 0;
-        $scope.z = 0;
-        $scope.a = 0;
-        $scope.b = 0;
-        $scope.c = 0;
-       
-        $scope.HighRiskBack = function() {
-          $('#hrData').removeClass('hrDirty');
-          if($scope.x + 1 <= $scope.data.HighRisk_UserNotes.length - 1)
-          {
-              $scope.x += 1;
+        $scope.hrIndex = 0;
+        $scope.hrText = '';
+        $scope.hrIndexChange = function(value) {
+          console.log('hrIndex:',$scope.hrIndex);
+          $scope.enterWdgtForm.highRiskTxt.$setPristine();
+          if ($scope.hrIndex > $scope.data.HighRisk_UserNotes.length-1) {
+            $scope.hrIndex = $scope.data.HighRisk_UserNotes.length-1;
+          } else if ($scope.hrIndex < 0 || !angular.isNumber($scope.hrIndex)) {
+            $scope.hrIndex = 0;
           }
-           //$('#hrData').html($scope.data.HighRisk_UserNotes[$scope.x].UserNotes);
-        };
-        $scope.goForwardRisk = function() {
-         $('#hrData').removeClass('hrDirty');
-         if($scope.x - 1 >= 0)
-         {
-           $scope.x -=   1;
-         }
-         //$('#hrData').html($scope.data.HighRisk_UserNotes[$scope.x].UserNotes);
-
-         };
-        $scope.goBackProvider = function() {
-
-          if($scope.c + 1 <= $scope.data.HighRisk_SPANImport.length - 1)
-          {
-               $scope.c += 1;
-          }
-        };
-
-        $scope.goForwardProvider = function() {
-          if($scope.c - 1 >= 0)
-          {
-            $scope.c -=   1;
-          }
-        };
-
-        $scope.goBackSOR = function() {
-        $('#mhData').removeClass('mhDirty');
-          if($scope.z + 1 <= $scope.data.PrimaryHealthProvider_UserNotes.length - 1)
-          {
-               $scope.z += 1;
-          }
-           $('#mhData').html($scope.data.PrimaryHealthProvider_UserNotes[$scope.z].UserNotes);
-        };
-
-        $scope.goForwardSOR = function() {
-          $('#mhData').removeClass('mhDirty');
-          if($scope.z - 1 >= 0)
-          {
-            $scope.z -=   1;
-          }
-          $('#mhData').html($scope.data.PrimaryHealthProvider_UserNotes[$scope.z].UserNotes);
-
-        };
-        $scope.goBackSafety = function() {
-
-          $('#spData').removeClass('spDirty');
-          if($scope.a + 1 <= $scope.data.SafetyPlan_UserNotes.length - 1)
-          {
-               $scope.a += 1;
-          }
-           $('#spData').html($scope.data.SafetyPlan_UserNotes[$scope.a].UserNotes);
-        };
-
-        $scope.goForwardSafety = function() {
-          $('#spData').removeClass('spDirty');
-          if($scope.a - 1 >= 0)
-          {
-            $scope.a -=   1;
-          }
-          $('#spData').html($scope.data.SafetyPlan_UserNotes[$scope.a].UserNotes);
-
-        };
-        $scope.goBackMHP = function() {
-          if($scope.b + 1 <= $scope.data.SafetyPlan_SPANImport.length - 1)
-          {
-               $scope.b += 1;
-          }
-        };
-
-        $scope.goForwardMHP = function() {
-          if($scope.b + 1 <= $scope.data.SafetyPlan_SPANImport.length - 1)
-          {
-               $scope.b += 1;
-          }
-        };
+          $scope.hrText = $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes;
+        }
         $scope.goBack = function() {
-
-          $('#comment').removeClass('commentDirty');
-
-          if($scope.y + 1 <= $scope.data.GeneralComments.length - 1)
-          {
-               $scope.y += 1;
+          if ($scope.hrIndex < $scope.data.HighRisk_UserNotes.length-1) {
+            $scope.enterWdgtForm.highRiskTxt.$setPristine();
+            $scope.hrIndex+=1;
+            $scope.hrText = $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes;
           }
-          $('#comment').html($scope.data.GeneralComments[$scope.y].Comment);
         };
         $scope.goForward = function() {
-            $('#comment').removeClass('commentDirty');
-          if($scope.y + 1 <= $scope.data.GeneralComments.length - 1)
-          {
-               $scope.y += 1;
-          }
-          $('#comment').html($scope.data.GeneralComments[$scope.y].Comment);
-        };
-
-        $scope.NewHRDataAdded = function(){
-          $('#hrData').removeClass('hrDirty');
-          if($.trim( $('#hrData').val()).length > 1)
-          {
-            $('#hrData').addClass('hrDirty');
+          if ($scope.hrIndex !== 0) {
+            $scope.enterWdgtForm.highRiskTxt.$setPristine();
+            $scope.hrIndex-=1;
+            $scope.hrText = $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes;           
           }
         };
-        $scope.NewMHDataAdded = function(){
-          $('#mhData').removeClass('mhDirty');
-          if($.trim( $('#mhData').val()).length > 1)
-          {
-            $('#mhData').addClass('mhDirty');
-          }
-        };
-        $scope.NewSPDataAdded = function(){
-          $('#spData').removeClass('spDirty');
-          if($.trim( $('#spData').val()).length > 1)
-          {
-            $('#spData').addClass('spDirty');
-          }
-        };
-        $scope.NewCommentDataAdded = function(){
-          $('#comment').removeClass('commentDirty');
-          if($.trim( $('#comment').val()).length > 1)
-          {
-            $('#comment').addClass('commentDirty');
-          }
-        };
-
-        $scope.providerData = [{
-          entry: "No Data Available",
-        }];
-
+       
         $scope.addNewData = function() {
             var UpdatedHR_UserNotes = {isNew: false};
             var UpdatedMH_UserNotes = {isNew:  false};
             var UpdatedSP_UserNotes = {isNew: false};
             var UpdatedGC_UserNotes = {isNew: false};
+            var addDate = new Date().toLocaleDateString();
 
-            if($('#hrData').hasClass('hrDirty'))
+            if ($scope.hrText != $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes)
             {
                UpdatedHR_UserNotes = {
-                  entry: $('#hrData').val(),
-                  date: new Date().toLocaleDateString(),
+                  entry: $scope.hrText,
+                  date: addDate,
                   isNew: true
                 }
+                var addHrTextLocal = {};
+                addHrTextLocal.EntryDate = addDate;
+                addHrTextLocal.UserNotes = $scope.hrText;
+                console.log('HighRisk BeforeUnshift: ',$scope.data.HighRisk_UserNotes);
+                $scope.data.HighRisk_UserNotes.unshift(addHrTextLocal);
+                console.log('HighRisk AfterUnshift: ',$scope.data.HighRisk_UserNotes);
+                $scope.hrIndex = 0
+                $scope.hrIndexChange($scope.hrIndex);
             }
-
-            if($('#mhData').hasClass('mhDirty'))
-            {
-              UpdatedMH_UserNotes = {
-                entry: $('#mhData').val(),
-                date: new Date().toLocaleDateString(),
-                isNew: true
-              }
-            }
-
-            if($('#spData').hasClass('spDirty'))
-            {
-              UpdatedSP_UserNotes = {
-              entry: $('#spData').val(),
-              date: new Date().toLocaleDateString(),
-              isNew: true
-              }
-            }
-
-            // if ($scope.soData) {
-            //   $scope.sorData.unshift({
-            //     entry: $scope.soData,
-            //     date: "01-08-2016"
-            //   })
-            //   $scope.soData = '';
-            // }
-            // if ($scope.spsorData) {
-            //   $scope.sorspData.unshift({
-            //     entry: $scope.soData,
-            //     date: "01-08-2016"
-            //   })
-            //   $scope.spsoData = '';
-            // }
-            //  if ($scope.mpData) {
-            //   $scope.planData.unshift({
-            //     entry: $scope.mpData,
-            //     date: "01-08-2016"
-            //   })
-            //   $scope.mpData = '';
-            // }
-
-            if($('#comment').hasClass('commentDirty'))
-            {
-              UpdatedGC_UserNotes = {
-              entry: $('#comment').val(),
-              date: new Date().toLocaleDateString(),
-              isNew: true
-            }
-          }
 
           $scope.widget.dataModel.saveNewUserData({
                                                     hrUserNotes: UpdatedHR_UserNotes,
@@ -3120,102 +2966,22 @@ angular.module('ui.widgets')
                                                     gcUserNotes: UpdatedGC_UserNotes
                                                   });
           }
+
+          $scope.init = function() {
+            // Initialize Textarea
+          }
+
+
       },
       link: function postLink(scope, element, attr) {
         scope.$watch('widgetData', function(data){
           scope.data = data;
-          //$('#hrData').html(scope.data.HighRisk_UserNotes[scope.x].UserNotes);
-        });
 
-        $('#jumpToHR').on('keydown', function(e){
-              var code = (e.keyCode? e.keyCode: e.which)
-              if(code==13)
-              {
-                var userValue = parseInt($('#jumpToHR').val());
-                var maxValue = scope.data.HighRisk_UserNotes.length;
-                if(userValue > maxValue)
-                {
-                  scope.x = maxValue;
-                  $('#hrData').val(scope.data.HighRisk_UserNotes[maxValue - 1].UserNotes);
-                  $('#jumpToHR').val(scope.x);
-                }
-                else {
-                  scope.x = userValue;
-                  $('#hrData').val(scope.data.HighRisk_UserNotes[userValue - 1].UserNotes);
-                }
-              }
-        });
-        $('#nextNew').on('keydown', function(e){
-              var code = (e.keyCode? e.keyCode: e.which)
-              if(code==13)
-              {
-                var userValue = parseInt($('#nextNew').val());
-                var maxValue = scope.data.HighRisk_SPANImport.length;
-                if(userValue > maxValue)
-                {
-                  scope.x = maxValue;
-                  $('#soData').val(scope.data.HighRisk_SPANImport[maxValue - 1].HighRisk);
-                  $('#nextNew').val(scope.x);
-                }
-                else {
-                  scope.x = userValue;
-                  $('#soData').val(scope.data.HighRisk_SPANImport[userValue - 1].HighRisk);
-                }
-              }
-        });
-        $('#goToSafety').on('keydown', function(e){
-              var code = (e.keyCode? e.keyCode: e.which)
-              if(code==13)
-              {
-                var userValue = parseInt($('#goToSafety').val());
-                var maxValue = scope.data.SafetyPlan_UserNotes.length;
-                if(userValue > maxValue)
-                {
-                  scope.x = maxValue;
-                  $('#spData').val(scope.data.SafetyPlan_UserNotes[maxValue - 1].UserNotes);
-                  $('#goToSafety').val(scope.x);
-                }
-                else {
-                  scope.x = userValue;
-                  $('#spData').val(scope.data.SafetyPlan_UserNotes[userValue - 1].UserNotes);
-                }
-              }
-        });
-        $('#commentAhead').on('keydown', function(e){
-              var code = (e.keyCode? e.keyCode: e.which)
-              if(code==13)
-              {
-                var userValue = parseInt($('#commentAhead').val());
-                var maxValue = scope.data.GeneralComments.length;
-                if(userValue > maxValue)
-                {
-                  scope.x = maxValue;
-                  $('#comment').val(scope.data.GeneralComments[maxValue - 1].Comment);
-                  $('#commentAhead').val(scope.x);
-                }
-                else {
-                  scope.x = userValue;
-                  $('#comment').val(scope.data.GeneralComments[userValue - 1].Comment);
-                }
-              }
-        });
-        $('#safetyPlanGo').on('keydown', function(e){
-              var code = (e.keyCode? e.keyCode: e.which)
-              if(code==13)
-              {
-                var userValue = parseInt($('#safetyPlanGo').val());
-                var maxValue = scope.data.SafetyPlan_SPANImport.length;
-                if(userValue > maxValue)
-                {
-                  scope.x = maxValue;
-                  $('#spsorData').val(scope.data.SafetyPlan_SPANImport[maxValue - 1].SafetyPlanCurrent);
-                  $('#safetyPlanGo').val(scope.x);
-                }
-                else {
-                  scope.x = userValue;
-                  $('#spsorData').val(scope.data.SafetyPlan_SPANImport[userValue - 1].SafetyPlanCurrent);
-                }
-              }
+          //Initialize control values
+          if(scope.data.HighRisk_UserNotes)
+          {
+            scope.hrText = scope.data.HighRisk_UserNotes[scope.hrIndex].UserNotes;
+          }
         });
       }
     }
@@ -5712,29 +5478,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/enterdata/enterdata.html",
     "<div>\r" +
     "\n" +
-    "    <script type=\"text/ng-template\" id=\"group-template.html\">\r" +
-    "\n" +
-    "      <div class=\"panel {{panelClass || 'panel-default'}}\">\r" +
-    "\n" +
-    "        <div class=\"panel-heading\">\r" +
-    "\n" +
-    "          <h4 class=\"panel-title\" style=\"color:#fa39c3\">\r" +
-    "\n" +
-    "          <a href tabindex=\"0\" class=\"accordion-toggle\" ng-click=\"toggleOpen()\" uib-accordion-transclude=\"heading\"><span\r" +
-    "\n" +
-    "            ng-class=\"{'text-muted': isDisabled}\">{{heading}}</span></a>\r" +
-    "\n" +
-    "        </h4>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
-    "      </div>\r" +
-    "\n" +
-    "    </script>\r" +
-    "\n" +
-    "    <div ng-form=\"TestForm\">\r" +
+    "    <div ng-form=\"enterWdgtForm\">\r" +
     "\n" +
     "      <div class=\"panel panel-default\" style=\"width: 98%\">\r" +
     "\n" +
@@ -5748,67 +5492,31 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                <div class=\"col-md-6\">\r" +
     "\n" +
-    "                  <label style=\"font-weight:normal\">User Notes:\r" +
+    "                  <label style=\"font-weight:normal\">User Notes:</label>\r" +
     "\n" +
     "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
-    "\r" +
+    "                    <button type=\"button\" name=\"hrBack\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex >= data.HighRisk_UserNotes.length-1\" ng-click=\"goBack()\"><i class=\"glyphicon glyphicon-arrow-left\" \r" +
     "\n" +
-    "                      <button type=\"button\" name=\"hrBack\" class=\"btn btn-default pull-left\" ng-click=\"HighRiskBack()\"><i class=\"glyphicon glyphicon-arrow-left\"\r" +
+    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
-    "                        style=\"font-size:13px;width: 18px;\"></i></button>\r" +
+    "                    </button>\r" +
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" style=\"width:20px\" id=\"jumpToHR\"  value=\"{{x+1}}\"></input>\r" +
+    "                      <input type=\"text\" min=\"0\" ng-change=\"hrIndexChange(hrIndex)\" style=\"width:40px; height:22px;\" ng-model=\"hrIndex\" ></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
-    "                      <button type=\"button\" name=\"hrFwd\" class=\"btn btn-default pull-left\" ng-click=\"goForwardRisk()\"><i class=\"glyphicon glyphicon-arrow-right\"\r" +
+    "                    <button type=\"button\" name=\"hrFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex === 0\" ng-click=\"goForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
     "\n" +
-    "                        style=\"font-size:13px;width: 18px;\"></i></button>\r" +
+    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
-    "\r" +
+    "                    </button>\r" +
     "\n" +
     "                  </div><br/>\r" +
     "\n" +
-    "                  <textarea class=\"col-md-12\" rows=\"3\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" id=\"hrData\" ng-keyup=\"NewHRDataAdded()\" ng-attr-placeholder=\"{{data.HighRisk_UserNotes[x].UserNotes}}\"></textarea>\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "                <div class=\"col-md-6\">\r" +
-    "\n" +
-    "                  <label style=\"font-weight:normal\">SPAN Records</label>\r" +
-    "\n" +
-    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goBackProvider()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
-    "\n" +
-    "                    <div class=\"pull-left\">\r" +
-    "\n" +
-    "                      <input type=\"text\" style=\"width:20px\" id=\"nextNew\" value=\"{{c+1}}\"></input>\r" +
-    "\n" +
-    "                    </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goForwardProvider()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px';width: 18px;\"></i></button>\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "                  <div class=\"col-md-12 box\" style=\"background-color:#FBFBFB; border-style:solid;padding-bottom: 0px;\r" +
-    "\n" +
-    "                    border-width:1px;\" value=\"\">\r" +
-    "\n" +
-    "                    <label style=\"font-weight:normal\">High Risk: {{data.HighRisk_SPANImport[c].HighRisk}}</label>\r" +
-    "\n" +
-    "                    <label style=\"font-weight:normal\">Date First Identified: {{data.HighRisk_SPANImport[c].DateFirstIdentifiedAsHighRisk}}</label>\r" +
-    "\n" +
-    "                    <label style=\"font-weight:normal\">Date Last Updated: {{data.HighRisk_SPANImport[c].DateHighRiskLastUpdated}}</label>\r" +
-    "\n" +
-    "                  </div>\r" +
+    "                  <textarea class=\"col-md-12\" rows=\"3\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" ng-model=\"hrText\" name=\"highRiskTxt\" ng-class=\"{hrDirty: enterWdgtForm.highRiskTxt.$dirty && enterWdgtForm.highRiskTxt.$valid}\" id=\"hrText\"></textarea>\r" +
     "\n" +
     "                </div>\r" +
     "\n" +
@@ -5817,196 +5525,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "            </div>\r" +
     "\n" +
     "          </div>\r" +
-    "\n" +
-    "          <div class=\"row\">\r" +
-    "\n" +
-    "            <div class=\"col-md-12 bs-example mh-text\" style=\"padding: 10px; border-radius: 25px; border: 0.5px solid;\">\r" +
-    "\n" +
-    "              <div class=\"panel-body\">\r" +
-    "\n" +
-    "                <div class=\"col-md-6\">\r" +
-    "\n" +
-    "                  <label style=\"font-weight:normal\">User Notes:\r" +
-    "\n" +
-    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goBackSOR()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
-    "\n" +
-    "                    <div class=\"pull-left\">\r" +
-    "\n" +
-    "                      <input type=\"text\" style=\"width:20px\"  value=\"{{z+1}}\"></input>\r" +
-    "\n" +
-    "                    </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goForwardSOR()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
-    "\n" +
-    "                  </div><br/>\r" +
-    "\n" +
-    "                  <textarea class=\"col-md-12\" rows=\"3\" style=\"font-weight:normal\" type=\"text\"  ng-required=\"true\"  id=\"mhData\" ng-keyup=\"NewMHDataAdded()\"></textarea>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                   <div class=\"col-md-6\">\r" +
-    "\n" +
-    "                  <label style=\"font-weight:normal\">VistA Records</label>\r" +
-    "\n" +
-    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\"   ng-click=\"\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
-    "\n" +
-    "                    <div class=\"pull-left\">\r" +
-    "\n" +
-    "                      <input type=\"text\" style=\"width:20px\" title=\"\" value=\"{{1}}\"></input>\r" +
-    "\n" +
-    "                    </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i></button>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "                 <input class=\"col-md-12 box\" style=\"font-weight:normal;background-color:#FBFBFB;padding-bottom: 46px;\" ng-model=\"currentProviderRecords\"\r" +
-    "\n" +
-    "                    ng-required=\"true\" id=\"mpData\" type=\"text\" placeholder=\"No Data Available \"disabled></input>\r" +
-    "\n" +
-    "              </div>\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "          </div>\r" +
-    "\n" +
-    "          <div class=\"row\" style=\"padding: 14px;\">\r" +
-    "\n" +
-    "            <div class=\"col-md-12 sp-text\" style=\"border-radius: 25px; border: 0.5px solid;position: relative;\r" +
-    "\n" +
-    "                padding: 7px -1px 0px; margin: 0 -15px 5px; box-shadow: inset 0 3px 6px rgba(0,0,0,.05);\">\r" +
-    "\n" +
-    "              <div class=\"panel-body\">\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                <div class=\"col-md-6\">\r" +
-    "\n" +
-    "                  <label style=\"font-weight:normal\">User Notes:\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                   <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\" ng-click=\"goBackSafety()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width:18px\"></i></button>\r" +
-    "\n" +
-    "                    <div class=\"pull-left\">\r" +
-    "\n" +
-    "                      <input type=\"text\" style=\"width:20px\" id=\"goToSafety\" title=\"{{data.SafetyPlan_UserNotes[a].EntryDate}}\" value=\"{{a+1}}\"></input>\r" +
-    "\n" +
-    "                    </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\"  ng-click=\"goForwardSafety()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px; width:18px\"></i></button>\r" +
-    "\n" +
-    "                  </div><br>\r" +
-    "\n" +
-    "                    <textarea class=\"col-md-12\"  rows=\"3\" style=\"font-weight:normal\" type=\"text\" ng-required=\"true\" id=\"spData\" ng-keyup=\"NewSPDataAdded()\">{{data.SafetyPlan_UserNotes[0].UserNotes}}</textarea>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "                <div class=\"col-md-6\">\r" +
-    "\n" +
-    "                  <label style=\"font-weight:normal\">VistA Records </label>\r" +
-    "\n" +
-    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\"   ng-click=\"goBackMHP()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width:18px\"></i></button>\r" +
-    "\n" +
-    "                    <div class=\"pull-left\">\r" +
-    "\n" +
-    "                      <input type=\"text\" style=\"width:20px\" id=\"safetyPlanGo\" title=\"{{data.SafetyPlan_SPANImport[b].ImportDate}}\" value=\"{{b+1}}\"></input>\r" +
-    "\n" +
-    "                    </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                    <button type=\"button\" class=\"btn btn-default pull-left\"  ng-click=\"goForwardMHP()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width:18px\"></i></button>\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "                  <div class=\"col-md-12 box\" style=\"background-color:#FBFBFB; border-style:solid;padding-bottom: 14px;\r" +
-    "\n" +
-    "                    border-width:1px;\" value=\"\">\r" +
-    "\n" +
-    "                    <label style=\"font-weight:normal\">Safety Plan: {{data.SafetyPlan_SPANImport[b].SafetyPlanCurrent}}</label>\r" +
-    "\n" +
-    "                    <label style=\"font-weight:normal\">Date Completed: {{data.SafetyPlan_SPANImport[b].DateSafetyPlanCompletedOrUpdated}}</label>\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "              </div>\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "          </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "          <div class=\"row\" style=\"padding: 15px;\">\r" +
-    "\n" +
-    "            <div class=\"col-md-12 bs-example comment-text\" style=\"border-radius: 25px; border: 0.5px solid;\"\">\r" +
-    "\n" +
-    "              <div class=\"panel-body\">\r" +
-    "\n" +
-    "              <label style=\"font-weight:normal\">User Notes:</label>\r" +
-    "\n" +
-    "               <div class=\"btn-group btn-group-xs\" role=\"group\" aria-label=\"Buttons\" style=\"float:right\">\r" +
-    "\n" +
-    "                <button type=\"button\" class=\"btn btn-default pull-left\"   ng-click=\"goBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width:18px\"></i></button>\r" +
-    "\n" +
-    "                <div class=\"pull-left\">\r" +
-    "\n" +
-    "                  <input type=\"text\" style=\"width:20px\" id=\"commentAhead\" title=\"{{data.GeneralComments[y].EntryDate}}\" value=\"{{y+1}}\"></input>\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                <button type=\"button\" class=\"btn btn-default pull-left\"  ng-click=\"goForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width:18px\"></i></button>\r" +
-    "\n" +
-    "              </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "                <textarea class=\"form-control col-md-12\" rows=\"5\" id=\"comment\" style=\"outline:0.5px solid;font-size:10pt;font-weight:normal\"\r" +
-    "\n" +
-    "                ng-keyup=\"NewCommentDataAdded()\">{{data.GeneralComments[0].Comment}}</textarea>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "          </div>\r" +
-    "\n" +
-    "\r" +
     "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
@@ -6023,10 +5541,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "      </div>\r" +
     "\n" +
     "    </div>\r" +
-    "\n" +
-    "   </div>\r" +
-    "\n" +
-    "  </div>\r" +
     "\n" +
     "</div>\r" +
     "\n"
