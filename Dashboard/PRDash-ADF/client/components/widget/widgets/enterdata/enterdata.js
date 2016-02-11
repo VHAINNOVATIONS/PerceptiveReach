@@ -90,6 +90,49 @@ angular.module('ui.widgets')
           }
         };
 
+        $scope.spIndex = 0;
+        $scope.spSpanIndex = 0;
+        $scope.spText = '';
+
+        $scope.spIndexChange = function(value) {
+          //TODO
+          // $scope.enterWdgtForm.highRiskTxt.$setPristine();
+          // if ($scope.hrIndex > $scope.data.HighRisk_UserNotes.length-1) {
+          //   $scope.hrIndex = $scope.data.HighRisk_UserNotes.length-1;
+          // } else if ($scope.hrIndex < 0 || !angular.isNumber($scope.hrIndex)) {
+          //   $scope.hrIndex = 0;
+          // }
+          // $scope.hrText = $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes;
+        }
+
+        $scope.goSpBack = function() {
+          if ($scope.spIndex < $scope.data.SafetyPlan_UserNotes.length-1) {
+            $scope.enterWdgtForm.safetyPlanTxt.$setPristine();
+            $scope.spIndex+=1;
+            $scope.spText = $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes;
+          }
+        };
+
+        $scope.goSpForward = function() {
+          if ($scope.spIndex !== 0) {
+            $scope.enterWdgtForm.safetyPlanTxt.$setPristine();
+            $scope.spIndex-=1;
+            $scope.spText = $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes;           
+          }
+        };
+
+         $scope.goSpSpanBack = function() {
+          if ($scope.spSpanIndex < $scope.data.SafetyPlan_SPANImport.length-1) {
+            $scope.spSpanIndex+=1;
+          }
+        };
+
+        $scope.goSpSpanForward = function() {
+          if ($scope.spSpanIndex !== 0) {
+            $scope.spSpanIndex-=1;
+          }
+        };
+
        
         $scope.addNewData = function() {
             var UpdatedHR_UserNotes = {isNew: false};
@@ -116,6 +159,15 @@ angular.module('ui.widgets')
                 }
             }
 
+            if ($scope.spText != $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes)
+            {
+               UpdatedSP_UserNotes = {
+                  entry: $scope.spText,
+                  date: addDate,
+                  isNew: true
+                }
+            }
+
           $scope.widget.dataModel.saveNewUserData({
                                                     hrUserNotes: UpdatedHR_UserNotes,
                                                     mhUserNotes: UpdatedMH_UserNotes,
@@ -132,6 +184,7 @@ angular.module('ui.widgets')
           //Set all inputs to pristine state
           scope.enterWdgtForm.highRiskTxt.$setPristine();
           scope.enterWdgtForm.mentalProviderTxt.$setPristine();
+          scope.enterWdgtForm.safetyPlanTxt.$setPristine();
 
           //Initialize control values
           if(scope.data.HighRisk_UserNotes)
@@ -141,6 +194,10 @@ angular.module('ui.widgets')
           if(scope.data.PrimaryHealthProvider_UserNotes)
           {
             scope.mhText = scope.data.PrimaryHealthProvider_UserNotes[scope.mhIndex].UserNotes;
+          }
+          if(scope.data.PrimaryHealthProvider_UserNotes)
+          {
+            scope.spText = scope.data.SafetyPlan_UserNotes[scope.spIndex].UserNotes;
           }
 
         });

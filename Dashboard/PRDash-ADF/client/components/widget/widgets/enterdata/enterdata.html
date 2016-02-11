@@ -4,7 +4,7 @@
         <div class="panel-body" style="padding-left:40px">
           <div class="row">
             <div class="col-md-12 bs-example hr-text" style="padding: 5px;">
-              <div class="panel-body">
+              <div class="panel-body" style="padding:5px;">
                 <div class="col-md-6">
                   <label style="font-weight:normal">User Notes:</label>
                   <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
@@ -45,7 +45,7 @@
           </div>
           <div class="row">
             <div class="col-md-12 bs-example mh-text" style="padding: 5px;">
-              <div class="panel-body">
+              <div class="panel-body" style="padding:5px;">
                 <div class="col-md-6">
                   <label style="font-weight:normal">User Notes:</label>
                   <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
@@ -69,7 +69,42 @@
                 </div>
               </div>
             </div>
-
+          </div>
+          <div class="row">
+            <div class="col-md-12 bs-example sp-text" style="padding: 5px;">
+              <div class="panel-body" style="padding:5px;">
+                <div class="col-md-6">
+                  <label style="font-weight:normal">User Notes:</label>
+                  <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
+                    <button type="button" name="spBack" class="btn btn-default pull-left" ng-disabled="spIndex >= data.SafetyPlan_UserNotes.length-1" ng-click="goSpBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
+                    </button>
+                    <div class="pull-left">
+                      <input type="text" min="0" ng-change="spIndexChange(spIndex)" style="width:40px; height:22px;" ng-model="spIndex" ></input>
+                    </div>
+                    <button type="button" name="spFwd" class="btn btn-default pull-left" ng-disabled="spIndex === 0" ng-click="goSpForward()"><i class="glyphicon glyphicon-arrow-right" 
+                      style="font-size:13px;width: 18px;"></i>
+                    </button>
+                  </div><br>
+                  <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="spText" name="safetyPlanTxt" ng-class="{enterDataDirty: enterWdgtForm.safetyPlanTxt.$dirty && enterWdgtForm.safetyPlanTxt.$valid}" id="spText"></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label style="font-weight:normal">VistA Records:</label>
+                  <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
+                    <button type="button" name="spSpanBack" class="btn btn-default pull-left" ng-disabled="spSpanIndex >= data.SafetyPlan_SPANImport.length-1" ng-click="goSpSpanBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
+                    </button>
+                    <div class="pull-left">
+                      <input type="text" min="0" style="width:40px; height:22px;" ng-model="spSpanIndex" ></input>
+                    </div>
+                    <button type="button" name="spSpanFwd" class="btn btn-default pull-left" ng-disabled="spSpanIndex === 0" ng-click="goSpSpanForward()"><i class="glyphicon glyphicon-arrow-right" style="font-size:13px;width: 18px;"></i>
+                    </button>
+                  </div>
+                   <div class="col-md-12 enterDataBox" style="background-color:#e6e6e6;">
+                    <label style="font-weight:normal">Safety Plan Current: {{data.SafetyPlan_SPANImport[spSpanIndex].SafetyPlanCurrent}}</label>    
+                    <label style="font-weight:normal">Date Completed/Updated: {{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="row">
             <div class="col-xs-2 col-xs-offset-10">

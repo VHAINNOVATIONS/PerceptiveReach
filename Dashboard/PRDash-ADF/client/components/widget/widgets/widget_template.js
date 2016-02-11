@@ -219,7 +219,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <div class=\"col-md-12 bs-example hr-text\" style=\"padding: 5px;\">\r" +
     "\n" +
-    "              <div class=\"panel-body\">\r" +
+    "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
     "\n" +
     "                <div class=\"col-md-6\">\r" +
     "\n" +
@@ -301,7 +301,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <div class=\"col-md-12 bs-example mh-text\" style=\"padding: 5px;\">\r" +
     "\n" +
-    "              <div class=\"panel-body\">\r" +
+    "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
     "\n" +
     "                <div class=\"col-md-6\">\r" +
     "\n" +
@@ -349,7 +349,77 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            </div>\r" +
     "\n" +
-    "\r" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-md-12 bs-example sp-text\" style=\"padding: 5px;\">\r" +
+    "\n" +
+    "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
+    "\n" +
+    "                <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">User Notes:</label>\r" +
+    "\n" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"spBack\" class=\"btn btn-default pull-left\" ng-disabled=\"spIndex >= data.SafetyPlan_UserNotes.length-1\" ng-click=\"goSpBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" min=\"0\" ng-change=\"spIndexChange(spIndex)\" style=\"width:40px; height:22px;\" ng-model=\"spIndex\" ></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"spFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"spIndex === 0\" ng-click=\"goSpForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
+    "\n" +
+    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                  </div><br>\r" +
+    "\n" +
+    "                  <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"spText\" name=\"safetyPlanTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.safetyPlanTxt.$dirty && enterWdgtForm.safetyPlanTxt.$valid}\" id=\"spText\"></textarea>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">VistA Records:</label>\r" +
+    "\n" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"spSpanBack\" class=\"btn btn-default pull-left\" ng-disabled=\"spSpanIndex >= data.SafetyPlan_SPANImport.length-1\" ng-click=\"goSpSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" min=\"0\" style=\"width:40px; height:22px;\" ng-model=\"spSpanIndex\" ></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"spSpanFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"spSpanIndex === 0\" ng-click=\"goSpSpanForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                   <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">Safety Plan Current: {{data.SafetyPlan_SPANImport[spSpanIndex].SafetyPlanCurrent}}</label>    \r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">Date Completed/Updated: {{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated}}</label>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "            </div>\r" +
     "\n" +
     "          </div>\r" +
     "\n" +

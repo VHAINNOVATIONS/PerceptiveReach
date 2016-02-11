@@ -88,9 +88,9 @@ angular.module('app')
           roleAccess: 'SUP,REP,ADM,CCT',
           layout: 'individual'
         },
-        sizeX:16,
+        sizeX:14,
         sizeY:10,
-        minSizeX: 16
+        minSizeX: 14
       },
 
       {

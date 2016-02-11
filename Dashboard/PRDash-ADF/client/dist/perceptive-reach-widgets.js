@@ -2973,6 +2973,49 @@ angular.module('ui.widgets')
           }
         };
 
+        $scope.spIndex = 0;
+        $scope.spSpanIndex = 0;
+        $scope.spText = '';
+
+        $scope.spIndexChange = function(value) {
+          //TODO
+          // $scope.enterWdgtForm.highRiskTxt.$setPristine();
+          // if ($scope.hrIndex > $scope.data.HighRisk_UserNotes.length-1) {
+          //   $scope.hrIndex = $scope.data.HighRisk_UserNotes.length-1;
+          // } else if ($scope.hrIndex < 0 || !angular.isNumber($scope.hrIndex)) {
+          //   $scope.hrIndex = 0;
+          // }
+          // $scope.hrText = $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes;
+        }
+
+        $scope.goSpBack = function() {
+          if ($scope.spIndex < $scope.data.SafetyPlan_UserNotes.length-1) {
+            $scope.enterWdgtForm.safetyPlanTxt.$setPristine();
+            $scope.spIndex+=1;
+            $scope.spText = $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes;
+          }
+        };
+
+        $scope.goSpForward = function() {
+          if ($scope.spIndex !== 0) {
+            $scope.enterWdgtForm.safetyPlanTxt.$setPristine();
+            $scope.spIndex-=1;
+            $scope.spText = $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes;           
+          }
+        };
+
+         $scope.goSpSpanBack = function() {
+          if ($scope.spSpanIndex < $scope.data.SafetyPlan_SPANImport.length-1) {
+            $scope.spSpanIndex+=1;
+          }
+        };
+
+        $scope.goSpSpanForward = function() {
+          if ($scope.spSpanIndex !== 0) {
+            $scope.spSpanIndex-=1;
+          }
+        };
+
        
         $scope.addNewData = function() {
             var UpdatedHR_UserNotes = {isNew: false};
@@ -2999,6 +3042,15 @@ angular.module('ui.widgets')
                 }
             }
 
+            if ($scope.spText != $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes)
+            {
+               UpdatedSP_UserNotes = {
+                  entry: $scope.spText,
+                  date: addDate,
+                  isNew: true
+                }
+            }
+
           $scope.widget.dataModel.saveNewUserData({
                                                     hrUserNotes: UpdatedHR_UserNotes,
                                                     mhUserNotes: UpdatedMH_UserNotes,
@@ -3015,6 +3067,7 @@ angular.module('ui.widgets')
           //Set all inputs to pristine state
           scope.enterWdgtForm.highRiskTxt.$setPristine();
           scope.enterWdgtForm.mentalProviderTxt.$setPristine();
+          scope.enterWdgtForm.safetyPlanTxt.$setPristine();
 
           //Initialize control values
           if(scope.data.HighRisk_UserNotes)
@@ -3024,6 +3077,10 @@ angular.module('ui.widgets')
           if(scope.data.PrimaryHealthProvider_UserNotes)
           {
             scope.mhText = scope.data.PrimaryHealthProvider_UserNotes[scope.mhIndex].UserNotes;
+          }
+          if(scope.data.PrimaryHealthProvider_UserNotes)
+          {
+            scope.spText = scope.data.SafetyPlan_UserNotes[scope.spIndex].UserNotes;
           }
 
         });
@@ -5532,7 +5589,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <div class=\"col-md-12 bs-example hr-text\" style=\"padding: 5px;\">\r" +
     "\n" +
-    "              <div class=\"panel-body\">\r" +
+    "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
     "\n" +
     "                <div class=\"col-md-6\">\r" +
     "\n" +
@@ -5614,7 +5671,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <div class=\"col-md-12 bs-example mh-text\" style=\"padding: 5px;\">\r" +
     "\n" +
-    "              <div class=\"panel-body\">\r" +
+    "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
     "\n" +
     "                <div class=\"col-md-6\">\r" +
     "\n" +
@@ -5662,7 +5719,77 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            </div>\r" +
     "\n" +
-    "\r" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-md-12 bs-example sp-text\" style=\"padding: 5px;\">\r" +
+    "\n" +
+    "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
+    "\n" +
+    "                <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">User Notes:</label>\r" +
+    "\n" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"spBack\" class=\"btn btn-default pull-left\" ng-disabled=\"spIndex >= data.SafetyPlan_UserNotes.length-1\" ng-click=\"goSpBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" min=\"0\" ng-change=\"spIndexChange(spIndex)\" style=\"width:40px; height:22px;\" ng-model=\"spIndex\" ></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"spFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"spIndex === 0\" ng-click=\"goSpForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
+    "\n" +
+    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                  </div><br>\r" +
+    "\n" +
+    "                  <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"spText\" name=\"safetyPlanTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.safetyPlanTxt.$dirty && enterWdgtForm.safetyPlanTxt.$valid}\" id=\"spText\"></textarea>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">VistA Records:</label>\r" +
+    "\n" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"spSpanBack\" class=\"btn btn-default pull-left\" ng-disabled=\"spSpanIndex >= data.SafetyPlan_SPANImport.length-1\" ng-click=\"goSpSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" min=\"0\" style=\"width:40px; height:22px;\" ng-model=\"spSpanIndex\" ></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"spSpanFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"spSpanIndex === 0\" ng-click=\"goSpSpanForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                   <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">Safety Plan Current: {{data.SafetyPlan_SPANImport[spSpanIndex].SafetyPlanCurrent}}</label>    \r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">Date Completed/Updated: {{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated}}</label>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "            </div>\r" +
     "\n" +
     "          </div>\r" +
     "\n" +
