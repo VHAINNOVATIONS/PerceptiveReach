@@ -227,9 +227,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"hrBack\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex >= data.HighRisk_UserNotes.length-1\" ng-click=\"goHrBack()\"><i class=\"glyphicon glyphicon-arrow-left\" \r" +
-    "\n" +
-    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "                    <button type=\"button\" name=\"hrBack\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex >= data.HighRisk_UserNotes.length-1\" ng-click=\"goHrBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
     "                    </button>\r" +
     "\n" +
@@ -259,9 +257,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"hrSpanBack\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex >= data.HighRisk_SPANImport.length-1\" ng-click=\"goHrSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" \r" +
-    "\n" +
-    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "                    <button type=\"button\" name=\"hrSpanBack\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex >= data.HighRisk_SPANImport.length-1\" ng-click=\"goHrSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
     "                    </button>\r" +
     "\n" +
@@ -301,11 +297,55 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "          </div>\r" +
     "\n" +
-    "          \r" +
-    "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
     "            <div class=\"col-md-12 bs-example mh-text\" style=\"padding: 5px;\">\r" +
+    "\n" +
+    "              <div class=\"panel-body\">\r" +
+    "\n" +
+    "                <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">User Notes:</label>\r" +
+    "\n" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"mhBack\" class=\"btn btn-default pull-left\" ng-disabled=\"mhIndex >= data.PrimaryHealthProvider_UserNotes.length-1\" ng-click=\"goMhBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" min=\"0\" ng-change=\"mhIndexChange(mhIndex)\" style=\"width:40px; height:22px;\" ng-model=\"mhIndex\" ></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"mhFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"mhIndex === 0\" ng-click=\"goMhForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
+    "\n" +
+    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                  </div><br/>\r" +
+    "\n" +
+    "                  <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"mhText\" name=\"mentalProviderTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.mentalProviderTxt.$dirty && enterWdgtForm.mentalProviderTxt.$valid}\" id=\"mhText\"></textarea>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div class=\"col-md-6\" > \r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">VistA Records:</label>\r" +
+    "\n" +
+    "                  \r" +
+    "\n" +
+    "                  <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
+    "\n" +
+    "                   <label style=\"font-weight:normal\">No Data Available</label>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "              </div>\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
