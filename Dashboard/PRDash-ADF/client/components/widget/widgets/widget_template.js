@@ -233,7 +233,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" min=\"0\" ng-change=\"hrIndexChange(hrIndex)\" style=\"width:40px; height:22px;\" ng-model=\"hrIndex\" ></input>\r" +
+    "                      <input type=\"text\" min=\"0\" ng-change=\"hrIndexChange(hrIndex)\" class=\"enterDataNumInput\" ng-model=\"hrIndex\" ></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -249,8 +249,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                </div>\r" +
     "\n" +
-    "\r" +
-    "\n" +
     "                <div class=\"col-md-6\" >    \r" +
     "\n" +
     "                  <label style=\"font-weight:normal\">SPAN Records:</label>\r" +
@@ -263,11 +261,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" min=\"0\" style=\"width:40px; height:22px;\" ng-model=\"hrSpanIndex\" ></input>\r" +
+    "                      <input type=\"text\" min=\"0\" class=\"enterDataNumInput\" ng-model=\"hrSpanIndex\" ></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"hrSpanFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex === 0\" ng-click=\"goHrSpanForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
+    "                    <button type=\"button\" name=\"hrSpanFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex === 0\" ng-click=\"goHrSpanForward()\"><i class=\"glyphicon glyphicon-arrow-right\"\r" +
     "\n" +
     "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
@@ -311,7 +309,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" min=\"0\" ng-change=\"mhIndexChange(mhIndex)\" style=\"width:40px; height:22px;\" ng-model=\"mhIndex\" ></input>\r" +
+    "                      <input class=\"enterDataNumInput\" type=\"text\" min=\"0\" ng-change=\"mhIndexChange(mhIndex)\" ng-model=\"mhIndex\" ></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -365,7 +363,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" min=\"0\" ng-change=\"spIndexChange(spIndex)\" style=\"width:40px; height:22px;\" ng-model=\"spIndex\" ></input>\r" +
+    "                      <input type=\"text\" min=\"0\" ng-change=\"spIndexChange(spIndex)\" class=\"enterDataNumInput\" ng-model=\"spIndex\" ></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -393,7 +391,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" min=\"0\" style=\"width:40px; height:22px;\" ng-model=\"spSpanIndex\" ></input>\r" +
+    "                      <input type=\"text\" min=\"0\" class=\"enterDataNumInput\" ng-model=\"spSpanIndex\" ></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -435,7 +433,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                      <div class=\"pull-left\">\r" +
     "\n" +
-    "                        <input type=\"text\" min=\"0\" style=\"width:40px; height:22px;\" ng-model=\"commentIndex\" ></input>\r" +
+    "                        <input type=\"text\" min=\"0\" class=\"enterDataNumInput\" ng-model=\"commentIndex\" ></input>\r" +
     "\n" +
     "                      </div>\r" +
     "\n" +
