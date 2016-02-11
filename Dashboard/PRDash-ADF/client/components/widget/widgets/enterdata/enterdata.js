@@ -26,7 +26,9 @@ angular.module('ui.widgets')
       templateUrl: 'client/components/widget/widgets/enterdata/enterdata.html',
       controller: function ($scope) {
         $scope.hrIndex = 0;
+        $scope.hrSpanIndex = 0;
         $scope.hrText = '';
+
         $scope.hrIndexChange = function(value) {
           console.log('hrIndex:',$scope.hrIndex);
           $scope.enterWdgtForm.highRiskTxt.$setPristine();
@@ -37,18 +39,31 @@ angular.module('ui.widgets')
           }
           $scope.hrText = $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes;
         }
-        $scope.goBack = function() {
+
+        $scope.goHrBack = function() {
           if ($scope.hrIndex < $scope.data.HighRisk_UserNotes.length-1) {
             $scope.enterWdgtForm.highRiskTxt.$setPristine();
             $scope.hrIndex+=1;
             $scope.hrText = $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes;
           }
         };
-        $scope.goForward = function() {
+        $scope.goHrForward = function() {
           if ($scope.hrIndex !== 0) {
             $scope.enterWdgtForm.highRiskTxt.$setPristine();
             $scope.hrIndex-=1;
             $scope.hrText = $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes;           
+          }
+        };
+
+        $scope.goHrSpanBack = function() {
+          if ($scope.hrSpanIndex < $scope.data.HighRisk_SPANImport.length-1) {
+            $scope.hrSpanIndex+=1;
+          }
+        };
+
+        $scope.goHrSpanForward = function() {
+          if ($scope.hrSpanIndex !== 0) {
+            $scope.hrSpanIndex-=1;
           }
         };
        

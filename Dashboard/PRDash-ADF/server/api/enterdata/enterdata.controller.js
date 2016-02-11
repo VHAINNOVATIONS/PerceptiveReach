@@ -63,12 +63,12 @@ exports.index = function(req, res) {
        }
 
          /*Parse result into JSON object and format the date */
-         			var jsonHighRisk_SPANImport = JSON.parse(JSON.stringify(recordset[0]));
-         			var jsonHighRisk_UserNotes = JSON.parse(JSON.stringify(recordset[1]));
-         			var jsonSafetyPlan_SPANImport = JSON.parse(JSON.stringify(recordset[2]));
-              var jsonSafetyPlan_UserNotes = JSON.parse(JSON.stringify(recordset[3]));
-              var jsonPrimaryHealthProvider_UserNotes = JSON.parse(JSON.stringify(recordset[4]));
-              var jsonGeneralComments = JSON.parse(JSON.stringify(recordset[5]));
+ 			var jsonHighRisk_SPANImport = JSON.parse(JSON.stringify(recordset[0]));
+ 			var jsonHighRisk_UserNotes = JSON.parse(JSON.stringify(recordset[1]));
+ 			var jsonSafetyPlan_SPANImport = JSON.parse(JSON.stringify(recordset[2]));
+      var jsonSafetyPlan_UserNotes = JSON.parse(JSON.stringify(recordset[3]));
+      var jsonPrimaryHealthProvider_UserNotes = JSON.parse(JSON.stringify(recordset[4]));
+      var jsonGeneralComments = JSON.parse(JSON.stringify(recordset[5]));
 
       /*Send the data */
       res.send({HighRisk_SPANImport:jsonHighRisk_SPANImport,
