@@ -11,7 +11,7 @@
                     <button type="button" name="hrBack" class="btn btn-default pull-left" ng-disabled="hrIndex >= data.HighRisk_UserNotes.length-1" ng-click="goHrBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
                     </button>
                     <div class="pull-left">
-                      <input type="text" min="0" ng-change="hrIndexChange(hrIndex)" style="width:40px; height:22px;" ng-model="hrIndex" ></input>
+                      <input type="text" min="0" ng-change="hrIndexChange(hrIndex)" class="enterDataNumInput" ng-model="hrIndex" ></input>
                     </div>
                     <button type="button" name="hrFwd" class="btn btn-default pull-left" ng-disabled="hrIndex === 0" ng-click="goHrForward()"><i class="glyphicon glyphicon-arrow-right" 
                       style="font-size:13px;width: 18px;"></i>
@@ -19,16 +19,15 @@
                   </div><br/>
                   <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="hrText" name="highRiskTxt" ng-class="{enterDataDirty: enterWdgtForm.highRiskTxt.$dirty && enterWdgtForm.highRiskTxt.$valid}" id="hrText"></textarea>
                 </div>
-
                 <div class="col-md-6" >    
                   <label style="font-weight:normal">SPAN Records:</label>
                   <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
                     <button type="button" name="hrSpanBack" class="btn btn-default pull-left" ng-disabled="hrSpanIndex >= data.HighRisk_SPANImport.length-1" ng-click="goHrSpanBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
                     </button>
                     <div class="pull-left">
-                      <input type="text" min="0" style="width:40px; height:22px;" ng-model="hrSpanIndex" ></input>
+                      <input type="text" min="0" class="enterDataNumInput" ng-model="hrSpanIndex" ></input>
                     </div>
-                    <button type="button" name="hrSpanFwd" class="btn btn-default pull-left" ng-disabled="hrSpanIndex === 0" ng-click="goHrSpanForward()"><i class="glyphicon glyphicon-arrow-right" 
+                    <button type="button" name="hrSpanFwd" class="btn btn-default pull-left" ng-disabled="hrSpanIndex === 0" ng-click="goHrSpanForward()"><i class="glyphicon glyphicon-arrow-right"
                       style="font-size:13px;width: 18px;"></i>
                     </button>
                   </div>
@@ -50,7 +49,7 @@
                     <button type="button" name="mhBack" class="btn btn-default pull-left" ng-disabled="mhIndex >= data.PrimaryHealthProvider_UserNotes.length-1" ng-click="goMhBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
                     </button>
                     <div class="pull-left">
-                      <input type="text" min="0" ng-change="mhIndexChange(mhIndex)" style="width:40px; height:22px;" ng-model="mhIndex" ></input>
+                      <input class="enterDataNumInput" type="text" min="0" ng-change="mhIndexChange(mhIndex)" ng-model="mhIndex" ></input>
                     </div>
                     <button type="button" name="mhFwd" class="btn btn-default pull-left" ng-disabled="mhIndex === 0" ng-click="goMhForward()"><i class="glyphicon glyphicon-arrow-right" 
                       style="font-size:13px;width: 18px;"></i>
@@ -77,7 +76,7 @@
                     <button type="button" name="spBack" class="btn btn-default pull-left" ng-disabled="spIndex >= data.SafetyPlan_UserNotes.length-1" ng-click="goSpBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
                     </button>
                     <div class="pull-left">
-                      <input type="text" min="0" ng-change="spIndexChange(spIndex)" style="width:40px; height:22px;" ng-model="spIndex" ></input>
+                      <input type="text" min="0" ng-change="spIndexChange(spIndex)" class="enterDataNumInput" ng-model="spIndex" ></input>
                     </div>
                     <button type="button" name="spFwd" class="btn btn-default pull-left" ng-disabled="spIndex === 0" ng-click="goSpForward()"><i class="glyphicon glyphicon-arrow-right" 
                       style="font-size:13px;width: 18px;"></i>
@@ -91,7 +90,7 @@
                     <button type="button" name="spSpanBack" class="btn btn-default pull-left" ng-disabled="spSpanIndex >= data.SafetyPlan_SPANImport.length-1" ng-click="goSpSpanBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
                     </button>
                     <div class="pull-left">
-                      <input type="text" min="0" style="width:40px; height:22px;" ng-model="spSpanIndex" ></input>
+                      <input type="text" min="0" class="enterDataNumInput" ng-model="spSpanIndex" ></input>
                     </div>
                     <button type="button" name="spSpanFwd" class="btn btn-default pull-left" ng-disabled="spSpanIndex === 0" ng-click="goSpSpanForward()"><i class="glyphicon glyphicon-arrow-right" style="font-size:13px;width: 18px;"></i>
                     </button>
@@ -112,7 +111,7 @@
                       <button type="button" name="commentBack" class="btn btn-default pull-left" ng-disabled="commentIndex >= data.GeneralComments.length-1" ng-click="goCommentBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
                       </button>
                       <div class="pull-left">
-                        <input type="text" min="0" style="width:40px; height:22px;" ng-model="commentIndex" ></input>
+                        <input type="text" min="0" class="enterDataNumInput" ng-model="commentIndex" ></input>
                       </div>
                       <button type="button" name="commentFwd" class="btn btn-default pull-left" ng-disabled="commentIndex === 0" ng-click="goCommentForward()"><i class="glyphicon glyphicon-arrow-right" style="font-size:13px;width: 18px;"></i>
                       </button>

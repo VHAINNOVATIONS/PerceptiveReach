@@ -48,9 +48,16 @@ a{
 
 .enterDataBox
 {
-  border:1px solid gray;
+  border:1px solid lightgray;
   height:75px;
   border-radius:5px;
+}
+
+.enterDataNumInput
+{
+  width:40px; 
+  height:22px;
+  border:1px solid lightgray;
 }
 
 .box {
