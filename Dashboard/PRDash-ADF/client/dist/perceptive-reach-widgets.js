@@ -2913,14 +2913,14 @@ angular.module('ui.widgets')
         $scope.hrText = '';
 
         $scope.hrIndexChange = function(value) {
-          console.log('hrIndex:',$scope.hrIndex);
-          $scope.enterWdgtForm.highRiskTxt.$setPristine();
-          if ($scope.hrIndex > $scope.data.HighRisk_UserNotes.length-1) {
-            $scope.hrIndex = $scope.data.HighRisk_UserNotes.length-1;
-          } else if ($scope.hrIndex < 0 || !angular.isNumber($scope.hrIndex)) {
-            $scope.hrIndex = 0;
-          }
-          $scope.hrText = $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes;
+          //TODO
+          // $scope.enterWdgtForm.highRiskTxt.$setPristine();
+          // if ($scope.hrIndex > $scope.data.HighRisk_UserNotes.length-1) {
+          //   $scope.hrIndex = $scope.data.HighRisk_UserNotes.length-1;
+          // } else if ($scope.hrIndex < 0 || !angular.isNumber($scope.hrIndex)) {
+          //   $scope.hrIndex = 0;
+          // }
+          // $scope.hrText = $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes;
         }
 
         $scope.goHrBack = function() {
@@ -2949,6 +2949,30 @@ angular.module('ui.widgets')
             $scope.hrSpanIndex-=1;
           }
         };
+
+
+        $scope.mhIndex = 0;
+        $scope.mhText = '';
+
+        $scope.mhIndexChange = function(value) {
+          //TODO
+        }
+
+        $scope.goMhBack = function() {
+          if ($scope.mhIndex < $scope.data.PrimaryHealthProvider_UserNotes.length-1) {
+            $scope.enterWdgtForm.mentalProviderTxt.$setPristine();
+            $scope.mhIndex+=1;
+            $scope.mhText = $scope.data.PrimaryHealthProvider_UserNotes[$scope.mhIndex].UserNotes;
+          }
+        };
+        $scope.goMhForward = function() {
+          if ($scope.mhIndex !== 0) {
+            $scope.enterWdgtForm.mentalProviderTxt.$setPristine();
+            $scope.mhIndex-=1;
+            $scope.mhText = $scope.data.PrimaryHealthProvider_UserNotes[$scope.mhIndex].UserNotes;           
+          }
+        };
+
        
         $scope.addNewData = function() {
             var UpdatedHR_UserNotes = {isNew: false};
@@ -2964,14 +2988,15 @@ angular.module('ui.widgets')
                   date: addDate,
                   isNew: true
                 }
-                // var addHrTextLocal = {};
-                // addHrTextLocal.EntryDate = addDate;
-                // addHrTextLocal.UserNotes = $scope.hrText;
-                // console.log('HighRisk BeforeUnshift: ',$scope.data.HighRisk_UserNotes);
-                // $scope.data.HighRisk_UserNotes.unshift(addHrTextLocal);
-                // console.log('HighRisk AfterUnshift: ',$scope.data.HighRisk_UserNotes);
-                // $scope.hrIndex = 0
-                // $scope.hrIndexChange($scope.hrIndex);
+            }
+
+            if ($scope.mhText != $scope.data.PrimaryHealthProvider_UserNotes[$scope.mhIndex].UserNotes)
+            {
+               UpdatedMH_UserNotes = {
+                  entry: $scope.mhText,
+                  date: addDate,
+                  isNew: true
+                }
             }
 
           $scope.widget.dataModel.saveNewUserData({
@@ -2982,21 +3007,25 @@ angular.module('ui.widgets')
                                                   });
           }
 
-          $scope.init = function() {
-            // Initialize Textarea
-          }
-
-
       },
       link: function postLink(scope, element, attr) {
         scope.$watch('widgetData', function(data){
           scope.data = data;
+
+          //Set all inputs to pristine state
+          scope.enterWdgtForm.highRiskTxt.$setPristine();
+          scope.enterWdgtForm.mentalProviderTxt.$setPristine();
 
           //Initialize control values
           if(scope.data.HighRisk_UserNotes)
           {
             scope.hrText = scope.data.HighRisk_UserNotes[scope.hrIndex].UserNotes;
           }
+          if(scope.data.PrimaryHealthProvider_UserNotes)
+          {
+            scope.mhText = scope.data.PrimaryHealthProvider_UserNotes[scope.mhIndex].UserNotes;
+          }
+
         });
       }
     }
@@ -5511,9 +5540,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"hrBack\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex >= data.HighRisk_UserNotes.length-1\" ng-click=\"goHrBack()\"><i class=\"glyphicon glyphicon-arrow-left\" \r" +
-    "\n" +
-    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "                    <button type=\"button\" name=\"hrBack\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex >= data.HighRisk_UserNotes.length-1\" ng-click=\"goHrBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
     "                    </button>\r" +
     "\n" +
@@ -5543,9 +5570,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"hrSpanBack\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex >= data.HighRisk_SPANImport.length-1\" ng-click=\"goHrSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" \r" +
-    "\n" +
-    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "                    <button type=\"button\" name=\"hrSpanBack\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex >= data.HighRisk_SPANImport.length-1\" ng-click=\"goHrSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
     "                    </button>\r" +
     "\n" +
@@ -5585,11 +5610,55 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "          </div>\r" +
     "\n" +
-    "          \r" +
-    "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
     "            <div class=\"col-md-12 bs-example mh-text\" style=\"padding: 5px;\">\r" +
+    "\n" +
+    "              <div class=\"panel-body\">\r" +
+    "\n" +
+    "                <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">User Notes:</label>\r" +
+    "\n" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"mhBack\" class=\"btn btn-default pull-left\" ng-disabled=\"mhIndex >= data.PrimaryHealthProvider_UserNotes.length-1\" ng-click=\"goMhBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" min=\"0\" ng-change=\"mhIndexChange(mhIndex)\" style=\"width:40px; height:22px;\" ng-model=\"mhIndex\" ></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"mhFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"mhIndex === 0\" ng-click=\"goMhForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
+    "\n" +
+    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                  </div><br/>\r" +
+    "\n" +
+    "                  <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"mhText\" name=\"mentalProviderTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.mentalProviderTxt.$dirty && enterWdgtForm.mentalProviderTxt.$valid}\" id=\"mhText\"></textarea>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div class=\"col-md-6\" > \r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">VistA Records:</label>\r" +
+    "\n" +
+    "                  \r" +
+    "\n" +
+    "                  <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
+    "\n" +
+    "                   <label style=\"font-weight:normal\">No Data Available</label>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "              </div>\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
