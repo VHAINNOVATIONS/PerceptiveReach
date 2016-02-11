@@ -2964,14 +2964,14 @@ angular.module('ui.widgets')
                   date: addDate,
                   isNew: true
                 }
-                var addHrTextLocal = {};
-                addHrTextLocal.EntryDate = addDate;
-                addHrTextLocal.UserNotes = $scope.hrText;
-                console.log('HighRisk BeforeUnshift: ',$scope.data.HighRisk_UserNotes);
-                $scope.data.HighRisk_UserNotes.unshift(addHrTextLocal);
-                console.log('HighRisk AfterUnshift: ',$scope.data.HighRisk_UserNotes);
-                $scope.hrIndex = 0
-                $scope.hrIndexChange($scope.hrIndex);
+                // var addHrTextLocal = {};
+                // addHrTextLocal.EntryDate = addDate;
+                // addHrTextLocal.UserNotes = $scope.hrText;
+                // console.log('HighRisk BeforeUnshift: ',$scope.data.HighRisk_UserNotes);
+                // $scope.data.HighRisk_UserNotes.unshift(addHrTextLocal);
+                // console.log('HighRisk AfterUnshift: ',$scope.data.HighRisk_UserNotes);
+                // $scope.hrIndex = 0
+                // $scope.hrIndexChange($scope.hrIndex);
             }
 
           $scope.widget.dataModel.saveNewUserData({
@@ -5501,7 +5501,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
-    "            <div class=\"col-md-12 bs-example hr-text\" style=\"padding: 5px; border-radius: 5px; border: 0.5px solid gray;\">\r" +
+    "            <div class=\"col-md-12 bs-example hr-text\" style=\"padding: 5px;\">\r" +
     "\n" +
     "              <div class=\"panel-body\">\r" +
     "\n" +
@@ -5582,6 +5582,18 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "              </div>\r" +
     "\n" +
     "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          \r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-md-12 bs-example mh-text\" style=\"padding: 5px;\">\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "\r" +
     "\n" +
     "          </div>\r" +
     "\n" +

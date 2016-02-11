@@ -81,14 +81,14 @@ angular.module('ui.widgets')
                   date: addDate,
                   isNew: true
                 }
-                var addHrTextLocal = {};
-                addHrTextLocal.EntryDate = addDate;
-                addHrTextLocal.UserNotes = $scope.hrText;
-                console.log('HighRisk BeforeUnshift: ',$scope.data.HighRisk_UserNotes);
-                $scope.data.HighRisk_UserNotes.unshift(addHrTextLocal);
-                console.log('HighRisk AfterUnshift: ',$scope.data.HighRisk_UserNotes);
-                $scope.hrIndex = 0
-                $scope.hrIndexChange($scope.hrIndex);
+                // var addHrTextLocal = {};
+                // addHrTextLocal.EntryDate = addDate;
+                // addHrTextLocal.UserNotes = $scope.hrText;
+                // console.log('HighRisk BeforeUnshift: ',$scope.data.HighRisk_UserNotes);
+                // $scope.data.HighRisk_UserNotes.unshift(addHrTextLocal);
+                // console.log('HighRisk AfterUnshift: ',$scope.data.HighRisk_UserNotes);
+                // $scope.hrIndex = 0
+                // $scope.hrIndexChange($scope.hrIndex);
             }
 
           $scope.widget.dataModel.saveNewUserData({
