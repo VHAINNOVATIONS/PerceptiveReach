@@ -217,7 +217,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
-    "            <div class=\"col-md-12 bs-example hr-text\" style=\"padding: 5px; border-radius: 5px; border: 0.5px solid gray;\">\r" +
+    "            <div class=\"col-md-12 bs-example hr-text\" style=\"padding: 5px;\">\r" +
     "\n" +
     "              <div class=\"panel-body\">\r" +
     "\n" +
@@ -298,6 +298,18 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "              </div>\r" +
     "\n" +
     "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          \r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-md-12 bs-example mh-text\" style=\"padding: 5px;\">\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "\r" +
     "\n" +
     "          </div>\r" +
     "\n" +
