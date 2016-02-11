@@ -3,7 +3,7 @@
       <div class="panel panel-default">
         <div class="panel-body" style="padding-left:40px">
           <div class="row">
-            <div class="col-md-12 bs-example hr-text" style="padding: 5px;">
+            <div class="col-md-12 bs-example hr-text" style="padding: 2px;">
               <div class="panel-body" style="padding:5px;">
                 <div class="col-md-6">
                   <label style="font-weight:normal">User Notes:</label>
@@ -38,13 +38,11 @@
                     <label style="font-weight:normal">Date Last Updated: {{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated}}</label>
                   </div>
                 </div>
-
-
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-12 bs-example mh-text" style="padding: 5px;">
+            <div class="col-md-12 bs-example mh-text" style="padding: 2px;">
               <div class="panel-body" style="padding:5px;">
                 <div class="col-md-6">
                   <label style="font-weight:normal">User Notes:</label>
@@ -71,7 +69,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-12 bs-example sp-text" style="padding: 5px;">
+            <div class="col-md-12 bs-example sp-text" style="padding: 2px;">
               <div class="panel-body" style="padding:5px;">
                 <div class="col-md-6">
                   <label style="font-weight:normal">User Notes:</label>
@@ -104,6 +102,24 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 bs-example comment-text" style="padding: 2px;">
+               <div class="panel-body" style="padding:5px;">
+                 <div class="col-md-12">
+                   <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
+                      <button type="button" name="commentBack" class="btn btn-default pull-left" ng-disabled="commentIndex >= data.GeneralComments.length-1" ng-click="goCommentBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
+                      </button>
+                      <div class="pull-left">
+                        <input type="text" min="0" style="width:40px; height:22px;" ng-model="commentIndex" ></input>
+                      </div>
+                      <button type="button" name="commentFwd" class="btn btn-default pull-left" ng-disabled="commentIndex === 0" ng-click="goCommentForward()"><i class="glyphicon glyphicon-arrow-right" style="font-size:13px;width: 18px;"></i>
+                      </button>
+                   </div>
+                    <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="commentText" name="commentTxt" ng-class="{enterDataDirty: enterWdgtForm.commentTxt.$dirty && enterWdgtForm.commentTxt.$valid}" id="commentText"></textarea>
+                 </div>
+               </div>
             </div>
           </div>
           <div class="row">

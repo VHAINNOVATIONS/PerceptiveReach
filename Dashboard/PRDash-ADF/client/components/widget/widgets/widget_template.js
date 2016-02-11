@@ -217,7 +217,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
-    "            <div class=\"col-md-12 bs-example hr-text\" style=\"padding: 5px;\">\r" +
+    "            <div class=\"col-md-12 bs-example hr-text\" style=\"padding: 2px;\">\r" +
     "\n" +
     "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
     "\n" +
@@ -287,10 +287,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                </div>\r" +
     "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
     "              </div>\r" +
     "\n" +
     "            </div>\r" +
@@ -299,7 +295,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
-    "            <div class=\"col-md-12 bs-example mh-text\" style=\"padding: 5px;\">\r" +
+    "            <div class=\"col-md-12 bs-example mh-text\" style=\"padding: 2px;\">\r" +
     "\n" +
     "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
     "\n" +
@@ -353,7 +349,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
-    "            <div class=\"col-md-12 bs-example sp-text\" style=\"padding: 5px;\">\r" +
+    "            <div class=\"col-md-12 bs-example sp-text\" style=\"padding: 2px;\">\r" +
     "\n" +
     "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
     "\n" +
@@ -418,6 +414,42 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "                </div>\r" +
     "\n" +
     "              </div>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-md-12 bs-example comment-text\" style=\"padding: 2px;\">\r" +
+    "\n" +
+    "               <div class=\"panel-body\" style=\"padding:5px;\">\r" +
+    "\n" +
+    "                 <div class=\"col-md-12\">\r" +
+    "\n" +
+    "                   <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                      <button type=\"button\" name=\"commentBack\" class=\"btn btn-default pull-left\" ng-disabled=\"commentIndex >= data.GeneralComments.length-1\" ng-click=\"goCommentBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                      </button>\r" +
+    "\n" +
+    "                      <div class=\"pull-left\">\r" +
+    "\n" +
+    "                        <input type=\"text\" min=\"0\" style=\"width:40px; height:22px;\" ng-model=\"commentIndex\" ></input>\r" +
+    "\n" +
+    "                      </div>\r" +
+    "\n" +
+    "                      <button type=\"button\" name=\"commentFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"commentIndex === 0\" ng-click=\"goCommentForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                      </button>\r" +
+    "\n" +
+    "                   </div>\r" +
+    "\n" +
+    "                    <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"commentText\" name=\"commentTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.commentTxt.$dirty && enterWdgtForm.commentTxt.$valid}\" id=\"commentText\"></textarea>\r" +
+    "\n" +
+    "                 </div>\r" +
+    "\n" +
+    "               </div>\r" +
     "\n" +
     "            </div>\r" +
     "\n" +

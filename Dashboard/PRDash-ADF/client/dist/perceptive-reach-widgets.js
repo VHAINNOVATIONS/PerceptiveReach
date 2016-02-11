@@ -2908,6 +2908,9 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/enterdata/enterdata.html',
       controller: function ($scope) {
+
+        //HIGH RISK SECTION
+
         $scope.hrIndex = 0;
         $scope.hrSpanIndex = 0;
         $scope.hrText = '';
@@ -2950,6 +2953,7 @@ angular.module('ui.widgets')
           }
         };
 
+        //MENTAL HEALTH PROVIDER SECTION
 
         $scope.mhIndex = 0;
         $scope.mhText = '';
@@ -2973,19 +2977,13 @@ angular.module('ui.widgets')
           }
         };
 
+        //SYSTEM PLAN SECTION
         $scope.spIndex = 0;
         $scope.spSpanIndex = 0;
         $scope.spText = '';
 
         $scope.spIndexChange = function(value) {
-          //TODO
-          // $scope.enterWdgtForm.highRiskTxt.$setPristine();
-          // if ($scope.hrIndex > $scope.data.HighRisk_UserNotes.length-1) {
-          //   $scope.hrIndex = $scope.data.HighRisk_UserNotes.length-1;
-          // } else if ($scope.hrIndex < 0 || !angular.isNumber($scope.hrIndex)) {
-          //   $scope.hrIndex = 0;
-          // }
-          // $scope.hrText = $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes;
+
         }
 
         $scope.goSpBack = function() {
@@ -3016,40 +3014,72 @@ angular.module('ui.widgets')
           }
         };
 
+        //GENERAL COMMENTS SECTION
+
+        $scope.commentIndex = 0;
+        $scope.commentText = '';
+
+        $scope.goCommentBack = function() {
+          if ($scope.commentIndex < $scope.data.GeneralComments.length-1) {
+            $scope.enterWdgtForm.commentTxt.$setPristine();
+            $scope.commentIndex+=1;
+            $scope.commentText = $scope.data.GeneralComments[$scope.commentIndex].Comment;
+          }
+        };
+
+        $scope.goCommentForward = function() {
+          if ($scope.commentIndex !== 0) {
+            $scope.enterWdgtForm.commentTxt.$setPristine();
+            $scope.commentIndex-=1;
+            $scope.commentText = $scope.data.GeneralComments[$scope.spIndex].Comment;           
+          }
+        };
+
+        // ADD DATA SECTION
        
         $scope.addNewData = function() {
-            var UpdatedHR_UserNotes = {isNew: false};
-            var UpdatedMH_UserNotes = {isNew:  false};
-            var UpdatedSP_UserNotes = {isNew: false};
-            var UpdatedGC_UserNotes = {isNew: false};
-            var addDate = new Date().toLocaleDateString();
+          var UpdatedHR_UserNotes = {isNew: false};
+          var UpdatedMH_UserNotes = {isNew:  false};
+          var UpdatedSP_UserNotes = {isNew: false};
+          var UpdatedGC_UserNotes = {isNew: false};
+          var addDate = new Date().toLocaleDateString();
 
-            if ($scope.hrText != $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes)
-            {
-               UpdatedHR_UserNotes = {
-                  entry: $scope.hrText,
-                  date: addDate,
-                  isNew: true
-                }
-            }
+          if ($scope.hrText != $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes)
+          {
+             UpdatedHR_UserNotes = {
+                entry: $scope.hrText,
+                date: addDate,
+                isNew: true
+              }
+          }
 
-            if ($scope.mhText != $scope.data.PrimaryHealthProvider_UserNotes[$scope.mhIndex].UserNotes)
-            {
-               UpdatedMH_UserNotes = {
-                  entry: $scope.mhText,
-                  date: addDate,
-                  isNew: true
-                }
-            }
+          if ($scope.mhText != $scope.data.PrimaryHealthProvider_UserNotes[$scope.mhIndex].UserNotes)
+          {
+             UpdatedMH_UserNotes = {
+                entry: $scope.mhText,
+                date: addDate,
+                isNew: true
+              }
+          }
 
-            if ($scope.spText != $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes)
-            {
-               UpdatedSP_UserNotes = {
-                  entry: $scope.spText,
-                  date: addDate,
-                  isNew: true
-                }
-            }
+          if ($scope.spText != $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes)
+          {
+             UpdatedSP_UserNotes = {
+                entry: $scope.spText,
+                date: addDate,
+                isNew: true
+              }
+          }
+
+          if ($scope.commentText != $scope.data.GeneralComments[$scope.commentIndex].Comment)
+          {
+             UpdatedGC_UserNotes = {
+                entry: $scope.commentText,
+                date: addDate,
+                isNew: true
+              }
+          }
+
 
           $scope.widget.dataModel.saveNewUserData({
                                                     hrUserNotes: UpdatedHR_UserNotes,
@@ -3068,19 +3098,27 @@ angular.module('ui.widgets')
           scope.enterWdgtForm.highRiskTxt.$setPristine();
           scope.enterWdgtForm.mentalProviderTxt.$setPristine();
           scope.enterWdgtForm.safetyPlanTxt.$setPristine();
+          scope.enterWdgtForm.commentTxt.$setPristine();
 
           //Initialize control values
           if(scope.data.HighRisk_UserNotes)
           {
             scope.hrText = scope.data.HighRisk_UserNotes[scope.hrIndex].UserNotes;
           }
+
           if(scope.data.PrimaryHealthProvider_UserNotes)
           {
             scope.mhText = scope.data.PrimaryHealthProvider_UserNotes[scope.mhIndex].UserNotes;
           }
+
           if(scope.data.PrimaryHealthProvider_UserNotes)
           {
             scope.spText = scope.data.SafetyPlan_UserNotes[scope.spIndex].UserNotes;
+          }
+
+          if(scope.data.GeneralComments)
+          {
+            scope.commentText = scope.data.GeneralComments[scope.commentIndex].Comment;
           }
 
         });
@@ -5587,7 +5625,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
-    "            <div class=\"col-md-12 bs-example hr-text\" style=\"padding: 5px;\">\r" +
+    "            <div class=\"col-md-12 bs-example hr-text\" style=\"padding: 2px;\">\r" +
     "\n" +
     "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
     "\n" +
@@ -5657,10 +5695,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                </div>\r" +
     "\n" +
-    "\r" +
-    "\n" +
-    "\r" +
-    "\n" +
     "              </div>\r" +
     "\n" +
     "            </div>\r" +
@@ -5669,7 +5703,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
-    "            <div class=\"col-md-12 bs-example mh-text\" style=\"padding: 5px;\">\r" +
+    "            <div class=\"col-md-12 bs-example mh-text\" style=\"padding: 2px;\">\r" +
     "\n" +
     "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
     "\n" +
@@ -5723,7 +5757,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
-    "            <div class=\"col-md-12 bs-example sp-text\" style=\"padding: 5px;\">\r" +
+    "            <div class=\"col-md-12 bs-example sp-text\" style=\"padding: 2px;\">\r" +
     "\n" +
     "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
     "\n" +
@@ -5788,6 +5822,42 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "                </div>\r" +
     "\n" +
     "              </div>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-md-12 bs-example comment-text\" style=\"padding: 2px;\">\r" +
+    "\n" +
+    "               <div class=\"panel-body\" style=\"padding:5px;\">\r" +
+    "\n" +
+    "                 <div class=\"col-md-12\">\r" +
+    "\n" +
+    "                   <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                      <button type=\"button\" name=\"commentBack\" class=\"btn btn-default pull-left\" ng-disabled=\"commentIndex >= data.GeneralComments.length-1\" ng-click=\"goCommentBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                      </button>\r" +
+    "\n" +
+    "                      <div class=\"pull-left\">\r" +
+    "\n" +
+    "                        <input type=\"text\" min=\"0\" style=\"width:40px; height:22px;\" ng-model=\"commentIndex\" ></input>\r" +
+    "\n" +
+    "                      </div>\r" +
+    "\n" +
+    "                      <button type=\"button\" name=\"commentFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"commentIndex === 0\" ng-click=\"goCommentForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                      </button>\r" +
+    "\n" +
+    "                   </div>\r" +
+    "\n" +
+    "                    <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"commentText\" name=\"commentTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.commentTxt.$dirty && enterWdgtForm.commentTxt.$valid}\" id=\"commentText\"></textarea>\r" +
+    "\n" +
+    "                 </div>\r" +
+    "\n" +
+    "               </div>\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
