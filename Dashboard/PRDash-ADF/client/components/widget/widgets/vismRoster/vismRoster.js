@@ -138,7 +138,7 @@ angular.module('ui.widgets')
             var activeView = commonData.data.activeView;
             if(activeView == "surveillance"){
               commonData.data.visnSelected.surveillance = visnId;
-              commonData.data.facilitySelected.surveillance = null; 
+              commonData.data.facilitySelected.surveillanceName = null; 
             }
               
             else if(activeView == "facility")
@@ -149,6 +149,10 @@ angular.module('ui.widgets')
             scope.$root.$broadcast('commonDataChanged', commonData);
             //scope.$apply();
           });
+
+          $('#VISNRosterDiv .dataTables_scrollHeadInner,#VISNRosterDiv table').css({'width':''}); 
+          var containerHeight = parseInt($('#VISNRosterDiv').parent().css('height'),10);
+          $('#VISNRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
         });
         scope.$watch('widgetData', function(data){
           if(data != null && data.length >0){

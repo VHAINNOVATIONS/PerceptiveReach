@@ -38,6 +38,7 @@ module.exports = function(app) {
   app.use('/api/appointmentData', require('./api/appointmentData'));
   app.use('/api/visnRoster', require('./api/visnRoster'));
   app.use('/api/facilityRoster', require('./api/facilityRoster'));
+  app.use('/api/CDSQuestionnaire', require('./api/CDSQuestionnaire'));
   
   app.use('/api/dashboard', require('./api/dashboard'));
 

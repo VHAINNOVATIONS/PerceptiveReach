@@ -80,7 +80,10 @@ angular.module('ui.widgets')
             });
 			
 		$('#tblPatient_info').attr('title','Patient Table: Tab to move to the next control');
-             
+    
+    $('#patientRosterDiv .dataTables_scrollHeadInner,#patientRosterDiv .dataTables_scrollHeadInner table').css({'width':''});   
+    var containerHeight = parseInt($('#patientRosterDiv').parent().css('height'),10);
+    $('#patientRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);    
 		  
 		  $('#tblPatient tbody>tr select').keydown(function(event){ 
             if (event.keyCode == '13' || event.key == 'Enter') {

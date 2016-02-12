@@ -96,6 +96,11 @@ angular.module('ui.dashboard')
                }, 
                // optional callback fired when item is resized,
                stop: function(event, $element, widget) {
+                scope.$broadcast('gridsterResized');
+                $timeout(function(){
+                  var containerHeight = parseInt($($element).find('.widget-content').css('height'),10);
+                  $($element).find('.dataTables_scrollBody').css('height',.78 * containerHeight);
+                },800);
                 scope.saveDashboard();
                } // optional callback fired when item is finished resizing
             },
@@ -118,7 +123,8 @@ angular.module('ui.dashboard')
 
         // Save default widget config for reset
         scope.defaultWidgets = scope.options.defaultWidgets;
-
+        scope.IsShiftKeyPressed = false;
+        scope.RowIncrement = 0;
         scope.widgetDefs = new WidgetDefCollection(scope.options.widgetDefinitions);
         var count = 1;
 
@@ -139,20 +145,20 @@ angular.module('ui.dashboard')
               scope.PatientName = '';
           }
           else if(data.data.activeView == 'facility'){
-            if(data.data.facilitySelected.facility != null)
-              scope.FacilityName = 'VAMC: ' + data.data.facilitySelected.facility;
+            if(data.data.facilitySelected.facilityName != null)
+              scope.FacilityName = 'VAMC: ' + data.data.facilitySelected.facilityName;
             else
               scope.FacilityName = '';
           }
           else if(data.data.activeView == 'surveillance'){
-            if(data.data.facilitySelected.surveillance == null && data.data.visnSelected.surveillance == null)
+            if(data.data.facilitySelected.surveillanceName == null && data.data.visnSelected.surveillance == null)
               scope.VISN_FacilityName = 'VISN:  VAMC: ';
-            else if (data.data.facilitySelected.surveillance == null)
+            else if (data.data.facilitySelected.surveillanceName == null)
               scope.VISN_FacilityName = 'VISN: ' + data.data.visnSelected.surveillance + ' VAMC: ';
             else if (data.data.visnSelected.surveillance == null)
-              scope.VISN_FacilityName = 'VISN:  VAMC: ' + data.data.facilitySelected.surveillance;
+              scope.VISN_FacilityName = 'VISN:  VAMC: ' + data.data.facilitySelected.surveillanceName;
             else
-              scope.VISN_FacilityName = 'VISN: ' + data.data.visnSelected.surveillance + ' VAMC: ' + data.data.facilitySelected.surveillance;
+              scope.VISN_FacilityName = 'VISN: ' + data.data.visnSelected.surveillance + ' VAMC: ' + data.data.facilitySelected.surveillanceName;
           }        
         }.bind(this));
 		
@@ -164,7 +170,6 @@ angular.module('ui.dashboard')
 
 
         scope.addWidget = function (widgetToInstantiate, doNotSave) {
-
           if (typeof widgetToInstantiate === 'string') {
             widgetToInstantiate = {
               name: widgetToInstantiate
@@ -207,28 +212,97 @@ angular.module('ui.dashboard')
         {
           var sizex = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX;
           var sizey = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY;
+          var col = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.col;
+          var row = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.row;
+          var gridsterContainer = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController;
+          var gridsterEle = $($(e)[0].currentTarget).closest('.gridsterContainer');
           var sizeIncrement = 1;
           switch(e.which) {
+          case 16:
+              scope.IsShiftKeyPressed = true;
+              return false;
           case 40:
-              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY = sizey+sizeIncrement;
+              gridsterContainer.sizeY = sizey+sizeIncrement;
+              //scope.saveDashboard();
+              gridsterContainer.gridster.resizable.stop({},gridsterEle,{});
               return false;
-              break;
           case 37:
-              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX = sizex-sizeIncrement;
+              gridsterContainer.sizeX = sizex-sizeIncrement;
+              //scope.saveDashboard();
+              gridsterContainer.gridster.resizable.stop({},gridsterEle,{});
               return false;
-              break;
           case 39:
-              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX = sizex+sizeIncrement;
+              if(col + sizex < 30)
+              {
+                gridsterContainer.sizeX = sizex+sizeIncrement;
+                //scope.saveDashboard();
+                gridsterContainer.gridster.resizable.stop({},gridsterEle,{});
+              }
               return false;
-              break;
           case 38:
-              $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY = sizey-sizeIncrement;
+              gridsterContainer.sizeY = sizey-sizeIncrement;
+              //scope.saveDashboard();
+              gridsterContainer.gridster.resizable.stop({},gridsterEle,{});
               return false;
+          case 65:
+              if(scope.IsShiftKeyPressed)
+              {
+                if(col > 0)
+                {
+                  gridsterContainer.col = col-1;
+                  scope.saveDashboard();
+                }
+                return false;
+              }
               break;
+          case 68:
+              if(scope.IsShiftKeyPressed)
+              {
+                if(col + sizex < 30)
+                {
+                  gridsterContainer.col = col+1;
+                  scope.saveDashboard();
+                }
+                return false;
+              }
+              break;
+          case 83:
+            if(scope.IsShiftKeyPressed)
+            {
+              scope.RowIncrement += 5;
+              gridsterContainer.row = row + scope.RowIncrement;
+              scope.saveDashboard();
+              return false;
+            }
+            break;
+          case 87:
+            if(scope.IsShiftKeyPressed)
+            {
+              if(row > 0)
+              {
+                gridsterContainer.row = row-1;
+                scope.saveDashboard();
+              }
+              return false;  
+            }
+            break;
           default:
               return;
           } 
 
+        }
+
+        scope.keyUp = function(e)
+        {
+          switch(e.which) {
+            case 16:
+              scope.IsShiftKeyPressed = false;
+              scope.RowIncrement = 0;
+              return;
+            default:
+              return;
+
+          }
         }
 
         /**
@@ -293,6 +367,15 @@ angular.module('ui.dashboard')
          */
         scope.addWidgetInternal = function (event, widgetDef) {
           event.preventDefault();
+          var widgetExists =  jQuery.grep(scope.widgets, function( n, i ) {  return ( n.name == widgetDef.name);});
+          if(widgetExists.length)
+          {
+            $(".snoAlertBox").fadeIn();
+            window.setTimeout(function () {
+              $(".snoAlertBox").fadeOut(300)
+            }, 4000);
+            return false;   
+          }
           scope.addWidget(widgetDef);
           $timeout(function(){
            scope.$broadcast('defaultWidgetsSelected', scope.common);

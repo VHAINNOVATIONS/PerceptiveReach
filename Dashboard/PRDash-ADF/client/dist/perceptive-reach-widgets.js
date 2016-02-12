@@ -1425,27 +1425,38 @@ angular.module('ui.models')
        init: function () {
         var dataModelOptions = this.dataModelOptions;
         var currentID = null;
+        var currentVISN = null;
+        var currentSTA3N = null;
+        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+          if(dataModelOptions.common.data.facilitySelected.surveillance) {
+            currentSTA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+          }
 
-        if(dataModelOptions.layout == "stateVISN"){
-          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;
+          if(dataModelOptions.common.data.visnSelected.surveillance) {
+            currentVISN = dataModelOptions.common.data.visnSelected.surveillance;
+          }
         }
-        if(dataModelOptions.layout == "facility"){
-          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;
+        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+          currentSTA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
 
-          this.currentID = this.ID;
+          this.currentVISN = this.VISN;
+          this.currentSTA3N = this.STA3N;
 
-          if(dataModelOptions.layout == "stateVISN"){
-            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+            this.VISN = (dataModelOptions.common.data.visnSelected.surveillance) ? dataModelOptions.common.data.visnSelected.surveillance : null;
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
           }
-          if(dataModelOptions.layout == "facility"){
-            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;
+          else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+            this.VISN = null;
           }
 
-          if(this.ID != this.currentID)
+          if(this.STA3N != this.currentSTA3N || this.VISN != this.currentVISN) {
             this.getData();
+          }
 
         }.bind(this));
 
@@ -1456,25 +1467,25 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var visn_or_facility = '';
 
-        if((that.dataModelOptions.layout == "stateVISN" || that.dataModelOptions.layout == "facility") && !this.ID) {
-          this.updateScope(data);
+        var parameter = '';
+        if (this.VISN || this.STA3N) {
+            parameter += "?";
         }
-        else {
-          if(that.dataModelOptions.layout == "stateVISN")
-            visn_or_facility = "-v";
-          else if(that.dataModelOptions.layout == "facility")
-            visn_or_facility = "-f";
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/VAMCMetrics'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
+
+        if (this.VISN) {
+            parameter += "VISN=" + this.VISN;
         }
+
+        if (this.STA3N) {
+            if (this.VISN) parameter += '&';
+            parameter += "STA3N=" + this.STA3N;
+        }
+        $http.get('/api/VAMCMetrics'+ parameter)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
       },
 
       destroy: function () {
@@ -1498,12 +1509,12 @@ angular.module('ui.models')
 		   var currentVISN = null;
 		   var currentSTA3N = null;
 		   if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-			 if(dataModelOptions.common.data.facilitySelected.surveillance) {
-			   currentSTA3N = dataModelOptions.common.data.facilitySelected.surveillance;
-			 }
+  			 if(dataModelOptions.common.data.facilitySelected.surveillance) {
+  			   currentSTA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+  			 }
 
-			 if(dataModelOptions.common.data.visnSelected.surveillance) {
-			   currentVISN = dataModelOptions.common.data.visnSelected.surveillance;
+  			 if(dataModelOptions.common.data.visnSelected.surveillance) {
+  			   currentVISN = dataModelOptions.common.data.visnSelected.surveillance;
 			 }
 		   }
 		   else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
@@ -1524,14 +1535,15 @@ angular.module('ui.models')
 			   this.VISN = null;
 			 }
 
-			 if(this.STA3N != this.currentSTA3N || this.VISN != this.currentVISN) {
-			   this.getData();
-			 }
+			 this.getData();
 
 		   }.bind(this));
 
 		   this.updateScope([]);
-		   this.getData();
+       if(this.widgetScope.common.data.activeView == "surveillance")
+       {
+         this.getData();
+       }
 		 },
 
 			getData: function () {
@@ -1577,45 +1589,43 @@ angular.module('ui.models')
     angular.extend(FacilityDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentID = null;
+        var currentVISN = null;
 
         if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-          if(dataModelOptions.common.data.facilitySelected.surveillance)
-            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
-          else if(dataModelOptions.common.data.visnSelected.surveillance)
-            currentID = dataModelOptions.common.data.visnSelected.surveillance;
+          if(dataModelOptions.common.data.visnSelected.surveillance)
+            currentVISN = dataModelOptions.common.data.visnSelected.surveillance;
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = null;
+          currentVISN = null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          this.currentID = this.ID;
+          this.currentVISN = this.VISN;
 
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
             if(dataModelOptions.common.data.visnSelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
+              this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
           }
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-            this.ID = null;
+            this.VISN = null;
           }
-          if(this.ID != this.currentID)
+          if(this.VISN != this.currentVISN)
             this.getData();
 
         }.bind(this));
 
         this.widgetScope.$on('defaultWidgetsSelected', function (event, data) {
           this.dataModelOptions.common = data;
-          this.currentID = this.ID;
+          this.currentVISN = this.VISN;
 
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
             if(dataModelOptions.common.data.visnSelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
+              this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
           }
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-            this.ID = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;
+            this.VISN = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;
           }
-          if(this.ID != this.currentID)
+          if(this.VISN != this.currentVISN)
             this.getData();
         }.bind(this));
         this.updateScope([]);
@@ -1625,21 +1635,16 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var visn_or_facility = '';
         var activeView = that.dataModelOptions.common.data.activeView;
+        var parameter = '';
 
         if(activeView == "surveillance"){
-          if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
-          else if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
-        }
-        else if(activeView == "facility"){
-          if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
-          else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
+          if(this.VISN)
+          parameter = "?VISN=" + this.VISN;
         }
 
-        var parameter = '';
-        if(this.ID)
-          parameter = "?ID=" + this.ID + visn_or_facility;
+        //if activeView == "facility", then return all facilities
+        
         $http.get('/api/facilityRoster'+ parameter)
         .success(function(dataset) {
                 data = dataset;
@@ -1666,29 +1671,9 @@ angular.module('ui.models')
         var dataModelOptions = this.dataModelOptions;
         var currentID = null;
 
-        /*if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-          if(dataModelOptions.common.data.facilitySelected)
-            currentID = dataModelOptions.common.data.facilitySelected;
-          else if(dataModelOptions.common.data.visnSelected)
-            currentID = dataModelOptions.common.data.visnSelected;
-        }
-        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = (dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;
-        }*/
-
         this.widgetScope.$on('commonDataChanged', function (event, data) {
 
           this.currentID = this.ID;
-
-          /*if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            if(dataModelOptions.common.data.facilitySelected)
-              this.ID = dataModelOptions.common.data.facilitySelected;
-            else if(dataModelOptions.common.data.visnSelected)
-              this.ID = dataModelOptions.common.data.visnSelected;
-          }
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-            this.ID = (dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;
-          }*/
 
           if(this.ID != this.currentID)
             this.getData();
@@ -1708,26 +1693,12 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var visn_or_facility = '';
-        var activeView = that.dataModelOptions.common.data.activeView;
-
-        /*if((activeView == "surveillance" || activeView == "facility" || activeView === undefined) && !this.ID) {
-          this.updateScope(data);
-        }
-        else {
-          if(that.dataModelOptions.common.data.facilitySelected)
-            visn_or_facility = "-f";
-          else if(that.dataModelOptions.common.data.visnSelected == "facility")
-            visn_or_facility = "-v";*/
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/visnRoster'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        //}
+      
+        $http.get('/api/visnRoster')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
       },
 
       destroy: function () {
@@ -1736,6 +1707,44 @@ angular.module('ui.models')
     });
 
     return VISNDataModel;
+  })
+.factory('CDSQuestionnaireDataModel', function ($http, CommonDataModel) {
+    function CDSQuestionnaireDataModel() {
+    }
+
+    CDSQuestionnaireDataModel.prototype = Object.create(CommonDataModel.prototype);
+    CDSQuestionnaireDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(CDSQuestionnaireDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+
+        this.widgetScope.$on('defaultWidgetsSelected', function (event, data) {
+          this.dataModelOptions.common = data;
+          this.getData();
+        }.bind(this));
+
+        this.updateScope([]);
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+      
+        $http.get('/api/CDSQuestionnaire')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return CDSQuestionnaireDataModel;
   });
 
 /*
@@ -2601,6 +2610,143 @@ function Gauge(element, configuration)
 'use strict';
 
 angular.module('ui.widgets')
+  .directive('wtCdsQuestionnaire', function ($timeout) {
+    return {
+      restrict: 'EAC',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/CDSQuestionnaire/CDSQuestionnaire.html',
+      scope: {
+        data: '=',
+      },
+      controller: function ($scope) {
+        $scope.GotoQuestions =  function () {
+          $scope.filteredQuestions = [];
+          $('#cdsConditionDiv input:checkbox:checked').each(function(){
+            var conditionId = $(this).attr('name').replace('chkbx_','');
+            var filteredQs= jQuery.grep($scope.data.questions, function( n, i ) {
+                                  var isAlreadyAdded = $.grep($scope.filteredQuestions, function (elem) {
+                                                          return elem.Question === n.Question;
+                                                      }).length > 0;
+                                  return (!isAlreadyAdded  && n.Condition_ID == conditionId );
+                          });
+            $.merge($scope.filteredQuestions,filteredQs);
+          });
+          $('#cdsConditionDiv').toggleClass('hidden');
+          $('#cdsQuestionDiv').toggleClass('hidden');
+        }
+
+        $scope.GotoTreatments  =  function () {
+          $scope.filteredTreatments = [];
+          $('#cdsQuestionDiv .cdsUIList button').each(function(){
+             if($(this).find('span:first').text() == 'Yes')
+             {
+               var questionId = $(this).attr('name').replace('question_','');
+               var filterTrtmnts = jQuery.grep($scope.data.treatments, function( n, i ) {
+                                      var isAlreadyAdded = $.grep($scope.filteredTreatments, function (elem) {
+                                          return elem.Treatment === n.Treatment;
+                                      }).length > 0;
+                                      return ( !isAlreadyAdded  && n.Question_ID == questionId);
+                                   });
+               $.merge($scope.filteredTreatments,filterTrtmnts);
+             }
+          })
+
+          $('#cdsQuestionDiv').toggleClass('hidden');
+          $('#cdsTreatmentDiv').toggleClass('hidden');
+        }
+
+         $scope.BacktoConditions  =  function () {
+          $('#cdsQuestionDiv').toggleClass('hidden');
+          $('#cdsConditionDiv').toggleClass('hidden');
+        }
+
+        $scope.BacktoQuestions =  function () {
+          $('#cdsTreatmentDiv').toggleClass('hidden');
+          $('#cdsQuestionDiv').toggleClass('hidden');
+        } 
+
+        $scope.resizeConditionList = function(){
+          var containerHeight = parseInt($('#cdsQuestionnaire').parent().css('height'),10);
+          $('#cdsQuestionnaire .cdsUIList').css('height',.65 * containerHeight);
+        }   
+
+        $scope.AnswerSelected = function(e){
+          var selectedText = $(e.currentTarget).text();
+          $(e.currentTarget).parent().parent().find('button>span:first').text(selectedText);
+          return false;
+        } 
+
+        $scope.ChkbxClicked = function(){
+          if($('#cdsConditionDiv input:checkbox:checked').length > 0)
+          {
+            $scope.IsChecked = true;
+          }
+          else
+          {
+            $scope.IsChecked = false;
+          }
+        }
+
+        $scope.IsChecked = false;
+
+      },
+     link: function postLink(scope, element, attr) {
+
+        scope.$on("gridsterResized", function (){
+            $timeout(function(){
+              scope.resizeConditionList();
+            },1000);
+        });
+
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.data = data;
+            $timeout(function(){
+              scope.resizeConditionList();
+            },2000);
+          }
+         
+        });
+
+        $('#cdsTabs').click(function(e){
+          var tabContentId = $(e.target).attr('href');
+          if(tabContentId)
+          {
+            $('#cdsTabs>li').removeClass('active');
+            $(e.target).parent().addClass('active');
+            $('#cdsTabContent>div').removeClass('in').removeClass('active')
+            $(tabContentId).addClass('in').addClass('active');
+          }
+          return false;
+        });
+
+        $("#dropdownMenu2").on("click", "li a", function() {
+            var platform = $(this).text();
+            $("#dropdown_title2").html(platform);
+            $('#printPlatform').html(platform);
+        });  
+      }
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
   .directive('wtAppointment', function () {
     return {
       restrict: 'A',
@@ -2836,18 +2982,27 @@ angular.module('ui.widgets')
           $($('#diagnosisDiv table')[0]).find('th').each(function(){
             $(this).attr('tabindex','-1');
           });
+         
+          $timeout(function(){
+            $('#diagnosisDiv .dataTables_scrollHeadInner,#diagnosisDiv table').css({'width':''});  
+            var containerHeight = parseInt($('#diagnosisDiv').parent().css('height'),10);
+            $('#diagnosisDiv .dataTables_scrollBody').css('height',.78 * containerHeight);  
+          },2500);
         });
 
         $timeout(function(){
             scope.$emit('bindEvents');
+            
         },1500);
+
+       
+        
 
         scope.$watch('data', function (data) {
           $.fn.dataTable.ext.errMode = 'throw';
           if (data) {
              scope.data = data;  
         }
-
         });
       }
     };
@@ -3290,6 +3445,7 @@ angular.module('ui.widgets')
 			
             scope.eventTimer = event.timeStamp;
             var facilityId = null;
+            var facilityName = null;
             var commonData = scope.widget.dataModelOptions.common;
             var activeView = commonData.data.activeView;
             //if(scope.previousSelectedRowIndex == event.currentTarget.rowIndex){
@@ -3300,9 +3456,11 @@ angular.module('ui.widgets')
                 $(this).removeClass('selected').removeClass('selected');
                 var activeView = commonData.data.activeView;
                 facilityId = '';  
+                facilityName = '';
               } 
               else
                 facilityId = commonData.data.facilitySelected.facility;             
+                facilityName = commonData.data.facilitySelected.facilityName;             
               //scope.previousSelectedRowIndex = null;
             }
             else{
@@ -3316,6 +3474,7 @@ angular.module('ui.widgets')
               // update common data object with new patient object
               console.log("eventClick:", event);
               facilityId = parseInt(event.currentTarget.cells[0].innerText);
+              facilityName = event.currentTarget.cells[1].innerText;
               /*var obj = jQuery.grep(scope.patientList, function( n, i ) {
                 return ( n.ReachID == vetId );
               });*/
@@ -3324,15 +3483,25 @@ angular.module('ui.widgets')
             }
             
             if(activeView == "surveillance")
+            {
               commonData.data.facilitySelected.surveillance = facilityId;
+              commonData.data.facilitySelected.surveillanceName = facilityName;
+            }
             else if(activeView == "facility")
+            {
               commonData.data.facilitySelected.facility = facilityId;
+              commonData.data.facilitySelected.facilityName = facilityName;
+            }
             //console.log("CommonDataAfterClick: ", commonData);
 
             // broadcast message throughout system
             scope.$root.$broadcast('commonDataChanged', commonData);
             //scope.$apply();
           });
+
+          $('#facilityRosterDiv .dataTables_scrollHeadInner,#facilityRosterDiv table').css({'width':''});
+          var containerHeight = parseInt($('#facilityRosterDiv').parent().css('height'),10);
+          $('#facilityRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
         });
 		
 
@@ -3693,6 +3862,12 @@ angular.module('ui.widgets')
           scope.$emit('bindEvents');      
         },1500);          
 
+        $timeout(function(){
+          $('#medicationDiv .dataTables_scrollHeadInner,#medicationDiv table').css({'width':''});
+          var containerHeight = parseInt($('#medicationDiv').parent().css('height'),10);
+          $('#medicationDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
+        },2500);
+
         scope.$watch('data', function (data) {
           if (data) {
             scope.data = data;
@@ -3969,6 +4144,12 @@ angular.module('ui.widgets')
       			$(this).attr('scope','col');
       			$(this).attr('tabindex','-1');
           });
+          
+          $timeout(function(){
+            $('#ageGroupDiv .dataTables_scrollHeadInner,#ageGroupDiv table').css({'width':''});
+            var containerHeight = parseInt($('#ageGroupDiv').parent().css('height'),10);
+            $('#ageGroupDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
+          },2500);
     		});
         scope.$watch('widgetData', function (data) {
           $timeout(function(){
@@ -3993,6 +4174,8 @@ angular.module('ui.widgets')
             }
           },1000)
         });
+
+       
       }
     };
   });
@@ -4213,6 +4396,7 @@ angular.module('ui.widgets')
 		.withDOM('lfrti')
 		.withScroller()
 		.withOption('deferRender', true)
+    .withOption('scrollY', 200)
 		.withOption('paging',false)
     .withOption('bDestroy',true)
 		.withOption('order', [1, 'desc']);
@@ -4230,6 +4414,11 @@ link: function postLink(scope, element, attr) {
   			$(this).attr('scope','col');
   			$(this).attr('tabindex','-1');
       });
+      $timeout(function(){
+        $('#militaryBranchDiv .dataTables_scrollHeadInner,#militaryBranchDiv table').css({'width':''}); 
+        var containerHeight = parseInt($('#militaryBranchDiv').parent().css('height'),10);
+        $('#militaryBranchDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
+      },1000)
 		});
 	scope.$watch('widgetData', function (data) {
     $timeout(function(){
@@ -4343,6 +4532,13 @@ angular.module('ui.widgets')
       			$(this).attr('scope','col');
       			$(this).attr('tabindex','-1');
           });
+
+          $timeout(function(){
+            $('#outReachDiv .dataTables_scrollHeadInner,#outReachDiv table').css({'width':''});
+            var containerHeight = parseInt($('#outReachDiv').parent().css('height'),10);
+            $('#outReachDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
+          },2500);
+
 		    });
         scope.$watch('widgetData', function (data) {  
           $timeout(function(){
@@ -4368,6 +4564,8 @@ angular.module('ui.widgets')
             }
           },1000)
         });
+
+
       }
     };
   });
@@ -4768,7 +4966,10 @@ angular.module('ui.widgets')
             });
 			
 		$('#tblPatient_info').attr('title','Patient Table: Tab to move to the next control');
-             
+    
+    $('#patientRosterDiv .dataTables_scrollHeadInner,#patientRosterDiv .dataTables_scrollHeadInner table').css({'width':''});   
+    var containerHeight = parseInt($('#patientRosterDiv').parent().css('height'),10);
+    $('#patientRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);    
 		  
 		  $('#tblPatient tbody>tr select').keydown(function(event){ 
             if (event.keyCode == '13' || event.key == 'Enter') {
@@ -5171,8 +5372,14 @@ angular.module('ui.widgets')
               });
             }
           }
-		  },1000)
+		      },1000)
         });
+
+        $timeout(function(){
+          $('#suicideStatisticsDiv .dataTables_scrollHeadInner,#suicideStatisticsDiv table').css({'width':''});
+          var containerHeight = parseInt($('#suicideStatisticsDiv').parent().css('height'),10);
+          $('#suicideStatisticsDiv .dataTables_scrollBody').css('height',.78 * containerHeight);  
+        },2500);
       }
     };
   });
@@ -5400,7 +5607,7 @@ angular.module('ui.widgets')
             var activeView = commonData.data.activeView;
             if(activeView == "surveillance"){
               commonData.data.visnSelected.surveillance = visnId;
-              commonData.data.facilitySelected.surveillance = null; 
+              commonData.data.facilitySelected.surveillanceName = null; 
             }
               
             else if(activeView == "facility")
@@ -5411,6 +5618,10 @@ angular.module('ui.widgets')
             scope.$root.$broadcast('commonDataChanged', commonData);
             //scope.$apply();
           });
+
+          $('#VISNRosterDiv .dataTables_scrollHeadInner,#VISNRosterDiv table').css({'width':''}); 
+          var containerHeight = parseInt($('#VISNRosterDiv').parent().css('height'),10);
+          $('#VISNRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
         });
         scope.$watch('widgetData', function(data){
           if(data != null && data.length >0){
@@ -5460,6 +5671,205 @@ angular.module('ui.widgets')
     };
   });
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
+
+  $templateCache.put("client/components/widget/widgets/CDSQuestionnaire/CDSQuestionnaire.html",
+    "<div id=\"cdsQuestionnaire\" title=\"CDS Questionnaire\">\r" +
+    "\n" +
+    "   <!--1/26/2016 The below code is left for future use, Delete if not needed -->\r" +
+    "\n" +
+    "        <!-- <ul class=\"nav nav-pills\" role=\"tablist\" id=\"cdsTabs\" style=\"margin-top:5px;\">\r" +
+    "\n" +
+    "          <li class=\"active\">\r" +
+    "\n" +
+    "              <a href=\"#home\" role=\"tab\" data-toggle=\"tab\">\r" +
+    "\n" +
+    "                   Home\r" +
+    "\n" +
+    "              </a>\r" +
+    "\n" +
+    "          </li>\r" +
+    "\n" +
+    "          <li><a href=\"#options\" role=\"tab\" data-toggle=\"tab\">\r" +
+    "\n" +
+    "                  Options\r" +
+    "\n" +
+    "              </a>\r" +
+    "\n" +
+    "          </li>\r" +
+    "\n" +
+    "          <li>\r" +
+    "\n" +
+    "              <a href=\"#help\" role=\"tab\" data-toggle=\"tab\">\r" +
+    "\n" +
+    "                   Help\r" +
+    "\n" +
+    "              </a>\r" +
+    "\n" +
+    "          </li>\r" +
+    "\n" +
+    "        </ul>\r" +
+    "\n" +
+    "        <div class=\"tab-content\" id=\"cdsTabContent\" style=\"margin-top:5px;\">\r" +
+    "\n" +
+    "          <div class=\"tab-pane fade active in\" id=\"home\">\r" +
+    "\n" +
+    "            \r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"tab-pane fade\" id=\"options\">\r" +
+    "\n" +
+    "              <h2>Options</h2>\r" +
+    "\n" +
+    "              <img src=\"https://avatars1.githubusercontent.com/u/1252476?v=3&s=200\" alt=\"Cats\"/>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"tab-pane fade\" id=\"help\">\r" +
+    "\n" +
+    "              <h2>Help</h2>\r" +
+    "\n" +
+    "              <img src=\"https://avatars1.githubusercontent.com/u/1252476?v=3&s=200\" alt=\"Cats\"/>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "        \r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div>\r" +
+    "\n" +
+    "          <div class=\"panel panel-default\" style=\"margin-top:5px;\">\r" +
+    "\n" +
+    "            <div class=\"panel-heading\">\r" +
+    "\n" +
+    "              <h3 class=\"panel-title\">Emergency Contact Information</h3>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <div class=\"panel-body\">\r" +
+    "\n" +
+    "              For emergency assistance please contact: P: (xxx) xxx-xxxx, e: email@email.com\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "        </div> -->\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "      <div id=\"cdsConditionDiv\"  style=\"margin-top:5px;\">\r" +
+    "\n" +
+    "        <div >\r" +
+    "\n" +
+    "           <legend>Clinical Decision Support:</legend>\r" +
+    "\n" +
+    "              <fieldset style=\"border:1px solid lightgray;border-radius:5px;\">\r" +
+    "\n" +
+    "                Please choose the specific symptoms, diagnoses, or conditions the Veteran is facing.  After all selections have been made please press <strong>‘Next’</strong>.\r" +
+    "\n" +
+    "              </fieldset>\r" +
+    "\n" +
+    "              <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
+    "\n" +
+    "                <label ng-repeat=\"condition in data.conditions\" style=\"display:block;\">\r" +
+    "\n" +
+    "                      <input type=\"checkbox\" ng-click=\"ChkbxClicked()\" name=\"chkbx_{{condition.Condition_ID}}\"> {{condition.Condition}}\r" +
+    "\n" +
+    "                </label>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "              <div style=\"height:40px;padding:5px;\">\r" +
+    "\n" +
+    "                 <button ng-click=\"GotoQuestions()\" alt=\"Next(Questions)\" title=\"Next(Questions)\" ng-disabled=\"!IsChecked\" class=\"btn btn-primary pull-right\">Next</button>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "    <div id=\"cdsQuestionDiv\" class=\"hidden\">\r" +
+    "\n" +
+    "       <legend>Question(s):</legend>\r" +
+    "\n" +
+    "       <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
+    "\n" +
+    "         <div ng-repeat=\"question in filteredQuestions\">\r" +
+    "\n" +
+    "            <label>{{$index+1}}. {{question.Question}}  </label>\r" +
+    "\n" +
+    "             <div class=\"dropdown\">\r" +
+    "\n" +
+    "                    <button class=\"btn btn-default\"\r" +
+    "\n" +
+    "                            data-toggle=\"dropdown\" name=\"question_{{question.Question_ID}}\">\r" +
+    "\n" +
+    "                        <span>Select</span>\r" +
+    "\n" +
+    "                        <span class=\"caret\"></span>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                    <ul class=\"dropdown-menu\" >\r" +
+    "\n" +
+    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">Yes</a></li>\r" +
+    "\n" +
+    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">No</a></li>\r" +
+    "\n" +
+    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">N/A</a></li>\r" +
+    "\n" +
+    "                    </ul>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "         </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "       <div style=\"height:40px;padding:5px;\">\r" +
+    "\n" +
+    "          <button ng-click=\"BacktoConditions()\" alt=\"Back(Conditions)\" title=\"Back(Conditions)\" class=\"btn btn-primary pull-left\" >Back</button>\r" +
+    "\n" +
+    "          <button ng-click=\"GotoTreatments()\" alt=\"Next(Treatment)\" title=\"Next(Treatment)\" class=\"btn btn-primary pull-right\" >Next</button>\r" +
+    "\n" +
+    "       </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "    <div id=\"cdsTreatmentDiv\" class=\"hidden\">\r" +
+    "\n" +
+    "        <legend>Treatment(s):</legend>\r" +
+    "\n" +
+    "        <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
+    "\n" +
+    "          <div ng-repeat=\"treatment in filteredTreatments\">\r" +
+    "\n" +
+    "            <label>{{$index+1}}. {{treatment.Treatment}}</label>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div style=\"height:40px;padding:5px;\">\r" +
+    "\n" +
+    "          <button ng-click=\"BacktoQuestions()\" alt=\"Back(Questions)\" title=\"Back(Questions)\" class=\"btn btn-primary pull-left\">Back</button>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "        \r" +
+    "\n" +
+    "</div>\r" +
+    "\n"
+  );
 
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
     "<div class=\"appointment\">\r" +

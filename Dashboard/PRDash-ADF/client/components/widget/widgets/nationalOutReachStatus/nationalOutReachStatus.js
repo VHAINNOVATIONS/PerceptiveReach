@@ -59,6 +59,13 @@ angular.module('ui.widgets')
       			$(this).attr('scope','col');
       			$(this).attr('tabindex','-1');
           });
+
+          $timeout(function(){
+            $('#outReachDiv .dataTables_scrollHeadInner,#outReachDiv table').css({'width':''});
+            var containerHeight = parseInt($('#outReachDiv').parent().css('height'),10);
+            $('#outReachDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
+          },2500);
+
 		    });
         scope.$watch('widgetData', function (data) {  
           $timeout(function(){
@@ -84,6 +91,8 @@ angular.module('ui.widgets')
             }
           },1000)
         });
+
+
       }
     };
   });

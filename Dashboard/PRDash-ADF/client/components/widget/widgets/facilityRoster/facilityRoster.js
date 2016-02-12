@@ -109,6 +109,7 @@ angular.module('ui.widgets')
 			
             scope.eventTimer = event.timeStamp;
             var facilityId = null;
+            var facilityName = null;
             var commonData = scope.widget.dataModelOptions.common;
             var activeView = commonData.data.activeView;
             //if(scope.previousSelectedRowIndex == event.currentTarget.rowIndex){
@@ -119,9 +120,11 @@ angular.module('ui.widgets')
                 $(this).removeClass('selected').removeClass('selected');
                 var activeView = commonData.data.activeView;
                 facilityId = '';  
+                facilityName = '';
               } 
               else
                 facilityId = commonData.data.facilitySelected.facility;             
+                facilityName = commonData.data.facilitySelected.facilityName;             
               //scope.previousSelectedRowIndex = null;
             }
             else{
@@ -135,6 +138,7 @@ angular.module('ui.widgets')
               // update common data object with new patient object
               console.log("eventClick:", event);
               facilityId = parseInt(event.currentTarget.cells[0].innerText);
+              facilityName = event.currentTarget.cells[1].innerText;
               /*var obj = jQuery.grep(scope.patientList, function( n, i ) {
                 return ( n.ReachID == vetId );
               });*/
@@ -143,15 +147,25 @@ angular.module('ui.widgets')
             }
             
             if(activeView == "surveillance")
+            {
               commonData.data.facilitySelected.surveillance = facilityId;
+              commonData.data.facilitySelected.surveillanceName = facilityName;
+            }
             else if(activeView == "facility")
+            {
               commonData.data.facilitySelected.facility = facilityId;
+              commonData.data.facilitySelected.facilityName = facilityName;
+            }
             //console.log("CommonDataAfterClick: ", commonData);
 
             // broadcast message throughout system
             scope.$root.$broadcast('commonDataChanged', commonData);
             //scope.$apply();
           });
+
+          $('#facilityRosterDiv .dataTables_scrollHeadInner,#facilityRosterDiv table').css({'width':''});
+          var containerHeight = parseInt($('#facilityRosterDiv').parent().css('height'),10);
+          $('#facilityRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
         });
 		
 
