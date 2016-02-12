@@ -2909,22 +2909,75 @@ angular.module('ui.widgets')
       templateUrl: 'client/components/widget/widgets/enterdata/enterdata.html',
       controller: function ($scope) {
 
+        $scope.jumpTo = function(keyPress,section){
+          if (keyPress.which === 13)
+          {
+            switch(section){
+              case "hr":
+                  $scope.hrIndex = parseInt($scope.hrIndex, 10); 
+                  $scope.enterWdgtForm.highRiskTxt.$setPristine();
+                  if ($scope.hrIndex > $scope.data.HighRisk_UserNotes.length-1) {
+                    $scope.hrIndex = $scope.data.HighRisk_UserNotes.length-1;
+                  } else if ($scope.hrIndex < 0 || !angular.isNumber($scope.hrIndex)) {
+                    $scope.hrIndex = 0;
+                  }
+                  $scope.hrText = $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes;
+                  break;
+              case "hrspan":
+                  $scope.hrSpanIndex = parseInt($scope.hrSpanIndex, 10);
+                  if ($scope.hrSpanIndex > $scope.data.HighRisk_SPANImport.length-1) {
+                    $scope.hrSpanIndex = $scope.data.HighRisk_SPANImport.length-1;
+                  } else if ($scope.hrSpanIndex < 0 || !angular.isNumber($scope.hrSpanIndex)) {
+                    $scope.hrSpanIndex = 0;
+                  }
+                  break;
+              case "mh":
+                  $scope.mhIndex = parseInt($scope.mhIndex, 10); 
+                  $scope.enterWdgtForm.mentalProviderTxt.$setPristine();
+                  if ($scope.mhIndex > $scope.data.PrimaryHealthProvider_UserNotes.length-1) {
+                    $scope.mhIndex = $scope.data.PrimaryHealthProvider_UserNotes.length-1;
+                  } else if ($scope.mhIndex < 0 || !angular.isNumber($scope.mhIndex)) {
+                    $scope.mhIndex = 0;
+                  }
+                  $scope.mhText = $scope.data.PrimaryHealthProvider_UserNotes[$scope.mhIndex].UserNotes;
+                  break;
+              case "sp":
+                  $scope.spIndex = parseInt($scope.spIndex, 10); 
+                  $scope.enterWdgtForm.safetyPlanTxt.$setPristine();
+                  if ($scope.spIndex > $scope.data.SafetyPlan_UserNotes.length-1) {
+                    $scope.spIndex = $scope.data.SafetyPlan_UserNotes.length-1;
+                  } else if ($scope.spIndex < 0 || !angular.isNumber($scope.spIndex)) {
+                    $scope.spIndex = 0;
+                  }
+                  $scope.spText = $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes;
+                  break;
+              case "spspan":
+                  $scope.spSpanIndex = parseInt($scope.spSpanIndex, 10);
+                  if ($scope.spSpanIndex > $scope.data.SafetyPlan_SPANImport.length-1) {
+                    $scope.spSpanIndex = $scope.data.SafetyPlan_SPANImport.length-1;
+                  } else if ($scope.spSpanIndex < 0 || !angular.isNumber($scope.spSpanIndex)) {
+                    $scope.spSpanIndex = 0;
+                  }
+                  break;
+              case "comment":
+                  $scope.commentIndex = parseInt($scope.commentIndex, 10); 
+                  $scope.enterWdgtForm.commentTxt.$setPristine();
+                  if ($scope.commentIndex > $scope.data.GeneralComments.length-1) {
+                    $scope.commentIndex = $scope.data.GeneralComments.length-1;
+                  } else if ($scope.commentIndex < 0 || !angular.isNumber($scope.commentIndex)) {
+                    $scope.commentIndex = 0;
+                  }
+                  $scope.commentText = $scope.data.GeneralComments[$scope.commentIndex].Comment;
+                  break;
+            }
+          }
+        };
+
         //HIGH RISK SECTION
 
         $scope.hrIndex = 0;
         $scope.hrSpanIndex = 0;
         $scope.hrText = '';
-
-        $scope.hrIndexChange = function(value) {
-          //TODO
-          // $scope.enterWdgtForm.highRiskTxt.$setPristine();
-          // if ($scope.hrIndex > $scope.data.HighRisk_UserNotes.length-1) {
-          //   $scope.hrIndex = $scope.data.HighRisk_UserNotes.length-1;
-          // } else if ($scope.hrIndex < 0 || !angular.isNumber($scope.hrIndex)) {
-          //   $scope.hrIndex = 0;
-          // }
-          // $scope.hrText = $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes;
-        }
 
         $scope.goHrBack = function() {
           if ($scope.hrIndex < $scope.data.HighRisk_UserNotes.length-1) {
@@ -5641,7 +5694,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" min=\"0\" ng-change=\"hrIndexChange(hrIndex)\" class=\"enterDataNumInput\" ng-model=\"hrIndex\" ></input>\r" +
+    "                      <input type=\"text\" ng-keypress=\"jumpTo($event,'hr')\" class=\"enterDataNumInput\" ng-model=\"hrIndex\" ></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -5669,7 +5722,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" min=\"0\" class=\"enterDataNumInput\" ng-model=\"hrSpanIndex\" ></input>\r" +
+    "                      <input type=\"text\" ng-keypress=\"jumpTo($event,'hrspan')\" class=\"enterDataNumInput\" ng-model=\"hrSpanIndex\" ></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -5717,7 +5770,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input class=\"enterDataNumInput\" type=\"text\" min=\"0\" ng-change=\"mhIndexChange(mhIndex)\" ng-model=\"mhIndex\" ></input>\r" +
+    "                      <input class=\"enterDataNumInput\" type=\"text\" ng-keypress=\"jumpTo($event,'mh')\" ng-change=\"mhIndexChange(mhIndex)\" ng-model=\"mhIndex\" ></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -5771,7 +5824,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" min=\"0\" ng-change=\"spIndexChange(spIndex)\" class=\"enterDataNumInput\" ng-model=\"spIndex\" ></input>\r" +
+    "                      <input type=\"text\" ng-keypress=\"jumpTo($event,'sp')\" class=\"enterDataNumInput\" ng-model=\"spIndex\" ></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -5799,7 +5852,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" min=\"0\" class=\"enterDataNumInput\" ng-model=\"spSpanIndex\" ></input>\r" +
+    "                      <input type=\"text\" ng-keypress=\"jumpTo($event,'spspan')\" class=\"enterDataNumInput\" ng-model=\"spSpanIndex\" ></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -5841,7 +5894,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                      <div class=\"pull-left\">\r" +
     "\n" +
-    "                        <input type=\"text\" min=\"0\" class=\"enterDataNumInput\" ng-model=\"commentIndex\" ></input>\r" +
+    "                        <input type=\"text\" ng-keypress=\"jumpTo($event,'comment')\" class=\"enterDataNumInput\" ng-model=\"commentIndex\" ></input>\r" +
     "\n" +
     "                      </div>\r" +
     "\n" +

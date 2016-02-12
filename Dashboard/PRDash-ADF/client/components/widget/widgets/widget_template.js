@@ -233,7 +233,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" min=\"0\" ng-change=\"hrIndexChange(hrIndex)\" class=\"enterDataNumInput\" ng-model=\"hrIndex\" ></input>\r" +
+    "                      <input type=\"text\" ng-keypress=\"jumpTo($event,'hr')\" class=\"enterDataNumInput\" ng-model=\"hrIndex\" ></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -261,7 +261,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" min=\"0\" class=\"enterDataNumInput\" ng-model=\"hrSpanIndex\" ></input>\r" +
+    "                      <input type=\"text\" ng-keypress=\"jumpTo($event,'hrspan')\" class=\"enterDataNumInput\" ng-model=\"hrSpanIndex\" ></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -309,7 +309,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input class=\"enterDataNumInput\" type=\"text\" min=\"0\" ng-change=\"mhIndexChange(mhIndex)\" ng-model=\"mhIndex\" ></input>\r" +
+    "                      <input class=\"enterDataNumInput\" type=\"text\" ng-keypress=\"jumpTo($event,'mh')\" ng-change=\"mhIndexChange(mhIndex)\" ng-model=\"mhIndex\" ></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -363,7 +363,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" min=\"0\" ng-change=\"spIndexChange(spIndex)\" class=\"enterDataNumInput\" ng-model=\"spIndex\" ></input>\r" +
+    "                      <input type=\"text\" ng-keypress=\"jumpTo($event,'sp')\" class=\"enterDataNumInput\" ng-model=\"spIndex\" ></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -391,7 +391,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"pull-left\">\r" +
     "\n" +
-    "                      <input type=\"text\" min=\"0\" class=\"enterDataNumInput\" ng-model=\"spSpanIndex\" ></input>\r" +
+    "                      <input type=\"text\" ng-keypress=\"jumpTo($event,'spspan')\" class=\"enterDataNumInput\" ng-model=\"spSpanIndex\" ></input>\r" +
     "\n" +
     "                    </div>\r" +
     "\n" +
@@ -433,7 +433,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                      <div class=\"pull-left\">\r" +
     "\n" +
-    "                        <input type=\"text\" min=\"0\" class=\"enterDataNumInput\" ng-model=\"commentIndex\" ></input>\r" +
+    "                        <input type=\"text\" ng-keypress=\"jumpTo($event,'comment')\" class=\"enterDataNumInput\" ng-model=\"commentIndex\" ></input>\r" +
     "\n" +
     "                      </div>\r" +
     "\n" +
