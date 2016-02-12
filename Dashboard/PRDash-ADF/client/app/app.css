@@ -51,6 +51,7 @@ a{
   border:1px solid lightgray;
   height:75px;
   border-radius:5px;
+  overflow: auto;
 }
 
 .enterDataNumInput
