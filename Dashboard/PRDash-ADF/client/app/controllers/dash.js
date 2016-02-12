@@ -6,7 +6,7 @@ angular.module('app')
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
                                     MedicationDataModel, ClinicalDecisionSupportDataModel,
-                                    AppointmentDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,AgeGroupsMetricsDataModel, 
+                                    AppointmentDataModel, EnterDataDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,AgeGroupsMetricsDataModel,
                                     GenderDistributionMetricsDataModel, PredictionChartDataModel,
                                     MilitaryBranchMetricsDataModel, OutreachStatusMetricsDataModel,
                                     TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel,CDSQuestionnaireDataModel
@@ -42,7 +42,7 @@ angular.module('app')
           width: '34%'
         }
       },*/
-      
+
       {
         name: 'ClinicalDecisionSupport',
         directive: 'wt-clinical-decision-support',
@@ -77,6 +77,22 @@ angular.module('app')
         sizeX:18,
         sizeY:10
       },
+        {
+        name: 'enterdata',
+        directive: 'wt-enter-data',
+        dataAttrName: 'data',
+        dataModelType: EnterDataDataModel,
+        title: 'Data Entry',
+        dataModelOptions: {
+          defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM,CCT',
+          layout: 'individual'
+        },
+        sizeX:14,
+        sizeY:10,
+        minSizeX: 14
+      },
+
       {
         name: 'contact',
         directive: 'wt-contact',
@@ -181,7 +197,7 @@ angular.module('app')
         },
         sizeX:15,
         sizeY:9
-      },  
+      },
 
 	   {
         name: 'AgeGroups',
@@ -196,7 +212,7 @@ angular.module('app')
           layout: 'surveillance,facility'
         }
         //}
-      },     
+      },
 	   {
         name: 'GenderDistribution',
         directive: 'wt-national-gender-distribution',
@@ -398,7 +414,7 @@ angular.module('app')
           height: '350px'
         }
       },*/
-	   
+
       /*{
         name: 'Metrics Chart',
         directive: 'wt-metrics-chart',
@@ -464,7 +480,7 @@ angular.module('app')
         style: {
           width: '250px'
         }
-      }, 
+      },
       {
         name: 'fluid',
         directive: 'wt-fluid',
@@ -481,7 +497,7 @@ angular.module('app')
     ];
   })
   .value('defaultWidgets', [
-      { name: 'RosterTable' }, 
+      { name: 'RosterTable' },
       { name: 'contact' },
       { name: 'emergency' },
       {name: 'diagnoses'},
@@ -495,7 +511,7 @@ angular.module('app')
       { name: 'Bar Chart' },
       { name: 'topN' },
       { name: 'gauge' },
-      { name: 'fluid' } 
+      { name: 'fluid' }
     { name: 'random' },
     { name: 'time' },
     { name: 'datamodel' },
@@ -521,7 +537,7 @@ angular.module('app')
         var surveillanceViewDefault = [];
         var facilityViewDefault = [];
         var individualViewDefault = [];
-        
+
         var widget = null;
         for(var widgetIdx in widgetDefinitions){
           widget = widgetDefinitions[widgetIdx];
@@ -534,11 +550,11 @@ angular.module('app')
             }
             if(widget.dataModelOptions.layout.indexOf("individual") != -1 && widget.dataModelOptions.roleAccess.indexOf(userRole) != -1){
               individualViewDefault.push({name: widget.name});
-            }            
+            }
         }
         defaultWidgetsObj.surveillance = surveillanceViewDefault;
         defaultWidgetsObj.facility = facilityViewDefault;
-        defaultWidgetsObj.individual = individualViewDefault;         
+        defaultWidgetsObj.individual = individualViewDefault;
 
         return defaultWidgetsObj;
     },
@@ -550,7 +566,7 @@ angular.module('app')
         var facilityView = [];
         var individualView = [];
         var allViews = widgetDefinitions;
-        
+
         var widget = null;
         for(var widgetIdx in widgetDefinitions){
           widget = widgetDefinitions[widgetIdx];
@@ -567,31 +583,31 @@ angular.module('app')
             surveillanceView.push(widget);
             facilityView.push(widget);
             individualView.push(widget);
-          }            
+          }
         }
         widgetsObj.surveillance = surveillanceView;
         widgetsObj.facility = facilityView;
-        widgetsObj.individual = individualView; 
-        widgetsObj.allViews = allViews;        
+        widgetsObj.individual = individualView;
+        widgetsObj.allViews = allViews;
 
         return widgetsObj;
     },
 
     getAllDefaultWidgets: function(widgetDefinitions, userRole)
     {
-        var defaultWidgets = [];        
+        var defaultWidgets = [];
         var widget = null;
         for(var widgetIdx in widgetDefinitions){
           widget = widgetDefinitions[widgetIdx];
           if(widget.dataModelOptions.defaultWidget && widget.dataModelOptions.roleAccess.indexOf(userRole) != -1){
-             defaultWidgets.push({name: widget.name}); 
+             defaultWidgets.push({name: widget.name});
           }
         }
         return defaultWidgets;
     }
   }})
   .controller('DemoCtrl', function ($scope, $interval, $window, widgetDefinitions, defaultWidgets) {
-    
+
     $scope.dashboardOptions = {
       widgetButtons: true,
       widgetDefinitions: widgetDefinitions,
@@ -608,4 +624,3 @@ angular.module('app')
     }, 1000);
 
   });
-
