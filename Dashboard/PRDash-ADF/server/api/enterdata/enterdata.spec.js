@@ -8,7 +8,7 @@ describe('GET /api/enterdata', function() {
 
   it('should respond with JSON array', function(done) {
     request(app)
-      .get('/api/enterdata')
+      .get('/api/enterdata?reachID=109258')
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
