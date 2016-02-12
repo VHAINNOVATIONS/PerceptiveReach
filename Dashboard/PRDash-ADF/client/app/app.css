@@ -38,15 +38,78 @@ a{
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
+#leftstep {
+    position: static;
+    top: -30px;
+    left: 0px;
+    width: 30px;
+    height: 21px;
+    overflow: hidden;
+}
+#rightstep {
+    position: relative;
+    top: -21px;
+    left: 30px;
+    width: 29px;
+    height: 21px;
+    overflow: hidden;
+}
 
+.enterDataDirty
+{
+  border-color: red !important;
+}
+
+.enterDataBox
+{
+  border:1px solid lightgray;
+  height:75px;
+  border-radius:5px;
+  overflow: auto;
+}
+
+.enterDataNumInput
+{
+  width:40px; 
+  height:22px;
+  border:1px solid lightgray;
+}
+
+.box {
+  border-style:solid;
+  border-width:1px;
+  padding-bottom:45px;
+}
+.bs-example {
+    position: relative;
+    padding: 10px 0px 1px;
+    margin: 0 -15px 5px;
+}
+.hr-text::before {
+  content: "High Risk Flag Information";
+  font-weight: bold;
+}
+.sp-text::before {
+  content: "Safety Plan Information";
+  font-weight: bold;
+}
+.mh-text::before {
+  content: "Mental Health Provider Information";
+  font-weight: bold;
+}
+.comment-text::before {
+  content: "General Notes";
+  font-weight: bold;
+  padding-left:9px;
+}
 .hidden {
     display: none;
 }
 
 h1{
   font-weight: inherit;
-  font-size: 2em; 
-  line-height: 80px; 
+  font-size: 2em;
+  line-height: 80px;
   margin-bottom: 14px;
 }
 

@@ -29,7 +29,7 @@ module.exports = function(app) {
   app.use('/api/VAMCMetrics', require('./api/VAMCMetrics'))
   app.use('/api/outReachStatusMetrics', require('./api/outReachStatusMetrics'));
   app.use('/api/prediction', require('./api/prediction'));
-
+  app.use('/api/enterdata', require('./api/enterdata')); 
   app.use('/api/patientContact', require('./api/patientContact'));
   app.use('/api/emergencyContact', require('./api/emergencyContact'));
   app.use('/api/patientFlagData', require('./api/patientFlagData'));
