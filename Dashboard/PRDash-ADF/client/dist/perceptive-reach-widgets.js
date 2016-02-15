@@ -3063,6 +3063,8 @@ angular.module('ui.widgets')
       templateUrl: 'client/components/widget/widgets/enterdata/enterdata.html',
       controller: function ($scope) {
 
+        $scope.noDataFound = '--No Data Available--'
+
         $scope.jumpTo = function(keyPress,section){
           if (keyPress.which === 13)
           {
@@ -3251,7 +3253,8 @@ angular.module('ui.widgets')
           var UpdatedGC_UserNotes = {isNew: false};
           var addDate = new Date().toLocaleDateString();
 
-          if ($scope.hrText != $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes)
+          if (($scope.data.HighRisk_UserNotes.length == 0 && $scope.hrText != $scope.noDataFound) || 
+               ($scope.data.HighRisk_UserNotes.length > 0 && $scope.hrText != $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes))
           {
              UpdatedHR_UserNotes = {
                 entry: $scope.hrText,
@@ -3260,7 +3263,8 @@ angular.module('ui.widgets')
               }
           }
 
-          if ($scope.mhText != $scope.data.PrimaryHealthProvider_UserNotes[$scope.mhIndex].UserNotes)
+          if (($scope.data.PrimaryHealthProvider_UserNotes.length == 0 && $scope.mhText != $scope.noDataFound) || 
+               ($scope.data.PrimaryHealthProvider_UserNotes.length > 0 && $scope.mhText != $scope.data.PrimaryHealthProvider_UserNotes[$scope.mhIndex].UserNotes))
           {
              UpdatedMH_UserNotes = {
                 entry: $scope.mhText,
@@ -3269,7 +3273,8 @@ angular.module('ui.widgets')
               }
           }
 
-          if ($scope.spText != $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes)
+          if (($scope.data.SafetyPlan_UserNotes.length == 0 && $scope.spText != $scope.noDataFound) || 
+               ($scope.data.SafetyPlan_UserNotes.length > 0 && $scope.spText != $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes))
           {
              UpdatedSP_UserNotes = {
                 entry: $scope.spText,
@@ -3278,7 +3283,8 @@ angular.module('ui.widgets')
               }
           }
 
-          if ($scope.commentText != $scope.data.GeneralComments[$scope.commentIndex].Comment)
+          if (($scope.data.GeneralComments.length == 0 && $scope.commentText != $scope.noDataFound) || 
+               ($scope.data.GeneralComments.length > 0 && $scope.commentText != $scope.data.GeneralComments[$scope.commentIndex].Comment))
           {
              UpdatedGC_UserNotes = {
                 entry: $scope.commentText,
@@ -3307,23 +3313,35 @@ angular.module('ui.widgets')
           scope.enterWdgtForm.safetyPlanTxt.$setPristine();
           scope.enterWdgtForm.commentTxt.$setPristine();
 
+          scope.hrIndex = 0;
+          scope.hrSpanIndex = 0;
+          scope.mhIndex = 0;
+          scope.spIndex = 0;
+          scope.spSpanIndex = 0;
+          scope.commentIndex = 0;
+          
+          scope.hrText = scope.noDataFound;
+          scope.mhText = scope.noDataFound;
+          scope.spText = scope.noDataFound;
+          scope.commentText = scope.noDataFound;
+
           //Initialize control values
-          if(scope.data.HighRisk_UserNotes)
+          if(scope.data.HighRisk_UserNotes && scope.data.HighRisk_UserNotes.length > 0)
           {
             scope.hrText = scope.data.HighRisk_UserNotes[scope.hrIndex].UserNotes;
           }
-
-          if(scope.data.PrimaryHealthProvider_UserNotes)
+          
+          if(scope.data.PrimaryHealthProvider_UserNotes && scope.data.PrimaryHealthProvider_UserNotes.length > 0)
           {
             scope.mhText = scope.data.PrimaryHealthProvider_UserNotes[scope.mhIndex].UserNotes;
           }
 
-          if(scope.data.PrimaryHealthProvider_UserNotes)
+          if(scope.data.SafetyPlan_UserNotes && scope.data.SafetyPlan_UserNotes.length > 0)
           {
             scope.spText = scope.data.SafetyPlan_UserNotes[scope.spIndex].UserNotes;
           }
 
-          if(scope.data.GeneralComments)
+          if(scope.data.GeneralComments && scope.data.GeneralComments.length > 0)
           {
             scope.commentText = scope.data.GeneralComments[scope.commentIndex].Comment;
           }
@@ -6203,7 +6221,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
     "\n" +
-    "                   <label style=\"font-weight:normal\">No Data Available</label>\r" +
+    "                   <label style=\"font-weight:normal\">{{noDataFound}}</label>\r" +
     "\n" +
     "                  </div>\r" +
     "\n" +
