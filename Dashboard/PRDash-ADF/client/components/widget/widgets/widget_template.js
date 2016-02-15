@@ -532,7 +532,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
     "\n" +
-    "                   <label style=\"font-weight:normal\">No Data Available</label>\r" +
+    "                   <label style=\"font-weight:normal\">{{noDataFound}}</label>\r" +
     "\n" +
     "                  </div>\r" +
     "\n" +
