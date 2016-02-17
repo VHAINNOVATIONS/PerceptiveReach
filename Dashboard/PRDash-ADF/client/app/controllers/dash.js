@@ -90,7 +90,8 @@ angular.module('app')
         },
         sizeX:14,
         sizeY:10,
-        minSizeX: 14
+        minSizeX: 14,
+        minSizeY: 6
       },
 
       {
