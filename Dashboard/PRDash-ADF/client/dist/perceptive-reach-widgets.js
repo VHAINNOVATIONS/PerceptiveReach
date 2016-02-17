@@ -3074,7 +3074,7 @@ angular.module('ui.widgets')
                   $scope.enterWdgtForm.highRiskTxt.$setPristine();
                   if ($scope.hrIndex > $scope.data.HighRisk_UserNotes.length-1) {
                     $scope.hrIndex = $scope.data.HighRisk_UserNotes.length-1;
-                  } else if ($scope.hrIndex < 0 || !angular.isNumber($scope.hrIndex)) {
+                  } else if ($scope.hrIndex < 0 || isNaN($scope.hrIndex)) {
                     $scope.hrIndex = 0;
                   }
                   $scope.hrText = $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes;
@@ -3083,7 +3083,7 @@ angular.module('ui.widgets')
                   $scope.hrSpanIndex = parseInt($scope.hrSpanIndex, 10);
                   if ($scope.hrSpanIndex > $scope.data.HighRisk_SPANImport.length-1) {
                     $scope.hrSpanIndex = $scope.data.HighRisk_SPANImport.length-1;
-                  } else if ($scope.hrSpanIndex < 0 || !angular.isNumber($scope.hrSpanIndex)) {
+                  } else if ($scope.hrSpanIndex < 0 || isNaN($scope.hrSpanIndex)) {
                     $scope.hrSpanIndex = 0;
                   }
                   break;
@@ -3092,7 +3092,7 @@ angular.module('ui.widgets')
                   $scope.enterWdgtForm.mentalProviderTxt.$setPristine();
                   if ($scope.mhIndex > $scope.data.PrimaryHealthProvider_UserNotes.length-1) {
                     $scope.mhIndex = $scope.data.PrimaryHealthProvider_UserNotes.length-1;
-                  } else if ($scope.mhIndex < 0 || !angular.isNumber($scope.mhIndex)) {
+                  } else if ($scope.mhIndex < 0 || isNaN($scope.mhIndex)) {
                     $scope.mhIndex = 0;
                   }
                   $scope.mhText = $scope.data.PrimaryHealthProvider_UserNotes[$scope.mhIndex].UserNotes;
@@ -3102,7 +3102,7 @@ angular.module('ui.widgets')
                   $scope.enterWdgtForm.safetyPlanTxt.$setPristine();
                   if ($scope.spIndex > $scope.data.SafetyPlan_UserNotes.length-1) {
                     $scope.spIndex = $scope.data.SafetyPlan_UserNotes.length-1;
-                  } else if ($scope.spIndex < 0 || !angular.isNumber($scope.spIndex)) {
+                  } else if ($scope.spIndex < 0 || isNaN($scope.spIndex)) {
                     $scope.spIndex = 0;
                   }
                   $scope.spText = $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes;
@@ -3111,7 +3111,7 @@ angular.module('ui.widgets')
                   $scope.spSpanIndex = parseInt($scope.spSpanIndex, 10);
                   if ($scope.spSpanIndex > $scope.data.SafetyPlan_SPANImport.length-1) {
                     $scope.spSpanIndex = $scope.data.SafetyPlan_SPANImport.length-1;
-                  } else if ($scope.spSpanIndex < 0 || !angular.isNumber($scope.spSpanIndex)) {
+                  } else if ($scope.spSpanIndex < 0 || isNaN($scope.spSpanIndex)) {
                     $scope.spSpanIndex = 0;
                   }
                   break;
@@ -3120,7 +3120,7 @@ angular.module('ui.widgets')
                   $scope.enterWdgtForm.commentTxt.$setPristine();
                   if ($scope.commentIndex > $scope.data.GeneralComments.length-1) {
                     $scope.commentIndex = $scope.data.GeneralComments.length-1;
-                  } else if ($scope.commentIndex < 0 || !angular.isNumber($scope.commentIndex)) {
+                  } else if ($scope.commentIndex < 0 || isNaN($scope.commentIndex)) {
                     $scope.commentIndex = 0;
                   }
                   $scope.commentText = $scope.data.GeneralComments[$scope.commentIndex].Comment;
@@ -3253,8 +3253,8 @@ angular.module('ui.widgets')
           var UpdatedGC_UserNotes = {isNew: false};
           var addDate = new Date().toLocaleDateString();
 
-          if (($scope.data.HighRisk_UserNotes.length == 0 && $scope.hrText != $scope.noDataFound) || 
-               ($scope.data.HighRisk_UserNotes.length > 0 && $scope.hrText != $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes))
+          if ($scope.enterWdgtForm.highRiskTxt.$valid &&(($scope.data.HighRisk_UserNotes.length == 0 && $scope.hrText != $scope.noDataFound) || 
+               ($scope.data.HighRisk_UserNotes.length > 0 && $scope.hrText != $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes)))
           {
              UpdatedHR_UserNotes = {
                 entry: $scope.hrText,
@@ -3263,8 +3263,8 @@ angular.module('ui.widgets')
               }
           }
 
-          if (($scope.data.PrimaryHealthProvider_UserNotes.length == 0 && $scope.mhText != $scope.noDataFound) || 
-               ($scope.data.PrimaryHealthProvider_UserNotes.length > 0 && $scope.mhText != $scope.data.PrimaryHealthProvider_UserNotes[$scope.mhIndex].UserNotes))
+          if ($scope.enterWdgtForm.mentalProviderTxt.$valid && (($scope.data.PrimaryHealthProvider_UserNotes.length == 0 && $scope.mhText != $scope.noDataFound) || 
+               ($scope.data.PrimaryHealthProvider_UserNotes.length > 0 && $scope.mhText != $scope.data.PrimaryHealthProvider_UserNotes[$scope.mhIndex].UserNotes)))
           {
              UpdatedMH_UserNotes = {
                 entry: $scope.mhText,
@@ -3273,8 +3273,8 @@ angular.module('ui.widgets')
               }
           }
 
-          if (($scope.data.SafetyPlan_UserNotes.length == 0 && $scope.spText != $scope.noDataFound) || 
-               ($scope.data.SafetyPlan_UserNotes.length > 0 && $scope.spText != $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes))
+          if ($scope.enterWdgtForm.safetyPlanTxt.$valid && (($scope.data.SafetyPlan_UserNotes.length == 0 && $scope.spText != $scope.noDataFound) || 
+               ($scope.data.SafetyPlan_UserNotes.length > 0 && $scope.spText != $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes)))
           {
              UpdatedSP_UserNotes = {
                 entry: $scope.spText,
@@ -3283,8 +3283,8 @@ angular.module('ui.widgets')
               }
           }
 
-          if (($scope.data.GeneralComments.length == 0 && $scope.commentText != $scope.noDataFound) || 
-               ($scope.data.GeneralComments.length > 0 && $scope.commentText != $scope.data.GeneralComments[$scope.commentIndex].Comment))
+          if ($scope.enterWdgtForm.commentTxt.$valid && (($scope.data.GeneralComments.length == 0 && $scope.commentText != $scope.noDataFound) || 
+               ($scope.data.GeneralComments.length > 0 && $scope.commentText != $scope.data.GeneralComments[$scope.commentIndex].Comment)))
           {
              UpdatedGC_UserNotes = {
                 entry: $scope.commentText,
@@ -6163,11 +6163,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
     "\n" +
-    "                    <label style=\"font-weight:normal\">High Risk: {{data.HighRisk_SPANImport[hrSpanIndex].HighRisk}}</label>    \r" +
+    "                    <label style=\"font-weight:normal\">High Risk: {{data.HighRisk_SPANImport[hrSpanIndex].HighRisk}}</label></br>\r" +
     "\n" +
-    "                    <label style=\"font-weight:normal\">Date First Identified: {{data.HighRisk_SPANImport[hrSpanIndex].DateFirstIdentifiedAsHighRisk}}</label>    \r" +
+    "                    <label style=\"font-weight:normal\">Date First Identified: {{data.HighRisk_SPANImport[hrSpanIndex].DateFirstIdentifiedAsHighRisk | date: 'dd-MM-yyyy HH:mma'}}</label></br>\r" +
     "\n" +
-    "                    <label style=\"font-weight:normal\">Date Last Updated: {{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated}}</label>\r" +
+    "                    <label style=\"font-weight:normal\">Date Last Updated: {{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated | date: 'dd-MM-yyyy HH:mma'}}</label>\r" +
     "\n" +
     "                  </div>\r" +
     "\n" +
@@ -6291,9 +6291,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                   <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
     "\n" +
-    "                    <label style=\"font-weight:normal\">Safety Plan Current: {{data.SafetyPlan_SPANImport[spSpanIndex].SafetyPlanCurrent}}</label>    \r" +
+    "                    <label style=\"font-weight:normal\">Safety Plan Current: {{data.SafetyPlan_SPANImport[spSpanIndex].SafetyPlanCurrent}}</label></br>    \r" +
     "\n" +
-    "                    <label style=\"font-weight:normal\">Date Completed/Updated: {{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated}}</label>\r" +
+    "                    <label style=\"font-weight:normal\">Date Completed/Updated: {{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated | date: 'dd-MM-yyyy HH:mma'}}</label>\r" +
     "\n" +
     "                  </div>\r" +
     "\n" +

@@ -32,9 +32,9 @@
                     </button>
                   </div>
                   <div class="col-md-12 enterDataBox" style="background-color:#e6e6e6;">
-                    <label style="font-weight:normal">High Risk: {{data.HighRisk_SPANImport[hrSpanIndex].HighRisk}}</label>    
-                    <label style="font-weight:normal">Date First Identified: {{data.HighRisk_SPANImport[hrSpanIndex].DateFirstIdentifiedAsHighRisk}}</label>    
-                    <label style="font-weight:normal">Date Last Updated: {{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated}}</label>
+                    <label style="font-weight:normal">High Risk: {{data.HighRisk_SPANImport[hrSpanIndex].HighRisk}}</label></br>
+                    <label style="font-weight:normal">Date First Identified: {{data.HighRisk_SPANImport[hrSpanIndex].DateFirstIdentifiedAsHighRisk | date: 'dd-MM-yyyy HH:mma'}}</label></br>
+                    <label style="font-weight:normal">Date Last Updated: {{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated | date: 'dd-MM-yyyy HH:mma'}}</label>
                   </div>
                 </div>
               </div>
@@ -96,8 +96,8 @@
                     </button>
                   </div>
                    <div class="col-md-12 enterDataBox" style="background-color:#e6e6e6;">
-                    <label style="font-weight:normal">Safety Plan Current: {{data.SafetyPlan_SPANImport[spSpanIndex].SafetyPlanCurrent}}</label>    
-                    <label style="font-weight:normal">Date Completed/Updated: {{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated}}</label>
+                    <label style="font-weight:normal">Safety Plan Current: {{data.SafetyPlan_SPANImport[spSpanIndex].SafetyPlanCurrent}}</label></br>    
+                    <label style="font-weight:normal">Date Completed/Updated: {{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated | date: 'dd-MM-yyyy HH:mma'}}</label>
                   </div>
                 </div>
               </div>
