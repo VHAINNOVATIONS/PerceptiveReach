@@ -1,5 +1,4 @@
-Feature: AAs a Clinical Care Team Member, I want to view a history of the principal MH providers free text entries by selecting the left or right arrows.
-PR-3449
+Feature: As a Clinical Care Team Member, I want to view a history of the principal MH providers free text entries by selecting the left or right arrows.PR-3449
 
 Scenario: I open a web browser and navigate to http://localhost:7003/ where I can view Consolidated Surveillance View widgets
 Given I navigate to the http://localhost:7003/

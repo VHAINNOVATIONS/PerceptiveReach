@@ -1,4 +1,4 @@
-Feature: As a Administrator/Supervisor, I want to access wData Entry Widget in the Surveillance View PR-3438
+Feature: As a Administrator/Supervisor, I want to access Data Entry Widget in the Surveillance View PR-3438
 
 Scenario: I open a web browser and navigate to http://localhost:7003/ where I can view Consolidated Surveillance View widgets
 Given I navigate to the http://localhost:7003/
