@@ -208,7 +208,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"panel-title\">\r" +
     "\n" +
-    "                        <span style=\"background-color: transparent;\" class=\"label-primary widget-title nav\">{{widget.title}}</span>\r" +
+    "                        <span style=\"background-color: transparent;margin-right:3px;\" class=\"label-primary widget-title nav pull-left\">{{widget.title}}</span>\r" +
     "\n" +
     "                        <span class=\"label label-primary\" ng-if=\"!options.hideWidgetName\" tabindex=\"-1\">{{widget.name}}</span>\r" +
     "\n" +
