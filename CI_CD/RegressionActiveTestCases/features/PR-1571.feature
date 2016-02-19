@@ -4,7 +4,7 @@ Feature: As a SPC I want to Enable the background communications layer between a
   Scenario: I open a web browser and use http://localhost:7003/ to see the Clinical support Decision widget
   Given I navigate to the http://localhost:7003/ 
   Then I should see "Perceptive Reach"
-  Then I put in "email" field as "vaphsfequia"
+  Then I put in "email" field as "TESTER254"
   Then I put in "password" field as "FeAn#011819"
   And I click on check box "checky"
   And I click on "Login" button
@@ -26,7 +26,7 @@ Feature: As a SPC I want to Enable the background communications layer between a
   Scenario: I open a web browser and use http://localhost:7003/ to see Medication widget for Individual veteran
   Given I navigate to the http://localhost:7003/ 
   Then I should see "Perceptive Reach"
-  Then I put in "email" field as "vaphsfequia"
+  Then I put in "email" field as "TESTER254"
   Then I put in "password" field as "FeAn#011819"
   And I click on check box "checky"
   And I click on "Login" button

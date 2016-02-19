@@ -1125,12 +1125,12 @@ angular.module('ui.models')
 		   var currentVISN = null;
 		   var currentSTA3N = null;
 		   if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-			 if(dataModelOptions.common.data.facilitySelected.surveillance) {
-			   currentSTA3N = dataModelOptions.common.data.facilitySelected.surveillance;
-			 }
+  			 if(dataModelOptions.common.data.facilitySelected.surveillance) {
+  			   currentSTA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+  			 }
 
-			 if(dataModelOptions.common.data.visnSelected.surveillance) {
-			   currentVISN = dataModelOptions.common.data.visnSelected.surveillance;
+  			 if(dataModelOptions.common.data.visnSelected.surveillance) {
+  			   currentVISN = dataModelOptions.common.data.visnSelected.surveillance;
 			 }
 		   }
 		   else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
@@ -1151,14 +1151,15 @@ angular.module('ui.models')
 			   this.VISN = null;
 			 }
 
-			 if(this.STA3N != this.currentSTA3N || this.VISN != this.currentVISN) {
-			   this.getData();
-			 }
+			 this.getData();
 
 		   }.bind(this));
 
 		   this.updateScope([]);
-		   this.getData();
+       if(this.widgetScope.common.data.activeView == "surveillance")
+       {
+         this.getData();
+       }
 		 },
 
 			getData: function () {
@@ -1322,4 +1323,87 @@ angular.module('ui.models')
     });
 
     return VISNDataModel;
+  })
+.factory('CDSQuestionnaireDataModel', function ($http, CommonDataModel) {
+    function CDSQuestionnaireDataModel() {
+    }
+
+    CDSQuestionnaireDataModel.prototype = Object.create(CommonDataModel.prototype);
+    CDSQuestionnaireDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(CDSQuestionnaireDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+
+        this.widgetScope.$on('defaultWidgetsSelected', function (event, data) {
+          this.dataModelOptions.common = data;
+          this.getData();
+        }.bind(this));
+
+        this.updateScope([]);
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+      
+        $http.get('/api/CDSQuestionnaire')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return CDSQuestionnaireDataModel;
+  })
+.factory('EnterDataDataModel', function ($http, CommonDataModel) {
+    function EnterDataDataModel() {
+    }
+
+    EnterDataDataModel.prototype = Object.create(CommonDataModel.prototype);
+    EnterDataDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(EnterDataDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
+
+        this.updateScope('-');
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/enterdata?reachID='+ this.reachID)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+      saveNewUserData: function(jsonData){
+        $http.put('/api/enterdata?reachID='+this.reachID,{'UpdatedUserData':jsonData})
+        .success(function(){
+          this.getData();
+        }.bind(this));
+      },
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return EnterDataDataModel;
   });

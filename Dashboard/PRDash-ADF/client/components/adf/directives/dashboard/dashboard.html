@@ -1,5 +1,6 @@
 <div>
     <div offset="105" style="z-index:5;background-color:white;" sticky tabindex="-1">
+        <div class="alert alert-success snoAlertBox" data-alert="alert">This widget has already been added to your dashboard. Please select a different widget to add.</div>
         <div class="btn-toolbar" ng-if="!options.hideToolbar" style="padding-bottom:5px;padding-top:5px;border-bottom: 2px solid gray;">
 		<!--ul class="inline"><li-->
             <div class="btn-group" ng-if="!options.widgetButtons" data-ng-class="{open: open}" tabindex="-1">
@@ -55,7 +56,7 @@
                         <div id="widgetSettings" style="display:inline-block; float:right; position:relative;">
                             <!--button ng-click="widget.contentStyle.display = widget.contentStyle.display === 'none' ? 'block' : 'none'" style="background-color: transparent; float:left;" class="glyphicon" ng-class="{'glyphicon-plus': widget.contentStyle.display === 'none','glyphicon-minus': widget.contentStyle.display !== 'none'}"></button-->
                             <!--button ng-click="openWidgetSettings(widget);" style="background-color: transparent; float:left;" class="glyphicon glyphicon-cog" ng-if="!options.hideWidgetSeyttings"></button-->
-                            <button ng-click="removeWidget(widget);" ng-keydown="keyDown($event)" title="Remove Widget Or Resize Widget" alt="Remove Widget" style="background-color: transparent; float:right;" class="glyphicon glyphicon-remove" ng-if="!options.hideWidgetClose"></button>
+                            <button ng-click="removeWidget(widget);" ng-keydown="keyDown($event)" ng-keyup="keyUp($event)" title="Remove Widget Or Resize Widget" alt="Remove Widget" style="background-color: transparent; float:right;" class="glyphicon glyphicon-remove" ng-if="!options.hideWidgetClose"></button>
                         </div>
                     </div>
                 </div>
