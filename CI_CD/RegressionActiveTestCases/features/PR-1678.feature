@@ -6,7 +6,7 @@ Scenario:  open a web browser and navigate to http://localhost:7003/ where I can
 
 Given I navigate to the http://localhost:7003/
 Then I should see "Perceptive Reach"
-Then I put in "email" field as "vaphsgattuc"
+Then I put in "email" field as "TESTER254"
 Then I put in "password" field as "FeAn#011819"
 And I click on check box "checky"
 And I click on "Login" button
