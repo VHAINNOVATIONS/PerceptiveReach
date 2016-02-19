@@ -10,6 +10,7 @@ Feature: As a Dashboard user, I want to see a Veteran's emergency contact inform
   And I click on check box "checky"
   And I click on "Login" button
   When I click on "Individual View" 
+  Then I should wait
   Then I should see "Patient Roster by VAMC" widget
   Then I should see "Emergency Contact Information" widget
   And I should see "Name"

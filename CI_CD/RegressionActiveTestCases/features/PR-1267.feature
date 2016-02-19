@@ -25,6 +25,7 @@ And I click on check box "checky"
   And I click on check box "checky"
   And I click on "Login" button
   When I click on "Individual View"
+  Then I should wait
   Then I should see "Patient Roster by VAMC" widget
   Then I should see "Patient Contact" widget
   And I should see "Last 4 of SSN"
