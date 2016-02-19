@@ -1,5 +1,204 @@
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
+  $templateCache.put("client/components/widget/widgets/CDSQuestionnaire/CDSQuestionnaire.html",
+    "<div id=\"cdsQuestionnaire\" title=\"CDS Questionnaire\">\r" +
+    "\n" +
+    "   <!--1/26/2016 The below code is left for future use, Delete if not needed -->\r" +
+    "\n" +
+    "        <!-- <ul class=\"nav nav-pills\" role=\"tablist\" id=\"cdsTabs\" style=\"margin-top:5px;\">\r" +
+    "\n" +
+    "          <li class=\"active\">\r" +
+    "\n" +
+    "              <a href=\"#home\" role=\"tab\" data-toggle=\"tab\">\r" +
+    "\n" +
+    "                   Home\r" +
+    "\n" +
+    "              </a>\r" +
+    "\n" +
+    "          </li>\r" +
+    "\n" +
+    "          <li><a href=\"#options\" role=\"tab\" data-toggle=\"tab\">\r" +
+    "\n" +
+    "                  Options\r" +
+    "\n" +
+    "              </a>\r" +
+    "\n" +
+    "          </li>\r" +
+    "\n" +
+    "          <li>\r" +
+    "\n" +
+    "              <a href=\"#help\" role=\"tab\" data-toggle=\"tab\">\r" +
+    "\n" +
+    "                   Help\r" +
+    "\n" +
+    "              </a>\r" +
+    "\n" +
+    "          </li>\r" +
+    "\n" +
+    "        </ul>\r" +
+    "\n" +
+    "        <div class=\"tab-content\" id=\"cdsTabContent\" style=\"margin-top:5px;\">\r" +
+    "\n" +
+    "          <div class=\"tab-pane fade active in\" id=\"home\">\r" +
+    "\n" +
+    "            \r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"tab-pane fade\" id=\"options\">\r" +
+    "\n" +
+    "              <h2>Options</h2>\r" +
+    "\n" +
+    "              <img src=\"https://avatars1.githubusercontent.com/u/1252476?v=3&s=200\" alt=\"Cats\"/>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"tab-pane fade\" id=\"help\">\r" +
+    "\n" +
+    "              <h2>Help</h2>\r" +
+    "\n" +
+    "              <img src=\"https://avatars1.githubusercontent.com/u/1252476?v=3&s=200\" alt=\"Cats\"/>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "        \r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div>\r" +
+    "\n" +
+    "          <div class=\"panel panel-default\" style=\"margin-top:5px;\">\r" +
+    "\n" +
+    "            <div class=\"panel-heading\">\r" +
+    "\n" +
+    "              <h3 class=\"panel-title\">Emergency Contact Information</h3>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <div class=\"panel-body\">\r" +
+    "\n" +
+    "              For emergency assistance please contact: P: (xxx) xxx-xxxx, e: email@email.com\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "        </div> -->\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "      <div id=\"cdsConditionDiv\"  style=\"margin-top:5px;\">\r" +
+    "\n" +
+    "        <div >\r" +
+    "\n" +
+    "           <legend>Clinical Decision Support:</legend>\r" +
+    "\n" +
+    "              <fieldset style=\"border:1px solid lightgray;border-radius:5px;\">\r" +
+    "\n" +
+    "                Please choose the specific symptoms, diagnoses, or conditions the Veteran is facing.  After all selections have been made please press <strong>‘Next’</strong>.\r" +
+    "\n" +
+    "              </fieldset>\r" +
+    "\n" +
+    "              <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
+    "\n" +
+    "                <label ng-repeat=\"condition in data.conditions\" style=\"display:block;\">\r" +
+    "\n" +
+    "                      <input type=\"checkbox\" ng-click=\"ChkbxClicked()\" name=\"chkbx_{{condition.Condition_ID}}\"> {{condition.Condition}}\r" +
+    "\n" +
+    "                </label>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "              <div style=\"height:40px;padding:5px;\">\r" +
+    "\n" +
+    "                 <button ng-click=\"GotoQuestions()\" alt=\"Next(Questions)\" title=\"Next(Questions)\" ng-disabled=\"!IsChecked\" class=\"btn btn-primary pull-right\">Next</button>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "    <div id=\"cdsQuestionDiv\" class=\"hidden\">\r" +
+    "\n" +
+    "       <legend>Question(s):</legend>\r" +
+    "\n" +
+    "       <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
+    "\n" +
+    "         <div ng-repeat=\"question in filteredQuestions\">\r" +
+    "\n" +
+    "            <label>{{$index+1}}. {{question.Question}}  </label>\r" +
+    "\n" +
+    "             <div class=\"dropdown\">\r" +
+    "\n" +
+    "                    <button class=\"btn btn-default\"\r" +
+    "\n" +
+    "                            data-toggle=\"dropdown\" name=\"question_{{question.Question_ID}}\">\r" +
+    "\n" +
+    "                        <span>Select</span>\r" +
+    "\n" +
+    "                        <span class=\"caret\"></span>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                    <ul class=\"dropdown-menu\" >\r" +
+    "\n" +
+    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">Yes</a></li>\r" +
+    "\n" +
+    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">No</a></li>\r" +
+    "\n" +
+    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">N/A</a></li>\r" +
+    "\n" +
+    "                    </ul>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "         </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "       <div style=\"height:40px;padding:5px;\">\r" +
+    "\n" +
+    "          <button ng-click=\"BacktoConditions()\" alt=\"Back(Conditions)\" title=\"Back(Conditions)\" class=\"btn btn-primary pull-left\" >Back</button>\r" +
+    "\n" +
+    "          <button ng-click=\"GotoTreatments()\" alt=\"Next(Treatment)\" title=\"Next(Treatment)\" class=\"btn btn-primary pull-right\" >Next</button>\r" +
+    "\n" +
+    "       </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "    <div id=\"cdsTreatmentDiv\" class=\"hidden\">\r" +
+    "\n" +
+    "        <legend>Treatment(s):</legend>\r" +
+    "\n" +
+    "        <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
+    "\n" +
+    "          <div ng-repeat=\"treatment in filteredTreatments\">\r" +
+    "\n" +
+    "            <label>{{$index+1}}. {{treatment.Treatment}}</label>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div style=\"height:40px;padding:5px;\">\r" +
+    "\n" +
+    "          <button ng-click=\"BacktoQuestions()\" alt=\"Back(Questions)\" title=\"Back(Questions)\" class=\"btn btn-primary pull-left\">Back</button>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "        \r" +
+    "\n" +
+    "</div>\r" +
+    "\n"
+  );
+
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
     "<div class=\"appointment\">\r" +
     "\n" +
@@ -199,6 +398,273 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "    <div ng-hide=\"data.length\" style=\"text-align: center;\">\r" +
     "\n" +
     "        <p font-size=\"12\"><br>No Data Found</b></p>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n"
+  );
+
+  $templateCache.put("client/components/widget/widgets/enterdata/enterdata.html",
+    "<div>\r" +
+    "\n" +
+    "    <div ng-form=\"enterWdgtForm\">\r" +
+    "\n" +
+    "      <div class=\"panel panel-default\">\r" +
+    "\n" +
+    "        <div class=\"panel-body\" style=\"padding-left:40px\">\r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-md-12 bs-example hr-text\" style=\"padding: 2px;\">\r" +
+    "\n" +
+    "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
+    "\n" +
+    "                <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">User Notes:</label>\r" +
+    "\n" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"hrBack\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex >= data.HighRisk_UserNotes.length-1\" ng-click=\"goHrBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" ng-keypress=\"jumpTo($event,'hr')\" class=\"enterDataNumInput\" ng-model=\"hrIndex\" ></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"hrFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex === 0\" ng-click=\"goHrForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
+    "\n" +
+    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                  </div><br/>\r" +
+    "\n" +
+    "                  <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"hrText\" name=\"highRiskTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.highRiskTxt.$dirty && enterWdgtForm.highRiskTxt.$valid}\" id=\"hrText\"></textarea>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div class=\"col-md-6\" >    \r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">SPAN Records:</label>\r" +
+    "\n" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"hrSpanBack\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex >= data.HighRisk_SPANImport.length-1\" ng-click=\"goHrSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" ng-keypress=\"jumpTo($event,'hrspan')\" class=\"enterDataNumInput\" ng-model=\"hrSpanIndex\" ></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"hrSpanFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex === 0\" ng-click=\"goHrSpanForward()\"><i class=\"glyphicon glyphicon-arrow-right\"\r" +
+    "\n" +
+    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                  <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">High Risk: {{data.HighRisk_SPANImport[hrSpanIndex].HighRisk}}</label></br>\r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">Date First Identified: {{data.HighRisk_SPANImport[hrSpanIndex].DateFirstIdentifiedAsHighRisk | date: 'dd-MM-yyyy HH:mma'}}</label></br>\r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">Date Last Updated: {{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated | date: 'dd-MM-yyyy HH:mma'}}</label>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-md-12 bs-example mh-text\" style=\"padding: 2px;\">\r" +
+    "\n" +
+    "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
+    "\n" +
+    "                <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">User Notes:</label>\r" +
+    "\n" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"mhBack\" class=\"btn btn-default pull-left\" ng-disabled=\"mhIndex >= data.PrimaryHealthProvider_UserNotes.length-1\" ng-click=\"goMhBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input class=\"enterDataNumInput\" type=\"text\" ng-keypress=\"jumpTo($event,'mh')\" ng-change=\"mhIndexChange(mhIndex)\" ng-model=\"mhIndex\" ></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"mhFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"mhIndex === 0\" ng-click=\"goMhForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
+    "\n" +
+    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                  </div><br/>\r" +
+    "\n" +
+    "                  <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"mhText\" name=\"mentalProviderTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.mentalProviderTxt.$dirty && enterWdgtForm.mentalProviderTxt.$valid}\" id=\"mhText\"></textarea>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div class=\"col-md-6\" > \r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">VistA Records:</label>\r" +
+    "\n" +
+    "                  \r" +
+    "\n" +
+    "                  <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
+    "\n" +
+    "                   <label style=\"font-weight:normal\">{{noDataFound}}</label>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-md-12 bs-example sp-text\" style=\"padding: 2px;\">\r" +
+    "\n" +
+    "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
+    "\n" +
+    "                <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">User Notes:</label>\r" +
+    "\n" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"spBack\" class=\"btn btn-default pull-left\" ng-disabled=\"spIndex >= data.SafetyPlan_UserNotes.length-1\" ng-click=\"goSpBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" ng-keypress=\"jumpTo($event,'sp')\" class=\"enterDataNumInput\" ng-model=\"spIndex\" ></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"spFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"spIndex === 0\" ng-click=\"goSpForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
+    "\n" +
+    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                  </div><br>\r" +
+    "\n" +
+    "                  <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"spText\" name=\"safetyPlanTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.safetyPlanTxt.$dirty && enterWdgtForm.safetyPlanTxt.$valid}\" id=\"spText\"></textarea>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div class=\"col-md-6\">\r" +
+    "\n" +
+    "                  <label style=\"font-weight:normal\">VistA Records:</label>\r" +
+    "\n" +
+    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"spSpanBack\" class=\"btn btn-default pull-left\" ng-disabled=\"spSpanIndex >= data.SafetyPlan_SPANImport.length-1\" ng-click=\"goSpSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                    <div class=\"pull-left\">\r" +
+    "\n" +
+    "                      <input type=\"text\" ng-keypress=\"jumpTo($event,'spspan')\" class=\"enterDataNumInput\" ng-model=\"spSpanIndex\" ></input>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "                    <button type=\"button\" name=\"spSpanFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"spSpanIndex === 0\" ng-click=\"goSpSpanForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                   <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">Safety Plan Current: {{data.SafetyPlan_SPANImport[spSpanIndex].SafetyPlanCurrent}}</label></br>    \r" +
+    "\n" +
+    "                    <label style=\"font-weight:normal\">Date Completed/Updated: {{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated | date: 'dd-MM-yyyy HH:mma'}}</label>\r" +
+    "\n" +
+    "                  </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-md-12 bs-example comment-text\" style=\"padding: 2px;\">\r" +
+    "\n" +
+    "               <div class=\"panel-body\" style=\"padding:5px;\">\r" +
+    "\n" +
+    "                 <div class=\"col-md-12\">\r" +
+    "\n" +
+    "                   <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                      <button type=\"button\" name=\"commentBack\" class=\"btn btn-default pull-left\" ng-disabled=\"commentIndex >= data.GeneralComments.length-1\" ng-click=\"goCommentBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                      </button>\r" +
+    "\n" +
+    "                      <div class=\"pull-left\">\r" +
+    "\n" +
+    "                        <input type=\"text\" ng-keypress=\"jumpTo($event,'comment')\" class=\"enterDataNumInput\" ng-model=\"commentIndex\" ></input>\r" +
+    "\n" +
+    "                      </div>\r" +
+    "\n" +
+    "                      <button type=\"button\" name=\"commentFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"commentIndex === 0\" ng-click=\"goCommentForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "\n" +
+    "                      </button>\r" +
+    "\n" +
+    "                   </div>\r" +
+    "\n" +
+    "                    <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"commentText\" name=\"commentTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.commentTxt.$dirty && enterWdgtForm.commentTxt.$valid}\" id=\"commentText\"></textarea>\r" +
+    "\n" +
+    "                 </div>\r" +
+    "\n" +
+    "               </div>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-xs-2 col-xs-offset-10\">\r" +
+    "\n" +
+    "              <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"addNewData()\">Add Data</button>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
     "\n" +
     "    </div>\r" +
     "\n" +

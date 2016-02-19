@@ -40,6 +40,7 @@ angular.module('ui.widgets')
 		.withDOM('lfrti')
 		.withScroller()
 		.withOption('deferRender', true)
+    .withOption('scrollY', 200)
 		.withOption('paging',false)
     .withOption('bDestroy',true)
 		.withOption('order', [1, 'desc']);
@@ -57,6 +58,11 @@ link: function postLink(scope, element, attr) {
   			$(this).attr('scope','col');
   			$(this).attr('tabindex','-1');
       });
+      $timeout(function(){
+        $('#militaryBranchDiv .dataTables_scrollHeadInner,#militaryBranchDiv table').css({'width':''}); 
+        var containerHeight = parseInt($('#militaryBranchDiv').parent().css('height'),10);
+        $('#militaryBranchDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
+      },1000)
 		});
 	scope.$watch('widgetData', function (data) {
     $timeout(function(){
