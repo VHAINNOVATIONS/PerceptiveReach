@@ -8,6 +8,7 @@ Then I put in "password" field as "q@G5v9d4k*"
 And I click on check box "checky"
 And I click on "Login" button
 When I click on "Individual View"
+sleep(30)
 And I click on "Add a Widget" button
 And I click on "RosterTable" button in the menu
 Then I should see the "Patient Roster by VAMC" widget
