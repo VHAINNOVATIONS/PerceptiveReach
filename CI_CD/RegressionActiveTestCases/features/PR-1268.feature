@@ -33,6 +33,7 @@ Scenario: I open a web browser and use http://localhost:7003/ to delete/close th
   And I click on check box "checky"
   And I click on "Login" button
   When I click on "Individual View" 
+  Then I click on the Default Widgets button
   Then I should see "Patient Roster by VAMC" widget
   Then I should see "Emergency Contact Information" widget
   When I click on close on the "emergency" widget
