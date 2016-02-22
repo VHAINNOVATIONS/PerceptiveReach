@@ -26,7 +26,7 @@ When(/^I select middle risk veteran row in the widget$/) do
   #find(:xpath, '//*[@id="sampleVet"]/tbody/tr["+row+"]').click
    #find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[2]').click
       #find(:xpath, '//*[@id="sampleVet"]/tbody/tr[9]').click 
-	expect(page).to have_content '3799'
+	#expect(page).to have_content '3799'
 	find(:xpath, '//td[contains(text(),"1966")]').click 
 	 #click_link('vet_566384')
 end
@@ -53,8 +53,8 @@ When(/^I select top risk veteran row in the widget$/) do
   #find(:xpath, '//*[@id="sampleVet"]/tbody/tr["+row+"]').click
    #find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[2]').click
      # find(:xpath, '//*[@id="sampleVet"]/tbody/tr[9]').click 
-	  find(:xpath, '//td[contains(text(),"4669")]').click 
-	  # click_link('vet_652427')
+	 find(:xpath, '//td[contains(text(),"4669")]').click 
+	
 end
 
 
@@ -153,8 +153,9 @@ Then(/^I should see "(.*?)" widget$/) do |pagecontent|
   expect(page).to have_content(pagecontent)
 end
 
-Then(/^I should not see the "(.*?)" widget$/) do |pagecontent|
-  expect(page).to have_no_content(pagecontent)
+Then(/^I should not see the "(.*?)" widget$/) do |arg1|
+  page.has_no_xpath?(arg1)
+  #expect(page).to have_no_content(pagecontent)
 end
 
 And(/^I should see "(.*?)"$/) do |pagecontent|
@@ -470,8 +471,20 @@ When(/^I click on save button$/) do
   pending # express the regexp above with the code you wish you had
 end
 
+When(/^I click on Add Data$/) do
+  pending # express the regexp above with the code you wish you had
+  find_button('Add Data').click
+end
+
+
 Then(/^I should see the widget (\d+) title change to "(.*?)"$/) do |arg1, arg2|
   pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I click on the Default Widgets button$/) do
+  #pending # express the regexp above with the code you wish you had
+  #find_button('Add a Widget').click
+  find_button('Default Widgets').click
 end
 
 Then(/^I should wait$/) do
