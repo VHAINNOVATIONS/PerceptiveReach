@@ -27,7 +27,8 @@ When(/^I select middle risk veteran row in the widget$/) do
    #find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[2]').click
       #find(:xpath, '//*[@id="sampleVet"]/tbody/tr[9]').click 
 	#expect(page).to have_content '3799'
-	find(:xpath, '//td[contains(text(),"1966")]').click 
+	#find(:xpath, '//td[contains(text(),"1966")]').click 
+  find(:xpath, '(//tr/td[contains(text(),\'MIDDLE\')])[1]').click 
 	 #click_link('vet_566384')
 end
 
@@ -53,7 +54,7 @@ When(/^I select top risk veteran row in the widget$/) do
   #find(:xpath, '//*[@id="sampleVet"]/tbody/tr["+row+"]').click
    #find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[2]').click
      # find(:xpath, '//*[@id="sampleVet"]/tbody/tr[9]').click 
-	 find(:xpath, '//td[contains(text(),"4669")]').click 
+	 find(:xpath, '(//tr/td[contains(text(),\'TOP\')])[1]').click 
 	
 end
 
@@ -98,8 +99,11 @@ end
 When(/^I click on close on the "(.*?)" widget$/) do |widgetname|
   title = widgetname
 #page.find(:xpath, "//span[normalize-space(text())='emergency']/following::button[3]",:match => :prefer_exact).click
-all(:xpath, "//span[normalize-space(text())='#{title}']/following::button[1]")[1].click
-
+#all(:xpath, "//span[normalize-space(text())='#{title}']/following::button[1]")[1].click
+#page.find(:xpath, ".//span[text()='Emergency Contact Information']/following-sibling::div/child::button").click
+#el = page.find(:xpath, ".//span[text()='Emergency Contact Information']/following-sibling::div/child::button")
+jScript = "$($('.panel-title>span:contains(\""+ widgetname +"\")').siblings()[1]).find('button').click()"
+page.execute_script(jScript)
 end
 
 When(/^I select VISN Roster "(.*?)" veteran row in the widget$/) do |arg1|
@@ -154,8 +158,13 @@ Then(/^I should see "(.*?)" widget$/) do |pagecontent|
 end
 
 Then(/^I should not see the "(.*?)" widget$/) do |arg1|
-  page.has_no_xpath?(arg1)
+  title = arg1
+  expect(page).to have_no_xpath("//span[contains(text(),'#{title}')]")
   #expect(page).to have_no_content(pagecontent)
+end
+
+Then(/^I should not be able to see the "(.*?)" widget$/) do |arg1|
+  expect(page).to have_no_content(pagecontent)
 end
 
 And(/^I should see "(.*?)"$/) do |pagecontent|
