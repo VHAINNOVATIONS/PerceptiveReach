@@ -14,7 +14,5 @@ Then I should see "Data Entry" widget
 And I should see "User Notes:" 
 And I should see "SPAN Records"
 And I should see "VistA Records:" 
-And I should see "High Risk: Date First Identified:"
-And I should see "Date Last Updated:"
 And I should see "--No Data Available--"
 And I click on "Logout" button
