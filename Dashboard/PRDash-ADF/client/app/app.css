@@ -416,6 +416,17 @@ fieldset[disabled] .btn-warning.active {
   background-color: transparent;
   text-decoration: underline;
 }
+
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  /*Chrome CSS here*/
+  div:focus,
+  form:focus,
+  li:focus {
+      outline: none;
+  }
+}
+
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
     color: #000000;
@@ -513,3 +524,4 @@ position: relative;
 -webkit-box-shadow: 0px 2px 10px rgba(50, 50, 50, 0.5);
 }
 
+}
