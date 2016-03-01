@@ -74,6 +74,7 @@ angular.module('app')
         style: {
           width: '55%'
         },
+        canClose:false,
         sizeX:18,
         sizeY:10
       },
@@ -182,7 +183,8 @@ angular.module('app')
           vamc: 1
         },
         sizeX:15,
-        sizeY:9
+        sizeY:9,
+        canClose:false
       },
       {
         name: 'FacilityTable',
@@ -197,7 +199,8 @@ angular.module('app')
           vamc: 1
         },
         sizeX:15,
-        sizeY:9
+        sizeY:9,
+        canClose:false
       },
 
 	   {
