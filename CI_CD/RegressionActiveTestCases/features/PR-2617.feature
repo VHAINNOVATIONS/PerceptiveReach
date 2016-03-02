@@ -1,6 +1,7 @@
 Feature: Prevent Roster widgets from being deleted from the Dashboard PR-2617 
 @Prevent_Individual_Roster_widgets_deletion-PR_2617
-Scenario: PR-2617
+Scenario: I open a web browser and see the Patient Rooster widget 
+
 Given I navigate to the http://localhost:7003/
 Then I should see "Perceptive Reach"
 Then I put in "email" field as "TESTER254"
@@ -15,7 +16,8 @@ Then I should see the "Patient Roster by VAMC" widget
 And I click on "Logout" button
 
 @Prevent_Surveillance_Rooster_Deletion-PR_2617
-Scenario: PR-2617
+Scenario: I open a web browser and see the VISN Rooster widget 
+
 Given I navigate to the http://localhost:7003/
 Then I should see "Perceptive Reach"
 Then I put in "email" field as "TESTER254"
@@ -32,7 +34,8 @@ Then I should see the "Facility Roster" widget
 And I click on "Logout" button
 
 @Prevent_Facility_Rooster_Deletion-PR_2617
-Scenario: PR-2617
+Scenario: I open a web browser and see the Facility Rooster widget 
+
 Given I navigate to the http://localhost:7003/
 Then I should see "Perceptive Reach"
 Then I put in "email" field as "TESTER254"
