@@ -322,7 +322,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/adf/directives/dashboardLayouts/dashboardLayouts.html",
-    "<ul ui-sortable=\"sortableOptions\" ng-model=\"layouts\" class=\"nav nav-tabs layout-tabs\" offset=\"59\" style=\"z-index:5;background-color:white;\" sticky>\r" +
+    "<ul ng-model=\"layouts\" class=\"nav nav-tabs layout-tabs\" offset=\"59\" style=\"z-index:5;background-color:white;\" sticky>\r" +
     "\n" +
     "    <li ng-repeat=\"layout in layouts\" ng-class=\"{ active: layout.active }\">\r" +
     "\n" +
@@ -345,6 +345,8 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "        </a>\r" +
     "\n" +
     "    </li>\r" +
+    "\n" +
+    "    <label class=\"pull-right\" style=\"padding:5px;font-weight:normal;\">Data Last Updated:{{options.dataLastUpdated | date: \"MM-dd-yyyy\"}}</label>\r" +
     "\n" +
     "</ul>\r" +
     "\n" +

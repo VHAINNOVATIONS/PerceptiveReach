@@ -138,13 +138,6 @@ angular.module('ui.dashboard')
             }
           };
 
-          var sortableDefaults = {
-            stop: function() {
-              scope.options.saveLayouts();
-            },
-            distance: 5
-          };
-          scope.sortableOptions = angular.extend({}, sortableDefaults, scope.options.sortableOptions || {});
         }
       };
     }
