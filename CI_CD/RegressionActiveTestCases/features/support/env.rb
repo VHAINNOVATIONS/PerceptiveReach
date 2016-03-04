@@ -2,6 +2,7 @@ require 'capybara/cucumber'
 require 'capybara-screenshot/cucumber'
 require "tiny_tds"
 require 'selenium-webdriver'
+require 'capybara/email'
 
 Capybara.default_wait_time = 15
 Capybara.default_driver = :selenium
