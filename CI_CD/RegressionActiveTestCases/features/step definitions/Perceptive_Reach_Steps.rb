@@ -210,15 +210,6 @@ Then(/^I put in "(.*?)" field as "(.*?)"$/) do |arg1, arg2|
 fill_in(arg1, :with => arg2)
 end
 
-Then(/^I select the 3rd row from Patient Roster Widget$/) do
-  find(:xpath, './/*[@id=\'tblPatient\']/tbody/tr[3]').click
-end
-
-Then(/^I should see the SSN in patient contact equal to SSN in 3rd row of Patient Roster$/) do
-  ssn = find(:xpath, './/*[@id=\'tblPatient\']/tbody/tr[3]/td[2]').text
-  expect(find(:xpath,'.//div[@wt-contact=\'\']/div[@class=\'ng-binding\']')).to have_content(ssn)
-end
-
 Then(/^I check the page for a Veteran's SSN$/) do
   expect(page).to have_content 'Veteran Roster'
   client1 = TinyTds::Client.new username: 'user', password: 'pw', host: 'host', database: 'db'
@@ -509,3 +500,11 @@ Then(/^I should wait$/) do
   # pending # express the regexp above with the code you wish you had
   sleep(30)
 end
+
+Then (/^I send an email following the link$/) do 
+	click_link('Contact Help Desk')
+	open_email('vaperceptivereachsupport@va.gov')
+	expect(current_email).to eq "vaperceptivereachsupport@va.gov"
+	expect(current_email).subject eq "Perceptive Reach Dashboard Support"
+	clear_emails
+end 
