@@ -35,19 +35,22 @@ angular.module('app')
       for (var layoutIdx in user.DashboardData.layouts){
         layout = user.DashboardData.layouts[layoutIdx];
 
-        if(layout.title.indexOf("Surveillance") != -1){
+        if(layout.title.indexOf("Surveillance View") != -1){
           layout.defaultWidgets = defaultWidgetsLayout.surveillance;
           layout.widgetDefinitions = widgetsAllObj.surveillance;
+          layout.IsMalhar = true;
           if (layout.active) activeView = "surveillance";
         }
         else if(layout.title.indexOf("Facility") != -1){
           layout.defaultWidgets = defaultWidgetsLayout.facility;
           layout.widgetDefinitions = widgetsAllObj.facility;
+          layout.IsMalhar = true;
           if (layout.active) activeView = "facility";
         }
         else if(layout.title.indexOf("Individual") != -1){
           layout.defaultWidgets = defaultWidgetsLayout.individual;
           layout.widgetDefinitions = widgetsAllObj.individual;
+          layout.IsMalhar = true;
           if (layout.active) activeView = "individual";
         }
 
@@ -61,17 +64,20 @@ angular.module('app')
       var role = user.UserRole;
       var layout = null;
       if (user.VISN_State_Reg_View_Access){
-        layout = { title: 'Surveillance View', active: (role.match(/^(SUP|REP|ADM)$/)) ? true : false , defaultWidgets: defaultWidgetsLayout.surveillance, widgetDefinitions: widgetsAllObj.surveillance};
+        layout = { title: 'Surveillance View', active: (role.match(/^(SUP|REP|ADM)$/)) ? true : false , defaultWidgets: defaultWidgetsLayout.surveillance, widgetDefinitions: widgetsAllObj.surveillance,IsMalhar:true};
         if (layout.active) activeView = "surveillance";
         layouts.push(layout);
       }
       if (user.Facility_View_Access){
-        layout = { title: 'Facility View', active: (role.match(/^(CCT)$/)) ? true : false, defaultWidgets: defaultWidgetsLayout.facility, widgetDefinitions: widgetsAllObj.facility};
+        layout = { title: 'Facility View', active: (role.match(/^(CCT)$/)) ? true : false, defaultWidgets: defaultWidgetsLayout.facility, widgetDefinitions: widgetsAllObj.facility,IsMalhar:true};
         if (layout.active) activeView = "facility";
         layouts.push(layout);  
       }
       if (user.Individual_View_Access){
-        layouts.push({ title: 'Individual View', active: false, defaultWidgets: defaultWidgetsLayout.individual, widgetDefinitions: widgetsAllObj.individual});
+        layouts.push({ title: 'Individual View', active: false, defaultWidgets: defaultWidgetsLayout.individual, widgetDefinitions: widgetsAllObj.individual,IsMalhar:true});
+      }
+      if (user.VISN_State_Reg_View_Access){
+        layouts.push({ title: 'Surveillance Visualization', active: false,IsMalhar:false});
       }
     }
 

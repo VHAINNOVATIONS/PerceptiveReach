@@ -39,6 +39,7 @@ module.exports = function(app) {
   app.use('/api/visnRoster', require('./api/visnRoster'));
   app.use('/api/facilityRoster', require('./api/facilityRoster'));
   app.use('/api/CDSQuestionnaire', require('./api/CDSQuestionnaire'));
+  app.use('/api/surveillanceViz', require('./api/surveillanceViz'));
   
   app.use('/api/dashboard', require('./api/dashboard'));
 

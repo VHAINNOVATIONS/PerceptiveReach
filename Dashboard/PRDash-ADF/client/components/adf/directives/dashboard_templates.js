@@ -1,5 +1,84 @@
 angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
 
+  $templateCache.put("client/components/adf/directives/Viz/SurveillanceViz.html",
+    "<div>\r" +
+    "\n" +
+    "\t<div class='dc-data-count pull-right' style=\"margin-top:-35px\">\r" +
+    "\n" +
+    "\t\t<span class='filter-count' style=\"font-size: xx-large\"></span>\r" +
+    "\n" +
+    "\t\ttotal patients in view</span> |\r" +
+    "\n" +
+    "\t\t<a class=\"btn btn-primary btn-sm\" id=\"reset\" href=\"javascript:reset()\" style=\"margin-top:-10px\">Reset All</a>\r" +
+    "\n" +
+    "\t</div>  \r" +
+    "\n" +
+    "\t<div gridster=\"gridsterOpts\" style=\"margin-top:35px;\" class=\"dashboard-widget-area\" tabindex=\"-1\">\r" +
+    "\n" +
+    "\t\t<ul>\r" +
+    "\n" +
+    "\t\t\t<li gridster-item size-x=\"12\" size-y=\"8\" class=\"gridsterContainer\" >\r" +
+    "\n" +
+    "\t\t\t\t<div class=\"container-fluid\" style=\"height:100%;\">\r" +
+    "\n" +
+    "\t\t\t\t\t<div class=\"row\" style=\"height:100%;\">\r" +
+    "\n" +
+    "\t\t\t\t\t\t<strong style=\"padding:5px;\">Total Patients At-Risk by States</strong>\r" +
+    "\n" +
+    "\t\t\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\n" +
+    "\t\t\t\t\t\t</div> \r" +
+    "\n" +
+    "\t\t\t\t\t\t<div id=\"us-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\n" +
+    "\t\t\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('usChart')\"  style=\"display: none;\">reset</a>\r" +
+    "\n" +
+    "\t\t\t\t\t\t\t<span class=\"reset\" style=\"display: none;\"> | Current filter: <span class=\"filter\"></span></span>\r" +
+    "\n" +
+    "\t\t\t\t\t\t\t<div class=\"clearfix\"></div>\r" +
+    "\n" +
+    "\t\t\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t</li>\r" +
+    "\n" +
+    "\t\t\t<li gridster-item size-x=\"10\" size-y=\"5\" class=\"gridsterContainer\" >\r" +
+    "\n" +
+    "\t\t\t\t<strong style=\"padding:5px;\">Total Patients per VISN</strong>\r" +
+    "\n" +
+    "\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\n" +
+    "\t\t\t\t</div> \r" +
+    "\n" +
+    "\t\t\t\t<div id=\"visnBar-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"reset\" style=\"display: none;\">range: <span class=\"filter\"></span></span>\r" +
+    "\n" +
+    "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('visnBarChart')\"  style=\"display: none;\">reset</a>\r" +
+    "\n" +
+    "\t\t\t\t\t<div class=\"clearfix\"></div>\r" +
+    "\n" +
+    "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t</li>\r" +
+    "\n" +
+    "\t\t</ul>\r" +
+    "\n" +
+    "\t</div>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "\r" +
+    "\n"
+  );
+
   $templateCache.put("client/components/adf/directives/dashboard/altDashboard.html",
     "<div>\r" +
     "\n" +
@@ -350,7 +429,14 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "</ul>\r" +
     "\n" +
-    "<div ng-repeat=\"layout in layouts | filter:isActive\" dashboard=\"layout.dashboard\" template-url=\"client/components/adf/directives/dashboard/dashboard.html\" dashboard-title=\"layout.title\"></div>"
+    "<div ng-repeat=\"layout in layouts | filter:isActive\">\r" +
+    "\n" +
+    "    <div ng-if=\"layout.IsMalhar\" dashboard=\"layout.dashboard\" template-url=\"client/components/adf/directives/dashboard/dashboard.html\" dashboard-title=\"layout.title\"></div>    \r" +
+    "\n" +
+    "    <div ng-if=\"!layout.IsMalhar\" viz></div> \r" +
+    "\n" +
+    "</div>\r" +
+    "\n"
   );
 
 }]);
