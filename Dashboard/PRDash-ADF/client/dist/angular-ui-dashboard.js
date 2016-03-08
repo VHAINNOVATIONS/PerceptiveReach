@@ -494,7 +494,7 @@ angular.module('ui.dashboard')
       scope: true,
 
       controller: ['$scope', '$attrs', function (scope, attrs) {
-        scope.gridsterOpts = {
+        scope.gridsterOpt = {
             columns: 30, // the width of the grid, in columns
             pushing: true, // whether to push other items out of the way on move or resize
             floating: true, // whether to automatically float items up so they stack (you can temporarily disable if you are adding unsorted items with ng-repeat)
@@ -504,11 +504,11 @@ angular.module('ui.dashboard')
             rowHeight: 'match', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
             //margins: [10, 10], // the pixel distance between each widget
             outerMargin: true, // whether margins apply to outer edges of the grid
-            defaultSizeX: 10, // the default width of a gridster item, if not specifed
-            defaultSizeY: 6, // the default height of a gridster item, if not specified
-            minSizeX: 5, // minimum column width of an item
+            defaultSizeX: 2, // the default width of a gridster item, if not specifed
+            defaultSizeY: 2, // the default height of a gridster item, if not specified
+            minSizeX: 2, // minimum column width of an item
             maxSizeX: null, // maximum column width of an item
-            minSizeY: 5, // minumum row height of an item
+            minSizeY: 2, // minumum row height of an item
             maxSizeY: null, // maximum row height of an item
             resizable: {
                enabled: false
@@ -531,14 +531,14 @@ angular.module('ui.dashboard')
         scope.visnBarChart = dc.barChart('#visnBar-chart');
         //var vamcBarChart = dc.barChart('#vamcBar-chart');
         //var visnDataTable = dc.dataTable('.dc-data-table');
-        //var genderChart = dc.pieChart('#gender-chart');
-        //var maritalChart = dc.rowChart('#marital-chart');
-        //var riskChart = dc.pieChart('#risk-chart');
-        //var militaryChart = dc.rowChart('#military-chart');
+        scope.genderChart = dc.pieChart('#gender-chart');
+        scope.maritalChart = dc.rowChart('#marital-chart');
+        scope.riskChart = dc.pieChart('#risk-chart');
+        scope.militaryChart = dc.rowChart('#military-chart');
         scope.totalCount = dc.dataCount('.dc-data-count');
 
         $('.LoadingDiv').show();
-
+        
         d3.json('/api/SurveillanceViz', function (data) {
 
           var ndx = crossfilter(data);
@@ -665,7 +665,7 @@ angular.module('ui.dashboard')
 
             var projection = d3.geo.albersUsa()
               .scale(width)
-              .translate([width/2, height/1.6]);
+              .translate([width/2, height/1.95]);
 
             scope.usChart
              .width(width)
@@ -687,11 +687,11 @@ angular.module('ui.dashboard')
              });
 
             var visnBarWidth = parseInt(d3.select('#visnBar-chart').style('width'));
-            var visnBarHeight = parseInt(d3.select('#visnBar-chart').style('width'));
+            var visnBarHeight = parseInt(d3.select('#visnBar-chart').style('height'));
             
             scope.visnBarChart
               .width(visnBarWidth)
-              .height(visnBarHeight/2.5)
+              .height(visnBarHeight/1.3)
               .margins({ top: 10, right: 50, bottom: 30, left: 50 })
               .dimension(visnBarChartDim)
               .group(visnBarGroup)
@@ -704,6 +704,61 @@ angular.module('ui.dashboard')
               .xUnits(dc.units.ordinal)
               .xAxis().tickFormat();
 
+            var genderChartWidth = parseInt(d3.select('#gender-chart').style('width'));
+            var genderChartHeight = parseInt(d3.select('#gender-chart').style('height'));
+
+            scope.genderChart
+              .width(genderChartWidth)
+              .height(genderChartHeight)
+              .radius(genderChartWidth/3)
+              .dimension(genderDim)
+              .group(genderGroup);
+
+            var riskChartWidth = parseInt(d3.select('#risk-chart').style('width'));
+            var riskChartHeight = parseInt(d3.select('#risk-chart').style('height'));
+
+            scope.riskChart
+              .width(riskChartWidth)
+              .height(riskChartHeight)
+              .radius(genderChartWidth/3)
+              .dimension(riskDim)
+              .group(riskGroup);
+
+            var militaryChartWidth = parseInt(d3.select('#military-chart').style('width'));
+            var militaryChartHeight = parseInt(d3.select('#military-chart').style('height'));
+            var colorScale = d3.scale.ordinal().range(['#99d6ff', '#99d6ff', '#99d6ff', '#99d6ff', '#80ccff', '#66c2ff', '#4db8ff', '#33adff', '#1aa3ff', '#0099ff', '#008ae6', '#007acc', '#006bb3', '#005c99', '#004c80', '#003d66', '#002e4d', '#001f33']);
+            scope.militaryChart 
+               .width(militaryChartWidth)
+               .height(militaryChartHeight - 40)
+               .margins({ top: 20, left: 10, right: 10, bottom: 20 })
+               .group(militaryGroup)
+               .dimension(militaryDim)
+               .colors(colorScale)
+               .label(function (d) {
+                 return d.key;
+               })
+               .title(function (d) {
+                 return d.value;
+               })
+               .elasticX(true)
+               .xAxis().ticks(4);
+
+            var maritalChartWidth = parseInt(d3.select('#marital-chart').style('width'));
+            var maritalChartHeight = parseInt(d3.select('#marital-chart').style('height'));
+            scope.maritalChart
+              .width(maritalChartWidth)
+              .height(maritalChartHeight - 40)
+              .margins({ top: 20, left: 10, right: 10, bottom: 20 })
+              .group(maritalGroup)
+              .dimension(maritalDim)
+              .label(function (d) {
+                return d.key;
+              })
+              .title(function (d) {
+                return d.value;
+              })
+              .elasticX(true)
+              .xAxis().ticks(4);
          
             dc.renderAll();
             $('.LoadingDiv').hide();
@@ -942,11 +997,11 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t</div>  \r" +
     "\n" +
-    "\t<div gridster=\"gridsterOpts\" style=\"margin-top:35px;\" class=\"dashboard-widget-area\" tabindex=\"-1\">\r" +
+    "\t<div gridster=\"gridsterOpt\" style=\"margin-top:35px;\" class=\"dashboard-widget-area\" tabindex=\"-1\">\r" +
     "\n" +
     "\t\t<ul>\r" +
     "\n" +
-    "\t\t\t<li gridster-item size-x=\"12\" size-y=\"8\" class=\"gridsterContainer\" >\r" +
+    "\t\t\t<li gridster-item size-x=\"15\" size-y=\"8\" class=\"gridsterContainer\" >\r" +
     "\n" +
     "\t\t\t\t<div class=\"container-fluid\" style=\"height:100%;\">\r" +
     "\n" +
@@ -976,7 +1031,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t</li>\r" +
     "\n" +
-    "\t\t\t<li gridster-item size-x=\"10\" size-y=\"5\" class=\"gridsterContainer\" >\r" +
+    "\t\t\t<li gridster-item size-x=\"15\" size-y=\"4\" class=\"gridsterContainer\" >\r" +
     "\n" +
     "\t\t\t\t<strong style=\"padding:5px;\">Total Patients per VISN</strong>\r" +
     "\n" +
@@ -990,11 +1045,93 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t\t<span class=\"reset\" style=\"display: none;\">range: <span class=\"filter\"></span></span>\r" +
     "\n" +
+    "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('maritalChart')\"  style=\"display: none;\">reset</a>\r" +
+    "\n" +
+    "\t\t\t\t\t<div class=\"clearfix\"></div>\r" +
+    "\n" +
+    "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t</li>\r" +
+    "\n" +
+    "\t\t\t<li gridster-item size-x=\"7\" size-y=\"4\" class=\"gridsterContainer\" >\r" +
+    "\n" +
+    "\t\t\t\t<strong style=\"padding:5px;\">Marital Status</strong>\r" +
+    "\n" +
+    "\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\n" +
+    "\t\t\t\t</div> \r" +
+    "\n" +
+    "\t\t\t\t<div id=\"marital-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"reset\" style=\"display: none;\">range: <span class=\"filter\"></span></span>\r" +
+    "\n" +
     "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('visnBarChart')\"  style=\"display: none;\">reset</a>\r" +
     "\n" +
     "\t\t\t\t\t<div class=\"clearfix\"></div>\r" +
     "\n" +
     "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t</li>\r" +
+    "\n" +
+    "\t\t\t<li gridster-item size-x=\"4\" size-y=\"4\" class=\"gridsterContainer\" >\r" +
+    "\n" +
+    "\t\t\t\t<strong>Gender Chart</strong>\r" +
+    "\n" +
+    "\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\n" +
+    "\t\t\t\t</div> \r" +
+    "\n" +
+    "\t\t\t\t<div id=\"gender-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\n" +
+    "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('genderChart')\"  style=\"display: none;\">reset</a>\r" +
+    "\n" +
+    "\t\t\t\t\t<div class=\"clearfix\"></div>\r" +
+    "\n" +
+    "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t</li>\r" +
+    "\n" +
+    "\t\t\t<li gridster-item size-x=\"4\" size-y=\"4\" class=\"gridsterContainer\" >\r" +
+    "\n" +
+    "\t\t\t\t<strong>Risk Chart</strong>\r" +
+    "\n" +
+    "\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\n" +
+    "\t\t\t\t</div> \r" +
+    "\n" +
+    "\t\t\t\t<div id=\"risk-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\n" +
+    "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('riskChart')\"  style=\"display: none;\">reset</a>\r" +
+    "\n" +
+    "\t\t\t\t\t<div class=\"clearfix\"></div>\r" +
+    "\n" +
+    "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t</li>\r" +
+    "\n" +
+    "\t\t\t<li gridster-item size-x=\"15\" size-y=\"7\" class=\"gridsterContainer\" >\r" +
+    "\n" +
+    "\t\t\t\t<strong>Military Branch</strong>\r" +
+    "\n" +
+    "\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\n" +
+    "\t\t\t\t</div> \r" +
+    "\n" +
+    "\t\t\t\t <div id=\"military-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\n" +
+    "\t\t\t        <a class=\"reset\"   href=\"#\" ng-click=\"resetChart('militaryChart')\"  style=\"display: none;\">reset</a>\r" +
+    "\n" +
+    "\t\t\t        <div class=\"clearfix\"></div>\r" +
+    "\n" +
+    "\t\t\t      </div>\r" +
     "\n" +
     "\t\t\t</li>\r" +
     "\n" +

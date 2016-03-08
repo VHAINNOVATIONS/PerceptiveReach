@@ -13,11 +13,11 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t</div>  \r" +
     "\n" +
-    "\t<div gridster=\"gridsterOpts\" style=\"margin-top:35px;\" class=\"dashboard-widget-area\" tabindex=\"-1\">\r" +
+    "\t<div gridster=\"gridsterOpt\" style=\"margin-top:35px;\" class=\"dashboard-widget-area\" tabindex=\"-1\">\r" +
     "\n" +
     "\t\t<ul>\r" +
     "\n" +
-    "\t\t\t<li gridster-item size-x=\"12\" size-y=\"8\" class=\"gridsterContainer\" >\r" +
+    "\t\t\t<li gridster-item size-x=\"15\" size-y=\"8\" class=\"gridsterContainer\" >\r" +
     "\n" +
     "\t\t\t\t<div class=\"container-fluid\" style=\"height:100%;\">\r" +
     "\n" +
@@ -47,7 +47,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t</li>\r" +
     "\n" +
-    "\t\t\t<li gridster-item size-x=\"10\" size-y=\"5\" class=\"gridsterContainer\" >\r" +
+    "\t\t\t<li gridster-item size-x=\"15\" size-y=\"4\" class=\"gridsterContainer\" >\r" +
     "\n" +
     "\t\t\t\t<strong style=\"padding:5px;\">Total Patients per VISN</strong>\r" +
     "\n" +
@@ -61,11 +61,93 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t\t<span class=\"reset\" style=\"display: none;\">range: <span class=\"filter\"></span></span>\r" +
     "\n" +
+    "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('maritalChart')\"  style=\"display: none;\">reset</a>\r" +
+    "\n" +
+    "\t\t\t\t\t<div class=\"clearfix\"></div>\r" +
+    "\n" +
+    "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t</li>\r" +
+    "\n" +
+    "\t\t\t<li gridster-item size-x=\"7\" size-y=\"4\" class=\"gridsterContainer\" >\r" +
+    "\n" +
+    "\t\t\t\t<strong style=\"padding:5px;\">Marital Status</strong>\r" +
+    "\n" +
+    "\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\n" +
+    "\t\t\t\t</div> \r" +
+    "\n" +
+    "\t\t\t\t<div id=\"marital-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"reset\" style=\"display: none;\">range: <span class=\"filter\"></span></span>\r" +
+    "\n" +
     "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('visnBarChart')\"  style=\"display: none;\">reset</a>\r" +
     "\n" +
     "\t\t\t\t\t<div class=\"clearfix\"></div>\r" +
     "\n" +
     "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t</li>\r" +
+    "\n" +
+    "\t\t\t<li gridster-item size-x=\"4\" size-y=\"4\" class=\"gridsterContainer\" >\r" +
+    "\n" +
+    "\t\t\t\t<strong>Gender Chart</strong>\r" +
+    "\n" +
+    "\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\n" +
+    "\t\t\t\t</div> \r" +
+    "\n" +
+    "\t\t\t\t<div id=\"gender-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\n" +
+    "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('genderChart')\"  style=\"display: none;\">reset</a>\r" +
+    "\n" +
+    "\t\t\t\t\t<div class=\"clearfix\"></div>\r" +
+    "\n" +
+    "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t</li>\r" +
+    "\n" +
+    "\t\t\t<li gridster-item size-x=\"4\" size-y=\"4\" class=\"gridsterContainer\" >\r" +
+    "\n" +
+    "\t\t\t\t<strong>Risk Chart</strong>\r" +
+    "\n" +
+    "\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\n" +
+    "\t\t\t\t</div> \r" +
+    "\n" +
+    "\t\t\t\t<div id=\"risk-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\n" +
+    "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('riskChart')\"  style=\"display: none;\">reset</a>\r" +
+    "\n" +
+    "\t\t\t\t\t<div class=\"clearfix\"></div>\r" +
+    "\n" +
+    "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t</li>\r" +
+    "\n" +
+    "\t\t\t<li gridster-item size-x=\"15\" size-y=\"7\" class=\"gridsterContainer\" >\r" +
+    "\n" +
+    "\t\t\t\t<strong>Military Branch</strong>\r" +
+    "\n" +
+    "\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\n" +
+    "\t\t\t\t</div> \r" +
+    "\n" +
+    "\t\t\t\t <div id=\"military-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\n" +
+    "\t\t\t        <a class=\"reset\"   href=\"#\" ng-click=\"resetChart('militaryChart')\"  style=\"display: none;\">reset</a>\r" +
+    "\n" +
+    "\t\t\t        <div class=\"clearfix\"></div>\r" +
+    "\n" +
+    "\t\t\t      </div>\r" +
     "\n" +
     "\t\t\t</li>\r" +
     "\n" +
