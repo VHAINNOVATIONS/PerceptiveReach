@@ -11,11 +11,11 @@ And I click on "Login" button
 When I click on "Individual View"
 Then I click on the Default Widgets button
 Then I should see the "Patient Roster by VAMC" widget
-And I click on close on the "RoosterTable" widget
+And I click on close on the "RosterTable" widget
 Then I should see the "Patient Roster by VAMC" widget
 And I click on "Logout" button
 
-@Prevent_Surveillance_Rooster_Deletion-PR_3760
+@Prevent_Surveillance_Roster_Deletion-PR_3760
 Scenario: I open a web browser and see the VISN Rooster widget 
 
 Given I navigate to the http://localhost:7003/
