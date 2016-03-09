@@ -17,7 +17,7 @@ exports.index = function(req, res) {
 		var request = new sql.Request(connection);
 			
 		/*Configure database query */
-		var query = "select * from vw_SurveillanceViz";
+		var query = "select * from vw_SurveillanceViz order by VISN";
 
 		/*Query database */
 		request.query(query, function(err, recordset) {
