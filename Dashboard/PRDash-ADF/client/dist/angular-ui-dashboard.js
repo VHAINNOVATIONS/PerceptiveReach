@@ -531,6 +531,7 @@ angular.module('ui.dashboard')
           scope.riskChart.filterAll();
           scope.militaryChart.filterAll();
           scope.totalCount.filterAll();
+          scope.vamcBubbleChart.filterAll();
           dc.redrawAll();
         };
 
@@ -538,7 +539,7 @@ angular.module('ui.dashboard')
       link: function (scope) {
 
         scope.usChart = dc.geoChoroplethChart("#us-chart");
-        //var visnBubbleChart = dc.bubbleChart('#visn-bubble-chart');
+        scope.vamcBubbleChart = dc.bubbleChart('#vamc-bubble-chart');
         scope.visnBarChart = dc.barChart('#visnBar-chart');
         //var vamcBarChart = dc.barChart('#vamcBar-chart');
         //scope.visnDataTable = dc.dataTable('#dc-data-table');
@@ -571,11 +572,11 @@ angular.module('ui.dashboard')
           });
 
 
-          var visnDim = ndx.dimension(function (d) {
-            return d.VISN;
+          var vamcDim = ndx.dimension(function (d) {
+            return d.STA3N;
           });
 
-          var visnGroup = visnDim.group().reduce(
+          var vamcGroup = vamcDim.group().reduce(
              function (p, v) {
                ++p.count;
                p.PatientCount += parseInt(v.PatientCount);
@@ -615,15 +616,6 @@ angular.module('ui.dashboard')
           var visnBarGroup = visnBarChartDim.group().reduceSum(function (d) {
             return d["PatientCount"];
           });
-
-          var vamcBarChartDim = ndx.dimension(function (d) {
-            return d.STA3N;
-          });
-
-          var vamcBarGroup = vamcBarChartDim.group().reduceSum(function (d) {
-            return d["PatientCount"];
-          });
-
 
           var genderDim = ndx.dimension(function (d) {
             if (d.Gender == 'F') {
@@ -757,7 +749,7 @@ angular.module('ui.dashboard')
             var maritalChartWidth = parseInt(d3.select('#marital-chart').style('width'));
             var maritalChartHeight = parseInt(d3.select('#marital-chart').style('height'));
             scope.maritalChart
-              .width(maritalChartWidth)
+              .width(maritalChartWidth-20)
               .height(maritalChartHeight - 40)
               .margins({ top: 20, left: 10, right: 10, bottom: 20 })
               .group(maritalGroup)
@@ -770,6 +762,51 @@ angular.module('ui.dashboard')
               })
               .elasticX(true)
               .xAxis().ticks(4);
+
+            var vamcBubbleChartWidth = parseInt(d3.select('#vamc-bubble-chart').style('width'));
+            var vamcBubbleChartHeight = parseInt(d3.select('#vamc-bubble-chart').style('height'));
+            scope.vamcBubbleChart
+              .width(vamcBubbleChartWidth)
+              .height(vamcBubbleChartHeight - 40)
+              .margins({ top: 10, right: 50, bottom: 30, left: 40 })
+              .dimension(vamcDim)
+              .group(vamcGroup)
+              .keyAccessor(function (p) {
+                return p.value.PatientCount;
+              })
+              .valueAccessor(function (p) {
+                return p.value.AtRisk;
+              })
+              .radiusValueAccessor(function (p) {
+                return .01;
+              })
+              .maxBubbleRelativeSize(.3)
+              .x(d3.scale.linear().range([0, 50000]))
+              .y(d3.scale.linear().domain([0, 50000]))
+              .r(d3.scale.linear().range([0, 1]))
+              .elasticY(true)
+              .elasticX(true)
+              .yAxisPadding(100)
+              .xAxisPadding(500)
+              .renderHorizontalGridLines(true)
+              .renderVerticalGridLines(true)
+              .xAxisLabel('Total Patients')
+              .yAxisLabel('At Risk')
+              .renderLabel(true)
+              .label(function (p) {
+                return p.key;
+              })
+              .renderTitle(true)
+              .colors(colorbrewer.RdYlGn[9])
+              .colorDomain([0, 1000])
+              .colorAccessor(function (d) {
+                return d.value.AtRisk;
+              })
+              .title(function (p) {
+                return [
+                  p.key
+                ].join('\n');
+            });
          
             dc.renderAll();
             $('.LoadingDiv').hide();
@@ -1136,13 +1173,33 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t</div> \r" +
     "\n" +
-    "\t\t\t\t <div id=\"military-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\t\t\t\t<div id=\"military-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
     "\n" +
-    "\t\t\t        <a class=\"reset\"   href=\"#\" ng-click=\"resetChart('militaryChart')\"  style=\"display: none;\">reset</a>\r" +
+    "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('militaryChart')\"  style=\"display: none;\">reset</a>\r" +
     "\n" +
-    "\t\t\t        <div class=\"clearfix\"></div>\r" +
+    "\t\t\t\t\t<div class=\"clearfix\"></div>\r" +
     "\n" +
-    "\t\t\t      </div>\r" +
+    "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t</li>\r" +
+    "\n" +
+    "\t\t\t<li gridster-item size-x=\"15\" size-y=\"7\" class=\"gridsterContainer\" >\r" +
+    "\n" +
+    "\t\t\t\t<strong>Total Patients vs Total Risk in VAMC</strong>\r" +
+    "\n" +
+    "\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\n" +
+    "\t\t\t\t</div> \r" +
+    "\n" +
+    "\t\t\t\t<div id=\"vamc-bubble-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\n" +
+    "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('vamcBubbleChart')\"  style=\"display: none;\">reset</a>\r" +
+    "\n" +
+    "\t\t\t\t\t<div class=\"clearfix\"></div>\r" +
+    "\n" +
+    "\t\t\t\t</div>\r" +
     "\n" +
     "\t\t\t</li>\r" +
     "\n" +

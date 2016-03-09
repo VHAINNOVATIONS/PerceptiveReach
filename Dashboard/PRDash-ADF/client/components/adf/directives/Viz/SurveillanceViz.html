@@ -68,10 +68,20 @@
 				<div style="font-size: 1em;display: none" class="LoadingDiv">
 					<span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <label>Loading Visualization...</label>
 				</div> 
-				 <div id="military-chart" class="dc-chart" style="width:100%;height:100%;">
-			        <a class="reset"   href="#" ng-click="resetChart('militaryChart')"  style="display: none;">reset</a>
-			        <div class="clearfix"></div>
-			      </div>
+				<div id="military-chart" class="dc-chart" style="width:100%;height:100%;">
+					<a class="reset"   href="#" ng-click="resetChart('militaryChart')"  style="display: none;">reset</a>
+					<div class="clearfix"></div>
+				</div>
+			</li>
+			<li gridster-item size-x="15" size-y="7" class="gridsterContainer" >
+				<strong>Total Patients vs Total Risk in VAMC</strong>
+				<div style="font-size: 1em;display: none" class="LoadingDiv">
+					<span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <label>Loading Visualization...</label>
+				</div> 
+				<div id="vamc-bubble-chart" class="dc-chart" style="width:100%;height:100%;">
+					<a class="reset"   href="#" ng-click="resetChart('vamcBubbleChart')"  style="display: none;">reset</a>
+					<div class="clearfix"></div>
+				</div>
 			</li>
 		</ul>
 	</div>

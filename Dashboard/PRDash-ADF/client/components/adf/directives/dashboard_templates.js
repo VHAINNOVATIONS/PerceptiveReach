@@ -141,13 +141,33 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t</div> \r" +
     "\n" +
-    "\t\t\t\t <div id=\"military-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\t\t\t\t<div id=\"military-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
     "\n" +
-    "\t\t\t        <a class=\"reset\"   href=\"#\" ng-click=\"resetChart('militaryChart')\"  style=\"display: none;\">reset</a>\r" +
+    "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('militaryChart')\"  style=\"display: none;\">reset</a>\r" +
     "\n" +
-    "\t\t\t        <div class=\"clearfix\"></div>\r" +
+    "\t\t\t\t\t<div class=\"clearfix\"></div>\r" +
     "\n" +
-    "\t\t\t      </div>\r" +
+    "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t</li>\r" +
+    "\n" +
+    "\t\t\t<li gridster-item size-x=\"15\" size-y=\"7\" class=\"gridsterContainer\" >\r" +
+    "\n" +
+    "\t\t\t\t<strong>Total Patients vs Total Risk in VAMC</strong>\r" +
+    "\n" +
+    "\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\n" +
+    "\t\t\t\t</div> \r" +
+    "\n" +
+    "\t\t\t\t<div id=\"vamc-bubble-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\n" +
+    "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('vamcBubbleChart')\"  style=\"display: none;\">reset</a>\r" +
+    "\n" +
+    "\t\t\t\t\t<div class=\"clearfix\"></div>\r" +
+    "\n" +
+    "\t\t\t\t</div>\r" +
     "\n" +
     "\t\t\t</li>\r" +
     "\n" +
