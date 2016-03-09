@@ -508,3 +508,12 @@ Then (/^I send an email following the link$/) do
 	expect(current_email).subject eq "Perceptive Reach Dashboard Support"
 	clear_emails
 end 
+
+Then(/^I select the 3rd row from Patient Roster Widget$/) do
+  find(:xpath, './/*[@id=\'tblPatient\']/tbody/tr[3]').click
+end
+
+Then(/^I should see the SSN in patient contact equal to SSN in 3rd row of Patient Roster$/) do
+  ssn = find(:xpath, './/*[@id=\'tblPatient\']/tbody/tr[3]/td[2]').text
+  expect(find(:xpath,'.//div[@wt-contact=\'\']/div[@class=\'ng-binding\']')).to have_content(ssn)
+end
