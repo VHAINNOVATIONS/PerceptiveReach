@@ -41,6 +41,17 @@ angular.module('ui.dashboard')
           dc.redrawAll();
         };
 
+        scope.resetAll = function(chartName){
+          scope.usChart.filterAll();
+          scope.visnBarChart.filterAll();
+          scope.genderChart.filterAll();
+          scope.maritalChart.filterAll();
+          scope.riskChart.filterAll();
+          scope.militaryChart.filterAll();
+          scope.totalCount.filterAll();
+          dc.redrawAll();
+        };
+
       }],
       link: function (scope) {
 
@@ -48,7 +59,7 @@ angular.module('ui.dashboard')
         //var visnBubbleChart = dc.bubbleChart('#visn-bubble-chart');
         scope.visnBarChart = dc.barChart('#visnBar-chart');
         //var vamcBarChart = dc.barChart('#vamcBar-chart');
-        //var visnDataTable = dc.dataTable('.dc-data-table');
+        //scope.visnDataTable = dc.dataTable('#dc-data-table');
         scope.genderChart = dc.pieChart('#gender-chart');
         scope.maritalChart = dc.rowChart('#marital-chart');
         scope.riskChart = dc.pieChart('#risk-chart');
@@ -213,10 +224,10 @@ angular.module('ui.dashboard')
               .margins({ top: 10, right: 50, bottom: 30, left: 50 })
               .dimension(visnBarChartDim)
               .group(visnBarGroup)
-              .ordering(function (t) { return t.key; })
               .elasticY(true)
               .gap(3)
               .x(d3.scale.ordinal().domain(data.map(function (d) { return parseInt(d.VISN); })))
+              .ordering(d3.descending)
               .renderHorizontalGridLines(true)
               .brushOn(false)
               .xUnits(dc.units.ordinal)

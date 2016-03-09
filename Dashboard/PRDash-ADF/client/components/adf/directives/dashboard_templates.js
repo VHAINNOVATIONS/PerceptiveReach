@@ -9,7 +9,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\ttotal patients in view</span> |\r" +
     "\n" +
-    "\t\t<a class=\"btn btn-primary btn-sm\" id=\"reset\" href=\"javascript:reset()\" style=\"margin-top:-10px\">Reset All</a>\r" +
+    "\t\t<a class=\"btn btn-primary btn-sm\" id=\"reset\" href=\"#\" ng-click=\"resetAll()\"  style=\"margin-top:-10px\">Reset All</a>\r" +
     "\n" +
     "\t</div>  \r" +
     "\n" +
