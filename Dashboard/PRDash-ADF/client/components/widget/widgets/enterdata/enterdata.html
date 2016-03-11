@@ -5,7 +5,7 @@
           <div class="row">
             <div class="col-md-12 bs-example hr-text" style="padding: 2px;">
               <div class="panel-body" style="padding:5px;">
-                <div class="col-md-6">
+                <div class="col-md-6" ng-attr-title="{{data.HighRisk_UserNotes[hrIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}">
                   <label style="font-weight:normal">User Notes:</label>
                   <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
                     <button type="button" name="hrBack" class="btn btn-default pull-left" ng-disabled="hrIndex >= data.HighRisk_UserNotes.length-1" ng-click="goHrBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
@@ -19,7 +19,7 @@
                   </div><br/>
                   <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="hrText" name="highRiskTxt" ng-class="{enterDataDirty: enterWdgtForm.highRiskTxt.$dirty && enterWdgtForm.highRiskTxt.$valid}" id="hrText" maxlength="128"></textarea>
                 </div>
-                <div class="col-md-6" >    
+                <div class="col-md-6" ng-attr-title="{{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated | date:'MM/dd/yyyy @ h:mma'}}">
                   <label style="font-weight:normal">SPAN Records:</label>
                   <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
                     <button type="button" name="hrSpanBack" class="btn btn-default pull-left" ng-disabled="hrSpanIndex >= data.HighRisk_SPANImport.length-1" ng-click="goHrSpanBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
@@ -43,7 +43,7 @@
           <div class="row">
             <div class="col-md-12 bs-example mh-text" style="padding: 2px;">
               <div class="panel-body" style="padding:5px;">
-                <div class="col-md-6">
+                <div class="col-md-6" ng-attr-title="{{data.PrimaryHealthProvider_UserNotes[mhIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}">
                   <label style="font-weight:normal">User Notes:</label>
                   <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
                     <button type="button" name="mhBack" class="btn btn-default pull-left" ng-disabled="mhIndex >= data.PrimaryHealthProvider_UserNotes.length-1" ng-click="goMhBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
@@ -70,7 +70,7 @@
           <div class="row">
             <div class="col-md-12 bs-example sp-text" style="padding: 2px;">
               <div class="panel-body" style="padding:5px;">
-                <div class="col-md-6">
+                <div class="col-md-6" ng-attr-title="{{data.SafetyPlan_UserNotes[spIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}">
                   <label style="font-weight:normal">User Notes:</label>
                   <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
                     <button type="button" name="spBack" class="btn btn-default pull-left" ng-disabled="spIndex >= data.SafetyPlan_UserNotes.length-1" ng-click="goSpBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
@@ -84,7 +84,8 @@
                   </div><br>
                   <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="spText" name="safetyPlanTxt" ng-class="{enterDataDirty: enterWdgtForm.safetyPlanTxt.$dirty && enterWdgtForm.safetyPlanTxt.$valid}" id="spText" maxlength="128"></textarea>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" 
+                     ng-attr-title="{{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated | date:'MM/dd/yyyy @ h:mma'}}">
                   <label style="font-weight:normal">VistA Records:</label>
                   <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
                     <button type="button" name="spSpanBack" class="btn btn-default pull-left" ng-disabled="spSpanIndex >= data.SafetyPlan_SPANImport.length-1" ng-click="goSpSpanBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
@@ -106,7 +107,7 @@
           <div class="row">
             <div class="col-md-12 bs-example comment-text" style="padding: 2px;">
                <div class="panel-body" style="padding:5px;">
-                 <div class="col-md-12">
+                 <div class="col-md-12" ng-attr-title="{{data.GeneralComments[commentIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}">
                    <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
                       <button type="button" name="commentBack" class="btn btn-default pull-left" ng-disabled="commentIndex >= data.GeneralComments.length-1" ng-click="goCommentBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
                       </button>

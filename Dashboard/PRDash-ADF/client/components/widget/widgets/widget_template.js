@@ -420,7 +420,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
     "\n" +
-    "                <div class=\"col-md-6\">\r" +
+    "                <div class=\"col-md-6\" ng-attr-title=\"{{data.HighRisk_UserNotes[hrIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
     "\n" +
     "                  <label style=\"font-weight:normal\">User Notes:</label>\r" +
     "\n" +
@@ -448,7 +448,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                </div>\r" +
     "\n" +
-    "                <div class=\"col-md-6\" >    \r" +
+    "                <div class=\"col-md-6\" ng-attr-title=\"{{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
     "\n" +
     "                  <label style=\"font-weight:normal\">SPAN Records:</label>\r" +
     "\n" +
@@ -496,7 +496,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
     "\n" +
-    "                <div class=\"col-md-6\">\r" +
+    "                <div class=\"col-md-6\" ng-attr-title=\"{{data.PrimaryHealthProvider_UserNotes[mhIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
     "\n" +
     "                  <label style=\"font-weight:normal\">User Notes:</label>\r" +
     "\n" +
@@ -550,7 +550,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
     "\n" +
-    "                <div class=\"col-md-6\">\r" +
+    "                <div class=\"col-md-6\" ng-attr-title=\"{{data.SafetyPlan_UserNotes[spIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
     "\n" +
     "                  <label style=\"font-weight:normal\">User Notes:</label>\r" +
     "\n" +
@@ -578,7 +578,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                </div>\r" +
     "\n" +
-    "                <div class=\"col-md-6\">\r" +
+    "                <div class=\"col-md-6\" \r" +
+    "\n" +
+    "                     ng-attr-title=\"{{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
     "\n" +
     "                  <label style=\"font-weight:normal\">VistA Records:</label>\r" +
     "\n" +
@@ -622,7 +624,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "               <div class=\"panel-body\" style=\"padding:5px;\">\r" +
     "\n" +
-    "                 <div class=\"col-md-12\">\r" +
+    "                 <div class=\"col-md-12\" ng-attr-title=\"{{data.GeneralComments[commentIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
     "\n" +
     "                   <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
