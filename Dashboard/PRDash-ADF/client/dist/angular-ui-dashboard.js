@@ -1093,7 +1093,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t\t<span class=\"reset\" style=\"display: none;\">range: <span class=\"filter\"></span></span>\r" +
     "\n" +
-    "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('maritalChart')\"  style=\"display: none;\">reset</a>\r" +
+    "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('visnBarChart')\"  style=\"display: none;\">reset</a>\r" +
     "\n" +
     "\t\t\t\t\t<div class=\"clearfix\"></div>\r" +
     "\n" +
