@@ -517,3 +517,8 @@ Then(/^I should see the SSN in patient contact equal to SSN in 3rd row of Patien
   ssn = find(:xpath, './/*[@id=\'tblPatient\']/tbody/tr[3]/td[2]').text
   expect(find(:xpath,'.//div[@wt-contact=\'\']/div[@class=\'ng-binding\']')).to have_content(ssn)
 end
+
+Then(/^I should wait for inactivity$/) do
+  # pending # express the regexp above with the code you wish you had
+  sleep(1020)
+end
