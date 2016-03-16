@@ -19,26 +19,17 @@ exports.index = function(req, res) {
         }
         var request = new sql.Request(connection);
         var VISN = req.param("VISN");
-
-        // Configure WHERE clause if needed
-        var whereClause = '';
-
-        // Configure Database Query
-        var query = '';
+        
+        var userName = req.headers.prsessionkey != undefined ? req.headers.prsessionkey.split('::')[0] : '';
+        var visnId = null;
         if (VISN && validator.isInt(VISN)) {
-            request.input('VISN', sql.Int, VISN);
-             whereClause = " WHERE VISN = @VISN";            
+           visnId =  VISN
         }
 
-        query =  "SELECT [TotalPatients] AS Total"
-        query += " ,[AtRisk]"
-        query += " ,[VISN]"
-        query += " ,[STA3N]"
-        query += " ,[VAMC_Name]"
-        query += " ,[StateAbbr]"
-        query += " FROM [dbo].[vw_FacilityRoster]"
-        query += whereClause;
-        query += " ORDER BY STA3N ASC";
+
+        request.input('userNameParam', sql.VarChar(50), userName);
+        request.input('visnIdParam', sql.VarChar(25), visnId);
+        var query = "exec prsystem.sp_GetFacility @UserName=@userNameParam, @VisnId=@visnIdParam";
 
     
         // Query the database
