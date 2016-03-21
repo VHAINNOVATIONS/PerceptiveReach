@@ -522,3 +522,20 @@ Then(/^I should wait for inactivity$/) do
   # pending # express the regexp above with the code you wish you had
   sleep(1020)
 end
+
+Then (/^I should see "(.*?)" in "(.*?)" $/) do |arg1,arg2|
+	#find(:xpath, '//*[@id=/'hrText/']')
+  	fill_in('hrText', :with => 'The patient has coronary artery disease, hypertension, hypercholesterolemia, COPD and tobacco abuse. He reports that doing well. He did have some more knee pain for a few weeks, but this has resolved.')
+end
+
+Then(/^I see only max length in "(.*?)" $/) do |arg1|
+	find(:xpath, arg1).value.length.should_be 128
+end
+
+Then(/^I click on Add Data button$/) do
+  #find_button('Add Data').click 
+  page.execute_script("$(\"button:contains('Add Data')\")[0].scrollIntoView( true );")
+  page.execute_script("$(window).scrollTop( 600 );")
+  #find_button('Add Data').trigger('click')
+   find_button('Add Data').click 
+end
