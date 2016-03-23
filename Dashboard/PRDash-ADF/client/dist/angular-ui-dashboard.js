@@ -118,6 +118,11 @@ angular.module('ui.dashboard')
             }
         };
 
+        scope.CloseSaveAlert =  function(){
+          $(".unsavedDataAlert").fadeOut();
+        }
+
+
       }],
       link: function (scope) {
 
@@ -597,6 +602,10 @@ angular.module('ui.dashboard')
           };
 
           scope.makeLayoutActive = function(layout) {
+            if(scope.common && scope.common.data && scope.common.data.EnterDataIsUnsaved == true){
+              $(".unsavedDataAlert").fadeIn();
+              return;
+            }
 
             var current = layoutStorage.getActiveLayout();
 
@@ -795,6 +804,14 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("client/components/adf/directives/dashboard/dashboard.html",
     "<div>\r" +
+    "\n" +
+    "    <div class=\"alert alert-warning unsavedDataAlert\">\r" +
+    "\n" +
+    "          <p>You have Unsaved changes in EnterData widget, Please Save or Undo changes and retry.</p>\r" +
+    "\n" +
+    "          <button name=\"btnSaveAlertOk\" alt=\"Unsaved Changes\" class=\"btn btn-primary\" ng-click=\"CloseSaveAlert()\">OK</button>\r" +
+    "\n" +
+    "    </div>\r" +
     "\n" +
     "    <div offset=\"105\" style=\"z-index:5;background-color:white;\" sticky tabindex=\"-1\">\r" +
     "\n" +
