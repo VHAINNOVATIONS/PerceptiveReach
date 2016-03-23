@@ -16,6 +16,18 @@ body {
   font-weight: bold;
 }
 
+.unsavedDataAlert{
+  position:absolute;
+  z-index:1400;
+  top:50%;
+  right:30%;
+  text-align:center;
+  display:none;
+  border: 2px solid red;
+  font-weight: bold;
+}
+
+
 a{
     cursor: pointer;
 }

@@ -74,10 +74,10 @@ angular.module('ui.widgets')
           } );
 		  		 	  
 		  $($('#patientRosterDiv table')[0]).find('th').each(function(){
-                $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+        $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
 				$(this).attr('scope','col');
         $(this).attr('tabindex','-1');
-            });
+      });
 			
 		$('#tblPatient_info').attr('title','Patient Table: Tab to move to the next control');
     
@@ -98,6 +98,11 @@ angular.module('ui.widgets')
           });
 
           $('#tblPatient tbody').on( 'click', 'tr', function (event) {
+            if(scope.common.data.EnterDataIsUnsaved == true){
+              $(".unsavedDataAlert").fadeIn();
+              return;
+            }
+
             if($(this).hasClass('selected')){
             }
             else{

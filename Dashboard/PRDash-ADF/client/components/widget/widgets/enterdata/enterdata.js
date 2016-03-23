@@ -207,9 +207,60 @@ angular.module('ui.widgets')
           }
         };
 
+        $scope.clearEdits = function(){
+          $scope.SetWidgetData();
+          $scope.common.data.EnterDataIsUnsaved = false;
+        };
+
+        $scope.SetWidgetData = function(data){
+          if(data)
+          {
+            $scope.data = data;
+          }
+
+          $scope.enterWdgtForm.highRiskTxt.$setPristine();
+          $scope.enterWdgtForm.mentalProviderTxt.$setPristine();
+          $scope.enterWdgtForm.safetyPlanTxt.$setPristine();
+          $scope.enterWdgtForm.commentTxt.$setPristine();
+
+          $scope.hrIndex = 0;
+          $scope.hrSpanIndex = 0;
+          $scope.mhIndex = 0;
+          $scope.spIndex = 0;
+          $scope.spSpanIndex = 0;
+          $scope.commentIndex = 0;
+
+          $scope.hrText = $scope.noDataFound;
+          $scope.mhText = $scope.noDataFound;
+          $scope.spText = $scope.noDataFound;
+          $scope.commentText = $scope.noDataFound;
+
+          //Initialize control values
+          if($scope.data.HighRisk_UserNotes && $scope.data.HighRisk_UserNotes.length > 0)
+          {
+            $scope.hrText = $scope.data.HighRisk_UserNotes[0].UserNotes;
+          }
+          
+          if($scope.data.PrimaryHealthProvider_UserNotes && $scope.data.PrimaryHealthProvider_UserNotes.length > 0)
+          {
+            $scope.mhText = $scope.data.PrimaryHealthProvider_UserNotes[0].UserNotes;
+          }
+
+          if($scope.data.SafetyPlan_UserNotes && $scope.data.SafetyPlan_UserNotes.length > 0)
+          {
+            $scope.spText = $scope.data.SafetyPlan_UserNotes[0].UserNotes;
+          }
+
+          if($scope.data.GeneralComments && $scope.data.GeneralComments.length > 0)
+          {
+            $scope.commentText = $scope.data.GeneralComments[0].Comment;
+          }
+        };
+
         // ADD DATA SECTION
        
         $scope.addNewData = function() {
+          $scope.common.data.EnterDataIsUnsaved = false;
           var UpdatedHR_UserNotes = {isNew: false};
           var UpdatedMH_UserNotes = {isNew:  false};
           var UpdatedSP_UserNotes = {isNew: false};
@@ -263,52 +314,16 @@ angular.module('ui.widgets')
                                                     spUserNotes: UpdatedSP_UserNotes,
                                                     gcUserNotes: UpdatedGC_UserNotes
                                                   });
-          }
+          };
+
+          $scope.enterDataChanged = function(){
+            $scope.common.data.EnterDataIsUnsaved = true
+          };
 
       },
       link: function postLink(scope, element, attr) {
         scope.$watch('widgetData', function(data){
-          scope.data = data;
-
-          //Set all inputs to pristine state
-          scope.enterWdgtForm.highRiskTxt.$setPristine();
-          scope.enterWdgtForm.mentalProviderTxt.$setPristine();
-          scope.enterWdgtForm.safetyPlanTxt.$setPristine();
-          scope.enterWdgtForm.commentTxt.$setPristine();
-
-          scope.hrIndex = 0;
-          scope.hrSpanIndex = 0;
-          scope.mhIndex = 0;
-          scope.spIndex = 0;
-          scope.spSpanIndex = 0;
-          scope.commentIndex = 0;
-          
-          scope.hrText = scope.noDataFound;
-          scope.mhText = scope.noDataFound;
-          scope.spText = scope.noDataFound;
-          scope.commentText = scope.noDataFound;
-
-          //Initialize control values
-          if(scope.data.HighRisk_UserNotes && scope.data.HighRisk_UserNotes.length > 0)
-          {
-            scope.hrText = scope.data.HighRisk_UserNotes[scope.hrIndex].UserNotes;
-          }
-          
-          if(scope.data.PrimaryHealthProvider_UserNotes && scope.data.PrimaryHealthProvider_UserNotes.length > 0)
-          {
-            scope.mhText = scope.data.PrimaryHealthProvider_UserNotes[scope.mhIndex].UserNotes;
-          }
-
-          if(scope.data.SafetyPlan_UserNotes && scope.data.SafetyPlan_UserNotes.length > 0)
-          {
-            scope.spText = scope.data.SafetyPlan_UserNotes[scope.spIndex].UserNotes;
-          }
-
-          if(scope.data.GeneralComments && scope.data.GeneralComments.length > 0)
-          {
-            scope.commentText = scope.data.GeneralComments[scope.commentIndex].Comment;
-          }
-
+          scope.SetWidgetData(data);
         });
       }
     }

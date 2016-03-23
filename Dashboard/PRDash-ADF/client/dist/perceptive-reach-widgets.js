@@ -3244,9 +3244,60 @@ angular.module('ui.widgets')
           }
         };
 
+        $scope.clearEdits = function(){
+          $scope.SetWidgetData();
+          $scope.common.data.EnterDataIsUnsaved = false;
+        };
+
+        $scope.SetWidgetData = function(data){
+          if(data)
+          {
+            $scope.data = data;
+          }
+
+          $scope.enterWdgtForm.highRiskTxt.$setPristine();
+          $scope.enterWdgtForm.mentalProviderTxt.$setPristine();
+          $scope.enterWdgtForm.safetyPlanTxt.$setPristine();
+          $scope.enterWdgtForm.commentTxt.$setPristine();
+
+          $scope.hrIndex = 0;
+          $scope.hrSpanIndex = 0;
+          $scope.mhIndex = 0;
+          $scope.spIndex = 0;
+          $scope.spSpanIndex = 0;
+          $scope.commentIndex = 0;
+
+          $scope.hrText = $scope.noDataFound;
+          $scope.mhText = $scope.noDataFound;
+          $scope.spText = $scope.noDataFound;
+          $scope.commentText = $scope.noDataFound;
+
+          //Initialize control values
+          if($scope.data.HighRisk_UserNotes && $scope.data.HighRisk_UserNotes.length > 0)
+          {
+            $scope.hrText = $scope.data.HighRisk_UserNotes[0].UserNotes;
+          }
+          
+          if($scope.data.PrimaryHealthProvider_UserNotes && $scope.data.PrimaryHealthProvider_UserNotes.length > 0)
+          {
+            $scope.mhText = $scope.data.PrimaryHealthProvider_UserNotes[0].UserNotes;
+          }
+
+          if($scope.data.SafetyPlan_UserNotes && $scope.data.SafetyPlan_UserNotes.length > 0)
+          {
+            $scope.spText = $scope.data.SafetyPlan_UserNotes[0].UserNotes;
+          }
+
+          if($scope.data.GeneralComments && $scope.data.GeneralComments.length > 0)
+          {
+            $scope.commentText = $scope.data.GeneralComments[0].Comment;
+          }
+        };
+
         // ADD DATA SECTION
        
         $scope.addNewData = function() {
+          $scope.common.data.EnterDataIsUnsaved = false;
           var UpdatedHR_UserNotes = {isNew: false};
           var UpdatedMH_UserNotes = {isNew:  false};
           var UpdatedSP_UserNotes = {isNew: false};
@@ -3300,52 +3351,16 @@ angular.module('ui.widgets')
                                                     spUserNotes: UpdatedSP_UserNotes,
                                                     gcUserNotes: UpdatedGC_UserNotes
                                                   });
-          }
+          };
+
+          $scope.enterDataChanged = function(){
+            $scope.common.data.EnterDataIsUnsaved = true
+          };
 
       },
       link: function postLink(scope, element, attr) {
         scope.$watch('widgetData', function(data){
-          scope.data = data;
-
-          //Set all inputs to pristine state
-          scope.enterWdgtForm.highRiskTxt.$setPristine();
-          scope.enterWdgtForm.mentalProviderTxt.$setPristine();
-          scope.enterWdgtForm.safetyPlanTxt.$setPristine();
-          scope.enterWdgtForm.commentTxt.$setPristine();
-
-          scope.hrIndex = 0;
-          scope.hrSpanIndex = 0;
-          scope.mhIndex = 0;
-          scope.spIndex = 0;
-          scope.spSpanIndex = 0;
-          scope.commentIndex = 0;
-          
-          scope.hrText = scope.noDataFound;
-          scope.mhText = scope.noDataFound;
-          scope.spText = scope.noDataFound;
-          scope.commentText = scope.noDataFound;
-
-          //Initialize control values
-          if(scope.data.HighRisk_UserNotes && scope.data.HighRisk_UserNotes.length > 0)
-          {
-            scope.hrText = scope.data.HighRisk_UserNotes[scope.hrIndex].UserNotes;
-          }
-          
-          if(scope.data.PrimaryHealthProvider_UserNotes && scope.data.PrimaryHealthProvider_UserNotes.length > 0)
-          {
-            scope.mhText = scope.data.PrimaryHealthProvider_UserNotes[scope.mhIndex].UserNotes;
-          }
-
-          if(scope.data.SafetyPlan_UserNotes && scope.data.SafetyPlan_UserNotes.length > 0)
-          {
-            scope.spText = scope.data.SafetyPlan_UserNotes[scope.spIndex].UserNotes;
-          }
-
-          if(scope.data.GeneralComments && scope.data.GeneralComments.length > 0)
-          {
-            scope.commentText = scope.data.GeneralComments[scope.commentIndex].Comment;
-          }
-
+          scope.SetWidgetData(data);
         });
       }
     }
@@ -4977,10 +4992,10 @@ angular.module('ui.widgets')
           } );
 		  		 	  
 		  $($('#patientRosterDiv table')[0]).find('th').each(function(){
-                $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+        $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
 				$(this).attr('scope','col');
         $(this).attr('tabindex','-1');
-            });
+      });
 			
 		$('#tblPatient_info').attr('title','Patient Table: Tab to move to the next control');
     
@@ -5001,6 +5016,11 @@ angular.module('ui.widgets')
           });
 
           $('#tblPatient tbody').on( 'click', 'tr', function (event) {
+            if(scope.common.data.EnterDataIsUnsaved == true){
+              $(".unsavedDataAlert").fadeIn();
+              return;
+            }
+
             if($(this).hasClass('selected')){
             }
             else{
@@ -6133,7 +6153,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  </div><br/>\r" +
     "\n" +
-    "                  <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"hrText\" name=\"highRiskTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.highRiskTxt.$dirty && enterWdgtForm.highRiskTxt.$valid}\" id=\"hrText\" maxlength=\"128\"></textarea>\r" +
+    "                  <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"hrText\" name=\"highRiskTxt\" ng-change=\"enterDataChanged()\" ng-class=\"{enterDataDirty: enterWdgtForm.highRiskTxt.$dirty && enterWdgtForm.highRiskTxt.$valid}\" id=\"hrText\" maxlength=\"128\"></textarea>\r" +
     "\n" +
     "                </div>\r" +
     "\n" +
@@ -6209,7 +6229,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  </div><br/>\r" +
     "\n" +
-    "                  <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"mhText\" name=\"mentalProviderTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.mentalProviderTxt.$dirty && enterWdgtForm.mentalProviderTxt.$valid}\" id=\"mhText\" maxlength=\"128\"></textarea>\r" +
+    "                  <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"mhText\" name=\"mentalProviderTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.mentalProviderTxt.$dirty && enterWdgtForm.mentalProviderTxt.$valid}\" id=\"mhText\" ng-change=\"enterDataChanged()\" maxlength=\"128\"></textarea>\r" +
     "\n" +
     "                </div>\r" +
     "\n" +
@@ -6263,7 +6283,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  </div><br>\r" +
     "\n" +
-    "                  <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"spText\" name=\"safetyPlanTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.safetyPlanTxt.$dirty && enterWdgtForm.safetyPlanTxt.$valid}\" id=\"spText\" maxlength=\"128\"></textarea>\r" +
+    "                  <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"spText\" name=\"safetyPlanTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.safetyPlanTxt.$dirty && enterWdgtForm.safetyPlanTxt.$valid}\" ng-change=\"enterDataChanged()\" id=\"spText\" maxlength=\"128\"></textarea>\r" +
     "\n" +
     "                </div>\r" +
     "\n" +
@@ -6333,7 +6353,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                   </div>\r" +
     "\n" +
-    "                    <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"commentText\" name=\"commentTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.commentTxt.$dirty && enterWdgtForm.commentTxt.$valid}\" id=\"commentText\"></textarea>\r" +
+    "                    <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"commentText\" name=\"commentTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.commentTxt.$dirty && enterWdgtForm.commentTxt.$valid}\" ng-change=\"enterDataChanged()\" id=\"commentText\"></textarea>\r" +
     "\n" +
     "                 </div>\r" +
     "\n" +
@@ -6345,9 +6365,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "          <div class=\"row\">\r" +
     "\n" +
-    "            <div class=\"col-xs-2 col-xs-offset-10\">\r" +
+    "            <div class=\"col-md-6\" style=\"float:right;\">\r" +
     "\n" +
-    "              <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"addNewData()\">Add Data</button>\r" +
+    "              <button type=\"button\" class=\"btn btn-primary btn-sm\" ng-click=\"addNewData()\" style=\"float:right;margin:5px;\">Add Data</button>\r" +
+    "\n" +
+    "              <button type=\"button\" class=\"btn btn-primary btn-sm\" ng-click=\"clearEdits()\" style=\"float:right;margin:5px;\">Clear Edits</button>\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
