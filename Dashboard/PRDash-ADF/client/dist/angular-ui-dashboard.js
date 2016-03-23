@@ -602,7 +602,7 @@ angular.module('ui.dashboard')
           };
 
           scope.makeLayoutActive = function(layout) {
-            if(scope.common.data.EnterDataIsUnsaved == true){
+            if(scope.common && scope.common.data && scope.common.data.EnterDataIsUnsaved == true){
               $(".unsavedDataAlert").fadeIn();
               return;
             }
