@@ -118,6 +118,11 @@ angular.module('ui.dashboard')
             }
         };
 
+        scope.CloseSaveAlert =  function(){
+          $(".unsavedDataAlert").fadeOut();
+        }
+
+
       }],
       link: function (scope) {
 
