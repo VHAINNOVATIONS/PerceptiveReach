@@ -539,3 +539,7 @@ Then(/^I click on Add Data button$/) do
   #find_button('Add Data').trigger('click')
    find_button('Add Data').click 
 end
+
+Then(/^I select Another Veteran$/) do 
+ find(:xpath, '//*[@id="tblPatient"]/tbody/tr[1]/td[4]').click
+end 
