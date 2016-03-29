@@ -544,3 +544,11 @@ end
 Then(/^I select Another Veteran$/) do 
  find(:xpath, '//*[@id="tblPatient"]/tbody/tr[1]/td[4]').click
 end 
+
+Then(/^I should not see "(.*?)"$/) do |arg1|
+	expect(page).to_not have_content(arg1)
+end
+
+Then(/^I should see Facility "(.*?)"$/) do |arg1|
+	expect(page).to have_content(arg1)
+end
