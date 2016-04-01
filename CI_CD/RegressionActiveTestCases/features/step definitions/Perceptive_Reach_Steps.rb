@@ -552,3 +552,8 @@ end
 Then(/^I should see Facility "(.*?)"$/) do |arg1|
 	expect(page).to have_content(arg1)
 end
+
+Then(/^I should wait for twenty seconds$/) do  
+  # pending # express the regexp above with the code you wish you had
+  sleep(20)
+end    
