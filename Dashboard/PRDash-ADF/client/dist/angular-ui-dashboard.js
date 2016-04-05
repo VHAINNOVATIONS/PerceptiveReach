@@ -1410,6 +1410,10 @@ angular.module('ui.dashboard')
 
         var serialized = _.map(widgets, function (widget) {
           var w = widget.serialize();
+          if(w.dataModelOptions.common.data.veteranObj.OutreachStatus)
+          {
+            delete w.dataModelOptions.common.data.veteranObj.OutreachStatus;
+          }
           w.col = widget.col;
           w.row = widget.row;
           w.sizeX = widget.sizeX;
