@@ -23,11 +23,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/facilityRoster/facilityRoster.html',
      
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.facilityList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -44,7 +44,11 @@ angular.module('ui.widgets')
             .withOption('scrollY', 200)
             .withOption('paging',false)
             .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc']);
+            .withOption('order', [1, 'desc'])
+            .withDOM('frtip')
+            .withButtons([
+                { extend: 'csv', text: 'Export' }
+            ]);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('STA3N').withTitle('VAMC'),
             DTColumnBuilder.newColumn('VAMC_Name').withTitle('VAMC Name'),
@@ -57,6 +61,20 @@ angular.module('ui.widgets')
       },
       link: function postLink(scope, element, attr) {
         scope.$on("bindEvents", function (){
+
+          scope.dtInstance.changeData(function() {
+                return new Promise( function(resolve, reject){
+                  if (scope.facilityList)
+                  {
+                    resolve(scope.facilityList);
+                  }
+                  else
+                  {
+                    resolve([]);
+                  }
+                });
+              });
+
           $($('#facilityRosterDiv table')[0]).find('th').each(function(){
             $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+',Down/Up arrows to navigate, Spacebar to select and Tab to Exit rows">'+$(this).text()+'</a>');
             $(this).attr('scope','col');
@@ -173,19 +191,7 @@ angular.module('ui.widgets')
           if(data != null && data.length >0){
               scope.data = data;
               scope.facilityList = data;
-              var promise = new Promise( function(resolve, reject){
-                    if (scope.facilityList)
-                      resolve(scope.facilityList);
-                    else
-                      resolve([]);
-                  });
-              if(scope.dtInstance)
-                scope.dtInstance.changeData(promise);
-              else {
-                scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                  dtInstances.tblFacilityRoster._renderer.changeData(promise)              
-                });
-              }
+              
               $timeout(function(){
                 scope.$emit('bindEvents');
                 $.fn.dataTable.ext.errMode = 'throw';
