@@ -540,11 +540,6 @@ Then(/^I click on Add Data button$/) do
    find_button('Add Data').click 
 end
 
-
-Then(/^I select Another Veteran$/) do 
- find(:xpath, '//*[@id="tblPatient"]/tbody/tr[1]/td[4]').click
-end 
-
 Then(/^I should not see "(.*?)"$/) do |arg1|
 	expect(page).to_not have_content(arg1)
 end
@@ -552,6 +547,59 @@ end
 Then(/^I should see Facility "(.*?)"$/) do |arg1|
 	expect(page).to have_content(arg1)
 end
+
+Then(/^I select first Veteran$/) do 
+ find(:xpath, '//*[@id="tblPatient"]/tbody/tr[1]/td[1]').click
+end 
+
+Then(/^I see the same SSN and VeteranID displayed on top of page for first veteran$/) do
+ #pending # express the regexp above with the code you wish you had
+  veteranID = find(:xpath, './/*[@id=\'tblPatient\']/tbody/tr[1]/td[1]').text
+  ssn = find(:xpath, './/*[@id=\'tblPatient\']/tbody/tr[1]/td[2]').text
+ expect(find(:xpath, '/html/body/div[1]/div/div/div/div[2]/div[2]/div[2]/label/span')).to have_content(ssn)
+ expect(find(:xpath, '/html/body/div[1]/div/div/div/div[2]/div[2]/div[2]/label/span')).to have_content(veteranID)
+end
+
+Then(/^I see the same SSN and VeteranID displayed on top of page for another veteran$/) do
+ #pending # express the regexp above with the code you wish you had
+  veteranID = find(:xpath, './/*[@id=\'tblPatient\']/tbody/tr[4]/td[1]').text
+  ssn = find(:xpath, './/*[@id=\'tblPatient\']/tbody/tr[4]/td[2]').text
+ expect(find(:xpath, '/html/body/div[1]/div/div/div/div[2]/div[2]/div[2]/label/span')).to have_content(ssn)
+ expect(find(:xpath, '/html/body/div[1]/div/div/div/div[2]/div[2]/div[2]/label/span')).to have_content(veteranID)
+end
+
+Then(/^I click on the Clear button$/) do
+  #pending # express the regexp above with the code you wish you had
+   find_button('Clear').click
+end
+
+Then(/^I should not see any widgets$/) do
+   expect(page).to have_no_xpath("//span[contains(text(),'Patient Roster by VAMC')]")
+   expect(page).to have_no_xpath("//span[contains(text(),'Clinical Decision Support')]")
+   expect(page).to have_no_xpath("//span[contains(text(),'Patient Contact')]")
+   expect(page).to have_no_xpath("//span[contains(text(),'Data Entry')]")
+   expect(page).to have_no_xpath("//span[contains(text(),'Diagnoses')]")
+   expect(page).to have_no_xpath("//span[contains(text(),'Medication')]")
+   expect(page).to have_no_xpath("//span[contains(text(),'Appointment')]")
+   expect(page).to have_no_xpath("//span[contains(text(),'CDS Questionnaire')]")
+   expect(page).to have_no_xpath("//span[contains(text(),'Emergency Contact Information')]")
+end
+
+Then(/^I should see all the  widgets$/) do
+   expect(page).to have_xpath("//span[contains(text(),'Patient Roster by VAMC')]")
+   expect(page).to have_xpath("//span[contains(text(),'Clinical Decision Support')]")
+   expect(page).to have_xpath("//span[contains(text(),'Patient Contact')]")
+   expect(page).to have_xpath("//span[contains(text(),'Data Entry')]")
+   expect(page).to have_xpath("//span[contains(text(),'Diagnoses')]")
+   expect(page).to have_xpath("//span[contains(text(),'Medication')]")
+   expect(page).to have_xpath("//span[contains(text(),'Appointment')]")
+   expect(page).to have_xpath("//span[contains(text(),'CDS Questionnaire')]")
+   expect(page).to have_xpath("//span[contains(text(),'Emergency Contact Information')]")
+end
+
+Then(/^I select Another Veteran$/) do 
+ find(:xpath, '//*[@id="tblPatient"]/tbody/tr[1]/td[4]').click
+end 
 
 Then(/^I should wait for twenty seconds$/) do  
   # pending # express the regexp above with the code you wish you had
