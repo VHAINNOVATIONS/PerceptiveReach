@@ -26,6 +26,7 @@ angular.module('ui.dashboard')
       this.stringify = stringify;
     }
 
+
     DashboardState.prototype = {
       /**
        * Takes array of widget instance objects, serializes, 

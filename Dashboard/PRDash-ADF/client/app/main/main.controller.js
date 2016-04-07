@@ -86,7 +86,7 @@ angular.module('app')
       defaultLayouts: layouts      
     };
 
-    // initialize common data object and broadcast to widgets
+    // initialize  common data object and broadcast to widgets
     $scope.common = {
       data: {
         visnSelected: {surveillance: null, facility: user.VISN},
