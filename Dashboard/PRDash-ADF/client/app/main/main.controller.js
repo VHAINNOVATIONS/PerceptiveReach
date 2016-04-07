@@ -83,7 +83,8 @@ angular.module('app')
       defaultWidgets: defaultWidgetsAll,
       explicitSave: false,
       lockDefaultLayouts: true,
-      defaultLayouts: layouts      
+      defaultLayouts: layouts,
+      dataLastUpdated: user.DataLastUpdated    
     };
 
     // initialize common data object and broadcast to widgets
