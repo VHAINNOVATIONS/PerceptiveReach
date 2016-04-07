@@ -87,7 +87,7 @@ angular.module('app')
       dataLastUpdated: user.DataLastUpdated    
     };
 
-    // initialize common data object and broadcast to widgets
+    // initialize  common data object and broadcast to widgets
     $scope.common = {
       data: {
         visnSelected: {surveillance: null, facility: user.VISN},
