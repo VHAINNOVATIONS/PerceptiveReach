@@ -1,135 +1,110 @@
-/**
- * Using Rails-like standard naming convention for endpoints.
- * GET     /things              ->  index
- * POST    /things              ->  create
- * GET     /things/:id          ->  show
- * PUT     /things/:id          ->  update
- * DELETE  /things/:id          ->  destroy
- */
-
 'use strict';
 
 var _ = require('lodash');
-
+var validator = require('validator');
 var sql = require('mssql');
-
 var dataFormatter = require('../../components/formatUtil/formatUtil.service.js');
-// Get list of things
+
 exports.index = function(req, res) {
-    res.header("content-type: application/json");
-    var data = [];
-
-    var dbc = require('../../config/db_connection/development.js');
-    var config = dbc.config;
-
-    var id = req.param("id");
-    var score = req.param("score");
-    var query = '';
-    var select = "SELECT p.ReachID, FirstName, LastName, SSN, HomePhone, DateIdentifiedAsHighRisk, CASE WHEN RiskLevel = 1 THEN 'High' WHEN RiskLevel = 2 THEN 'Medium' END 'RiskLevel', RiskLevel AS RiskLevelID, OutreachStatus"; 
-    //query += "ReachID, vamc.VAMC FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE ";
-    if (id) {
-        //console.log("Registering endpoint: /veteranRoster/:id is " + id);
-        //query += "vamc.vamcID = " + id;
-        query += select + ", ps.sta3N " 
-                + "FROM  Patient p INNER JOIN PatientStation ps ON p.ReachID = ps.ReachID "
-                + "WHERE p.RiskLevel in (1,2) and ps.sta3N = " + id;
-        if (score) {
-            //console.log("Registering endpoint: /veteranRoster/:score is " + score);
-            query += "AND p.Score >= " + score;
-        }
-        query += " ORDER BY RiskLevel ASC";
-
-    } 
-    
-    else {
-        query += select + " FROM Patient "
-                + "WHERE RiskLevel in (1,2) "
-                + "ORDER BY RiskLevel ASC";
-        //res.send("ERROR: VAMC ID is required.");
-        ////console.log("ERROR: VAMC ID is required."); 
-    }
-
-    var connection = new sql.Connection(config, function(err) {
-        // ... error checks
-        if (err) { 
-        data = "Error: Database connection failed!";
-        //console.log("Database connection failed!"); 
-        return; 
-        }
-
-        // Query
-        var request = new sql.Request(connection); // or: var request = connection.request();
-        //console.log("Patient Query:" + query);
-        request.query(query, function(err, recordset) {
-            //console.log(recordset);
-            // ... error checks
-            if (err) { 
-            //console.log("Query failed! -- " + query); 
-            return; 
-            }
-
-            //console.log(recordset.length);
-            var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
-            //console.log(jsonRecordSet);
-            for (var patient in jsonRecordSet) {
-                jsonRecordSet[patient].SSN = dataFormatter.formatData(jsonRecordSet[patient].SSN,"ssn");
-                jsonRecordSet[patient].HomePhone = dataFormatter.formatData(jsonRecordSet[patient].HomePhone,"phone");
-                jsonRecordSet[patient].DateIdentifiedAsHighRisk = dataFormatter.formatData(jsonRecordSet[patient].DateIdentifiedAsHighRisk,"date");
-                ////console.log(jsonRecordSet[patient].SSN + " " + jsonRecordSet[patient].Phone + " " + jsonRecordSet[patient].DateIdentifiedAsHighRisk);
-            }
-            res.send(jsonRecordSet);
-        });
-
-    });
-    
+	/*Configure response header */
+	//res.header("content-type: application/json");
+	
+	/*Configure and open database */
+	var dbc = require('../../config/db_connection/development.js');
+	var config = dbc.config;  var data = [];
+	var connection = new sql.Connection(config, function(err) {
+		if (err) { 
+		  console.dir(err);
+		  return; 
+		}
+		var request = new sql.Request(connection); 
+		request.multiple = true;
+		
+		/*Configure database query */
+		var sta3N = req.param("sta3N");
+		var query = '';
+		var select = "SELECT * FROM [dbo].[vw_PatientRoster] WHERE RiskLevelID in (1,2) AND ISNULL(Active,-1) in (-1,1)"; 
+		if (sta3N && validator.isInt(sta3N)) {
+			request.input('sta3N', sql.Int, sta3N);
+			query += select
+				  + " and sta3N = @sta3N";
+			query += " ORDER BY RiskLevel ASC";
+		} 
+		query += "; SELECT * FROM Ref_OutreachStatus";
+	  
+		/*Query database */
+		request.query(query, function(err, recordset) {
+			if (err) { 
+				console.dir(err);
+				res.send(401, 'Query Failed');
+				return; 
+			}
+			
+			/*Parse result into JSON object and format the date */
+			var jsonRecordSet = JSON.parse(JSON.stringify(recordset[0]));
+			var jsonOutreachStatus = JSON.parse(JSON.stringify(recordset[1]));
+			
+			/*Send the data */
+			res.send({patients:jsonRecordSet, outreachStatus:jsonOutreachStatus });
+		});
+  });   
 }
 
 exports.update = function(req, res) {
+	/*Configure response header */
     res.header("content-type: application/json");
-    var data = [];
 
+	/*Configure and open database */
     var dbc = require('../../config/db_connection/development.js');
-    var config = dbc.config;
-    var outreachStatus = req.param("outreachStatus");
-    var vetReachID = req.param("vetReachID");
-    var query = '';
-    
-    if (vetReachID) {
-        //console.log("Registering endpoint: /veteranRoster/:outreachStatus is " + outreachStatus);
-        var value = '';
-        if (outreachStatus == null || outreachStatus.length == 0 || outreachStatus == 0)
-            value = "NULL";
-        else
-            value = outreachStatus;
-        query += "UPDATE Patient SET OutreachStatus = " + value + " WHERE  ReachID=" + vetReachID;
-    }
-    else {
-        res.send("ERROR: vetReach ID is required.");
-        //console.log("ERROR: vetReach ID is required."); 
-    }
-
+    var config = dbc.config; var data = [];
     var connection = new sql.Connection(config, function(err) {
-        // ... error checks
         if (err) { 
-        data = "Error: Database connection failed!";
-        //console.log("Database connection failed!"); 
-        return; 
+			data = "Error: Database connection failed!"; 
+			return; 
         }
-
-        // Query
-        var request = new sql.Request(connection); // or: var request = connection.request();
+        var request = new sql.Request(connection);
+		
+		/*Configure database query */
+        var outreachStatus = req.param("outreachStatus");
+        outreachStatus = outreachStatus? outreachStatus:0;
+        var vetReachID = req.param("vetReachID");
+        var facilityID = req.param("facilityID");
+        var userID = req.param("UserID");
+        var query = '';
+        if (userID && validator.isInt(userID)) {
+          request.input('userID', sql.Int, userID);
+        }
+        if (facilityID && validator.isInt(facilityID)) {
+          request.input('facilityID', sql.Int, facilityID);
+        }
+		if (outreachStatus && validator.isInt(outreachStatus)) {
+			request.input('outreachStatus', sql.Int, outreachStatus);
+		}
+        if (vetReachID && validator.isInt(vetReachID)) {
+            request.input('vetReachID', sql.Int, vetReachID);
+            var value = '';
+            if (outreachStatus == null || outreachStatus.length == 0 || outreachStatus == 0)
+                value = undefined;
+            else
+                value = outreachStatus;
+            request.input('value', sql.Int, value);
+            query += "exec dbo.sp_SaveOutreachStatus @User=@userId, @ReachID=@vetReachID, @Status=@value, @sta3n_input=@facilityID";
+        }
+        else {
+            res.send("ERROR: vetReach ID is required.");
+        }
+		
+		/*Query database */
         request.query(query, function(err, recordset) {
-            // ... error checks
-            if (err) { 
-            //console.log("Query failed! -- " + query); 
-            return; 
-            }
+			if (err) { 
+			  console.dir(err);
+			  res.send(401, 'Query Failed');
+			  return; 
+			}
 
-            //console.log("Save Completed! ");
-            data = "Save Completed Successfully!";
-            res.send(data);
+			/*Send the data */
+			data = "Save Completed Successfully!";
+			res.send(data);
         });
-
     });
-    
 };

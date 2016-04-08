@@ -1,83 +1,63 @@
-/**
- * Using Rails-like standard naming convention for endpoints.
- * GET     /things              ->  index
- * POST    /things              ->  create
- * GET     /things/:id          ->  show
- * PUT     /things/:id          ->  update
- * DELETE  /things/:id          ->  destroy
- */
-
 'use strict';
 
 var _ = require('lodash');
-
+var validator = require('validator');
 var sql = require('mssql');
-
 var dataFormatter = require('../../components/formatUtil/formatUtil.service.js');
-// Get list of things
+
 exports.index = function(req, res) {
-    res.header("content-type: application/json");
-    var data = [];
-
+	/*Configure response header */
+    //res.header("content-type: application/json");
+	
+	/*Configure and open database */
     var dbc = require('../../config/db_connection/development.js');
-    var config = dbc.config;
+    var config = dbc.config; var data = [];
+	var connection = new sql.Connection(config, function(err) {
+		if (err) { 
+			data = "Error: Database connection failed!";
+			return; 
+		}
+		var request = new sql.Request(connection); 
+		
+		/* Request parameters from database */
+		var guideType = req.param("guideType");
+		var riskLevel = req.param("riskLevel");
+		
+		/*Configure database query */
+		var query = '';
+		var select = "SELECT CDSG.CDSG_ID, CDSG.Features, CDSG.Action, CDSG.GuidelineType, CDSG.RiskLevel, RL.RiskLevelDesc, RF.GuidelineURL, RF.ToolkitURL FROM Ref_ClinicalDecisionSupportGuideline As CDSG INNER JOIN  Ref_GuidelineRiskFactors As RF ON CDSG.GuidelineType = RF.RiskFactorCode INNER JOIN Ref_RiskLevel As RL ON RL.RiskLevelID = CDSG.RiskLevel"; 
 
-    var guideType = req.param("guideType");
-    var riskLevel = req.param("riskLevel");
-    var query = '';
-    var select = "SELECT CDSG.CDSG_ID, CDSG.Features, CDSG.Action, CDSG.GuidelineType, CDSG.RiskLevel, RL.RiskLevelDesc, RF.GuidelineURL, RF.ToolkitURL FROM ClinicalDecisionSupoortGuideline As CDSG INNER JOIN  RiskFactors As RF ON CDSG.GuidelineType = RF.RiskFactorCode INNER JOIN Ref_RiskLevel As RL ON RL.RiskLevelID = CDSG.RiskLevel"; 
-    //query += "ReachID, vamc.VAMC FROM VeteranRisk vet INNER JOIN Ref_VAMC vamc ON vet.VAMC = vamc.VAMCID WHERE ";
-    if (guideType) {
-        //console.log("Registering endpoint: /clinicalDecisionSupport/:guideType is " + guideType);
-        //query += "vamc.vamcID = " + id;
-        query += select
-                + " WHERE CDSG.GuidelineType = '" + guideType +"'";
-        if (riskLevel) {
-            //console.log("Registering endpoint: /clinicalDecisionSupport/:guideType&riskLevel is " + riskLevel);
-            query += " AND CDSG.RiskLevel= " + riskLevel;
-        }
-        query += " ORDER BY CDSG.RiskLevel ASC";
+		if (guideType) {
+			request.input('guideType', sql.VarChar(50), guideType);
+			query += select
+				  + " WHERE CDSG.GuidelineType = @guideType ";
+			if (riskLevel && validator.isInt(riskLevel)) {
+				request.input('riskLevel', sql.Int, riskLevel);
+				query += " AND CDSG.RiskLevel= @riskLevel";
+			}
+			query += " ORDER BY CDSG.RiskLevel ASC";
+		} 
+		else if (riskLevel && validator.isInt(riskLevel)) {
+			request.input('riskLevel', sql.Int, riskLevel);
+			query += select
+				  + " WHERE CDSG.RiskLevel = @riskLevel";
+				  + " ORDER BY CDSG.RiskLevel ASC";
+		}
+		else {
+			query += select 
+				  + " ORDER BY CDSG.RiskLevel ASC";
+		}
 
-    } 
-    else if (riskLevel) {
-        //console.log("Registering endpoint: /clinicalDecisionSupport/:riskLevel is " + riskLevel);
-        //query += "vamc.vamcID = " + id;
-        query += select
-              + " WHERE CDSG.RiskLevel = " + riskLevel
-              + " ORDER BY CDSG.RiskLevel ASC";
-    }
-    else {
-        //console.log("Registering endpoint: /clinicalDecisionSupport/:All");
-        query += select 
-                + " ORDER BY CDSG.RiskLevel ASC";
-        //res.send("ERROR: VAMC ID is required.");
-        ////console.log("ERROR: VAMC ID is required."); 
-    }
-
-    var connection = new sql.Connection(config, function(err) {
-        // ... error checks
-        if (err) { 
-        data = "Error: Database connection failed!";
-        //console.log("Database connection failed!"); 
-        return; 
-        }
-
-        // Query
-        var request = new sql.Request(connection); // or: var request = connection.request();
-        request.query(query, function(err, recordset) {
-            // ... error checks
-            if (err) { 
-            //console.log("Query failed! -- " + query); 
-            return; 
-            }
-
-            //console.log(recordset.length);
-            //console.log(recordset);
-            
-            res.send(recordset);
-            //res.send(data);
-        });
-
-    });
-    
+		/*Query database */
+		request.query(query, function(err, recordset) {
+			if (err) { 
+				console.dir(err);
+				res.send(401, "Query Failed");
+				return; 
+			}
+			
+			/*Send the data */
+			res.send(recordset);
+		});
+    });   
 };

@@ -17,46 +17,44 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtPatientRosterTable', function () {
+  .directive('wtPatientRosterTable', function ($timeout) {
     return {
       restrict: 'EAC',
       replace: true,
       templateUrl: 'client/components/widget/widgets/patientTable/patientTable.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder, DTInstances) {
-        //console.log("inside patient roster controller");
-        //console.log($scope.widgetData);
-        $scope.dtinstance = DTInstances;
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.patientList = $scope.widgetData;
-        //console.log("dtoptionsbuilder, dtcolumnsdefbuilder, dtinstances");
-        //console.log(DTOptionsBuilder);
-        //console.log(DTColumnDefBuilder);
-        //console.log(DTInstances);
-        $scope.dtOptions = DTOptionsBuilder.newOptions()//.fromSource($scope.widgetData)
+        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+              return new Promise( function(resolve, reject){
+                if ($scope.widgetData)
+                  resolve($scope.widgetData);
+                else
+                  resolve([]);
+              });
+ 
+          })//.fromSource($scope.widgetData) newOptions().
             .withDOM('lfrti')
             .withScroller()
             .withOption('deferRender', true)
             // Do not forget to add the scorllY option!!!
             .withOption('scrollY', 200)
-            .withOption('paging',false);
+            .withOption('bDestroy',true)
+            .withOption('paging',false)
+            .withDOM('frtip')
+            .withButtons([
+                { extend: 'csv', text: 'Export' }
+            ]);
         $scope.dtColumns = [
-          DTColumnDefBuilder.newColumnDef(0),
-          DTColumnDefBuilder.newColumnDef(1),
-          DTColumnDefBuilder.newColumnDef(2),
-          DTColumnDefBuilder.newColumnDef(3),
-          DTColumnDefBuilder.newColumnDef(4),
-          DTColumnDefBuilder.newColumnDef(5)
-            /*DTColumnBuilder.newColumn('Name').withTitle('Name'),
+            DTColumnBuilder.newColumn('Name').withTitle('Name'),
             DTColumnBuilder.newColumn('SSN').withTitle('SSN'),
-            DTColumnBuilder.newColumn('Phone').withTitle('Phone'),
-            DTColumnBuilder.newColumn('DateIdentifiedRisk').withTitle('Date First Identified'),
+            DTColumnBuilder.newColumn('HomePhone').withTitle('Phone'),
+            DTColumnBuilder.newColumn('DateIdentifiedAsAtRisk').withTitle('Date First Identified'),
             DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level'),
-            DTColumnBuilder.newColumn('OutreachStatus').withTitle('Outreach Status')*/
+            DTColumnBuilder.newColumn('OutreachStatus').withTitle('Outreach Status')
         ];
-        //console.log("dtoptions:  ");
-        //console.log($scope.dtOptions);
-        //console.log("dtcolumns:  ");
-        //console.log($scope.dtColumns);
         $scope.columns = [
           {"Name" : "Name"},
           {"Name" : "SSN"},
@@ -65,11 +63,73 @@ angular.module('ui.widgets')
           {"Name" : "Statistical Risk Level"},
           {"Name" : "Outreach Status"}
         ];
+		
       },
       link: function postLink(scope, element, attr) {
-        //console.log("scope::");
-        //console.log(scope);
-        
+        scope.$on("updateSelectMenu", function (){
+          var datamodelList = {};
+          var patientList = scope.widgetData[1];          
+          $( "select[id^='vet_']" ).on("change",function(e,ui){
+            var selectedIndex = this.value;
+            var selectedreachId = $(e.currentTarget).attr('id').replace("vet_","");
+            $('#Outreach_' + selectedreachId).text(selectedIndex);
+            var commonData = scope.widget.dataModelOptions.common;
+            scope.widget.dataModel.saveOutreachData(parseInt(selectedIndex),selectedreachId,commonData.data.facilitySelected.facility);
+          } );
+		  		 	  
+		  $($('#patientRosterDiv table')[0]).find('th').each(function(){
+        $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+				$(this).attr('scope','col');
+        $(this).attr('tabindex','-1');
+      });
+			
+		$('#tblPatient_info').attr('title','Patient Table: Tab to move to the next control');
+    
+    $('#patientRosterDiv .dataTables_scrollHeadInner,#patientRosterDiv .dataTables_scrollHeadInner table').css({'width':''});   
+    var containerHeight = parseInt($('#patientRosterDiv').parent().css('height'),10);
+    $('#patientRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);    
+		  
+		  $('#tblPatient tbody>tr select').keydown(function(event){ 
+            if (event.keyCode == '13' || event.key == 'Enter') {
+				$(this).closest('tr').click();
+				return false; 
+			} 
+			if (event.keyCode == '27' || event.key == 'Cancel') {
+				$('#tblPatient_info').focus();
+				$('#tblPatient_info').tooltip().mouseover();
+				return false; 
+			} 		  
+          });
+
+          $('#tblPatient tbody').on( 'click', 'tr', function (event) {
+            if(scope.common.data.EnterDataIsUnsaved == true){
+              $(".unsavedDataAlert").fadeIn();
+              return;
+            }
+
+            if($(this).hasClass('selected')){
+            }
+            else{
+              $('tr.selected').removeClass('selected');
+              $(this).addClass('selected');
+              //get common data object
+              var commonData = scope.widget.dataModelOptions.common;
+              // update common data object with new patient object
+              var vetId = event.currentTarget.cells[5].children[1].id.replace("vet_","");
+              var obj = jQuery.grep(scope.patientList, function( n, i ) {
+                return ( n.ReachID == vetId );
+              });
+              console.log("ReachID Vet Selected: ",vetId);
+              //delete obj[0].OutreachStatus;
+              commonData.data.veteranObj = obj[0];
+              //commonData.data.veteranObj.OutreachStatus = $('#Outreach_' + vetId).text();
+              console.log("CommonDataAfterClick: ", commonData);
+              // broadcast message throughout system
+              scope.$parent.$parent.$parent.$broadcast('commonDataChanged', commonData);
+            }
+            scope.$apply();
+          });  
+        });
         //scope.dtrender.showLoading();
         scope.$watch('widgetData', function(v){
           var opts = {
@@ -90,96 +150,57 @@ angular.module('ui.widgets')
           top: '50%', // Top position relative to parent
           left: '50%' // Left position relative to parent
         };
-        //var spinner = new Spinner(opts).spin($("#spinner"));
-
-          //console.log("inside patient roster directive before check");
-          //console.log(v); 
           
-          //console.log(DTOptionsBuilder);
         if(v != null && v.length >0){
-            //unwatch();                
-            //console.log("inside patient roster directive after check is positive");
-            //console.log(scope.widgetData);
-            //scope.dtInstance.changeData(scope.widgetData[1]);
             scope.outreachStatusList = scope.widgetData[2];
             scope.patientList = scope.widgetData[1];
-            var datamodelList = {};
-            for(var patient in scope.patientList){
-              datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient]; 
-            }
-            scope.dataModelObj = datamodelList;
-            //console.log("datamodelobj:::");
-            //console.log(scope.dataModelObj);
-            var dataTableVet = $(element).children();
-            //dataTableVet.dataTable();
-            /*var dataTableVet = $(element).children().dataTable( {
-                "data": scope.widgetData[1],
-                "scrollY":        "200px",
-                "scrollCollapse": true,
-                "paging":         false,
-                "columns": [
-                    { "title": "Name" },
-                    { "title": "SSN" },
-                    { "title": "Phone" },
-                    { "title": "Date First identified", "class": "center" },
-                    { "title": "Statistical Risk Level", "class": "center" },
-                    { "title": "Outreach Status", "class": "center" }
-                    //{ "title": "Last VA Clinician Visit", "class": "center" }
-                ],
-                dom: 'T<"clear">lfrtip',
-                tableTools: {
-                    "sRowSelect": "single"
-                }
-            });*/
+            var outreachStatus = scope.outreachStatusList;
+            var patientsBysta3N = scope.patientList;
 
-            scope.dtinstance.getLast().then(function(dtInstance) {
-              scope.dtInstance = dtInstance;
-              //console.log("before select menu");
-              for(patient in scope.patientList){
-                //console.log('#vet_' + scope.patientList[patient].ReachID);
-                $('#vet_' + scope.patientList[patient].ReachID).val(scope.patientList[patient].OutreachStatus);
-                //datamodelList[scope.patientList[patient].ReachID] = scope.patientList[patient].OutreachStatus; 
-              }
-              $('select').selectmenu({
-                select: function( event, ui ) {
-                  // Write back selection to the patient Risk table for the patient
-                  //console.log(ui);
-                  //console.log(ui.item.element.context.parentElement.id.replace("vet_",""));
-                  scope.widget.dataModel.saveOutreachData(ui.item.index, ui.item.element.context.parentElement.id.replace("vet_",""));                    
+            for(var patient in patientsBysta3N){
+              var selected = ' selected="selected"';
+              var options = "";
+              var temp = "";
+              for(var outreachStat in outreachStatus){
+                if(patientsBysta3N[patient].OutreachStatus == outreachStatus[outreachStat].OutReachStatusID)
+                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + selected + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
+                else{
+                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
+                  //console.log("outreachStatusString: ",  temp);
                 }
-              });
-              $('#sampleVet tbody').on( 'click', 'tr', function (event) {
-                  //console.log( dataTableVet.row( this ).data() );
-                  if($(this).hasClass('selected')){
-                      //$(this).removeClass('selected'); // removes selected highlighting
-                      //scope.hideVetDetBtn = true;
-                      //$('#patientView').hide();
-                      //$('#facilityInfo').show();
-                  }
-                  else{
-                      $('tr.selected').removeClass('selected');
-                      $(this).addClass('selected');
-                      // get common data object
-                      var commonData = scope.widget.dataModelOptions.common;
-                      console.log("CommonDataBeforeClick: ", commonData);
-                      // update common data object with new patient object
-                      console.log("ReachID Vet Selected: ", event.currentTarget.cells[5].firstElementChild.id.replace("vet_",""));
-                      commonData.data.veteranObj = datamodelList[event.currentTarget.cells[5].firstElementChild.id.replace("vet_","")];
-                      console.log("CommonDataAfterClick: ", commonData);
-                      // broadcast message throughout system
-                      scope.$parent.$broadcast('commonDataChanged', commonData);
-                      //scope.hideVetDetBtn = false;
-                      //$('#patientView').show();
-                      //$('#facilityInfo').hide();
-                      //scope.getpatient(event.currentTarget.cells[4].innerText);
-                  }
-                  scope.$apply();
-                  //console.log("ReachID selected: " + event.currentTarget.cells[5].firstElementChild.id.replace("vet_",""));//innerText);
-                  //console.log(event);
-              } );
-            });                
-        }
+                options += temp;                
+              }
+              var select = "<select class='form-control' style='width: 180px;' id='vet_" + patientsBysta3N[patient].ReachID + "'><option value=''></option>"+ options+ "</select>";
+              //patientsBysta3N[patient].OutreachStatusSelect = select;
+              patientsBysta3N[patient].OutreachStatus = "<span id='Outreach_" + patientsBysta3N[patient].ReachID + "' hidden>"+ patientsBysta3N[patient].OutreachStatus +"</span> " +  select;
+              
+            }
             
+            scope.patientList = patientsBysta3N;
+            var promise = new Promise( function(resolve, reject){
+                  if (scope.patientList)
+                    resolve(scope.patientList);
+                  else
+                    resolve([]);
+                });
+            scope.dtInstance.changeData(function() {
+                  return promise;
+              });
+            
+            $timeout(function(){
+              $.fn.dataTable.ext.errMode = 'throw';
+              scope.$emit('updateSelectMenu'); 
+              var commonData = scope.widget.dataModelOptions.common;
+              if(!commonData.data.veteranObj)
+              {
+                $('#tblPatient').find( "tbody>tr:first" ).click();
+              }
+              else
+              {
+                $('#tblPatient').find( "tbody>tr td:contains('"+commonData.data.veteranObj.Name+"')" ).parent().click();
+              }
+            },500)            
+          }
         });
       }
     };

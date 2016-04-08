@@ -19,14 +19,17 @@ module.exports.formatData = function formatData(data,type) {
       }
     },
     'phone': function () {
-      //Check if phone number and format (202)-465-4848
+      /*//Check if phone number and format (202)-465-4848
       if(/^\d+$/.test(data) && data.length == 10){
         correctData = "(" + data.substr(0, 3) + ") " + data.substr(3, 3) + "-" + data.substr(6);
       }
       else{
         console.log("Phone number provided is incorrect: " + data);
         correctData = data;
-      }
+      }*/
+
+      //Remove formatting due to CDW data being in an inconsistent format
+      correctData = data;
     },
     'date': function () {
       //Check if date time and format 11/24/2015 (just date) 2004-02-03T00:00:00.000Z

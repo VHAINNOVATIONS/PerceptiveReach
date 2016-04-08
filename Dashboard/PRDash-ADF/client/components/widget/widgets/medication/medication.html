@@ -1,14 +1,14 @@
-<div class="medication">
-    <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
-        <thead>
+<div id="medicationDiv" class="medication" title="Medication Widget">
+    <table id="tblMedication" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+        <thead> 
         <tr>
-            <th>Medication</th>
+            <th scope="col" tabindex="-1"><a alt="Medication" title="Sort by Medication" href="" ng-click="predicate = 'Medication'; reverse=false">Medication</a></th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="meds in data">
+        <tr ng-repeat="meds in data track by $index | orderBy:predicate:reverse">
             <td>{{ meds.MedicationName }}</td>
         </tr>
         </tbody>
     </table>
-</div>
+</div> 

@@ -15,14 +15,16 @@
  */
 'use strict';
 
-angular.module('ui.dashboard', ['ui.bootstrap', 'ui.sortable']);
+angular.module('ui.dashboard', ['ui.bootstrap', 'ui.sortable', 'ui.DashboardUtil','gridster']);
 
 angular.module('ui.dashboard')
-  .directive('dashboard', ['WidgetModel', 'WidgetDefCollection', '$modal', 'DashboardState', '$log', function (WidgetModel, WidgetDefCollection, $modal, DashboardState, $log) {
+
+  .directive('dashboard', ['WidgetModel', 'WidgetDefCollection', '$modal', 'DashboardState', '$log','$timeout', function (WidgetModel, WidgetDefCollection, $modal, DashboardState, $log,$timeout) {
+
     return {
       restrict: 'A',
       templateUrl: function(element, attr) {
-        return attr.templateUrl ? attr.templateUrl : 'client/components/adf/template/dashboard.html';
+        return attr.templateUrl ? attr.templateUrl : 'client/components/adf/directives/dashboard/dashboard.html';
       },
       scope: true,
 
@@ -33,7 +35,7 @@ angular.module('ui.dashboard')
           hideWidgetSettings: false,
           hideWidgetClose: false,
           settingsModalOptions: {
-            templateUrl: 'client/components/adf/template/widget-settings-template.html',
+            templateUrl: 'client/components/adf/directives/dashboard/widget-settings-template.html',
             controller: 'WidgetSettingsCtrl'
           },
           onSettingsClose: function(result, widget) { // NOTE: dashboard scope is also passed as 3rd argument
@@ -45,19 +47,8 @@ angular.module('ui.dashboard')
         };
 
         // from dashboard="options"
-        // scope.options = scope.$eval(attrs.dashboard);
-
-        // extend default settingsModalOptions
-        // scope.options.settingsModalOptions = scope.options.settingsModalOptions || {};
-
-        // extend options with defaults
-        // angular.extend(defaults.settingsModalOptions, scope.options.settingsModalOptions);
-        // angular.extend(scope.options.settingsModalOptions, defaults.settingsModalOptions);
-        // angular.extend(defaults, scope.options);
-        // angular.extend(scope.options, defaults);
-
-        // from dashboard="options"
         scope.options = scope.$eval(attrs.dashboard);
+        scope.dashboardTitle = scope.$eval(attrs.dashboardTitle)
 
         // Deep options
         scope.options.settingsModalOptions = scope.options.settingsModalOptions || {};
@@ -71,24 +62,74 @@ angular.module('ui.dashboard')
         // Shallow options
         _.defaults(scope.options, defaults);
 
-        // jQuery.extend(true, defaults, scope.options);
-        // jQuery.extend(scope.options, defaults);
-
+        // sortable options
         var sortableDefaults = {
           stop: function () {
             scope.saveDashboard();
           },
-          handle: '.widget-header'
+          handle: '.widget-header',
+          distance: 5
         };
         scope.sortableOptions = angular.extend({}, sortableDefaults, scope.options.sortableOptions || {});
+
+        scope.gridsterOpts = {
+            columns: 30, // the width of the grid, in columns
+            pushing: true, // whether to push other items out of the way on move or resize
+            floating: true, // whether to automatically float items up so they stack (you can temporarily disable if you are adding unsorted items with ng-repeat)
+            swapping: false, // whether or not to have items of the same size switch places instead of pushing down if they are the same size
+            width: 'auto', // can be an integer or 'auto'. 'auto' scales gridster to be the full width of its containing element
+            colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
+            rowHeight: 'match', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
+            //margins: [10, 10], // the pixel distance between each widget
+            outerMargin: true, // whether margins apply to outer edges of the grid
+            defaultSizeX: 10, // the default width of a gridster item, if not specifed
+            defaultSizeY: 6, // the default height of a gridster item, if not specified
+            minSizeX: 5, // minimum column width of an item
+            maxSizeX: null, // maximum column width of an item
+            minSizeY: 5, // minumum row height of an item
+            maxSizeY: null, // maximum row height of an item
+            resizable: {
+               enabled: true,
+               handles: ['n', 'e', 's', 'w', 'ne', 'se', 'sw', 'nw'],
+               start: function(event, $element, widget) {}, // optional callback fired when resize is started,
+               resize: function(event, $element, widget) {
+               }, 
+               // optional callback fired when item is resized,
+               stop: function(event, $element, widget) {
+                scope.$broadcast('gridsterResized');
+                $timeout(function(){
+                  var containerHeight = parseInt($($element).find('.widget-content').css('height'),10);
+                  $($element).find('.dataTables_scrollBody').css('height',.78 * containerHeight);
+                },800);
+                scope.saveDashboard();
+               } // optional callback fired when item is finished resizing
+            },
+            draggable: {
+               enabled: true, // whether dragging items is supported
+               handle: '.widget-header', // optional selector for resize handle
+               start: function(event, $element, widget) {
+                scope.startPosition = $element.position();
+               }, // optional callback fired when drag is started,
+               drag: function(event, $element, widget) {}, // optional callback fired when item is moved,
+               stop: function(event, $element, widget) {
+                if(!angular.equals($element.position(),scope.startPosition))
+                scope.saveDashboard();
+               } // optional callback fired when item is finished dragging
+            }
+        };
+
+        scope.CloseSaveAlert =  function(){
+          $(".unsavedDataAlert").fadeOut();
+        }
+
 
       }],
       link: function (scope) {
 
         // Save default widget config for reset
         scope.defaultWidgets = scope.options.defaultWidgets;
-
-        //scope.widgetDefs = scope.options.widgetDefinitions;
+        scope.IsShiftKeyPressed = false;
+        scope.RowIncrement = 0;
         scope.widgetDefs = new WidgetDefCollection(scope.options.widgetDefinitions);
         var count = 1;
 
@@ -101,11 +142,45 @@ angular.module('ui.dashboard')
           scope.options.stringifyStorage
         );
 
+        scope.$on('commonDataChanged', function (event, data) {
+          if (data.data.activeView == 'individual'){
+            if(data.data.veteranObj && data.data.veteranObj.Name)
+              scope.PatientName = data.data.veteranObj.Name +', SSN: '+ data.data.veteranObj.SSN;
+            else
+              scope.PatientName = '';
+          }
+          else if(data.data.activeView == 'facility'){
+            if(data.data.facilitySelected.facilityName != null)
+              scope.FacilityName = 'VAMC: ' + data.data.facilitySelected.facilityName;
+            else
+              scope.FacilityName = '';
+          }
+          else if(data.data.activeView == 'surveillance'){
+            if(data.data.facilitySelected.surveillanceName == null && data.data.visnSelected.surveillance == null)
+              scope.VISN_FacilityName = 'VISN:  VAMC: ';
+            else if (data.data.facilitySelected.surveillanceName == null)
+              scope.VISN_FacilityName = 'VISN: ' + data.data.visnSelected.surveillance + ' VAMC: ';
+            else if (data.data.visnSelected.surveillance == null)
+              scope.VISN_FacilityName = 'VISN:  VAMC: ' + data.data.facilitySelected.surveillanceName;
+            else
+              scope.VISN_FacilityName = 'VISN: ' + data.data.visnSelected.surveillance + ' VAMC: ' + data.data.facilitySelected.surveillanceName;
+          }        
+        }.bind(this));
+		
+
         /**
          * Instantiates a new widget on the dashboard
          * @param {Object} widgetToInstantiate The definition object of the widget to be instantiated
          */
+
+
         scope.addWidget = function (widgetToInstantiate, doNotSave) {
+          if (typeof widgetToInstantiate === 'string') {
+            widgetToInstantiate = {
+              name: widgetToInstantiate
+            };
+          }
+
           var defaultWidgetDefinition = scope.widgetDefs.getByName(widgetToInstantiate.name);
           if (!defaultWidgetDefinition) {
             throw 'Widget ' + widgetToInstantiate.name + ' is not found.';
@@ -113,22 +188,14 @@ angular.module('ui.dashboard')
 
           // Determine the title for the new widget
           var title;
-          if (widgetToInstantiate.title) {
-            title = widgetToInstantiate.title;
-          } else if (defaultWidgetDefinition.title) {
-            title = defaultWidgetDefinition.title;
-          } else {
-            title = 'Widget ' + count++;
+          if (!widgetToInstantiate.title && !defaultWidgetDefinition.title) {
+            widgetToInstantiate.title = 'Widget ' + count++;
           }
 
-          // Deep extend a new object for instantiation
-          widgetToInstantiate = jQuery.extend(true, {}, defaultWidgetDefinition, widgetToInstantiate);
-
           // Instantiation
-          var widget = new WidgetModel(widgetToInstantiate, {
-            title: title
-          });
+          var widget = new WidgetModel(defaultWidgetDefinition, widgetToInstantiate);
 
+          // Add to the widgets array
           scope.widgets.push(widget);
           if (!doNotSave) {
             scope.saveDashboard();
@@ -142,9 +209,109 @@ angular.module('ui.dashboard')
          * @param  {Object} widget The widget instance object (not a definition object)
          */
         scope.removeWidget = function (widget) {
-          scope.widgets.splice(_.indexOf(scope.widgets, widget), 1);
-          scope.saveDashboard();
+          if(widget.canClose != false)
+          {
+            scope.widgets.splice(_.indexOf(scope.widgets, widget), 1);
+            scope.saveDashboard();
+          }
         };
+
+        scope.keyDown = function(e)
+        {
+          var sizex = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX;
+          var sizey = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY;
+          var col = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.col;
+          var row = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.row;
+          var gridsterContainer = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController;
+          var gridsterEle = $($(e)[0].currentTarget).closest('.gridsterContainer');
+          var sizeIncrement = 1;
+          switch(e.which) {
+          case 16:
+              scope.IsShiftKeyPressed = true;
+              return false;
+          case 40:
+              gridsterContainer.sizeY = sizey+sizeIncrement;
+              //scope.saveDashboard();
+              gridsterContainer.gridster.resizable.stop({},gridsterEle,{});
+              return false;
+          case 37:
+              gridsterContainer.sizeX = sizex-sizeIncrement;
+              //scope.saveDashboard();
+              gridsterContainer.gridster.resizable.stop({},gridsterEle,{});
+              return false;
+          case 39:
+              if(col + sizex < 30)
+              {
+                gridsterContainer.sizeX = sizex+sizeIncrement;
+                //scope.saveDashboard();
+                gridsterContainer.gridster.resizable.stop({},gridsterEle,{});
+              }
+              return false;
+          case 38:
+              gridsterContainer.sizeY = sizey-sizeIncrement;
+              //scope.saveDashboard();
+              gridsterContainer.gridster.resizable.stop({},gridsterEle,{});
+              return false;
+          case 65:
+              if(scope.IsShiftKeyPressed)
+              {
+                if(col > 0)
+                {
+                  gridsterContainer.col = col-1;
+                  scope.saveDashboard();
+                }
+                return false;
+              }
+              break;
+          case 68:
+              if(scope.IsShiftKeyPressed)
+              {
+                if(col + sizex < 30)
+                {
+                  gridsterContainer.col = col+1;
+                  scope.saveDashboard();
+                }
+                return false;
+              }
+              break;
+          case 83:
+            if(scope.IsShiftKeyPressed)
+            {
+              scope.RowIncrement += 5;
+              gridsterContainer.row = row + scope.RowIncrement;
+              scope.saveDashboard();
+              return false;
+            }
+            break;
+          case 87:
+            if(scope.IsShiftKeyPressed)
+            {
+              if(row > 0)
+              {
+                gridsterContainer.row = row-1;
+                scope.saveDashboard();
+              }
+              return false;  
+            }
+            break;
+          default:
+              return;
+          } 
+
+        }
+
+        scope.keyUp = function(e)
+        {
+          switch(e.which) {
+            case 16:
+              scope.IsShiftKeyPressed = false;
+              scope.RowIncrement = 0;
+              return;
+            default:
+              return;
+
+          }
+        }
 
         /**
          * Opens a dialog for setting and changing widget properties
@@ -208,7 +375,19 @@ angular.module('ui.dashboard')
          */
         scope.addWidgetInternal = function (event, widgetDef) {
           event.preventDefault();
+          var widgetExists =  jQuery.grep(scope.widgets, function( n, i ) {  return ( n.name == widgetDef.name);});
+          if(widgetExists.length)
+          {
+            $(".snoAlertBox").fadeIn();
+            window.setTimeout(function () {
+              $(".snoAlertBox").fadeOut(300)
+            }, 4000);
+            return false;   
+          }
           scope.addWidget(widgetDef);
+          $timeout(function(){
+           scope.$broadcast('defaultWidgetsSelected', scope.common);
+          },1000);
         };
 
         /**
@@ -259,6 +438,11 @@ angular.module('ui.dashboard')
         scope.resetWidgetsToDefault = function () {
           scope.loadWidgets(scope.defaultWidgets);
           scope.saveDashboard();
+          $timeout(function(){
+           scope.$broadcast('defaultWidgetsSelected', scope.common);
+          },1000);
+
+
         };
 
         // Set default widgets array
@@ -320,12 +504,78 @@ angular.module('ui.dashboard')
 'use strict';
 
 angular.module('ui.dashboard')
+  .controller('WidgetSettingsCtrl', ['$scope', '$modalInstance', 'widget', function ($scope, $modalInstance, widget) {
+    // add widget to scope
+    $scope.widget = widget;
+
+    // set up result object
+    $scope.result = jQuery.extend(true, {}, widget);
+
+    $scope.ok = function () {
+      $modalInstance.close($scope.result);
+    };
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  }]);
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.dashboard')
+  .controller('SaveChangesModalCtrl', ['$scope', '$modalInstance', 'layout', function ($scope, $modalInstance, layout) {
+    
+    // add layout to scope
+    $scope.layout = layout;
+
+    $scope.ok = function () {
+      $modalInstance.close();
+    };
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss();
+    };
+  }]);
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.dashboard')
   .directive('dashboardLayouts', ['LayoutStorage', '$timeout', '$modal',
     function(LayoutStorage, $timeout, $modal) {
       return {
         scope: true,
         templateUrl: function(element, attr) {
-          return attr.templateUrl ? attr.templateUrl : 'client/components/adf/template/dashboard-layouts.html';
+          return attr.templateUrl ? attr.templateUrl : 'client/components/adf/directives/dashboardLayouts/dashboardLayouts.html';
         },
         link: function(scope, element, attrs) {
 
@@ -352,12 +602,16 @@ angular.module('ui.dashboard')
           };
 
           scope.makeLayoutActive = function(layout) {
+            if(scope.common && scope.common.data && scope.common.data.EnterDataIsUnsaved == true){
+              $(".unsavedDataAlert").fadeIn();
+              return;
+            }
 
             var current = layoutStorage.getActiveLayout();
 
             if (current && current.dashboard.unsavedChangeCount) {
               var modalInstance = $modal.open({
-                templateUrl: 'client/components/adf/template/save-changes-modal.html',
+                templateUrl: 'client/components/adf/directives/dashboardLayouts/SaveChangesModal.html',
                 resolve: {
                   layout: function() {
                     return layout;
@@ -374,6 +628,9 @@ angular.module('ui.dashboard')
                 },
                 function() {
                   scope._makeLayoutActive(layout);
+                  $('div[dashboard-layouts=layoutOptions] li>a').filter(function () {
+                     return $(this).text().trim() == layout.title;
+                  }).click();
                 }
               );
             } else {
@@ -438,13 +695,609 @@ angular.module('ui.dashboard')
             }
           };
 
-          var sortableDefaults = {
-            stop: function() {
-              scope.options.saveLayouts();
-            },
-          };
-          scope.sortableOptions = angular.extend({}, sortableDefaults, scope.options.sortableOptions || {});
         }
+      };
+    }
+  ]);
+angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
+
+  $templateCache.put("client/components/adf/directives/dashboard/altDashboard.html",
+    "<div>\r" +
+    "\n" +
+    "    <div class=\"btn-toolbar\" ng-if=\"!options.hideToolbar\">\r" +
+    "\n" +
+    "        <div class=\"btn-group\" ng-if=\"!options.widgetButtons\">\r" +
+    "\n" +
+    "            <span class=\"dropdown\" on-toggle=\"toggled(open)\">\r" +
+    "\n" +
+    "              <button name=\"btnDropdown\" type=\"button\" class=\"btn btn-primary dropdown-toggle\" ng-disabled=\"disabled\">\r" +
+    "\n" +
+    "                Button dropdown <span class=\"caret\"></span>\r" +
+    "\n" +
+    "              </button>\r" +
+    "\n" +
+    "              <ul class=\"dropdown-menu\" role=\"menu\">\r" +
+    "\n" +
+    "                <li ng-repeat=\"widget in widgetDefs\">\r" +
+    "\n" +
+    "                  <a name=\"liWidgetName\" href=\"#\" ng-click=\"addWidgetInternal($event, widget);\" class=\"dropdown-toggle\">{{widget.name}}</a>\r" +
+    "\n" +
+    "                </li>\r" +
+    "\n" +
+    "              </ul>\r" +
+    "\n" +
+    "            </span>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "        <div class=\"btn-group\" ng-if=\"options.widgetButtons\">\r" +
+    "\n" +
+    "            <button name=\"btnWidgetName\" ng-repeat=\"widget in widgetDefs\"\r" +
+    "\n" +
+    "                    ng-click=\"addWidgetInternal($event, widget);\" type=\"button\" class=\"btn btn-primary\">\r" +
+    "\n" +
+    "                {{widget.name}}\r" +
+    "\n" +
+    "            </button>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "        <button name=\"btnDefaultWidgets\" class=\"btn btn-warning\" ng-click=\"resetWidgetsToDefault()\">Default Widgets</button>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "        <button name=\"btnUnsaved\" ng-if=\"options.storage && options.explicitSave\" ng-click=\"options.saveDashboard()\" class=\"btn btn-success\" ng-hide=\"!options.unsavedChangeCount\">{{ !options.unsavedChangeCount ? \"Alternative - No Changes\" : \"Save\" }}</button>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "        <button name=\"btnClear\" ng-click=\"clear();\" ng-hide=\"!widgets.length\" type=\"button\" class=\"btn btn-info\">Clear</button>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "    <div ui-sortable=\"sortableOptions\" ng-model=\"widgets\" class=\"dashboard-widget-area\">\r" +
+    "\n" +
+    "        <div ng-repeat=\"widget in widgets\" ng-style=\"widget.style\" class=\"widget-container\" widget>\r" +
+    "\n" +
+    "            <div class=\"widget panel panel-default\">\r" +
+    "\n" +
+    "                <div class=\"widget-header panel-heading\">\r" +
+    "\n" +
+    "                    <h3 class=\"panel-title\">\r" +
+    "\n" +
+    "                        <span class=\"widget-title\" ng-dblclick=\"editTitle(widget)\" ng-hide=\"widget.editingTitle\">{{widget.title}}</span>\r" +
+    "\n" +
+    "                        <form action=\"\" class=\"widget-title\" ng-show=\"widget.editingTitle\" ng-submit=\"saveTitleEdit(widget)\">\r" +
+    "\n" +
+    "                            <input alt=\"Widget Title\" type=\"text\" ng-model=\"widget.title\" class=\"form-control\">\r" +
+    "\n" +
+    "                        </form>\r" +
+    "\n" +
+    "                        <span class=\"label label-primary\" ng-if=\"!options.hideWidgetName\">{{widget.name}}</span>\r" +
+    "\n" +
+    "                        <span ng-click=\"removeWidget(widget);\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></span>\r" +
+    "\n" +
+    "                        <span ng-click=\"openWidgetSettings(widget);\" class=\"glyphicon glyphicon-cog\" ng-if=\"!options.hideWidgetSettings\"></span>\r" +
+    "\n" +
+    "                    </h3>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div class=\"panel-body widget-content\"></div>\r" +
+    "\n" +
+    "                <div class=\"widget-ew-resizer\" ng-mousedown=\"grabResizer($event)\"></div>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n"
+  );
+
+  $templateCache.put("client/components/adf/directives/dashboard/dashboard.html",
+    "<div>\r" +
+    "\n" +
+    "    <div class=\"alert alert-warning unsavedDataAlert\">\r" +
+    "\n" +
+    "          <p>You have Unsaved changes in EnterData widget, Please Save or Undo changes and retry.</p>\r" +
+    "\n" +
+    "          <button name=\"btnSaveAlertOk\" alt=\"Unsaved Changes\" class=\"btn btn-primary\" ng-click=\"CloseSaveAlert()\">OK</button>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div offset=\"105\" style=\"z-index:5;background-color:white;\" sticky tabindex=\"-1\">\r" +
+    "\n" +
+    "        <div class=\"alert alert-success snoAlertBox\" data-alert=\"alert\">This widget has already been added to your dashboard. Please select a different widget to add.</div>\r" +
+    "\n" +
+    "        <div class=\"btn-toolbar\" ng-if=\"!options.hideToolbar\" style=\"padding-bottom:5px;padding-top:5px;border-bottom: 2px solid gray;\">\r" +
+    "\n" +
+    "\t\t<!--ul class=\"inline\"><li-->\r" +
+    "\n" +
+    "            <div class=\"btn-group\" ng-if=\"!options.widgetButtons\" data-ng-class=\"{open: open}\" tabindex=\"-1\">\r" +
+    "\n" +
+    "\t\t\t<span title=\"Add a Widget\">\r" +
+    "\n" +
+    "                  <button name=\"btnAddWidget\" data-toggle=\"dropdown\" alt=\"Add Widget\" class=\"btn btn-primary dropdown-toggle\">\r" +
+    "\n" +
+    "                    Add a Widget<span class=\"caret\"/>\r" +
+    "\n" +
+    "                  </button>\r" +
+    "\n" +
+    "                  <ul class=\"dropdown-menu\">\r" +
+    "\n" +
+    "                    <li ng-repeat=\"widget in widgetDefs\">\r" +
+    "\n" +
+    "                      <a name=\"liWidgetDropdown\"  alt=\"Add Widget {{widget.name}}\" title=\"Add Widget {{widget.name}}\" data-toggle=\"tooltip\" href=\"#\" ng-click=\"addWidgetInternal($event, widget);\" class=\"dropdown-toggle nav\"><span class=\"label label-primary\">{{widget.name}}</span></a>\r" +
+    "\n" +
+    "                    </li>\r" +
+    "\n" +
+    "                  </ul>\r" +
+    "\n" +
+    "\t\t\t\t </span> \r" +
+    "\n" +
+    "\t\t\t</div>\r" +
+    "\n" +
+    "\t\t<!--/li></ul-->\r" +
+    "\n" +
+    "            <div class=\"btn-group\" ng-if=\"options.widgetButtons\" tabindex=\"-1\">\r" +
+    "\n" +
+    "                <button name=\"btnWidgetName\"  alt=\"Widget Name {{widget.name}}\" title=\"Widget Name {{widget.name}}\" ng-repeat=\"widget in widgetDefs\" ng-click=\"addWidgetInternal($event, widget);\" type=\"button\" class=\"btn btn-primary\">\r" +
+    "\n" +
+    "                    {{widget.name}}\r" +
+    "\n" +
+    "                </button>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "            <button name=\"btnDefaultWarning\"  alt=\"Default Widgets\" title=\"Default Widgets\"  class=\"btn btn-warning\" ng-click=\"resetWidgetsToDefault()\">Default Widgets</button>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "            <button name=\"btnSave\" title=\"Save\" alt=\"Save\"  ng-if=\"options.storage && options.explicitSave\" ng-click=\"options.saveDashboard()\" class=\"btn btn-success\" ng-disabled=\"!options.unsavedChangeCount\">{{ !options.unsavedChangeCount ? \"all saved\" : \"save changes (\" + options.unsavedChangeCount + \")\" }}</button>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "            <button name=\"btnClear\" ng-click=\"clear();\"  alt=\"Clear\" title=\"Clear\"  type=\"button\" class=\"btn btn-info\">Clear</button>\r" +
+    "\n" +
+    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Individual View'\" title=\"Individual View Layout\">\r" +
+    "\n" +
+    "                <label alt=\"{{ PatientName }}\" style=\"font-weight:normal\">\r" +
+    "\n" +
+    "                    <span> {{ PatientName }}</span>\r" +
+    "\n" +
+    "                </label>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Facility View'\" title=\"Facility View Layout\" >\r" +
+    "\n" +
+    "                <label alt=\"{{ FacilityName }}\" style=\"font-weight:normal\">\r" +
+    "\n" +
+    "                    <span> {{ FacilityName }}</span>\r" +
+    "\n" +
+    "                </label>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Surveillance View'\"  title=\"Surveillance View Layout\" >\r" +
+    "\n" +
+    "                <label alt=\"{{VISN_FacilityName\" style=\"font-weight:normal\">\r" +
+    "\n" +
+    "                    <span> {{ VISN_FacilityName }}</span>\r" +
+    "\n" +
+    "                </label>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "    <div gridster=\"gridsterOpts\" style=\"margin-top:35px;\" class=\"dashboard-widget-area\" tabindex=\"-1\">\r" +
+    "\n" +
+    "    <ul ng-model=\"widgets\">\r" +
+    "\n" +
+    "        <li gridster-item=\"widget\" ng-repeat=\"widget in widgets\" class=\"gridsterContainer\" widget tabindex=\"-1\">\r" +
+    "\n" +
+    "              <div class=\"widget panel panel-default\" style=\"height:98%\">\r" +
+    "\n" +
+    "                <div class=\"widget-header panel-heading\" tabindex=\"-1\" style=\"height:45px;\">\r" +
+    "\n" +
+    "                    <div class=\"panel-title\">\r" +
+    "\n" +
+    "                        <span style=\"background-color: transparent;margin-right:3px;\" class=\"label-primary widget-title nav pull-left\">{{widget.title}}</span>\r" +
+    "\n" +
+    "                        <span class=\"label label-primary\" ng-if=\"!options.hideWidgetName\" tabindex=\"-1\">{{widget.name}}</span>\r" +
+    "\n" +
+    "                        <div id=\"widgetSettings\" style=\"display:inline-block; float:right; position:relative;\">\r" +
+    "\n" +
+    "                            <!--button ng-click=\"widget.contentStyle.display = widget.contentStyle.display === 'none' ? 'block' : 'none'\" style=\"background-color: transparent; float:left;\" class=\"glyphicon\" ng-class=\"{'glyphicon-plus': widget.contentStyle.display === 'none','glyphicon-minus': widget.contentStyle.display !== 'none'}\"></button-->\r" +
+    "\n" +
+    "                            <!--button ng-click=\"openWidgetSettings(widget);\" style=\"background-color: transparent; float:left;\" class=\"glyphicon glyphicon-cog\" ng-if=\"!options.hideWidgetSeyttings\"></button-->\r" +
+    "\n" +
+    "                            <button ng-click=\"removeWidget(widget);\" ng-keydown=\"keyDown($event)\" ng-keyup=\"keyUp($event)\"  ng-attr-title=\"{{widget.canClose == false? 'Resize/Move Widget':'Remove/Resize/Move Widget'}}\" alt=\"Remove Widget\" style=\"background-color: transparent; float:right;\" ng-class=\"(widget.canClose == false) ? 'glyphicon glyphicon-move' : 'glyphicon glyphicon-remove'\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
+    "\n" +
+    "                        </div>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div class=\"widget-content\" style=\"height:85%;\"></div>\r" +
+    "\n" +
+    "                <div class=\"widget-ew-resizer\" ng-mousedown=\"grabResizer($event)\"></div>\r" +
+    "\n" +
+    "                <div ng-if=\"widget.enableVerticalResize\" class=\"widget-s-resizer\" ng-mousedown=\"grabSouthResizer($event)\"></div>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "        </li>\r" +
+    "\n" +
+    "    </ul>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/adf/directives/dashboard/widget-settings-template.html",
+    "<div class=\"modal-header\">\r" +
+    "\n" +
+    "    <button name=\"btnCancel\" alt=\"Cancel\" type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
+    "\n" +
+    "  <p font-size=\"12\"><b>Widget Options:  </b><small>{{widget.title}}</small></p>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "<div class=\"modal-body\">\r" +
+    "\n" +
+    "    <form name=\"form\" novalidate class=\"form-horizontal\">\r" +
+    "\n" +
+    "        <div class=\"form-group\">\r" +
+    "\n" +
+    "            <label alt=\"Widget Title\" for=\"widgetTitle\" class=\"col-sm-2 control-label\">Title</label>\r" +
+    "\n" +
+    "            <div class=\"col-sm-10\">\r" +
+    "\n" +
+    "                <input alt=\"Result Title\" id=\"widgetTitle\" type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div ng-if=\"widget.settingsModalOptions.partialTemplateUrl\"\r" +
+    "\n" +
+    "             ng-include=\"widget.settingsModalOptions.partialTemplateUrl\"></div>\r" +
+    "\n" +
+    "    </form>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "<div class=\"modal-footer\">\r" +
+    "\n" +
+    "    <button name=\"btn2Cancel\" alt=\"cancel\" type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
+    "\n" +
+    "    <button name=\"btnOK\" alt=\"ok\" type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/adf/directives/dashboardLayouts/SaveChangesModal.html",
+    "<div class=\"modal-header\">\r" +
+    "\n" +
+    "    <button name=\"btnCancel\" type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
+    "\n" +
+    "  <h3>Unsaved Changes to \"{{layout.title}}\"</h3>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "<div class=\"modal-body\">\r" +
+    "\n" +
+    "    <p>You have {{layout.dashboard.unsavedChangeCount}} unsaved changes on this dashboard. Would you like to save them? </p>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "<div class=\"modal-footer\">\r" +
+    "\n" +
+    "    <button name=\"btn2Cancel\" type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
+    "\n" +
+    "    <button name=\"btnSave\" type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">Save</button>\r" +
+    "\n" +
+    "</div>"
+  );
+
+  $templateCache.put("client/components/adf/directives/dashboardLayouts/dashboardLayouts.html",
+    "<ul ng-model=\"layouts\" class=\"nav nav-tabs layout-tabs\" offset=\"59\" style=\"z-index:5;background-color:white;\" sticky>\r" +
+    "\n" +
+    "    <li ng-repeat=\"layout in layouts\" ng-class=\"{ active: layout.active }\">\r" +
+    "\n" +
+    "        <a ng-click=\"makeLayoutActive(layout)\" alt=\"{{layout.title}}\" title=\"{{layout.title}}\" tabindex=\"0\">\r" +
+    "\n" +
+    "            <span ng-dblclick=\"editTitle(layout)\"  ng-show=\"!layout.editingTitle\">{{layout.title}}</span>\r" +
+    "\n" +
+    "            <form action=\"\" class=\"layout-title\" ng-show=\"layout.editingTitle\" ng-submit=\"saveTitleEdit(layout)\">\r" +
+    "\n" +
+    "                <input type=\"text\" ng-model=\"layout.title\" class=\"form-control\" data-layout=\"{{layout.id}}\">\r" +
+    "\n" +
+    "            </form>\r" +
+    "\n" +
+    "            <span ng-if=\"!layout.locked\" ng-click=\"removeLayout(layout)\" class=\"glyphicon glyphicon-remove remove-layout-icon\"></span>\r" +
+    "\n" +
+    "            <!-- <span class=\"glyphicon glyphicon-pencil\"></span> -->\r" +
+    "\n" +
+    "            <!-- <span class=\"glyphicon glyphicon-remove\"></span> -->\r" +
+    "\n" +
+    "        </a>\r" +
+    "\n" +
+    "    </li>\r" +
+    "\n" +
+    "    <label class=\"pull-right\" style=\"padding:5px;font-weight:normal;\">Data Last Updated:{{options.dataLastUpdated | date: \"MM-dd-yyyy\"}}  <a style=\"border-left:1px solid gray;padding-left:5px;font-size:12px;\" href=\"mailto:vaperceptivereachsupport@va.gov?Subject=Perceptive Reach Dashboard Support\">Contact Help Desk</a></label>\r" +
+    "\n" +
+    "</ul>\r" +
+    "\n" +
+    "<div ng-repeat=\"layout in layouts | filter:isActive\" dashboard=\"layout.dashboard\" template-url=\"client/components/adf/directives/dashboard/dashboard.html\" dashboard-title=\"layout.title\"></div>"
+  );
+
+}]);
+
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.dashboard')
+  .controller('DashboardWidgetCtrl', ['$scope', '$element', '$compile', '$window', '$timeout',
+    function($scope, $element, $compile, $window, $timeout) {
+
+      $scope.status = {
+        isopen: false
+      };
+
+      // Fills "container" with compiled view
+      $scope.makeTemplateString = function() {
+
+        var widget = $scope.widget;
+
+        // First, build template string
+        var templateString = '';
+
+        if (widget.templateUrl) {
+
+          // Use ng-include for templateUrl
+          templateString = '<div ng-include="\'' + widget.templateUrl + '\'"></div>';
+
+        } else if (widget.template) {
+
+          // Direct string template
+          templateString = widget.template;
+
+        } else {
+
+          // Assume attribute directive
+          templateString = '<div ' + widget.directive;
+
+          // Check if data attribute was specified
+          if (widget.dataAttrName) {
+            widget.attrs = widget.attrs || {};
+            widget.attrs[widget.dataAttrName] = 'widgetData';
+          }
+
+          // Check for specified attributes
+          if (widget.attrs) {
+
+            // First check directive name attr
+            if (widget.attrs[widget.directive]) {
+              templateString += '="' + widget.attrs[widget.directive] + '"';
+            }
+
+            // Add attributes
+            _.each(widget.attrs, function(value, attr) {
+
+              // make sure we aren't reusing directive attr
+              if (attr !== widget.directive) {
+                templateString += ' ' + attr + '="' + value + '"';
+              }
+
+            });
+          }
+          templateString += '></div>';
+        }
+        return templateString;
+      };
+
+      $scope.grabResizer = function(e) {
+
+        var widget = $scope.widget;
+        var widgetElm = $element.find('.widget');
+
+        // ignore middle- and right-click
+        if (e.which !== 1) {
+          return;
+        }
+
+        e.stopPropagation();
+        e.originalEvent.preventDefault();
+
+        // get the starting horizontal position
+        var initX = e.clientX;
+        // console.log('initX', initX);
+
+        // Get the current width of the widget and dashboard
+        var pixelWidth = widgetElm.width();
+        var pixelHeight = widgetElm.height();
+        var widgetStyleWidth = widget.containerStyle.width;
+        var widthUnits = widget.widthUnits;
+        var unitWidth = parseFloat(widgetStyleWidth);
+
+        // create marquee element for resize action
+        var $marquee = angular.element('<div class="widget-resizer-marquee" style="height: ' + pixelHeight + 'px; width: ' + pixelWidth + 'px;"></div>');
+        widgetElm.append($marquee);
+
+        // determine the unit/pixel ratio
+        var transformMultiplier = unitWidth / pixelWidth;
+
+        // updates marquee with preview of new width
+        var mousemove = function(e) {
+          var curX = e.clientX;
+          var pixelChange = curX - initX;
+          var newWidth = pixelWidth + pixelChange;
+          $marquee.css('width', newWidth + 'px');
+        };
+
+        // sets new widget width on mouseup
+        var mouseup = function(e) {
+          // remove listener and marquee
+          jQuery($window).off('mousemove', mousemove);
+          $marquee.remove();
+
+          // calculate change in units
+          var curX = e.clientX;
+          var pixelChange = curX - initX;
+          var unitChange = Math.round(pixelChange * transformMultiplier * 100) / 100;
+
+          // add to initial unit width
+          var newWidth = unitWidth * 1 + unitChange;
+          widget.setWidth(newWidth, widthUnits);
+          $scope.$emit('widgetChanged', widget);
+          $scope.$apply();
+          $scope.$broadcast('widgetResized', {
+            width: newWidth
+          });
+        };
+
+        jQuery($window).on('mousemove', mousemove).one('mouseup', mouseup);
+      };
+
+      //TODO refactor
+      $scope.grabSouthResizer = function(e) {
+        var widgetElm = $element.find('.widget');
+
+        // ignore middle- and right-click
+        if (e.which !== 1) {
+          return;
+        }
+
+        e.stopPropagation();
+        e.originalEvent.preventDefault();
+
+        // get the starting horizontal position
+        var initY = e.clientY;
+        // console.log('initX', initX);
+
+        // Get the current width of the widget and dashboard
+        var pixelWidth = widgetElm.width();
+        var pixelHeight = widgetElm.height();
+
+        // create marquee element for resize action
+        var $marquee = angular.element('<div class="widget-resizer-marquee" style="height: ' + pixelHeight + 'px; width: ' + pixelWidth + 'px;"></div>');
+        widgetElm.append($marquee);
+
+        // updates marquee with preview of new height
+        var mousemove = function(e) {
+          var curY = e.clientY;
+          var pixelChange = curY - initY;
+          var newHeight = pixelHeight + pixelChange;
+          $marquee.css('height', newHeight + 'px');
+        };
+
+        // sets new widget width on mouseup
+        var mouseup = function(e) {
+          // remove listener and marquee
+          jQuery($window).off('mousemove', mousemove);
+          $marquee.remove();
+
+          // calculate height change
+          var curY = e.clientY;
+          var pixelChange = curY - initY;
+
+          //var widgetContainer = widgetElm.parent(); // widget container responsible for holding widget width and height
+          var widgetContainer = widgetElm.find('.widget-content');
+
+          var diff = pixelChange;
+          var height = parseInt(widgetContainer.css('height'), 10);
+          var newHeight = (height + diff);
+
+          //$scope.widget.style.height = newHeight + 'px';
+
+          $scope.widget.setHeight(newHeight + 'px');
+
+          $scope.$emit('widgetChanged', $scope.widget);
+          $scope.$apply(); // make AngularJS to apply style changes
+
+          $scope.$broadcast('widgetResized', {
+            height: newHeight
+          });
+        };
+
+        jQuery($window).on('mousemove', mousemove).one('mouseup', mouseup);
+      };
+
+      // replaces widget title with input
+      $scope.editTitle = function(widget) {
+        var widgetElm = $element.find('.widget');
+        widget.editingTitle = true;
+        // HACK: get the input to focus after being displayed.
+        $timeout(function() {
+          widgetElm.find('form.widget-title input:eq(0)').focus()[0].setSelectionRange(0, 9999);
+        });
+      };
+
+      // saves whatever is in the title input as the new title
+      $scope.saveTitleEdit = function(widget) {
+        widget.editingTitle = false;
+        $scope.$emit('widgetChanged', widget);
+      };
+
+      $scope.compileTemplate = function() {
+        var container = $scope.findWidgetContainer($element);
+        var templateString = $scope.makeTemplateString();
+        var widgetElement = angular.element(templateString);
+
+        container.empty();
+        container.append(widgetElement);
+        $compile(widgetElement)($scope);
+      };
+
+      $scope.findWidgetContainer = function(element) {
+        // widget placeholder is the first (and only) child of .widget-content
+        return element.find('.widget-content');
       };
     }
   ]);
@@ -532,259 +1385,6 @@ angular.module('ui.dashboard')
 'use strict';
 
 angular.module('ui.dashboard')
-  .factory('LayoutStorage', function() {
-
-    var noopStorage = {
-      setItem: function() {
-
-      },
-      getItem: function() {
-
-      },
-      removeItem: function() {
-
-      }
-    };
-
-    
-
-    function LayoutStorage(options) {
-
-      var defaults = {
-        storage: noopStorage,
-        storageHash: '',
-        stringifyStorage: true
-      };
-
-      angular.extend(defaults, options);
-      angular.extend(options, defaults);
-
-      this.id = options.storageId;
-      this.storage = options.storage;
-      this.storageHash = options.storageHash;
-      this.stringifyStorage = options.stringifyStorage;
-      this.widgetDefinitions = options.widgetDefinitions;
-      this.defaultLayouts = options.defaultLayouts;
-      this.lockDefaultLayouts = options.lockDefaultLayouts;
-      this.widgetButtons = options.widgetButtons;
-      this.explicitSave = options.explicitSave;
-      this.defaultWidgets = options.defaultWidgets;
-      this.settingsModalOptions = options.settingsModalOptions;
-      this.onSettingsClose = options.onSettingsClose;
-      this.onSettingsDismiss = options.onSettingsDismiss;
-      this.options = options;
-      this.options.unsavedChangeCount = 0;
-
-      this.layouts = [];
-      this.states = {};
-      this.load();
-      this._ensureActiveLayout();
-    }
-
-    LayoutStorage.prototype = {
-
-      add: function(layouts) {
-        if (!angular.isArray(layouts)) {
-          layouts = [layouts];
-        }
-        var self = this;
-        angular.forEach(layouts, function(layout) {
-          layout.dashboard = layout.dashboard || {};
-          layout.dashboard.storage = self;
-          layout.dashboard.storageId = layout.id = self._getLayoutId.call(self,layout);
-          layout.dashboard.widgetDefinitions = self.widgetDefinitions;
-          layout.dashboard.stringifyStorage = false;
-          layout.dashboard.defaultWidgets = layout.defaultWidgets || self.defaultWidgets;
-          layout.dashboard.widgetButtons = self.widgetButtons;
-          layout.dashboard.explicitSave = self.explicitSave;
-          layout.dashboard.settingsModalOptions = self.settingsModalOptions;
-          layout.dashboard.onSettingsClose = self.onSettingsClose;
-          layout.dashboard.onSettingsDismiss = self.onSettingsDismiss;
-          self.layouts.push(layout);
-        });
-      },
-
-      remove: function(layout) {
-        var index = this.layouts.indexOf(layout);
-        if (index >= 0) {
-          this.layouts.splice(index, 1);
-          delete this.states[layout.id];
-
-          // check for active
-          if (layout.active && this.layouts.length) {
-            var nextActive = index > 0 ? index - 1 : 0;
-            this.layouts[nextActive].active = true;
-          }
-        }
-      },
-
-      save: function() {
-
-        var state = {
-          layouts: this._serializeLayouts(),
-          states: this.states,
-          storageHash: this.storageHash
-        };
-
-        if (this.stringifyStorage) {
-          state = JSON.stringify(state);
-        }
-
-        this.storage.setItem(this.id, state);
-        this.options.unsavedChangeCount = 0;
-      },
-
-      load: function() {
-
-        var serialized = this.storage.getItem(this.id);
-
-        this.clear();
-
-        if (serialized) {
-          // check for promise
-          if (angular.isObject(serialized) && angular.isFunction(serialized.then)) {
-            this._handleAsyncLoad(serialized);
-          } else {
-            this._handleSyncLoad(serialized);
-          }
-        } else {
-          this._addDefaultLayouts();
-        }
-      },
-
-      clear: function() {
-        this.layouts = [];
-        this.states = {};
-      },
-
-      setItem: function(id, value) {
-        this.states[id] = value;
-        this.save();
-      },
-
-      getItem: function(id) {
-        return this.states[id];
-      },
-
-      removeItem: function(id) {
-        delete this.states[id];
-        this.save();
-      },
-
-      getActiveLayout: function() {
-        var len = this.layouts.length;
-        for (var i = 0; i < len; i++) {
-          var layout = this.layouts[i];
-          if (layout.active) {
-            return layout;
-          }
-        }
-        return false;
-      },
-
-      _addDefaultLayouts: function() {
-        var self = this;
-        var defaults = this.lockDefaultLayouts ? { locked: true } : {};
-        angular.forEach(this.defaultLayouts, function(layout) {
-          self.add(angular.extend(_.clone(defaults), layout));
-        });
-      },
-
-      _serializeLayouts: function() {
-        var result = [];
-        angular.forEach(this.layouts, function(l) {
-          result.push({
-            title: l.title,
-            id: l.id,
-            active: l.active,
-            locked: l.locked,
-            defaultWidgets: l.dashboard.defaultWidgets
-          });
-        });
-        return result;
-      },
-
-      _handleSyncLoad: function(serialized) {
-        
-        var deserialized;
-
-        if (this.stringifyStorage) {
-          try {
-
-            deserialized = JSON.parse(serialized);
-
-          } catch (e) {
-            this._addDefaultLayouts();
-            return;
-          }
-        } else {
-
-          deserialized = serialized;
-
-        }
-
-        if (this.storageHash !== deserialized.storageHash) {
-          this._addDefaultLayouts();
-          return;
-        }
-        this.states = deserialized.states;
-        this.add(deserialized.layouts);
-      },
-
-      _handleAsyncLoad: function(promise) {
-        var self = this;
-        promise.then(
-          angular.bind(self, this._handleSyncLoad),
-          angular.bind(self, this._addDefaultLayouts)
-        );
-      },
-
-      _ensureActiveLayout: function() {
-        for (var i = 0; i < this.layouts.length; i++) {
-          var layout = this.layouts[i];
-          if (layout.active) {
-            return;
-          }
-        }
-        if (this.layouts[0]) {
-          this.layouts[0].active = true;
-        }
-      },
-
-      _getLayoutId: function(layout) {
-        if (layout.id) {
-          return layout.id;
-        }
-        var max = 0;
-        for (var i = 0; i < this.layouts.length; i++) {
-          var id = this.layouts[i].id;
-          max = Math.max(max, id * 1);
-        }
-        return max + 1;
-      }
-
-    };
-    return LayoutStorage;
-  });
-/*
- * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-angular.module('ui.dashboard')
   .factory('DashboardState', ['$log', '$q', function ($log, $q) {
     function DashboardState(storage, id, hash, widgetDefinitions, stringify) {
       this.storage = storage;
@@ -809,17 +1409,17 @@ angular.module('ui.dashboard')
         }
 
         var serialized = _.map(widgets, function (widget) {
-          var widgetObject = {
-            title: widget.title,
-            name: widget.name,
-            style: widget.style,
-            size: widget.size,
-            dataModelOptions: widget.dataModelOptions,
-            storageHash: widget.storageHash,
-            attrs: widget.attrs
-          };
-
-          return widgetObject;
+          var w = widget.serialize();
+          if(typeof w.dataModelOptions !== 'undefined' && typeof w.dataModelOptions.common !== 'undefined'
+            && typeof w.dataModelOptions.common.data.veteranObj.OutreachStatus !== 'undefined')
+          {
+            delete w.dataModelOptions.common.data.veteranObj.OutreachStatus;
+          }
+          w.col = widget.col;
+          w.row = widget.row;
+          w.sizeX = widget.sizeX;
+          w.sizeY = widget.sizeY;
+          return w;
         });
 
         var item = { widgets: serialized, hash: this.hash };
@@ -827,7 +1427,7 @@ angular.module('ui.dashboard')
         if (this.stringify) {
           item = JSON.stringify(item);
         }
-
+        
         this.storage.setItem(this.id, item);
         return true;
       },
@@ -975,6 +1575,291 @@ angular.module('ui.dashboard')
 'use strict';
 
 angular.module('ui.dashboard')
+  .factory('LayoutStorage', function(Dashboard) {
+
+    var noopStorage = {
+      setItem: function() {
+
+      },
+      getItem: function() {
+
+      },
+      removeItem: function() {
+
+      }
+    };
+
+    
+
+    function LayoutStorage(options) {
+
+      var defaults = {
+        storage: noopStorage,
+        storageHash: '',
+        stringifyStorage: true
+      };
+
+      angular.extend(defaults, options);
+      angular.extend(options, defaults);
+       
+      this.id = options.storageId;
+      this.storage = options.storage;
+      this.storageHash = options.storageHash;
+      this.stringifyStorage = options.stringifyStorage;
+      this.widgetDefinitions = options.widgetDefinitions;
+      this.defaultLayouts = options.defaultLayouts;
+      this.lockDefaultLayouts = options.lockDefaultLayouts;
+      this.widgetButtons = options.widgetButtons;
+      this.explicitSave = options.explicitSave;
+      this.defaultWidgets = options.defaultWidgets;
+      this.settingsModalOptions = options.settingsModalOptions;
+      this.onSettingsClose = options.onSettingsClose;
+      this.onSettingsDismiss = options.onSettingsDismiss;
+      this.options = options;
+      this.options.unsavedChangeCount = 0;
+
+      this.layouts = [];
+      this.states = {};
+      this.load();
+      this._ensureActiveLayout();
+    }
+
+    LayoutStorage.prototype = {
+
+      add: function(layouts) {
+        if (!angular.isArray(layouts)) {
+          layouts = [layouts];
+        }
+        var self = this;
+        angular.forEach(layouts, function(layout) {
+          layout.dashboard = layout.dashboard || {};
+          layout.dashboard.storage = self;
+          layout.dashboard.storageId = layout.id = self._getLayoutId.call(self,layout);
+          layout.dashboard.widgetDefinitions = self._getProperWidgetDefinitions(layout.widgetDefinitions, self.widgetDefinitions);//layout.widgetDefinitions || self.widgetDefinitions; // PerceptiveReach change
+          layout.dashboard.stringifyStorage = false;
+          layout.dashboard.defaultWidgets = layout.defaultWidgets || self.defaultWidgets;
+          layout.dashboard.widgetButtons = self.widgetButtons;
+          layout.dashboard.explicitSave = self.explicitSave;
+          layout.dashboard.settingsModalOptions = self.settingsModalOptions;
+          layout.dashboard.onSettingsClose = self.onSettingsClose;
+          layout.dashboard.onSettingsDismiss = self.onSettingsDismiss;
+          self.layouts.push(layout);
+        });
+      },
+
+      remove: function(layout) {
+        var index = this.layouts.indexOf(layout);
+        if (index >= 0) {
+          this.layouts.splice(index, 1);
+          delete this.states[layout.id];
+
+          // check for active
+          if (layout.active && this.layouts.length) {
+            var nextActive = index > 0 ? index - 1 : 0;
+            this.layouts[nextActive].active = true;
+          }
+        }
+      },
+
+      save: function() {
+
+        var state = {
+          layouts: this._serializeLayouts(),
+          states: this.states,
+          storageHash: this.storageHash
+        };
+
+        var sessionStore = JSON.parse(sessionStorage.getItem('user'));
+        
+        if(sessionStore)
+        {
+          sessionStore.DashboardData = state;
+          sessionStorage.setItem("user", JSON.stringify(sessionStore)); 
+        }
+
+        if (this.stringifyStorage) {
+          state = JSON.stringify(state);
+        }
+
+        this.storage.setItem(this.id, state);
+        this.options.unsavedChangeCount = 0;
+
+        Dashboard.saveDashboard({id: this.id, data: state});
+        //console.log("Inside save function for LayoutStorage: ");
+      },
+
+      load: function() {
+
+        var serialized = this.storage.getItem(this.id);
+
+        this.clear();
+
+        if (serialized) {
+          // check for promise
+          if (angular.isObject(serialized) && angular.isFunction(serialized.then)) {
+            this._handleAsyncLoad(serialized);
+          } else {
+            this._handleSyncLoad(serialized);
+          }
+        } else {
+          this._addDefaultLayouts();
+        }
+      },
+
+      clear: function() {
+        this.layouts = [];
+        this.states = {};
+      },
+
+      setItem: function(id, value) {
+        this.states[id] = value;
+        this.save();
+      },
+
+      getItem: function(id) {
+        return this.states[id];
+      },
+
+      removeItem: function(id) {
+        delete this.states[id];
+        this.save();
+      },
+
+      getActiveLayout: function() {
+        var len = this.layouts.length;
+        for (var i = 0; i < len; i++) {
+          var layout = this.layouts[i];
+          if (layout.active) {
+            return layout;
+          }
+        }
+        return false;
+      },
+
+      _addDefaultLayouts: function() {
+        var self = this;
+        var defaults = this.lockDefaultLayouts ? { locked: true } : {};
+        angular.forEach(this.defaultLayouts, function(layout) {
+          self.add(angular.extend(_.clone(defaults), layout));
+        });
+      },
+
+      _serializeLayouts: function() {
+        var result = [];
+        angular.forEach(this.layouts, function(l) {
+          result.push({
+            title: l.title,
+            id: l.id,
+            active: l.active,
+            locked: l.locked,
+            defaultWidgets: l.dashboard.defaultWidgets
+          });
+        });
+        return result;
+      },
+
+      _handleSyncLoad: function(serialized) {
+        
+        var deserialized;
+
+        if (this.stringifyStorage) {
+          try {
+
+            deserialized = JSON.parse(serialized);
+
+          } catch (e) {
+            this._addDefaultLayouts();
+            return;
+          }
+        } else {
+
+          deserialized = serialized;
+
+        }
+
+        if (this.storageHash !== deserialized.storageHash) {
+          this._addDefaultLayouts();
+          return;
+        }
+        this.states = deserialized.states;
+        this.add(deserialized.layouts);
+      },
+
+      _handleAsyncLoad: function(promise) {
+        var self = this;
+        promise.then(
+          angular.bind(self, this._handleSyncLoad),
+          angular.bind(self, this._addDefaultLayouts)
+        );
+      },
+
+      _ensureActiveLayout: function() {
+        for (var i = 0; i < this.layouts.length; i++) {
+          var layout = this.layouts[i];
+          if (layout.active) {
+            return;
+          }
+        }
+        if (this.layouts[0]) {
+          this.layouts[0].active = true;
+        }
+      },
+
+      _getLayoutId: function(layout) {
+        if (layout.id) {
+          return layout.id;
+        }
+        var max = 0;
+        for (var i = 0; i < this.layouts.length; i++) {
+          var id = this.layouts[i].id;
+          max = Math.max(max, id * 1);
+        }
+        return max + 1;
+      },
+
+      _getProperWidgetDefinitions: function(widgetDefinitionsLayout, widgetDefinitionsAll)
+      {
+        var someView = [];        
+        var widget = null;
+
+        if (widgetDefinitionsLayout == null)
+          return widgetDefinitionsAll;
+        
+        else if (widgetDefinitionsLayout != null && widgetDefinitionsLayout.length == 0)
+          return widgetDefinitionsLayout;
+        
+        else{
+          for(var widgetIdx in widgetDefinitionsLayout){
+            widget = widgetDefinitionsLayout[widgetIdx];
+            someView.push(_.filter(widgetDefinitionsAll,{'name': widget.name})[0]);                     
+          }  
+        }          
+        //console.log("LayoutViewWidgets:",someView);
+        return someView;
+      }
+
+    };
+    return LayoutStorage;
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.dashboard')
   .factory('WidgetDataModel', function () {
     function WidgetDataModel() {
     }
@@ -1021,7 +1906,18 @@ angular.module('ui.dashboard')
 
 angular.module('ui.dashboard')
   .factory('WidgetDefCollection', function () {
+
+    function convertToDefinition(d) {
+      if (typeof d === 'function') {
+        return new d();
+      }
+      return d;
+    }
+
     function WidgetDefCollection(widgetDefs) {
+      
+      widgetDefs = widgetDefs.map(convertToDefinition);
+
       this.push.apply(this, widgetDefs);
 
       // build (name -> widget definition) map for widget lookup by name
@@ -1038,8 +1934,15 @@ angular.module('ui.dashboard')
       return this.map[name];
     };
 
+    WidgetDefCollection.prototype.add = function(def) {
+      def = convertToDefinition(def);
+      this.push(def);
+      this.map[def.name] = def;
+    };
+
     return WidgetDefCollection;
   });
+
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -1059,39 +1962,29 @@ angular.module('ui.dashboard')
 'use strict';
 
 angular.module('ui.dashboard')
-  .factory('WidgetModel', function () {
-    // constructor for widget model instances
-    function WidgetModel(Class, overrides) {
-      var defaults = {
-          title: 'Widget',
-          name: Class.name,
-          attrs: Class.attrs,
-          dataAttrName: Class.dataAttrName,
-          dataModelType: Class.dataModelType,
-          dataModelArgs: Class.dataModelArgs, // used in data model constructor, not serialized
-          //AW Need deep copy of options to support widget options editing
-          dataModelOptions: Class.dataModelOptions,
-          settingsModalOptions: Class.settingsModalOptions,
-          onSettingsClose: Class.onSettingsClose,
-          onSettingsDismiss: Class.onSettingsDismiss,
-          style: Class.style || {},
-          size: Class.size || {},
-          enableVerticalResize: (Class.enableVerticalResize === false) ? false : true
-        };
+  .factory('WidgetModel', function ($log) {
 
-      overrides = overrides || {};
-      angular.extend(this, angular.copy(defaults), overrides);
-      this.containerStyle = { width: '33%' }; // default width
-      this.contentStyle = {};
+    function defaults() {
+      return {
+        title: 'Widget',
+        style: {},
+        size: {},
+        enableVerticalResize: true,
+        containerStyle: { width: '33%' }, // default width
+        contentStyle: {}
+      };
+    };
+
+    // constructor for widget model instances
+    function WidgetModel(widgetDefinition, overrides) {
+  
+      // Extend this with the widget definition object with overrides merged in (deep extended).
+      angular.extend(this, defaults(), _.merge(angular.copy(widgetDefinition), overrides));
+
       this.updateContainerStyle(this.style);
 
-      if (Class.templateUrl) {
-        this.templateUrl = Class.templateUrl;
-      } else if (Class.template) {
-        this.template = Class.template;
-      } else {
-        var directive = Class.directive || Class.name;
-        this.directive = directive;
+      if (!this.templateUrl && !this.template && !this.directive) {
+        this.directive = widgetDefinition.name;
       }
 
       if (this.size && _.has(this.size, 'height')) {
@@ -1112,10 +2005,12 @@ angular.module('ui.dashboard')
       setWidth: function (width, units) {
         width = width.toString();
         units = units || width.replace(/^[-\.\d]+/, '') || '%';
+
         this.widthUnits = units;
         width = parseFloat(width);
 
-        if (width < 0) {
+        if (width < 0 || isNaN(width)) {
+          $log.warn('malhar-angular-dashboard: setWidth was called when width was ' + width);
           return false;
         }
 
@@ -1147,631 +2042,22 @@ angular.module('ui.dashboard')
 
       updateContainerStyle: function (style) {
         angular.extend(this.containerStyle, style);
+      },
+
+      compactObject : function(o) {
+         var clone = _.clone(o);
+         _.each(clone, function(v, k) {
+           if(!v || _.isEmpty(v)) {
+             clone[k] = undefined;
+           }
+         });
+         return clone;
+      },
+
+      serialize: function() {
+        return _.pick(this.compactObject(this), ['title', 'name', 'style', 'size', 'dataModelOptions', 'attrs', 'storageHash']);
       }
     };
 
     return WidgetModel;
   });
-/*
- * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-angular.module('ui.dashboard')
-  .controller('SaveChangesModalCtrl', ['$scope', '$modalInstance', 'layout', function ($scope, $modalInstance, layout) {
-    
-    // add layout to scope
-    $scope.layout = layout;
-
-    $scope.ok = function () {
-      $modalInstance.close();
-    };
-
-    $scope.cancel = function () {
-      $modalInstance.dismiss();
-    };
-  }]);
-    /*
- * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-angular.module('ui.dashboard')
-  .controller('DashboardWidgetCtrl', ['$scope', '$element', '$compile', '$window', '$timeout',
-    function($scope, $element, $compile, $window, $timeout) {
-
-      $scope.status = {
-        isopen: false
-      };
-
-      // Fills "container" with compiled view
-      $scope.makeTemplateString = function() {
-
-        var widget = $scope.widget;
-
-        // First, build template string
-        var templateString = '';
-
-        if (widget.templateUrl) {
-
-          // Use ng-include for templateUrl
-          templateString = '<div ng-include="\'' + widget.templateUrl + '\'"></div>';
-
-        } else if (widget.template) {
-
-          // Direct string template
-          templateString = widget.template;
-
-        } else {
-
-          // Assume attribute directive
-          templateString = '<div ' + widget.directive;
-
-          // Check if data attribute was specified
-          if (widget.dataAttrName) {
-            widget.attrs = widget.attrs || {};
-            widget.attrs[widget.dataAttrName] = 'widgetData';
-          }
-
-          // Check for specified attributes
-          if (widget.attrs) {
-
-            // First check directive name attr
-            if (widget.attrs[widget.directive]) {
-              templateString += '="' + widget.attrs[widget.directive] + '"';
-            }
-
-            // Add attributes
-            _.each(widget.attrs, function(value, attr) {
-
-              // make sure we aren't reusing directive attr
-              if (attr !== widget.directive) {
-                templateString += ' ' + attr + '="' + value + '"';
-              }
-
-            });
-          }
-          templateString += '></div>';
-        }
-        return templateString;
-      };
-
-      $scope.grabResizer = function(e) {
-
-        var widget = $scope.widget;
-        var widgetElm = $element.find('.widget');
-
-        // ignore middle- and right-click
-        if (e.which !== 1) {
-          return;
-        }
-
-        e.stopPropagation();
-        e.originalEvent.preventDefault();
-
-        // get the starting horizontal position
-        var initX = e.clientX;
-        // console.log('initX', initX);
-
-        // Get the current width of the widget and dashboard
-        var pixelWidth = widgetElm.width();
-        var pixelHeight = widgetElm.height();
-        var widgetStyleWidth = widget.containerStyle.width;
-        var widthUnits = widget.widthUnits;
-        var unitWidth = parseFloat(widgetStyleWidth);
-
-        // create marquee element for resize action
-        var $marquee = angular.element('<div class="widget-resizer-marquee" style="height: ' + pixelHeight + 'px; width: ' + pixelWidth + 'px;"></div>');
-        widgetElm.append($marquee);
-
-        // determine the unit/pixel ratio
-        var transformMultiplier = unitWidth / pixelWidth;
-
-        // updates marquee with preview of new width
-        var mousemove = function(e) {
-          var curX = e.clientX;
-          var pixelChange = curX - initX;
-          var newWidth = pixelWidth + pixelChange;
-          $marquee.css('width', newWidth + 'px');
-        };
-
-        // sets new widget width on mouseup
-        var mouseup = function(e) {
-          // remove listener and marquee
-          jQuery($window).off('mousemove', mousemove);
-          $marquee.remove();
-
-          // calculate change in units
-          var curX = e.clientX;
-          var pixelChange = curX - initX;
-          var unitChange = Math.round(pixelChange * transformMultiplier * 100) / 100;
-
-          // add to initial unit width
-          var newWidth = unitWidth * 1 + unitChange;
-          widget.setWidth(newWidth + widthUnits);
-          $scope.$emit('widgetChanged', widget);
-          $scope.$apply();
-          $scope.$broadcast('widgetResized', {
-            width: newWidth
-          });
-        };
-
-        jQuery($window).on('mousemove', mousemove).one('mouseup', mouseup);
-      };
-
-      //TODO refactor
-      $scope.grabSouthResizer = function(e) {
-        var widgetElm = $element.find('.widget');
-
-        // ignore middle- and right-click
-        if (e.which !== 1) {
-          return;
-        }
-
-        e.stopPropagation();
-        e.originalEvent.preventDefault();
-
-        // get the starting horizontal position
-        var initY = e.clientY;
-        // console.log('initX', initX);
-
-        // Get the current width of the widget and dashboard
-        var pixelWidth = widgetElm.width();
-        var pixelHeight = widgetElm.height();
-
-        // create marquee element for resize action
-        var $marquee = angular.element('<div class="widget-resizer-marquee" style="height: ' + pixelHeight + 'px; width: ' + pixelWidth + 'px;"></div>');
-        widgetElm.append($marquee);
-
-        // updates marquee with preview of new height
-        var mousemove = function(e) {
-          var curY = e.clientY;
-          var pixelChange = curY - initY;
-          var newHeight = pixelHeight + pixelChange;
-          $marquee.css('height', newHeight + 'px');
-        };
-
-        // sets new widget width on mouseup
-        var mouseup = function(e) {
-          // remove listener and marquee
-          jQuery($window).off('mousemove', mousemove);
-          $marquee.remove();
-
-          // calculate height change
-          var curY = e.clientY;
-          var pixelChange = curY - initY;
-
-          //var widgetContainer = widgetElm.parent(); // widget container responsible for holding widget width and height
-          var widgetContainer = widgetElm.find('.widget-content');
-
-          var diff = pixelChange;
-          var height = parseInt(widgetContainer.css('height'), 10);
-          var newHeight = (height + diff);
-
-          //$scope.widget.style.height = newHeight + 'px';
-
-          $scope.widget.setHeight(newHeight + 'px');
-
-          $scope.$emit('widgetChanged', $scope.widget);
-          $scope.$apply(); // make AngularJS to apply style changes
-
-          $scope.$broadcast('widgetResized', {
-            height: newHeight
-          });
-        };
-
-        jQuery($window).on('mousemove', mousemove).one('mouseup', mouseup);
-      };
-
-      // replaces widget title with input
-      $scope.editTitle = function(widget) {
-        var widgetElm = $element.find('.widget');
-        widget.editingTitle = true;
-        // HACK: get the input to focus after being displayed.
-        $timeout(function() {
-          widgetElm.find('form.widget-title input:eq(0)').focus()[0].setSelectionRange(0, 9999);
-        });
-      };
-
-      // saves whatever is in the title input as the new title
-      $scope.saveTitleEdit = function(widget) {
-        widget.editingTitle = false;
-        $scope.$emit('widgetChanged', widget);
-      };
-
-      $scope.compileTemplate = function() {
-        var container = $scope.findWidgetContainer($element);
-        var templateString = $scope.makeTemplateString();
-        var widgetElement = angular.element(templateString);
-
-        container.empty();
-        container.append(widgetElement);
-        $compile(widgetElement)($scope);
-      };
-
-      $scope.findWidgetContainer = function(element) {
-        // widget placeholder is the first (and only) child of .widget-content
-        return element.find('.widget-content');
-      };
-    }
-  ]);
-/*
- * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-angular.module('ui.dashboard')
-  .controller('WidgetSettingsCtrl', ['$scope', '$modalInstance', 'widget', function ($scope, $modalInstance, widget) {
-    // add widget to scope
-    $scope.widget = widget;
-
-    // set up result object
-    $scope.result = jQuery.extend(true, {}, widget);
-
-    $scope.ok = function () {
-      $modalInstance.close($scope.result);
-    };
-
-    $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
-    };
-  }]);
-angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
-
-  $templateCache.put("client/components/adf/template/alt-dashboard.html",
-    "<div>\r" +
-    "\n" +
-    "    <div class=\"btn-toolbar\" ng-if=\"!options.hideToolbar\">\r" +
-    "\n" +
-    "        <div class=\"btn-group\" ng-if=\"!options.widgetButtons\">\r" +
-    "\n" +
-    "            <span class=\"dropdown\" on-toggle=\"toggled(open)\">\r" +
-    "\n" +
-    "              <button type=\"button\" class=\"btn btn-primary dropdown-toggle\" ng-disabled=\"disabled\">\r" +
-    "\n" +
-    "                Button dropdown <span class=\"caret\"></span>\r" +
-    "\n" +
-    "              </button>\r" +
-    "\n" +
-    "              <ul class=\"dropdown-menu\" role=\"menu\">\r" +
-    "\n" +
-    "                <li ng-repeat=\"widget in widgetDefs\">\r" +
-    "\n" +
-    "                  <a href=\"#\" ng-click=\"addWidgetInternal($event, widget);\" class=\"dropdown-toggle\">{{widget.name}}</a>\r" +
-    "\n" +
-    "                </li>\r" +
-    "\n" +
-    "              </ul>\r" +
-    "\n" +
-    "            </span>\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "        <div class=\"btn-group\" ng-if=\"options.widgetButtons\">\r" +
-    "\n" +
-    "            <button ng-repeat=\"widget in widgetDefs\"\r" +
-    "\n" +
-    "                    ng-click=\"addWidgetInternal($event, widget);\" type=\"button\" class=\"btn btn-primary\">\r" +
-    "\n" +
-    "                {{widget.name}}\r" +
-    "\n" +
-    "            </button>\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "        <button class=\"btn btn-warning\" ng-click=\"resetWidgetsToDefault()\">Default Widgets</button>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "        <button ng-if=\"options.storage && options.explicitSave\" ng-click=\"options.saveDashboard()\" class=\"btn btn-success\" ng-hide=\"!options.unsavedChangeCount\">{{ !options.unsavedChangeCount ? \"Alternative - No Changes\" : \"Save\" }}</button>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "        <button ng-click=\"clear();\" ng-hide=\"!widgets.length\" type=\"button\" class=\"btn btn-info\">Clear</button>\r" +
-    "\n" +
-    "    </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "    <div ui-sortable=\"sortableOptions\" ng-model=\"widgets\" class=\"dashboard-widget-area\">\r" +
-    "\n" +
-    "        <div ng-repeat=\"widget in widgets\" ng-style=\"widget.style\" class=\"widget-container\" widget>\r" +
-    "\n" +
-    "            <div class=\"widget panel panel-default\">\r" +
-    "\n" +
-    "                <div class=\"widget-header panel-heading\">\r" +
-    "\n" +
-    "                    <h3 class=\"panel-title\">\r" +
-    "\n" +
-    "                        <span class=\"widget-title\" ng-dblclick=\"editTitle(widget)\" ng-hide=\"widget.editingTitle\">{{widget.title}}</span>\r" +
-    "\n" +
-    "                        <form action=\"\" class=\"widget-title\" ng-show=\"widget.editingTitle\" ng-submit=\"saveTitleEdit(widget)\">\r" +
-    "\n" +
-    "                            <input type=\"text\" ng-model=\"widget.title\" class=\"form-control\">\r" +
-    "\n" +
-    "                        </form>\r" +
-    "\n" +
-    "                        <span class=\"label label-primary\" ng-if=\"!options.hideWidgetName\">{{widget.name}}</span>\r" +
-    "\n" +
-    "                        <span ng-click=\"removeWidget(widget);\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></span>\r" +
-    "\n" +
-    "                        <span ng-click=\"openWidgetSettings(widget);\" class=\"glyphicon glyphicon-cog\" ng-if=\"!options.hideWidgetSettings\"></span>\r" +
-    "\n" +
-    "                    </h3>\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "                <div class=\"panel-body widget-content\"></div>\r" +
-    "\n" +
-    "                <div class=\"widget-ew-resizer\" ng-mousedown=\"grabResizer($event)\"></div>\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
-    "    </div>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n"
-  );
-
-  $templateCache.put("client/components/adf/template/dashboard-layouts.html",
-    "<ul ui-sortable=\"sortableOptions\" ng-model=\"layouts\" class=\"nav nav-tabs layout-tabs\">\r" +
-    "\n" +
-    "    <li ng-repeat=\"layout in layouts\" ng-class=\"{ active: layout.active }\">\r" +
-    "\n" +
-    "        <a ng-click=\"makeLayoutActive(layout)\">\r" +
-    "\n" +
-    "            <span ng-dblclick=\"editTitle(layout)\" ng-show=\"!layout.editingTitle\">{{layout.title}}</span>\r" +
-    "\n" +
-    "            <form action=\"\" class=\"layout-title\" ng-show=\"layout.editingTitle\" ng-submit=\"saveTitleEdit(layout)\">\r" +
-    "\n" +
-    "                <input type=\"text\" ng-model=\"layout.title\" class=\"form-control\" data-layout=\"{{layout.id}}\">\r" +
-    "\n" +
-    "            </form>\r" +
-    "\n" +
-    "            <span ng-if=\"!layout.locked\" ng-click=\"removeLayout(layout)\" class=\"glyphicon glyphicon-remove remove-layout-icon\"></span>\r" +
-    "\n" +
-    "            <!-- <span class=\"glyphicon glyphicon-pencil\"></span> -->\r" +
-    "\n" +
-    "            <!-- <span class=\"glyphicon glyphicon-remove\"></span> -->\r" +
-    "\n" +
-    "        </a>\r" +
-    "\n" +
-    "    </li>\r" +
-    "\n" +
-    "    <li>\r" +
-    "\n" +
-    "        <a ng-click=\"createNewLayout()\">\r" +
-    "\n" +
-    "            <span class=\"glyphicon glyphicon-plus\"></span>\r" +
-    "\n" +
-    "        </a>\r" +
-    "\n" +
-    "    </li>\r" +
-    "\n" +
-    "</ul>\r" +
-    "\n" +
-    "<div ng-repeat=\"layout in layouts | filter:isActive\" dashboard=\"layout.dashboard\" template-url=\"client/components/adf/template/dashboard.html\"></div>"
-  );
-
-  $templateCache.put("client/components/adf/template/dashboard.html",
-    "<div>\r" +
-    "\n" +
-    "    <div class=\"btn-toolbar\" ng-if=\"!options.hideToolbar\">\r" +
-    "\n" +
-    "        <div class=\"btn-group\" ng-if=\"!options.widgetButtons\">\r" +
-    "\n" +
-    "            <span class=\"dropdown\" on-toggle=\"toggled(open)\">\r" +
-    "\n" +
-    "              <button type=\"button\" class=\"btn btn-primary dropdown-toggle\" data-toggle=\"dropdown\" ng-disabled=\"disabled\">Add a Widget<span class=\"caret\"></span>\r" +
-    "\n" +
-    "              </button>\r" +
-    "\n" +
-    "              <ul class=\"dropdown-menu\" role=\"menu\">\r" +
-    "\n" +
-    "                <li ng-repeat=\"widget in widgetDefs\">\r" +
-    "\n" +
-    "                    <button ng-click=\"addWidgetInternal($event, widget);\" type=\"button\" class=\"btn btn-primary ng-scope ng-binding\">{{widget.name}}</button>  \r" +
-    "\n" +
-    "                </li>\r" +
-    "\n" +
-    "              </ul>\r" +
-    "\n" +
-    "            </span>\r" +
-    "\n" +
-    "    </div>\r" +
-    "\n" +
-    "        <div class=\"btn-group\" ng-if=\"options.widgetButtons\">\r" +
-    "\n" +
-    "            <button ng-repeat=\"widget in widgetDefs\"\r" +
-    "\n" +
-    "                    ng-click=\"addWidgetInternal($event, widget);\" type=\"button\" class=\"btn btn-primary\">\r" +
-    "\n" +
-    "                {{widget.name}}\r" +
-    "\n" +
-    "            </button>\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "        <button class=\"btn btn-warning\" ng-click=\"resetWidgetsToDefault()\">Default Widgets</button>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "        <button ng-if=\"options.storage && options.explicitSave\" ng-click=\"options.saveDashboard()\" class=\"btn btn-success\" ng-disabled=\"!options.unsavedChangeCount\">{{ !options.unsavedChangeCount ? \"all saved\" : \"save changes (\" + options.unsavedChangeCount + \")\" }}</button>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "        <button ng-click=\"clear();\" type=\"button\" class=\"btn btn-info\">Clear</button>\r" +
-    "\n" +
-    "    </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "    <div ui-sortable=\"sortableOptions\" ng-model=\"widgets\" class=\"dashboard-widget-area\">\r" +
-    "\n" +
-    "        <div ng-repeat=\"widget in widgets\" ng-style=\"widget.containerStyle\" class=\"widget-container\" widget>\r" +
-    "\n" +
-    "            <div class=\"widget panel panel-default\">\r" +
-    "\n" +
-    "                <div class=\"widget-header panel-heading\">\r" +
-    "\n" +
-    "                    <h3 class=\"panel-title\">\r" +
-    "\n" +
-    "                        <span class=\"widget-title\" ng-dblclick=\"editTitle(widget)\" ng-hide=\"widget.editingTitle\">{{widget.title}}</span>\r" +
-    "\n" +
-    "                        <form action=\"\" class=\"widget-title\" ng-show=\"widget.editingTitle\" ng-submit=\"saveTitleEdit(widget)\">\r" +
-    "\n" +
-    "                            <input type=\"text\" ng-model=\"widget.title\" class=\"form-control\">\r" +
-    "\n" +
-    "                        </form>\r" +
-    "\n" +
-    "                        <span class=\"label label-primary\" ng-if=\"!options.hideWidgetName\">{{widget.name}}</span>\r" +
-    "\n" +
-    "                        <span ng-click=\"removeWidget(widget);\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></span>\r" +
-    "\n" +
-    "                        <span ng-click=\"openWidgetSettings(widget);\" class=\"glyphicon glyphicon-cog\" ng-if=\"!options.hideWidgetSettings\"></span>\r" +
-    "\n" +
-    "                    </h3>\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "                <div class=\"panel-body widget-content\" ng-style=\"widget.contentStyle\"></div>\r" +
-    "\n" +
-    "                <div class=\"widget-ew-resizer\" ng-mousedown=\"grabResizer($event)\"></div>\r" +
-    "\n" +
-    "                <div ng-if=\"widget.enableVerticalResize\" class=\"widget-s-resizer\" ng-mousedown=\"grabSouthResizer($event)\"></div>\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
-    "    </div>\r" +
-    "\n" +
-    "</div>"
-  );
-
-  $templateCache.put("client/components/adf/template/save-changes-modal.html",
-    "<div class=\"modal-header\">\r" +
-    "\n" +
-    "    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
-    "\n" +
-    "  <h3>Unsaved Changes to \"{{layout.title}}\"</h3>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div class=\"modal-body\">\r" +
-    "\n" +
-    "    <p>You have {{layout.dashboard.unsavedChangeCount}} unsaved changes on this dashboard. Would you like to save them?</p>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div class=\"modal-footer\">\r" +
-    "\n" +
-    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Don't Save</button>\r" +
-    "\n" +
-    "    <button type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">Save</button>\r" +
-    "\n" +
-    "</div>"
-  );
-
-  $templateCache.put("client/components/adf/template/widget-default-content.html",
-    ""
-  );
-
-  $templateCache.put("client/components/adf/template/widget-settings-template.html",
-    "<div class=\"modal-header\">\r" +
-    "\n" +
-    "    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\" ng-click=\"cancel()\">&times;</button>\r" +
-    "\n" +
-    "  <h3>Widget Options <small>{{widget.title}}</small></h3>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div class=\"modal-body\">\r" +
-    "\n" +
-    "    <form name=\"form\" novalidate class=\"form-horizontal\">\r" +
-    "\n" +
-    "        <div class=\"form-group\">\r" +
-    "\n" +
-    "            <label for=\"widgetTitle\" class=\"col-sm-2 control-label\">Title</label>\r" +
-    "\n" +
-    "            <div class=\"col-sm-10\">\r" +
-    "\n" +
-    "                <input type=\"text\" class=\"form-control\" name=\"widgetTitle\" ng-model=\"result.title\">\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
-    "        <div ng-if=\"widget.settingsModalOptions.partialTemplateUrl\"\r" +
-    "\n" +
-    "             ng-include=\"widget.settingsModalOptions.partialTemplateUrl\"></div>\r" +
-    "\n" +
-    "    </form>\r" +
-    "\n" +
-    "</div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "<div class=\"modal-footer\">\r" +
-    "\n" +
-    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button>\r" +
-    "\n" +
-    "    <button type=\"button\" class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
-    "\n" +
-    "</div>"
-  );
-
-}]);

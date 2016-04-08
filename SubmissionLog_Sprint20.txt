@@ -1,0 +1,395 @@
+* commit 30e18a621e16975b9cb6796a722c4c0dd91a55ef (HEAD, origin/master, origin/HEAD, master)
+| Author: Monica Mohler <monica.mohler@us.pwc.com>
+| Date:   Fri Jul 17 17:46:12 2015 -0400
+| 
+|     CDP & Design Spec Deliverables for Sprint 21
+|    
+*   commit 4763cc3400e01cec5327a0d105e0250bf62ee0e6
+|\  Merge: 222d687 60d962a
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Fri Jul 17 15:37:51 2015 -0400
+| | 
+| |     Merge branch 'stable'
+| |     
+| *   commit 60d962a36a66ce4a1e3b4c9dd15229ae914dc9e6 (origin/stable)
+| |\  Merge: ec6d352 87ab060
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Fri Jul 17 15:36:45 2015 -0400
+| | | 
+| | |     Merge branch 'test' into stable
+| | |    
+| | * commit 87ab060e3fb5fbebd89d4cb14e94c411cfca4982 (origin/test)
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Thu Jul 16 14:36:20 2015 -0400
+| | | 
+| | |     Updated test cases for PR-2189
+| | |      
+| * |   commit ec6d352a3d69f5f558059a749ca69ec016138b87
+| |\ \  Merge: 1aadd1c 43f522d
+| | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | |   Date:   Wed Jul 15 22:57:12 2015 -0400
+| | |   
+| | |       Merge branch 'test' into stable
+| | |      
+| | *   commit 43f522d8b4815f7280ff7ee433eab109006a4506
+| | |\  Merge: 9344c55 819cc44
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Wed Jul 15 22:50:38 2015 -0400
+| | | | 
+| | | |     Merge branch 'dev' into test
+| | | |     
+| | | * commit 819cc44fb8d6b61592a4f45a3d281d733dc2e249 (origin/dev)
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Wed Jul 15 22:42:13 2015 -0400
+| | | | 
+| | | |     updated reference to RiskFactors table in the Clinical Decision Support Guidelines widget
+| | | |     
+| | | * commit 57b97f04b485f4c0b72ba9ae6db0e3f0de7be182
+| | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | Date:   Wed Jul 15 17:40:44 2015 -0400
+| | | | 
+| | | |     PR-2457 PR-2458 PR-2459 PR-2460 Updated code to add Multiple Site functionality and locked the default layouts on the dashboard to prevent users from deleting/renaming
+| | | |     
+| | | * commit 993c7ff20024bccc3e986e86abec1bf2b592aa36
+| | | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | | Date:   Tue Jul 14 15:32:38 2015 -0400
+| | | | 
+| | | |     PR-2505 WASA Issue #11: Detailed error should not be displayed.
+| | | |     
+| | | * commit 96ff5aa8bc985035b5b9f855019af73109d135ab
+| | | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | | Date:   Mon Jul 13 16:50:56 2015 -0400
+| | | | 
+| | | |     PR-2505 WASA Issue #11: Detailed error should not be displayed to users.
+| | | |     
+| | | * commit 728e36d84c89a6f53e2f79f706b503a67cb0b8b5
+| | | | Author: jarao <jaya.rao@us.pwc.com>
+| | | | Date:   Mon Jul 13 01:06:03 2015 -0400
+| | | | 
+| | | |     PR-2306 Last remaining contrast error resolved
+| | | |     
+| | | * commit 25584df3245b33c911881aade329f34f773bad41
+| | | | Author: jarao <jaya.rao@us.pwc.com>
+| | | | Date:   Mon Jul 13 00:33:55 2015 -0400
+| | | | 
+| | | |     PR-2433 Addition of a semicolon and removal of white space
+| | | |     
+| | | * commit b61be4d61750200b1cc927b42189c2561b92a3ad
+| | | | Author: jarao <jaya.rao@us.pwc.com>
+| | | | Date:   Mon Jul 13 00:16:53 2015 -0400
+| | | | 
+| | | |     PR-2436 Added more specific labels to National Data Widget descriptors
+| | | |     
+| | | * commit 17c7699da7ce2345928f9ae320718979b2054617
+| | | | Author: jarao <jaya.rao@us.pwc.com>
+| | | | Date:   Sun Jul 12 23:33:23 2015 -0400
+| | | | 
+| | | |     PR-2431 Health Indicators widget more descriptive, adjusted to comply with HIW site reqs/size
+| | | |     
+| | | * commit 1044f75d5d7cfce1420d0653404ae32e7c025cf6
+| | | | Author: jarao <jaya.rao@us.pwc.com>
+| | | | Date:   Sun Jul 12 23:00:57 2015 -0400
+| | | | 
+| | | |     PR-2433 App.CSS 508 issues added underline for links and removed absolute positioning
+| | | |     
+| | | * commit 2ebcff6edf17b6f01d61ac049cf01c4d0cd5f1bb
+| | | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | | Date:   Fri Jul 10 16:43:55 2015 -0400
+| | | | 
+| | | |     Added new pattern to username field.(Requested by Andrew)
+| | | |     
+| | * | commit 9344c55f48b9594d690041dc17845f2fa25b6435
+| |/ /  Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | |   Date:   Fri Jul 10 12:20:23 2015 -0400
+| | |   
+| | |       Updated test cases for PR-1380
+| | |      
+| * |   commit 1aadd1cdd00f0963f14ac837d8c43775cee5403f
+| |\ \  Merge: b1fce32 cd2dde1
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Thu Jul 9 20:25:08 2015 -0400
+| | |   
+| | |       Merge commit 'cd2dde186bfd8325b0d6f037072790576e9dd98e' into HEAD
+| | |    
+| | * commit cd2dde186bfd8325b0d6f037072790576e9dd98e
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Thu Jul 9 20:05:31 2015 -0400
+| | | 
+| | |     PR-2495 WASA API query parameterization - Fixed minor API issue from remediation and changed random token from 10 to 16.
+| | |      
+| * |   commit b1fce32e747f5baf6f8e5268fed289c0deed5306
+| |\ \  Merge: f225b97 1bb19c5
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Thu Jul 9 18:57:41 2015 -0400
+| | |   
+| | |       Merge commit '1bb19c5d585175b87ea82ef57704d43e23664878' into HEAD
+| | |    
+| | * commit 1bb19c5d585175b87ea82ef57704d43e23664878
+| | | Author: jarao <jaya.rao@us.pwc.com>
+| | | Date:   Thu Jul 9 18:23:50 2015 -0400
+| | | 
+| | |     PR-2495 WASA API query parameterization
+| | |    
+| | * commit f27bd4c5b5a58a0094c87a20f8b5af0bc3c66ba0
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Thu Jul 9 17:56:07 2015 -0400
+| | | 
+| | |     PR-2495 Updates to the User Model to add in the request parameters.
+| | |    
+| | * commit ef2614de332245f241f55dce9a69304ecfe1dffc
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Thu Jul 9 17:53:55 2015 -0400
+| | | 
+| | |     PR-2495 Dashboard api changes to prevent SQL injection.
+| | |    
+| | * commit 58157884edff0411001576a8e89e032d713ce275
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Thu Jul 9 16:54:51 2015 -0400
+| | | 
+| | |     PR-2495 - Code clean up for National widgets.
+| | |    
+| | * commit 7791d96782e1b85a1c27e64a7298a0949a7a6511
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Thu Jul 9 14:14:55 2015 -0400
+| | | 
+| | |     PR-2495 Updates to the API's to make the parameters reside on the request.
+| | |    
+| | * commit 7327ed5bfd5a73d6799e7519c63795618587f5f5
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Wed Jul 8 16:49:15 2015 -0400
+| | | 
+| | |     PR-2447 SQL injection WASA scan remediation
+| | |      
+| * |   commit f225b97dd143cf66b938b24fcf5318e9dd029dc1
+| |\ \  Merge: efc6715 cd2b3d9
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Wed Jul 8 16:42:03 2015 -0400
+| | |   
+| | |       Merge commit 'cd2b3d9a54b4c72f62405b1e993b08d331d42b3b' into HEAD
+| | |    
+| | * commit cd2b3d9a54b4c72f62405b1e993b08d331d42b3b
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Tue Jul 7 12:33:42 2015 -0400
+| | | 
+| | |     PR-2340 WASA scan SQL injection remediation.
+| | |    
+| * | commit efc67158fb100674fde1555897b9afcc6bb50399
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jul 7 16:43:36 2015 -0400
+| | | 
+| | |     Updated test cases for PR-876 and PR-1380
+| | |    
+| * | commit dd3f627319844bd5bb7956bfdce30da87545a0cf
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jul 7 16:29:38 2015 -0400
+| | | 
+| | |     Updated test cases for PR-1380
+| | |    
+| * | commit 69644492e0f7740b0514d87c862f7ce5e4917fd0
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jul 7 15:46:26 2015 -0400
+| | | 
+| | |     Updated feature file for PR-1268
+| | |    
+| * | commit 251a3388604d118ccdf732966a47a675e79b02b9
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jul 7 15:19:58 2015 -0400
+| | | 
+| | |     Updated user id for PR-1317
+| | |    
+| * | commit 380dd38bd6893266d71d778578e4f50805438262
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jul 7 15:15:09 2015 -0400
+| | | 
+| | |     Updated feature file for PR-876
+| | |    
+| * | commit 6d8708ed09c8a9906ecad9018b604ffe2b18540a
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jul 7 13:56:29 2015 -0400
+| | | 
+| | |     Updated test cases for PR-1405
+| | |    
+| * | commit 0f139266a8ad2ceff00b4cbf136b3c039602d919
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jul 7 13:19:27 2015 -0400
+| | | 
+| | |     Updated user id for features PR-1267, PR-1380, PR-1405, PR-1406, PR-1407, PR-1537, PR-1676, PR-1678, PR-2189, PR-356, PR-728, PR-876 and PR-
+| | |    
+| * | commit 0c0af85418ee1312955265abd676c2fa22623ba6
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jul 7 12:11:14 2015 -0400
+| | | 
+| | |     Updated feature files for PR-1268, PR-1317, PR-1571 and step definitions
+| | |      
+| * |   commit fc5e52b119785afffd3b17d48ca7ab9e4a94aeb5
+| |\ \  Merge: a41806a 1589615
+| | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | |   Date:   Mon Jul 6 23:19:57 2015 -0400
+| | |   
+| | |       Merge branch 'dev' into test
+| | |    
+| | * commit 1589615e2fa55207d9876054362ba383408ddf8b
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Mon Jul 6 23:15:43 2015 -0400
+| | | 
+| | |     PR-2340 Check for sql injection in request body-email
+| | |      
+| * |   commit a41806ad841d16a61579033c06236ca4b78dbbac
+| |\ \  Merge: a210f25 e1cb014
+| | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | |   Date:   Mon Jul 6 20:51:33 2015 -0400
+| | |   
+| | |       Merge branch 'dev' into test
+| | |    
+| | * commit e1cb0148800fadb78cccff799ae8e256d0da7bb7
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Mon Jul 6 20:44:33 2015 -0400
+| | | 
+| | |     PR-2340- Adding conditions to check for URL SQL injection attempts
+| | |      
+| * |   commit a210f25e40612809b19b2d8c143906cba884aeda
+| |\ \  Merge: 4b40e54 3d51220
+| | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | |   Date:   Mon Jul 6 20:36:18 2015 -0400
+| | |   
+| | |       Merge branch 'dev' into test
+| | |    
+| | * commit 3d51220065532dc6e19353d93a21d791bd11ca59
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Mon Jul 6 20:08:20 2015 -0400
+| | | 
+| | |     PR-2340 Bug fix for sql injection fix.
+| | |    
+| | * commit 9ebb5edd13122bcfa8249341df02d5ec7879df73
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Mon Jul 6 19:33:40 2015 -0400
+| | | 
+| | |     PR-2339 Made updates to how session keys are generated.
+| | |    
+| | * commit d1b55aa45660564219a21b646fa3fb67a2fba2ef
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Mon Jul 6 19:09:16 2015 -0400
+| | | 
+| | |     PR-2340 WASA SQL injection remediation.
+| | |    
+| | * commit fac17cdea968045c2c1a18e689b11696a03e02b8
+| | | Author: jarao <jaya.rao@us.pwc.com>
+| | | Date:   Mon Jul 6 15:30:39 2015 -0400
+| | | 
+| | |     PR-2432 Added set-cookie dependency to accommodate WASA scan remediation
+| | |    
+| | * commit aa637a0825e3577697fa53febeafbc6ea0b2f8b1
+| | | Author: jarao <jaya.rao@us.pwc.com>
+| | | Date:   Mon Jul 6 15:27:14 2015 -0400
+| | | 
+| | |     PR-2432 WASA Remediation made conned.sid and io cookies HttpOnly and Secure
+| | |      
+* | |   commit 222d687a4a8fcf27602894a0520a25915c6f4817
+|\ \ \  Merge: cd03176 4b40e54
+| |/ /  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | |   Date:   Sun Jul 5 15:39:39 2015 -0400
+| | |   
+| | |       Merge branch 'stable'
+| | |      
+| * |   commit 4b40e542be58b597a64878fc73b9a82ad29503aa
+| |\ \  Merge: 0345af5 7631af1
+| | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | |   Date:   Sun Jul 5 15:38:24 2015 -0400
+| | |   
+| | |       Merge branch 'dev' into test
+| | |    
+| | * commit 7631af144f5b1991b8749a0bacfe053c3bfaffc8
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Sun Jul 5 15:37:50 2015 -0400
+| | | 
+| | |     PR-2350 Due to the Prod Scans, more cleanup to remove any traces of sensitive information.
+| | |      
+* | |   commit cd03176cee80307725062f1c207415a358345f13
+|\ \ \  Merge: 33b251a 0345af5
+| |/ /  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | |   Date:   Sat Jul 4 14:58:35 2015 -0400
+| | |   
+| | |       Merge branch 'stable'
+| | |      
+| * |   commit 0345af5409f77c2c8b522397d6bbf4ae6938da30
+| |\ \  Merge: 4e46ff5 ada3637
+| | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | |   Date:   Sat Jul 4 14:57:31 2015 -0400
+| | |   
+| | |       Merge branch 'dev' into test
+| | |    
+| | * commit ada3637aef4858e7a9a9a662faa7d1e8f7aebb37
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Sat Jul 4 14:50:55 2015 -0400
+| | | 
+| | |     PR-2350 Due to the Prod Scans, more cleanup to remove any traces of sensitive information.
+| | |    
+| * | commit 4e46ff522d8a16340210fbc19508e4d0c96b0bac
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Sat Jul 4 14:57:14 2015 -0400
+| | | 
+| | |     PR-2350 Due to the Prod Scans, more cleanup to remove any traces of sensitive information.
+| | |      
+* | |   commit 33b251a5ad69b3e33a981dbe9eda76f550784994
+|\ \ \  Merge: e459a3f 844b8eb
+| |/ /  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | |   Date:   Sat Jul 4 01:31:01 2015 -0400
+| | |   
+| | |       Merge branch 'stable'
+| | |      
+| * |   commit 844b8eba3019c3a39ca1cea1bde7c210d6c437c1
+| |\ \  Merge: 94931e5 c0a7dc5
+| | |/  Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | |   Date:   Sat Jul 4 01:26:17 2015 -0400
+| | |   
+| | |       Merge branch 'dev' into test
+| | |    
+| | * commit c0a7dc59c8da8443d8fa88a01e337a58f54b0282
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Sat Jul 4 01:08:13 2015 -0400
+| | | 
+| | |     PR-2350 Due to the Prod Scans, more cleanup to remove any traces of sensitive information.
+| | |    
+| | * commit 21c53e13636e4fa5877fe8de486633668d1d64c4
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Sat Jul 4 00:28:17 2015 -0400
+| | | 
+| | |     PR-2350 Due to the Prod Scans, more cleanup to remove any traces of sensitive information.
+| | |    
+* | | commit e459a3f5961cd9b5ce8a8258ef6335c482fa5f07
+|/ /  Merge: 0fd848a 94931e5
+| |   Author: Robert Snelling <robert.snelling@us.pwc.com>
+| |   Date:   Fri Jul 3 20:13:24 2015 -0400
+| |   
+| |       Merge branch 'stable'
+| |   
+* | commit 94931e5d3e31f37234a34b55d51c2b113c5a623d
+|/  Merge: 7630472 e0448a5
+|   Author: Robert Snelling <robert.snelling@us.pwc.com>
+|   Date:   Fri Jul 3 20:06:35 2015 -0400
+|   
+|       Merge branch 'dev' into test
+|  
+* commit e0448a591a642e1c6af7866f977c8c58ad222b3d
+| Author: Robert Snelling <robert.snelling@us.pwc.com>
+| Date:   Fri Jul 3 20:03:45 2015 -0400
+| 
+|     PR-2350 Due to the Prod Scans, more cleanup to remove any traces of sensitive information.
+|  
+* commit 48b2641f7667523abbe91268b2646e2ef11ab831
+  Author: Robert Snelling <robert.snelling@us.pwc.com>
+  Date:   Fri Jul 3 19:49:28 2015 -0400
+  
+      PR-2350 New configuration settings for IISNODE.  web.config is removed from Git and put in the ignore file.
+  
+* commit c0d0bfa5293edfec6496c6039491e8e2c5062be0 (origin/angular_dashboard_framework)
+| Author: Robert Snelling <robert.snelling@us.pwc.com>
+| Date:   Sun Jul 5 15:30:57 2015 -0400
+| 
+|     PR-2350 Due to the Prod Scans, more cleanup to remove any traces of sensitive information.
+|  
+* commit c2e36fe992d22543dab69e0f6edfed77378a3f8a
+  Author: Robert Snelling <robert.snelling@us.pwc.com>
+  Date:   Sun Jul 5 15:27:07 2015 -0400
+  
+      PR-2350 Due to the Prod Scans, more cleanup to remove any traces of sensitive information.
