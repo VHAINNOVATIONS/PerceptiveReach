@@ -23,11 +23,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/suicideStatistics/suicideStatistics.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        //$scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = {};
+        $scope.dtInstanceAbstract = DTInstances;
+        $scope.dtInstance = null;
         $scope.suicideStatusList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -77,10 +77,13 @@ angular.module('ui.widgets')
               else
                 resolve([]);
             });
-           scope.dtInstance.changeData(function() {
-                  return promise;
+            if(scope.dtInstance)
+              scope.dtInstance.changeData(promise);
+            else {
+              scope.dtInstanceAbstract.getList().then(function(dtInstances){
+                dtInstances.tblSuicideStatistics._renderer.changeData(promise)              
               });
-
+            }
           }
 		      },1000)
         });

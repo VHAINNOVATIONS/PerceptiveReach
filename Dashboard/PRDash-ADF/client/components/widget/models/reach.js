@@ -1323,45 +1323,7 @@ angular.module('ui.models')
     });
 
     return VISNDataModel;
-  })
-.factory('CDSQuestionnaireDataModel', function ($http, CommonDataModel) {
-    function CDSQuestionnaireDataModel() {
-    }
-
-    CDSQuestionnaireDataModel.prototype = Object.create(CommonDataModel.prototype);
-    CDSQuestionnaireDataModel.prototype.constructor = CommonDataModel;
-
-    angular.extend(CDSQuestionnaireDataModel.prototype, {
-       init: function () {
-        var dataModelOptions = this.dataModelOptions;
-
-        this.widgetScope.$on('defaultWidgetsSelected', function (event, data) {
-          this.dataModelOptions.common = data;
-          this.getData();
-        }.bind(this));
-
-        this.updateScope([]);
-        this.getData();
-      },
-
-      getData: function () {
-        var that = this;
-        var data = [];
-      
-        $http.get('/api/CDSQuestionnaire')
-        .success(function(dataset) {
-                data = dataset;
-                this.updateScope(data);
-            }.bind(this));
-      },
-
-      destroy: function () {
-        CommonDataModel.prototype.destroy.call(this);
-      }
-    });
-
-    return CDSQuestionnaireDataModel;
-  })
+})
 .factory('EnterDataDataModel', function ($http, CommonDataModel) {
     function EnterDataDataModel() {
     }
