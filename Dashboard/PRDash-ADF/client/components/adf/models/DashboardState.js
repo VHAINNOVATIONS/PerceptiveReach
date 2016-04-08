@@ -42,8 +42,7 @@ angular.module('ui.dashboard')
 
         var serialized = _.map(widgets, function (widget) {
           var w = widget.serialize();
-          if(typeof w.dataModelOptions !== 'undefined' && typeof w.dataModelOptions.common !== 'undefined'
-            && typeof w.dataModelOptions.common.data.veteranObj.OutreachStatus !== 'undefined')
+          if(w.dataModelOptions.common.data.veteranObj.OutreachStatus)
           {
             delete w.dataModelOptions.common.data.veteranObj.OutreachStatus;
           }
