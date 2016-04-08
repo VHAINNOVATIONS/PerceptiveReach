@@ -23,11 +23,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/nationalOutReachStatus/nationalOutReachStatus.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        //$scope.dtInstanceAbstract = {};
-        $scope.dtInstance = {};
+        $scope.dtInstanceAbstract = DTInstances;
+        $scope.dtInstance = null;
         $scope.outreachStatusList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -44,10 +44,7 @@ angular.module('ui.widgets')
             .withOption('scrollY', 200)
             .withOption('paging',false)
             .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc'])
-            .withButtons([
-                { extend: 'csv', text: 'Export' }
-            ]);
+            .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Status').withTitle('Outreach Status'),
@@ -84,9 +81,13 @@ angular.module('ui.widgets')
                     else
                       resolve([]);
                   });
-              scope.dtInstance.changeData(function() {
-                  return promise;
-              });
+              if(scope.dtInstance)
+                scope.dtInstance.changeData(promise);
+              else {
+                scope.dtInstanceAbstract.getList().then(function(dtInstances){
+                  dtInstances.tblNationalOutReachStatus._renderer.changeData(promise)              
+                });
+              }
             }
           },1000)
         });
