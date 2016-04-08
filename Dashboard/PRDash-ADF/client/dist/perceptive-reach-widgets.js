@@ -1662,45 +1662,7 @@ angular.module('ui.models')
     });
 
     return VISNDataModel;
-  })
-.factory('CDSQuestionnaireDataModel', function ($http, CommonDataModel) {
-    function CDSQuestionnaireDataModel() {
-    }
-
-    CDSQuestionnaireDataModel.prototype = Object.create(CommonDataModel.prototype);
-    CDSQuestionnaireDataModel.prototype.constructor = CommonDataModel;
-
-    angular.extend(CDSQuestionnaireDataModel.prototype, {
-       init: function () {
-        var dataModelOptions = this.dataModelOptions;
-
-        this.widgetScope.$on('defaultWidgetsSelected', function (event, data) {
-          this.dataModelOptions.common = data;
-          this.getData();
-        }.bind(this));
-
-        this.updateScope([]);
-        this.getData();
-      },
-
-      getData: function () {
-        var that = this;
-        var data = [];
-      
-        $http.get('/api/CDSQuestionnaire')
-        .success(function(dataset) {
-                data = dataset;
-                this.updateScope(data);
-            }.bind(this));
-      },
-
-      destroy: function () {
-        CommonDataModel.prototype.destroy.call(this);
-      }
-    });
-
-    return CDSQuestionnaireDataModel;
-  })
+})
 .factory('EnterDataDataModel', function ($http, CommonDataModel) {
     function EnterDataDataModel() {
     }
@@ -2590,143 +2552,6 @@ function Gauge(element, configuration)
     this.visibly.init();
 })();
 
-/*
- * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-angular.module('ui.widgets')
-  .directive('wtCdsQuestionnaire', function ($timeout) {
-    return {
-      restrict: 'EAC',
-      replace: true,
-      templateUrl: 'client/components/widget/widgets/CDSQuestionnaire/CDSQuestionnaire.html',
-      scope: {
-        data: '=',
-      },
-      controller: function ($scope) {
-        $scope.GotoQuestions =  function () {
-          $scope.filteredQuestions = [];
-          $('#cdsConditionDiv input:checkbox:checked').each(function(){
-            var conditionId = $(this).attr('name').replace('chkbx_','');
-            var filteredQs= jQuery.grep($scope.data.questions, function( n, i ) {
-                                  var isAlreadyAdded = $.grep($scope.filteredQuestions, function (elem) {
-                                                          return elem.Question === n.Question;
-                                                      }).length > 0;
-                                  return (!isAlreadyAdded  && n.Condition_ID == conditionId );
-                          });
-            $.merge($scope.filteredQuestions,filteredQs);
-          });
-          $('#cdsConditionDiv').toggleClass('hidden');
-          $('#cdsQuestionDiv').toggleClass('hidden');
-        }
-
-        $scope.GotoTreatments  =  function () {
-          $scope.filteredTreatments = [];
-          $('#cdsQuestionDiv .cdsUIList button').each(function(){
-             if($(this).find('span:first').text() == 'Yes')
-             {
-               var questionId = $(this).attr('name').replace('question_','');
-               var filterTrtmnts = jQuery.grep($scope.data.treatments, function( n, i ) {
-                                      var isAlreadyAdded = $.grep($scope.filteredTreatments, function (elem) {
-                                          return elem.Treatment === n.Treatment;
-                                      }).length > 0;
-                                      return ( !isAlreadyAdded  && n.Question_ID == questionId);
-                                   });
-               $.merge($scope.filteredTreatments,filterTrtmnts);
-             }
-          })
-
-          $('#cdsQuestionDiv').toggleClass('hidden');
-          $('#cdsTreatmentDiv').toggleClass('hidden');
-        }
-
-         $scope.BacktoConditions  =  function () {
-          $('#cdsQuestionDiv').toggleClass('hidden');
-          $('#cdsConditionDiv').toggleClass('hidden');
-        }
-
-        $scope.BacktoQuestions =  function () {
-          $('#cdsTreatmentDiv').toggleClass('hidden');
-          $('#cdsQuestionDiv').toggleClass('hidden');
-        } 
-
-        $scope.resizeConditionList = function(){
-          var containerHeight = parseInt($('#cdsQuestionnaire').parent().css('height'),10);
-          $('#cdsQuestionnaire .cdsUIList').css('height',.65 * containerHeight);
-        }   
-
-        $scope.AnswerSelected = function(e){
-          var selectedText = $(e.currentTarget).text();
-          $(e.currentTarget).parent().parent().find('button>span:first').text(selectedText);
-          return false;
-        } 
-
-        $scope.ChkbxClicked = function(){
-          if($('#cdsConditionDiv input:checkbox:checked').length > 0)
-          {
-            $scope.IsChecked = true;
-          }
-          else
-          {
-            $scope.IsChecked = false;
-          }
-        }
-
-        $scope.IsChecked = false;
-
-      },
-     link: function postLink(scope, element, attr) {
-
-        scope.$on("gridsterResized", function (){
-            $timeout(function(){
-              scope.resizeConditionList();
-            },1000);
-        });
-
-        scope.$watch('data', function (data) {
-          if (data) {
-            scope.data = data;
-            $timeout(function(){
-              scope.resizeConditionList();
-            },2000);
-          }
-         
-        });
-
-        $('#cdsTabs').click(function(e){
-          var tabContentId = $(e.target).attr('href');
-          if(tabContentId)
-          {
-            $('#cdsTabs>li').removeClass('active');
-            $(e.target).parent().addClass('active');
-            $('#cdsTabContent>div').removeClass('in').removeClass('active')
-            $(tabContentId).addClass('in').addClass('active');
-          }
-          return false;
-        });
-
-        $("#dropdownMenu2").on("click", "li a", function() {
-            var platform = $(this).text();
-            $("#dropdown_title2").html(platform);
-            $('#printPlatform').html(platform);
-        });  
-      }
-    };
-  });
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -5709,205 +5534,6 @@ angular.module('ui.widgets')
   });
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
-  $templateCache.put("client/components/widget/widgets/CDSQuestionnaire/CDSQuestionnaire.html",
-    "<div id=\"cdsQuestionnaire\" title=\"CDS Questionnaire\">\r" +
-    "\n" +
-    "   <!--1/26/2016 The below code is left for future use, Delete if not needed -->\r" +
-    "\n" +
-    "        <!-- <ul class=\"nav nav-pills\" role=\"tablist\" id=\"cdsTabs\" style=\"margin-top:5px;\">\r" +
-    "\n" +
-    "          <li class=\"active\">\r" +
-    "\n" +
-    "              <a href=\"#home\" role=\"tab\" data-toggle=\"tab\">\r" +
-    "\n" +
-    "                   Home\r" +
-    "\n" +
-    "              </a>\r" +
-    "\n" +
-    "          </li>\r" +
-    "\n" +
-    "          <li><a href=\"#options\" role=\"tab\" data-toggle=\"tab\">\r" +
-    "\n" +
-    "                  Options\r" +
-    "\n" +
-    "              </a>\r" +
-    "\n" +
-    "          </li>\r" +
-    "\n" +
-    "          <li>\r" +
-    "\n" +
-    "              <a href=\"#help\" role=\"tab\" data-toggle=\"tab\">\r" +
-    "\n" +
-    "                   Help\r" +
-    "\n" +
-    "              </a>\r" +
-    "\n" +
-    "          </li>\r" +
-    "\n" +
-    "        </ul>\r" +
-    "\n" +
-    "        <div class=\"tab-content\" id=\"cdsTabContent\" style=\"margin-top:5px;\">\r" +
-    "\n" +
-    "          <div class=\"tab-pane fade active in\" id=\"home\">\r" +
-    "\n" +
-    "            \r" +
-    "\n" +
-    "          </div>\r" +
-    "\n" +
-    "          <div class=\"tab-pane fade\" id=\"options\">\r" +
-    "\n" +
-    "              <h2>Options</h2>\r" +
-    "\n" +
-    "              <img src=\"https://avatars1.githubusercontent.com/u/1252476?v=3&s=200\" alt=\"Cats\"/>\r" +
-    "\n" +
-    "          </div>\r" +
-    "\n" +
-    "          <div class=\"tab-pane fade\" id=\"help\">\r" +
-    "\n" +
-    "              <h2>Help</h2>\r" +
-    "\n" +
-    "              <img src=\"https://avatars1.githubusercontent.com/u/1252476?v=3&s=200\" alt=\"Cats\"/>\r" +
-    "\n" +
-    "          </div>\r" +
-    "\n" +
-    "        \r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
-    "        <div>\r" +
-    "\n" +
-    "          <div class=\"panel panel-default\" style=\"margin-top:5px;\">\r" +
-    "\n" +
-    "            <div class=\"panel-heading\">\r" +
-    "\n" +
-    "              <h3 class=\"panel-title\">Emergency Contact Information</h3>\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "            <div class=\"panel-body\">\r" +
-    "\n" +
-    "              For emergency assistance please contact: P: (xxx) xxx-xxxx, e: email@email.com\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "          </div>\r" +
-    "\n" +
-    "        </div> -->\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "      <div id=\"cdsConditionDiv\"  style=\"margin-top:5px;\">\r" +
-    "\n" +
-    "        <div >\r" +
-    "\n" +
-    "           <legend>Clinical Decision Support:</legend>\r" +
-    "\n" +
-    "              <fieldset style=\"border:1px solid lightgray;border-radius:5px;\">\r" +
-    "\n" +
-    "                Please choose the specific symptoms, diagnoses, or conditions the Veteran is facing.  After all selections have been made please press <strong>‘Next’</strong>.\r" +
-    "\n" +
-    "              </fieldset>\r" +
-    "\n" +
-    "              <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
-    "\n" +
-    "                <label ng-repeat=\"condition in data.conditions\" style=\"display:block;\">\r" +
-    "\n" +
-    "                      <input type=\"checkbox\" ng-click=\"ChkbxClicked()\" name=\"chkbx_{{condition.Condition_ID}}\"> {{condition.Condition}}\r" +
-    "\n" +
-    "                </label>\r" +
-    "\n" +
-    "              </div>\r" +
-    "\n" +
-    "              <div style=\"height:40px;padding:5px;\">\r" +
-    "\n" +
-    "                 <button ng-click=\"GotoQuestions()\" alt=\"Next(Questions)\" title=\"Next(Questions)\" ng-disabled=\"!IsChecked\" class=\"btn btn-primary pull-right\">Next</button>\r" +
-    "\n" +
-    "              </div>\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
-    "    </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "    <div id=\"cdsQuestionDiv\" class=\"hidden\">\r" +
-    "\n" +
-    "       <legend>Question(s):</legend>\r" +
-    "\n" +
-    "       <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
-    "\n" +
-    "         <div ng-repeat=\"question in filteredQuestions\">\r" +
-    "\n" +
-    "            <label>{{$index+1}}. {{question.Question}}  </label>\r" +
-    "\n" +
-    "             <div class=\"dropdown\">\r" +
-    "\n" +
-    "                    <button class=\"btn btn-default\"\r" +
-    "\n" +
-    "                            data-toggle=\"dropdown\" name=\"question_{{question.Question_ID}}\">\r" +
-    "\n" +
-    "                        <span>Select</span>\r" +
-    "\n" +
-    "                        <span class=\"caret\"></span>\r" +
-    "\n" +
-    "                    </button>\r" +
-    "\n" +
-    "                    <ul class=\"dropdown-menu\" >\r" +
-    "\n" +
-    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">Yes</a></li>\r" +
-    "\n" +
-    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">No</a></li>\r" +
-    "\n" +
-    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">N/A</a></li>\r" +
-    "\n" +
-    "                    </ul>\r" +
-    "\n" +
-    "              </div>\r" +
-    "\n" +
-    "         </div>\r" +
-    "\n" +
-    "      </div>\r" +
-    "\n" +
-    "       <div style=\"height:40px;padding:5px;\">\r" +
-    "\n" +
-    "          <button ng-click=\"BacktoConditions()\" alt=\"Back(Conditions)\" title=\"Back(Conditions)\" class=\"btn btn-primary pull-left\" >Back</button>\r" +
-    "\n" +
-    "          <button ng-click=\"GotoTreatments()\" alt=\"Next(Treatment)\" title=\"Next(Treatment)\" class=\"btn btn-primary pull-right\" >Next</button>\r" +
-    "\n" +
-    "       </div>\r" +
-    "\n" +
-    "    </div>\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "    <div id=\"cdsTreatmentDiv\" class=\"hidden\">\r" +
-    "\n" +
-    "        <legend>Treatment(s):</legend>\r" +
-    "\n" +
-    "        <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
-    "\n" +
-    "          <div ng-repeat=\"treatment in filteredTreatments\">\r" +
-    "\n" +
-    "            <label>{{$index+1}}. {{treatment.Treatment}}</label>\r" +
-    "\n" +
-    "          </div>\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
-    "        <div style=\"height:40px;padding:5px;\">\r" +
-    "\n" +
-    "          <button ng-click=\"BacktoQuestions()\" alt=\"Back(Questions)\" title=\"Back(Questions)\" class=\"btn btn-primary pull-left\">Back</button>\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
-    "    </div>\r" +
-    "\n" +
-    "        \r" +
-    "\n" +
-    "</div>\r" +
-    "\n"
-  );
-
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
     "<div class=\"appointment\">\r" +
     "\n" +
@@ -6135,7 +5761,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"hrBack\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex >= data.HighRisk_UserNotes.length-1\" ng-click=\"goHrBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "                    <button type=\"button\" name=\"hrBack\" title=\"Previous High Risk Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex >= data.HighRisk_UserNotes.length-1\" ng-click=\"goHrBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
     "                    </button>\r" +
     "\n" +
@@ -6145,7 +5771,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    </div>\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"hrFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex === 0\" ng-click=\"goHrForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
+    "                    <button type=\"button\" name=\"hrFwd\" title=\"Next High Risk Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex === 0\" ng-click=\"goHrForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
     "\n" +
     "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
@@ -6163,7 +5789,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"hrSpanBack\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex >= data.HighRisk_SPANImport.length-1\" ng-click=\"goHrSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "                    <button type=\"button\" name=\"hrSpanBack\" title=\"Previous High Risk Span Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex >= data.HighRisk_SPANImport.length-1\" ng-click=\"goHrSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
     "                    </button>\r" +
     "\n" +
@@ -6173,7 +5799,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    </div>\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"hrSpanFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex === 0\" ng-click=\"goHrSpanForward()\"><i class=\"glyphicon glyphicon-arrow-right\"\r" +
+    "                    <button type=\"button\" name=\"hrSpanFwd\" title=\"Next High Risk Span Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex === 0\" ng-click=\"goHrSpanForward()\"><i class=\"glyphicon glyphicon-arrow-right\"\r" +
     "\n" +
     "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
@@ -6211,7 +5837,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"mhBack\" class=\"btn btn-default pull-left\" ng-disabled=\"mhIndex >= data.PrimaryHealthProvider_UserNotes.length-1\" ng-click=\"goMhBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "                    <button type=\"button\" name=\"mhBack\" title=\"Previous Mental Health Provider Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"mhIndex >= data.PrimaryHealthProvider_UserNotes.length-1\" ng-click=\"goMhBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
     "                    </button>\r" +
     "\n" +
@@ -6221,9 +5847,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    </div>\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"mhFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"mhIndex === 0\" ng-click=\"goMhForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
-    "\n" +
-    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "                    <button type=\"button\" name=\"mhFwd\" title=\"Next Mental Health Provider Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"mhIndex === 0\" ng-click=\"goMhForward()\"><i class=\"glyphicon glyphicon-arrow-right\"  style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
     "                    </button>\r" +
     "\n" +
@@ -6265,7 +5889,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"spBack\" class=\"btn btn-default pull-left\" ng-disabled=\"spIndex >= data.SafetyPlan_UserNotes.length-1\" ng-click=\"goSpBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "                    <button type=\"button\" name=\"spBack\" title=\"Previous Safety Plan Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"spIndex >= data.SafetyPlan_UserNotes.length-1\" ng-click=\"goSpBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
     "                    </button>\r" +
     "\n" +
@@ -6275,7 +5899,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    </div>\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"spFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"spIndex === 0\" ng-click=\"goSpForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
+    "                    <button type=\"button\" name=\"spFwd\" title=\"Next Safety Plan Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"spIndex === 0\" ng-click=\"goSpForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
     "\n" +
     "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
@@ -6295,7 +5919,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"spSpanBack\" class=\"btn btn-default pull-left\" ng-disabled=\"spSpanIndex >= data.SafetyPlan_SPANImport.length-1\" ng-click=\"goSpSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "                    <button type=\"button\" name=\"spSpanBack\" title=\"Previous Safety Plan VistA Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"spSpanIndex >= data.SafetyPlan_SPANImport.length-1\" ng-click=\"goSpSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
     "                    </button>\r" +
     "\n" +
@@ -6305,7 +5929,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    </div>\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"spSpanFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"spSpanIndex === 0\" ng-click=\"goSpSpanForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "                    <button type=\"button\" name=\"spSpanFwd\" title=\"Next Safety Plan VistA Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"spSpanIndex === 0\" ng-click=\"goSpSpanForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
     "                    </button>\r" +
     "\n" +
@@ -6337,7 +5961,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                   <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
-    "                      <button type=\"button\" name=\"commentBack\" class=\"btn btn-default pull-left\" ng-disabled=\"commentIndex >= data.GeneralComments.length-1\" ng-click=\"goCommentBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "                      <button type=\"button\" name=\"commentBack\" title=\"Previous Comments\" class=\"btn btn-default pull-left\" ng-disabled=\"commentIndex >= data.GeneralComments.length-1\" ng-click=\"goCommentBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
     "                      </button>\r" +
     "\n" +
@@ -6347,7 +5971,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                      </div>\r" +
     "\n" +
-    "                      <button type=\"button\" name=\"commentFwd\" class=\"btn btn-default pull-left\" ng-disabled=\"commentIndex === 0\" ng-click=\"goCommentForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "                      <button type=\"button\" name=\"commentFwd\" title=\"Next Comments\" class=\"btn btn-default pull-left\" ng-disabled=\"commentIndex === 0\" ng-click=\"goCommentForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i>\r" +
     "\n" +
     "                      </button>\r" +
     "\n" +
