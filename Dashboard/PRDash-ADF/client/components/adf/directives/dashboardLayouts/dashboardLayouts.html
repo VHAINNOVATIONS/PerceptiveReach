@@ -1,4 +1,4 @@
-<ul ui-sortable="sortableOptions" ng-model="layouts" class="nav nav-tabs layout-tabs" offset="59" style="z-index:5;background-color:white;" sticky>
+<ul ng-model="layouts" class="nav nav-tabs layout-tabs" offset="59" style="z-index:5;background-color:white;" sticky>
     <li ng-repeat="layout in layouts" ng-class="{ active: layout.active }">
         <a ng-click="makeLayoutActive(layout)" alt="{{layout.title}}" title="{{layout.title}}" tabindex="0">
             <span ng-dblclick="editTitle(layout)"  ng-show="!layout.editingTitle">{{layout.title}}</span>
@@ -10,5 +10,6 @@
             <!-- <span class="glyphicon glyphicon-remove"></span> -->
         </a>
     </li>
+    <label class="pull-right" style="padding:5px;font-weight:normal;">Data Last Updated:{{options.dataLastUpdated | date: "MM-dd-yyyy"}}  <a style="border-left:1px solid gray;padding-left:5px;font-size:12px;" href="mailto:vaperceptivereachsupport@va.gov?Subject=Perceptive Reach Dashboard Support">Contact Help Desk</a></label>
 </ul>
 <div ng-repeat="layout in layouts | filter:isActive" dashboard="layout.dashboard" template-url="client/components/adf/directives/dashboard/dashboard.html" dashboard-title="layout.title"></div>

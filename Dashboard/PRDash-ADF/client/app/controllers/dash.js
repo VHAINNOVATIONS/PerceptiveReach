@@ -53,7 +53,7 @@ angular.module('app')
           //riskLevel: 1,
           defaultWidget: true,
           layout: 'individual',
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           guidelineType: 'SRB'
         },
         sizeX:12,
@@ -68,12 +68,13 @@ angular.module('app')
         dataModelOptions: {
           defaultWidget: true,
           layout: 'individual',
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           vamc: 1
         },
         style: {
           width: '55%'
         },
+        canClose:false,
         sizeX:18,
         sizeY:10
       },
@@ -85,7 +86,7 @@ angular.module('app')
         title: 'Data Entry',
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'individual'
         },
         sizeX:14,
@@ -101,7 +102,7 @@ angular.module('app')
         dataModelType: ContactBaseDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'individual'
         },
         title: 'Patient Contact',
@@ -118,7 +119,7 @@ angular.module('app')
         title: 'Emergency Contact Information',
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'individual',
           reachID: 16
         },
@@ -135,7 +136,7 @@ angular.module('app')
         dataModelType: MedicationDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'individual'
         },
         sizeY:9
@@ -148,7 +149,7 @@ angular.module('app')
         dataModelType: AppointmentDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'individual'
         },
         size: {
@@ -164,7 +165,7 @@ angular.module('app')
         dataModelType: DiagnosesDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'individual'
         },
         sizeY:9
@@ -182,7 +183,8 @@ angular.module('app')
           vamc: 1
         },
         sizeX:15,
-        sizeY:9
+        sizeY:9,
+        canClose:false
       },
       {
         name: 'FacilityTable',
@@ -192,12 +194,13 @@ angular.module('app')
         title: 'Facility Roster',
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM',
+          roleAccess: 'SUP,REP,ADM,CCS',
           layout: 'surveillance,facility',
           vamc: 1
         },
         sizeX:15,
-        sizeY:9
+        sizeY:9,
+        canClose:false
       },
 
 	   {
@@ -209,7 +212,7 @@ angular.module('app')
         sizeY:10,
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'surveillance,facility'
         }
         //}
@@ -222,7 +225,7 @@ angular.module('app')
         dataModelType: GenderDistributionMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'surveillance,facility'
         },
         sizeY:9
@@ -258,7 +261,7 @@ angular.module('app')
         dataModelType: MilitaryBranchMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'surveillance,facility'
         }
       },
@@ -270,7 +273,7 @@ angular.module('app')
         dataModelType: OutreachStatusMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'surveillance,facility'
         },
         sizeY:10
@@ -283,7 +286,7 @@ angular.module('app')
         dataModelType: TopMidRiskMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'surveillance,facility'
         },
         size: {
