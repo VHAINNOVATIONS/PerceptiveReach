@@ -17,51 +17,108 @@
 'use strict';
 
 angular.module('app')
-	.controller('LayoutsDemoExplicitSaveCtrl', function($scope, widgetDefinitions, defaultWidgets, LayoutStorage, $interval, $timeout) {
+	.controller('LayoutsDemoExplicitSaveCtrl', function($scope, widgetDefinitions, LayoutStorage, Util, Auth, $interval, $timeout, IdleServ, DefaultWidgetService,$rootScope) {
+    //console.log("UserObj inside main controller: ",$rootScope.globals['userObj']);
+    // Start Idle Service
+    IdleServ.start(Auth);
+    var user = JSON.parse(sessionStorage.user);
+    //user.DashboardData = JSON.parse(user.DashboardData);
+    // initialize LayoutOptions depending on role or dashboard data
+    var layouts = [];
+    var activeView = null;
+    var defaultWidgetsLayout = DefaultWidgetService.getDefaultWidgetsObj(widgetDefinitions,user.UserRole);
+    var defaultWidgetsAll = DefaultWidgetService.getAllDefaultWidgets(widgetDefinitions,user.UserRole);
+    var widgetsAllObj = DefaultWidgetService.getAllWidgetsObj(widgetDefinitions,user.UserRole);
+
+    if (user.DashboardData){      
+      var layout = null;
+      for (var layoutIdx in user.DashboardData.layouts){
+        layout = user.DashboardData.layouts[layoutIdx];
+
+        if(layout.title.indexOf("Surveillance") != -1){
+          layout.defaultWidgets = defaultWidgetsLayout.surveillance;
+          layout.widgetDefinitions = widgetsAllObj.surveillance;
+          if (layout.active) activeView = "surveillance";
+        }
+        else if(layout.title.indexOf("Facility") != -1){
+          layout.defaultWidgets = defaultWidgetsLayout.facility;
+          layout.widgetDefinitions = widgetsAllObj.facility;
+          if (layout.active) activeView = "facility";
+        }
+        else if(layout.title.indexOf("Individual") != -1){
+          layout.defaultWidgets = defaultWidgetsLayout.individual;
+          layout.widgetDefinitions = widgetsAllObj.individual;
+          if (layout.active) activeView = "individual";
+        }
+
+        user.DashboardData.layouts[layoutIdx] = layout;
+      }
+      layouts = user.DashboardData.layouts;
+      // populate local storage
+      sessionStorage.setItem(user.UserDashboardID, JSON.stringify(user.DashboardData));
+    }
+    else{
+      var role = user.UserRole;
+      var layout = null;
+      if (user.VISN_State_Reg_View_Access){
+        layout = { title: 'Surveillance View', active: (role.match(/^(SUP|REP|ADM)$/)) ? true : false , defaultWidgets: defaultWidgetsLayout.surveillance, widgetDefinitions: widgetsAllObj.surveillance};
+        if (layout.active) activeView = "surveillance";
+        layouts.push(layout);
+      }
+      if (user.Facility_View_Access){
+        layout = { title: 'Facility View', active: (role.match(/^(CCT)$/)) ? true : false, defaultWidgets: defaultWidgetsLayout.facility, widgetDefinitions: widgetsAllObj.facility};
+        if (layout.active) activeView = "facility";
+        layouts.push(layout);  
+      }
+      if (user.Individual_View_Access){
+        layouts.push({ title: 'Individual View', active: false, defaultWidgets: defaultWidgetsLayout.individual, widgetDefinitions: widgetsAllObj.individual});
+      }
+    }
+
     $scope.layoutOptions = {
-      storageId: 'demo-layouts-explicit-save',
-      storage: localStorage,
-      storageHash: 'fs4df4d51',
+      storageId: (user.DashboardData) ? user.UserDashboardID : user.UserName + '-dashboard-' + user.UserRole,
+      storage: sessionStorage,
+      storageHash: (user.DashboardData) ? user.DashboardData.storageHash : Util.makeStorageID(),
       widgetDefinitions: widgetDefinitions,
-      defaultWidgets: defaultWidgets,
-      explicitSave: true,
-      defaultLayouts: [
-        { title: 'National View', active: true , defaultWidgets: defaultWidgets },
-        { title: 'State View', active: false, defaultWidgets: defaultWidgets },
-        { title: 'Facility View', active: false, defaultWidgets: defaultWidgets },
-        { title: 'Individual View', active: false, defaultWidgets: defaultWidgets }
-      ]
+      defaultWidgets: defaultWidgetsAll,
+      explicitSave: false,
+      lockDefaultLayouts: true,
+      defaultLayouts: layouts      
     };
 
-    // random scope value
-    $scope.randomValue = Math.random();
-    $interval(function () {
-      $scope.randomValue = Math.random();
-    }, 500);
     // initialize common data object and broadcast to widgets
     $scope.common = {
       data: {
-        stateSelected: '',
-        facilitySelected: 1,
+        visnSelected: {surveillance: null, facility: user.VISN},
+        facilitySelected: {surveillance: null, facility: user.UserHomeFacility},
         patientIdSelected: 1,
-        veteranObj: {"ReachID":781151,"FirstName":"Vet*","MiddleName":"I","LastName":"Veteran_*","SSN":"xxx-xx-9018","Phone":"(800) 555-4078","DateIdentifiedRisk":"2/8/2011","RiskLevel":"High","RiskLevelID":1,"OutreachStatus":null,"VAMC":"(V01) (402) Togus, ME"},
+        activeView: activeView,
         userObj: {}
       }
     };
-   
+
     $timeout(function(){
+      // Add listener for enter key on layout
+      $('ul li a').keydown(function(event){
+        if(event.KeyCode == '13' || event.key == 'Enter')
+        {
+          //tab.click();
+          $(this).click();
+        }
+      });
       // Add listener for when layout is changed
       $('ul li a').click(function(e) 
       {
-        //alert("clickme");
-        $scope.$broadcast('commonDataChanged', $scope.common);
+        $timeout(function(){
+          var element = (e.currentTarget.innerText) ? e.currentTarget : e.currentTarget.activeElement;
+          $scope.common.data.activeView = element.innerText.replace(' View','').toLowerCase().replace(/(\r\n|\n|\r)/gm,"").trim(); //e.currentTarget.innerText.replace(' View','').toLowerCase();
+          $scope.$broadcast('commonDataChanged', $scope.common);  
+        },1500)        
       });
 
       // Broadcast message first time
       $scope.$broadcast('commonDataChanged', $scope.common);
-      console.log('broadcast submitted');
-      console.log($scope);
-    });
+    },1000);
     
 
     // percentage (gauge widget, progressbar widget)
@@ -69,15 +126,5 @@ angular.module('app')
     $interval(function () {
       $scope.percentage = ($scope.percentage + 10) % 100;
     }, 1000);
-
-    // line chart widget
-    $interval(function () {
-      $scope.topN = _.map(_.range(0, 10), function (index) {
-        return {
-          name: 'item' + index,
-          value: Math.floor(Math.random() * 100)
-        };
-      });
-    }, 500);
 
   });

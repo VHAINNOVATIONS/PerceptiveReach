@@ -1,0 +1,418 @@
+*   commit 230d0d47a79f850b46bb5fcceeed7f6eb6605dbd (HEAD, origin/master, origin/HEAD, master)
+|\  Merge: efd3e43 7630472
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Thu Jul 2 17:46:30 2015 -0400
+| | 
+| |     Merge branch 'stable'
+| |   
+| * commit 7630472e2dcff18414393a24dc6c804acfe04f17 (origin/test, origin/stable)
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Thu Jul 2 12:26:37 2015 -0400
+| | 
+| |     Updated PR-1571
+| |   
+| * commit 53129b903b134526063e11db2f2080d987c8bb69
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Thu Jul 2 11:46:00 2015 -0400
+| | 
+| |     Updated PR-1380
+| |   
+| * commit b6f6823ef0035401197c6e7373fc06e5e4c1e1f0
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Thu Jul 2 11:39:42 2015 -0400
+| | 
+| |     Updated feature for PR-1571
+| |   
+| * commit 76bbecfbd6fbd529807d79e248e4dde301888fc5
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Wed Jul 1 16:59:24 2015 -0400
+| | 
+| |     Updated test cases for PR-876
+| |   
+| * commit 9031d7104d69ec1b66fe99d42de271b8b7033d2a
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Wed Jul 1 16:46:15 2015 -0400
+| | 
+| |     Updated feature files PR-2189 and PR-356
+| |   
+| * commit 7e73256bac1e983d0b2f360415cd7f38988c014b
+| | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | Date:   Wed Jul 1 16:36:38 2015 -0400
+| | 
+| |     Updated PR-1380 feature file with new steps
+| |     
+| *   commit b20c8b21714228536dafd9d054a4f2d1c538f05f
+| |\  Merge: 8f63a34 ba4c604
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Wed Jul 1 14:01:05 2015 -0400
+| | | 
+| | |     Merge branch 'dev' into test
+| | |    
+| | * commit ba4c60466063eee9048f283ef34b6770708e932d (origin/dev)
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Wed Jul 1 13:59:20 2015 -0400
+| | | 
+| | |     PR-2362 PR-2361 Implemented Widget View Management functionality and applied to every widget. Configured drop downs for every layout to provide only widgets related to that layout
+| | |    
+| | * commit f2870d9bfe8abbc49908935d4e43d5fcb0fde4f5
+| | | Author: jarao <jaya.rao@us.pwc.com>
+| | | Date:   Wed Jul 1 13:33:54 2015 -0400
+| | | 
+| | |     PR-2314 PR-2315 National data widgets updated API, directives, formatting, swichted bar widgets to tables
+| | |    
+| | * commit 1044a90480dfad3f13027044e827ba047b381453
+| | | Author: jarao <jaya.rao@us.pwc.com>
+| | | Date:   Wed Jul 1 00:30:40 2015 -0400
+| | | 
+| | |     PR-2314 PR-2315 National Data Widget Initial Creation
+| | |    
+| | * commit 3e66ed55abf9f9a3e6d19e80989490de79e67e5b
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Tue Jun 30 14:17:24 2015 -0400
+| | | 
+| | |     PR-2344 Security protection for existing data APIs
+| | |    
+| * | commit 8f63a3416891ee078b7832b0da53484fb6888e19
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Wed Jul 1 13:04:49 2015 -0400
+| | | 
+| | |     Updated test cases for feature file PR-1571
+| | |    
+| * | commit a6f2e3a4c26fba05b2869701cdbb8c5c9daf8c8b
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Wed Jul 1 12:33:35 2015 -0400
+| | | 
+| | |     Updated step defe file with save changes functionality
+| | |    
+| * | commit 8c44e5b0f5a57bd6044f1a7753fdd5bf6c514bf5
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Wed Jul 1 11:03:04 2015 -0400
+| | | 
+| | |     Removed feature for PR-1677
+| | |    
+| * | commit e0ee94cc445924a5ee9061ba59aa7d7bdc309ef5
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Wed Jul 1 10:25:40 2015 -0400
+| | | 
+| | |     This this test scripts added in another folder
+| | |    
+| * | commit 865bf2bbd3379a333034ac31392fb75266bb841c
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Jul 1 08:46:50 2015 -0400
+| | | 
+| | |     updates to feature files
+| | |    
+| * | commit dba82d992b7e4eaede1d9f38409604a20902a475
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jun 30 18:28:07 2015 -0400
+| | | 
+| | |     Updated test cases for PR-728
+| | |    
+| * | commit 909a863783fd35c9e22705ddedb3735e63792ae0
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jun 30 15:37:44 2015 -0400
+| | | 
+| | |     Updated feature file for PR-1407 and PR 1537
+| | |    
+| * | commit 7d793a0fc78e6134dbf584235a624ca1cbf7f492
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jun 30 15:33:34 2015 -0400
+| | | 
+| | |     Updated test cases for PR-1405 and PR-1406
+| | |    
+| * | commit 471dcfb58a038da79b1e90b5a92203e2753504c1
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Tue Jun 30 14:43:32 2015 -0400
+| | | 
+| | |     pr-1267 updated contact info
+| | |    
+| * | commit 99fc0062233e3596ed35eed1714dc0df268dfb9e
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Tue Jun 30 14:40:22 2015 -0400
+| | | 
+| | |     being rescue during login
+| | |    
+| * | commit 1bf9d0ae00a068085a76ea1ed8fb3b96dcede334
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jun 30 14:29:46 2015 -0400
+| | | 
+| | |     Updated Step defenition
+| | |    
+| * | commit cdc834d42bf34a5f6d786a0b2b99c859151c5a8e
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jun 30 14:07:40 2015 -0400
+| | | 
+| | |     Updated step defenition file
+| | |    
+| * | commit c898a4a37eee5aa01135aa14a9b4e3d3d870bfe7
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jun 30 12:50:43 2015 -0400
+| | | 
+| | |     Updated feature file for PR-1267
+| | |    
+| * | commit 7d44eddaaadad02a3607158f0ec30767c3ba415d
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jun 30 11:36:17 2015 -0400
+| | | 
+| | |     Added new folder regression test scripts
+| | |    
+| * | commit 190f909f758012604cd72fa176580179fb5e4f67
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jun 30 11:34:20 2015 -0400
+| | | 
+| | |     Updated test scripts
+| | |    
+| * | commit 5211f4fe26c9a226cfa1b285c443f7af44ca1406
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jun 30 11:18:43 2015 -0400
+| | | 
+| | |     updated
+| | |    
+| * | commit d737c35f88008c82433569dbe7b14c4dc927eaec
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jun 30 11:15:02 2015 -0400
+| | | 
+| | |     Added a folder for existing current tests
+| | |      
+| * |   commit 7bbf43cb95ce1d32e63f80df1cb7ab3d98baf8e5
+| |\ \  Merge: 2f3c8d6 c9283af
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Tue Jun 30 09:33:26 2015 -0400
+| | |   
+| | |       Merge commit 'c9283af99ddd574c19bee4437d7f86562b1aceb6' into HEAD
+| | |    
+| | * commit c9283af99ddd574c19bee4437d7f86562b1aceb6
+| | | Author: jarao <jaya.rao@us.pwc.com>
+| | | Date:   Mon Jun 29 17:01:20 2015 -0400
+| | | 
+| | |     PR-2214 PR-2301 HealthIndicators database changes, sizing, and column adjustments for demo data
+| | |    
+| | * commit 6f45eb8f4f5768b63be0a39bdd36386c35c3268e
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Mon Jun 29 16:14:14 2015 -0400
+| | | 
+| | |     PR-2343 Convert SQL script to SQL Views
+| | |      
+| * |   commit 2f3c8d601258da686fd3b687583deef09e376a71
+| |\ \  Merge: 7dabb28 0fbc953
+| | |/  Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | |   Date:   Mon Jun 29 15:29:38 2015 -0400
+| | |   
+| | |       Merge commit '0fbc9534d14bc2d2a1df4a03372ccc7da216b2b2' into HEAD
+| | |    
+| | * commit 0fbc9534d14bc2d2a1df4a03372ccc7da216b2b2
+| | | Author: jarao <jaya.rao@us.pwc.com>
+| | | Date:   Mon Jun 29 15:16:47 2015 -0400
+| | | 
+| | |     PR-2386 PR-2214 PR-2301 Changed external data widget to read from db, resolved widget bug, formatting change
+| | |    
+| * | commit 7dabb285b59840fd91be0413469102e8fc049468
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Mon Jun 29 09:21:53 2015 -0400
+| | | 
+| | |     updated step definitions file
+| | |      
+| * |   commit 0f63b058a59e8cc15602974f63f5ea7874201d0c
+| |\ \  Merge: 7fdfa38 1ee7155
+| | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | |   Date:   Mon Jun 29 01:17:57 2015 -0400
+| | |   
+| | |       Merge branch 'dev' into test
+| | |    
+| | * commit 1ee71552958bcbf6efbdc30abbca5b56beff65c9
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Mon Jun 29 01:13:03 2015 -0400
+| | | 
+| | |     PR-2360 Fixed Bug related to performance enhancements to Roster Widget
+| | |    
+| | * commit eead1f22ddbf2061104d0474226efdea02746ef9
+| | | Author: jarao <jaya.rao@us.pwc.com>
+| | | Date:   Sun Jun 28 19:39:54 2015 -0400
+| | | 
+| | |     PR-2214 PR-2314 PR-2315 Added national widget data front end, connected health indicators to database
+| | |      
+| * |   commit 7fdfa380898978f6d10297a5593530a7a67f4663
+| |\ \  Merge: 122cc72 ea7cae1
+| | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | |   Date:   Fri Jun 26 09:25:42 2015 -0400
+| | |   
+| | |       Merge branch 'dev' into test
+| | |    
+| | * commit ea7cae178571a3542c65560b24640d77e414b4b4
+| | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | Date:   Fri Jun 26 03:02:50 2015 -0400
+| | | 
+| | |     PR-2358 PR-2360 PR-2348 Provided performance enhancements for Patient Roster Widget and IE11
+| | |      
+| | *   commit 15be7ecbcf3bf629a29eb31166697cc42670dcea
+| | |\  Merge: 8d68ece 74c4544
+| | | | Author: jarao <jaya.rao@us.pwc.com>
+| | | | Date:   Thu Jun 25 12:21:01 2015 -0400
+| | | | 
+| | | |     Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | | |     
+| | | * commit 74c4544af010d6546db85e4446573f29ff148bcb
+| | | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | | Date:   Thu Jun 25 11:11:18 2015 -0400
+| | | | 
+| | | |     Removed manual inclusion of loading bar js file. Js file inclusion is handled by Grunt injection.
+| | | |     
+| | | * commit 1fff3916a08d2472d43c6892b3a1469bcfc3d766
+| | | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | | Date:   Thu Jun 25 10:45:38 2015 -0400
+| | | | 
+| | | |     Removed loading-bar.css file link, This file is handled by the grunt injector.
+| | | |     
+| | * | commit 8d68ecec7969ebea86b3f649eacc6f4d83fbf8b9
+| | |/  Author: jarao <jaya.rao@us.pwc.com>
+| | |   Date:   Thu Jun 25 12:18:07 2015 -0400
+| | |   
+| | |       PR-2214 Converted XML to JSON for response data, added library
+| | |    
+| | * commit 82f93fe264d5c846c1c5dc316162b81258f316f0
+| | | Author: jarao <jaya.rao@us.pwc.com>
+| | | Date:   Thu Jun 25 10:34:44 2015 -0400
+| | | 
+| | |     PR-2214 Fixed widget bug to enable injector code
+| | |    
+| | * commit 28df5f2b49e2bf176ab766d1b0e0c7e3f5e2ca64
+| | | Author: jarao <jaya.rao@us.pwc.com>
+| | | Date:   Thu Jun 25 10:03:43 2015 -0400
+| | | 
+| | |     PR-2214 Commiting code before transform data added
+| | |    
+| | * commit 917ce982b22686130b3e8564649fb8747c204d1b
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Wed Jun 24 16:26:36 2015 -0400
+| | | 
+| | |     PR-2346 Display progress icon on dashboard.
+| | |    
+| | * commit 0699c82a8cfe307aeed40d41981a22a3a1a6f199
+| | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | Date:   Tue Jun 23 18:12:53 2015 -0400
+| | | 
+| | |     PR-2342 IE performance fixes-resolved Javascript looping issue
+| | |    
+| * | commit 122cc72734e78f2d1058fb6d2a2af8cb522e8e95
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Thu Jun 25 15:50:00 2015 -0400
+| | | 
+| | |     Updated feature file and step defeni for PR-2084
+| | |    
+| * | commit 6c9ee2ae46c9181df3f9c0f0849b5e6fa63aafd3
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Thu Jun 25 11:02:06 2015 -0400
+| | | 
+| | |     updated feature file for PR-2082 and PR-2083
+| | |    
+| * | commit db0e89038f0d2d8b823e602f2d27133bc058adc2
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Thu Jun 25 10:40:30 2015 -0400
+| | | 
+| | |     Updated feature for PR-2083
+| | |    
+| * | commit d9abdc2f296aab5dffb6ce4cd02830f775ec99b5
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Thu Jun 25 10:27:22 2015 -0400
+| | | 
+| | |     Updated step def file
+| | |    
+| * | commit 31ddc368809567af64a349c3c4edd3286c2dab05
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Thu Jun 25 10:20:46 2015 -0400
+| | | 
+| | |     Updated feature file and step defe for PR-2084
+| | |    
+| * | commit 4bdeaf67f6cd86fdb086d4f92f2e7fd1b3bec142
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Wed Jun 24 13:17:37 2015 -0400
+| | | 
+| | |     Updated test cases for PR-2084
+| | |    
+| * | commit 13caa2bcc9d52c41c7e08297b23f423fb5d3a0f8
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jun 23 11:56:58 2015 -0400
+| | | 
+| | |     Updated with sleep functionality
+| | |    
+| * | commit 565eec409c98bad3d29323a36a3c993f9a10fe7d
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jun 23 11:53:38 2015 -0400
+| | | 
+| | |     Updated feature file and step defe for PR-2084 and PR-2088
+| | |    
+| * | commit d9e3d3be8bb3620a5fd7fc9a0f4e5c75d317f964
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jun 23 11:39:42 2015 -0400
+| | | 
+| | |     Updated feature file PR-2082 and step defe
+| | |    
+| * | commit 30428adfb379937d8b13de71d94a1dc326d509f3
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jun 16 10:11:51 2015 -0400
+| | | 
+| | |     updates step defini file
+| | |    
+| * | commit 1c35ebb39684d6aeff3923abcef5758893f0f16a
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Tue Jun 16 08:34:35 2015 -0400
+| | | 
+| | |     Updated feature file PR-2081
+| | |    
+| * | commit 96acc1d6139a03c3bf503599c14d2c6814650d85
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Mon Jun 15 20:46:10 2015 -0400
+| | | 
+| | |     updated step definitions file with wait
+| | |    
+| * | commit 8d0c81f7547fc86da9279d1ccd5f3d6fd7d8060f
+| | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | Date:   Mon Jun 15 17:06:53 2015 -0400
+| | | 
+| | |     Updated step defini file
+| | |    
+| * | commit 18e9048148cfbc6939f1c75247568d899478d781
+| | | Merge: 8fb7ea4 e2eddd5
+| | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | Date:   Mon Jun 22 10:53:34 2015 -0400
+| | | 
+| | |     Merge branch 'test' of https://github.com/VHAINNOVATIONS/PerceptiveReach into test
+| | |    
+* | | commit efd3e43faa3ecfb2b61881a9ba95fa3701935150
+| | | Author: Monica Mohler <monica.mohler@us.pwc.com>
+| | | Date:   Fri Jun 19 19:50:34 2015 -0400
+| | | 
+| | |     Sprint 14 submission log
+| | |    
+* | | commit 4b59099e9fb9b7253f7c7894d6438ac8e8748197
+| | | Author: Monica Mohler <monica.mohler@us.pwc.com>
+| | | Date:   Fri Jun 19 19:35:06 2015 -0400
+| | | 
+| | |     CDP Deliverables for Sprint 18
+| | |    
+* | | commit bd21000aac43614b76cba090cef1d282693329d3
+|/ /  Merge: 2639fd1 e2eddd5
+| |   Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| |   Date:   Fri Jun 19 18:23:41 2015 -0400
+| |   
+| |       Merge branch 'stable'
+| |     
+* |   commit e2eddd5b109042104cc0e304df9b909deda9205c
+|\ \  Merge: bb0fb61 ddc4656
+| |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| |   Date:   Fri Jun 19 18:20:33 2015 -0400
+| |   
+| |       Merge branch 'dev' into test
+| |   
+| * commit ddc4656e0fd32500d0f5a7b26a3c264547e114f4
+|   Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+|   Date:   Fri Jun 19 18:19:30 2015 -0400
+|   
+|       Updated fix for Util.js issue regarding Crypto logic not working in IE11
+|  
+* commit bb0fb616b4d865adb70b8132c3cdefc9ae987972
+  Merge: 22f29ad 1e98c2c
+  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+  Date:   Fri Jun 19 18:13:52 2015 -0400
+  
+      Merge branch 'dev' into test

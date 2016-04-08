@@ -87,9 +87,9 @@ exports.me = function(req, res, next) {
   User.findOne({
     UserID: userId
   }/*, '-salt -hashedPassword'*/, function(err, user) { // don't ever give out the password or salt
-    console.log(user);
     if (err) return next(err);
     if (!user) return res.json(401);
+    //console.log("User.findOne() - ",user);
     res.json(user);
   });
 };

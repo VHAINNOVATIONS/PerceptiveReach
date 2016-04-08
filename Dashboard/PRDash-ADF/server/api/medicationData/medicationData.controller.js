@@ -1,20 +1,48 @@
-/**
- * Using Rails-like standard naming convention for endpoints.
- * GET     /things              ->  index
- * POST    /things              ->  create
- * GET     /things/:id          ->  show
- * PUT     /things/:id          ->  update
- * DELETE  /things/:id          ->  destroy
- */
-
 'use strict';
 
 var _ = require('lodash');
+var validator = require('validator');
+var sql = require('mssql');
+var dataFormatter = require('../../components/formatUtil/formatUtil.service.js');
 
-// Get list of things
 exports.index = function(req, res) {
-  res.header("content-type: application/json");
-  var data = '[{"ReachID": 1, "Active": 1, "RxID": 1, "Name": "Zoloft", "Dosage": "100mg"}, {"ReachID": 1, "Active": 0, "RxID": 2, "Name": "Xanax","Dosage": "200mg"}, {"ReachID": 1, "Active": 1, "RxID": 3, "Name": "Prednisone","Dosage": "300mg"}, {"ReachID": 1, "Active": 1, "RxID": 4, "Name": "Ambien","Dosage": "400mg"}, {"ReachID": 1, "Active": 0, "RxID": 5, "Name": "Tramadol","Dosage": "500mg"}, {"ReachID": 1, "Active": 0, "RxID": 6, "Name": "Nucynta","Dosage": "500mg"}]';
+	/*Configure response header */
+	//res.header("content-type: application/json");
 
-  res.send(JSON.parse(data));
+  /*Configure and open database */
+  var dbc = require('../../config/db_connection/development.js');
+  var config = dbc.config;
+  var connection = new sql.Connection(config, function(err) {
+		if (err) { 
+		  console.dir(err);
+		  return; 
+		}
+		var request = new sql.Request(connection);
+		var reachID = req.param("reachID");
+
+		/*Configure database query */
+		var query = '';
+		if (reachID && validator.isInt(reachID)) {
+			request.input('reachID', sql.Int, reachID);
+			query = "SELECT * FROM PatientMedications "
+			query += "WHERE ReachID = @reachID";
+		} else {
+			res.send("ERROR: ReachID  is required.");
+		}
+
+		/*Query the database */
+		request.query(query, function(err, recordset) {
+			if (err) {
+			  console.dir(err); 
+			  res.send(401, 'Query Failed');
+			  return; 
+			}
+			
+			/*Parse into JSON object */
+			var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
+			
+			/*Send the data */
+			res.send(jsonRecordSet);
+		});
+    });
 };

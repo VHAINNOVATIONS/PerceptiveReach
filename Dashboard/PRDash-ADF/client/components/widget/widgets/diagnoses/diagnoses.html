@@ -1,0 +1,18 @@
+<div id="diagnosisDiv" class="diagnoses" title="Diagnoses Widget">
+	<table id="tblDiagnoses" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+        <thead>
+        <tr>
+            <th scope="col" tabindex="-1"><a alt="Diagnosis" title="Sort by Diagnosis" href="" ng-click="predicate = 'Diagnosis'; reverse=false">Diagnosis</a></th>
+            <th scope="col" tabindex="-1"><a alt="ICD" title="Sort by ICD" href="" ng-click="predicate = 'ICD'; reverse=false">ICD</a></th>
+            <th scope="col" tabindex="-1"><a alt="Date" title="Sort by Date" href="" ng-click="predicate = 'Date'; reverse=false">Date</a></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="diagnosis in data track by $index | orderBy:predicate:reverse">
+            <td>{{ diagnosis.ICD_Desc }}</td>
+            <td>{{ diagnosis.ICD_Code }}</td>
+            <td>{{ diagnosis.DiagnosisDate }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div> 

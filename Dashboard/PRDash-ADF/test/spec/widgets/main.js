@@ -74,5 +74,13 @@ describe('main test', function () {
     expect(element.hasClass('appointment')).toBe(true);
     //expect(element.hasClass('dataTables_wrapper')).toBe(true);
   });
+
+    it('should have diagnoses directive', function() {
+    var element = angular.element('<div wt-diagnoses data="widgetData"></div>');
+    $compile(element)($rootScope);
+    $rootScope.$digest();
+    expect(element.hasClass('diagnoses')).toBe(true);
+    //expect(element.hasClass('dataTables_wrapper')).toBe(true);
+  });
 });
 

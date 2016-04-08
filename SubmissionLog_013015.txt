@@ -1,0 +1,68 @@
+*   commit e376629502ccc5fe88e35d8b38c0a9712ee0a010 (HEAD, origin/master, origin/HEAD, master)
+|\  Merge: a727d95 0049e28
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Fri Jan 30 11:50:03 2015 -0600
+| | 
+| |     Merge branch 'stable'
+| |   
+| * commit 0049e28f049ffc92bc19df7bf6b97f1f2fc28533 (origin/stable)
+| | Merge: cad9e78 17e77b9
+| | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | Date:   Fri Jan 30 11:48:05 2015 -0600
+| | 
+| |     Merge branch 'test' into stable
+| |   
+* | commit a727d954277c815943b182b6d9d1ee8a5c457349
+| | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | Date:   Fri Jan 30 09:01:34 2015 -0500
+| | 
+| |     spc requirement feature file
+| |     
+| |     spc requirement feature file
+| |   
+* | commit 784aee13b8ff9f5060c8cd46017906d3353c9f99
+| | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | Date:   Fri Jan 30 01:23:49 2015 -0500
+| | 
+| |     New Dashboard Framework
+| |   
+* | commit 5f017831f90c26e07050f29ab3da283ab41dead3
+ /  Author: aqspwc <andrew.q.smith@us.pwc.com>
+|   Date:   Thu Jan 29 14:11:38 2015 -0500
+|   
+|       Jenkins Updates and Backup
+|       
+|       moved files around and updated the configuration and jobs/build file xml
+|       files
+|      
+| *   commit 6c645af8505fa13a30dfc37deddd785cf6dc4576 (origin/test)
+| |\  Merge: ef16cf2 da11cc2
+| | | Author: unknown <asmith039@i558dev.innovations.va.gov>
+| | | Date:   Fri Jan 30 12:35:17 2015 -0500
+| | | 
+| | |     Merge commit 'da11cc268a72a5689a05666b6f2ca9ac377bd386' into HEAD
+| | |    
+| | * commit da11cc268a72a5689a05666b6f2ca9ac377bd386 (origin/dev)
+| | | Author: Robert Snelling <robert.snelling@us.pwc.com>
+| | | Date:   Fri Jan 30 11:34:20 2015 -0600
+| | | 
+| | |     Database changes for Sprint 8
+| | |    
+| * | commit ef16cf2bcca3105ae3d693ae7b8a3e2c1f8274c7
+|/ /  Author: aqspwc <andrew.q.smith@us.pwc.com>
+| |   Date:   Fri Jan 30 12:17:20 2015 -0500
+| |   
+| |       spc requirement feature file
+| |   
+* | commit 17e77b9d48309620be6000fbb0e5d45dbe50e731
+|/  Merge: 0534029 b1fee11
+|   Author: unknown <asmith039@i558dev.innovations.va.gov>
+|   Date:   Fri Jan 30 01:34:26 2015 -0500
+|   
+|       Merge commit 'b1fee11ca0d470f5b556d4be8b3c61a067ffdb3a' into HEAD
+|  
+* commit b1fee11ca0d470f5b556d4be8b3c61a067ffdb3a
+  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+  Date:   Fri Jan 30 01:31:44 2015 -0500
+  
+      New Dashboard Framework

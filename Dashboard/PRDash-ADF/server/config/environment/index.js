@@ -29,6 +29,12 @@ var all = {
     session: 'perceptive-reach-secret'
   },
 
+  // Should we bypass user Authentication in Active Directory to develop locally? Default to false
+  bypassAuth: false,
+
+  // Server Encryption object
+  encryptionObj: {},
+
   // List of user roles
   userRoles: ['guest', 'user', 'admin'],
 
@@ -40,6 +46,8 @@ var all = {
       }
     }
   },
+
+  prSessionStore:{}
 
 };
 

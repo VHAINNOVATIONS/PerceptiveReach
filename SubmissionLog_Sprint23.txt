@@ -1,0 +1,430 @@
+* commit 53a27bd65ecf86a6d1ac505a3d91f6570fd541a3 (origin/test)
+| Author: cgattu <chandrakala.gattu@us.pwc.com>
+| Date:   Fri Aug 28 11:04:44 2015 -0400
+| 
+|     Updated feature files PR-356 and PR-1380
+|  
+* commit be02608aa295945dadb25d95847100844fefcb4d
+| Author: cgattu <chandrakala.gattu@us.pwc.com>
+| Date:   Thu Aug 27 16:04:48 2015 -0400
+| 
+|     Updated feature flies for PR-356 and PR-876
+|  
+* commit 72cb62f83d2bab7acd1b13999c35b8c04c7e4133
+| Author: aqspwc <andrew.q.smith@us.pwc.com>
+| Date:   Thu Aug 27 15:06:32 2015 -0400
+| 
+|     update env file - typo
+|     
+|     fixed typo
+|  
+* commit 4cd7b54057ebad6499462884f94b7c47d7ce4cae
+| Author: aqspwc <andrew.q.smith@us.pwc.com>
+| Date:   Thu Aug 27 15:04:18 2015 -0400
+| 
+|     update env file to use firefox
+|     
+|     i had to update the env file to use firefox because a recent update to
+|     chrome has caused failures when run as a services
+|  
+* commit 436f38cdd80e1cc3c07e79c479bcb5464601678f (HEAD, origin/stable, origin/master, origin/HEAD, master)
+| Author: cgattu <chandrakala.gattu@us.pwc.com>
+| Date:   Thu Aug 27 11:04:51 2015 -0400
+| 
+|     Updated feature flies for PR-1317, PR-1571 and added new feature PR-2993
+|    
+*   commit fa33690481013d3642a5b13e82bf299ffde29e9f
+|\  Merge: f14ae26 daf5c5a
+| | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | Date:   Thu Aug 27 00:16:13 2015 -0400
+| | 
+| |     Merge commit 'daf5c5a55b891c19ed2c2d77dbeebde684dfcb06' into HEAD
+| |     
+* |   commit f14ae2682b5e36642bb0700cb69c7b41eb975ec3
+|\ \  Merge: 5e03959 773a30e
+| | | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | | Date:   Wed Aug 26 23:16:28 2015 -0400
+| | | 
+| | |     Merge commit '773a30ef758241ff2c72de1c75b1e257fa2d3f83' into HEAD
+| | |      
+* | |   commit 5e039596f12987524308c209529a9d3ff36966e2
+|\ \ \  Merge: 65d2957 d146587
+| | | | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | | | Date:   Wed Aug 26 14:19:22 2015 -0400
+| | | | 
+| | | |     Merge commit 'd14658773e041110b9ad179844aa10aef5288dd4' into HEAD
+| | | |     
+* | | | commit 65d29572fbf7c9ab343dc23542dcd7dd558b7284
+| | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | Date:   Wed Aug 26 12:56:41 2015 -0400
+| | | | 
+| | | |     Updated feature file PR-1268 and step defe file also
+| | | |     
+* | | | commit 7d45e943c25856ae34d7f7b699b879165ff25a2b
+| | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | Date:   Tue Aug 25 18:58:38 2015 -0400
+| | | | 
+| | | |     Updated step defe file
+| | | |       
+* | | |   commit 2a2e4b0e97db0c51cb0e9a9681b6ee9b3de8d6dc
+|\ \ \ \  Merge: 8c0fa4d 5572fcb
+| | | | | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | | | | Date:   Wed Aug 26 03:13:01 2015 -0400
+| | | | | 
+| | | | |     Merge commit '5572fcb74334d9902a5fe06da1963b181b17a084' into HEAD
+| | | | |        
+* | | | |   commit 8c0fa4dcaddc3d54e14afedb3de1efcbcd77d8ca
+|\ \ \ \ \  Merge: 269bb1d d9a3796
+| | | | | | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | | | | | Date:   Wed Aug 26 02:35:30 2015 -0400
+| | | | | | 
+| | | | | |     Merge commit 'd9a3796b012b1a8fc989531e07410078801abd09' into HEAD
+| | | | | |         
+* | | | | |   commit 269bb1d27e4a3c661473d01e44ff4899557c3b2e
+|\ \ \ \ \ \  Merge: ffae618 e26e50c
+| | | | | | | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | | | | | | Date:   Wed Aug 26 00:44:24 2015 -0400
+| | | | | | | 
+| | | | | | |     Merge commit 'e26e50cd1eef7a15f4de09e966cdfc059639f682' into HEAD
+| | | | | | |        
+* | | | | | | commit ffae6185c57f54333970011208011bb457d2e099
+| | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | Date:   Tue Aug 25 17:52:13 2015 -0400
+| | | | | | | 
+| | | | | | |     Updated steps for step defe
+| | | | | | |          
+* | | | | | |   commit 1ae32fc063582ef971029fad893baff7fed47209
+|\ \ \ \ \ \ \  Merge: 438ee11 7189718
+| | | | | | | | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | | | | | | | Date:   Tue Aug 25 16:56:45 2015 -0400
+| | | | | | | | 
+| | | | | | | |     Merge commit '7189718247a504a1512c1274787494ec183ab7b1' into HEAD
+| | | | | | | |         
+* | | | | | | | commit 438ee116ddca559a4034601f07a9bcc221ba3795
+| | | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | | Date:   Tue Aug 25 16:36:32 2015 -0400
+| | | | | | | | 
+| | | | | | | |     Updated step defenition file
+| | | | | | | |         
+* | | | | | | | commit e2bd3b698a34ebedf004f109e026508533f9092f
+| | | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | | Date:   Tue Aug 25 10:09:32 2015 -0400
+| | | | | | | | 
+| | | | | | | |     Updated feature file PR-728
+| | | | | | | |           
+* | | | | | | |   commit 96e1b9ab64b03f1d4763b82a0e45717435dd6de3
+|\ \ \ \ \ \ \ \  Merge: f3fb5d9 21bc3f0
+| | | | | | | | | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | | | | | | | | Date:   Mon Aug 24 16:41:22 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     Merge commit '21bc3f0a1d38788f9fda2f14abfbd91fbd38f5db' into HEAD
+| | | | | | | | |          
+* | | | | | | | | commit f3fb5d9a72038e201c4a761d1329b7b59adad275
+| | | | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | | | Date:   Mon Aug 24 16:01:16 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     Updated feature file PR-1317
+| | | | | | | | |          
+* | | | | | | | | commit 22b8028590d1deca4ad6eb345f52fd10452d213e
+| | | | | | | | | Merge: e964534 16562f0
+| | | | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | | | Date:   Mon Aug 24 11:25:49 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     Merge branch 'master' into test
+| | | | | | | | |          
+* | | | | | | | | commit e96453431f6f323de968f11d17dac3ad6fc6c3a9
+| | | | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | | | Date:   Mon Aug 24 11:25:06 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     Updated feature files PR-1405 and PR-1927
+| | | | | | | | |          
+* | | | | | | | | commit d848b8de9e42268a6ff97233dceff387a50899ea
+| | | | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | | | Date:   Mon Aug 24 09:22:44 2015 -0400
+| | | | | | | | | 
+| | | | | | | | |     Updated feature files PR-2189 and PR-728
+| | | | | | | | |            
+* | | | | | | | |   commit 5bfa78936621e658f591f3c46b61896ae590c0a9
+|\ \ \ \ \ \ \ \ \  Merge: abcf04d 0272e70
+| | | | | | | | | | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | Date:   Mon Aug 24 03:12:17 2015 -0400
+| | | | | | | | | | 
+| | | | | | | | | |     Merge commit '0272e705b42bc5cd82138054257fa7659d9d5def' into HEAD
+| | | | | | | | | |             
+* | | | | | | | | |   commit abcf04d7c35532c21947da46789ac2593c8e6e83
+|\ \ \ \ \ \ \ \ \ \  Merge: ae612a2 8779601
+| | | | | | | | | | | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | | Date:   Fri Aug 21 16:43:32 2015 -0400
+| | | | | | | | | | | 
+| | | | | | | | | | |     Merge commit '87796013fd96b5ca44d8c2438b44634f7d66dcd0' into HEAD
+| | | | | | | | | | |              
+* | | | | | | | | | |   commit ae612a24e732af83d3d2fe699350c80944a99a2d
+|\ \ \ \ \ \ \ \ \ \ \  Merge: 4463584 d8c3e91
+| | | | | | | | | | | | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | | | Date:   Fri Aug 21 14:28:57 2015 -0400
+| | | | | | | | | | | | 
+| | | | | | | | | | | |     Merge commit 'd8c3e917d7fd4e937a2c43de788cf35a534cab98' into HEAD
+| | | | | | | | | | | |             
+* | | | | | | | | | | | commit 446358453d008ec621af838a39a595704affe552
+| | | | | | | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | | | | | | Date:   Fri Aug 21 12:46:33 2015 -0400
+| | | | | | | | | | | | 
+| | | | | | | | | | | |     Updated feature file for PR-1571 and updated step defe
+| | | | | | | | | | | |               
+* | | | | | | | | | | |   commit 190f4a27abb7a500cadaa84945866c1495b2210a
+|\ \ \ \ \ \ \ \ \ \ \ \  Merge: 7d9b435 f7d740e
+| | | | | | | | | | | | | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | | | | Date:   Thu Aug 20 11:23:35 2015 -0400
+| | | | | | | | | | | | | 
+| | | | | | | | | | | | |     Merge commit 'f7d740e420008c932f288fe3d69f3441b87bbc85' into HEAD
+| | | | | | | | | | | | |                
+* | | | | | | | | | | | |   commit 7d9b435fccee61ad4da5f8ef7a63c5d405b20f1c
+|\ \ \ \ \ \ \ \ \ \ \ \ \  Merge: 6d4f99b 9738210
+| | | | | | | | | | | | | | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | | | | | Date:   Thu Aug 20 10:21:19 2015 -0400
+| | | | | | | | | | | | | | 
+| | | | | | | | | | | | | |     Merge commit '97382108a2ee4d804dc2e7b74dea91142a81ded3' into HEAD
+| | | | | | | | | | | | | |                 
+* | | | | | | | | | | | | |   commit 6d4f99b0d735c57613f61772d87778ac31bf8d09
+|\ \ \ \ \ \ \ \ \ \ \ \ \ \  Merge: 83a2da0 0bfa720
+| | | | | | | | | | | | | | | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | | | | | | Date:   Thu Aug 20 01:24:14 2015 -0400
+| | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | |     Merge commit '0bfa7201fe208cdb9d6439933643e817fe67eac5' into HEAD
+| | | | | | | | | | | | | | |                  
+* | | | | | | | | | | | | | |   commit 83a2da0d2763e01ea8c4988329d486e162f6b152
+|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Merge: 2d27a00 bae35cb
+| | | | | | | | | | | | | | | | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | | | | | | | Date:   Wed Aug 19 00:31:24 2015 -0400
+| | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | |     Merge commit 'bae35cb59362d531b6a4ab4190a1b942d2faeafb' into HEAD
+| | | | | | | | | | | | | | | |                   
+* | | | | | | | | | | | | | | |   commit 2d27a003f9a6972d017f213f5d3c67a4427e2286
+|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Merge: 1bb92c1 27a48d4
+| | | | | | | | | | | | | | | | | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | | | | | | | | Date:   Tue Aug 18 16:29:10 2015 -0400
+| | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | |     Merge commit '27a48d401cfe17a5b191cb706de6c5829f3c3855' into HEAD
+| | | | | | | | | | | | | | | | |                    
+* | | | | | | | | | | | | | | | |   commit 1bb92c1604849c57139fe844183453dca7805d50
+|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Merge: 53039e6 364f6a5
+| | | | | | | | | | | | | | | | | | Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | | | | | | | | | | | | | | | Date:   Tue Aug 18 14:27:23 2015 -0400
+| | | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | | |     Merge branch 'dev' into test
+| | | | | | | | | | | | | | | | | |     
+| | | | | | | | | | | | | | | | | |     Conflicts:
+| | | | | | | | | | | | | | | | | |     	Dashboard/PRDash-ADF/client/index.html
+| | | | | | | | | | | | | | | | | |                   
+* | | | | | | | | | | | | | | | | | commit 53039e6695b95fbb40d2b6eccdee1481989c0cd8
+| | | | | | | | | | | | | | | | | | Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | | | | | | | | | | | | Date:   Mon Aug 17 18:19:32 2015 -0400
+| | | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | | |     Updated feature file
+| | | | | | | | | | | | | | | | | |                   
+* | | | | | | | | | | | | | | | | | commit 1b99b5dda1d5005b2aacbbf082aea3fb02344599
+| | | | | | | | | | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | | | | | | | | | Date:   Mon Aug 17 16:50:08 2015 -0400
+| | | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | | |     updated pr-1927
+| | | | | | | | | | | | | | | | | |     
+| | | | | | | | | | | | | | | | | |     updated pr-1927 to avoid cucumber errors
+| | | | | | | | | | | | | | | | | |                   
+* | | | | | | | | | | | | | | | | | commit 145e9f731c02f2c8211749ca51f157aa7783aedc
+| | | | | | | | | | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | | | | | | | | | Date:   Mon Aug 17 16:47:40 2015 -0400
+| | | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | | |     removing pr-1927 file
+| | | | | | | | | | | | | | | | | |     
+| | | | | | | | | | | | | | | | | |     removing pr-1927 file to troubleshoot a character issue
+| | | | | | | | | | | | | | | | | |                     
+* | | | | | | | | | | | | | | | | |   commit be9b710a728495eece8b391300044f7127adec93
+|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Merge: e610de7 e2e846c
+| | | | | | | | | | | | | | | | | | | Author: andrew.q.smith@us.pwc.com <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | | | | | | | | | | Date:   Mon Aug 17 16:11:47 2015 -0400
+| | | | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | | | |     Merge commit 'e2e846c561d797c9ee6c1f3852cf0f37cc1253c9' into HEAD
+| | | | | | | | | | | | | | | | | | |                    
+* | | | | | | | | | | | | | | | | | | commit e610de78146ec34d22531709354c2ee4c0243455
+| | | | | | | | | | | | | | | | | | | Author: aqspwc <andrew.q.smith@us.pwc.com>
+| | | | | | | | | | | | | | | | | | | Date:   Mon Aug 17 13:43:09 2015 -0400
+| | | | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | | | |     update steps
+| | | | | | | | | | | | | | | | | | |     
+| | | | | | | | | | | | | | | | | | |     troubleshooting an issue with cucumber
+| | | | | | | | | | | | | | | | | | |                    
+* | | | | | | | | | | | | | | | | | | commit 34c4bc3da17386fe3c8d967186589133d381c206
+ / / / / / / / / / / / / / / / / / /  Author: cgattu <chandrakala.gattu@us.pwc.com>
+| | | | | | | | | | | | | | | | | |   Date:   Mon Aug 17 10:55:25 2015 -0400
+| | | | | | | | | | | | | | | | | |   
+| | | | | | | | | | | | | | | | | |       Updated step defe with sleep
+| | | | | | | | | | | | | | | | | |                     
+| | | | | | | | | | | | | | | | | | * commit b74092be3059d5e30533121fc4e134b5b1e5cd56 (origin/dev)
+| | | | | | | | | | | | | | | | | | | Author: unknown <jrao012@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | | | | | | Date:   Thu Aug 27 23:39:02 2015 -0400
+| | | | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | | | |     PR-3045 PR-3043 PR-3032 Table sorting, tooltips, scope, alt added to html files
+| | | | | | | | | | | | | | | | | | |                    
+| | | | | | | | | | | | | | | | | | * commit c5e0e475687401dda04310a8d67671aa1bc51300
+| | | | | | | | | | | | | | | | | | | Author: unknown <jrao012@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | | | | | | Date:   Thu Aug 27 23:22:51 2015 -0400
+| | | | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | | | |     PR-3045 PR-3043 PR-3032 Sorting added.  Tooltips, alt, and header scope restored
+| | | | | | | | | | | | | | | | | | |                    
+| | | | | | | | | | | | | | | | | | * commit f06117b1a6bcea16f2100aa9d628d391bf8d2703
+| | | | | | | | | | | | | | | | | | | Author: unknown <jrao012@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | | | | | | Date:   Thu Aug 27 21:49:35 2015 -0400
+| | | | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | | | |     PR-3043 PR-3045 templates for these tickets checked in (html driven changes)
+| | | | | | | | | | | | | | | | | | |                    
+| | | | | | | | | | | | | | | | | | * commit 303863fb7ac0aad646a516631761dade088a5cc5
+| | | | | | | | | | | | | | | | | |/  Author: unknown <jrao012@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | | | | |   Date:   Thu Aug 27 21:48:15 2015 -0400
+| | | | | | | | | | | | | | | | | |   
+| | | | | | | | | | | | | | | | | |       PR-3043 PR-3045 Added column scopes, tooltips, and alt to html driven widgets
+| | | | | | | | | | | | | | | | | |                     
+| | | | | | | | | | | | | | | | | *   commit daf5c5a55b891c19ed2c2d77dbeebde684dfcb06
+| | | | | | | | | | | | | | | | | |\  Merge: dd01cf1 773a30e
+| | | | | | | | | | | | | | | | | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | | | | | | | | | | | | | |/|   Date:   Thu Aug 27 00:13:25 2015 -0400
+| | | | | | | | | | | | | | | | | |   
+| | | | | | | | | | | | | | | | | |       Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | | | | | | | | | | | | | | | | |       
+| | | | | | | | | | | | | | | | | |       Conflicts:
+| | | | | | | | | | | | | | | | | |       	Dashboard/PRDash-ADF/client/app/controllers/dash.js
+| | | | | | | | | | | | | | | | | |                   
+| | | | | | | | | | | | | | | | * | commit 773a30ef758241ff2c72de1c75b1e257fa2d3f83
+| | | | | | | | | | | | | | | | | | Author: unknown <jrao012@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | | | | | Date:   Wed Aug 26 23:14:30 2015 -0400
+| | | | | | | | | | | | | | | | | | 
+| | | | | | | | | | | | | | | | | |     PR-3043 Fixed layout syntax error
+| | | | | | | | | | | | | | | | | |                   
+| | | | | | | | | | | | | | | | * | commit e3959a32d73eac538febb751e4e19c0f22eba2df
+| | | | | | | | | | | | | | | |/ /  Author: unknown <jrao012@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | | | |   Date:   Wed Aug 26 23:03:39 2015 -0400
+| | | | | | | | | | | | | | | | |   
+| | | | | | | | | | | | | | | | |       PR-3043 PR-3047 Added tooltips accessible by hover and tab to select controls, checked for url showing up when hovering over a url
+| | | | | | | | | | | | | | | | |                  
+| | | | | | | | | | | | | | | * | commit d14658773e041110b9ad179844aa10aef5288dd4
+| | | | | | | | | | | | | | |/ /  Author: varunn <varun.neelakantan@us.pwc.com>
+| | | | | | | | | | | | | | | |   Date:   Wed Aug 26 14:17:17 2015 -0400
+| | | | | | | | | | | | | | | |   
+| | | | | | | | | | | | | | | |       PR-2184: Default widget button fix after change made to common data.
+| | | | | | | | | | | | | | | |                 
+| | | | | | | | | | | | | | * | commit 5572fcb74334d9902a5fe06da1963b181b17a084
+| | | | | | | | | | | | | |/ /  Author: unknown <jrao012@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | | |   Date:   Wed Aug 26 03:11:09 2015 -0400
+| | | | | | | | | | | | | | |   
+| | | | | | | | | | | | | | |       PR-3043 PR-3047 Tooltips display when tabbed and are accessible via hovering as well as tabbing
+| | | | | | | | | | | | | | |                
+| | | | | | | | | | | | | * | commit d9a3796b012b1a8fc989531e07410078801abd09
+| | | | | | | | | | | | |/ /  Author: unknown <jrao012@i558dev.innovations.va.gov>
+| | | | | | | | | | | | | |   Date:   Wed Aug 26 02:33:53 2015 -0400
+| | | | | | | | | | | | | |   
+| | | | | | | | | | | | | |       PR-3037 User attention is drawn to error messages/errors are clearly delineated
+| | | | | | | | | | | | | |               
+| | | | | | | | | | | | * | commit e26e50cd1eef7a15f4de09e966cdfc059639f682
+| | | | | | | | | | | |/ /  Author: unknown <jrao012@i558dev.innovations.va.gov>
+| | | | | | | | | | | | |   Date:   Wed Aug 26 00:42:23 2015 -0400
+| | | | | | | | | | | | |   
+| | | | | | | | | | | | |       PR-3040 Removed the ability to create a custom layout
+| | | | | | | | | | | | |              
+| | | | | | | | | | | * | commit 7189718247a504a1512c1274787494ec183ab7b1
+| | | | | | | | | | |/ /  Author: varunn <varun.neelakantan@us.pwc.com>
+| | | | | | | | | | | |   Date:   Tue Aug 25 16:55:13 2015 -0400
+| | | | | | | | | | | |   
+| | | | | | | | | | | |       PR-2999 Increased no. of columns in gridster to 30, Resized all the widgets. Moved External Suicide indicator to the bottom of the screen
+| | | | | | | | | | | |             
+| | | | | | | | | | * | commit 21bc3f0a1d38788f9fda2f14abfbd91fbd38f5db
+| | | | | | | | | |/ /  Author: jarao <jaya.rao@us.pwc.com>
+| | | | | | | | | | |   Date:   Mon Aug 24 16:39:29 2015 -0400
+| | | | | | | | | | |   
+| | | | | | | | | | |       PR-2945 Added alert to login page re timeouts
+| | | | | | | | | | |            
+| | | | | | | | | | * commit dd01cf1ec47c185dbb2625b7a4de3fff80133aca
+| | | | | | | | | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | | | | | | |   Date:   Thu Aug 27 00:00:57 2015 -0400
+| | | | | | | | | |   
+| | | | | | | | | |       PR-3064 PR-3065 Updated various files to resolve bugs in Surveillance/Facility Views
+| | | | | | | | | |             
+| | | | | | | | | *   commit 0272e705b42bc5cd82138054257fa7659d9d5def
+| | | | | | | | | |\  Merge: e2e8264 8779601
+| | | | | | | | | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | | | | | |/|   Date:   Mon Aug 24 03:09:49 2015 -0400
+| | | | | | | | | |   
+| | | | | | | | | |       Merge branch 'dev' of https://github.com/VHAINNOVATIONS/PerceptiveReach into dev
+| | | | | | | | | |       
+| | | | | | | | | |       Conflicts:
+| | | | | | | | | |       	Dashboard/PRDash-ADF/test-results.xml
+| | | | | | | | | |           
+| | | | | | | | * | commit 87796013fd96b5ca44d8c2438b44634f7d66dcd0
+| | | | | | | |/ /  Author: varunn <varun.neelakantan@us.pwc.com>
+| | | | | | | | |   Date:   Fri Aug 21 16:42:04 2015 -0400
+| | | | | | | | |   
+| | | | | | | | |       PR-3051 Clicking on Widget title bar should not increment "Unsaved" changes.
+| | | | | | | | |          
+| | | | | | | * | commit d8c3e917d7fd4e937a2c43de788cf35a534cab98
+| | | | | | |/ /  Author: varunn <varun.neelakantan@us.pwc.com>
+| | | | | | | |   Date:   Fri Aug 21 14:27:20 2015 -0400
+| | | | | | | |   
+| | | | | | | |       PR-2184 Fix for default widgets button cause widgets to be empty in individual view.
+| | | | | | | |         
+| | | | | | * | commit f7d740e420008c932f288fe3d69f3441b87bbc85
+| | | | | |/ /  Author: varunn <varun.neelakantan@us.pwc.com>
+| | | | | | |   Date:   Thu Aug 20 11:20:37 2015 -0400
+| | | | | | |   
+| | | | | | |       PR-3001 Reduced height for widget header panel.
+| | | | | | |        
+| | | | | * | commit 97382108a2ee4d804dc2e7b74dea91142a81ded3
+| | | | |/ /  Author: varunn <varun.neelakantan@us.pwc.com>
+| | | | | |   Date:   Thu Aug 20 10:18:19 2015 -0400
+| | | | | |   
+| | | | | |       PR-3001 Widgets/Gridster container will size based on the form factor of the device.
+| | | | | |       
+| | | | | * commit e2e8264f88ae4ee0655ee3513eafacc9ef28c484
+| | | | |/  Author: Andal FeQuiere <andal.fequiere@us.pwc.com>
+| | | | |   Date:   Mon Aug 24 02:59:01 2015 -0400
+| | | | |   
+| | | | |       PR-2994 PR-2996 PR-2997 Updated various files to add in new Consolidated View on the Dashboard. Updated Facility View and added sticky header at the top to notify user of Facility selections. Added sticky header for Consolidated View as well.
+| | | | |      
+| | | | * commit 0bfa7201fe208cdb9d6439933643e817fe67eac5
+| | | | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | | | Date:   Wed Aug 19 13:41:12 2015 -0400
+| | | | | 
+| | | | |     PR-3026 PR-2824 PR-2946 Fixed issue where we are not able to edit the title for the widgets after scrolling down.
+| | | | |      
+| | | | * commit cb4d1f2d5a04bb778964a77d8138392b74e9015a
+| | | | | Author: varunn <varun.neelakantan@us.pwc.com>
+| | | | | Date:   Wed Aug 19 11:25:39 2015 -0400
+| | | | | 
+| | | | |     PR-2992 Name along with SSN will be visible in the floating toolbar under individual view.
+| | | | |      
+| | | | * commit d3dac3b575c4ef5f619a93f0dcc2408e97c3d8fe
+| | | |/  Author: unknown <jrao012@i558dev.innovations.va.gov>
+| | | |   Date:   Wed Aug 19 02:21:23 2015 -0400
+| | | |   
+| | | |       PR-3032 Added ng-click events to all column headers except for Patient Roster Table
+| | | |     
+| | | * commit bae35cb59362d531b6a4ab4190a1b942d2faeafb
+| | |/  Author: unknown <jrao012@i558dev.innovations.va.gov>
+| | |   Date:   Wed Aug 19 00:27:38 2015 -0400
+| | |   
+| | |       PR-3024 PR-3031 Tab order from left to right maintained across each widget
+| | |    
+| | * commit 27a48d401cfe17a5b191cb706de6c5829f3c3855
+| |/  Author: varunn <varun.neelakantan@us.pwc.com>
+| |   Date:   Tue Aug 18 16:26:03 2015 -0400
+| |   
+| |       PR-2995 PR-3000 PR-3001 Used GridsterJS instead of UISortableJS to fix widget movement issues.
+| |   
+| * commit 364f6a5a12fde64df4e18e76ba6f8f02f829e4ec
+|/  Author: jarao <jaya.rao@us.pwc.com>
+|   Date:   Tue Aug 18 02:19:39 2015 -0400
+|   
+|       PR-2838 PR-3024 All navigation fields are actionable and in the correct order.  Widget settings start with Remove-Edit-Min
+|  
+* commit e2e846c561d797c9ee6c1f3852cf0f37cc1253c9
+  Author: varunn <varun.neelakantan@us.pwc.com>
+  Date:   Mon Aug 17 16:08:44 2015 -0400
+  
+      PR-2814 Username/Password required message displayed when either of the field is left blank and the user tries to login.

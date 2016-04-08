@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app')
-  .controller('LoginCtrl',
+  /*.controller('LoginCtrl',
     ['$scope', '$rootScope', '$location', 'Auth',
     function ($scope, $rootScope, $location, Auth) {
         $scope.user = {};
@@ -19,6 +19,9 @@ angular.module('app')
                       Auth.SetCredentials($scope.user.email, $scope.user.password);
                       //console.log("LoginController rootScoope.globals: ",$rootScope.globals);
                       $location.path('/');
+                      $('#navHeader').show();
+                      $('#description').show();
+
                   } else {
                       $scope.errors.other = response.message;
                       $scope.dataLoading = false;
@@ -26,10 +29,28 @@ angular.module('app')
               });
             }
         };
-    }]);
-  /*.controller('LoginCtrl', function ($scope, Auth, $location, $window) {
+    }]);*/
+  .controller('LoginCtrl', function ($scope, Auth, $location, $window, CipherService) {
     $scope.user = {};
     $scope.errors = {};
+    CipherService.getEncryptionObj();
+	
+	$(document).ready(function(){
+	$('[data-toggle="tooltip"]').tooltip(); 
+	});
+
+    //Add listener to for checkbox
+    $('.btn-login').attr("disabled","disabled");
+    $('#checky').click(function(){      
+      if($(this).prop('checked')){
+        $('.btn-login').removeAttr('disabled');
+        //console.log("Entered click event-enabled", $('.btn-login'));
+      }
+      else{
+        $('.btn-login').attr("disabled","disabled");
+        //console.log("Entered click event-disabled", $('.btn-login'));  
+      }
+    });
 
     $scope.login = function(form) {
       $scope.submitted = true;
@@ -37,7 +58,7 @@ angular.module('app')
       if(form.$valid) {
         Auth.login({
           email: $scope.user.email,
-          password: $scope.user.password
+          password: CipherService.encrypt($scope.user.password).cipher_text
         })
         .then( function() {
           // Logged in, redirect to home
@@ -52,4 +73,4 @@ angular.module('app')
     $scope.loginOauth = function(provider) {
       $window.location.href = '/auth/' + provider;
     };
-  });*/
+  });
