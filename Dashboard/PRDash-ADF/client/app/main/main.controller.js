@@ -23,7 +23,7 @@ angular.module('app')
     IdleServ.start(Auth);
     var user = JSON.parse(sessionStorage.user);
     //user.DashboardData = JSON.parse(user.DashboardData);
-    // initialize LayoutOptions depending on role or dashboard data
+    // initialize LayoutOptions depending on role or dashboard data.
     var layouts = [];
     var activeView = null;
     var defaultWidgetsLayout = DefaultWidgetService.getDefaultWidgetsObj(widgetDefinitions,user.UserRole);
@@ -83,7 +83,8 @@ angular.module('app')
       defaultWidgets: defaultWidgetsAll,
       explicitSave: false,
       lockDefaultLayouts: true,
-      defaultLayouts: layouts      
+      defaultLayouts: layouts,
+      dataLastUpdated: user.DataLastUpdated    
     };
 
     // initialize common data object and broadcast to widgets
