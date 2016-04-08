@@ -118,6 +118,11 @@ angular.module('ui.dashboard')
             }
         };
 
+        scope.CloseSaveAlert =  function(){
+          $(".unsavedDataAlert").fadeOut();
+        }
+
+
       }],
       link: function (scope) {
 
@@ -204,8 +209,11 @@ angular.module('ui.dashboard')
          * @param  {Object} widget The widget instance object (not a definition object)
          */
         scope.removeWidget = function (widget) {
-          scope.widgets.splice(_.indexOf(scope.widgets, widget), 1);
-          scope.saveDashboard();
+          if(widget.canClose != false)
+          {
+            scope.widgets.splice(_.indexOf(scope.widgets, widget), 1);
+            scope.saveDashboard();
+          }
         };
 
         scope.keyDown = function(e)
@@ -594,6 +602,10 @@ angular.module('ui.dashboard')
           };
 
           scope.makeLayoutActive = function(layout) {
+            if(scope.common && scope.common.data && scope.common.data.EnterDataIsUnsaved == true){
+              $(".unsavedDataAlert").fadeIn();
+              return;
+            }
 
             var current = layoutStorage.getActiveLayout();
 
@@ -683,13 +695,6 @@ angular.module('ui.dashboard')
             }
           };
 
-          var sortableDefaults = {
-            stop: function() {
-              scope.options.saveLayouts();
-            },
-            distance: 5
-          };
-          scope.sortableOptions = angular.extend({}, sortableDefaults, scope.options.sortableOptions || {});
         }
       };
     }
@@ -799,6 +804,14 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("client/components/adf/directives/dashboard/dashboard.html",
     "<div>\r" +
+    "\n" +
+    "    <div class=\"alert alert-warning unsavedDataAlert\">\r" +
+    "\n" +
+    "          <p>You have Unsaved changes in EnterData widget, Please Save or Undo changes and retry.</p>\r" +
+    "\n" +
+    "          <button name=\"btnSaveAlertOk\" alt=\"Unsaved Changes\" class=\"btn btn-primary\" ng-click=\"CloseSaveAlert()\">OK</button>\r" +
+    "\n" +
+    "    </div>\r" +
     "\n" +
     "    <div offset=\"105\" style=\"z-index:5;background-color:white;\" sticky tabindex=\"-1\">\r" +
     "\n" +
@@ -914,7 +927,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                            <!--button ng-click=\"openWidgetSettings(widget);\" style=\"background-color: transparent; float:left;\" class=\"glyphicon glyphicon-cog\" ng-if=\"!options.hideWidgetSeyttings\"></button-->\r" +
     "\n" +
-    "                            <button ng-click=\"removeWidget(widget);\" ng-keydown=\"keyDown($event)\" ng-keyup=\"keyUp($event)\" title=\"Remove Widget Or Resize Widget\" alt=\"Remove Widget\" style=\"background-color: transparent; float:right;\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
+    "                            <button ng-click=\"removeWidget(widget);\" ng-keydown=\"keyDown($event)\" ng-keyup=\"keyUp($event)\"  ng-attr-title=\"{{widget.canClose == false? 'Resize/Move Widget':'Remove/Resize/Move Widget'}}\" alt=\"Remove Widget\" style=\"background-color: transparent; float:right;\" ng-class=\"(widget.canClose == false) ? 'glyphicon glyphicon-move' : 'glyphicon glyphicon-remove'\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
     "\n" +
     "                        </div>\r" +
     "\n" +
@@ -1018,7 +1031,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/adf/directives/dashboardLayouts/dashboardLayouts.html",
-    "<ul ui-sortable=\"sortableOptions\" ng-model=\"layouts\" class=\"nav nav-tabs layout-tabs\" offset=\"59\" style=\"z-index:5;background-color:white;\" sticky>\r" +
+    "<ul ng-model=\"layouts\" class=\"nav nav-tabs layout-tabs\" offset=\"59\" style=\"z-index:5;background-color:white;\" sticky>\r" +
     "\n" +
     "    <li ng-repeat=\"layout in layouts\" ng-class=\"{ active: layout.active }\">\r" +
     "\n" +
@@ -1041,6 +1054,8 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "        </a>\r" +
     "\n" +
     "    </li>\r" +
+    "\n" +
+    "    <label class=\"pull-right\" style=\"padding:5px;font-weight:normal;\">Data Last Updated:{{options.dataLastUpdated | date: \"MM-dd-yyyy\"}}  <a style=\"border-left:1px solid gray;padding-left:5px;font-size:12px;\" href=\"mailto:vaperceptivereachsupport@va.gov?Subject=Perceptive Reach Dashboard Support\">Contact Help Desk</a></label>\r" +
     "\n" +
     "</ul>\r" +
     "\n" +

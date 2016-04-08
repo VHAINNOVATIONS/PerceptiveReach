@@ -26,8 +26,9 @@ When(/^I select middle risk veteran row in the widget$/) do
   #find(:xpath, '//*[@id="sampleVet"]/tbody/tr["+row+"]').click
    #find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[2]').click
       #find(:xpath, '//*[@id="sampleVet"]/tbody/tr[9]').click 
-	expect(page).to have_content '3799'
-	find(:xpath, '//td[contains(text(),"1966")]').click 
+	#expect(page).to have_content '3799'
+	#find(:xpath, '//td[contains(text(),"1966")]').click 
+  find(:xpath, '(//tr/td[contains(text(),\'MIDDLE\')])[1]').click 
 	 #click_link('vet_566384')
 end
 
@@ -53,8 +54,8 @@ When(/^I select top risk veteran row in the widget$/) do
   #find(:xpath, '//*[@id="sampleVet"]/tbody/tr["+row+"]').click
    #find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[2]').click
      # find(:xpath, '//*[@id="sampleVet"]/tbody/tr[9]').click 
-	  find(:xpath, '//td[contains(text(),"4669")]').click 
-	  # click_link('vet_652427')
+	 find(:xpath, '(//tr/td[contains(text(),\'TOP\')])[1]').click 
+	
 end
 
 
@@ -98,8 +99,11 @@ end
 When(/^I click on close on the "(.*?)" widget$/) do |widgetname|
   title = widgetname
 #page.find(:xpath, "//span[normalize-space(text())='emergency']/following::button[3]",:match => :prefer_exact).click
-all(:xpath, "//span[normalize-space(text())='#{title}']/following::button[1]")[1].click
-
+#all(:xpath, "//span[normalize-space(text())='#{title}']/following::button[1]")[1].click
+#page.find(:xpath, ".//span[text()='Emergency Contact Information']/following-sibling::div/child::button").click
+#el = page.find(:xpath, ".//span[text()='Emergency Contact Information']/following-sibling::div/child::button")
+jScript = "$($('.panel-title>span:contains(\""+ widgetname +"\")').siblings()[1]).find('button').click()"
+page.execute_script(jScript)
 end
 
 When(/^I select VISN Roster "(.*?)" veteran row in the widget$/) do |arg1|
@@ -153,7 +157,13 @@ Then(/^I should see "(.*?)" widget$/) do |pagecontent|
   expect(page).to have_content(pagecontent)
 end
 
-Then(/^I should not see the "(.*?)" widget$/) do |pagecontent|
+Then(/^I should not see the "(.*?)" widget$/) do |arg1|
+  title = arg1
+  expect(page).to have_no_xpath("//span[contains(text(),'#{title}')]")
+  #expect(page).to have_no_content(pagecontent)
+end
+
+Then(/^I should not be able to see the "(.*?)" widget$/) do |arg1|
   expect(page).to have_no_content(pagecontent)
 end
 
@@ -470,11 +480,62 @@ When(/^I click on save button$/) do
   pending # express the regexp above with the code you wish you had
 end
 
+When(/^I click on Add Data$/) do
+  pending # express the regexp above with the code you wish you had
+  find_button('Add Data').click
+end
+
+
 Then(/^I should see the widget (\d+) title change to "(.*?)"$/) do |arg1, arg2|
   pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I click on the Default Widgets button$/) do
+  #pending # express the regexp above with the code you wish you had
+  #find_button('Add a Widget').click
+  find_button('Default Widgets').click
 end
 
 Then(/^I should wait$/) do
   # pending # express the regexp above with the code you wish you had
   sleep(30)
+end
+
+Then (/^I send an email following the link$/) do 
+	click_link('Contact Help Desk')
+	open_email('vaperceptivereachsupport@va.gov')
+	expect(current_email).to eq "vaperceptivereachsupport@va.gov"
+	expect(current_email).subject eq "Perceptive Reach Dashboard Support"
+	clear_emails
+end 
+
+Then(/^I select the 3rd row from Patient Roster Widget$/) do
+  find(:xpath, './/*[@id=\'tblPatient\']/tbody/tr[3]').click
+end
+
+Then(/^I should see the SSN in patient contact equal to SSN in 3rd row of Patient Roster$/) do
+  ssn = find(:xpath, './/*[@id=\'tblPatient\']/tbody/tr[3]/td[2]').text
+  expect(find(:xpath,'.//div[@wt-contact=\'\']/div[@class=\'ng-binding\']')).to have_content(ssn)
+end
+
+Then(/^I should wait for inactivity$/) do
+  # pending # express the regexp above with the code you wish you had
+  sleep(1020)
+end
+
+Then (/^I should see "(.*?)" in "(.*?)" $/) do |arg1,arg2|
+	#find(:xpath, '//*[@id=/'hrText/']')
+  	fill_in('hrText', :with => 'The patient has coronary artery disease, hypertension, hypercholesterolemia, COPD and tobacco abuse. He reports that doing well. He did have some more knee pain for a few weeks, but this has resolved.')
+end
+
+Then(/^I see only max length in "(.*?)" $/) do |arg1|
+	find(:xpath, arg1).value.length.should_be 128
+end
+
+Then(/^I click on Add Data button$/) do
+  #find_button('Add Data').click 
+  page.execute_script("$(\"button:contains('Add Data')\")[0].scrollIntoView( true );")
+  page.execute_script("$(window).scrollTop( 600 );")
+  #find_button('Add Data').trigger('click')
+   find_button('Add Data').click 
 end

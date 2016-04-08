@@ -118,6 +118,11 @@ angular.module('ui.dashboard')
             }
         };
 
+        scope.CloseSaveAlert =  function(){
+          $(".unsavedDataAlert").fadeOut();
+        }
+
+
       }],
       link: function (scope) {
 
@@ -204,8 +209,11 @@ angular.module('ui.dashboard')
          * @param  {Object} widget The widget instance object (not a definition object)
          */
         scope.removeWidget = function (widget) {
-          scope.widgets.splice(_.indexOf(scope.widgets, widget), 1);
-          scope.saveDashboard();
+          if(widget.canClose != false)
+          {
+            scope.widgets.splice(_.indexOf(scope.widgets, widget), 1);
+            scope.saveDashboard();
+          }
         };
 
         scope.keyDown = function(e)

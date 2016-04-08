@@ -104,6 +104,14 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/adf/directives/dashboard/dashboard.html",
     "<div>\r" +
     "\n" +
+    "    <div class=\"alert alert-warning unsavedDataAlert\">\r" +
+    "\n" +
+    "          <p>You have Unsaved changes in EnterData widget, Please Save or Undo changes and retry.</p>\r" +
+    "\n" +
+    "          <button name=\"btnSaveAlertOk\" alt=\"Unsaved Changes\" class=\"btn btn-primary\" ng-click=\"CloseSaveAlert()\">OK</button>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
     "    <div offset=\"105\" style=\"z-index:5;background-color:white;\" sticky tabindex=\"-1\">\r" +
     "\n" +
     "        <div class=\"alert alert-success snoAlertBox\" data-alert=\"alert\">This widget has already been added to your dashboard. Please select a different widget to add.</div>\r" +
@@ -218,7 +226,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                            <!--button ng-click=\"openWidgetSettings(widget);\" style=\"background-color: transparent; float:left;\" class=\"glyphicon glyphicon-cog\" ng-if=\"!options.hideWidgetSeyttings\"></button-->\r" +
     "\n" +
-    "                            <button ng-click=\"removeWidget(widget);\" ng-keydown=\"keyDown($event)\" ng-keyup=\"keyUp($event)\" title=\"Remove Widget Or Resize Widget\" alt=\"Remove Widget\" style=\"background-color: transparent; float:right;\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
+    "                            <button ng-click=\"removeWidget(widget);\" ng-keydown=\"keyDown($event)\" ng-keyup=\"keyUp($event)\"  ng-attr-title=\"{{widget.canClose == false? 'Resize/Move Widget':'Remove/Resize/Move Widget'}}\" alt=\"Remove Widget\" style=\"background-color: transparent; float:right;\" ng-class=\"(widget.canClose == false) ? 'glyphicon glyphicon-move' : 'glyphicon glyphicon-remove'\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
     "\n" +
     "                        </div>\r" +
     "\n" +
@@ -322,7 +330,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/adf/directives/dashboardLayouts/dashboardLayouts.html",
-    "<ul ui-sortable=\"sortableOptions\" ng-model=\"layouts\" class=\"nav nav-tabs layout-tabs\" offset=\"59\" style=\"z-index:5;background-color:white;\" sticky>\r" +
+    "<ul ng-model=\"layouts\" class=\"nav nav-tabs layout-tabs\" offset=\"59\" style=\"z-index:5;background-color:white;\" sticky>\r" +
     "\n" +
     "    <li ng-repeat=\"layout in layouts\" ng-class=\"{ active: layout.active }\">\r" +
     "\n" +
@@ -345,6 +353,8 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "        </a>\r" +
     "\n" +
     "    </li>\r" +
+    "\n" +
+    "    <label class=\"pull-right\" style=\"padding:5px;font-weight:normal;\">Data Last Updated:{{options.dataLastUpdated | date: \"MM-dd-yyyy\"}}  <a style=\"border-left:1px solid gray;padding-left:5px;font-size:12px;\" href=\"mailto:vaperceptivereachsupport@va.gov?Subject=Perceptive Reach Dashboard Support\">Contact Help Desk</a></label>\r" +
     "\n" +
     "</ul>\r" +
     "\n" +
