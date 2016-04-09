@@ -11,5 +11,6 @@ When I click on "Individual View"
 Then I select first Veteran
 Then I see the same SSN and VeteranID displayed on top of page for first veteran
 Then I select Another Veteran
+Then I should wait for twenty seconds
 Then I see the same SSN and VeteranID displayed on top of page for another veteran
 And I click on "Logout" button
