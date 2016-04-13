@@ -98,23 +98,7 @@ a{
     padding: 10px 0px 1px;
     margin: 0 -15px 5px;
 }
-.hr-text::before {
-  content: "High Risk Flag Information";
-  font-weight: bold;
-}
-.sp-text::before {
-  content: "Safety Plan Information";
-  font-weight: bold;
-}
-.mh-text::before {
-  content: "Mental Health Provider Information";
-  font-weight: bold;
-}
-.comment-text::before {
-  content: "General Notes";
-  font-weight: bold;
-  padding-left:9px;
-}
+
 .hidden {
     display: none;
 }
