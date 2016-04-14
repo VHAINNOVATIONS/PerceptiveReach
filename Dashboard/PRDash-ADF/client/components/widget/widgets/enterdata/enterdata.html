@@ -9,13 +9,13 @@
             <div class="col-md-6" ng-attr-title="{{data.HighRisk_UserNotes[hrIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}">
               <label style="font-weight:normal">User Notes:</label>
               <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
-                <button type="button" name="hrBack" title="Previous High Risk Info." class="btn btn-default pull-left" ng-disabled="hrIndex >= data.HighRisk_UserNotes.length-1" ng-click="goHrBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
+                <button type="button" name="hrBack" title="Previous High Risk Info." class="btn btn-default pull-left" ng-disabled="hrIndex >= data.HighRisk_UserNotes.length-1" ng-click="goHrBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>Previous High Risk Info.
                 </button>
                 <div class="pull-left">
                   <input type="text" ng-keypress="jumpTo($event,'hr')" class="enterDataNumInput" ng-model="hrIndex"></input>
                 </div>
                 <button type="button" name="hrFwd" title="Next High Risk Info." class="btn btn-default pull-left" ng-disabled="hrIndex === 0" ng-click="goHrForward()"><i class="glyphicon glyphicon-arrow-right" 
-                  style="font-size:13px;width: 18px;"></i>
+                  style="font-size:13px;width: 18px;"></i>Next High Risk Info.
                 </button>
               </div><br/>
               <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="hrText" name="highRiskTxt" ng-change="enterDataChanged()" ng-class="{enterDataDirty: enterWdgtForm.highRiskTxt.$dirty && enterWdgtForm.highRiskTxt.$valid}" id="hrText" maxlength="128"></textarea>
@@ -23,13 +23,13 @@
             <div class="col-md-6" ng-attr-title="{{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated | date:'MM/dd/yyyy @ h:mma'}}">
               <label style="font-weight:normal">SPAN Records:</label>
               <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
-                <button type="button" name="hrSpanBack" title="Previous High Risk Span Info." class="btn btn-default pull-left" ng-disabled="hrSpanIndex >= data.HighRisk_SPANImport.length-1" ng-click="goHrSpanBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
+                <button type="button" name="hrSpanBack" title="Previous High Risk Span Info." class="btn btn-default pull-left" ng-disabled="hrSpanIndex >= data.HighRisk_SPANImport.length-1" ng-click="goHrSpanBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>Previous High Risk Span Info.
                 </button>
                 <div class="pull-left">
                   <input type="text" ng-keypress="jumpTo($event,'hrspan')" class="enterDataNumInput" ng-model="hrSpanIndex"></input>
                 </div>
                 <button type="button" name="hrSpanFwd" title="Next High Risk Span Info." class="btn btn-default pull-left" ng-disabled="hrSpanIndex === 0" ng-click="goHrSpanForward()"><i class="glyphicon glyphicon-arrow-right"
-                  style="font-size:13px;width: 18px;"></i>
+                  style="font-size:13px;width: 18px;"></i>Next High Risk Span Info.
                 </button>
               </div>
               <div class="col-md-12 enterDataBox" style="background-color:#e6e6e6;">
@@ -48,12 +48,12 @@
             <div class="col-md-6" ng-attr-title="{{data.PrimaryHealthProvider_UserNotes[mhIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}">
               <label style="font-weight:normal">User Notes:</label>
               <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
-                <button type="button" name="mhBack" title="Previous Mental Health Provider Info." class="btn btn-default pull-left" ng-disabled="mhIndex >= data.PrimaryHealthProvider_UserNotes.length-1" ng-click="goMhBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
+                <button type="button" name="mhBack" title="Previous Mental Health Provider Info." class="btn btn-default pull-left" ng-disabled="mhIndex >= data.PrimaryHealthProvider_UserNotes.length-1" ng-click="goMhBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>Previous Mental Health Provider Info.
                 </button>
                 <div class="pull-left">
                   <input class="enterDataNumInput" type="text" ng-keypress="jumpTo($event,'mh')" ng-change="mhIndexChange(mhIndex)" ng-model="mhIndex"></input>
                 </div>
-                <button type="button" name="mhFwd" title="Next Mental Health Provider Info." class="btn btn-default pull-left" ng-disabled="mhIndex === 0" ng-click="goMhForward()"><i class="glyphicon glyphicon-arrow-right"  style="font-size:13px;width: 18px;"></i>
+                <button type="button" name="mhFwd" title="Next Mental Health Provider Info." class="btn btn-default pull-left" ng-disabled="mhIndex === 0" ng-click="goMhForward()"><i class="glyphicon glyphicon-arrow-right"  style="font-size:13px;width: 18px;"></i>Next Mental Health Provider Info.
                 </button>
               </div><br/>
               <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="mhText" name="mentalProviderTxt" ng-class="{enterDataDirty: enterWdgtForm.mentalProviderTxt.$dirty && enterWdgtForm.mentalProviderTxt.$valid}" id="mhText" ng-change="enterDataChanged()" maxlength="128"></textarea>
@@ -75,13 +75,13 @@
           <div class="col-md-6" ng-attr-title="{{data.SafetyPlan_UserNotes[spIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}">
             <label style="font-weight:normal">User Notes:</label>
             <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
-              <button type="button" name="spBack" title="Previous Safety Plan Info." class="btn btn-default pull-left" ng-disabled="spIndex >= data.SafetyPlan_UserNotes.length-1" ng-click="goSpBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
+              <button type="button" name="spBack" title="Previous Safety Plan Info." class="btn btn-default pull-left" ng-disabled="spIndex >= data.SafetyPlan_UserNotes.length-1" ng-click="goSpBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>Previous Safety Plan Info.
               </button>
               <div class="pull-left">
                 <input type="text" ng-keypress="jumpTo($event,'sp')" class="enterDataNumInput" ng-model="spIndex"></input>
               </div>
               <button type="button" name="spFwd" title="Next Safety Plan Info." class="btn btn-default pull-left" ng-disabled="spIndex === 0" ng-click="goSpForward()"><i class="glyphicon glyphicon-arrow-right" 
-                style="font-size:13px;width: 18px;"></i>
+                style="font-size:13px;width: 18px;"></i>Next Safety Plan Info.
               </button>
             </div><br>
             <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="spText" name="safetyPlanTxt" ng-class="{enterDataDirty: enterWdgtForm.safetyPlanTxt.$dirty && enterWdgtForm.safetyPlanTxt.$valid}" ng-change="enterDataChanged()" id="spText" maxlength="128"></textarea>
@@ -90,12 +90,12 @@
           ng-attr-title="{{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated | date:'MM/dd/yyyy @ h:mma'}}">
           <label style="font-weight:normal">VistA Records:</label>
           <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
-            <button type="button" name="spSpanBack" title="Previous Safety Plan VistA Info." class="btn btn-default pull-left" ng-disabled="spSpanIndex >= data.SafetyPlan_SPANImport.length-1" ng-click="goSpSpanBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
+            <button type="button" name="spSpanBack" title="Previous Safety Plan VistA Info." class="btn btn-default pull-left" ng-disabled="spSpanIndex >= data.SafetyPlan_SPANImport.length-1" ng-click="goSpSpanBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>Previous Safety Plan VistA Info.
             </button>
             <div class="pull-left">
               <input type="text" ng-keypress="jumpTo($event,'spspan')" class="enterDataNumInput" ng-model="spSpanIndex"></input>
             </div>
-            <button type="button" name="spSpanFwd" title="Next Safety Plan VistA Info." class="btn btn-default pull-left" ng-disabled="spSpanIndex === 0" ng-click="goSpSpanForward()"><i class="glyphicon glyphicon-arrow-right" style="font-size:13px;width: 18px;"></i>
+            <button type="button" name="spSpanFwd" title="Next Safety Plan VistA Info." class="btn btn-default pull-left" ng-disabled="spSpanIndex === 0" ng-click="goSpSpanForward()"><i class="glyphicon glyphicon-arrow-right" style="font-size:13px;width: 18px;"></i>Next Safety Plan VistA Info.
             </button>
           </div>
           <div class="col-md-12 enterDataBox" style="background-color:#e6e6e6;">
@@ -112,12 +112,12 @@
      <div class="panel-body">
        <div class="col-md-12" ng-attr-title="{{data.GeneralComments[commentIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}">
          <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
-          <button type="button" name="commentBack" title="Previous Comments" class="btn btn-default pull-left" ng-disabled="commentIndex >= data.GeneralComments.length-1" ng-click="goCommentBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>
+          <button type="button" name="commentBack" title="Previous Comments" class="btn btn-default pull-left" ng-disabled="commentIndex >= data.GeneralComments.length-1" ng-click="goCommentBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>Previous Comments
           </button>
           <div class="pull-left">
             <input type="text" ng-keypress="jumpTo($event,'comment')" class="enterDataNumInput" ng-model="commentIndex"></input>
           </div>
-          <button type="button" name="commentFwd" title="Next Comments" class="btn btn-default pull-left" ng-disabled="commentIndex === 0" ng-click="goCommentForward()"><i class="glyphicon glyphicon-arrow-right" style="font-size:13px;width: 18px;"></i>
+          <button type="button" name="commentFwd" title="Next Comments" class="btn btn-default pull-left" ng-disabled="commentIndex === 0" ng-click="goCommentForward()"><i class="glyphicon glyphicon-arrow-right" style="font-size:13px;width: 18px;"></i>Next Comments
           </button>
         </div>
         <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="commentText" name="commentTxt" ng-class="{enterDataDirty: enterWdgtForm.commentTxt.$dirty && enterWdgtForm.commentTxt.$valid}" ng-change="enterDataChanged()" id="commentText"></textarea>
