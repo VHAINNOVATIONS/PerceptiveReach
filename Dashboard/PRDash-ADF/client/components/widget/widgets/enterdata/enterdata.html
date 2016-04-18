@@ -18,7 +18,7 @@
                   style="font-size:13px;width: 18px;"></i>Next High Risk Info.
                 </button>
               </div><br/>
-              <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="hrText" name="highRiskTxt" ng-change="enterDataChanged()" ng-class="{enterDataDirty: enterWdgtForm.highRiskTxt.$dirty && enterWdgtForm.highRiskTxt.$valid}" id="hrText" maxlength="128"></textarea>
+              <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="hrText" name="highRiskTxt" ng-change="enterDataChanged()" ng-class="{enterDataDirty: enterWdgtForm.highRiskTxt.$dirty && enterWdgtForm.highRiskTxt.$valid}" id="hrText" maxlength="128" title="High Risk Flag Information"></textarea>
             </div>
             <div class="col-md-6" ng-attr-title="{{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated | date:'MM/dd/yyyy @ h:mma'}}">
               <label style="font-weight:normal">SPAN Records:</label>
@@ -56,7 +56,7 @@
                 <button type="button" name="mhFwd" title="Next Mental Health Provider Info." class="btn btn-default pull-left" ng-disabled="mhIndex === 0" ng-click="goMhForward()"><i class="glyphicon glyphicon-arrow-right"  style="font-size:13px;width: 18px;"></i>Next Mental Health Provider Info.
                 </button>
               </div><br/>
-              <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="mhText" name="mentalProviderTxt" ng-class="{enterDataDirty: enterWdgtForm.mentalProviderTxt.$dirty && enterWdgtForm.mentalProviderTxt.$valid}" id="mhText" ng-change="enterDataChanged()" maxlength="128"></textarea>
+              <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="mhText" name="mentalProviderTxt" ng-class="{enterDataDirty: enterWdgtForm.mentalProviderTxt.$dirty && enterWdgtForm.mentalProviderTxt.$valid}" id="mhText" ng-change="enterDataChanged()" maxlength="128" title="Mental Health Provider Information"></textarea>
             </div>
             <div class="col-md-6"> 
               <label style="font-weight:normal">VistA Records:</label>
@@ -84,7 +84,7 @@
                 style="font-size:13px;width: 18px;"></i>Next Safety Plan Info.
               </button>
             </div><br>
-            <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="spText" name="safetyPlanTxt" ng-class="{enterDataDirty: enterWdgtForm.safetyPlanTxt.$dirty && enterWdgtForm.safetyPlanTxt.$valid}" ng-change="enterDataChanged()" id="spText" maxlength="128"></textarea>
+            <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="spText" name="safetyPlanTxt" ng-class="{enterDataDirty: enterWdgtForm.safetyPlanTxt.$dirty && enterWdgtForm.safetyPlanTxt.$valid}" ng-change="enterDataChanged()" id="spText" maxlength="128" title="Safety Plan Information"></textarea>
           </div>
           <div class="col-md-6" 
           ng-attr-title="{{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated | date:'MM/dd/yyyy @ h:mma'}}">
@@ -120,7 +120,7 @@
           <button type="button" name="commentFwd" title="Next Comments" class="btn btn-default pull-left" ng-disabled="commentIndex === 0" ng-click="goCommentForward()"><i class="glyphicon glyphicon-arrow-right" style="font-size:13px;width: 18px;"></i>Next Comments
           </button>
         </div>
-        <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="commentText" name="commentTxt" ng-class="{enterDataDirty: enterWdgtForm.commentTxt.$dirty && enterWdgtForm.commentTxt.$valid}" ng-change="enterDataChanged()" id="commentText"></textarea>
+        <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="commentText" name="commentTxt" ng-class="{enterDataDirty: enterWdgtForm.commentTxt.$dirty && enterWdgtForm.commentTxt.$valid}" ng-change="enterDataChanged()" id="commentText" title="General Notes"></textarea>
       </div>
     </div>
   </div>
