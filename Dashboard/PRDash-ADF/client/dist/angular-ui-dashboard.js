@@ -1409,9 +1409,10 @@ angular.module('ui.dashboard')
         }
 
         var serialized = _.map(widgets, function (widget) {
-          var w = widget.serialize();
-          if(typeof w.dataModelOptions !== 'undefined' && typeof w.dataModelOptions.common !== 'undefined'
-            && typeof w.dataModelOptions.common.data.veteranObj.OutreachStatus !== 'undefined')
+          var temp = widget.serialize();
+          var w = $.extend( true, {}, temp );
+          if(_.has(w,"dataModelOptions") && _.has(w.dataModelOptions,"common") && _.has(w.dataModelOptions.common,"data") 
+            && _.has(w.dataModelOptions.common.data,"veteranObj") && _.has(w.dataModelOptions.common.data.veteranObj,"OutreachStatus"))
           {
             delete w.dataModelOptions.common.data.veteranObj.OutreachStatus;
           }
