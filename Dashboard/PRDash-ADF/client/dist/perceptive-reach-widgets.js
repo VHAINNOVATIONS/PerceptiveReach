@@ -2620,15 +2620,15 @@ angular.module('ui.widgets')
       controller: function ($scope) {
         $scope.GotoQuestions =  function () {
           $scope.filteredQuestions = [];
-          $('#cdsConditionDiv input:checkbox:checked').each(function(){
-            var conditionId = $(this).attr('name').replace('chkbx_','');
+          $('#cdsConditionDiv input:radio:checked').each(function(){
+            var conditionId = $(this).attr('id').replace('Condition_','');
+            var conditionName = $(this).attr('name');
+
             var filteredQs= jQuery.grep($scope.data.questions, function( n, i ) {
-                                  var isAlreadyAdded = $.grep($scope.filteredQuestions, function (elem) {
-                                                          return elem.Question === n.Question;
-                                                      }).length > 0;
-                                  return (!isAlreadyAdded  && n.Condition_ID == conditionId );
-                          });
-            $.merge($scope.filteredQuestions,filteredQs);
+                                  return n.Condition_ID == conditionId ;
+                            });
+            var arrayItem = {ConditionName: conditionName, Questions: filteredQs};
+            $scope.filteredQuestions.push(arrayItem);
           });
           $('#cdsConditionDiv').toggleClass('hidden');
           $('#cdsQuestionDiv').toggleClass('hidden');
@@ -2637,19 +2637,43 @@ angular.module('ui.widgets')
         $scope.GotoTreatments  =  function () {
           $scope.filteredTreatments = [];
           $('#cdsQuestionDiv .cdsUIList button').each(function(){
+             var questionId = $(this).attr('id').replace('question_','');
+             var conditionName = $(this).attr('name');
+             var filterTrtmnts = [];
+
              if($(this).find('span:first').text() == 'Yes')
-             {
-               var questionId = $(this).attr('name').replace('question_','');
-               var filterTrtmnts = jQuery.grep($scope.data.treatments, function( n, i ) {
-                                      var isAlreadyAdded = $.grep($scope.filteredTreatments, function (elem) {
-                                          return elem.Treatment === n.Treatment;
-                                      }).length > 0;
-                                      return ( !isAlreadyAdded  && n.Question_ID == questionId);
+             { 
+               filterTrtmnts = jQuery.grep($scope.data.treatments, function( n, i ) {
+                                      return  n.Question_ID == questionId && n.Response_ID == 2;
                                    });
-               $.merge($scope.filteredTreatments,filterTrtmnts);
+             }
+             else if($(this).find('span:first').text() == 'No')
+             { 
+               filterTrtmnts = jQuery.grep($scope.data.treatments, function( n, i ) {
+                                      return n.Question_ID == questionId && n.Response_ID == 3;
+                                });
+             }
+             var arrayItem = {ConditionName: conditionName, Treatments: filterTrtmnts};
+
+             if(filterTrtmnts.length > 0){
+                var ExistingNode = $.grep($scope.filteredTreatments,function(n,i){
+                  if(n.ConditionName == arrayItem.ConditionName)
+                  {
+                    return true;
+                  }
+                  return false;
+                });
+
+                if(ExistingNode.length > 0)
+                {
+                  ExistingNode[0].Treatments.push(filterTrtmnts[0]);
+                }
+                else
+                {
+                $scope.filteredTreatments.push(arrayItem);
+                }
              }
           })
-
           $('#cdsQuestionDiv').toggleClass('hidden');
           $('#cdsTreatmentDiv').toggleClass('hidden');
         }
@@ -2675,8 +2699,8 @@ angular.module('ui.widgets')
           return false;
         } 
 
-        $scope.ChkbxClicked = function(){
-          if($('#cdsConditionDiv input:checkbox:checked').length > 0)
+        $scope.RadioBtnClicked = function(){
+          if($('#cdsConditionDiv input:radio:checked').length > 0)
           {
             $scope.IsChecked = true;
           }
@@ -2687,6 +2711,11 @@ angular.module('ui.widgets')
         }
 
         $scope.IsChecked = false;
+
+        $scope.ResetQuestions = function(){
+          $('#cdsConditionDiv input:radio').attr('checked',false);
+          $scope.IsChecked = false;          
+        }
 
       },
      link: function postLink(scope, element, attr) {
@@ -5815,17 +5844,37 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "              <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
     "\n" +
-    "                <label ng-repeat=\"condition in data.conditions\" style=\"display:block;\">\r" +
+    "                \r" +
     "\n" +
-    "                      <input type=\"checkbox\" ng-click=\"ChkbxClicked()\" name=\"chkbx_{{condition.Condition_ID}}\"> {{condition.Condition}}\r" +
+    "              <div ng-repeat=\"condition in data.conditions\">\r" +
     "\n" +
-    "                </label>\r" +
+    "                <div ng-if=\"$index == 0 || $index != 0 && data.conditions[$index].Condition != data.conditions[$index-1].Condition\">\r" +
+    "\n" +
+    "                  <hr style=\"margin-top:5px;margin-bottom: 0px\"/>\r" +
+    "\n" +
+    "                  <label style=\"margin:0px\">\r" +
+    "\n" +
+    "                      {{condition.Condition}}\r" +
+    "\n" +
+    "                  </label>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div>\r" +
+    "\n" +
+    "                  <input id=\"Condition_{{condition.Condition_ID}}\" ng-click=\"RadioBtnClicked()\" name=\"{{condition.Condition}}\" type=\"radio\" /> {{condition.Condition_SubQuestion}}\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "              </div>\r" +
     "\n" +
     "              </div>\r" +
     "\n" +
     "              <div style=\"height:40px;padding:5px;\">\r" +
     "\n" +
-    "                 <button ng-click=\"GotoQuestions()\" alt=\"Next(Questions)\" title=\"Next(Questions)\" ng-disabled=\"!IsChecked\" class=\"btn btn-primary pull-right\">Next</button>\r" +
+    "                <button ng-click=\"ResetQuestions()\" alt=\"Reset Questions\" title=\"Reset Questions\" ng-disabled=\"!IsChecked\"  class=\"btn btn-primary pull-left\">Reset Selection</button>\r" +
+    "\n" +
+    "                <button ng-click=\"GotoQuestions()\" alt=\"Next(Questions)\" title=\"Next(Questions)\" ng-disabled=\"!IsChecked\" class=\"btn btn-primary pull-right\">Next</button>\r" +
     "\n" +
     "              </div>\r" +
     "\n" +
@@ -5837,19 +5886,29 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <div id=\"cdsQuestionDiv\" class=\"hidden\">\r" +
     "\n" +
-    "       <legend>Question(s):</legend>\r" +
+    "      <legend>Question(s):</legend>\r" +
     "\n" +
-    "       <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
+    "      <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
     "\n" +
-    "         <div ng-repeat=\"question in filteredQuestions\">\r" +
+    "          <div ng-repeat=\"question in filteredQuestions\">\r" +
     "\n" +
-    "            <label>{{$index+1}}. {{question.Question}}  </label>\r" +
+    "              <hr style=\"margin-top:5px;margin-bottom: 0px\"/>\r" +
     "\n" +
-    "             <div class=\"dropdown\">\r" +
+    "              <label>\r" +
+    "\n" +
+    "                  {{question.ConditionName}}\r" +
+    "\n" +
+    "              </label>\r" +
+    "\n" +
+    "              <div ng-repeat=\"q in question.Questions\">\r" +
+    "\n" +
+    "                <label style=\"font-weight: normal;\">{{$index+1}}. {{q.Question}}  </label>\r" +
+    "\n" +
+    "                <div class=\"dropdown\">\r" +
     "\n" +
     "                    <button class=\"btn btn-default\"\r" +
     "\n" +
-    "                            data-toggle=\"dropdown\" name=\"question_{{question.Question_ID}}\">\r" +
+    "                            data-toggle=\"dropdown\" id=\"question_{{q.Question_ID}}\" name=\"{{question.ConditionName}}\">\r" +
     "\n" +
     "                        <span>Select</span>\r" +
     "\n" +
@@ -5867,9 +5926,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    </ul>\r" +
     "\n" +
+    "                </div>\r" +
+    "\n" +
     "              </div>\r" +
     "\n" +
-    "         </div>\r" +
+    "          </div>\r" +
     "\n" +
     "      </div>\r" +
     "\n" +
@@ -5891,11 +5952,19 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
     "\n" +
-    "          <div ng-repeat=\"treatment in filteredTreatments\">\r" +
+    "          <div ng-repeat=\"t in filteredTreatments\">\r" +
     "\n" +
-    "            <label>{{$index+1}}. {{treatment.Treatment}}</label>\r" +
+    "            <hr style=\"margin-top:5px;margin-bottom: 0px\"/>\r" +
     "\n" +
-    "          </div>\r" +
+    "            <label>{{$index+1}}. {{t.ConditionName}}</label>\r" +
+    "\n" +
+    "            <div ng-repeat=\"treatment in t.Treatments\">\r" +
+    "\n" +
+    "              <label style=\"font-weight:normal;\">{{treatment.Treatment}}</label>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>  \r" +
     "\n" +
     "        </div>\r" +
     "\n" +

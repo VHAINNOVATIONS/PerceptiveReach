@@ -48,24 +48,39 @@
                 Please choose the specific symptoms, diagnoses, or conditions the Veteran is facing.  After all selections have been made please press <strong>‘Next’</strong>.
               </fieldset>
               <div class="cdsUIList" style="margin:10px;padding:5px;overflow-y:scroll;">
-                <label ng-repeat="condition in data.conditions" style="display:block;">
-                      <input type="checkbox" ng-click="ChkbxClicked()" name="chkbx_{{condition.Condition_ID}}"> {{condition.Condition}}
-                </label>
+                
+              <div ng-repeat="condition in data.conditions">
+                <div ng-if="$index == 0 || $index != 0 && data.conditions[$index].Condition != data.conditions[$index-1].Condition">
+                  <hr style="margin-top:5px;margin-bottom: 0px"/>
+                  <label style="margin:0px">
+                      {{condition.Condition}}
+                  </label>
+                </div>
+                <div>
+                  <input id="Condition_{{condition.Condition_ID}}" ng-click="RadioBtnClicked()" name="{{condition.Condition}}" type="radio" /> {{condition.Condition_SubQuestion}}
+                </div>
+              </div>
               </div>
               <div style="height:40px;padding:5px;">
-                 <button ng-click="GotoQuestions()" alt="Next(Questions)" title="Next(Questions)" ng-disabled="!IsChecked" class="btn btn-primary pull-right">Next</button>
+                <button ng-click="ResetQuestions()" alt="Reset Questions" title="Reset Questions" ng-disabled="!IsChecked"  class="btn btn-primary pull-left">Reset Selection</button>
+                <button ng-click="GotoQuestions()" alt="Next(Questions)" title="Next(Questions)" ng-disabled="!IsChecked" class="btn btn-primary pull-right">Next</button>
               </div>
         </div>
     </div>
 
     <div id="cdsQuestionDiv" class="hidden">
-       <legend>Question(s):</legend>
-       <div class="cdsUIList" style="margin:10px;padding:5px;overflow-y:scroll;">
-         <div ng-repeat="question in filteredQuestions">
-            <label>{{$index+1}}. {{question.Question}}  </label>
-             <div class="dropdown">
+      <legend>Question(s):</legend>
+      <div class="cdsUIList" style="margin:10px;padding:5px;overflow-y:scroll;">
+          <div ng-repeat="question in filteredQuestions">
+              <hr style="margin-top:5px;margin-bottom: 0px"/>
+              <label>
+                  {{question.ConditionName}}
+              </label>
+              <div ng-repeat="q in question.Questions">
+                <label style="font-weight: normal;">{{$index+1}}. {{q.Question}}  </label>
+                <div class="dropdown">
                     <button class="btn btn-default"
-                            data-toggle="dropdown" name="question_{{question.Question_ID}}">
+                            data-toggle="dropdown" id="question_{{q.Question_ID}}" name="{{question.ConditionName}}">
                         <span>Select</span>
                         <span class="caret"></span>
                     </button>
@@ -74,8 +89,9 @@
                         <li ng-click="AnswerSelected($event)"><a href="#">No</a></li>
                         <li ng-click="AnswerSelected($event)"><a href="#">N/A</a></li>
                     </ul>
+                </div>
               </div>
-         </div>
+          </div>
       </div>
        <div style="height:40px;padding:5px;">
           <button ng-click="BacktoConditions()" alt="Back(Conditions)" title="Back(Conditions)" class="btn btn-primary pull-left" >Back</button>
@@ -86,9 +102,13 @@
     <div id="cdsTreatmentDiv" class="hidden">
         <legend>Treatment(s):</legend>
         <div class="cdsUIList" style="margin:10px;padding:5px;overflow-y:scroll;">
-          <div ng-repeat="treatment in filteredTreatments">
-            <label>{{$index+1}}. {{treatment.Treatment}}</label>
-          </div>
+          <div ng-repeat="t in filteredTreatments">
+            <hr style="margin-top:5px;margin-bottom: 0px"/>
+            <label>{{$index+1}}. {{t.ConditionName}}</label>
+            <div ng-repeat="treatment in t.Treatments">
+              <label style="font-weight:normal;">{{treatment.Treatment}}</label>
+            </div>
+          </div>  
         </div>
         <div style="height:40px;padding:5px;">
           <button ng-click="BacktoQuestions()" alt="Back(Questions)" title="Back(Questions)" class="btn btn-primary pull-left">Back</button>

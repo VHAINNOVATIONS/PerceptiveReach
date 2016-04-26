@@ -28,15 +28,15 @@ angular.module('ui.widgets')
       controller: function ($scope) {
         $scope.GotoQuestions =  function () {
           $scope.filteredQuestions = [];
-          $('#cdsConditionDiv input:checkbox:checked').each(function(){
-            var conditionId = $(this).attr('name').replace('chkbx_','');
+          $('#cdsConditionDiv input:radio:checked').each(function(){
+            var conditionId = $(this).attr('id').replace('Condition_','');
+            var conditionName = $(this).attr('name');
+
             var filteredQs= jQuery.grep($scope.data.questions, function( n, i ) {
-                                  var isAlreadyAdded = $.grep($scope.filteredQuestions, function (elem) {
-                                                          return elem.Question === n.Question;
-                                                      }).length > 0;
-                                  return (!isAlreadyAdded  && n.Condition_ID == conditionId );
-                          });
-            $.merge($scope.filteredQuestions,filteredQs);
+                                  return n.Condition_ID == conditionId ;
+                            });
+            var arrayItem = {ConditionName: conditionName, Questions: filteredQs};
+            $scope.filteredQuestions.push(arrayItem);
           });
           $('#cdsConditionDiv').toggleClass('hidden');
           $('#cdsQuestionDiv').toggleClass('hidden');
@@ -45,19 +45,43 @@ angular.module('ui.widgets')
         $scope.GotoTreatments  =  function () {
           $scope.filteredTreatments = [];
           $('#cdsQuestionDiv .cdsUIList button').each(function(){
+             var questionId = $(this).attr('id').replace('question_','');
+             var conditionName = $(this).attr('name');
+             var filterTrtmnts = [];
+
              if($(this).find('span:first').text() == 'Yes')
-             {
-               var questionId = $(this).attr('name').replace('question_','');
-               var filterTrtmnts = jQuery.grep($scope.data.treatments, function( n, i ) {
-                                      var isAlreadyAdded = $.grep($scope.filteredTreatments, function (elem) {
-                                          return elem.Treatment === n.Treatment;
-                                      }).length > 0;
-                                      return ( !isAlreadyAdded  && n.Question_ID == questionId);
+             { 
+               filterTrtmnts = jQuery.grep($scope.data.treatments, function( n, i ) {
+                                      return  n.Question_ID == questionId && n.Response_ID == 2;
                                    });
-               $.merge($scope.filteredTreatments,filterTrtmnts);
+             }
+             else if($(this).find('span:first').text() == 'No')
+             { 
+               filterTrtmnts = jQuery.grep($scope.data.treatments, function( n, i ) {
+                                      return n.Question_ID == questionId && n.Response_ID == 3;
+                                });
+             }
+             var arrayItem = {ConditionName: conditionName, Treatments: filterTrtmnts};
+
+             if(filterTrtmnts.length > 0){
+                var ExistingNode = $.grep($scope.filteredTreatments,function(n,i){
+                  if(n.ConditionName == arrayItem.ConditionName)
+                  {
+                    return true;
+                  }
+                  return false;
+                });
+
+                if(ExistingNode.length > 0)
+                {
+                  ExistingNode[0].Treatments.push(filterTrtmnts[0]);
+                }
+                else
+                {
+                $scope.filteredTreatments.push(arrayItem);
+                }
              }
           })
-
           $('#cdsQuestionDiv').toggleClass('hidden');
           $('#cdsTreatmentDiv').toggleClass('hidden');
         }
@@ -83,8 +107,8 @@ angular.module('ui.widgets')
           return false;
         } 
 
-        $scope.ChkbxClicked = function(){
-          if($('#cdsConditionDiv input:checkbox:checked').length > 0)
+        $scope.RadioBtnClicked = function(){
+          if($('#cdsConditionDiv input:radio:checked').length > 0)
           {
             $scope.IsChecked = true;
           }
@@ -95,6 +119,11 @@ angular.module('ui.widgets')
         }
 
         $scope.IsChecked = false;
+
+        $scope.ResetQuestions = function(){
+          $('#cdsConditionDiv input:radio').attr('checked',false);
+          $scope.IsChecked = false;          
+        }
 
       },
      link: function postLink(scope, element, attr) {

@@ -101,17 +101,37 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "              <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
     "\n" +
-    "                <label ng-repeat=\"condition in data.conditions\" style=\"display:block;\">\r" +
+    "                \r" +
     "\n" +
-    "                      <input type=\"checkbox\" ng-click=\"ChkbxClicked()\" name=\"chkbx_{{condition.Condition_ID}}\"> {{condition.Condition}}\r" +
+    "              <div ng-repeat=\"condition in data.conditions\">\r" +
     "\n" +
-    "                </label>\r" +
+    "                <div ng-if=\"$index == 0 || $index != 0 && data.conditions[$index].Condition != data.conditions[$index-1].Condition\">\r" +
+    "\n" +
+    "                  <hr style=\"margin-top:5px;margin-bottom: 0px\"/>\r" +
+    "\n" +
+    "                  <label style=\"margin:0px\">\r" +
+    "\n" +
+    "                      {{condition.Condition}}\r" +
+    "\n" +
+    "                  </label>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div>\r" +
+    "\n" +
+    "                  <input id=\"Condition_{{condition.Condition_ID}}\" ng-click=\"RadioBtnClicked()\" name=\"{{condition.Condition}}\" type=\"radio\" /> {{condition.Condition_SubQuestion}}\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "              </div>\r" +
     "\n" +
     "              </div>\r" +
     "\n" +
     "              <div style=\"height:40px;padding:5px;\">\r" +
     "\n" +
-    "                 <button ng-click=\"GotoQuestions()\" alt=\"Next(Questions)\" title=\"Next(Questions)\" ng-disabled=\"!IsChecked\" class=\"btn btn-primary pull-right\">Next</button>\r" +
+    "                <button ng-click=\"ResetQuestions()\" alt=\"Reset Questions\" title=\"Reset Questions\" ng-disabled=\"!IsChecked\"  class=\"btn btn-primary pull-left\">Reset Selection</button>\r" +
+    "\n" +
+    "                <button ng-click=\"GotoQuestions()\" alt=\"Next(Questions)\" title=\"Next(Questions)\" ng-disabled=\"!IsChecked\" class=\"btn btn-primary pull-right\">Next</button>\r" +
     "\n" +
     "              </div>\r" +
     "\n" +
@@ -123,19 +143,29 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <div id=\"cdsQuestionDiv\" class=\"hidden\">\r" +
     "\n" +
-    "       <legend>Question(s):</legend>\r" +
+    "      <legend>Question(s):</legend>\r" +
     "\n" +
-    "       <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
+    "      <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
     "\n" +
-    "         <div ng-repeat=\"question in filteredQuestions\">\r" +
+    "          <div ng-repeat=\"question in filteredQuestions\">\r" +
     "\n" +
-    "            <label>{{$index+1}}. {{question.Question}}  </label>\r" +
+    "              <hr style=\"margin-top:5px;margin-bottom: 0px\"/>\r" +
     "\n" +
-    "             <div class=\"dropdown\">\r" +
+    "              <label>\r" +
+    "\n" +
+    "                  {{question.ConditionName}}\r" +
+    "\n" +
+    "              </label>\r" +
+    "\n" +
+    "              <div ng-repeat=\"q in question.Questions\">\r" +
+    "\n" +
+    "                <label style=\"font-weight: normal;\">{{$index+1}}. {{q.Question}}  </label>\r" +
+    "\n" +
+    "                <div class=\"dropdown\">\r" +
     "\n" +
     "                    <button class=\"btn btn-default\"\r" +
     "\n" +
-    "                            data-toggle=\"dropdown\" name=\"question_{{question.Question_ID}}\">\r" +
+    "                            data-toggle=\"dropdown\" id=\"question_{{q.Question_ID}}\" name=\"{{question.ConditionName}}\">\r" +
     "\n" +
     "                        <span>Select</span>\r" +
     "\n" +
@@ -153,9 +183,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    </ul>\r" +
     "\n" +
+    "                </div>\r" +
+    "\n" +
     "              </div>\r" +
     "\n" +
-    "         </div>\r" +
+    "          </div>\r" +
     "\n" +
     "      </div>\r" +
     "\n" +
@@ -177,11 +209,19 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
     "\n" +
-    "          <div ng-repeat=\"treatment in filteredTreatments\">\r" +
+    "          <div ng-repeat=\"t in filteredTreatments\">\r" +
     "\n" +
-    "            <label>{{$index+1}}. {{treatment.Treatment}}</label>\r" +
+    "            <hr style=\"margin-top:5px;margin-bottom: 0px\"/>\r" +
     "\n" +
-    "          </div>\r" +
+    "            <label>{{$index+1}}. {{t.ConditionName}}</label>\r" +
+    "\n" +
+    "            <div ng-repeat=\"treatment in t.Treatments\">\r" +
+    "\n" +
+    "              <label style=\"font-weight:normal;\">{{treatment.Treatment}}</label>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>  \r" +
     "\n" +
     "        </div>\r" +
     "\n" +
