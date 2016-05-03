@@ -45,7 +45,7 @@ angular.module('ui.widgets')
             .withOption('paging',false)
             .withDOM('frtip')
             .withButtons([
-                { extend: 'csv', text: 'Export' }
+                { extend: 'csv', text: '<a class="glyphicon glyphicon-export"></a>' }
             ]);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Name').withTitle('Name'),

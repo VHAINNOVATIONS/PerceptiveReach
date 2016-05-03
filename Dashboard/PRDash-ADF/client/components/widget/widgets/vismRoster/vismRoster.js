@@ -45,11 +45,8 @@ angular.module('ui.widgets')
             .withOption('scrollY', 200)
             .withOption('paging',false)
             .withOption('bDestroy',true)
-            .withOption('order', [0, 'asc'])
-            .withDOM('frtip')
-            .withButtons([
-                { extend: 'csv', text: 'Export' }
-            ]);
+            .withOption('order', [0, 'asc']);
+            
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
             DTColumnBuilder.newColumn('NetworkName').withTitle('Network Name'),
