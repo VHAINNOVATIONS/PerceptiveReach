@@ -3250,11 +3250,7 @@ angular.module('ui.widgets')
             .withOption('scrollY', 200)
             .withOption('paging',false)
             .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc'])
-            .withDOM('frtip')
-            .withButtons([
-                { extend: 'csv', text: 'Export' }
-            ]);
+            .withOption('order', [1, 'desc']);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('STA3N').withTitle('VAMC'),
             DTColumnBuilder.newColumn('VAMC_Name').withTitle('VAMC Name'),
@@ -4004,11 +4000,7 @@ angular.module('ui.widgets')
             .withOption('scrollY', 200)
             .withOption('paging',false)
             .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc'])
-            .withDOM('frtip')
-            .withButtons([
-                { extend: 'csv', text: 'Export' }
-            ]);
+            .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('AgeRange').withTitle('Age Groups'),
@@ -4159,10 +4151,7 @@ angular.module('ui.widgets')
             // Do not forget to add the scrollY option!!!
             .withOption('paging',false)
             .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc'])
-            .withButtons([
-                { extend: 'csv', text: 'Export' }
-            ]);
+            .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
           DTColumnBuilder.newColumn('Gender').withTitle('Gender'),
@@ -4276,10 +4265,7 @@ angular.module('ui.widgets')
     .withOption('scrollY', 200)
 		.withOption('paging',false)
     .withOption('bDestroy',true)
-		.withOption('order', [1, 'desc'])
-    .withButtons([
-                { extend: 'csv', text: 'Export' }
-            ]);
+		.withOption('order', [1, 'desc']);
 	//.withPaginationType('full_numbers').withDisplayLength(5);
 	$scope.dtColumns = [
         DTColumnBuilder.newColumn('BranchDesc').withTitle('Branch'),
@@ -4393,10 +4379,7 @@ angular.module('ui.widgets')
             .withOption('scrollY', 200)
             .withOption('paging',false)
             .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc'])
-            .withButtons([
-                { extend: 'csv', text: 'Export' }
-            ]);
+            .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Status').withTitle('Outreach Status'),
@@ -4806,7 +4789,7 @@ angular.module('ui.widgets')
             .withOption('paging',false)
             .withDOM('frtip')
             .withButtons([
-                { extend: 'csv', text: 'Export' }
+                { extend: 'csv', text: '<a class="glyphicon glyphicon-export"></a>' }
             ]);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Name').withTitle('Name'),
@@ -5391,11 +5374,8 @@ angular.module('ui.widgets')
             .withOption('scrollY', 200)
             .withOption('paging',false)
             .withOption('bDestroy',true)
-            .withOption('order', [0, 'asc'])
-            .withDOM('frtip')
-            .withButtons([
-                { extend: 'csv', text: 'Export' }
-            ]);
+            .withOption('order', [0, 'asc']);
+            
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
             DTColumnBuilder.newColumn('NetworkName').withTitle('Network Name'),
