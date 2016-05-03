@@ -23,9 +23,9 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/patientTable/patientTable.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.patientList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
               return new Promise( function(resolve, reject){
@@ -42,7 +42,11 @@ angular.module('ui.widgets')
             // Do not forget to add the scorllY option!!!
             .withOption('scrollY', 200)
             .withOption('bDestroy',true)
-            .withOption('paging',false);
+            .withOption('paging',false)
+            .withDOM('frtip')
+            .withButtons([
+                { extend: 'csv', text: '<a class="glyphicon glyphicon-export"></a>' }
+            ]);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Name').withTitle('Name'),
             DTColumnBuilder.newColumn('SSN').withTitle('SSN'),
@@ -108,7 +112,7 @@ angular.module('ui.widgets')
             else{
               $('tr.selected').removeClass('selected');
               $(this).addClass('selected');
-              // get common data object
+              //get common data object
               var commonData = scope.widget.dataModelOptions.common;
               // update common data object with new patient object
               var vetId = event.currentTarget.cells[5].children[1].id.replace("vet_","");
@@ -116,9 +120,9 @@ angular.module('ui.widgets')
                 return ( n.ReachID == vetId );
               });
               console.log("ReachID Vet Selected: ",vetId);
-              delete obj[0].OutreachStatus;
+              //delete obj[0].OutreachStatus;
               commonData.data.veteranObj = obj[0];
-              commonData.data.veteranObj.OutreachStatus = $('#Outreach_' + vetId).text();
+              //commonData.data.veteranObj.OutreachStatus = $('#Outreach_' + vetId).text();
               console.log("CommonDataAfterClick: ", commonData);
               // broadcast message throughout system
               scope.$parent.$parent.$parent.$broadcast('commonDataChanged', commonData);
@@ -179,13 +183,9 @@ angular.module('ui.widgets')
                   else
                     resolve([]);
                 });
-            if(scope.dtInstance)
-              scope.dtInstance.changeData(promise);
-            else {
-              scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                dtInstances.tblPatient._renderer.changeData(promise)              
+            scope.dtInstance.changeData(function() {
+                  return promise;
               });
-            }
             
             $timeout(function(){
               $.fn.dataTable.ext.errMode = 'throw';

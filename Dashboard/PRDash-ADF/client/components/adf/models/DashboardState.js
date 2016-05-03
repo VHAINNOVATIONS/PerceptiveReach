@@ -41,7 +41,13 @@ angular.module('ui.dashboard')
         }
 
         var serialized = _.map(widgets, function (widget) {
-          var w = widget.serialize();
+          var temp = widget.serialize();
+          var w = $.extend( true, {}, temp );
+          if(_.has(w,"dataModelOptions") && _.has(w.dataModelOptions,"common") && _.has(w.dataModelOptions.common,"data") 
+            && _.has(w.dataModelOptions.common.data,"veteranObj") && _.has(w.dataModelOptions.common.data.veteranObj,"OutreachStatus"))
+          {
+            delete w.dataModelOptions.common.data.veteranObj.OutreachStatus;
+          }
           w.col = widget.col;
           w.row = widget.row;
           w.sizeX = widget.sizeX;
