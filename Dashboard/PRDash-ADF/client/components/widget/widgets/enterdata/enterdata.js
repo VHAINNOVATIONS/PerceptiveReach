@@ -19,7 +19,7 @@
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtEnterData', function () {
+  .directive('wtEnterData', function ($timeout) {
     return {
       restrict: 'A',
       replace: true,
@@ -320,10 +320,23 @@ angular.module('ui.widgets')
             $scope.common.data.EnterDataIsUnsaved = true
           };
 
+          $scope.resizeWidgetDataArea = function(){
+            var containerHeight = parseInt($('#enterWdgtDataForm').parent().css('height'),10);
+            $('.enterWdgtDataDiv').css('height',.80 * containerHeight);
+          } 
+
       },
       link: function postLink(scope, element, attr) {
+        scope.$on("gridsterResized", function (){
+            $timeout(function(){
+              scope.resizeWidgetDataArea();
+            },1000);
+        });
         scope.$watch('widgetData', function(data){
           scope.SetWidgetData(data);
+          $timeout(function(){
+              scope.resizeWidgetDataArea();
+            },2000);
         });
       }
     }
