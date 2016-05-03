@@ -23,11 +23,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/nationalOutReachStatus/nationalOutReachStatus.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.outreachStatusList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -81,13 +81,9 @@ angular.module('ui.widgets')
                     else
                       resolve([]);
                   });
-              if(scope.dtInstance)
-                scope.dtInstance.changeData(promise);
-              else {
-                scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                  dtInstances.tblNationalOutReachStatus._renderer.changeData(promise)              
-                });
-              }
+              scope.dtInstance.changeData(function() {
+                  return promise;
+              });
             }
           },1000)
         });
