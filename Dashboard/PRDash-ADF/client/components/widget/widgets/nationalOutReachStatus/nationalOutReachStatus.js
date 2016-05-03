@@ -44,10 +44,7 @@ angular.module('ui.widgets')
             .withOption('scrollY', 200)
             .withOption('paging',false)
             .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc'])
-            .withButtons([
-                { extend: 'csv', text: 'Export' }
-            ]);
+            .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Status').withTitle('Outreach Status'),
