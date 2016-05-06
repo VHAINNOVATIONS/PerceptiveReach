@@ -42,10 +42,10 @@ angular.module('ui.widgets')
             // Do not forget to add the scorllY option!!!
             .withOption('scrollY', 200)
             .withOption('bDestroy',true)
-            .withOption('paging',false)
+            .withOption('paging',true)
             .withDOM('frtip')
             .withButtons([
-                { extend: 'csv', text: '<a class="glyphicon glyphicon-export"></a>' }
+                { extend: 'csv', text: '<a name="PatientExport" class="glyphicon glyphicon-export"></a>' }
             ]);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Name').withTitle('Name'),
