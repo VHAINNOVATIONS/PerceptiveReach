@@ -38,14 +38,9 @@ angular.module('ui.widgets')
           });
 
         })
-        .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [0, 'asc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [0, 'asc']);
             
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('VISN').withTitle('VISN'),

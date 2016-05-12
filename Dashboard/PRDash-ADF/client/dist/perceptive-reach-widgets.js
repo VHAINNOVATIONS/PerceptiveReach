@@ -2581,10 +2581,7 @@ angular.module('ui.widgets')
       },
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scorllY option!!!
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
             .withOption('paging',false)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
@@ -2783,11 +2780,7 @@ angular.module('ui.widgets')
       },
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scorllY option!!!
-            .withOption('scrollY', 200)
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
             .withOption('paging',false)
             .withOption('bDestroy',true)
             .withOption('order', [1, 'desc']);
@@ -3243,14 +3236,9 @@ angular.module('ui.widgets')
               resolve([]);
           });
         })
-        .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [1, 'desc']);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('STA3N').withTitle('VAMC'),
             DTColumnBuilder.newColumn('VAMC_Name').withTitle('VAMC Name'),
@@ -3709,12 +3697,7 @@ angular.module('ui.widgets')
       }, 
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scorllY option!!!
-            .withOption('scrollY', 200)
-            .withOption('bDestroy',true)
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
             .withOption('paging',false);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
@@ -3993,14 +3976,9 @@ angular.module('ui.widgets')
               resolve([]);
           });
         })
-          .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('AgeRange').withTitle('Age Groups'),
@@ -4259,13 +4237,9 @@ angular.module('ui.widgets')
         resolve([]);
     });
   })
-	.withDOM('lfrti')
-		.withScroller()
-		.withOption('deferRender', true)
-    .withOption('scrollY', 200)
-		.withOption('paging',false)
-    .withOption('bDestroy',true)
-		.withOption('order', [1, 'desc']);
+	.withOption('paging',false)
+  .withOption('bDestroy',true)
+	.withOption('order', [1, 'desc']);
 	//.withPaginationType('full_numbers').withDisplayLength(5);
 	$scope.dtColumns = [
         DTColumnBuilder.newColumn('BranchDesc').withTitle('Branch'),
@@ -4372,14 +4346,9 @@ angular.module('ui.widgets')
               resolve([]);
           });
         })
-          .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Status').withTitle('Outreach Status'),
@@ -4786,17 +4755,18 @@ angular.module('ui.widgets')
                 $compile(angular.element(row).contents())($scope);
             })
             .withOption('rowCallback', rowCallback)
-            .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scorllY option!!!
-            .withOption('scrollY', 200)
-            .withOption('bDestroy',true)
-            .withPaginationType('full_numbers')
             .withDOM('frtip')
             .withButtons([
                 { extend: 'csv', text: '<a name="PatientExport" class="glyphicon glyphicon-export"></a>' }
-            ]);
+            ])
+            .withScroller()
+            .withOption('deferRender', true)
+            // Do not forget to add the scrollY option!!!
+            .withOption('scrollY', 200)
+            .withOption('bDestroy',true)
+            .withLanguage({
+              "sInfo": "Total Record's: _TOTAL_"
+            });
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Name').withTitle('Name').withOption('width', '20%'),
             DTColumnBuilder.newColumn('SSN').withTitle('SSN').withOption('width', '15%'),
@@ -4808,6 +4778,7 @@ angular.module('ui.widgets')
                var hiddenSpan = "<span id='Outreach_" + data.ReachID + "' hidden>"+ data.OutreachStatus +"</span> "
                return hiddenSpan + template;
             })
+            
         ];
      
         $scope.UpdateOutreachStatus = function(selected){
@@ -5168,14 +5139,9 @@ angular.module('ui.widgets')
               resolve([]);
           });
         })
-          .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [0, 'asc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [0, 'asc']);
             //.withPaginationType('full_numbers').withDisplayLength(100);
 			
         $scope.dtColumns = [
@@ -5348,14 +5314,9 @@ angular.module('ui.widgets')
           });
 
         })
-        .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [0, 'asc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [0, 'asc']);
             
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
