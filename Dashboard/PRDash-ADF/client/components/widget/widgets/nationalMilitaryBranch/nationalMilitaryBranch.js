@@ -37,13 +37,9 @@ angular.module('ui.widgets')
         resolve([]);
     });
   })
-	.withDOM('lfrti')
-		.withScroller()
-		.withOption('deferRender', true)
-    .withOption('scrollY', 200)
-		.withOption('paging',false)
-    .withOption('bDestroy',true)
-		.withOption('order', [1, 'desc']);
+	.withOption('paging',false)
+  .withOption('bDestroy',true)
+	.withOption('order', [1, 'desc']);
 	//.withPaginationType('full_numbers').withDisplayLength(5);
 	$scope.dtColumns = [
         DTColumnBuilder.newColumn('BranchDesc').withTitle('Branch'),
