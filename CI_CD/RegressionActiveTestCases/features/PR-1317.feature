@@ -13,7 +13,7 @@ Feature: As a SPC I want customize my widget page PR-1317 1.1.24
     And I click on "Login" button
 	When I click on "Individual View"
 	Then I click on the Default Widgets button
-	And I click on close on the "medication" widget
+	And I click on close on the "Medication" widget
 	Then I should not see the "Medication" widget
 	And I click on "Add a Widget" button
     And I click on "medication" button in the menu
