@@ -52,7 +52,7 @@ angular.module('ui.widgets')
             .withOption('scrollY', 200)
             .withOption('bDestroy',true)
             .withLanguage({
-              "sInfo": "Total Record's: _TOTAL_"
+              "sInfo": "Total Records: _TOTAL_"
             });
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Name').withTitle('Name').withOption('width', '20%'),
