@@ -11,7 +11,7 @@ And I click on "Login" button
 When I click on "Individual View"
 Then I click on the Default Widgets button
 Then I should see the "Patient Roster by VAMC" widget
-And I click on close on the "RosterTable" widget
+And I click on close on the "Patient Roster by VAMC" widget
 Then I should see the "Patient Roster by VAMC" widget
 And I click on "Logout" button
 
@@ -26,10 +26,10 @@ And I click on check box "checky"
 And I click on "Login" button
 When I click on "Surveillance View"
 Then I should see the "VISN Roster" widget
-And I click on close on the "VISNTable" widget
+And I click on close on the "VISN Roster" widget
 Then I should see the "VISN Roster" widget
 Then I should see the "Facility Roster" widget
-And I click on close on the "FacilityTable" widget
+And I click on close on the "Facility Roster" widget
 Then I should see the "Facility Roster" widget
 And I click on "Logout" button
 
@@ -44,6 +44,6 @@ And I click on check box "checky"
 And I click on "Login" button
 When I click on "Facility View"
 Then I should see the "Facility Roster" widget
-And I click on close on the "FacilityTable" widget
+And I click on close on the "Facility Roster" widget
 Then I should see the "Facility Roster" widget
 And I click on "Logout" button
