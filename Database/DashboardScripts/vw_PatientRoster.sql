@@ -10,8 +10,8 @@ GO
 
 
 
-CREATE VIEW [dbo].[vw_PatientRoster] as
-SELECT LastName+','+FirstName as Name, 
+ALTER VIEW [dbo].[vw_PatientRoster] as
+SELECT isNULL(LastName, '') + ',' + isNULL(FirstName, '') as Name, 
 p.ReachID, FirstName, 
 LastName, 'xxx-xx-'+RIGHT(SSN,4) AS SSN,
 HomePhone, 
@@ -25,7 +25,9 @@ p.RiskScore
 FROM  Patient p 
 INNER JOIN Ref_RiskLevel rl ON rl.RiskLevelID = p.RiskLevel
 INNER JOIN PatientStation ps ON p.ReachID = ps.ReachID 
-INNER JOIN prsystem.PatientDashboardFilter f on p.ReachID = f.ReachIDWHERE f.Patient = 1
+INNER JOIN prsystem.PatientDashboardFilter f on p.ReachID = f.ReachID
+WHERE f.Patient = 1
+
 
 
 GO
