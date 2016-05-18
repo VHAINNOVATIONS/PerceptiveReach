@@ -608,3 +608,9 @@ Then(/^I should wait for twenty seconds$/) do
   # pending # express the regexp above with the code you wish you had
   sleep(20)
 end    
+
+Then(/^I click on link "(.*?)"$/) do |arg1|
+  #pending # express the regexp above with the code you wish you had
+# find_link(arg1).click
+find(:xpath, '//*[@id="tblPatient_wrapper"]/div[1]/a/span/a').click
+end
