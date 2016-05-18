@@ -11,4 +11,4 @@ And I click on "Login" button
 And I click on "Surveillance View"
 Then I should wait for inactivity
 Then I should see "Perceptive Reach"
-Then I should see "If you have any further questions regarding Perceptive Reach and associated resources, Please contact the Help Desk at VAPerceptiverReachSupport@va.gov"
+Then I should see "If you have any further questions regarding Perceptive Reach and associated resources, Please contact the Help Desk at VAPerceptiveReachSupport@va.gov"
