@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-angular.module('ui.widgets', ['datatorrent.mlhrTable', 'nvd3ChartDirectives', 'datatables','datatables.scroller']);
+angular.module('ui.widgets', ['datatorrent.mlhrTable', 'nvd3ChartDirectives', 'datatables','datatables.scroller','datatables.buttons']);
 angular.module('ui.websocket', ['ui.visibility', 'ui.notify']);
 angular.module('ui.models', ['ui.visibility', 'ui.websocket']);
 
@@ -2581,10 +2581,7 @@ angular.module('ui.widgets')
       },
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scorllY option!!!
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
             .withOption('paging',false)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
@@ -2783,11 +2780,7 @@ angular.module('ui.widgets')
       },
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scorllY option!!!
-            .withOption('scrollY', 200)
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
             .withOption('paging',false)
             .withOption('bDestroy',true)
             .withOption('order', [1, 'desc']);
@@ -2881,7 +2874,7 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
-  .directive('wtEnterData', function () {
+  .directive('wtEnterData', function ($timeout) {
     return {
       restrict: 'A',
       replace: true,
@@ -3182,10 +3175,23 @@ angular.module('ui.widgets')
             $scope.common.data.EnterDataIsUnsaved = true
           };
 
+          $scope.resizeWidgetDataArea = function(){
+            var containerHeight = parseInt($('#enterWdgtDataForm').parent().css('height'),10);
+            $('.enterWdgtDataDiv').css('height',.80 * containerHeight);
+          } 
+
       },
       link: function postLink(scope, element, attr) {
+        scope.$on("gridsterResized", function (){
+            $timeout(function(){
+              scope.resizeWidgetDataArea();
+            },1000);
+        });
         scope.$watch('widgetData', function(data){
           scope.SetWidgetData(data);
+          $timeout(function(){
+              scope.resizeWidgetDataArea();
+            },2000);
         });
       }
     }
@@ -3216,11 +3222,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/facilityRoster/facilityRoster.html',
      
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.facilityList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -3230,14 +3236,9 @@ angular.module('ui.widgets')
               resolve([]);
           });
         })
-        .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [1, 'desc']);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('STA3N').withTitle('VAMC'),
             DTColumnBuilder.newColumn('VAMC_Name').withTitle('VAMC Name'),
@@ -3250,6 +3251,20 @@ angular.module('ui.widgets')
       },
       link: function postLink(scope, element, attr) {
         scope.$on("bindEvents", function (){
+
+          scope.dtInstance.changeData(function() {
+                return new Promise( function(resolve, reject){
+                  if (scope.facilityList)
+                  {
+                    resolve(scope.facilityList);
+                  }
+                  else
+                  {
+                    resolve([]);
+                  }
+                });
+              });
+
           $($('#facilityRosterDiv table')[0]).find('th').each(function(){
             $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+',Down/Up arrows to navigate, Spacebar to select and Tab to Exit rows">'+$(this).text()+'</a>');
             $(this).attr('scope','col');
@@ -3366,19 +3381,7 @@ angular.module('ui.widgets')
           if(data != null && data.length >0){
               scope.data = data;
               scope.facilityList = data;
-              var promise = new Promise( function(resolve, reject){
-                    if (scope.facilityList)
-                      resolve(scope.facilityList);
-                    else
-                      resolve([]);
-                  });
-              if(scope.dtInstance)
-                scope.dtInstance.changeData(promise);
-              else {
-                scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                  dtInstances.tblFacilityRoster._renderer.changeData(promise)              
-                });
-              }
+              
               $timeout(function(){
                 scope.$emit('bindEvents');
                 $.fn.dataTable.ext.errMode = 'throw';
@@ -3694,12 +3697,7 @@ angular.module('ui.widgets')
       }, 
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scorllY option!!!
-            .withOption('scrollY', 200)
-            .withOption('bDestroy',true)
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
             .withOption('paging',false);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
@@ -3964,11 +3962,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/nationalAgeGroups/nationalAgeGroups.html',
      
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.ageGroupsList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -3978,14 +3976,9 @@ angular.module('ui.widgets')
               resolve([]);
           });
         })
-          .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('AgeRange').withTitle('Age Groups'),
@@ -4021,13 +4014,11 @@ angular.module('ui.widgets')
                     else
                       resolve([]);
                   });
-              if(scope.dtInstance)
-                scope.dtInstance.changeData(promise);
-              else {
-                scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                  dtInstances.tblAgeGroups._renderer.changeData(promise)              
-                });
-              }
+              
+              scope.dtInstance.changeData(function() {
+                  return promise;
+              });
+                
             }
           },1000)
         });
@@ -4119,11 +4110,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/nationalGenderDistribution/nationalGenderDistribution.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.genderDistributionList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -4169,13 +4160,9 @@ angular.module('ui.widgets')
                     else
                       resolve([]);
                   });
-              if(scope.dtInstance)
-                scope.dtInstance.changeData(promise);
-              else {
-                scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                  dtInstances.tblGenderDistribution._renderer.changeData(promise)              
-                });
-              }
+             scope.dtInstance.changeData(function() {
+                  return promise;
+              });
             }
           },1000)
         });
@@ -4236,27 +4223,23 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/nationalMilitaryBranch/nationalMilitaryBranch.html',
        
-	controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+	controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
 	//$scope.dtOptions = DTOptionsBuilder.newOptions()
-	$scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
-        $scope.militaryBranchList = $scope.widgetData;
-        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
-          return new Promise( function(resolve, reject){
-            if ($scope.widgetData)
-              resolve($scope.widgetData);
-            else
-              resolve([]);
-          });
-        })
-		.withDOM('lfrti')
-		.withScroller()
-		.withOption('deferRender', true)
-    .withOption('scrollY', 200)
-		.withOption('paging',false)
-    .withOption('bDestroy',true)
-		.withOption('order', [1, 'desc']);
+  //$scope.dtInstanceAbstract = {};
+  $scope.dtInstance = {};
+  $scope.militaryBranchList = $scope.widgetData;
+  $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+    return new Promise( function(resolve, reject){
+      if ($scope.widgetData)
+        resolve($scope.widgetData);
+      else
+        resolve([]);
+    });
+  })
+	.withOption('paging',false)
+  .withOption('bDestroy',true)
+	.withOption('order', [1, 'desc']);
 	//.withPaginationType('full_numbers').withDisplayLength(5);
 	$scope.dtColumns = [
         DTColumnBuilder.newColumn('BranchDesc').withTitle('Branch'),
@@ -4290,13 +4273,9 @@ link: function postLink(scope, element, attr) {
               else
                 resolve([]);
             });
-        if(scope.dtInstance)
-          scope.dtInstance.changeData(promise);
-        else {
-          scope.dtInstanceAbstract.getList().then(function(dtInstances){
-            dtInstances.tblMilitaryBranch._renderer.changeData(promise)              
-          });
-        }
+        scope.dtInstance.changeData(function() {
+                  return promise;
+              });
   	  }
      },1000)
 	});
@@ -4353,11 +4332,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/nationalOutReachStatus/nationalOutReachStatus.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.outreachStatusList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -4367,14 +4346,9 @@ angular.module('ui.widgets')
               resolve([]);
           });
         })
-          .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Status').withTitle('Outreach Status'),
@@ -4411,13 +4385,9 @@ angular.module('ui.widgets')
                     else
                       resolve([]);
                   });
-              if(scope.dtInstance)
-                scope.dtInstance.changeData(promise);
-              else {
-                scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                  dtInstances.tblNationalOutReachStatus._renderer.changeData(promise)              
-                });
-              }
+              scope.dtInstance.changeData(function() {
+                  return promise;
+              });
             }
           },1000)
         });
@@ -4766,10 +4736,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/patientTable/patientTable.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+      controller: function ($scope,$compile, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.patientList = $scope.widgetData;
+        $scope.OutreachMap = {};
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
               return new Promise( function(resolve, reject){
                 if ($scope.widgetData)
@@ -4779,142 +4750,128 @@ angular.module('ui.widgets')
               });
  
           })//.fromSource($scope.widgetData) newOptions().
-            .withDOM('lfrti')
+            .withOption('createdRow', function(row, data, dataIndex) {
+                // Recompiling so we can bind Angular directive to the DT
+                $compile(angular.element(row).contents())($scope);
+            })
+            .withOption('rowCallback', rowCallback)
+            .withDOM('frtip')
+            .withButtons([
+                { extend: 'csv', text: '<a name="PatientExport" class="glyphicon glyphicon-export"></a>' }
+            ])
             .withScroller()
             .withOption('deferRender', true)
-            // Do not forget to add the scorllY option!!!
+            // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
             .withOption('bDestroy',true)
-            .withOption('paging',false);
+            .withLanguage({
+              "sInfo": "Total Records: _TOTAL_"
+            });
         $scope.dtColumns = [
-            DTColumnBuilder.newColumn('Name').withTitle('Name'),
-            DTColumnBuilder.newColumn('SSN').withTitle('SSN'),
-            DTColumnBuilder.newColumn('HomePhone').withTitle('Phone'),
-            DTColumnBuilder.newColumn('DateIdentifiedAsAtRisk').withTitle('Date First Identified'),
-            DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level'),
-            DTColumnBuilder.newColumn('OutreachStatus').withTitle('Outreach Status')
+            DTColumnBuilder.newColumn('Name').withTitle('Name').withOption('width', '20%'),
+            DTColumnBuilder.newColumn('SSN').withTitle('SSN').withOption('width', '15%'),
+            DTColumnBuilder.newColumn('HomePhone').withTitle('Phone').withOption('width', '10%'),
+            DTColumnBuilder.newColumn('DateIdentifiedAsAtRisk').withTitle('Date First Identified').withOption('width', '15%'),
+            DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level').withOption('width', '10%'),
+            DTColumnBuilder.newColumn(null).withTitle('Outreach Status').withOption('width', '30%').renderWith(function(data, type, full, meta) {
+               var template = '<select id=vet_' + data.ReachID + ' ng-options="item as item.StatusDesc for item in outreachStatusList" ng-change="UpdateOutreachStatus(OutreachMap['+data.ReachID+'])" ng-model="OutreachMap['+data.ReachID+']"></select>';
+               var hiddenSpan = "<span id='Outreach_" + data.ReachID + "' hidden>"+ data.OutreachStatus +"</span> "
+               return hiddenSpan + template;
+            })
+            
         ];
-        $scope.columns = [
-          {"Name" : "Name"},
-          {"Name" : "SSN"},
-          {"Name" : "Phone"},
-          {"Name" : "Date First Identified"},
-          {"Name" : "Statistical Risk Level"},
-          {"Name" : "Outreach Status"}
-        ];
-		
+     
+        $scope.UpdateOutreachStatus = function(selected){
+          var commonData = $scope.widget.dataModelOptions.common;
+          var ReachId = commonData.data.veteranObj.ReachID;
+          var OutReachStatusID = selected.OutReachStatusID;
+          $scope.widget.dataModel.saveOutreachData(OutReachStatusID,ReachId,commonData.data.facilitySelected.facility);
+        }
+
+        $scope.rowClickHandler= function(info) {
+          if($scope.common.data.EnterDataIsUnsaved == true){
+              $(".unsavedDataAlert").fadeIn();
+              return;
+          }
+
+          var selectedRow = $("#tblPatient tr:contains('"+info.SSN+"')");
+          if(selectedRow.hasClass('selected'))
+          {
+            return;
+          } 
+          else
+          {
+            $('#tblPatient tr.selected').removeClass('selected');
+            selectedRow.addClass('selected');
+            var commonData = $scope.widget.dataModelOptions.common;
+            var vetId = info.ReachID;
+            var obj = jQuery.grep($scope.patientList, function( n, i ) {
+              return ( n.ReachID == vetId );
+            });
+            commonData.data.veteranObj = obj[0];
+            console.log("CommonDataAfterClick: ", commonData);
+            // broadcast message throughout system
+            $scope.$parent.$parent.$parent.$broadcast('commonDataChanged', commonData);
+
+          }
+
+        }
+
+        function rowCallback(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+          $('td', nRow).unbind('click');
+          $('td', nRow).bind('click', function() {
+              $scope.$apply(function() {
+                  $scope.rowClickHandler(aData);
+              });
+          });
+          return nRow;
+        }
+
       },
       link: function postLink(scope, element, attr) {
         scope.$on("updateSelectMenu", function (){
           var datamodelList = {};
-          var patientList = scope.widgetData[1];          
-          $( "select[id^='vet_']" ).on("change",function(e,ui){
-            var selectedIndex = this.value;
-            var selectedreachId = $(e.currentTarget).attr('id').replace("vet_","");
-            $('#Outreach_' + selectedreachId).text(selectedIndex);
-            var commonData = scope.widget.dataModelOptions.common;
-            scope.widget.dataModel.saveOutreachData(parseInt(selectedIndex),selectedreachId,commonData.data.facilitySelected.facility);
-          } );
-		  		 	  
-		  $($('#patientRosterDiv table')[0]).find('th').each(function(){
-        $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
-				$(this).attr('scope','col');
-        $(this).attr('tabindex','-1');
-      });
+          var patientList = scope.widgetData[1];          	 	  
+    		  $($('#patientRosterDiv table')[0]).find('th').each(function(){
+            $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+    				$(this).attr('scope','col');
+            $(this).attr('tabindex','-1');
+          });
 			
-		$('#tblPatient_info').attr('title','Patient Table: Tab to move to the next control');
+		      $('#tblPatient_info').attr('title','Patient Table: Tab to move to the next control');
     
-    $('#patientRosterDiv .dataTables_scrollHeadInner,#patientRosterDiv .dataTables_scrollHeadInner table').css({'width':''});   
-    var containerHeight = parseInt($('#patientRosterDiv').parent().css('height'),10);
-    $('#patientRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);    
+          $('#patientRosterDiv .dataTables_scrollHeadInner,#patientRosterDiv .dataTables_scrollHeadInner table').css({'width':''});   
+          var containerHeight = parseInt($('#patientRosterDiv').parent().css('height'),10);
+          $('#patientRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);    
 		  
-		  $('#tblPatient tbody>tr select').keydown(function(event){ 
+    		  $('#tblPatient tbody>tr select').keydown(function(event){ 
             if (event.keyCode == '13' || event.key == 'Enter') {
-				$(this).closest('tr').click();
-				return false; 
-			} 
-			if (event.keyCode == '27' || event.key == 'Cancel') {
-				$('#tblPatient_info').focus();
-				$('#tblPatient_info').tooltip().mouseover();
-				return false; 
-			} 		  
+              $(this).closest('tr').click();
+              return false; 
+            } 
+            if (event.keyCode == '27' || event.key == 'Cancel') {
+              $('#tblPatient_info').focus();
+              $('#tblPatient_info').tooltip().mouseover();
+              return false; 
+            } 		  
           });
 
-          $('#tblPatient tbody').on( 'click', 'tr', function (event) {
-            if(scope.common.data.EnterDataIsUnsaved == true){
-              $(".unsavedDataAlert").fadeIn();
-              return;
-            }
-
-            if($(this).hasClass('selected')){
-            }
-            else{
-              $('tr.selected').removeClass('selected');
-              $(this).addClass('selected');
-              // get common data object
-              var commonData = scope.widget.dataModelOptions.common;
-              // update common data object with new patient object
-              var vetId = event.currentTarget.cells[5].children[1].id.replace("vet_","");
-              var obj = jQuery.grep(scope.patientList, function( n, i ) {
-                return ( n.ReachID == vetId );
-              });
-              console.log("ReachID Vet Selected: ",vetId);
-              delete obj[0].OutreachStatus;
-              commonData.data.veteranObj = obj[0];
-              commonData.data.veteranObj.OutreachStatus = $('#Outreach_' + vetId).text();
-              console.log("CommonDataAfterClick: ", commonData);
-              // broadcast message throughout system
-              scope.$parent.$parent.$parent.$broadcast('commonDataChanged', commonData);
-            }
-            scope.$apply();
-          });  
         });
-        //scope.dtrender.showLoading();
-        scope.$watch('widgetData', function(v){
-          var opts = {
-          lines: 13, // The number of lines to draw
-          length: 20, // The length of each line
-          width: 10, // The line thickness
-          radius: 30, // The radius of the inner circle
-          corners: 1, // Corner roundness (0..1)
-          rotate: 0, // The rotation offset
-          direction: 1, // 1: clockwise, -1: counterclockwise
-          color: '#000', // #rgb or #rrggbb or array of colors
-          speed: 1, // Rounds per second
-          trail: 60, // Afterglow percentage
-          shadow: false, // Whether to render a shadow
-          hwaccel: false, // Whether to use hardware acceleration
-          className: 'spinner', // The CSS class to assign to the spinner
-          zIndex: 2e9, // The z-index (defaults to 2000000000)
-          top: '50%', // Top position relative to parent
-          left: '50%' // Left position relative to parent
-        };
-          
-        if(v != null && v.length >0){
+        scope.$watch('widgetData', function(v){  
+          if(v != null && v.length >0){
             scope.outreachStatusList = scope.widgetData[2];
             scope.patientList = scope.widgetData[1];
+
             var outreachStatus = scope.outreachStatusList;
             var patientsBysta3N = scope.patientList;
 
-            for(var patient in patientsBysta3N){
-              var selected = ' selected="selected"';
-              var options = "";
-              var temp = "";
-              for(var outreachStat in outreachStatus){
-                if(patientsBysta3N[patient].OutreachStatus == outreachStatus[outreachStat].OutReachStatusID)
-                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + selected + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
-                else{
-                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
-                  //console.log("outreachStatusString: ",  temp);
-                }
-                options += temp;                
-              }
-              var select = "<select class='form-control' style='width: 180px;' id='vet_" + patientsBysta3N[patient].ReachID + "'><option value=''></option>"+ options+ "</select>";
-              //patientsBysta3N[patient].OutreachStatusSelect = select;
-              patientsBysta3N[patient].OutreachStatus = "<span id='Outreach_" + patientsBysta3N[patient].ReachID + "' hidden>"+ patientsBysta3N[patient].OutreachStatus +"</span> " +  select;
-              
-            }
-            
+            scope.patientList.map(function(obj){
+              scope.OutreachMap[obj.ReachID] = obj.OutreachStatus != null ?  $.grep(scope.outreachStatusList,function(e){
+                                                                                      return e.OutReachStatusID == obj.OutreachStatus
+                                                                                    })[0] : null;
+
+          });
+  
             scope.patientList = patientsBysta3N;
             var promise = new Promise( function(resolve, reject){
                   if (scope.patientList)
@@ -4922,13 +4879,9 @@ angular.module('ui.widgets')
                   else
                     resolve([]);
                 });
-            if(scope.dtInstance)
-              scope.dtInstance.changeData(promise);
-            else {
-              scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                dtInstances.tblPatient._renderer.changeData(promise)              
+            scope.dtInstance.changeData(function() {
+                  return promise;
               });
-            }
             
             $timeout(function(){
               $.fn.dataTable.ext.errMode = 'throw';
@@ -4936,11 +4889,11 @@ angular.module('ui.widgets')
               var commonData = scope.widget.dataModelOptions.common;
               if(!commonData.data.veteranObj)
               {
-                $('#tblPatient').find( "tbody>tr:first" ).click();
+                $($('#tblPatient').find( "td" )[1]).click()
               }
               else
               {
-                $('#tblPatient').find( "tbody>tr td:contains('"+commonData.data.veteranObj.Name+"')" ).parent().click();
+                $('#tblPatient').find( "tbody>tr td:contains('"+commonData.data.veteranObj.Name+"')" ).click();
               }
             },500)            
           }
@@ -5172,11 +5125,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/suicideStatistics/suicideStatistics.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+        //$scope.dtInstanceAbstract = DTInstances;
+        $scope.dtInstance = {};
         $scope.suicideStatusList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -5186,14 +5139,9 @@ angular.module('ui.widgets')
               resolve([]);
           });
         })
-          .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [0, 'asc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [0, 'asc']);
             //.withPaginationType('full_numbers').withDisplayLength(100);
 			
         $scope.dtColumns = [
@@ -5226,13 +5174,10 @@ angular.module('ui.widgets')
               else
                 resolve([]);
             });
-            if(scope.dtInstance)
-              scope.dtInstance.changeData(promise);
-            else {
-              scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                dtInstances.tblSuicideStatistics._renderer.changeData(promise)              
+           scope.dtInstance.changeData(function() {
+                  return promise;
               });
-            }
+
           }
 		      },1000)
         });
@@ -5354,11 +5299,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/vismRoster/vismRoster.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.visnList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -5369,14 +5314,10 @@ angular.module('ui.widgets')
           });
 
         })
-        .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [0, 'asc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [0, 'asc']);
+            
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
             DTColumnBuilder.newColumn('NetworkName').withTitle('Network Name'),
@@ -5387,12 +5328,23 @@ angular.module('ui.widgets')
         $scope.eventTimer = null;
       },
       link: function postLink(scope, element, attr) {
-        scope.$on("bindEvents", function (){
-        $($('#VISNRosterDiv table')[0]).find('th').each(function(){
-          $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
-          $(this).attr('scope','col');
-          $(this).attr('tabindex','-1');
-        });
+          scope.$on("bindEvents", function (){
+      
+          scope.dtInstance.changeData(function() {
+              return new Promise( function(resolve, reject){
+                if (scope.visnList)
+                  resolve(scope.visnList);
+                else
+                  resolve([]);
+              });
+          });
+
+
+          $($('#VISNRosterDiv table')[0]).find('th').each(function(){
+            $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+            $(this).attr('scope','col');
+            $(this).attr('tabindex','-1');
+          });
 
         $($('#VISNRosterDiv table')[0]).find('th').keydown(function(event){ 
           if (event.keyCode == 40 || event.key == 'Down' || event.keyCode == 38 || event.key == 'Up') {
@@ -5489,19 +5441,7 @@ angular.module('ui.widgets')
           if(data != null && data.length >0){
               scope.data = data;
               scope.visnList = data;
-              var promise = new Promise( function(resolve, reject){
-                    if (scope.visnList)
-                      resolve(scope.visnList);
-                    else
-                      resolve([]);
-                  });
-              if(scope.dtInstance)
-                scope.dtInstance.changeData(promise);
-              else {
-                scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                  dtInstances.tblVismRoster._renderer.changeData(promise)              
-                });
-              }
+                           
               $timeout(function(){
                 scope.$emit('bindEvents');
                 $.fn.dataTable.ext.errMode = 'throw';
@@ -5741,259 +5681,83 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/enterdata/enterdata.html",
-    "<div>\r" +
+    "<div ng-form=\"enterWdgtForm\" id=\"enterWdgtDataForm\">\r" +
     "\n" +
-    "    <div ng-form=\"enterWdgtForm\">\r" +
+    "  <div class=\"panel panel-default\">\r" +
     "\n" +
-    "      <div class=\"panel panel-default\">\r" +
+    "    <div class=\"panel-body\" style=\"padding-left:40px\">\r" +
     "\n" +
-    "        <div class=\"panel-body\" style=\"padding-left:40px\">\r" +
+    "    <div class=\"enterWdgtDataDiv\" style=\"overflow-y:auto;overflow-x:hidden;\">\r" +
     "\n" +
-    "          <div class=\"row\">\r" +
+    "      <div class=\"row\">\r" +
     "\n" +
-    "            <div class=\"col-md-12 bs-example hr-text\" style=\"padding: 2px;\">\r" +
+    "        <div class=\"col-md-12 bs-example hr-text\">\r" +
     "\n" +
-    "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
+    "        <label style=\"margin-left:32px;\">High Risk Flag Information</label>\r" +
     "\n" +
-    "                <div class=\"col-md-6\" ng-attr-title=\"{{data.HighRisk_UserNotes[hrIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
+    "          <div class=\"panel-body\">\r" +
     "\n" +
-    "                  <label style=\"font-weight:normal\">User Notes:</label>\r" +
+    "            <div class=\"col-md-6\" ng-attr-title=\"{{data.HighRisk_UserNotes[hrIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
     "\n" +
-    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "              <label style=\"font-weight:normal\">User Notes:</label>\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"hrBack\" title=\"Previous High Risk Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex >= data.HighRisk_UserNotes.length-1\" ng-click=\"goHrBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "              <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
-    "                    </button>\r" +
+    "                <button type=\"button\" name=\"hrBack\" title=\"Previous High Risk Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex >= data.HighRisk_UserNotes.length-1\" ng-click=\"goHrBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>Previous High Risk Info.\r" +
     "\n" +
-    "                    <div class=\"pull-left\">\r" +
+    "                </button>\r" +
     "\n" +
-    "                      <input type=\"text\" ng-keypress=\"jumpTo($event,'hr')\" class=\"enterDataNumInput\" ng-model=\"hrIndex\" ></input>\r" +
+    "                <div class=\"pull-left\">\r" +
     "\n" +
-    "                    </div>\r" +
-    "\n" +
-    "                    <button type=\"button\" name=\"hrFwd\" title=\"Next High Risk Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex === 0\" ng-click=\"goHrForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
-    "\n" +
-    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
-    "\n" +
-    "                    </button>\r" +
-    "\n" +
-    "                  </div><br/>\r" +
-    "\n" +
-    "                  <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"hrText\" name=\"highRiskTxt\" ng-change=\"enterDataChanged()\" ng-class=\"{enterDataDirty: enterWdgtForm.highRiskTxt.$dirty && enterWdgtForm.highRiskTxt.$valid}\" id=\"hrText\" maxlength=\"128\"></textarea>\r" +
+    "                  <input type=\"text\" ng-keypress=\"jumpTo($event,'hr')\" class=\"enterDataNumInput\" ng-model=\"hrIndex\" title=\"High Risk: Jump To Record\"></input>\r" +
     "\n" +
     "                </div>\r" +
     "\n" +
-    "                <div class=\"col-md-6\" ng-attr-title=\"{{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
+    "                <button type=\"button\" name=\"hrFwd\" title=\"Next High Risk Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex === 0\" ng-click=\"goHrForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
     "\n" +
-    "                  <label style=\"font-weight:normal\">SPAN Records:</label>\r" +
+    "                  style=\"font-size:13px;width: 18px;\"></i>Next High Risk Info.\r" +
     "\n" +
-    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "                </button>\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"hrSpanBack\" title=\"Previous High Risk Span Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex >= data.HighRisk_SPANImport.length-1\" ng-click=\"goHrSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "              </div><br/>\r" +
     "\n" +
-    "                    </button>\r" +
+    "              <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"hrText\" name=\"highRiskTxt\" ng-change=\"enterDataChanged()\" ng-class=\"{enterDataDirty: enterWdgtForm.highRiskTxt.$dirty && enterWdgtForm.highRiskTxt.$valid}\" id=\"hrText\" maxlength=\"128\" title=\"High Risk Flag Information\"></textarea>\r" +
     "\n" +
-    "                    <div class=\"pull-left\">\r" +
+    "            </div>\r" +
     "\n" +
-    "                      <input type=\"text\" ng-keypress=\"jumpTo($event,'hrspan')\" class=\"enterDataNumInput\" ng-model=\"hrSpanIndex\" ></input>\r" +
+    "            <div class=\"col-md-6\" ng-attr-title=\"{{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
     "\n" +
-    "                    </div>\r" +
+    "              <label style=\"font-weight:normal\">SPAN Records:</label>\r" +
     "\n" +
-    "                    <button type=\"button\" name=\"hrSpanFwd\" title=\"Next High Risk Span Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex === 0\" ng-click=\"goHrSpanForward()\"><i class=\"glyphicon glyphicon-arrow-right\"\r" +
+    "              <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
     "\n" +
-    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
+    "                <button type=\"button\" name=\"hrSpanBack\" title=\"Previous High Risk Span Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex >= data.HighRisk_SPANImport.length-1\" ng-click=\"goHrSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>Previous High Risk Span Info.\r" +
     "\n" +
-    "                    </button>\r" +
+    "                </button>\r" +
     "\n" +
-    "                  </div>\r" +
+    "                <div class=\"pull-left\">\r" +
     "\n" +
-    "                  <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
-    "\n" +
-    "                    <label style=\"font-weight:normal\">High Risk: {{data.HighRisk_SPANImport[hrSpanIndex].HighRisk}}</label></br>\r" +
-    "\n" +
-    "                    <label style=\"font-weight:normal\">Date First Identified: {{data.HighRisk_SPANImport[hrSpanIndex].DateFirstIdentifiedAsHighRisk | date: 'dd-MM-yyyy HH:mma'}}</label></br>\r" +
-    "\n" +
-    "                    <label style=\"font-weight:normal\">Date Last Updated: {{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated | date: 'dd-MM-yyyy HH:mma'}}</label>\r" +
-    "\n" +
-    "                  </div>\r" +
+    "                  <input title=\"High Risk Span: Jump To Record\" type=\"text\" ng-keypress=\"jumpTo($event,'hrspan')\" class=\"enterDataNumInput\" ng-model=\"hrSpanIndex\"></input>\r" +
     "\n" +
     "                </div>\r" +
+    "\n" +
+    "                <button type=\"button\" name=\"hrSpanFwd\" title=\"Next High Risk Span Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex === 0\" ng-click=\"goHrSpanForward()\"><i class=\"glyphicon glyphicon-arrow-right\"\r" +
+    "\n" +
+    "                  style=\"font-size:13px;width: 18px;\"></i>Next High Risk Span Info.\r" +
+    "\n" +
+    "                </button>\r" +
     "\n" +
     "              </div>\r" +
     "\n" +
-    "            </div>\r" +
+    "              <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
     "\n" +
-    "          </div>\r" +
+    "                <label style=\"font-weight:normal\">High Risk: {{data.HighRisk_SPANImport[hrSpanIndex].HighRisk}}</label><br/>\r" +
     "\n" +
-    "          <div class=\"row\">\r" +
+    "                <label style=\"font-weight:normal\">Date First Identified: {{data.HighRisk_SPANImport[hrSpanIndex].DateFirstIdentifiedAsHighRisk | date: 'dd-MM-yyyy HH:mma'}}</label><br/>\r" +
     "\n" +
-    "            <div class=\"col-md-12 bs-example mh-text\" style=\"padding: 2px;\">\r" +
-    "\n" +
-    "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
-    "\n" +
-    "                <div class=\"col-md-6\" ng-attr-title=\"{{data.PrimaryHealthProvider_UserNotes[mhIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
-    "\n" +
-    "                  <label style=\"font-weight:normal\">User Notes:</label>\r" +
-    "\n" +
-    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
-    "\n" +
-    "                    <button type=\"button\" name=\"mhBack\" title=\"Previous Mental Health Provider Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"mhIndex >= data.PrimaryHealthProvider_UserNotes.length-1\" ng-click=\"goMhBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
-    "\n" +
-    "                    </button>\r" +
-    "\n" +
-    "                    <div class=\"pull-left\">\r" +
-    "\n" +
-    "                      <input class=\"enterDataNumInput\" type=\"text\" ng-keypress=\"jumpTo($event,'mh')\" ng-change=\"mhIndexChange(mhIndex)\" ng-model=\"mhIndex\" ></input>\r" +
-    "\n" +
-    "                    </div>\r" +
-    "\n" +
-    "                    <button type=\"button\" name=\"mhFwd\" title=\"Next Mental Health Provider Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"mhIndex === 0\" ng-click=\"goMhForward()\"><i class=\"glyphicon glyphicon-arrow-right\"  style=\"font-size:13px;width: 18px;\"></i>\r" +
-    "\n" +
-    "                    </button>\r" +
-    "\n" +
-    "                  </div><br/>\r" +
-    "\n" +
-    "                  <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"mhText\" name=\"mentalProviderTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.mentalProviderTxt.$dirty && enterWdgtForm.mentalProviderTxt.$valid}\" id=\"mhText\" ng-change=\"enterDataChanged()\" maxlength=\"128\"></textarea>\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "                <div class=\"col-md-6\" > \r" +
-    "\n" +
-    "                  <label style=\"font-weight:normal\">VistA Records:</label>\r" +
-    "\n" +
-    "                  \r" +
-    "\n" +
-    "                  <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
-    "\n" +
-    "                   <label style=\"font-weight:normal\">{{noDataFound}}</label>\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "                </div>\r" +
+    "                <label style=\"font-weight:normal\">Date Last Updated: {{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated | date: 'dd-MM-yyyy HH:mma'}}</label>\r" +
     "\n" +
     "              </div>\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "          </div>\r" +
-    "\n" +
-    "          <div class=\"row\">\r" +
-    "\n" +
-    "            <div class=\"col-md-12 bs-example sp-text\" style=\"padding: 2px;\">\r" +
-    "\n" +
-    "              <div class=\"panel-body\" style=\"padding:5px;\">\r" +
-    "\n" +
-    "                <div class=\"col-md-6\" ng-attr-title=\"{{data.SafetyPlan_UserNotes[spIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
-    "\n" +
-    "                  <label style=\"font-weight:normal\">User Notes:</label>\r" +
-    "\n" +
-    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
-    "\n" +
-    "                    <button type=\"button\" name=\"spBack\" title=\"Previous Safety Plan Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"spIndex >= data.SafetyPlan_UserNotes.length-1\" ng-click=\"goSpBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
-    "\n" +
-    "                    </button>\r" +
-    "\n" +
-    "                    <div class=\"pull-left\">\r" +
-    "\n" +
-    "                      <input type=\"text\" ng-keypress=\"jumpTo($event,'sp')\" class=\"enterDataNumInput\" ng-model=\"spIndex\" ></input>\r" +
-    "\n" +
-    "                    </div>\r" +
-    "\n" +
-    "                    <button type=\"button\" name=\"spFwd\" title=\"Next Safety Plan Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"spIndex === 0\" ng-click=\"goSpForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
-    "\n" +
-    "                      style=\"font-size:13px;width: 18px;\"></i>\r" +
-    "\n" +
-    "                    </button>\r" +
-    "\n" +
-    "                  </div><br>\r" +
-    "\n" +
-    "                  <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"spText\" name=\"safetyPlanTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.safetyPlanTxt.$dirty && enterWdgtForm.safetyPlanTxt.$valid}\" ng-change=\"enterDataChanged()\" id=\"spText\" maxlength=\"128\"></textarea>\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "                <div class=\"col-md-6\" \r" +
-    "\n" +
-    "                     ng-attr-title=\"{{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
-    "\n" +
-    "                  <label style=\"font-weight:normal\">VistA Records:</label>\r" +
-    "\n" +
-    "                  <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
-    "\n" +
-    "                    <button type=\"button\" name=\"spSpanBack\" title=\"Previous Safety Plan VistA Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"spSpanIndex >= data.SafetyPlan_SPANImport.length-1\" ng-click=\"goSpSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
-    "\n" +
-    "                    </button>\r" +
-    "\n" +
-    "                    <div class=\"pull-left\">\r" +
-    "\n" +
-    "                      <input type=\"text\" ng-keypress=\"jumpTo($event,'spspan')\" class=\"enterDataNumInput\" ng-model=\"spSpanIndex\" ></input>\r" +
-    "\n" +
-    "                    </div>\r" +
-    "\n" +
-    "                    <button type=\"button\" name=\"spSpanFwd\" title=\"Next Safety Plan VistA Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"spSpanIndex === 0\" ng-click=\"goSpSpanForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i>\r" +
-    "\n" +
-    "                    </button>\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "                   <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
-    "\n" +
-    "                    <label style=\"font-weight:normal\">Safety Plan Current: {{data.SafetyPlan_SPANImport[spSpanIndex].SafetyPlanCurrent}}</label></br>    \r" +
-    "\n" +
-    "                    <label style=\"font-weight:normal\">Date Completed/Updated: {{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated | date: 'dd-MM-yyyy HH:mma'}}</label>\r" +
-    "\n" +
-    "                  </div>\r" +
-    "\n" +
-    "                </div>\r" +
-    "\n" +
-    "              </div>\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "          </div>\r" +
-    "\n" +
-    "          <div class=\"row\">\r" +
-    "\n" +
-    "            <div class=\"col-md-12 bs-example comment-text\" style=\"padding: 2px;\">\r" +
-    "\n" +
-    "               <div class=\"panel-body\" style=\"padding:5px;\">\r" +
-    "\n" +
-    "                 <div class=\"col-md-12\" ng-attr-title=\"{{data.GeneralComments[commentIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
-    "\n" +
-    "                   <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
-    "\n" +
-    "                      <button type=\"button\" name=\"commentBack\" title=\"Previous Comments\" class=\"btn btn-default pull-left\" ng-disabled=\"commentIndex >= data.GeneralComments.length-1\" ng-click=\"goCommentBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>\r" +
-    "\n" +
-    "                      </button>\r" +
-    "\n" +
-    "                      <div class=\"pull-left\">\r" +
-    "\n" +
-    "                        <input type=\"text\" ng-keypress=\"jumpTo($event,'comment')\" class=\"enterDataNumInput\" ng-model=\"commentIndex\" ></input>\r" +
-    "\n" +
-    "                      </div>\r" +
-    "\n" +
-    "                      <button type=\"button\" name=\"commentFwd\" title=\"Next Comments\" class=\"btn btn-default pull-left\" ng-disabled=\"commentIndex === 0\" ng-click=\"goCommentForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i>\r" +
-    "\n" +
-    "                      </button>\r" +
-    "\n" +
-    "                   </div>\r" +
-    "\n" +
-    "                    <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"commentText\" name=\"commentTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.commentTxt.$dirty && enterWdgtForm.commentTxt.$valid}\" ng-change=\"enterDataChanged()\" id=\"commentText\"></textarea>\r" +
-    "\n" +
-    "                 </div>\r" +
-    "\n" +
-    "               </div>\r" +
-    "\n" +
-    "            </div>\r" +
-    "\n" +
-    "          </div>\r" +
-    "\n" +
-    "          <div class=\"row\">\r" +
-    "\n" +
-    "            <div class=\"col-md-6\" style=\"float:right;\">\r" +
-    "\n" +
-    "              <button type=\"button\" class=\"btn btn-primary btn-sm\" ng-click=\"addNewData()\" style=\"float:right;margin:5px;\">Add Data</button>\r" +
-    "\n" +
-    "              <button type=\"button\" class=\"btn btn-primary btn-sm\" ng-click=\"clearEdits()\" style=\"float:right;margin:5px;\">Clear Edits</button>\r" +
     "\n" +
     "            </div>\r" +
     "\n" +
@@ -6003,7 +5767,193 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "      </div>\r" +
     "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-12 bs-example mh-text\">\r" +
+    "\n" +
+    "        <label style=\"margin-left:32px;\">Mental Health Provider Information</label>\r" +
+    "\n" +
+    "          <div class=\"panel-body\">\r" +
+    "\n" +
+    "            <div class=\"col-md-6\" ng-attr-title=\"{{data.PrimaryHealthProvider_UserNotes[mhIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
+    "\n" +
+    "              <label style=\"font-weight:normal\">User Notes:</label>\r" +
+    "\n" +
+    "              <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                <button type=\"button\" name=\"mhBack\" title=\"Previous Mental Health Provider Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"mhIndex >= data.PrimaryHealthProvider_UserNotes.length-1\" ng-click=\"goMhBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>Previous Mental Health Provider Info.\r" +
+    "\n" +
+    "                </button>\r" +
+    "\n" +
+    "                <div class=\"pull-left\">\r" +
+    "\n" +
+    "                  <input title=\"Mental Health Prov.: Jump To Record\" class=\"enterDataNumInput\" type=\"text\" ng-keypress=\"jumpTo($event,'mh')\" ng-change=\"mhIndexChange(mhIndex)\" ng-model=\"mhIndex\"></input>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <button type=\"button\" name=\"mhFwd\" title=\"Next Mental Health Provider Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"mhIndex === 0\" ng-click=\"goMhForward()\"><i class=\"glyphicon glyphicon-arrow-right\"  style=\"font-size:13px;width: 18px;\"></i>Next Mental Health Provider Info.\r" +
+    "\n" +
+    "                </button>\r" +
+    "\n" +
+    "              </div><br/>\r" +
+    "\n" +
+    "              <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"mhText\" name=\"mentalProviderTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.mentalProviderTxt.$dirty && enterWdgtForm.mentalProviderTxt.$valid}\" id=\"mhText\" ng-change=\"enterDataChanged()\" maxlength=\"128\" title=\"Mental Health Provider Information\"></textarea>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <div class=\"col-md-6\"> \r" +
+    "\n" +
+    "              <label style=\"font-weight:normal\">VistA Records:</label>\r" +
+    "\n" +
+    "              \r" +
+    "\n" +
+    "              <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
+    "\n" +
+    "               <label style=\"font-weight:normal\">{{noDataFound}}</label>\r" +
+    "\n" +
+    "             </div>\r" +
+    "\n" +
+    "           </div>\r" +
+    "\n" +
+    "         </div>\r" +
+    "\n" +
+    "       </div>\r" +
+    "\n" +
+    "     </div>\r" +
+    "\n" +
+    "     <div class=\"row\">\r" +
+    "\n" +
+    "      <div class=\"col-md-12 bs-example sp-text\">\r" +
+    "\n" +
+    "      <label style=\"margin-left:32px;\">Safety Plan Information</label>\r" +
+    "\n" +
+    "        <div class=\"panel-body\">\r" +
+    "\n" +
+    "          <div class=\"col-md-6\" ng-attr-title=\"{{data.SafetyPlan_UserNotes[spIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
+    "\n" +
+    "            <label style=\"font-weight:normal\">User Notes:</label>\r" +
+    "\n" +
+    "            <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "              <button type=\"button\" name=\"spBack\" title=\"Previous Safety Plan Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"spIndex >= data.SafetyPlan_UserNotes.length-1\" ng-click=\"goSpBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>Previous Safety Plan Info.\r" +
+    "\n" +
+    "              </button>\r" +
+    "\n" +
+    "              <div class=\"pull-left\">\r" +
+    "\n" +
+    "                <input title=\"Safety Plan: Jump To Record\" type=\"text\" ng-keypress=\"jumpTo($event,'sp')\" class=\"enterDataNumInput\" ng-model=\"spIndex\"></input>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "              <button type=\"button\" name=\"spFwd\" title=\"Next Safety Plan Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"spIndex === 0\" ng-click=\"goSpForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
+    "\n" +
+    "                style=\"font-size:13px;width: 18px;\"></i>Next Safety Plan Info.\r" +
+    "\n" +
+    "              </button>\r" +
+    "\n" +
+    "            </div><br>\r" +
+    "\n" +
+    "            <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"spText\" name=\"safetyPlanTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.safetyPlanTxt.$dirty && enterWdgtForm.safetyPlanTxt.$valid}\" ng-change=\"enterDataChanged()\" id=\"spText\" maxlength=\"128\" title=\"Safety Plan Information\"></textarea>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"col-md-6\" \r" +
+    "\n" +
+    "          ng-attr-title=\"{{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
+    "\n" +
+    "          <label style=\"font-weight:normal\">VistA Records:</label>\r" +
+    "\n" +
+    "          <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "            <button type=\"button\" name=\"spSpanBack\" title=\"Previous Safety Plan VistA Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"spSpanIndex >= data.SafetyPlan_SPANImport.length-1\" ng-click=\"goSpSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>Previous Safety Plan VistA Info.\r" +
+    "\n" +
+    "            </button>\r" +
+    "\n" +
+    "            <div class=\"pull-left\">\r" +
+    "\n" +
+    "              <input title=\"Safety Plan VistA: Jump To Record\" type=\"text\" ng-keypress=\"jumpTo($event,'spspan')\" class=\"enterDataNumInput\" ng-model=\"spSpanIndex\"></input>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <button type=\"button\" name=\"spSpanFwd\" title=\"Next Safety Plan VistA Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"spSpanIndex === 0\" ng-click=\"goSpSpanForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i>Next Safety Plan VistA Info.\r" +
+    "\n" +
+    "            </button>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
+    "\n" +
+    "            <label style=\"font-weight:normal\">Safety Plan Current: {{data.SafetyPlan_SPANImport[spSpanIndex].SafetyPlanCurrent}}</label><br/>    \r" +
+    "\n" +
+    "            <label style=\"font-weight:normal\">Date Completed/Updated: {{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated | date: 'dd-MM-yyyy HH:mma'}}</label>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
     "    </div>\r" +
+    "\n" +
+    "  </div>\r" +
+    "\n" +
+    "  <div class=\"row\">\r" +
+    "\n" +
+    "    <div class=\"col-md-12 bs-example comment-text\">\r" +
+    "\n" +
+    "    <label style=\"margin-left:32px;\">General Notes</label>\r" +
+    "\n" +
+    "     <div class=\"panel-body\">\r" +
+    "\n" +
+    "       <div class=\"col-md-12\" ng-attr-title=\"{{data.GeneralComments[commentIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
+    "\n" +
+    "         <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "          <button type=\"button\" name=\"commentBack\" title=\"Previous Comments\" class=\"btn btn-default pull-left\" ng-disabled=\"commentIndex >= data.GeneralComments.length-1\" ng-click=\"goCommentBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>Previous Comments\r" +
+    "\n" +
+    "          </button>\r" +
+    "\n" +
+    "          <div class=\"pull-left\">\r" +
+    "\n" +
+    "            <input title=\"Comments: Jump To Record\" type=\"text\" ng-keypress=\"jumpTo($event,'comment')\" class=\"enterDataNumInput\" ng-model=\"commentIndex\"></input>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <button type=\"button\" name=\"commentFwd\" title=\"Next Comments\" class=\"btn btn-default pull-left\" ng-disabled=\"commentIndex === 0\" ng-click=\"goCommentForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i>Next Comments\r" +
+    "\n" +
+    "          </button>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"commentText\" name=\"commentTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.commentTxt.$dirty && enterWdgtForm.commentTxt.$valid}\" ng-change=\"enterDataChanged()\" id=\"commentText\" title=\"General Notes\"></textarea>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "  </div>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "<div class=\"row\">\r" +
+    "\n" +
+    "  <div class=\"col-md-6\" style=\"float:right;\">\r" +
+    "\n" +
+    "    <button type=\"button\" class=\"btn btn-primary btn-sm\" ng-click=\"addNewData()\" style=\"float:right;margin:5px;\">Add Data</button>\r" +
+    "\n" +
+    "    <button type=\"button\" class=\"btn btn-primary btn-sm\" ng-click=\"clearEdits()\" style=\"float:right;margin:5px;\">Clear Edits</button>\r" +
+    "\n" +
+    "  </div>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "</div>\r" +
     "\n" +
     "</div>\r" +
     "\n"

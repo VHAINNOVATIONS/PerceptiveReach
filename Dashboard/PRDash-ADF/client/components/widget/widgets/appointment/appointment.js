@@ -27,10 +27,7 @@ angular.module('ui.widgets')
       },
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scorllY option!!!
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
             .withOption('paging',false)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);

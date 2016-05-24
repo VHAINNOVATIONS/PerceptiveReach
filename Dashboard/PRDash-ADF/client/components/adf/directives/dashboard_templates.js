@@ -166,8 +166,6 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\r" +
     "\n" +
-    "            <button name=\"btnClear\" ng-click=\"clear();\"  alt=\"Clear\" title=\"Clear\"  type=\"button\" class=\"btn btn-info\">Clear</button>\r" +
-    "\n" +
     "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Individual View'\" title=\"Individual View Layout\">\r" +
     "\n" +
     "                <label alt=\"{{ PatientName }}\" style=\"font-weight:normal\">\r" +
@@ -217,8 +215,6 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "                    <div class=\"panel-title\">\r" +
     "\n" +
     "                        <span style=\"background-color: transparent;margin-right:3px;\" class=\"label-primary widget-title nav pull-left\">{{widget.title}}</span>\r" +
-    "\n" +
-    "                        <span class=\"label label-primary\" ng-if=\"!options.hideWidgetName\" tabindex=\"-1\">{{widget.name}}</span>\r" +
     "\n" +
     "                        <div id=\"widgetSettings\" style=\"display:inline-block; float:right; position:relative;\">\r" +
     "\n" +
