@@ -102,9 +102,12 @@ When(/^I click on close on the "(.*?)" widget$/) do |widgetname|
 #all(:xpath, "//span[normalize-space(text())='#{title}']/following::button[1]")[1].click
 #page.find(:xpath, ".//span[text()='Emergency Contact Information']/following-sibling::div/child::button").click
 #el = page.find(:xpath, ".//span[text()='Emergency Contact Information']/following-sibling::div/child::button")
-jScript = "$($('.panel-title>span:contains(\""+ widgetname +"\")').siblings()[1]).find('button').click()"
-page.execute_script(jScript)
+#jScript = "$($('.panel-title>span:contains(\""+ widgetname +"\")').siblings()[1]).find('button').click()"
+#page.execute_script(jScript)
+page.find(:xpath, ".//span[text()='#{title}']/following-sibling::div/child::button").click
 end
+
+
 
 When(/^I select VISN Roster "(.*?)" veteran row in the widget$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
@@ -605,3 +608,9 @@ Then(/^I should wait for twenty seconds$/) do
   # pending # express the regexp above with the code you wish you had
   sleep(20)
 end    
+
+Then(/^I click on link "(.*?)"$/) do |arg1|
+  #pending # express the regexp above with the code you wish you had
+# find_link(arg1).click
+find(:xpath, '//*[@id="tblPatient_wrapper"]/div[1]/a/span/a').click
+end

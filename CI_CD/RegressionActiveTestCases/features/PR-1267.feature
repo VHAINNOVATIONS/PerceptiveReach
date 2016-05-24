@@ -12,7 +12,7 @@ And I click on check box "checky"
   Then I click on the Default Widgets button
   Then I should wait
   Then I should see "Patient Roster by VAMC" widget
-  And I should see "Veteran_109258,Vet109258"
+  Then I select first Veteran
   Then I should see "Patient Contact" widget
   And I click on "Logout" button
 
