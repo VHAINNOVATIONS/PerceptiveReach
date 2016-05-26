@@ -23,27 +23,23 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/nationalMilitaryBranch/nationalMilitaryBranch.html',
        
-	controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+	controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
 	//$scope.dtOptions = DTOptionsBuilder.newOptions()
-	$scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
-        $scope.militaryBranchList = $scope.widgetData;
-        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
-          return new Promise( function(resolve, reject){
-            if ($scope.widgetData)
-              resolve($scope.widgetData);
-            else
-              resolve([]);
-          });
-        })
-		.withDOM('lfrti')
-		.withScroller()
-		.withOption('deferRender', true)
-    .withOption('scrollY', 200)
-		.withOption('paging',false)
-    .withOption('bDestroy',true)
-		.withOption('order', [1, 'desc']);
+  //$scope.dtInstanceAbstract = {};
+  $scope.dtInstance = {};
+  $scope.militaryBranchList = $scope.widgetData;
+  $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+    return new Promise( function(resolve, reject){
+      if ($scope.widgetData)
+        resolve($scope.widgetData);
+      else
+        resolve([]);
+    });
+  })
+	.withOption('paging',false)
+  .withOption('bDestroy',true)
+	.withOption('order', [1, 'desc']);
 	//.withPaginationType('full_numbers').withDisplayLength(5);
 	$scope.dtColumns = [
         DTColumnBuilder.newColumn('BranchDesc').withTitle('Branch'),
@@ -77,13 +73,9 @@ link: function postLink(scope, element, attr) {
               else
                 resolve([]);
             });
-        if(scope.dtInstance)
-          scope.dtInstance.changeData(promise);
-        else {
-          scope.dtInstanceAbstract.getList().then(function(dtInstances){
-            dtInstances.tblMilitaryBranch._renderer.changeData(promise)              
-          });
-        }
+        scope.dtInstance.changeData(function() {
+                  return promise;
+              });
   	  }
      },1000)
 	});

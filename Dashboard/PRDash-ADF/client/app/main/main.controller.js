@@ -69,7 +69,7 @@ angular.module('app')
         layouts.push(layout);
       }
       if (user.Facility_View_Access){
-        layout = { title: 'Facility View', active: (role.match(/^(CCT)$/)) ? true : false, defaultWidgets: defaultWidgetsLayout.facility, widgetDefinitions: widgetsAllObj.facility,IsMalhar:true};
+        layout = { title: 'Facility View', active: (role.match(/^(CCT|CCS)$/)) ? true : false, defaultWidgets: defaultWidgetsLayout.facility, widgetDefinitions: widgetsAllObj.facility,IsMalhar:true};
         if (layout.active) activeView = "facility";
         layouts.push(layout);  
       }

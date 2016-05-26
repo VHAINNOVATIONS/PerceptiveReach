@@ -87,7 +87,7 @@ angular.module('ui.dashboard')
             minSizeX: 5, // minimum column width of an item
             maxSizeX: null, // maximum column width of an item
             minSizeY: 5, // minumum row height of an item
-            maxSizeY: null, // maximum row height of an item
+            maxSizeY: 14, // maximum row height of an item
             resizable: {
                enabled: true,
                handles: ['n', 'e', 's', 'w', 'ne', 'se', 'sw', 'nw'],
@@ -99,7 +99,7 @@ angular.module('ui.dashboard')
                 scope.$broadcast('gridsterResized');
                 $timeout(function(){
                   var containerHeight = parseInt($($element).find('.widget-content').css('height'),10);
-                  $($element).find('.dataTables_scrollBody').css('height',.78 * containerHeight);
+                  $($element).find('.dataTables_scrollBody').css('height',.75 * containerHeight);
                 },800);
                 scope.saveDashboard();
                } // optional callback fired when item is finished resizing
@@ -117,6 +117,11 @@ angular.module('ui.dashboard')
                } // optional callback fired when item is finished dragging
             }
         };
+
+        scope.CloseSaveAlert =  function(){
+          $(".unsavedDataAlert").fadeOut();
+        }
+
 
       }],
       link: function (scope) {
@@ -937,6 +942,10 @@ angular.module('ui.dashboard')
           };
 
           scope.makeLayoutActive = function(layout) {
+            if(scope.common && scope.common.data && scope.common.data.EnterDataIsUnsaved == true){
+              $(".unsavedDataAlert").fadeIn();
+              return;
+            }
 
             var current = layoutStorage.getActiveLayout();
 
@@ -1317,6 +1326,14 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/adf/directives/dashboard/dashboard.html",
     "<div>\r" +
     "\n" +
+    "    <div class=\"alert alert-warning unsavedDataAlert\">\r" +
+    "\n" +
+    "          <p>You have Unsaved changes in EnterData widget, Please Save or Undo changes and retry.</p>\r" +
+    "\n" +
+    "          <button name=\"btnSaveAlertOk\" alt=\"Unsaved Changes\" class=\"btn btn-primary\" ng-click=\"CloseSaveAlert()\">OK</button>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
     "    <div offset=\"105\" style=\"z-index:5;background-color:white;\" sticky tabindex=\"-1\">\r" +
     "\n" +
     "        <div class=\"alert alert-success snoAlertBox\" data-alert=\"alert\">This widget has already been added to your dashboard. Please select a different widget to add.</div>\r" +
@@ -1371,8 +1388,6 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\r" +
     "\n" +
-    "            <button name=\"btnClear\" ng-click=\"clear();\"  alt=\"Clear\" title=\"Clear\"  type=\"button\" class=\"btn btn-info\">Clear</button>\r" +
-    "\n" +
     "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Individual View'\" title=\"Individual View Layout\">\r" +
     "\n" +
     "                <label alt=\"{{ PatientName }}\" style=\"font-weight:normal\">\r" +
@@ -1422,8 +1437,6 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "                    <div class=\"panel-title\">\r" +
     "\n" +
     "                        <span style=\"background-color: transparent;margin-right:3px;\" class=\"label-primary widget-title nav pull-left\">{{widget.title}}</span>\r" +
-    "\n" +
-    "                        <span class=\"label label-primary\" ng-if=\"!options.hideWidgetName\" tabindex=\"-1\">{{widget.name}}</span>\r" +
     "\n" +
     "                        <div id=\"widgetSettings\" style=\"display:inline-block; float:right; position:relative;\">\r" +
     "\n" +
@@ -1920,7 +1933,13 @@ angular.module('ui.dashboard')
         }
 
         var serialized = _.map(widgets, function (widget) {
-          var w = widget.serialize();
+          var temp = widget.serialize();
+          var w = $.extend( true, {}, temp );
+          if(_.has(w,"dataModelOptions") && _.has(w.dataModelOptions,"common") && _.has(w.dataModelOptions.common,"data") 
+            && _.has(w.dataModelOptions.common.data,"veteranObj") && _.has(w.dataModelOptions.common.data.veteranObj,"OutreachStatus"))
+          {
+            delete w.dataModelOptions.common.data.veteranObj.OutreachStatus;
+          }
           w.col = widget.col;
           w.row = widget.row;
           w.sizeX = widget.sizeX;

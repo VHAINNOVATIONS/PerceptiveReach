@@ -87,7 +87,7 @@ angular.module('ui.dashboard')
             minSizeX: 5, // minimum column width of an item
             maxSizeX: null, // maximum column width of an item
             minSizeY: 5, // minumum row height of an item
-            maxSizeY: null, // maximum row height of an item
+            maxSizeY: 14, // maximum row height of an item
             resizable: {
                enabled: true,
                handles: ['n', 'e', 's', 'w', 'ne', 'se', 'sw', 'nw'],
@@ -99,7 +99,7 @@ angular.module('ui.dashboard')
                 scope.$broadcast('gridsterResized');
                 $timeout(function(){
                   var containerHeight = parseInt($($element).find('.widget-content').css('height'),10);
-                  $($element).find('.dataTables_scrollBody').css('height',.78 * containerHeight);
+                  $($element).find('.dataTables_scrollBody').css('height',.75 * containerHeight);
                 },800);
                 scope.saveDashboard();
                } // optional callback fired when item is finished resizing
@@ -117,6 +117,11 @@ angular.module('ui.dashboard')
                } // optional callback fired when item is finished dragging
             }
         };
+
+        scope.CloseSaveAlert =  function(){
+          $(".unsavedDataAlert").fadeOut();
+        }
+
 
       }],
       link: function (scope) {
