@@ -9,11 +9,13 @@
 			<li gridster-item size-x="15" size-y="8" class="gridsterContainer" >
 				<div class="container-fluid" style="height:100%;">
 					<div class="row" style="height:100%;">
-						<strong style="padding:5px;">Total Patients At-Risk by States</strong>
-						<div style="font-size: 1em;display: none" class="LoadingDiv">
-							<span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <label>Loading Visualization...</label>
+						<div class="chartHeader">
+							<p>Total Patients At-Risk by States</p>
+						</div>
+						<div class="LoadingDiv">
+							<span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <label>Loading...</label>
 						</div> 
-						<div id="us-chart" style="width:100%;height:100%;">
+						<div id="us-chart" style="width:100%;height:95%;">
 							<a class="reset"   href="#" ng-click="resetChart('usChart')"  style="display: none;">reset</a>
 							<span class="reset" style="display: none;"> | Current filter: <span class="filter"></span></span>
 							<div class="clearfix"></div>
@@ -22,9 +24,11 @@
 				</div>
 			</li>
 			<li gridster-item size-x="15" size-y="4" class="gridsterContainer" >
-				<strong style="padding:5px;">Total Patients per VISN</strong>
-				<div style="font-size: 1em;display: none" class="LoadingDiv">
-					<span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <label>Loading Visualization...</label>
+				<div class="chartHeader">
+					<p>Total Patients per VISN</p>
+				</div>
+				<div class="LoadingDiv">
+					<span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <label>Loading...</label>
 				</div> 
 				<div id="visnBar-chart" class="dc-chart" style="width:100%;height:100%;">
 					<span class="reset" style="display: none;">range: <span class="filter"></span></span>
@@ -33,50 +37,60 @@
 				</div>
 			</li>
 			<li gridster-item size-x="7" size-y="4" class="gridsterContainer" >
-				<strong style="padding:5px;">Marital Status</strong>
-				<div style="font-size: 1em;display: none" class="LoadingDiv">
-					<span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <label>Loading Visualization...</label>
+				<div class="chartHeader">
+					<p>Marital Status</p>
+				</div>
+				<div class="LoadingDiv">
+					<span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <label>Loading...</label>
 				</div> 
-				<div id="marital-chart" class="dc-chart" style="width:100%;height:100%;">
+				<div id="marital-chart" class="dc-chart" style="width:100%;height:95%;">
 					<span class="reset" style="display: none;">range: <span class="filter"></span></span>
 					<a class="reset"   href="#" ng-click="resetChart('visnBarChart')"  style="display: none;">reset</a>
 					<div class="clearfix"></div>
 				</div>
 			</li>
 			<li gridster-item size-x="4" size-y="4" class="gridsterContainer" >
-				<strong>Gender Chart</strong>
-				<div style="font-size: 1em;display: none" class="LoadingDiv">
-					<span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <label>Loading Visualization...</label>
+				<div class="chartHeader">
+					<p>Gender Chart</p>
+				</div>
+				<div class="LoadingDiv">
+					<span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <label>Loading...</label>
 				</div> 
-				<div id="gender-chart" class="dc-chart" style="width:100%;height:100%;">
+				<div id="gender-chart" class="dc-chart" style="width:100%;height:95%;">
 					<a class="reset"   href="#" ng-click="resetChart('genderChart')"  style="display: none;">reset</a>
 					<div class="clearfix"></div>
 				</div>
 			</li>
 			<li gridster-item size-x="4" size-y="4" class="gridsterContainer" >
-				<strong>Risk Chart</strong>
-				<div style="font-size: 1em;display: none" class="LoadingDiv">
-					<span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <label>Loading Visualization...</label>
+				<div class="chartHeader">
+					<p>Risk Chart</p>
+				</div>
+				<div class="LoadingDiv">
+					<span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <label>Loading...</label>
 				</div> 
-				<div id="risk-chart" class="dc-chart" style="width:100%;height:100%;">
+				<div id="risk-chart" class="dc-chart" style="width:100%;height:95%;">
 					<a class="reset"   href="#" ng-click="resetChart('riskChart')"  style="display: none;">reset</a>
 					<div class="clearfix"></div>
 				</div>
 			</li>
 			<li gridster-item size-x="15" size-y="7" class="gridsterContainer" >
-				<strong>Military Branch</strong>
-				<div style="font-size: 1em;display: none" class="LoadingDiv">
-					<span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <label>Loading Visualization...</label>
+				<div class="chartHeader">
+					<p>Military Branch</p>
+				</div>
+				<div class="LoadingDiv">
+					<span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <label>Loading...</label>
 				</div> 
-				<div id="military-chart" class="dc-chart" style="width:100%;height:100%;">
+				<div id="military-chart" class="dc-chart" style="width:100%;height:95%;">
 					<a class="reset"   href="#" ng-click="resetChart('militaryChart')"  style="display: none;">reset</a>
 					<div class="clearfix"></div>
 				</div>
 			</li>
 			<li gridster-item size-x="15" size-y="7" class="gridsterContainer" >
-				<strong>Total Patients vs Total Risk in VAMC</strong>
-				<div style="font-size: 1em;display: none" class="LoadingDiv">
-					<span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <label>Loading Visualization...</label>
+				<div class="chartHeader">
+					<p>Total Patients vs Total Risk in VAMC</p>
+				</div>
+				<div class="LoadingDiv">
+					<span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <label>Loading...</label>
 				</div> 
 				<div id="vamc-bubble-chart" class="dc-chart" style="width:100%;height:100%;">
 					<a class="reset"   href="#" ng-click="resetChart('vamcBubbleChart')"  style="display: none;">reset</a>

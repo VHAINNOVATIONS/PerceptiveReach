@@ -673,7 +673,7 @@ angular.module('ui.dashboard')
 
             var projection = d3.geo.albersUsa()
               .scale(width)
-              .translate([width/2, height/1.95]);
+              .translate([width/2, height/2]);
 
             scope.usChart
              .width(width)
@@ -713,7 +713,7 @@ angular.module('ui.dashboard')
               .xAxis().tickFormat();
 
             var genderChartWidth = parseInt(d3.select('#gender-chart').style('width'));
-            var genderChartHeight = parseInt(d3.select('#gender-chart').style('height'));
+            var genderChartHeight = parseInt(d3.select('#gender-chart').style('height')) * .8;
 
             scope.genderChart
               .width(genderChartWidth)
@@ -723,7 +723,7 @@ angular.module('ui.dashboard')
               .group(genderGroup);
 
             var riskChartWidth = parseInt(d3.select('#risk-chart').style('width'));
-            var riskChartHeight = parseInt(d3.select('#risk-chart').style('height'));
+            var riskChartHeight = parseInt(d3.select('#risk-chart').style('height')) * .8;
 
             scope.riskChart
               .width(riskChartWidth)
@@ -1064,15 +1064,19 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t\t\t<div class=\"row\" style=\"height:100%;\">\r" +
     "\n" +
-    "\t\t\t\t\t\t<strong style=\"padding:5px;\">Total Patients At-Risk by States</strong>\r" +
+    "\t\t\t\t\t\t<div class=\"chartHeader\">\r" +
     "\n" +
-    "\t\t\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\t\t\t\t\t\t\t<p>Total Patients At-Risk by States</p>\r" +
     "\n" +
-    "\t\t\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\t\t\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t\t\t\t<div class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading...</label>\r" +
     "\n" +
     "\t\t\t\t\t\t</div> \r" +
     "\n" +
-    "\t\t\t\t\t\t<div id=\"us-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\t\t\t\t\t\t<div id=\"us-chart\" style=\"width:100%;height:95%;\">\r" +
     "\n" +
     "\t\t\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('usChart')\"  style=\"display: none;\">reset</a>\r" +
     "\n" +
@@ -1090,11 +1094,15 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<li gridster-item size-x=\"15\" size-y=\"4\" class=\"gridsterContainer\" >\r" +
     "\n" +
-    "\t\t\t\t<strong style=\"padding:5px;\">Total Patients per VISN</strong>\r" +
+    "\t\t\t\t<div class=\"chartHeader\">\r" +
     "\n" +
-    "\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\t\t\t\t\t<p>Total Patients per VISN</p>\r" +
     "\n" +
-    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t\t<div class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading...</label>\r" +
     "\n" +
     "\t\t\t\t</div> \r" +
     "\n" +
@@ -1112,15 +1120,19 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<li gridster-item size-x=\"7\" size-y=\"4\" class=\"gridsterContainer\" >\r" +
     "\n" +
-    "\t\t\t\t<strong style=\"padding:5px;\">Marital Status</strong>\r" +
+    "\t\t\t\t<div class=\"chartHeader\">\r" +
     "\n" +
-    "\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\t\t\t\t\t<p>Marital Status</p>\r" +
     "\n" +
-    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t\t<div class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading...</label>\r" +
     "\n" +
     "\t\t\t\t</div> \r" +
     "\n" +
-    "\t\t\t\t<div id=\"marital-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\t\t\t\t<div id=\"marital-chart\" class=\"dc-chart\" style=\"width:100%;height:95%;\">\r" +
     "\n" +
     "\t\t\t\t\t<span class=\"reset\" style=\"display: none;\">range: <span class=\"filter\"></span></span>\r" +
     "\n" +
@@ -1134,15 +1146,19 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<li gridster-item size-x=\"4\" size-y=\"4\" class=\"gridsterContainer\" >\r" +
     "\n" +
-    "\t\t\t\t<strong>Gender Chart</strong>\r" +
+    "\t\t\t\t<div class=\"chartHeader\">\r" +
     "\n" +
-    "\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\t\t\t\t\t<p>Gender Chart</p>\r" +
     "\n" +
-    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t\t<div class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading...</label>\r" +
     "\n" +
     "\t\t\t\t</div> \r" +
     "\n" +
-    "\t\t\t\t<div id=\"gender-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\t\t\t\t<div id=\"gender-chart\" class=\"dc-chart\" style=\"width:100%;height:95%;\">\r" +
     "\n" +
     "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('genderChart')\"  style=\"display: none;\">reset</a>\r" +
     "\n" +
@@ -1154,15 +1170,19 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<li gridster-item size-x=\"4\" size-y=\"4\" class=\"gridsterContainer\" >\r" +
     "\n" +
-    "\t\t\t\t<strong>Risk Chart</strong>\r" +
+    "\t\t\t\t<div class=\"chartHeader\">\r" +
     "\n" +
-    "\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\t\t\t\t\t<p>Risk Chart</p>\r" +
     "\n" +
-    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t\t<div class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading...</label>\r" +
     "\n" +
     "\t\t\t\t</div> \r" +
     "\n" +
-    "\t\t\t\t<div id=\"risk-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\t\t\t\t<div id=\"risk-chart\" class=\"dc-chart\" style=\"width:100%;height:95%;\">\r" +
     "\n" +
     "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('riskChart')\"  style=\"display: none;\">reset</a>\r" +
     "\n" +
@@ -1174,15 +1194,19 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<li gridster-item size-x=\"15\" size-y=\"7\" class=\"gridsterContainer\" >\r" +
     "\n" +
-    "\t\t\t\t<strong>Military Branch</strong>\r" +
+    "\t\t\t\t<div class=\"chartHeader\">\r" +
     "\n" +
-    "\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\t\t\t\t\t<p>Military Branch</p>\r" +
     "\n" +
-    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t\t<div class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading...</label>\r" +
     "\n" +
     "\t\t\t\t</div> \r" +
     "\n" +
-    "\t\t\t\t<div id=\"military-chart\" class=\"dc-chart\" style=\"width:100%;height:100%;\">\r" +
+    "\t\t\t\t<div id=\"military-chart\" class=\"dc-chart\" style=\"width:100%;height:95%;\">\r" +
     "\n" +
     "\t\t\t\t\t<a class=\"reset\"   href=\"#\" ng-click=\"resetChart('militaryChart')\"  style=\"display: none;\">reset</a>\r" +
     "\n" +
@@ -1194,11 +1218,15 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t\t\t<li gridster-item size-x=\"15\" size-y=\"7\" class=\"gridsterContainer\" >\r" +
     "\n" +
-    "\t\t\t\t<strong>Total Patients vs Total Risk in VAMC</strong>\r" +
+    "\t\t\t\t<div class=\"chartHeader\">\r" +
     "\n" +
-    "\t\t\t\t<div style=\"font-size: 1em;display: none\" class=\"LoadingDiv\">\r" +
+    "\t\t\t\t\t<p>Total Patients vs Total Risk in VAMC</p>\r" +
     "\n" +
-    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading Visualization...</label>\r" +
+    "\t\t\t\t</div>\r" +
+    "\n" +
+    "\t\t\t\t<div class=\"LoadingDiv\">\r" +
+    "\n" +
+    "\t\t\t\t\t<span class=\"glyphicon glyphicon-refresh glyphicon-spin\"></span> <label>Loading...</label>\r" +
     "\n" +
     "\t\t\t\t</div> \r" +
     "\n" +

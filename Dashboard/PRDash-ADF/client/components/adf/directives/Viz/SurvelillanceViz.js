@@ -186,7 +186,7 @@ angular.module('ui.dashboard')
 
             var projection = d3.geo.albersUsa()
               .scale(width)
-              .translate([width/2, height/1.95]);
+              .translate([width/2, height/2]);
 
             scope.usChart
              .width(width)
@@ -226,7 +226,7 @@ angular.module('ui.dashboard')
               .xAxis().tickFormat();
 
             var genderChartWidth = parseInt(d3.select('#gender-chart').style('width'));
-            var genderChartHeight = parseInt(d3.select('#gender-chart').style('height'));
+            var genderChartHeight = parseInt(d3.select('#gender-chart').style('height')) * .8;
 
             scope.genderChart
               .width(genderChartWidth)
@@ -236,7 +236,7 @@ angular.module('ui.dashboard')
               .group(genderGroup);
 
             var riskChartWidth = parseInt(d3.select('#risk-chart').style('width'));
-            var riskChartHeight = parseInt(d3.select('#risk-chart').style('height'));
+            var riskChartHeight = parseInt(d3.select('#risk-chart').style('height')) * .8;
 
             scope.riskChart
               .width(riskChartWidth)

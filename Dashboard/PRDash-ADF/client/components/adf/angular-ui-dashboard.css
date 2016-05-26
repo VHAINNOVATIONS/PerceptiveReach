@@ -81,6 +81,17 @@
 
 .gridsterContainer
 {
-  border: 2px solid #979797;  
+  border: 1px solid #ddd;  
   border-radius: 4px;
+}
+
+.chartHeader
+{
+  width: 100%;
+  text-align: center; 
+}
+
+.LoadingDiv
+{
+  padding-left: 40%
 }
