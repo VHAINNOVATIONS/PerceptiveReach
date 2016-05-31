@@ -614,3 +614,12 @@ Then(/^I click on link "(.*?)"$/) do |arg1|
 # find_link(arg1).click
 find(:xpath, '//*[@id="tblPatient_wrapper"]/div[1]/a/span/a').click
 end
+
+When(/^I click on "(.*?)" button multiple times$/) do |arg1|
+i = 0 
+count = 10
+  while i < count do
+  find_button(arg1).click 
+  i = i+1
+  end
+end
