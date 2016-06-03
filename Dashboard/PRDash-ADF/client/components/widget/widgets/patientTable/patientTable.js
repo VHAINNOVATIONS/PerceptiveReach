@@ -96,6 +96,7 @@ angular.module('ui.widgets')
               return ( n.ReachID == vetId );
             });
             commonData.data.veteranObj = obj[0];
+            commonData.data.patientRosterScrollPos = $('#patientRosterDiv .dataTables_scrollBody').scrollTop();;
             console.log("CommonDataAfterClick: ", commonData);
             // broadcast message throughout system
             $scope.$parent.$parent.$parent.$broadcast('commonDataChanged', commonData);
@@ -180,7 +181,10 @@ angular.module('ui.widgets')
               }
               else
               {
-                $('#tblPatient').find( "tbody>tr td:contains('"+commonData.data.veteranObj.Name+"')" ).click();
+                $('#patientRosterDiv .dataTables_scrollBody').scrollTop(commonData.data.patientRosterScrollPos);
+                $timeout(function() {
+                  $('#tblPatient').find( "tbody>tr td:contains('"+commonData.data.veteranObj.Name+"')" ).click();
+                }, 500);
               }
             },500)            
           }
