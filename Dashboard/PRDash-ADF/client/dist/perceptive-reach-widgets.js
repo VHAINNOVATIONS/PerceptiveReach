@@ -3333,11 +3333,8 @@ angular.module('ui.widgets')
               else
                 facilityId = commonData.data.facilitySelected.facility;             
                 facilityName = commonData.data.facilitySelected.facilityName;             
-              //scope.previousSelectedRowIndex = null;
             }
             else{
-              //$('tr.selected').removeClass('selected');
-              //$(this).hasClass('selected').removeClass('selected');
               console.log("tableroster:",$('#tblFacilityRoster'));//.cells().nodes().removeClass('selected');
               console.log("facilityroster has class:",$('#tblFacilityRoster tbody tr').hasClass('selected'));
               console.log("facilityroster tr:",$('#tblFacilityRoster tbody tr'));
@@ -3361,14 +3358,15 @@ angular.module('ui.widgets')
             }
             else if(activeView == "facility")
             {
+              if(commonData.data.facilitySelected && commonData.data.facilitySelected.facility != facilityId )
+              {
+                commonData.data.veteranObj = '';
+              }
               commonData.data.facilitySelected.facility = facilityId;
               commonData.data.facilitySelected.facilityName = facilityName;
             }
-            //console.log("CommonDataAfterClick: ", commonData);
-
             // broadcast message throughout system
             scope.$root.$broadcast('commonDataChanged', commonData);
-            //scope.$apply();
           });
 
           $('#facilityRosterDiv .dataTables_scrollHeadInner,#facilityRosterDiv table').css({'width':''});
@@ -3381,12 +3379,13 @@ angular.module('ui.widgets')
           if(data != null && data.length >0){
               scope.data = data;
               scope.facilityList = data;
-              
-              $timeout(function(){
-                scope.$emit('bindEvents');
+               scope.$emit('bindEvents');
+
+              $timeout(function(){               
                 $.fn.dataTable.ext.errMode = 'throw';
                 var commonData = scope.widget.dataModelOptions.common;
                 var activeView = commonData.data.activeView;
+                var selectedRow = null; 
                 if(activeView == "facility"){
                   if(commonData.data.facilitySelected.facility == null || commonData.data.facilitySelected.facility.toString().length == 0)
                   {
@@ -3394,39 +3393,37 @@ angular.module('ui.widgets')
                   }
                   else
                   {
-                    var selectedRow = null; 
                     $('#tblFacilityRoster tbody tr').each(function(){
                         var textcolumn = $(this).find('td').eq(0).text();
                         if($(this).find('td').eq(0).text() == commonData.data.facilitySelected.facility){
-                            selectedRow = $(this)[0];
+                            selectedRow = $(this);
+                            selectedRow.click();
                         }
                     }); 
-                    console.log("FacilityRoster selected:", selectedRow);
-                    console.log("FacilityRoster selected row index:", selectedRow.rowIndex);
-                    selectedRow.click();
-                    $('#tblFacilityRoster_wrapper > div > div.dataTables_scrollBody').animate({
-                      scrollTop: $('#tblFacilityRoster tbody tr').eq(selectedRow.rowIndex-9).offset().top
-                    },500)
                   }  
                 }
                 else if(activeView == "surveillance"){
                   if(commonData.data.facilitySelected.surveillance != null && commonData.data.facilitySelected.surveillance.toString().length > 0)
                   {
-                    var selectedRow = null; 
                     $('#tblFacilityRoster tbody tr').each(function(){
                         var textcolumn = $(this).find('td').eq(0).text();
                         if($(this).find('td').eq(0).text() == commonData.data.facilitySelected.surveillance){
                             selectedRow = $(this);
+                            selectedRow.addClass('selected');
                         }
-                    }); 
-                    console.log("FacilityRoster selected:", selectedRow);
-                    console.log("FacilityRoster selected row index:", selectedRow[0].rowIndex);           
-                    
-                    selectedRow.addClass('selected');//selectedRow.click();
-                    $('#tblFacilityRoster_wrapper > div > div.dataTables_scrollBody').animate({
-                      scrollTop: $('#tblFacilityRoster tbody tr').eq(selectedRow[0].rowIndex-8).offset().top
-                    },500);                                      
+                    });                                
                   }  
+                }
+
+                if(selectedRow)
+                {
+                  var rowPosition = selectedRow[0].rowIndex-8;
+                  if(rowPosition > 0)
+                  {
+                    $('#facilityRosterDiv').parent().animate({  
+                      scrollTop: $('#tblFacilityRoster tbody tr').eq(rowPosition).offset().top
+                    },500);
+                  }
                 }
                 
               },1500)            
@@ -4809,6 +4806,7 @@ angular.module('ui.widgets')
               return ( n.ReachID == vetId );
             });
             commonData.data.veteranObj = obj[0];
+            commonData.data.patientRosterScrollPos = $('#patientRosterDiv .dataTables_scrollBody').scrollTop();;
             console.log("CommonDataAfterClick: ", commonData);
             // broadcast message throughout system
             $scope.$parent.$parent.$parent.$broadcast('commonDataChanged', commonData);
@@ -4893,7 +4891,10 @@ angular.module('ui.widgets')
               }
               else
               {
-                $('#tblPatient').find( "tbody>tr td:contains('"+commonData.data.veteranObj.Name+"')" ).click();
+                $('#patientRosterDiv .dataTables_scrollBody').scrollTop(commonData.data.patientRosterScrollPos);
+                $timeout(function() {
+                  $('#tblPatient').find( "tbody>tr td:contains('"+commonData.data.veteranObj.Name+"')" ).click();
+                }, 500);
               }
             },500)            
           }
@@ -5441,9 +5442,8 @@ angular.module('ui.widgets')
           if(data != null && data.length >0){
               scope.data = data;
               scope.visnList = data;
-                           
+              scope.$emit('bindEvents');                           
               $timeout(function(){
-                scope.$emit('bindEvents');
                 $.fn.dataTable.ext.errMode = 'throw';
                 var commonData = scope.widget.dataModelOptions.common;
                 var activeView = commonData.data.activeView;
@@ -5455,15 +5455,17 @@ angular.module('ui.widgets')
                         var textcolumn = $(this).find('td').eq(0).text();
                         if($(this).find('td').eq(0).text() == commonData.data.visnSelected.surveillance){
                             selectedRow = $(this);
+                            selectedRow.addClass('selected');//click();
+                            //selectedRow[0].click();//.dataTables_scrollBody
+                            var rowPosition = selectedRow[0].rowIndex - 6;
+                            if(rowPosition > 0)
+                            {
+                              $('#VISNRosterDiv').parent().animate({
+                                scrollTop: $('#tblVismRoster tbody tr').eq(rowPosition).offset().top
+                              },500)
+                            }
                         }
-                    }); 
-                    console.log("VISN Roster selected:", selectedRow);
-                    console.log("VISNRoster selected row index:", selectedRow[0].rowIndex);
-                    selectedRow.addClass('selected');//click();
-                    //selectedRow[0].click();//.dataTables_scrollBody
-                    $('#tblVismRoster_wrapper > div > div.dataTables_scrollBody').animate({
-                      scrollTop: $('#tblVismRoster tbody tr').eq(selectedRow[0].rowIndex).offset().top
-                    },500)
+                    });  
                   }    
                 }                
               },1500)            

@@ -165,9 +165,8 @@ angular.module('ui.widgets')
           if(data != null && data.length >0){
               scope.data = data;
               scope.visnList = data;
-                           
+              scope.$emit('bindEvents');                           
               $timeout(function(){
-                scope.$emit('bindEvents');
                 $.fn.dataTable.ext.errMode = 'throw';
                 var commonData = scope.widget.dataModelOptions.common;
                 var activeView = commonData.data.activeView;
@@ -179,15 +178,17 @@ angular.module('ui.widgets')
                         var textcolumn = $(this).find('td').eq(0).text();
                         if($(this).find('td').eq(0).text() == commonData.data.visnSelected.surveillance){
                             selectedRow = $(this);
+                            selectedRow.addClass('selected');//click();
+                            //selectedRow[0].click();//.dataTables_scrollBody
+                            var rowPosition = selectedRow[0].rowIndex - 6;
+                            if(rowPosition > 0)
+                            {
+                              $('#VISNRosterDiv').parent().animate({
+                                scrollTop: $('#tblVismRoster tbody tr').eq(rowPosition).offset().top
+                              },500)
+                            }
                         }
-                    }); 
-                    console.log("VISN Roster selected:", selectedRow);
-                    console.log("VISNRoster selected row index:", selectedRow[0].rowIndex);
-                    selectedRow.addClass('selected');//click();
-                    //selectedRow[0].click();//.dataTables_scrollBody
-                    $('#tblVismRoster_wrapper > div > div.dataTables_scrollBody').animate({
-                      scrollTop: $('#tblVismRoster tbody tr').eq(selectedRow[0].rowIndex).offset().top
-                    },500)
+                    });  
                   }    
                 }                
               },1500)            
