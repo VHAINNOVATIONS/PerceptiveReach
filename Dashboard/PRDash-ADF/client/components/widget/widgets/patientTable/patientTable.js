@@ -125,6 +125,8 @@ angular.module('ui.widgets')
     				$(this).attr('scope','col');
             $(this).attr('tabindex','-1');
           });
+
+          $('#patientRosterDiv .dt-buttons').attr('title','Patient Roster-Export to Excel')
 			
 		      $('#tblPatient_info').attr('title','Patient Table: Tab to move to the next control');
     
