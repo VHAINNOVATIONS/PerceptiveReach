@@ -819,20 +819,17 @@ angular.module('ui.models')
     angular.extend(AgeGroupsMetricsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentID = null;
-        var currentVISN = null;
-        var currentSTA3N = null;
         if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
           if(dataModelOptions.common.data.facilitySelected.surveillance) {
-            currentSTA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+            this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
           }
 
           if(dataModelOptions.common.data.visnSelected.surveillance) {
-            currentVISN = dataModelOptions.common.data.visnSelected.surveillance;
+            this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
           }
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentSTA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+          this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
@@ -968,20 +965,18 @@ angular.module('ui.models')
     angular.extend(GenderDistributionMetricsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentID = null;
-        var currentVISN = null;
-        var currentSTA3N = null;
+
         if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
           if(dataModelOptions.common.data.facilitySelected.surveillance) {
-            currentSTA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+            this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
           }
 
           if(dataModelOptions.common.data.visnSelected.surveillance) {
-            currentVISN = dataModelOptions.common.data.visnSelected.surveillance;
+            this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
           }
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentSTA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+          this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
@@ -1049,15 +1044,15 @@ angular.module('ui.models')
     angular.extend(PredictionChartDataModel.prototype, {
       init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentSTA3N = null;
+
 
         if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
           if(dataModelOptions.common.data.facilitySelected.surveillance) {
-            currentSTA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+            this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
           }
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentSTA3N = null;
+            this.STA3N = null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
@@ -1138,19 +1133,17 @@ angular.module('ui.models')
     angular.extend(MilitaryBranchMetricsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentVISN = null;
-        var currentSTA3N = null;
         if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
           if(dataModelOptions.common.data.facilitySelected.surveillance) {
-            currentSTA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+            this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
           }
 
           if(dataModelOptions.common.data.visnSelected.surveillance) {
-            currentVISN = dataModelOptions.common.data.visnSelected.surveillance;
+            this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
           }
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentSTA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+          this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
@@ -1253,20 +1246,17 @@ angular.module('ui.models')
       angular.extend(TopMidRiskMetricsDataModel.prototype, {
         init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentID = null;
-        var currentVISN = null;
-        var currentSTA3N = null;
         if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
           if(dataModelOptions.common.data.facilitySelected.surveillance) {
-            currentSTA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+            this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
           }
 
           if(dataModelOptions.common.data.visnSelected.surveillance) {
-            currentVISN = dataModelOptions.common.data.visnSelected.surveillance;
+            this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
           }
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentSTA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+          this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
@@ -1460,37 +1450,34 @@ angular.module('ui.models')
     angular.extend(OutreachStatusMetricsDataModel.prototype, {
         init: function () {
 		   var dataModelOptions = this.dataModelOptions;
-		   var currentID = null;
-		   var currentVISN = null;
-		   var currentSTA3N = null;
 		   if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
   			 if(dataModelOptions.common.data.facilitySelected.surveillance) {
-  			   currentSTA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+  			   this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
   			 }
 
   			 if(dataModelOptions.common.data.visnSelected.surveillance) {
-  			   currentVISN = dataModelOptions.common.data.visnSelected.surveillance;
+  			   this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
 			 }
 		   }
 		   else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-			 currentSTA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+			   this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
 		   }
 
 		   this.widgetScope.$on('commonDataChanged', function (event, data) {
 
-			 this.currentVISN = this.VISN;
-			 this.currentSTA3N = this.STA3N;
+  			 this.currentVISN = this.VISN;
+  			 this.currentSTA3N = this.STA3N;
 
-			 if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-			   this.VISN = (dataModelOptions.common.data.visnSelected.surveillance) ? dataModelOptions.common.data.visnSelected.surveillance : null;
-			   this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
-			 }
-			 else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-			   this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
-			   this.VISN = null;
-			 }
+  			 if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+  			   this.VISN = (dataModelOptions.common.data.visnSelected.surveillance) ? dataModelOptions.common.data.visnSelected.surveillance : null;
+  			   this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
+  			 }
+  			 else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+  			   this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+  			   this.VISN = null;
+  			 }
 
-			 this.getData();
+  			 this.getData();
 
 		   }.bind(this));
 
@@ -1548,10 +1535,10 @@ angular.module('ui.models')
 
         if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
           if(dataModelOptions.common.data.visnSelected.surveillance)
-            currentVISN = dataModelOptions.common.data.visnSelected.surveillance;
+            this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentVISN = null;
+          this.VISN = null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
@@ -1633,12 +1620,6 @@ angular.module('ui.models')
           if(this.ID != this.currentID)
             this.getData();
 
-        }.bind(this));
-
-        this.widgetScope.$on('defaultWidgetsSelected', function (event, data) {
-          this.dataModelOptions.common = data;
-          this.currentID = this.ID;
-          this.getData();
         }.bind(this));
 
         this.updateScope([]);
@@ -3300,7 +3281,6 @@ angular.module('ui.widgets')
               $($('#tblFacilityRoster>tbody>tr')[0]).addClass('rowAtFocus');
               $($('#tblFacilityRoster>tbody>tr')[0]).css('backgroundColor','#f5f5f5');
             }
-            $('#facilityRosterDiv .dataTables_scrollBody').animate({ scrollTop: $('#tblFacilityRoster').find('tr.rowAtFocus')[0].offsetTop }, 500);
             return false;
           }
 
@@ -3371,7 +3351,6 @@ angular.module('ui.widgets')
 
           $('#facilityRosterDiv .dataTables_scrollHeadInner,#facilityRosterDiv table').css({'width':''});
           var containerHeight = parseInt($('#facilityRosterDiv').parent().css('height'),10);
-          $('#facilityRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
         });
 		
 
@@ -3418,7 +3397,7 @@ angular.module('ui.widgets')
                 if(selectedRow)
                 {
                   var rowPosition = selectedRow[0].rowIndex-8;
-                  if(rowPosition > 0)
+                  if(rowPosition > 0 && $('#facilityRosterDiv').parent().scrollTop() == 0)
                   {
                     $('#facilityRosterDiv').parent().animate({  
                       scrollTop: $('#tblFacilityRoster tbody tr').eq(rowPosition).offset().top
