@@ -101,7 +101,6 @@ angular.module('ui.widgets')
               $($('#tblFacilityRoster>tbody>tr')[0]).addClass('rowAtFocus');
               $($('#tblFacilityRoster>tbody>tr')[0]).css('backgroundColor','#f5f5f5');
             }
-            $('#facilityRosterDiv .dataTables_scrollBody').animate({ scrollTop: $('#tblFacilityRoster').find('tr.rowAtFocus')[0].offsetTop }, 500);
             return false;
           }
 
@@ -172,7 +171,6 @@ angular.module('ui.widgets')
 
           $('#facilityRosterDiv .dataTables_scrollHeadInner,#facilityRosterDiv table').css({'width':''});
           var containerHeight = parseInt($('#facilityRosterDiv').parent().css('height'),10);
-          $('#facilityRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
         });
 		
 
@@ -219,7 +217,7 @@ angular.module('ui.widgets')
                 if(selectedRow)
                 {
                   var rowPosition = selectedRow[0].rowIndex-8;
-                  if(rowPosition > 0)
+                  if(rowPosition > 0 && $('#facilityRosterDiv').parent().scrollTop() == 0)
                   {
                     $('#facilityRosterDiv').parent().animate({  
                       scrollTop: $('#tblFacilityRoster tbody tr').eq(rowPosition).offset().top
