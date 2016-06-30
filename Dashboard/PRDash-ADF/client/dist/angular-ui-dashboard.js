@@ -192,8 +192,14 @@ angular.module('ui.dashboard')
             widgetToInstantiate.title = 'Widget ' + count++;
           }
 
+
           // Instantiation
           var widget = new WidgetModel(defaultWidgetDefinition, widgetToInstantiate);
+
+          if(scope.common)
+          {
+            widget.dataModelOptions.common = scope.common
+          }
 
           // Add to the widgets array
           scope.widgets.push(widget);
