@@ -100,7 +100,7 @@ angular.module('app')
 
     $timeout(function(){
       // Add listener for enter key on layout
-      $('ul li a').keydown(function(event){
+      $('.layout-tabs li a').keydown(function(event){
         if(event.KeyCode == '13' || event.key == 'Enter')
         {
           //tab.click();
@@ -108,7 +108,7 @@ angular.module('app')
         }
       });
       // Add listener for when layout is changed
-      $('ul li a').click(function(e) 
+      $('.layout-tabs li a').click(function(e) 
       {
         $timeout(function(){
           var element = (e.currentTarget.innerText) ? e.currentTarget : e.currentTarget.activeElement;
