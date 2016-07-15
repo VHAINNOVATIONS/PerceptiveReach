@@ -23,11 +23,11 @@ exports.index = function(req, res) {
 		/*Configure database query */
 		var sta3N = req.param("sta3N");
 		var query = '';
-		var select = "SELECT * FROM [dbo].[vw_PatientRoster] WHERE RiskLevelID in (1,2) AND ISNULL(Active,-1) in (-1,1)"; 
+		var select = "SELECT * FROM [dbo].[vw_PatientRoster]"; 
 		if (sta3N && validator.isInt(sta3N)) {
 			request.input('sta3N', sql.Int, sta3N);
 			query += select
-				  + " and sta3N = @sta3N";
+				  + " WHERE sta3N = @sta3N";
 			query += " ORDER BY RiskLevel ASC";
 		} 
 		query += "; SELECT * FROM Ref_OutreachStatus";
