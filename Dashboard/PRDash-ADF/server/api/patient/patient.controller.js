@@ -35,11 +35,13 @@ exports.index = function(req, res) {
 		/*Query database */
 		request.query(query, function(err, recordset) {
 			if (err) { 
+				connection.close();
 				console.dir(err);
 				res.send(401, 'Query Failed');
 				return; 
 			}
 			
+			connection.close();
 			/*Parse result into JSON object and format the date */
 			var jsonRecordSet = JSON.parse(JSON.stringify(recordset[0]));
 			var jsonOutreachStatus = JSON.parse(JSON.stringify(recordset[1]));
@@ -97,11 +99,13 @@ exports.update = function(req, res) {
 		/*Query database */
         request.query(query, function(err, recordset) {
 			if (err) { 
+			  connection.close();
 			  console.dir(err);
 			  res.send(401, 'Query Failed');
 			  return; 
 			}
 
+			connection.close();
 			/*Send the data */
 			data = "Save Completed Successfully!";
 			res.send(data);
