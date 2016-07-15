@@ -14,11 +14,11 @@ exports.config = {
         encrypt: process.env.DB_ENCRYPT,
         appName:'PerceptiveReach',
         connectTimeout:15000,
-        requestTimeout:150000
+        requestTimeout:15000
     },
     pool: {
-        max: 20,
-        min: 10,
+        max: 2000,
+        min: 500,
         idleTimeoutMillis: 3000
     }
 };
