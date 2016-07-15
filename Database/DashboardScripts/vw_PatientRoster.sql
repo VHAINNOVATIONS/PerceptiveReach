@@ -23,10 +23,11 @@ ps.sta3N,
 ps.Active,
 p.RiskScore
 FROM  Patient p 
-INNER JOIN Ref_RiskLevel rl ON rl.RiskLevelID = p.RiskLevel
+LEFT JOIN Ref_RiskLevel rl ON rl.RiskLevelID = p.RiskLevel
 INNER JOIN PatientStation ps ON p.ReachID = ps.ReachID 
 INNER JOIN prsystem.PatientDashboardFilter f on p.ReachID = f.ReachID
 WHERE f.Patient = 1
+AND (p.RiskLevel is NOT NULL OR p.DateIdentifiedAsAtRisk is NOT NULL) 
 
 
 
