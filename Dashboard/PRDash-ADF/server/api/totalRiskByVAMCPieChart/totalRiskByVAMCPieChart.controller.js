@@ -43,6 +43,7 @@ exports.index = function(req, res) {
 		/*Query the database */
 		request.query(query, function(err, recordset) {
 			if (err) { 
+				connection.close();
 				console.dir(err);
 				res.send(401, "Query Failed");
 				return;  
@@ -71,7 +72,7 @@ exports.index = function(req, res) {
 					y: recordset[i].DiagnosedTBI                    
 				});
 			}
-
+			connection.close();
 			/*Send the data */
 			res.send(data);
 		});
