@@ -32,10 +32,12 @@ exports.index = function(req, res) {
         } 
         request.query(query, function(err, recordset) {
             if (err) { 
+                connection.close();
                 console.dir(err);
                 res.send(401, 'Query Failed.');
                 return;
             }
+            connection.close();
             console.log(recordset);
             res.send(recordset);
         });

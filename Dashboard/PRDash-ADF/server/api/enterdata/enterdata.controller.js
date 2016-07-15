@@ -57,11 +57,12 @@ exports.index = function(req, res) {
         // Query the database
       request.query(query, function(err, recordset) {
          if (err) {
+          connection.close();
              console.dir(err);
           res.send(401, 'Query Failed.');
              return;
        }
-
+       connection.close();
          /*Parse result into JSON object and format the date */
  			var jsonHighRisk_SPANImport = JSON.parse(JSON.stringify(recordset[0]));
  			var jsonHighRisk_UserNotes = JSON.parse(JSON.stringify(recordset[1]));
@@ -144,11 +145,12 @@ exports.index = function(req, res) {
 
         request.query(query, function(err, recordset) {
           if (err) {
-              console.dir(err);
-           res.send(401, 'Query Failed.');
-              return;
+            connection.close();
+            console.dir(err);
+            res.send(401, 'Query Failed.');
+            return;
           }
-
+          connection.close();
           res.send('Inserted Successfully');
         });
     });
