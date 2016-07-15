@@ -23,7 +23,7 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/patientTable/patientTable.html',
       
-      controller: function ($scope,$compile, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
+      controller: function ($scope, $compile, $filter, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder,FileSaver) {
         //$scope.dtInstanceAbstract = {};
         $scope.dtInstance = {};
         $scope.patientList = $scope.widgetData;
@@ -44,7 +44,12 @@ angular.module('ui.widgets')
             .withOption('rowCallback', rowCallback)
             .withDOM('frtip')
             .withButtons([
-                { extend: 'csv', text: '<a name="PatientExport" class="glyphicon glyphicon-export"></a>' }
+                {
+                  text: '<a name="PatientExport" class="glyphicon glyphicon-export"></a>',
+                  action: function (e, dt, node, config) {
+                      JSONToCSVConvertor($scope.patientList,'PatientRoster');
+                  }
+                }
             ])
             .withScroller()
             .withOption('deferRender', true)
@@ -54,6 +59,58 @@ angular.module('ui.widgets')
             .withLanguage({
               "sInfo": "Total Records: _TOTAL_"
             });
+
+         function JSONToCSVConvertor(JSONData,title) {
+            var exportHeaders = ['ReachID','FirstName','LastName','SSN','HomePhone','DateIdentifiedAsAtRisk','RiskLevel','OutreachStatus']
+            var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+            var d = new Date();
+
+            var month = d.getMonth()+1;
+            var day = d.getDate();
+            var time = d.getHours() + "_" + d.getMinutes() + "_" + d.getSeconds();
+            var fileDateTime = d.getFullYear() +
+            (month<10 ? '0' : '') + month +
+            (day<10 ? '0' : '') + day + "_" + time;
+            var CSV = '';
+            
+            //Headers
+            var row = "";
+            for (var index in arrData[0]) {
+              if($.inArray(index, exportHeaders) > 0)
+              {
+                row += index + ',';
+              }
+            }
+            row = row.slice(0, -1);
+            CSV += row + '\r\n';
+            
+            //Rows-Data
+            for (var i = 0; i < arrData.length; i++) {
+                var row = "";
+                for (var index in arrData[i]) {
+                    if($.inArray(index, exportHeaders) > 0)
+                    {
+                      if(index === 'OutreachStatus')
+                      {
+                        var arrValue = arrData[i][index] == null ? "" : $filter('filter')($scope.outreachStatusList, {OutReachStatusID: 
+                                                                                          parseInt(arrData[i][index]) })[0].StatusDesc;  
+                      }
+                      else
+                      {
+                        var arrValue = arrData[i][index] == null ? "" : arrData[i][index];  
+                      }
+                      row += arrValue + ',';
+                    }
+                }
+                row.slice(0, row.length - 1);
+                CSV += row + '\r\n';
+            }
+            
+            var blob = new Blob([CSV], { type: "text/csv;charset=utf-8" });
+            FileSaver.saveAs(blob, "PatientRoster_" + fileDateTime + ".csv");
+
+        };
+
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Name').withTitle('Name').withOption('width', '20%'),
             DTColumnBuilder.newColumn('SSN').withTitle('SSN').withOption('width', '15%'),

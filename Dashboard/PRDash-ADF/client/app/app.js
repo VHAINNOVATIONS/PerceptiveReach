@@ -29,7 +29,8 @@ angular.module('app', [
     'ui.models',
     'btford.markdown',
     'angular-loading-bar',
-    'sticky'
+    'sticky',
+    'ngFileSaver'
   ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     //$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
