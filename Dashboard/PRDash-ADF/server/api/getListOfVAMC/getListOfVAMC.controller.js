@@ -24,13 +24,11 @@ exports.index = function(req, res) {
 		/*Query the database */
 		request.query(query, function(err, recordset) {
 			if (err) { 
-				connection.close();
 				console.dir(err);
 				res.send(401, "Query Failed");
 				return; 
 			}
 
-			connection.close();
 			/*Send the data*/
 			res.send(recordset);
 		});
