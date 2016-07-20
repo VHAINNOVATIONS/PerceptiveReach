@@ -4,6 +4,7 @@ var _ = require('lodash');
 var validator = require('validator');
 var sql = require('mssql');
 var dataFormatter = require('../../components/formatUtil/formatUtil.service.js');
+var praudit = require('../../audit');
 
 exports.index = function(req, res) {
 	/*Configure response header */
@@ -104,7 +105,9 @@ exports.update = function(req, res) {
 			  res.send(401, 'Query Failed');
 			  return; 
 			}
-
+			var action = 'Outreach Status Updated for ReachID: ' + vetReachID;
+			var message = 'Updated by User ' + req.headers.prsessionkey.split('::')[0];
+			praudit.auditlog(action,message,'info');
 			connection.close();
 			/*Send the data */
 			data = "Save Completed Successfully!";
