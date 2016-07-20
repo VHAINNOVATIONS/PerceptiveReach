@@ -23,7 +23,7 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/patientTable/patientTable.html',
       
-      controller: function ($scope, $compile, $filter, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder,FileSaver) {
+      controller: function ($scope, $compile, $filter, $http, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder,FileSaver) {
         //$scope.dtInstanceAbstract = {};
         $scope.dtInstance = {};
         $scope.patientList = $scope.widgetData;
@@ -107,8 +107,17 @@ angular.module('ui.widgets')
             }
             
             var blob = new Blob([CSV], { type: "text/csv;charset=utf-8" });
-            FileSaver.saveAs(blob, "PatientRoster_" + fileDateTime + ".csv");
+            var user = JSON.parse(sessionStorage.user);
+            var logMessage = 'User - ' + user.UserName;
+            var params = {
+              action:'Patient Roster Export'
+            }
 
+            $http.post('/api/audit',params)
+            .success(function(data) {
+               FileSaver.saveAs(blob, "PatientRoster_" + fileDateTime + ".csv");
+            });
+           
         };
 
         $scope.dtColumns = [
