@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var validator = require('validator');
 var sql = require('mssql');
+var praudit = require('../../audit');
 
 exports.index = function(req, res) {
   var dbc = require('../../config/db_connection/development.js');
@@ -150,6 +151,10 @@ exports.index = function(req, res) {
             res.send(401, 'Query Failed.');
             return;
           }
+
+          var action = 'Enter Data Widget updated for ReachID: ' + ReachID;
+          var message = 'Updated by User ' + req.headers.prsessionkey.split('::')[0];
+          praudit.auditlog(action,message,'info');
           connection.close();
           res.send('Inserted Successfully');
         });
