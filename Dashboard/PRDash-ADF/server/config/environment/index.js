@@ -49,7 +49,7 @@ var all = {
 
   prSessionStore:{},
 
-  auditEnabled: false
+  auditEnabled: true
 
 };
 
