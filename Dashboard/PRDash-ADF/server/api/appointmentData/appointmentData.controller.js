@@ -4,6 +4,7 @@ var _ = require('lodash');
 var validator = require('validator');
 var sql = require('mssql');
 var dataFormatter = require('../../components/formatUtil/formatUtil.service.js');
+var praudit = require('../../audit');
 
 exports.index = function(req, res) {
 	/*Configure response header */
@@ -36,6 +37,7 @@ exports.index = function(req, res) {
 			if (err) { 
 				connection.close();
 				console.dir(err);
+				praudit.auditlog('SQL ERROR',err);
 				res.send(401, "Query Failed"); 
 				return; 
 			}
