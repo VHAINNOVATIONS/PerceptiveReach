@@ -38,6 +38,7 @@ exports.index = function(req, res) {
 			if (err) { 
 				connection.close();
 				console.dir(err);
+				praudit.auditlog('SQL ERROR',err);
 				res.send(401, 'Query Failed');
 				return; 
 			}
@@ -102,6 +103,7 @@ exports.update = function(req, res) {
 			if (err) { 
 			  connection.close();
 			  console.dir(err);
+			  praudit.auditlog('SQL ERROR',err);
 			  res.send(401, 'Query Failed');
 			  return; 
 			}
