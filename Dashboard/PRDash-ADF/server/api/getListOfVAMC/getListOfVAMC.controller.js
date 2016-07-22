@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var sql = require('mssql');
+var praudit = require('../../audit');
 
 exports.index = function(req, res) {
 	/*Configure response header */
@@ -25,6 +26,7 @@ exports.index = function(req, res) {
 		request.query(query, function(err, recordset) {
 			if (err) { 
 				connection.close();
+				praudit.auditlog('SQL ERROR',err);
 				console.dir(err);
 				res.send(401, "Query Failed");
 				return; 
