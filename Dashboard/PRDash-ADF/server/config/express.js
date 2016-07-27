@@ -47,7 +47,7 @@ module.exports = function(app) {
   app.use(bodyParser.json());
   app.use(methodOverride());
   app.use(cookieParser());
-  
+  app.disable('x-powered-by');
 
   function hasSql(value) {
     if (value === null || value === undefined) {
