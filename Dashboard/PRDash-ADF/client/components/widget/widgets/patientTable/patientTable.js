@@ -23,7 +23,7 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/patientTable/patientTable.html',
       
-      controller: function ($scope, $compile, $filter, $http, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder,FileSaver) {
+      controller: function ($scope, $compile, $filter, $http, $modal, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder,FileSaver) {
         //$scope.dtInstanceAbstract = {};
         $scope.dtInstance = {};
         $scope.patientList = $scope.widgetData;
@@ -181,8 +181,36 @@ angular.module('ui.widgets')
           return nRow;
         }
 
+        $scope.removePatient =  function(){
+          $modal.open({
+            scope: $scope,
+            templateUrl: 'client/components/widget/widgets/patientTable/removePatientModal.html',
+            controller: 'RemovePatientCtrl',
+            backdrop  : 'static',
+            keyboard  : false,
+            resolve: {
+                params: function() {
+                    return {
+                      veteranObj: $scope.widget.dataModelOptions.common.data.veteranObj
+                    };
+                }
+            }
+          });
+        }
+
+        $scope.resizeWidgetDataArea = function(){
+          var containerHeight = parseInt($('#patientRosterDiv').parent().css('height'),10);
+          $('#patientRosterDiv').find('.dataTables_scrollBody').css('height',.5 * containerHeight);
+        } 
+
       },
       link: function postLink(scope, element, attr) {
+        scope.$on("gridsterResized", function (){
+            $timeout(function(){
+              scope.resizeWidgetDataArea();
+            },1000);
+        });
+
         scope.$on("updateSelectMenu", function (){
           var datamodelList = {};
           var patientList = scope.widgetData[1];          	 	  
@@ -254,6 +282,9 @@ angular.module('ui.widgets')
                   $('#tblPatient').find( "tbody>tr td:contains('"+commonData.data.veteranObj.Name+"')" ).click();
                 }, 500);
               }
+
+              scope.resizeWidgetDataArea();
+               
             },500)            
           }
         });

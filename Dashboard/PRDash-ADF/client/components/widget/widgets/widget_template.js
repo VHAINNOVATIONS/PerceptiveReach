@@ -979,8 +979,164 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    </table>\r" +
     "\n" +
+    "\t<div class=\"row\">\r" +
+    "\n" +
+    "\t\t<div class=\"col-md-6\" style=\"float:right;\">\r" +
+    "\n" +
+    "\t\t\t<button type=\"button\" class=\"btn btn-primary btn-sm\" ng-click=\"removePatient()\" style=\"float:right;margin:5px;\">Remove Patient</button>\r" +
+    "\n" +
+    "\t\t</div>\r" +
+    "\n" +
+    "\t</div>\r" +
+    "\n" +
     "</div> \r" +
     "\n"
+  );
+
+  $templateCache.put("client/components/widget/widgets/patientTable/removePatientModal.html",
+    "<div>\r" +
+    "\n" +
+    "    <div class=\"modal-header\">\r" +
+    "\n" +
+    "        <h2 class=\"modal-title\">Are you sure you want to remove {{name}} from the Dashboard?</h2>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div class=\"modal-body\">\r" +
+    "\n" +
+    "\t    <div class=\"row\">\r" +
+    "\n" +
+    "\t\t    <div class=\"col-md-12\">\r" +
+    "\n" +
+    "\t\t    \t<div>\r" +
+    "\n" +
+    "\t\t    \t\tAre you sure you want to remove Veteran XYZ from your Dashboard? \r" +
+    "\n" +
+    "\t\t\t\t\t<br/>\r" +
+    "\n" +
+    "\t\t\t\t\t<br/>\r" +
+    "\n" +
+    "\t\t    \t\tIf so, please leave a comment below explaining why the individual no longer needs outreach services. Selecting the ‘Save’ button below will add your comment to the Data Entry Widget and remove this Veteran from your Dashboard.\r" +
+    "\n" +
+    "\t\t\t\t\t<hr>\r" +
+    "\n" +
+    "\t\t    \t</div>\r" +
+    "\n" +
+    "\t\t    </div>\r" +
+    "\n" +
+    "\t    </div>\r" +
+    "\n" +
+    "        <div class=\"row\">\r" +
+    "\n" +
+    "        \t<div class=\"col-md-1\">\r" +
+    "\n" +
+    "        \t\t<input type=\"checkbox\" />\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-5\">\r" +
+    "\n" +
+    "        \t\t<label>Deceased</label>\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-1\">\r" +
+    "\n" +
+    "        \t\t<input type=\"checkbox\" />\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-5\">\r" +
+    "\n" +
+    "        \t\t<label>Refused Services</label>\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"row\">\r" +
+    "\n" +
+    "        \t<div class=\"col-md-1\">\r" +
+    "\n" +
+    "        \t\t<input type=\"checkbox\" />\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-5\">\r" +
+    "\n" +
+    "        \t\t<label>Clinically not at risk</label>\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-1\">\r" +
+    "\n" +
+    "        \t\t<input type=\"checkbox\" />\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-5\">\r" +
+    "\n" +
+    "        \t\t<label>Cannot contact</label>\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"row\">\r" +
+    "\n" +
+    "        \t<div class=\"col-md-1\">\r" +
+    "\n" +
+    "        \t\t<input type=\"checkbox\" />\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-5\">\r" +
+    "\n" +
+    "        \t\t<label>Care from community provider</label>\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-1\">\r" +
+    "\n" +
+    "        \t\t<input type=\"checkbox\" />\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-5\">\r" +
+    "\n" +
+    "        \t\t<label>Other(Please Explain)</label>\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-md-12\">\r" +
+    "\n" +
+    "                <label>Comments:</label>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <div class=\"col-md-11\">\r" +
+    "\n" +
+    "                <textarea rows=\"4\" style=\"width:100%;\"></textarea>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div class=\"modal-footer\">\r" +
+    "\n" +
+    "        <button class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
+    "\n" +
+    "        <button class=\"btn btn-warning\" ng-click=\"cancel()\">Cancel</button>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
   );
 
   $templateCache.put("client/components/widget/widgets/pieChart/pieChart.html",
