@@ -1,0 +1,72 @@
+<div>
+    <div class="modal-header">
+        <h2 class="modal-title">Are you sure you want to remove {{name}} from the Dashboard?</h2>
+    </div>
+    <div class="modal-body">
+	    <div class="row">
+		    <div class="col-md-12">
+		    	<div>
+		    		Are you sure you want to remove Veteran XYZ from your Dashboard? 
+					<br/>
+					<br/>
+		    		If so, please leave a comment below explaining why the individual no longer needs outreach services. Selecting the ‘Save’ button below will add your comment to the Data Entry Widget and remove this Veteran from your Dashboard.
+					<hr>
+		    	</div>
+		    </div>
+	    </div>
+        <div class="row">
+        	<div class="col-md-1">
+        		<input type="checkbox" />
+        	</div>
+        	<div class="col-md-5">
+        		<label>Deceased</label>
+        	</div>
+        	<div class="col-md-1">
+        		<input type="checkbox" />
+        	</div>
+        	<div class="col-md-5">
+        		<label>Refused Services</label>
+        	</div>
+        </div>
+        <div class="row">
+        	<div class="col-md-1">
+        		<input type="checkbox" />
+        	</div>
+        	<div class="col-md-5">
+        		<label>Clinically not at risk</label>
+        	</div>
+        	<div class="col-md-1">
+        		<input type="checkbox" />
+        	</div>
+        	<div class="col-md-5">
+        		<label>Cannot contact</label>
+        	</div>
+        </div>
+        <div class="row">
+        	<div class="col-md-1">
+        		<input type="checkbox" />
+        	</div>
+        	<div class="col-md-5">
+        		<label>Care from community provider</label>
+        	</div>
+        	<div class="col-md-1">
+        		<input type="checkbox" />
+        	</div>
+        	<div class="col-md-5">
+        		<label>Other(Please Explain)</label>
+        	</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label>Comments:</label>
+            </div>
+            <div class="col-md-11">
+                <textarea rows="4" style="width:100%;"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</div>
