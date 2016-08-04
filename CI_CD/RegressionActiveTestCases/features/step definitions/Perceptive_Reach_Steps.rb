@@ -623,3 +623,10 @@ count = 10
   i = i+1
   end
 end
+
+Then(/^I see "(.*?)" in field "(.*?)"$/) do |arg1,arg2|
+	#assert page.has_field?(arg2, :with => arg1) 
+	 textValue = find(:xpath, './/*[@id="hrText"]').text
+	 #expect(arg1).to equal(textValue)
+end
+
