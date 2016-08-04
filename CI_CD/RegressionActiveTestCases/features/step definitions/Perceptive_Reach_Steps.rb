@@ -633,3 +633,38 @@ end
 Then(/^I should not see "(.*?)" in the Outreach Status column$/) do |pagecontent|
     expect(page).to have_no_content(pagecontent)
 end
+
+And(/^I should see "Remove Widget" button$/) do
+        #sql query get the default widgets for the user profile
+        page.find(:xpath,"/html/body/div/div/div/div/div[3]/ul/li[1]/div[1]/div[1]/div/div/button").click
+end
+
+
+
+
+And(/^I select first VISN Roster in the widget$/) do
+          #pending # express the regexp above with the code you wish you had
+        page.find(:xpath,"/html/body/div/div/div/div/div[3]/ul/li[1]/div[1]/div[2]/div/div/table/tbody/tr[1]/td[1]").click
+end
+
+And(/^I Select first VAMC facility in facility roster widget$/) do
+          #pending # express the regexp above with the code you wish you had
+        page.find(:xpath,"/html/body/div/div/div/div/div[3]/ul/li[2]/div[1]/div[2]/div/div/table/tbody/tr[1]/td[1]").click
+end
+
+
+
+And(/^I click X in upper right of Prediction Chart widget$/) do
+        #find_button('Individualididual view').click
+        page.find(:xpath,"/html/body/div/div/div/div/div[3]/ul/li[9]/div[1]/div[1]/div/div/button").click
+end
+
+And(/^I click the "Add a Widget" button$/) do
+  #find_button('Add a Widget').click
+  find_button('Add a Widget').click
+end
+
+Then(/^I should see "(.*?)" in Prediction Chart$/) do|pagecontent|
+  expect(page).to have_content(pagecontent)
+end
+
