@@ -630,3 +630,6 @@ Then(/^I see "(.*?)" in field "(.*?)"$/) do |arg1,arg2|
 	 #expect(arg1).to equal(textValue)
 end
 
+Then(/^I should not see "(.*?)" in the Outreach Status column$/) do |pagecontent|
+    expect(page).to have_no_content(pagecontent)
+end
