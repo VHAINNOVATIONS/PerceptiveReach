@@ -668,3 +668,4 @@ Then(/^I should see "(.*?)" in Prediction Chart$/) do|pagecontent|
   expect(page).to have_content(pagecontent)
 end
 
+
