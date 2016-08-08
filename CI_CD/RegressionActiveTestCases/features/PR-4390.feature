@@ -1,9 +1,9 @@
-Feature: VISN and Facility selection gets removed when a widget is removed. (PR-4390)
+Feature: VISN and Facility selection gets removed when a widget is removed. PR-4390 1.1.11
 
 Scenario: PR-4390
 Given I navigate to the http://localhost:7003/
 Then I should see "Perceptive Reach"
-Then I put in "email" field as "Zach_ADM"
+Then I put in "email" field as "TESTER4390"
 Then I put in "password" field as "FeAn#011819"
 And I click on check box "checky"
 And I click on "Login" button
