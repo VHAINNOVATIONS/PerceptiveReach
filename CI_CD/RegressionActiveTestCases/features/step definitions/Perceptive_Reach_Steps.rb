@@ -668,4 +668,6 @@ Then(/^I should see "(.*?)" in Prediction Chart$/) do|pagecontent|
   expect(page).to have_content(pagecontent)
 end
 
-
+Then (/^I should see Remove Patient button$/) do
+     find_button('Remove Patient')
+end
