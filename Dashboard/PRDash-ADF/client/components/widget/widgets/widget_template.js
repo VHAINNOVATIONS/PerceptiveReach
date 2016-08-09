@@ -98,6 +98,53 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "</div>"
   );
 
+  $templateCache.put("client/components/widget/widgets/communityResource/communityresource.html",
+    "<div class=\"appointment\">\r" +
+    "\n" +
+    "\t<table id=\"tblAppointment\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "        <thead>\r" +
+    "\n" +
+    "        <tr>\r" +
+    "\n" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Name'; reverse=false\">Name</a></th>\r" +
+    "\n" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Address'; reverse=!reverse\">Address</a></th>\r" +
+    "\n" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Phone'; reverse=!reverse\">Phone</a></th>\r" +
+    "\n" +
+    "\t\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Website'; reverse=!reverse\">Website</a></th>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"commResource in data track by $index | orderBy:predicate:reverse\">\r" +
+    "\n" +
+    "            <td>{{ commResource.Name }}</td>\r" +
+    "\n" +
+    "             <td>{{ commResource.Address }}</td>\r" +
+    "\n" +
+    "            <td>{{ commResource.Phone }}</td>\r" +
+    "\n" +
+    "\t\t\t\t\t\t<td>{{ commResource.Website }}</td>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n"
+  );
+
   $templateCache.put("client/components/widget/widgets/contact/contact.html",
     "<div class=\"contact\">\r" +
     "\n" +

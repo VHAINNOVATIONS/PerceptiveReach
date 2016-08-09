@@ -1688,7 +1688,48 @@ angular.module('ui.models')
     });
 
     return EnterDataDataModel;
-  });
+  })
+  .factory('CommunityResourceDataModel', function ($http, CommonDataModel) {
+      function CommunityResourceDataModel() {
+      }
+
+      CommunityResourceDataModel.prototype = Object.create(CommonDataModel.prototype);
+      CommunityResourceDataModel.prototype.constructor = CommonDataModel;
+
+      angular.extend(CommunityResourceDataModel.prototype, {
+         init: function () {
+          var dataModelOptions = this.dataModelOptions;
+          var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+          this.widgetScope.$on('commonDataChanged', function (event, data) {
+            this.currentReachID = this.reachID;
+            this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+            if(this.reachID != this.currentReachID)
+              this.getData();
+          }.bind(this));
+
+          this.updateScope('-');
+        },
+
+        getData: function () {
+          var that = this;
+          var data = [];
+
+          $http.get('/api/communityResource')
+          .success(function(dataset) {
+                  data = dataset;
+                  this.updateScope(data);
+              }.bind(this));
+        },
+
+        destroy: function () {
+          CommonDataModel.prototype.destroy.call(this);
+        }
+      });
+
+      return CommunityResourceDataModel;
+    });
+
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -2703,6 +2744,59 @@ angular.module('ui.widgets')
       }
     };
   });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtCommunityresource', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/communityResource/communityresource.html',
+      scope: {
+        data: '=',
+      },
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
+            .withOption('paging',false)
+            .withOption('order', [1, 'desc']);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2),
+            DTColumnDefBuilder.newColumnDef(3)
+        ];
+        /*$resource('data.json').query().$promise.then(function(persons) {
+            vm.persons = persons;
+        });*/
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.data = data;
+          }
+        });
+      }
+    };
+  });
+
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -5665,6 +5759,53 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\t</div>\r" +
     "\n" +
     "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/communityResource/communityresource.html",
+    "<div class=\"appointment\">\r" +
+    "\n" +
+    "\t<table id=\"tblAppointment\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "        <thead>\r" +
+    "\n" +
+    "        <tr>\r" +
+    "\n" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Name'; reverse=false\">Name</a></th>\r" +
+    "\n" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Address'; reverse=!reverse\">Address</a></th>\r" +
+    "\n" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Phone'; reverse=!reverse\">Phone</a></th>\r" +
+    "\n" +
+    "\t\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Website'; reverse=!reverse\">Website</a></th>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"commResource in data track by $index | orderBy:predicate:reverse\">\r" +
+    "\n" +
+    "            <td>{{ commResource.Name }}</td>\r" +
+    "\n" +
+    "             <td>{{ commResource.Address }}</td>\r" +
+    "\n" +
+    "            <td>{{ commResource.Phone }}</td>\r" +
+    "\n" +
+    "\t\t\t\t\t\t<td>{{ commResource.Website }}</td>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n"
   );
 
   $templateCache.put("client/components/widget/widgets/contact/contact.html",
