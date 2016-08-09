@@ -15,5 +15,6 @@ And I click X in upper right of Prediction Chart widget
 And I click on "Add a Widget" button
 And I add the "PredictionChart" widget
 Then I should wait for twenty seconds
-Then I should see "Month" in Prediction Chart
+Then I should not see "No Data Available" in Prediction Chart
 And I click on "Logout" button
+
