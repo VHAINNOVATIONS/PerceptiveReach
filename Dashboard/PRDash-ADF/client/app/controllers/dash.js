@@ -9,7 +9,7 @@ angular.module('app')
                                     AppointmentDataModel, EnterDataDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,AgeGroupsMetricsDataModel,
                                     GenderDistributionMetricsDataModel, PredictionChartDataModel,
                                     MilitaryBranchMetricsDataModel, OutreachStatusMetricsDataModel,
-                                    TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel
+                                    TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel,CommunityResourceDataModel
 					) {
     return [
       {
@@ -311,6 +311,22 @@ angular.module('app')
         },
         sizeX:10,
         sizeY:10
+      },
+      {
+        name: 'communityResource',
+        directive: 'wt-communityresource',
+        dataAttrName: 'data',
+        title: 'Community Resource',
+        dataModelType: CommunityResourceDataModel,
+        dataModelOptions: {
+          defaultWidget: false,
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
+          layout: 'individual'
+        },
+        size: {
+          //width: '25%',
+          height: '350px'
+        }
       },
       //---------------------------------------------------------------------------------------------
       /*{

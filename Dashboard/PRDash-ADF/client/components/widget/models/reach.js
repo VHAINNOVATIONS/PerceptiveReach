@@ -1349,4 +1349,44 @@ angular.module('ui.models')
     });
 
     return EnterDataDataModel;
-  });
+  })
+  .factory('CommunityResourceDataModel', function ($http, CommonDataModel) {
+      function CommunityResourceDataModel() {
+      }
+
+      CommunityResourceDataModel.prototype = Object.create(CommonDataModel.prototype);
+      CommunityResourceDataModel.prototype.constructor = CommonDataModel;
+
+      angular.extend(CommunityResourceDataModel.prototype, {
+         init: function () {
+          var dataModelOptions = this.dataModelOptions;
+          var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+          this.widgetScope.$on('commonDataChanged', function (event, data) {
+            this.currentReachID = this.reachID;
+            this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+            if(this.reachID != this.currentReachID)
+              this.getData();
+          }.bind(this));
+
+          this.updateScope('-');
+        },
+
+        getData: function () {
+          var that = this;
+          var data = [];
+
+          $http.get('/api/communityResource')
+          .success(function(dataset) {
+                  data = dataset;
+                  this.updateScope(data);
+              }.bind(this));
+        },
+
+        destroy: function () {
+          CommonDataModel.prototype.destroy.call(this);
+        }
+      });
+
+      return CommunityResourceDataModel;
+    });
