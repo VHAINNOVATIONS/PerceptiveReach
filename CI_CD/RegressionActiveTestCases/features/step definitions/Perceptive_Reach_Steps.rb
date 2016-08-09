@@ -636,7 +636,7 @@ end
 
 And(/^I should see "Remove Widget" button$/) do
         #sql query get the default widgets for the user profile
-        page.find(:xpath,"/html/body/div/div/div/div/div[3]/ul/li[1]/div[1]/div[1]/div/div/button").click
+        page.find(:xpath,"/html/body/div/div/div/div/div[3]/ul/li[3]/div[1]/div[1]/div/div/button").click
 end
 
 
@@ -664,8 +664,8 @@ And(/^I click the "Add a Widget" button$/) do
   find_button('Add a Widget').click
 end
 
-Then(/^I should see "(.*?)" in Prediction Chart$/) do|pagecontent|
-  expect(page).to have_content(pagecontent)
+Then(/^I should not see "(.*?)" in Prediction Chart$/) do |pagecontent|
+  expect(page).to have_no_content(pagecontent)
 end
 
 Then (/^I should see Remove Patient button$/) do
