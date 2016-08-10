@@ -656,7 +656,7 @@ end
 
 And(/^I click X in upper right of Prediction Chart widget$/) do
         #find_button('Individualididual view').click
-        page.find(:xpath,"/html/body/div/div/div/div/div[3]/ul/li[9]/div[1]/div[1]/div/div/button").click
+        page.find(:xpath,"/html/body/div/div/div/div/div[3]/ul/li[3]/div[1]/div[1]/div/div/button").click
 end
 
 And(/^I click the "Add a Widget" button$/) do
@@ -667,6 +667,7 @@ end
 Then(/^I should not see "(.*?)" in Prediction Chart$/) do |pagecontent|
   expect(page).to have_no_content(pagecontent)
 end
+
 
 Then (/^I should see Remove Patient button$/) do
      find_button('Remove Patient')
