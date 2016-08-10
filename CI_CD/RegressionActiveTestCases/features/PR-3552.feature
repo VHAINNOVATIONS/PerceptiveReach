@@ -3,7 +3,7 @@ Feature: As a user, I want to have a 128 character limit in the free text fields
 Scenario: I open a web browser and navigate to http://localhost:7003/ where I can view Consolidated Surveillance View widgets
 Given I navigate to the http://localhost:7003/
 Then I should see "Perceptive Reach"
-When I put in "email" field as "TESTER260"
+When I put in "email" field as "TESTER_3522"
 And I put in "password" field as "M1n@h3s4f9"
 And I click on check box "checky"
 And I click on "Login" button
