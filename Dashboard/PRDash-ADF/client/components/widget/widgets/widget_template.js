@@ -1,5 +1,244 @@
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
+  $templateCache.put("client/components/widget/widgets/CDSQuestionnaire/CDSQuestionnaire.html",
+    "<div id=\"cdsQuestionnaire\" title=\"CDS Questionnaire\">\r" +
+    "\n" +
+    "   <!--1/26/2016 The below code is left for future use, Delete if not needed -->\r" +
+    "\n" +
+    "        <!-- <ul class=\"nav nav-pills\" role=\"tablist\" id=\"cdsTabs\" style=\"margin-top:5px;\">\r" +
+    "\n" +
+    "          <li class=\"active\">\r" +
+    "\n" +
+    "              <a href=\"#home\" role=\"tab\" data-toggle=\"tab\">\r" +
+    "\n" +
+    "                   Home\r" +
+    "\n" +
+    "              </a>\r" +
+    "\n" +
+    "          </li>\r" +
+    "\n" +
+    "          <li><a href=\"#options\" role=\"tab\" data-toggle=\"tab\">\r" +
+    "\n" +
+    "                  Options\r" +
+    "\n" +
+    "              </a>\r" +
+    "\n" +
+    "          </li>\r" +
+    "\n" +
+    "          <li>\r" +
+    "\n" +
+    "              <a href=\"#help\" role=\"tab\" data-toggle=\"tab\">\r" +
+    "\n" +
+    "                   Help\r" +
+    "\n" +
+    "              </a>\r" +
+    "\n" +
+    "          </li>\r" +
+    "\n" +
+    "        </ul>\r" +
+    "\n" +
+    "        <div class=\"tab-content\" id=\"cdsTabContent\" style=\"margin-top:5px;\">\r" +
+    "\n" +
+    "          <div class=\"tab-pane fade active in\" id=\"home\">\r" +
+    "\n" +
+    "            \r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"tab-pane fade\" id=\"options\">\r" +
+    "\n" +
+    "              <h2>Options</h2>\r" +
+    "\n" +
+    "              <img src=\"https://avatars1.githubusercontent.com/u/1252476?v=3&s=200\" alt=\"Cats\"/>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"tab-pane fade\" id=\"help\">\r" +
+    "\n" +
+    "              <h2>Help</h2>\r" +
+    "\n" +
+    "              <img src=\"https://avatars1.githubusercontent.com/u/1252476?v=3&s=200\" alt=\"Cats\"/>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "        \r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div>\r" +
+    "\n" +
+    "          <div class=\"panel panel-default\" style=\"margin-top:5px;\">\r" +
+    "\n" +
+    "            <div class=\"panel-heading\">\r" +
+    "\n" +
+    "              <h3 class=\"panel-title\">Emergency Contact Information</h3>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <div class=\"panel-body\">\r" +
+    "\n" +
+    "              For emergency assistance please contact: P: (xxx) xxx-xxxx, e: email@email.com\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "        </div> -->\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "      <div id=\"cdsConditionDiv\"  style=\"margin-top:5px;\">\r" +
+    "\n" +
+    "        <div >\r" +
+    "\n" +
+    "           <legend>Clinical Decision Support:</legend>\r" +
+    "\n" +
+    "              <fieldset style=\"border:1px solid lightgray;border-radius:5px;\">\r" +
+    "\n" +
+    "                Please choose the specific symptoms, diagnoses, or conditions the Veteran is facing.  After all selections have been made please press <strong>‘Next’</strong>.\r" +
+    "\n" +
+    "              </fieldset>\r" +
+    "\n" +
+    "              <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
+    "\n" +
+    "                \r" +
+    "\n" +
+    "              <div ng-repeat=\"condition in data.conditions\">\r" +
+    "\n" +
+    "                <div ng-if=\"$index == 0 || $index != 0 && data.conditions[$index].Condition != data.conditions[$index-1].Condition\">\r" +
+    "\n" +
+    "                  <hr style=\"margin-top:5px;margin-bottom: 0px\"/>\r" +
+    "\n" +
+    "                  <label style=\"margin:0px\">\r" +
+    "\n" +
+    "                      {{condition.Condition}}\r" +
+    "\n" +
+    "                  </label>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div>\r" +
+    "\n" +
+    "                  <input id=\"Condition_{{condition.Condition_ID}}\" ng-click=\"RadioBtnClicked()\" name=\"{{condition.Condition}}\" type=\"radio\" /> {{condition.Condition_SubQuestion}}\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "              <div style=\"height:40px;padding:5px;\">\r" +
+    "\n" +
+    "                <button ng-click=\"ResetQuestions()\" alt=\"Reset Questions\" title=\"Reset Questions\" ng-disabled=\"!IsChecked\"  class=\"btn btn-primary pull-left\">Reset Selection</button>\r" +
+    "\n" +
+    "                <button ng-click=\"GotoQuestions()\" alt=\"Next(Questions)\" title=\"Next(Questions)\" ng-disabled=\"!IsChecked\" class=\"btn btn-primary pull-right\">Next</button>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "    <div id=\"cdsQuestionDiv\" class=\"hidden\">\r" +
+    "\n" +
+    "      <legend>Question(s):</legend>\r" +
+    "\n" +
+    "      <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
+    "\n" +
+    "          <div ng-repeat=\"question in filteredQuestions\">\r" +
+    "\n" +
+    "              <hr style=\"margin-top:5px;margin-bottom: 0px\"/>\r" +
+    "\n" +
+    "              <label>\r" +
+    "\n" +
+    "                  {{question.ConditionName}}\r" +
+    "\n" +
+    "              </label>\r" +
+    "\n" +
+    "              <div ng-repeat=\"q in question.Questions\">\r" +
+    "\n" +
+    "                <label style=\"font-weight: normal;\">{{$index+1}}. {{q.Question}}  </label>\r" +
+    "\n" +
+    "                <div class=\"dropdown\">\r" +
+    "\n" +
+    "                    <button class=\"btn btn-default\"\r" +
+    "\n" +
+    "                            data-toggle=\"dropdown\" id=\"question_{{q.Question_ID}}\" name=\"{{question.ConditionName}}\">\r" +
+    "\n" +
+    "                        <span>Select</span>\r" +
+    "\n" +
+    "                        <span class=\"caret\"></span>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                    <ul class=\"dropdown-menu\" >\r" +
+    "\n" +
+    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">Yes</a></li>\r" +
+    "\n" +
+    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">No</a></li>\r" +
+    "\n" +
+    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">N/A</a></li>\r" +
+    "\n" +
+    "                    </ul>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "       <div style=\"height:40px;padding:5px;\">\r" +
+    "\n" +
+    "          <button ng-click=\"BacktoConditions()\" alt=\"Back(Conditions)\" title=\"Back(Conditions)\" class=\"btn btn-primary pull-left\" >Back</button>\r" +
+    "\n" +
+    "          <button ng-click=\"GotoTreatments()\" alt=\"Next(Treatment)\" title=\"Next(Treatment)\" class=\"btn btn-primary pull-right\" >Next</button>\r" +
+    "\n" +
+    "       </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "    <div id=\"cdsTreatmentDiv\" class=\"hidden\">\r" +
+    "\n" +
+    "        <legend>Treatment(s):</legend>\r" +
+    "\n" +
+    "        <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
+    "\n" +
+    "          <div ng-repeat=\"t in filteredTreatments\">\r" +
+    "\n" +
+    "            <hr style=\"margin-top:5px;margin-bottom: 0px\"/>\r" +
+    "\n" +
+    "            <label>{{$index+1}}. {{t.ConditionName}}</label>\r" +
+    "\n" +
+    "            <div ng-repeat=\"treatment in t.Treatments\">\r" +
+    "\n" +
+    "              <label style=\"font-weight:normal;\">{{treatment.Treatment}}</label>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>  \r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div style=\"height:40px;padding:5px;\">\r" +
+    "\n" +
+    "          <button ng-click=\"BacktoQuestions()\" alt=\"Back(Questions)\" title=\"Back(Questions)\" class=\"btn btn-primary pull-left\">Back</button>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "        \r" +
+    "\n" +
+    "</div>\r" +
+    "\n"
+  );
+
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
     "<div class=\"appointment\">\r" +
     "\n" +

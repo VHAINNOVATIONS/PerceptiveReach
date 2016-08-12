@@ -6,10 +6,11 @@ angular.module('app')
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
                                     MedicationDataModel, ClinicalDecisionSupportDataModel,
-                                    AppointmentDataModel, EnterDataDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,AgeGroupsMetricsDataModel,
-                                    GenderDistributionMetricsDataModel, PredictionChartDataModel,
+                                    AppointmentDataModel, EnterDataDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,
+                                    AgeGroupsMetricsDataModel,GenderDistributionMetricsDataModel, PredictionChartDataModel,
                                     MilitaryBranchMetricsDataModel, OutreachStatusMetricsDataModel,
-                                    TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel,CommunityResourceDataModel
+                                    TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel,
+                                    CommunityResourceDataModel,CDSQuestionnaireDataModel
 					) {
     return [
       {
@@ -327,6 +328,23 @@ angular.module('app')
           //width: '25%',
           height: '350px'
         }
+      },
+      {
+        name: 'CDSQuestionnaire',
+        directive: 'wt-cds-questionnaire',
+        dataAttrName: 'data',
+        title: 'CDS Questionnaire',
+        dataModelType: CDSQuestionnaireDataModel,
+        dataModelOptions: {
+          defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM',
+          layout: 'individual'
+        },
+        size: {
+          width: '45%',
+          height: '485px'
+        },
+        sizeX:10
       },
       //---------------------------------------------------------------------------------------------
       /*{
