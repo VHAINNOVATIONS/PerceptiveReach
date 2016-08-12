@@ -7132,16 +7132,6 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    </table>\r" +
     "\n" +
-    "\t<div class=\"row\">\r" +
-    "\n" +
-    "\t\t<div class=\"col-md-6\" style=\"float:right;\">\r" +
-    "\n" +
-    "\t\t\t<button type=\"button\" class=\"btn btn-primary btn-sm\" ng-click=\"removePatient()\" style=\"float:right;margin:5px;\">Remove Patient</button>\r" +
-    "\n" +
-    "\t\t</div>\r" +
-    "\n" +
-    "\t</div>\r" +
-    "\n" +
     "</div> \r" +
     "\n"
   );
