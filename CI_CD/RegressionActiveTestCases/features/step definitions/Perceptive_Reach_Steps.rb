@@ -668,7 +668,20 @@ Then(/^I should not see "(.*?)" in Prediction Chart$/) do |pagecontent|
   expect(page).to have_no_content(pagecontent)
 end
 
-
 Then (/^I should see Remove Patient button$/) do
      find_button('Remove Patient')
+end
+
+Then(/^I should click on Condition1 button/) do
+	#find(:xpath, './/*[@id="cdsConditionDiv"]/div/div[1]/div[1]/div[2]').click
+	page.choose('Condition_1')
+end
+
+Then(/^I click on CDSNext1 button/) do
+	find(:xpath, './/*[@id="cdsConditionDiv"]/div/div[2]/button[2]').click
+
+end
+
+Then(/^I should select the first option in dropdown/) do
+  find(:xpath, './/*[@id="question_55"][1]').select_option
 end
