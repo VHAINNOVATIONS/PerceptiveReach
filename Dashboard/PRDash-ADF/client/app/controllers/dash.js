@@ -279,56 +279,6 @@ angular.module('app')
         },
         sizeY:10
       },
-	   {
-        name: 'TopMidRisk',
-        directive: 'wt-national-top-mid-risk',
-        dataAttrName: 'data',
-        title: 'Top Mid Risk Data',
-        dataModelType: TopMidRiskMetricsDataModel,
-        dataModelOptions: {
-          defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT,CCS',
-          layout: 'surveillance,facility'
-        },
-        size: {
-          width: '35%',
-          height: '200px'
-        }
-      },
-      {
-        name: 'ExternalSuicideStatistics',
-        directive: 'wt-external-suicide-statistics',
-        dataAttrName: 'data',
-        title: 'External Data HealthIndicators.gov Suicide Statistics',
-        dataModelType: SuicideStatisticsDataModel,
-        dataModelOptions: {
-          defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM',
-          layout: 'surveillance'
-        },
-        size: {
-          width: '45%',
-          height: '485px'
-        },
-        sizeX:10,
-        sizeY:10
-      },
-      {
-        name: 'communityResource',
-        directive: 'wt-communityresource',
-        dataAttrName: 'data',
-        title: 'Community Resource',
-        dataModelType: CommunityResourceDataModel,
-        dataModelOptions: {
-          defaultWidget: false,
-          roleAccess: 'SUP,REP,ADM,CCT,CCS',
-          layout: 'individual'
-        },
-        size: {
-          //width: '25%',
-          height: '350px'
-        }
-      },
       {
         name: 'CDSQuestionnaire',
         directive: 'wt-cds-questionnaire',
