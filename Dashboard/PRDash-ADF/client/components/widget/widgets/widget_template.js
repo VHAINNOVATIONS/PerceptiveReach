@@ -318,21 +318,23 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t<div ng-repeat=\"cpg in cpgList\">\r" +
     "\n" +
-    "\t\t<b>Chronic {{cpg.RiskLevelDesc}} Risk</b>\r" +
+    "<b style=\"color:rgb(16, 52, 166)\">Welcome to REACH-VET!</b>\r" +
     "\n" +
-    "\t\t<br><b>Features</b>\r" +
+    "    <p>REACH-VET uses predictive (statistical) modeling to identify Veterans at risk for suicide and other adverse outcomes. The patients identified by the model are at increased risk for outcomes including suicide attempts, deaths from accidents, overdoses, injuries, all-cause mortality, hospitalizations for mental health conditions, and medical/surgical hospitalizations.</p>\r" +
     "\n" +
-    "\t\t<div ng-bind-html=\"cpg.Features\"></div>\r" +
+    "    <p>As participants in this program, REACH-VET facility coordinators will focus on implementing the program, engaging providers, and ensuring that providers are aware of which of their patients are at risk. Providers for Veterans identified by REACH-VET will be asked to review the care they receive, and to enhance it as appropriate.</p>\r" +
     "\n" +
-    "\t\t<br><b>Action</b>\r" +
+    "    <b>Dashboard Outreach & Intervention</b>\r" +
     "\n" +
-    "\t\t<br>{{cpg.Action}}\r" +
+    "    <p>Facility coordinators should first review their list of “at-risk” Veterans in the Patient Roster by VAMC widget on the Individual view and assign providers for each Veteran. Facility coordinators should then engage the providers and notify them of their “at-risk” patients.</p>  \r" +
     "\n" +
-    "\t\t<br><br>For more information visit the full Clinical Practice Guide at <a href=\"{{cpg.GuidelineURL}}\" title=\"Clinical Practice Guide\" alt=\"Clinical Practice Guide\">{{cpg.GuidelineURL}}</a>\r" +
+    "    <p>Detailed outreach and intervention steps for both REACH-VET facility coordinators and providers are located in the “Data Entry Widget” on this Dashboard.</p>\r" +
     "\n" +
-    "\t\t<br><br>For guidance on proactive outreach and intervention strategies visit the Toolkit for Interventions <a href=\"{{cpg.ToolkitURL}}\" title=\"Toolkit for Interventions\" alt=\"Toolkit for Interventions\">{{cpg.ToolkitURL}}</a><br><br>\r" +
+    "    <b>Training & Additional Guidance</b>\r" +
     "\n" +
-    "\t</div>\r" +
+    "    <p>For additional instructional content and training on the REACH-VET program and Dashboard, please visit the REACH-VET VA intranet site: <a href=\"http://vaww.mirecc.va.gov/reachvet/\" style=\"color:rgb(16, 52, 166)\">http://vaww.mirecc.va.gov/reachvet/</a></p>\r" +
+    "\n" +
+    "</div>\r" +
     "\n" +
     "</div>"
   );
@@ -1465,7 +1467,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            yAxisTickFormat=\"yAxisTickFormatFunction()\"\r" +
     "\n" +
-    "            yAxisLabel=\"Attempts\"\r" +
+    "            yAxisLabel=\"Number of Attempts\"\r" +
     "\n" +
     "            yAxisRotateLabels=\"true\"\r" +
     "\n" +
@@ -1483,9 +1485,17 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            useInteractiveGuideline=\"true\"\r" +
     "\n" +
-    "            tooltips=\"true\">\r" +
+    "            tooltips=\"true\"\r" +
+    "\n" +
+    "            margin=\"{left:75, bottom:12}\">\r" +
     "\n" +
     "    </nvd3-line-chart>\r" +
+    "\n" +
+    "    <p>\r" +
+    "\n" +
+    "    The Attempt Prediction chart shows the historical number of suicide attempts at a facility based on SPAN data. Using a statistical algorithm, the chart also shows the predicted number of attempts for the next three months. Please see the User Manual for more details. \r" +
+    "\n" +
+    "    </p>\r" +
     "\n" +
     "</div>"
   );
