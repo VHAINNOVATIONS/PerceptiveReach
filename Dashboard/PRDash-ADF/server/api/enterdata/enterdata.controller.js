@@ -20,6 +20,7 @@ exports.index = function(req, res) {
 
 
         var query = '';
+
         query =   'SELECT * ' +
                   'FROM ClinOutreach_HighRisk_SPANImport ' +
                   'WHERE ReachID =  '+ReachID +
@@ -54,6 +55,11 @@ exports.index = function(req, res) {
               'WHERE ReachID =  '+ReachID +
               'ORDER BY Revision desc; '
 
+//Outreach Status
+            query +=   'SELECT * ' +
+            'FROM PatientOutReachStatus ' +
+            'WHERE ReachID =  '+ReachID +'; '
+
 
         // Query the database
       request.query(query, function(err, recordset) {
@@ -72,6 +78,7 @@ exports.index = function(req, res) {
       var jsonSafetyPlan_UserNotes = JSON.parse(JSON.stringify(recordset[3]));
       var jsonPrimaryHealthProvider_UserNotes = JSON.parse(JSON.stringify(recordset[4]));
       var jsonGeneralComments = JSON.parse(JSON.stringify(recordset[5]));
+      var jsonOutreachStatus = JSON.parse(JSON.stringify(recordset[6]));
 
       /*Send the data */
       res.send({HighRisk_SPANImport:jsonHighRisk_SPANImport,
@@ -79,7 +86,8 @@ exports.index = function(req, res) {
         SafetyPlan_SPANImport:jsonSafetyPlan_SPANImport,
         SafetyPlan_UserNotes:jsonSafetyPlan_UserNotes,
         PrimaryHealthProvider_UserNotes:jsonPrimaryHealthProvider_UserNotes,
-        GeneralComments:jsonGeneralComments
+        GeneralComments:jsonGeneralComments,
+        OutreachStatus: jsonOutreachStatus
         });
     });
     });
