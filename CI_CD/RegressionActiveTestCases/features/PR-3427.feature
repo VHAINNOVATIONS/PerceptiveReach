@@ -11,13 +11,6 @@ When I click on "Individual View"
 Then I should see "CDS Questionnaire" widget
 And I should see "Clinical Decision Support"
 And I should see "Alcohol Use Disorder"
-Then I should click on Condition1 button
-And I click on CDSNext1 button
-Then I should see "Alcohol Use Disorder"
-Then I should see "2. Receiving psychosocial treatment?"
-Then I should select the first option in dropdown
-And I click on "Next" button
-Then I should see "Treatment(s)"
 And I click on "Logout" button
 
 
