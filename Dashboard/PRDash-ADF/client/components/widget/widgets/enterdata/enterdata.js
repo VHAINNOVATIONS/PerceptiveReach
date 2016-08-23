@@ -255,6 +255,26 @@ angular.module('ui.widgets')
           {
             $scope.commentText = $scope.data.GeneralComments[0].Comment;
           }
+
+          if($scope.data.OutreachStatus && $scope.data.OutreachStatus.length > 0 )
+          {
+            $scope.IdentifiedPrimaryProvider = $scope.data.OutreachStatus[0].IdentifiedPrimaryProvider;
+            $scope.NotifiedProvider = $scope.data.OutreachStatus[0].NotifiedProvider;
+            $scope.AskedProviderReview = $scope.data.OutreachStatus[0].AskedProviderReview;
+            $scope.ReceivedNotification = $scope.data.OutreachStatus[0].ReceivedNotification;
+            $scope.ReviewedCurrentDiagnosis = $scope.data.OutreachStatus[0].ReviewedCurrentDiagnosis;
+            $scope.EstablishedContact = $scope.data.OutreachStatus[0].EstablishedContact;
+            $scope.UpdatedPlan = $scope.data.OutreachStatus[0].UpdatedPlan;
+            $scope.EvaluateCaring = $scope.data.OutreachStatus[0].EvaluateCaring;
+            $scope.EvaluateSafetyPlan = $scope.data.OutreachStatus[0].EvaluateSafetyPlan;
+            $scope.Deceased = $scope.data.OutreachStatus[0].Deceased;
+            $scope.CannotContact = $scope.data.OutreachStatus[0].CannotContact;
+            $scope.RefusedServices = $scope.data.OutreachStatus[0].RefusedServices;
+            $scope.CareFromCommunity = $scope.data.OutreachStatus[0].CareFromCommunity;
+            $scope.ClinicallyNotAtRisk = $scope.data.OutreachStatus[0].ClinicallyNotAtRisk;
+            $scope.Other = $scope.data.OutreachStatus[0].Other;
+          }
+          
         };
 
         // ADD DATA SECTION
@@ -307,12 +327,88 @@ angular.module('ui.widgets')
               }
           }
 
+            Updated_OutreachStatus = {};
+            if($scope.IdentifiedPrimaryProvider != $scope.data.OutreachStatus[0].IdentifiedPrimaryProvider)
+            {
+              Updated_OutreachStatus.IdentifiedPrimaryProvider = $scope.IdentifiedPrimaryProvider;
+            }
+
+            if($scope.NotifiedProvider != $scope.data.OutreachStatus[0].NotifiedProvider)
+            {
+              Updated_OutreachStatus.NotifiedProvider = $scope.NotifiedProvider;
+            }
+
+            if($scope.AskedProviderReview != $scope.data.OutreachStatus[0].AskedProviderReview)
+            {
+              Updated_OutreachStatus.AskedProviderReview = $scope.AskedProviderReview;
+            }
+
+            if($scope.ReceivedNotification != $scope.data.OutreachStatus[0].ReceivedNotification)
+            {
+              Updated_OutreachStatus.ReceivedNotification = $scope.ReceivedNotification;
+            }
+
+            if($scope.ReviewedCurrentDiagnosis != $scope.data.OutreachStatus[0].ReviewedCurrentDiagnosis)
+            {
+              Updated_OutreachStatus.ReviewedCurrentDiagnosis = $scope.ReviewedCurrentDiagnosis;
+            }
+            
+            if($scope.EstablishedContact != $scope.data.OutreachStatus[0].EstablishedContact)
+            {
+              Updated_OutreachStatus.EstablishedContact = $scope.EstablishedContact;
+            }
+            
+            if($scope.UpdatedPlan != $scope.data.OutreachStatus[0].UpdatedPlan)
+            {
+              Updated_OutreachStatus.UpdatedPlan = $scope.UpdatedPlan;
+            }
+            
+            if($scope.EvaluateCaring != $scope.data.OutreachStatus[0].EvaluateCaring)
+            {
+              Updated_OutreachStatus.EvaluateCaring = $scope.EvaluateCaring;
+            }
+
+            if($scope.EvaluateSafetyPlan != $scope.data.OutreachStatus[0].EvaluateSafetyPlan)
+            {
+              Updated_OutreachStatus.EvaluateSafetyPlan = $scope.EvaluateSafetyPlan;
+            }
+            
+            if($scope.Deceased != $scope.data.OutreachStatus[0].Deceased)
+            {
+              Updated_OutreachStatus.Deceased = $scope.Deceased;
+            }
+            
+            if($scope.CannotContact != $scope.data.OutreachStatus[0].CannotContact)
+            {
+              Updated_OutreachStatus.CannotContact = $scope.CannotContact;
+            }
+
+            if($scope.RefusedServices != $scope.data.OutreachStatus[0].RefusedServices)
+            {
+              Updated_OutreachStatus.RefusedServices = $scope.RefusedServices;
+            }
+
+            if($scope.CareFromCommunity != $scope.data.OutreachStatus[0].CareFromCommunity)
+            {
+              Updated_OutreachStatus.CareFromCommunity = $scope.CareFromCommunity;
+            }
+
+            if($scope.ClinicallyNotAtRisk != $scope.data.OutreachStatus[0].ClinicallyNotAtRisk)
+            {
+              Updated_OutreachStatus.ClinicallyNotAtRisk = $scope.ClinicallyNotAtRisk;
+            }
+
+            if($scope.Other != $scope.data.OutreachStatus[0].Other)
+            {
+              Updated_OutreachStatus.Other = $scope.Other;
+            }
 
           $scope.widget.dataModel.saveNewUserData({
                                                     hrUserNotes: UpdatedHR_UserNotes,
                                                     mhUserNotes: UpdatedMH_UserNotes,
                                                     spUserNotes: UpdatedSP_UserNotes,
-                                                    gcUserNotes: UpdatedGC_UserNotes
+                                                    gcUserNotes: UpdatedGC_UserNotes,
+                                                    OutreachStatus: Updated_OutreachStatus
                                                   });
           };
 
