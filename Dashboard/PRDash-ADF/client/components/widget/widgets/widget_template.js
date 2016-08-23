@@ -505,6 +505,224 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "      <div class=\"row\">\r" +
     "\n" +
+    "        <div class=\"col-md-12\">\r" +
+    "\n" +
+    "        <label>Outreach Status</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div style=\"padding-bottom:10px;\">Initiation Checklist- To be completed by site facilitator(s)</div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"IdentifiedPrimaryProvider\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          1. Identified a primary patient provider.\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"NotifiedProvider\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          2. Notified provider of the specific patient and program requirements\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"AskedProviderReview\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          3. Asked provider to review treatment plans for the patient.\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div style=\"padding-bottom:10px;padding-top:10px\">Outreach Checklist- To be completed by patient provider(or facilitator with provider approval)</div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"ReceivedNotification\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          4.Received notification from Site Facilitator about the patient\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"ReviewedCurrentDiagnosis\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          5. Reviewed current diagnoses and treatments\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"EstablishedContact\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          6. Established contact with the patient to review current diagnoses, symptoms, adherence and problems\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div style=\"padding-bottom:10px;padding-top:10px\">Care Evaluation Checklist – To Be Completed by Patient Provider (or Facilitator with Provider Approval)</div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"UpdatedPlan\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          7.Updated the plan for management and treatment as appropriate\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"EvaluateCaring\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          8. Evaluate appropriateness of Caring Communications program\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"EvaluateSafetyPlan\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          9. Evaluate appropriateness of Safety Planning\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div style=\"padding-bottom:10px;padding-top:10px\">Reasons for not Receiving VA Services– To Be Completed by Patient Provider (or Facilitator with Provider Approval)</div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"Deceased\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          10. Deceased\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"CannotContact\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          11. Cannot Contact\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"RefusedServices\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          12. Refused Services\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"CareFromCommunity\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "         13. Care from community provider\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"ClinicallyNotAtRisk\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          14. Clinically not at risk\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"Other\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          15. Other\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
     "        <div class=\"col-md-12 bs-example hr-text\">\r" +
     "\n" +
     "        <label style=\"margin-left:32px;\">High Risk Flag Information</label>\r" +
@@ -1263,7 +1481,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/patientTable/patientTable.html",
     "<div id=\"patientRosterDiv\" title=\"Navigate to header and click tab arrow to enter table, esc to leave table rows\">\r" +
     "\n" +
-    "    <table id=\"tblPatient\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
+    "    <table id=\"tblPatient\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" style=\"width:100%\">\r" +
     "\n" +
     "    </table>\r" +
     "\n" +

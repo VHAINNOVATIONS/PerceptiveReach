@@ -3389,6 +3389,26 @@ angular.module('ui.widgets')
           {
             $scope.commentText = $scope.data.GeneralComments[0].Comment;
           }
+
+          if($scope.data.OutreachStatus && $scope.data.OutreachStatus.length > 0 )
+          {
+            $scope.IdentifiedPrimaryProvider = $scope.data.OutreachStatus[0].IdentifiedPrimaryProvider;
+            $scope.NotifiedProvider = $scope.data.OutreachStatus[0].NotifiedProvider;
+            $scope.AskedProviderReview = $scope.data.OutreachStatus[0].AskedProviderReview;
+            $scope.ReceivedNotification = $scope.data.OutreachStatus[0].ReceivedNotification;
+            $scope.ReviewedCurrentDiagnosis = $scope.data.OutreachStatus[0].ReviewedCurrentDiagnosis;
+            $scope.EstablishedContact = $scope.data.OutreachStatus[0].EstablishedContact;
+            $scope.UpdatedPlan = $scope.data.OutreachStatus[0].UpdatedPlan;
+            $scope.EvaluateCaring = $scope.data.OutreachStatus[0].EvaluateCaring;
+            $scope.EvaluateSafetyPlan = $scope.data.OutreachStatus[0].EvaluateSafetyPlan;
+            $scope.Deceased = $scope.data.OutreachStatus[0].Deceased;
+            $scope.CannotContact = $scope.data.OutreachStatus[0].CannotContact;
+            $scope.RefusedServices = $scope.data.OutreachStatus[0].RefusedServices;
+            $scope.CareFromCommunity = $scope.data.OutreachStatus[0].CareFromCommunity;
+            $scope.ClinicallyNotAtRisk = $scope.data.OutreachStatus[0].ClinicallyNotAtRisk;
+            $scope.Other = $scope.data.OutreachStatus[0].Other;
+          }
+          
         };
 
         // ADD DATA SECTION
@@ -3441,12 +3461,88 @@ angular.module('ui.widgets')
               }
           }
 
+            Updated_OutreachStatus = {};
+            if($scope.IdentifiedPrimaryProvider != $scope.data.OutreachStatus[0].IdentifiedPrimaryProvider)
+            {
+              Updated_OutreachStatus.IdentifiedPrimaryProvider = $scope.IdentifiedPrimaryProvider;
+            }
+
+            if($scope.NotifiedProvider != $scope.data.OutreachStatus[0].NotifiedProvider)
+            {
+              Updated_OutreachStatus.NotifiedProvider = $scope.NotifiedProvider;
+            }
+
+            if($scope.AskedProviderReview != $scope.data.OutreachStatus[0].AskedProviderReview)
+            {
+              Updated_OutreachStatus.AskedProviderReview = $scope.AskedProviderReview;
+            }
+
+            if($scope.ReceivedNotification != $scope.data.OutreachStatus[0].ReceivedNotification)
+            {
+              Updated_OutreachStatus.ReceivedNotification = $scope.ReceivedNotification;
+            }
+
+            if($scope.ReviewedCurrentDiagnosis != $scope.data.OutreachStatus[0].ReviewedCurrentDiagnosis)
+            {
+              Updated_OutreachStatus.ReviewedCurrentDiagnosis = $scope.ReviewedCurrentDiagnosis;
+            }
+            
+            if($scope.EstablishedContact != $scope.data.OutreachStatus[0].EstablishedContact)
+            {
+              Updated_OutreachStatus.EstablishedContact = $scope.EstablishedContact;
+            }
+            
+            if($scope.UpdatedPlan != $scope.data.OutreachStatus[0].UpdatedPlan)
+            {
+              Updated_OutreachStatus.UpdatedPlan = $scope.UpdatedPlan;
+            }
+            
+            if($scope.EvaluateCaring != $scope.data.OutreachStatus[0].EvaluateCaring)
+            {
+              Updated_OutreachStatus.EvaluateCaring = $scope.EvaluateCaring;
+            }
+
+            if($scope.EvaluateSafetyPlan != $scope.data.OutreachStatus[0].EvaluateSafetyPlan)
+            {
+              Updated_OutreachStatus.EvaluateSafetyPlan = $scope.EvaluateSafetyPlan;
+            }
+            
+            if($scope.Deceased != $scope.data.OutreachStatus[0].Deceased)
+            {
+              Updated_OutreachStatus.Deceased = $scope.Deceased;
+            }
+            
+            if($scope.CannotContact != $scope.data.OutreachStatus[0].CannotContact)
+            {
+              Updated_OutreachStatus.CannotContact = $scope.CannotContact;
+            }
+
+            if($scope.RefusedServices != $scope.data.OutreachStatus[0].RefusedServices)
+            {
+              Updated_OutreachStatus.RefusedServices = $scope.RefusedServices;
+            }
+
+            if($scope.CareFromCommunity != $scope.data.OutreachStatus[0].CareFromCommunity)
+            {
+              Updated_OutreachStatus.CareFromCommunity = $scope.CareFromCommunity;
+            }
+
+            if($scope.ClinicallyNotAtRisk != $scope.data.OutreachStatus[0].ClinicallyNotAtRisk)
+            {
+              Updated_OutreachStatus.ClinicallyNotAtRisk = $scope.ClinicallyNotAtRisk;
+            }
+
+            if($scope.Other != $scope.data.OutreachStatus[0].Other)
+            {
+              Updated_OutreachStatus.Other = $scope.Other;
+            }
 
           $scope.widget.dataModel.saveNewUserData({
                                                     hrUserNotes: UpdatedHR_UserNotes,
                                                     mhUserNotes: UpdatedMH_UserNotes,
                                                     spUserNotes: UpdatedSP_UserNotes,
-                                                    gcUserNotes: UpdatedGC_UserNotes
+                                                    gcUserNotes: UpdatedGC_UserNotes,
+                                                    OutreachStatus: Updated_OutreachStatus
                                                   });
           };
 
@@ -5042,13 +5138,17 @@ angular.module('ui.widgets')
             .withOption('deferRender', true)
             // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
+            .withOption('scrollX', '100%')
             .withOption('bDestroy',true)
+            .withOption('aaSorting', [
+                [3, 'desc']
+            ])
             .withLanguage({
               "sInfo": "Total Records: _TOTAL_"
             });
 
          function JSONToCSVConvertor(JSONData,title) {
-            var exportHeaders = ['ReachID','FirstName','LastName','SSN','HomePhone','DateIdentifiedAsAtRisk','RiskLevel','OutreachStatus']
+            var exportHeaders = ['ReachID','FirstName','LastName','SSN','HomePhone','DateIdentifiedAsAtRisk','RiskLevel','CurrentStatus']
             var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
             var d = new Date();
 
@@ -5108,26 +5208,20 @@ angular.module('ui.widgets')
         };
 
         $scope.dtColumns = [
-            DTColumnBuilder.newColumn('Name').withTitle('Name').withOption('width', '20%'),
-            DTColumnBuilder.newColumn('SSN').withTitle('SSN').withOption('width', '15%'),
-            DTColumnBuilder.newColumn('HomePhone').withTitle('Phone').withOption('width', '10%'),
-            DTColumnBuilder.newColumn('DateIdentifiedAsAtRisk').withTitle('Date First Identified').withOption('width', '15%'),
-            DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level').withOption('width', '10%'),
-            DTColumnBuilder.newColumn(null).withTitle('Outreach Status').withOption('width', '30%').renderWith(function(data, type, full, meta) {
-               var template = '<select id=vet_' + data.ReachID + ' ng-options="item as item.StatusDesc for item in outreachStatusList" ng-change="UpdateOutreachStatus(OutreachMap['+data.ReachID+'])" ng-model="OutreachMap['+data.ReachID+']"></select>';
-               var hiddenSpan = "<span id='Outreach_" + data.ReachID + "' hidden>"+ data.OutreachStatus +"</span> "
-               return hiddenSpan + template;
+            DTColumnBuilder.newColumn('Name').withTitle('Name'),
+            DTColumnBuilder.newColumn('SSN').withTitle('SSN'),
+            DTColumnBuilder.newColumn('HomePhone').withTitle('Phone'),
+            DTColumnBuilder.newColumn('DateIdentifiedAsAtRisk').withTitle('Date First Identified'),
+            DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level'),
+            DTColumnBuilder.newColumn('CurrentStatus').withTitle('Outreach Status').withOption('width', '10%').renderWith(function(data, type, full, meta) {
+               var data1 = data.split('|')[0]
+               var data2 = data.split('|')[1]
+               var template = '<div>' + data1 + '</div><br/><div>'+data2+'</div>';
+               return  template;
             })
-            
         ];
      
-        $scope.UpdateOutreachStatus = function(selected){
-          var commonData = $scope.widget.dataModelOptions.common;
-          var ReachId = commonData.data.veteranObj.ReachID;
-          var OutReachStatusID = selected.OutReachStatusID;
-          $scope.widget.dataModel.saveOutreachData(OutReachStatusID,ReachId,commonData.data.facilitySelected.facility);
-        }
-
+    
         $scope.rowClickHandler= function(info) {
           if($scope.common.data.EnterDataIsUnsaved == true){
               $(".unsavedDataAlert").fadeIn();
@@ -6372,6 +6466,224 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "      <div class=\"row\">\r" +
     "\n" +
+    "        <div class=\"col-md-12\">\r" +
+    "\n" +
+    "        <label>Outreach Status</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div style=\"padding-bottom:10px;\">Initiation Checklist- To be completed by site facilitator(s)</div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"IdentifiedPrimaryProvider\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          1. Identified a primary patient provider.\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"NotifiedProvider\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          2. Notified provider of the specific patient and program requirements\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"AskedProviderReview\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          3. Asked provider to review treatment plans for the patient.\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div style=\"padding-bottom:10px;padding-top:10px\">Outreach Checklist- To be completed by patient provider(or facilitator with provider approval)</div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"ReceivedNotification\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          4.Received notification from Site Facilitator about the patient\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"ReviewedCurrentDiagnosis\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          5. Reviewed current diagnoses and treatments\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"EstablishedContact\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          6. Established contact with the patient to review current diagnoses, symptoms, adherence and problems\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div style=\"padding-bottom:10px;padding-top:10px\">Care Evaluation Checklist – To Be Completed by Patient Provider (or Facilitator with Provider Approval)</div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"UpdatedPlan\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          7.Updated the plan for management and treatment as appropriate\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"EvaluateCaring\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          8. Evaluate appropriateness of Caring Communications program\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"EvaluateSafetyPlan\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          9. Evaluate appropriateness of Safety Planning\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div style=\"padding-bottom:10px;padding-top:10px\">Reasons for not Receiving VA Services– To Be Completed by Patient Provider (or Facilitator with Provider Approval)</div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"Deceased\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          10. Deceased\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"CannotContact\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          11. Cannot Contact\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"RefusedServices\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          12. Refused Services\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"CareFromCommunity\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "         13. Care from community provider\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"ClinicallyNotAtRisk\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          14. Clinically not at risk\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"Other\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          15. Other\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
     "        <div class=\"col-md-12 bs-example hr-text\">\r" +
     "\n" +
     "        <label style=\"margin-left:32px;\">High Risk Flag Information</label>\r" +
@@ -7130,7 +7442,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/patientTable/patientTable.html",
     "<div id=\"patientRosterDiv\" title=\"Navigate to header and click tab arrow to enter table, esc to leave table rows\">\r" +
     "\n" +
-    "    <table id=\"tblPatient\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
+    "    <table id=\"tblPatient\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" style=\"width:100%\">\r" +
     "\n" +
     "    </table>\r" +
     "\n" +
