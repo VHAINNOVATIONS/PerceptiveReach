@@ -55,13 +55,17 @@ angular.module('ui.widgets')
             .withOption('deferRender', true)
             // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
+            .withOption('scrollX', '100%')
             .withOption('bDestroy',true)
+            .withOption('aaSorting', [
+                [3, 'desc']
+            ])
             .withLanguage({
               "sInfo": "Total Records: _TOTAL_"
             });
 
          function JSONToCSVConvertor(JSONData,title) {
-            var exportHeaders = ['ReachID','FirstName','LastName','SSN','HomePhone','DateIdentifiedAsAtRisk','RiskLevel','OutreachStatus']
+            var exportHeaders = ['ReachID','FirstName','LastName','SSN','HomePhone','DateIdentifiedAsAtRisk','RiskLevel','CurrentStatus']
             var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
             var d = new Date();
 
@@ -121,26 +125,20 @@ angular.module('ui.widgets')
         };
 
         $scope.dtColumns = [
-            DTColumnBuilder.newColumn('Name').withTitle('Name').withOption('width', '20%'),
-            DTColumnBuilder.newColumn('SSN').withTitle('SSN').withOption('width', '15%'),
-            DTColumnBuilder.newColumn('HomePhone').withTitle('Phone').withOption('width', '10%'),
-            DTColumnBuilder.newColumn('DateIdentifiedAsAtRisk').withTitle('Date First Identified').withOption('width', '15%'),
-            DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level').withOption('width', '10%'),
-            DTColumnBuilder.newColumn(null).withTitle('Outreach Status').withOption('width', '30%').renderWith(function(data, type, full, meta) {
-               var template = '<select id=vet_' + data.ReachID + ' ng-options="item as item.StatusDesc for item in outreachStatusList" ng-change="UpdateOutreachStatus(OutreachMap['+data.ReachID+'])" ng-model="OutreachMap['+data.ReachID+']"></select>';
-               var hiddenSpan = "<span id='Outreach_" + data.ReachID + "' hidden>"+ data.OutreachStatus +"</span> "
-               return hiddenSpan + template;
+            DTColumnBuilder.newColumn('Name').withTitle('Name'),
+            DTColumnBuilder.newColumn('SSN').withTitle('SSN'),
+            DTColumnBuilder.newColumn('HomePhone').withTitle('Phone'),
+            DTColumnBuilder.newColumn('DateIdentifiedAsAtRisk').withTitle('Date First Identified'),
+            DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level'),
+            DTColumnBuilder.newColumn('CurrentStatus').withTitle('Outreach Status').withOption('width', '10%').renderWith(function(data, type, full, meta) {
+               var data1 = data.split('|')[0]
+               var data2 = data.split('|')[1]
+               var template = '<div>' + data1 + '</div><br/><div>'+data2+'</div>';
+               return  template;
             })
-            
         ];
      
-        $scope.UpdateOutreachStatus = function(selected){
-          var commonData = $scope.widget.dataModelOptions.common;
-          var ReachId = commonData.data.veteranObj.ReachID;
-          var OutReachStatusID = selected.OutReachStatusID;
-          $scope.widget.dataModel.saveOutreachData(OutReachStatusID,ReachId,commonData.data.facilitySelected.facility);
-        }
-
+    
         $scope.rowClickHandler= function(info) {
           if($scope.common.data.EnterDataIsUnsaved == true){
               $(".unsavedDataAlert").fadeIn();
