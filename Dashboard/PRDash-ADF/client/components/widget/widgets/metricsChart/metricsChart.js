@@ -164,29 +164,6 @@ angular.module('ui.widgets')
           this.series[index].values = values;
         }.bind(this));
 
-        /*
-         //TODO this is workaround to have fixed x axis scale when no enough date is available
-         chart.push({
-         key: 'Left Value',
-         values: [
-         {timestamp: startTime, value: 0}
-         ]
-         });
-         */
-
-        /*
-         var max = _.max(history, function (historyPoint) { //TODO optimize
-         return historyPoint.stats.tuplesEmittedPSMA; //TODO
-         });
-
-         chart.push({
-         key: 'Upper Value',
-         values: [
-         {timestamp: now - 30 * 1000, value: Math.round(max.value * 1.2)}
-         ]
-         });
-         */
-
         if (history.length > 1) {
           this.scope.data = _.clone(this.series);
           this.scope.start = Math.min(startTime, _.first(history).timestamp);
