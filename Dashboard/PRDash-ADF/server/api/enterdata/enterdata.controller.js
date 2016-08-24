@@ -104,53 +104,82 @@ exports.index = function(req, res) {
         var UpdatedUserData = req.param("UpdatedUserData");
         var ReachID = req.param("reachID");
         var query = "";
+        
+
         if(UpdatedUserData.hrUserNotes.isNew)
         {
           //insert hrData
-         var param1 = ReachID;
-         var param2 = UpdatedUserData.hrUserNotes.entry;
+         
+         var hrusernotes = UpdatedUserData.hrUserNotes.entry;
 
-         request.input('reachID', sql.Int, param1);
-         request.input('userNotes',sql.NVarChar(sql.MAX),param2);
+         request.input('reachID', sql.Int, ReachID);
+         request.input('hrusernotes',sql.NVarChar(sql.MAX),hrusernotes);
 
-          query += 'INSERT INTO [dbo].[ClinOutreach_HighRisk_UserNotes] ([ReachID],[EntryDate],[UserNotes]) VALUES (@reachID,getdate(),@userNotes);'
+          query += 'INSERT INTO [dbo].[ClinOutreach_HighRisk_UserNotes] ([ReachID],[EntryDate],[UserNotes]) VALUES (@reachID,getdate(),@hrusernotes);'
 
         }
         if(UpdatedUserData.mhUserNotes.isNew)
         {
           //insert hrData
-         var param1 = ReachID;
-         var param2 = UpdatedUserData.mhUserNotes.entry;
+         var mhusernotes = UpdatedUserData.mhUserNotes.entry;
 
-         request.input('reachID', sql.Int, param1);
-         request.input('userNotes',sql.NVarChar(sql.MAX),param2);
+         request.input('reachID', sql.Int, ReachID);
+         request.input('mhusernotes',sql.NVarChar(sql.MAX),mhusernotes);
 
-          query += 'INSERT INTO [dbo].[ClinOutreach_PrimaryHealthProvider_UserNotes] ([ReachID],[EntryDate],[UserNotes]) VALUES (@reachID,getdate(),@userNotes);'
+          query += 'INSERT INTO [dbo].[ClinOutreach_PrimaryHealthProvider_UserNotes] ([ReachID],[EntryDate],[UserNotes]) VALUES (@reachID,getdate(),@mhusernotes);'
 
         }
         if(UpdatedUserData.spUserNotes.isNew)
         {
           //insert spData
-          var param1 = ReachID;
-          var param2 = UpdatedUserData.spUserNotes.entry;
+          var spusernotes = UpdatedUserData.spUserNotes.entry;
 
-          request.input('reachID', sql.Int, param1);
-          request.input('userNotes',sql.NVarChar(sql.MAX),param2);
+          request.input('reachID', sql.Int, ReachID);
+          request.input('spusernotes',sql.NVarChar(sql.MAX),spusernotes);
 
-           query += 'INSERT INTO [dbo].[ClinOutreach_SafetyPlan_UserNotes] ([ReachID],[EntryDate],[UserNotes]) VALUES (@reachID,getdate(),@userNotes);'
+           query += 'INSERT INTO [dbo].[ClinOutreach_SafetyPlan_UserNotes] ([ReachID],[EntryDate],[UserNotes]) VALUES (@reachID,getdate(),@spusernotes);'
 
         }
         if(UpdatedUserData.gcUserNotes.isNew)
         {
           //insert gcData
-          var param1 = ReachID;
-          var param2 = UpdatedUserData.gcUserNotes.entry;
+          var gcusernotes = UpdatedUserData.gcUserNotes.entry;
 
-          request.input('reachID', sql.Int, param1);
-          request.input('Comment',sql.NVarChar(sql.MAX),param2);
+          request.input('reachID', sql.Int, ReachID);
+          request.input('Comment',sql.NVarChar(sql.MAX),gcusernotes);
 
            query += 'INSERT INTO [dbo].[ClinOutreach_GeneralComments] ([ReachID],[EntryDate],[Comment]) VALUES (@reachID,getdate(),@Comment);'
 
+        }
+
+        if(Object.keys(UpdatedUserData.outreachStatus).length)
+        {
+          var obj = UpdatedUserData.outreachStatus
+          var innerQuery = '';
+
+          
+          request.input('reachID', sql.Int, ReachID);
+
+          Object.keys(obj).forEach(function(key,idx) {
+            if(idx == 0)
+            {
+              innerQuery = 'UPDATE [dbo].[PatientOutReachStatus] SET '
+                           + key + ' = ' + "'" + obj[key] + "'"
+                           + ',' + key+'_date = getdate()'
+            }
+            else
+            {
+              innerQuery += ','+ key + ' = ' + "'" + obj[key] +"'"
+                           + ','+ key+'_date = getdate()'
+            }
+
+          });
+
+          innerQuery += ' WHERE ReachID = @reachID;';
+
+          query += innerQuery;
+
+          
         }
 
         request.query(query, function(err, recordset) {
