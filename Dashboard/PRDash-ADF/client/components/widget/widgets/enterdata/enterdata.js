@@ -408,7 +408,7 @@ angular.module('ui.widgets')
                                                     mhUserNotes: UpdatedMH_UserNotes,
                                                     spUserNotes: UpdatedSP_UserNotes,
                                                     gcUserNotes: UpdatedGC_UserNotes,
-                                                    OutreachStatus: Updated_OutreachStatus
+                                                    outreachStatus: Updated_OutreachStatus
                                                   });
           };
 
