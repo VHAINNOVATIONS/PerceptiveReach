@@ -3407,6 +3407,8 @@ angular.module('ui.widgets')
             $scope.CareFromCommunity = $scope.data.OutreachStatus[0].CareFromCommunity;
             $scope.ClinicallyNotAtRisk = $scope.data.OutreachStatus[0].ClinicallyNotAtRisk;
             $scope.Other = $scope.data.OutreachStatus[0].Other;
+            
+            $scope.outreachStatus = $scope.data.OutreachStatus[0];
           }
           
         };
@@ -6486,7 +6488,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"col-md-3 text-left\">\r" +
     "\n" +
-    "          1. Identified a primary patient provider.\r" +
+    "          1. Identified a primary patient provider. <label class=\"enterDataDateFont\">{{outreachStatus.IdentifiedPrimaryProvider_Date | date:'MM/dd/yyyy @ h:mma' }}</label>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
@@ -6498,7 +6500,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"col-md-3 text-left\">\r" +
     "\n" +
-    "          2. Notified provider of the specific patient and program requirements\r" +
+    "          2. Notified provider of the specific patient and program requirements <label class=\"enterDataDateFont\">{{outreachStatus.NotifiedProvider_Date | date:'MM/dd/yyyy @ h:mma' }}</label>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
@@ -6510,7 +6512,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"col-md-3 text-left\">\r" +
     "\n" +
-    "          3. Asked provider to review treatment plans for the patient.\r" +
+    "          3. Asked provider to review treatment plans for the patient. <label class=\"enterDataDateFont\">{{outreachStatus.AskedProviderReview_Date | date:'MM/dd/yyyy @ h:mma' }}</label>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
@@ -6528,7 +6530,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"col-md-3 text-left\">\r" +
     "\n" +
-    "          4.Received notification from Site Facilitator about the patient\r" +
+    "          4.Received notification from Site Facilitator about the patient <label class=\"enterDataDateFont\">{{outreachStatus.ReceivedNotification_Date | date:'MM/dd/yyyy @ h:mma' }}</label>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
@@ -6540,7 +6542,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"col-md-3 text-left\">\r" +
     "\n" +
-    "          5. Reviewed current diagnoses and treatments\r" +
+    "          5. Reviewed current diagnoses and treatments <label class=\"enterDataDateFont\">{{outreachStatus.ReviewedCurrentDiagnosis_Date | date:'MM/dd/yyyy @ h:mma' }}</label>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
@@ -6552,7 +6554,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"col-md-3 text-left\">\r" +
     "\n" +
-    "          6. Established contact with the patient to review current diagnoses, symptoms, adherence and problems\r" +
+    "          6. Established contact with the patient to review current diagnoses, symptoms, adherence and problems <label class=\"enterDataDateFont\">{{outreachStatus.EstablishedContact_Date | date:'MM/dd/yyyy @ h:mma' }}</label>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
@@ -6570,7 +6572,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"col-md-3 text-left\">\r" +
     "\n" +
-    "          7.Updated the plan for management and treatment as appropriate\r" +
+    "          7.Updated the plan for management and treatment as appropriate <label class=\"enterDataDateFont\">{{outreachStatus.UpdatedPlan_Date | date:'MM/dd/yyyy @ h:mma' }}</label>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
@@ -6582,7 +6584,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"col-md-3 text-left\">\r" +
     "\n" +
-    "          8. Evaluate appropriateness of Caring Communications program\r" +
+    "          8. Evaluate appropriateness of Caring Communications program <label class=\"enterDataDateFont\">{{outreachStatus.EvaluateCaring_Date | date:'MM/dd/yyyy @ h:mma' }}</label>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
@@ -6594,7 +6596,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"col-md-3 text-left\">\r" +
     "\n" +
-    "          9. Evaluate appropriateness of Safety Planning\r" +
+    "          9. Evaluate appropriateness of Safety Planning <label class=\"enterDataDateFont\">{{outreachStatus.EvaluateSafetyPlan_Date | date:'MM/dd/yyyy @ h:mma' }}</label>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
@@ -6612,7 +6614,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"col-md-3 text-left\">\r" +
     "\n" +
-    "          10. Deceased\r" +
+    "          10. Deceased <label class=\"enterDataDateFont\">{{outreachStatus.Deceased_Date | date:'MM/dd/yyyy @ h:mma' }}</label>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
@@ -6624,7 +6626,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"col-md-3 text-left\">\r" +
     "\n" +
-    "          11. Cannot Contact\r" +
+    "          11. Cannot Contact <label class=\"enterDataDateFont\">{{outreachStatus.CannotContact_Date | date:'MM/dd/yyyy @ h:mma' }}</label>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
@@ -6636,7 +6638,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"col-md-3 text-left\">\r" +
     "\n" +
-    "          12. Refused Services\r" +
+    "          12. Refused Services <label class=\"enterDataDateFont\">{{outreachStatus.RefusedServices_Date | date:'MM/dd/yyyy @ h:mma' }}</label>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
@@ -6652,7 +6654,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"col-md-3 text-left\">\r" +
     "\n" +
-    "         13. Care from community provider\r" +
+    "         13. Care from community provider <label class=\"enterDataDateFont\">{{outreachStatus.CareFromCommunity_Date | date:'MM/dd/yyyy @ h:mma' }}</label>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
@@ -6664,7 +6666,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"col-md-3 text-left\">\r" +
     "\n" +
-    "          14. Clinically not at risk\r" +
+    "          14. Clinically not at risk <label class=\"enterDataDateFont\">{{outreachStatus.ClinicallyNotAtRisk_Date | date:'MM/dd/yyyy @ h:mma' }}</label>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
@@ -6676,7 +6678,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "        <div class=\"col-md-3 text-left\">\r" +
     "\n" +
-    "          15. Other\r" +
+    "          15. Other <label class=\"enterDataDateFont\">{{outreachStatus.Other_Date | date:'MM/dd/yyyy @ h:mma' }}</label>\r" +
     "\n" +
     "        </div>\r" +
     "\n" +
