@@ -94,6 +94,12 @@ a{
   height: 22px;
 }
 
+.enterDataDateFont
+{
+  color: gray;
+  font-weight: normal;
+}
+
 .box {
   border-style:solid;
   border-width:1px;
@@ -526,4 +532,4 @@ fieldset[disabled] .btn-warning.active {
     -webkit-box-shadow: 0px 2px 10px rgba(50, 50, 50, 0.5);
   }
 
-}
+} 

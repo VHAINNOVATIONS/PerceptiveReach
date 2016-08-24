@@ -273,6 +273,8 @@ angular.module('ui.widgets')
             $scope.CareFromCommunity = $scope.data.OutreachStatus[0].CareFromCommunity;
             $scope.ClinicallyNotAtRisk = $scope.data.OutreachStatus[0].ClinicallyNotAtRisk;
             $scope.Other = $scope.data.OutreachStatus[0].Other;
+            
+            $scope.outreachStatus = $scope.data.OutreachStatus[0];
           }
           
         };
