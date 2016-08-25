@@ -685,3 +685,18 @@ end
 Then(/^I should select the first option in dropdown/) do
   find(:xpath, './/*[@id="question_55"][1]').select_option
 end
+
+
+Then(/^I should select "(.*?)" in the Data Entry widget$/) do |pagecontent|
+ page.find(:xpath , '//*[@ng-model="NotifiedProvider"]').set(true)
+end
+
+
+Then(/^I should select "Add Data" button in the Data Entry widget$/) do
+ page.find(:xpath , '//*[@ng-click="addNewData()"]').set(true)
+end
+
+
+Then(/^I should see the "date and time" in the outreach status checklist$/) do
+ page.find(:xpath , '//*[@id="identifiedprimaryproviderdate"]')
+end
