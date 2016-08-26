@@ -161,16 +161,17 @@ exports.index = function(req, res) {
           request.input('reachID', sql.Int, ReachID);
 
           Object.keys(obj).forEach(function(key,idx) {
+            var dateValue = obj[key] == false ? 'null': 'getdate()'
             if(idx == 0)
             {
               innerQuery = 'UPDATE [dbo].[PatientOutReachStatus] SET '
                            + key + ' = ' + "'" + obj[key] + "'"
-                           + ',' + key+'_date = getdate()'
+                           + ',' + key+'_date = ' + dateValue
             }
             else
             {
               innerQuery += ','+ key + ' = ' + "'" + obj[key] +"'"
-                           + ','+ key+'_date = getdate()'
+                           + ','+ key+'_date = ' + dateValue
             }
 
           });
