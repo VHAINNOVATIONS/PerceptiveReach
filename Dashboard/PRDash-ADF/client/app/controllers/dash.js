@@ -49,7 +49,7 @@ angular.module('app')
         directive: 'wt-clinical-decision-support',
         dataAttrName: 'data',
         dataModelType: ClinicalDecisionSupportDataModel,
-        title: 'Clinical Decision Support',
+        title: 'What is Perceptive Reach',
         dataModelOptions: {
           //riskLevel: 1,
           defaultWidget: true,
