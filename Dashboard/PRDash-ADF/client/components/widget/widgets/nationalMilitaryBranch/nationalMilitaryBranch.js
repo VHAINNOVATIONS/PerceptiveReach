@@ -82,28 +82,3 @@ link: function postLink(scope, element, attr) {
 }
 }
 });
-	 /* controller: function ($scope) {
-		console.log("First log stmt:", $scope.data);
-		$scope.toolTipContentFunction = function(){
-		return function(key, x, y, e, graph) {
-			return  'Super New Tooltip' +
-				'<h1>' + key + '</h1>' +
-				'<p>' +  y + ' at ' + x + '</p>'
-			};
-		};
-
-        $scope.xFunction = function(){
-          return function(d) {
-			console.log("Label console stmt:",d.Label);
-            return d.Label;
-          };
-        };
-        $scope.yFunction = function(){
-          return function(d) {
-			console.log("Value console stmt:", d.Value);
-            return d.Value;
-          };
-        };
-      }
-    };
-  });*/
