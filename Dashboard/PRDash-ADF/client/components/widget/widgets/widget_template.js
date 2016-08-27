@@ -314,13 +314,13 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/clinicalDecisionSupport/clinicalDecisionSupport.html",
-    "<div name=\"clinicalDecisionSupport\" style=\"overflow:auto; height:auto; width:auto\">\r" +
+    "<div name=\"clinicalDecisionSupport\" style=\"overflow:auto; height:auto; width:auto; padding: 15px\">\r" +
     "\n" +
     "\t<div ng-repeat=\"cpg in cpgList\">\r" +
     "\n" +
-    "<b style=\"color:rgb(16, 52, 166)\">Welcome to REACH-VET!</b>\r" +
+    "<b style=\"color:rgb(16, 52, 166)\">Welcome to Perceptive Reach!</b>\r" +
     "\n" +
-    "    <p>REACH-VET uses predictive (statistical) modeling to identify Veterans at risk for suicide and other adverse outcomes. The patients identified by the model are at increased risk for outcomes including suicide attempts, deaths from accidents, overdoses, injuries, all-cause mortality, hospitalizations for mental health conditions, and medical/surgical hospitalizations.</p>\r" +
+    "    <p>Perceptive Reach uses predictive (statistical) modeling to identify Veterans at risk for suicide and other adverse outcomes. The patients identified by the model are at increased risk for outcomes including suicide attempts, deaths from accidents, overdoses, injuries, all-cause mortality, hospitalizations for mental health conditions, and medical/surgical hospitalizations.</p>\r" +
     "\n" +
     "    <p>As participants in this program, REACH-VET facility coordinators will focus on implementing the program, engaging providers, and ensuring that providers are aware of which of their patients are at risk. Providers for Veterans identified by REACH-VET will be asked to review the care they receive, and to enhance it as appropriate.</p>\r" +
     "\n" +
@@ -1665,7 +1665,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/predictionChart/predictionChart.html",
-    "<div class=\"prediction-chart\" style=\"height:100%;width:100%;\">\r" +
+    "<div class=\"prediction-chart\" style=\"height:90%;width:100%;\">\r" +
     "\n" +
     "    <nvd3-line-chart\r" +
     "\n" +
@@ -1705,11 +1705,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            tooltips=\"true\"\r" +
     "\n" +
-    "            margin=\"{left:75, bottom:12}\">\r" +
+    "            margin=\"{left:75, bottom:75}\">\r" +
     "\n" +
     "    </nvd3-line-chart>\r" +
     "\n" +
-    "    <p>\r" +
+    "    <p style=\"margin:20px\">\r" +
     "\n" +
     "    The Attempt Prediction chart shows the historical number of suicide attempts at a facility based on SPAN data. Using a statistical algorithm, the chart also shows the predicted number of attempts for the next three months. Please see the User Manual for more details. \r" +
     "\n" +
