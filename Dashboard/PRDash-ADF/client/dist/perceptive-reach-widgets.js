@@ -5190,15 +5190,14 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('HomePhone').withTitle('Phone'),
             DTColumnBuilder.newColumn('DateIdentifiedAsAtRisk').withTitle('Date First Identified'),
             DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level'),
-            DTColumnBuilder.newColumn('CurrentStatus').withTitle('Outreach Status').withOption('width', '10%').renderWith(function(data, type, full, meta) {
+            DTColumnBuilder.newColumn('CurrentStatus').withTitle('Outreach Status').withOption('width', '10%').notSortable().renderWith(function(data, type, full, meta) {
                var data1 = data.split('|')[0]
                var data2 = data.split('|')[1]
                var template = '<div>' + data1 + '</div><br/><div>'+data2+'</div>';
                return  template;
             })
         ];
-     
-    
+
         $scope.rowClickHandler= function(info) {
           if($scope.common.data.EnterDataIsUnsaved == true){
               $(".unsavedDataAlert").fadeIn();
@@ -6257,21 +6256,23 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t<div ng-repeat=\"cpg in cpgList\">\r" +
     "\n" +
-    "<b style=\"color:rgb(16, 52, 166)\">Welcome to Perceptive Reach!</b>\r" +
+    "<b style=\"color:rgb(16, 52, 166); text-decoration: underline\">Welcome to Perceptive Reach</b>\r" +
     "\n" +
     "    <p>Perceptive Reach uses predictive (statistical) modeling to identify Veterans at risk for suicide and other adverse outcomes. The patients identified by the model are at increased risk for outcomes including suicide attempts, deaths from accidents, overdoses, injuries, all-cause mortality, hospitalizations for mental health conditions, and medical/surgical hospitalizations.</p>\r" +
     "\n" +
-    "    <p>As participants in this program, REACH-VET facility coordinators will focus on implementing the program, engaging providers, and ensuring that providers are aware of which of their patients are at risk. Providers for Veterans identified by REACH-VET will be asked to review the care they receive, and to enhance it as appropriate.</p>\r" +
+    "    <p>As participants in this program, facility coordinators will focus on implementing the program, engaging providers, and ensuring that providers are aware of which of their patients are at risk. Providers for Veterans identified will be asked to review the care Veterans receive and to enhance it as appropriate.</p>\r" +
     "\n" +
     "    <b>Dashboard Outreach & Intervention</b>\r" +
     "\n" +
-    "    <p>Facility coordinators should first review their list of “at-risk” Veterans in the Patient Roster by VAMC widget on the Individual view and assign providers for each Veteran. Facility coordinators should then engage the providers and notify them of their “at-risk” patients.</p>  \r" +
+    "    <p>Facility coordinators should first review their list of “at-risk” Veterans in the Patient Roster by VAMC widget on the Individual view and assign providers for each Veteran. Facility coordinators should then engage the providers and notify them of their “at-risk” patients.\r" +
     "\n" +
-    "    <p>Detailed outreach and intervention steps for both REACH-VET facility coordinators and providers are located in the “Data Entry Widget” on this Dashboard.</p>\r" +
+    "Detailed outreach and intervention steps for both facility coordinators and providers are located in the “Data Entry Widget” on this Dashboard. \r" +
+    "\n" +
+    "\t</p>\r" +
     "\n" +
     "    <b>Training & Additional Guidance</b>\r" +
     "\n" +
-    "    <p>For additional instructional content and training on the REACH-VET program and Dashboard, please visit the REACH-VET VA intranet site: <a href=\"http://vaww.mirecc.va.gov/reachvet/\" style=\"color:rgb(16, 52, 166)\">http://vaww.mirecc.va.gov/reachvet/</a></p>\r" +
+    "    <p>For additional instructional content and training on the program and Dashboard, please visit: <a href=\"http://vaww.mirecc.va.gov/reachvet/\" style=\"color:rgb(16, 52, 166)\">http://vaww.mirecc.va.gov/reachvet/</a></p>\r" +
     "\n" +
     "</div>\r" +
     "\n" +
