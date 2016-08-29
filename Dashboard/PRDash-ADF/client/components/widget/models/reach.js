@@ -1189,7 +1189,7 @@ angular.module('ui.models')
                 var obj = {};
                 obj.checkListStatus = outreachItems[i].displayName;
                 obj.complete = data[0]['Sum_'+ outreachItems[i].statusName] == null? 0: data[0]['Sum_'+ outreachItems[i].statusName];
-                obj.percent = data[0]['Percent_'+ outreachItems[i].statusName] == null? 0: data[0]['Percent_'+ outreachItems[i].statusName];
+                obj.percent = (data[0]['Percent_'+ outreachItems[i].statusName] == null? 0: data[0]['Percent_'+ outreachItems[i].statusName]) + '%';
                 outreachData.push(obj);
               }                  
 
