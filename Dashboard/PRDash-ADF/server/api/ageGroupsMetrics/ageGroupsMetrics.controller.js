@@ -24,38 +24,22 @@ exports.index = function(req, res) {
         var where = ' WHERE';
         var and = ' AND';
 
+        var query = 'SELECT SUM(total) AS Total,AgeRange,RiskLevelDescription FROM [dbo].[vw_AgeSummary_VISN] '
+                    +'group by ageRange,RiskLevelDescription';
+
         if (VISN && validator.isInt(VISN)) {
             request.input('VISN', sql.Int, VISN);
-            whereClause += where + ' v.VISN = @VISN ';
+            query  = 'SELECT SUM(total) AS Total,AgeRange,RiskLevelDescription FROM [dbo].[vw_AgeSummary_VISN] '
+                    +'where visn = @VISN '
+                    +'group by ageRange,RiskLevelDescription';
         }
 
         if (STA3N && validator.isInt(STA3N)) {
             request.input('STA3N', sql.Int, STA3N);
-            if (VISN) {
-                whereClause += and;
-            } else {
-                whereClause += where;
-            }
-            whereClause += ' s.sta3N = @STA3N ';
+            query  = 'SELECT SUM(total) AS Total,AgeRange,RiskLevelDescription FROM [dbo].[vw_AgeSummary_VAMC] '
+                    +'where sta3n = @STA3N '
+                    +'group by ageRange,RiskLevelDescription';
         }         
-        // Configure Database Query
-        var query = '';
-        query += "SELECT CASE";
-        query += " WHEN DOB < DATEADD(year, -18, getdate()) AND DOB >= DATEADD(year, -29, getdate()) THEN '18 - 29'";
-        query += " WHEN DOB < DATEADD(year, -29, getdate()) AND DOB >= DATEADD(year, -44, getdate()) THEN '30 - 44'";
-        query += " WHEN DOB < DATEADD(year, -44, getdate()) AND DOB >= DATEADD(year, -69, getdate()) THEN '45 - 69'";
-        query += " WHEN DOB < DATEADD(year, -69, getdate()) then '70+'";
-        query += " END as AgeRange, d.RiskLevelDesc as RiskLevelDescription, COUNT(DISTINCT p.ReachID) as Total";
-        query += " FROM dbo.Patient p INNER JOIN Ref_RiskLevel d ON p.RiskLevel = d.RiskLevelID";
-        query += " INNER JOIN PatientStation s ON s.ReachID = p.ReachID";
-        query += " INNER JOIN Ref_VAMC v ON s.sta3N = v.STA3N ";
-        query += whereClause;
-        query += " GROUP BY CASE";
-        query += " WHEN DOB < DATEADD(year, -18, getdate()) AND DOB >= DATEADD(year, -29, getdate()) THEN '18 - 29'";
-        query += " WHEN DOB < DATEADD(year, -29, getdate()) AND DOB >= DATEADD(year, -44, getdate()) THEN '30 - 44'";
-        query += " WHEN DOB < DATEADD(year, -44, getdate()) AND DOB >= DATEADD(year, -69, getdate()) THEN '45 - 69'";
-        query += " WHEN DOB < DATEADD(year, -69, getdate()) then '70+'";
-        query += " END, d.RiskLevelDesc ORDER BY AgeRange";
         
         // Query the database
         request.query(query, function(err, recordset) {
