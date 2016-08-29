@@ -146,6 +146,7 @@ angular.module('ui.widgets')
             if(activeView == "surveillance"){
               commonData.data.visnSelected.surveillance = visnId;
               commonData.data.facilitySelected.surveillanceName = null; 
+              commonData.data.facilitySelected.surveillance = null; 
             }
               
             else if(activeView == "facility")
