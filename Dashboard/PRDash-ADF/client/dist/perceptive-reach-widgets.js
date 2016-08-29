@@ -1506,12 +1506,34 @@ angular.module('ui.models')
 			   parameter += "STA3N=" + this.STA3N;
 			}
 
-          $http.get('/api/outReachStatusMetrics'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        //}
+      $http.get('/api/outReachStatusMetrics'+ parameter)
+      .success(function(dataset) {
+              data = dataset;
+
+              var outreachItems=[{statusName:'IdentifiedPrimaryProvider',displayName:'Identified a primary patient provider.'},
+                                 {statusName:'NotifiedProvider',displayName:'Notified provider of the specific patient and program requirements '},
+                                 {statusName:'AskedProviderReview',displayName:'Asked provider to review treatment plans for the patient.'},
+                                 {statusName:'ReceivedNotification',displayName:'Received notification from Site Facilitator about the patient '},
+                                 {statusName:'ReviewedCurrentDiagnosis',displayName:'Reviewed current diagnoses and treatments'},
+                                 {statusName:'EstablishedContact',displayName:'Established contact with the patient to review current diagnoses, symptoms, adherence and problems  '},
+                                 {statusName:'UpdatedPlan',displayName:'Updated the plan for management and treatment as appropriate'},
+                                 {statusName:'EvaluateCaring',displayName:'Evaluate appropriateness of Caring Communications program'},
+                                 {statusName:'EvaluateSafetyPlan',displayName:'Evaluate appropriateness of Safety Planning'},
+                                 {statusName:'Deceased',displayName:'Deceased'},{statusName:'CannotContact',displayName:'Cannot Contact'},
+                                 {statusName:'RefusedServices',displayName:'Refused Services'},{statusName:'CareFromCommunity',displayName:'Care from community'},
+                                 {statusName:'ClinicallyNotAtRisk',displayName:'Clinically not at risk'},{statusName:'Other',displayName:'Other'}];
+
+              var outreachData = [];
+              for (var i = 0; i < outreachItems.length; i++) { 
+                var obj = {};
+                obj.checkListStatus = outreachItems[i].displayName;
+                obj.complete = data[0]['Sum_'+ outreachItems[i].statusName] == null? 0: data[0]['Sum_'+ outreachItems[i].statusName];
+                obj.percent = (data[0]['Percent_'+ outreachItems[i].statusName] == null? 0: data[0]['Percent_'+ outreachItems[i].statusName]) + '%';
+                outreachData.push(obj);
+              }                  
+
+              this.updateScope(outreachData);
+          }.bind(this));
       },
 
       destroy: function () {
@@ -4676,9 +4698,9 @@ angular.module('ui.widgets')
         .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
-            DTColumnBuilder.newColumn('Status').withTitle('Outreach Status'),
-            DTColumnBuilder.newColumn('RiskLevelDesc').withTitle('Risk Level Group'),
-            DTColumnBuilder.newColumn('Total').withTitle('At-Risk Persons')
+            DTColumnBuilder.newColumn('checkListStatus').withTitle('Outreach Status'),
+            DTColumnBuilder.newColumn('complete').withTitle('Total Complete'),
+            DTColumnBuilder.newColumn('percent').withTitle('Percent Complete')
         ];
       },
      link: function postLink(scope, element, attr) {	
@@ -5862,6 +5884,7 @@ angular.module('ui.widgets')
             if(activeView == "surveillance"){
               commonData.data.visnSelected.surveillance = visnId;
               commonData.data.facilitySelected.surveillanceName = null; 
+              commonData.data.facilitySelected.surveillance = null; 
             }
               
             else if(activeView == "facility")
