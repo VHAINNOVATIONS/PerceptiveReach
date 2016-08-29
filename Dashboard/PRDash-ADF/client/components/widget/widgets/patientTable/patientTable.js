@@ -130,15 +130,14 @@ angular.module('ui.widgets')
             DTColumnBuilder.newColumn('HomePhone').withTitle('Phone'),
             DTColumnBuilder.newColumn('DateIdentifiedAsAtRisk').withTitle('Date First Identified'),
             DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level'),
-            DTColumnBuilder.newColumn('CurrentStatus').withTitle('Outreach Status').withOption('width', '10%').renderWith(function(data, type, full, meta) {
+            DTColumnBuilder.newColumn('CurrentStatus').withTitle('Outreach Status').withOption('width', '10%').notSortable().renderWith(function(data, type, full, meta) {
                var data1 = data.split('|')[0]
                var data2 = data.split('|')[1]
                var template = '<div>' + data1 + '</div><br/><div>'+data2+'</div>';
                return  template;
             })
         ];
-     
-    
+
         $scope.rowClickHandler= function(info) {
           if($scope.common.data.EnterDataIsUnsaved == true){
               $(".unsavedDataAlert").fadeIn();
