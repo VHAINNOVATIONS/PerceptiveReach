@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var validator = require('validator');
 var sql = require('mssql');
+var praudit = require('../../audit');
 
 var round = function(r) {
     return Math.round((r + 0.000001) * 100) / 100;
@@ -39,11 +40,14 @@ exports.index = function(req, res) {
         // Query the database
         request.query(query, function(err, recordset) {
             if (err) { 
+                connection.close();
                 console.dir(err);
+                praudit.auditlog('SQL ERROR',err);
                 res.send(401, 'Query Failed.');
                 return; 
             }
 
+            connection.close();
             var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
             if (jsonRecordSet && jsonRecordSet.length) {
                 var result = jsonRecordSet.reduce(function(r, v, index) {

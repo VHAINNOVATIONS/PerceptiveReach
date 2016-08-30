@@ -97,10 +97,6 @@ angular.module('ui.dashboard')
                // optional callback fired when item is resized,
                stop: function(event, $element, widget) {
                 scope.$broadcast('gridsterResized');
-                $timeout(function(){
-                  var containerHeight = parseInt($($element).find('.widget-content').css('height'),10);
-                  $($element).find('.dataTables_scrollBody').css('height',.75 * containerHeight);
-                },800);
                 scope.saveDashboard();
                } // optional callback fired when item is finished resizing
             },
@@ -192,8 +188,14 @@ angular.module('ui.dashboard')
             widgetToInstantiate.title = 'Widget ' + count++;
           }
 
+
           // Instantiation
           var widget = new WidgetModel(defaultWidgetDefinition, widgetToInstantiate);
+
+          if(scope.common)
+          {
+            widget.dataModelOptions.common = scope.common
+          }
 
           // Add to the widgets array
           scope.widgets.push(widget);

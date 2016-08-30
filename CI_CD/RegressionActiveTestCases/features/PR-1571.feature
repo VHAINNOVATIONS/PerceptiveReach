@@ -11,6 +11,4 @@ Feature: As a SPC I want to Enable the background communications layer between a
   And I click on "Login" button
   When I click on "Individual View"
   Then I click on the Default Widgets button
-  And I select the 3rd row from Patient Roster Widget
-  Then I should see the SSN in patient contact equal to SSN in 3rd row of Patient Roster
   And I click on "Logout" button

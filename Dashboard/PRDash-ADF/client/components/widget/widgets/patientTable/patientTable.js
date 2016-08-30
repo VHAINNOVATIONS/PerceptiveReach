@@ -23,7 +23,7 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/patientTable/patientTable.html',
       
-      controller: function ($scope,$compile, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
+      controller: function ($scope, $compile, $filter, $http, $modal, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder,FileSaver) {
         //$scope.dtInstanceAbstract = {};
         $scope.dtInstance = {};
         $scope.patientList = $scope.widgetData;
@@ -44,36 +44,99 @@ angular.module('ui.widgets')
             .withOption('rowCallback', rowCallback)
             .withDOM('frtip')
             .withButtons([
-                { extend: 'csv', text: '<a name="PatientExport" class="glyphicon glyphicon-export"></a>' }
+                {
+                  text: '<a name="PatientExport" class="glyphicon glyphicon-export"></a>',
+                  action: function (e, dt, node, config) {
+                      JSONToCSVConvertor($scope.patientList,'PatientRoster');
+                  }
+                }
             ])
             .withScroller()
             .withOption('deferRender', true)
             // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
+            .withOption('scrollX', '100%')
             .withOption('bDestroy',true)
+            .withOption('aaSorting', [
+                [3, 'desc']
+            ])
             .withLanguage({
               "sInfo": "Total Records: _TOTAL_"
             });
-        $scope.dtColumns = [
-            DTColumnBuilder.newColumn('Name').withTitle('Name').withOption('width', '20%'),
-            DTColumnBuilder.newColumn('SSN').withTitle('SSN').withOption('width', '15%'),
-            DTColumnBuilder.newColumn('HomePhone').withTitle('Phone').withOption('width', '10%'),
-            DTColumnBuilder.newColumn('DateIdentifiedAsAtRisk').withTitle('Date First Identified').withOption('width', '15%'),
-            DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level').withOption('width', '10%'),
-            DTColumnBuilder.newColumn(null).withTitle('Outreach Status').withOption('width', '30%').renderWith(function(data, type, full, meta) {
-               var template = '<select id=vet_' + data.ReachID + ' ng-options="item as item.StatusDesc for item in outreachStatusList" ng-change="UpdateOutreachStatus(OutreachMap['+data.ReachID+'])" ng-model="OutreachMap['+data.ReachID+']"></select>';
-               var hiddenSpan = "<span id='Outreach_" + data.ReachID + "' hidden>"+ data.OutreachStatus +"</span> "
-               return hiddenSpan + template;
-            })
+
+         function JSONToCSVConvertor(JSONData,title) {
+            var exportHeaders = ['ReachID','FirstName','LastName','SSN','HomePhone','DateIdentifiedAsAtRisk','RiskLevel','CurrentStatus']
+            var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+            var d = new Date();
+
+            var month = d.getMonth()+1;
+            var day = d.getDate();
+            var time = d.getHours() + "_" + d.getMinutes() + "_" + d.getSeconds();
+            var fileDateTime = d.getFullYear() +
+            (month<10 ? '0' : '') + month +
+            (day<10 ? '0' : '') + day + "_" + time;
+            var CSV = '';
             
+            //Headers
+            var row = "";
+            for (var index in arrData[0]) {
+              if($.inArray(index, exportHeaders) > 0)
+              {
+                row += index + ',';
+              }
+            }
+            row = row.slice(0, -1);
+            CSV += row + '\r\n';
+            
+            //Rows-Data
+            for (var i = 0; i < arrData.length; i++) {
+                var row = "";
+                for (var index in arrData[i]) {
+                    if($.inArray(index, exportHeaders) > 0)
+                    {
+                      if(index === 'OutreachStatus')
+                      {
+                        var arrValue = arrData[i][index] == null ? "" : $filter('filter')($scope.outreachStatusList, {OutReachStatusID: 
+                                                                                          parseInt(arrData[i][index]) })[0].StatusDesc;  
+                      }
+                      else
+                      {
+                        var arrValue = arrData[i][index] == null ? "" : arrData[i][index];  
+                      }
+                      row += arrValue + ',';
+                    }
+                }
+                row.slice(0, row.length - 1);
+                CSV += row + '\r\n';
+            }
+            
+            var blob = new Blob([CSV], { type: "text/csv;charset=utf-8" });
+            var user = JSON.parse(sessionStorage.user);
+            var logMessage = 'User - ' + user.UserName;
+            var params = {
+              action:'Patient Roster Export'
+            }
+
+            $http.post('/api/audit',params)
+            .success(function(data) {
+               FileSaver.saveAs(blob, "PatientRoster_" + fileDateTime + ".csv");
+            });
+           
+        };
+
+        $scope.dtColumns = [
+            DTColumnBuilder.newColumn('Name').withTitle('Name'),
+            DTColumnBuilder.newColumn('SSN').withTitle('SSN'),
+            DTColumnBuilder.newColumn('HomePhone').withTitle('Phone'),
+            DTColumnBuilder.newColumn('DateIdentifiedAsAtRisk').withTitle('Date First Identified'),
+            DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level'),
+            DTColumnBuilder.newColumn('CurrentStatus').withTitle('Outreach Status').withOption('width', '10%').notSortable().renderWith(function(data, type, full, meta) {
+               var data1 = data.split('|')[0]
+               var data2 = data.split('|')[1]
+               var template = '<div>' + data1 + '</div><br/><div>'+data2+'</div>';
+               return  template;
+            })
         ];
-     
-        $scope.UpdateOutreachStatus = function(selected){
-          var commonData = $scope.widget.dataModelOptions.common;
-          var ReachId = commonData.data.veteranObj.ReachID;
-          var OutReachStatusID = selected.OutReachStatusID;
-          $scope.widget.dataModel.saveOutreachData(OutReachStatusID,ReachId,commonData.data.facilitySelected.facility);
-        }
 
         $scope.rowClickHandler= function(info) {
           if($scope.common.data.EnterDataIsUnsaved == true){
@@ -96,6 +159,7 @@ angular.module('ui.widgets')
               return ( n.ReachID == vetId );
             });
             commonData.data.veteranObj = obj[0];
+            commonData.data.patientRosterScrollPos = $('#patientRosterDiv .dataTables_scrollBody').scrollTop();;
             console.log("CommonDataAfterClick: ", commonData);
             // broadcast message throughout system
             $scope.$parent.$parent.$parent.$broadcast('commonDataChanged', commonData);
@@ -114,8 +178,36 @@ angular.module('ui.widgets')
           return nRow;
         }
 
+        $scope.removePatient =  function(){
+          $modal.open({
+            scope: $scope,
+            templateUrl: 'client/components/widget/widgets/patientTable/removePatientModal.html',
+            controller: 'RemovePatientCtrl',
+            backdrop  : 'static',
+            keyboard  : false,
+            resolve: {
+                params: function() {
+                    return {
+                      veteranObj: $scope.widget.dataModelOptions.common.data.veteranObj
+                    };
+                }
+            }
+          });
+        }
+
+        $scope.resizeWidgetDataArea = function(){
+          var containerHeight = parseInt($('#patientRosterDiv').parent().css('height'),10);
+          $('#patientRosterDiv').find('.dataTables_scrollBody').css('height',.5 * containerHeight);
+        } 
+
       },
       link: function postLink(scope, element, attr) {
+        scope.$on("gridsterResized", function (){
+            $timeout(function(){
+              scope.resizeWidgetDataArea();
+            },1000);
+        });
+
         scope.$on("updateSelectMenu", function (){
           var datamodelList = {};
           var patientList = scope.widgetData[1];          	 	  
@@ -124,6 +216,8 @@ angular.module('ui.widgets')
     				$(this).attr('scope','col');
             $(this).attr('tabindex','-1');
           });
+
+          $('#patientRosterDiv .dt-buttons').attr('title','Patient Roster-Export to Excel')
 			
 		      $('#tblPatient_info').attr('title','Patient Table: Tab to move to the next control');
     
@@ -180,8 +274,14 @@ angular.module('ui.widgets')
               }
               else
               {
-                $('#tblPatient').find( "tbody>tr td:contains('"+commonData.data.veteranObj.Name+"')" ).click();
+                $('#patientRosterDiv .dataTables_scrollBody').scrollTop(commonData.data.patientRosterScrollPos);
+                $timeout(function() {
+                  $('#tblPatient').find( "tbody>tr td:contains('"+commonData.data.veteranObj.Name+"')" ).click();
+                }, 500);
               }
+
+              scope.resizeWidgetDataArea();
+               
             },500)            
           }
         });

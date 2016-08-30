@@ -1,7 +1,6 @@
 DROP VIEW [dbo].[vw_PatientRoster]
 GO
 
-/****** Object:  View [dbo].[vw_PatientRoster]    Script Date: 4/29/2016 2:59:51 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -11,22 +10,25 @@ GO
 
 
 ALTER VIEW [dbo].[vw_PatientRoster] as
-SELECT isNULL(LastName, '') + ',' + isNULL(FirstName, '') as Name, 
+SELECT ISNULL(LastName, '') + ',' + ISNULL(FirstName, '') as Name, 
 p.ReachID, FirstName, 
 LastName, 'xxx-xx-'+RIGHT(SSN,4) AS SSN,
 HomePhone, 
-convert(varchar, DateIdentifiedAsAtRisk, 101) AS DateIdentifiedAsAtRisk, 
-rl.RiskLevelDesc as RiskLevel, 
+CONVERT(varchar, DateIdentifiedAsAtRisk, 101) AS DateIdentifiedAsAtRisk, 
+rl.RiskLevelDesc AS RiskLevel, 
 RiskLevel AS RiskLevelID, 
 OutreachStatus, 
 ps.sta3N,
 ps.Active,
-p.RiskScore
+p.RiskScore,
+po.CurrentStatus
 FROM  Patient p 
-INNER JOIN Ref_RiskLevel rl ON rl.RiskLevelID = p.RiskLevel
+LEFT JOIN Ref_RiskLevel rl ON rl.RiskLevelID = p.RiskLevel
 INNER JOIN PatientStation ps ON p.ReachID = ps.ReachID 
-INNER JOIN prsystem.PatientDashboardFilter f on p.ReachID = f.ReachID
+INNER JOIN prsystem.PatientDashboardFilter f ON p.ReachID = f.ReachID
+INNER JOIN dbo.PatientOutReachStatus po ON p.ReachID = po.ReachID
 WHERE f.Patient = 1
+AND (p.RiskLevel IS NOT NULL OR p.DateIdentifiedAsAtRisk IS NOT NULL)
 
 
 

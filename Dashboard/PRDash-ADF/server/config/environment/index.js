@@ -47,7 +47,9 @@ var all = {
     }
   },
 
-  prSessionStore:{}
+  prSessionStore:{},
+
+  auditEnabled: true
 
 };
 

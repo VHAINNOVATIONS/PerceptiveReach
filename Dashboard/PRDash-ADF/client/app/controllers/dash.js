@@ -6,10 +6,11 @@ angular.module('app')
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
                                     MedicationDataModel, ClinicalDecisionSupportDataModel,
-                                    AppointmentDataModel, EnterDataDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,AgeGroupsMetricsDataModel,
-                                    GenderDistributionMetricsDataModel, PredictionChartDataModel,
+                                    AppointmentDataModel, EnterDataDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,
+                                    AgeGroupsMetricsDataModel,GenderDistributionMetricsDataModel, PredictionChartDataModel,
                                     MilitaryBranchMetricsDataModel, OutreachStatusMetricsDataModel,
-                                    TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel
+                                    TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel,
+                                    CommunityResourceDataModel,CDSQuestionnaireDataModel
 					) {
     return [
       {
@@ -48,7 +49,7 @@ angular.module('app')
         directive: 'wt-clinical-decision-support',
         dataAttrName: 'data',
         dataModelType: ClinicalDecisionSupportDataModel,
-        title: 'Clinical Decision Support',
+        title: 'What is Perceptive Reach',
         dataModelOptions: {
           //riskLevel: 1,
           defaultWidget: true,
@@ -278,39 +279,22 @@ angular.module('app')
         },
         sizeY:10
       },
-	   {
-        name: 'TopMidRisk',
-        directive: 'wt-national-top-mid-risk',
-        dataAttrName: 'data',
-        title: 'Top Mid Risk Data',
-        dataModelType: TopMidRiskMetricsDataModel,
-        dataModelOptions: {
-          defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT,CCS',
-          layout: 'surveillance,facility'
-        },
-        size: {
-          width: '35%',
-          height: '200px'
-        }
-      },
       {
-        name: 'ExternalSuicideStatistics',
-        directive: 'wt-external-suicide-statistics',
+        name: 'CDSQuestionnaire',
+        directive: 'wt-cds-questionnaire',
         dataAttrName: 'data',
-        title: 'External Data HealthIndicators.gov Suicide Statistics',
-        dataModelType: SuicideStatisticsDataModel,
+        title: 'CDS Questionnaire',
+        dataModelType: CDSQuestionnaireDataModel,
         dataModelOptions: {
           defaultWidget: true,
           roleAccess: 'SUP,REP,ADM',
-          layout: 'surveillance'
+          layout: 'individual'
         },
         size: {
           width: '45%',
           height: '485px'
         },
-        sizeX:10,
-        sizeY:10
+        sizeX:10
       },
       //---------------------------------------------------------------------------------------------
       /*{
