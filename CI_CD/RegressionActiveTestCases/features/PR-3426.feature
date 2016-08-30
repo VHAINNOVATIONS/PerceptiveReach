@@ -8,8 +8,7 @@ And I put in "password" field as "M1n@h3s4f9"
 And I click on check box "checky"
 And I click on "Login" button
 When I click on "Individual View"
-And I click on "Add a Widget" button
-And I click on "CDSQuestionnaire" button in the menu
+Then I click on the Default Widgets button
 Then I should see "CDS Questionnaire" widget
 And I should see "Clinical Decision Support"
 And I should see "Alcohol Use Disorder"
