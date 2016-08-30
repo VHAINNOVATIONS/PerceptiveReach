@@ -8,5 +8,5 @@ And I click on check box "checky"
 And I click on "Login" button
 When I click on "Individual View"
 Then I should see the "Patient Roster by VAMC" widget
-And I should see "8005553288"
+And I should see "8005559457"
 And I click on "Logout" button

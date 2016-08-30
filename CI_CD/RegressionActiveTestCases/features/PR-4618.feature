@@ -8,6 +8,6 @@ Scenario: I open a web browser and use http://localhost:7003/ to see the Veteran
  And I click on check box "checky"
  And I click on "Login" button
  And I click on "Individual View"
- Then I should see the "About Perceptive Reach" widget
- Then I should see "Perceptive Reach uses predictive (statistical) modeling to identify Veterans at risk for suicide and other adverse outcomes" in the About Perceptive Reach widget content
+ Then I should see "What is Perceptive Reach" widget
+ Then I should see "Perceptive Reach uses predictive (statistical) modeling to identify Veterans at risk" in the About Perceptive Reach widget content
  Then I should see "http://vaww.mirecc.va.gov/reachvet" in the About Perceptive Reach widget

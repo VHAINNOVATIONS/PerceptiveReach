@@ -12,5 +12,5 @@ Then I click on the Default Widgets button
 Then I should see "Data Entry" widget
 Then I select first Veteran
 Then I put in "commentText" field as "Added Safety Plan  and High Risk Flag"
-And I click on Add Data button
+Then I should select "Add Data" button in the Data Entry widget
 And I click on "Logout" button
