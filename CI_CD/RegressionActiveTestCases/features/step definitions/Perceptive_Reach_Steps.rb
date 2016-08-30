@@ -698,7 +698,8 @@ end
 
 
 Then(/^I should see the "date and time" in the outreach status checklist$/) do
- page.find(:xpath , '//*[@id="identifiedprimaryproviderdate"]')
+ #page.find(:xpath , '//*[@id="identifiedprimaryproviderdate"]')
+ page.find(:xpath , './/*[@id="enterWdgtDataForm"]/div/div/div[1]/div[3]/div[4]/label')
 end
 
 Then(/^I should see "(.*?)" in the About Perceptive Reach widget$/) do |pagecontent|
