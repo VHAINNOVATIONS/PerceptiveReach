@@ -8,8 +8,7 @@ And I put in "password" field as "M1n@h3s4f9"
 And I click on check box "checky"
 And I click on "Login" button
 When I click on "Individual View"
-And I click on "Add a Widget" button
-And I click on "enterdata" button in the menu
+Then I click on the Default Widgets button
 Then I should see "Data Entry" widget
 Then I put in "hrText" field as "The patient has coronary artery disease, hypertension, hypercholesterolemia, COPD and tobacco abuse. He reports that doing well. He did have some more knee pain for a few weeks, but this has resolved."
 And I click on "Logout" button
