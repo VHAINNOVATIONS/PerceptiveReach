@@ -134,31 +134,11 @@ describe('PerceptiveReach DataModels', function () {
       	  dataModelOptions: { opt: true }
     	};
     	scope = $rootScope.$new();
-    	/*scope = {
-    	  fake: 'scope'
-    	};*/
-
-    	// Not sure if we can test a mock http from within a factory
-    	/* if so add the following to the inject , _$httpBackend_, $rootScope, $controller
-		$httpBackend = _$httpBackend_;
-		$httpBackend.expectGET('/api/medicationData').
-		  respond([{"ReachID": 1,"Active": 1,"RxID": 1,"Name": "Prescription 1","Dosage": "100mg"}]);
-
-		scope = $rootScope.$new();
-		ctrl = $controller('DashboardWidgetCtrl', {$scope: scope});
-		console.log('TEST: MedicationDataModel Scope: '+scope);
-		*/
+    	
   	  }));
 
 
-	  /*describe('setup method', function() {
-	    it('should set dataModelOptions and widgetScope from args', function() {
-	      m.setup(widget, scope);
-	      expect(m.dataModelOptions).toEqual(widget.dataModelOptions);
-	      expect(m.widgetScope).toEqual(scope);
-	    });
 
-	  });*/
 
 	  describe('getData method', function() {
 	    it('check the existence of getData method', function() {

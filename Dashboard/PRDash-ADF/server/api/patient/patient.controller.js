@@ -4,6 +4,7 @@ var _ = require('lodash');
 var validator = require('validator');
 var sql = require('mssql');
 var dataFormatter = require('../../components/formatUtil/formatUtil.service.js');
+var praudit = require('../../audit');
 
 exports.index = function(req, res) {
 	/*Configure response header */
@@ -23,11 +24,11 @@ exports.index = function(req, res) {
 		/*Configure database query */
 		var sta3N = req.param("sta3N");
 		var query = '';
-		var select = "SELECT * FROM [dbo].[vw_PatientRoster] WHERE RiskLevelID in (1,2) AND ISNULL(Active,-1) in (-1,1)"; 
+		var select = "SELECT * FROM [dbo].[vw_PatientRoster]"; 
 		if (sta3N && validator.isInt(sta3N)) {
 			request.input('sta3N', sql.Int, sta3N);
 			query += select
-				  + " and sta3N = @sta3N";
+				  + " WHERE sta3N = @sta3N";
 			query += " ORDER BY RiskLevel ASC";
 		} 
 		query += "; SELECT * FROM Ref_OutreachStatus";
@@ -35,11 +36,14 @@ exports.index = function(req, res) {
 		/*Query database */
 		request.query(query, function(err, recordset) {
 			if (err) { 
+				connection.close();
 				console.dir(err);
+				praudit.auditlog('SQL ERROR',err);
 				res.send(401, 'Query Failed');
 				return; 
 			}
 			
+			connection.close();
 			/*Parse result into JSON object and format the date */
 			var jsonRecordSet = JSON.parse(JSON.stringify(recordset[0]));
 			var jsonOutreachStatus = JSON.parse(JSON.stringify(recordset[1]));
@@ -97,11 +101,16 @@ exports.update = function(req, res) {
 		/*Query database */
         request.query(query, function(err, recordset) {
 			if (err) { 
+			  connection.close();
 			  console.dir(err);
+			  praudit.auditlog('SQL ERROR',err);
 			  res.send(401, 'Query Failed');
 			  return; 
 			}
-
+			var action = 'Outreach Status Updated for ReachID: ' + vetReachID;
+			var message = 'Updated by User ' + req.headers.prsessionkey.split('::')[0];
+			praudit.auditlog(action,message,'info');
+			connection.close();
 			/*Send the data */
 			data = "Save Completed Successfully!";
 			res.send(data);

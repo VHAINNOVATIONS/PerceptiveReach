@@ -614,3 +614,98 @@ Then(/^I click on link "(.*?)"$/) do |arg1|
 # find_link(arg1).click
 find(:xpath, '//*[@id="tblPatient_wrapper"]/div[1]/a/span/a').click
 end
+
+When(/^I click on "(.*?)" button multiple times$/) do |arg1|
+i = 0 
+count = 10
+  while i < count do
+  find_button(arg1).click 
+  i = i+1
+  end
+end
+
+Then(/^I see "(.*?)" in field "(.*?)"$/) do |arg1,arg2|
+	#assert page.has_field?(arg2, :with => arg1) 
+	 textValue = find(:xpath, './/*[@id="hrText"]').text
+	 #expect(arg1).to equal(textValue)
+end
+
+Then(/^I should not see "(.*?)" in the Outreach Status column$/) do |pagecontent|
+    expect(page).to have_no_content(pagecontent)
+end
+
+And(/^I should see "Remove Widget" button$/) do
+        #sql query get the default widgets for the user profile
+        page.find(:xpath,"/html/body/div/div/div/div/div[3]/ul/li[3]/div[1]/div[1]/div/div/button").click
+end
+
+
+
+
+And(/^I select first VISN Roster in the widget$/) do
+          #pending # express the regexp above with the code you wish you had
+        page.find(:xpath,"/html/body/div/div/div/div/div[3]/ul/li[1]/div[1]/div[2]/div/div/table/tbody/tr[1]/td[1]").click
+end
+
+And(/^I Select first VAMC facility in facility roster widget$/) do
+          #pending # express the regexp above with the code you wish you had
+        page.find(:xpath,"/html/body/div/div/div/div/div[3]/ul/li[2]/div[1]/div[2]/div/div/table/tbody/tr[1]/td[1]").click
+end
+
+
+
+And(/^I click X in upper right of Prediction Chart widget$/) do
+        #find_button('Individualididual view').click
+        page.find(:xpath,"/html/body/div/div/div/div/div[3]/ul/li[3]/div[1]/div[1]/div/div/button").click
+end
+
+And(/^I click the "Add a Widget" button$/) do
+  #find_button('Add a Widget').click
+  find_button('Add a Widget').click
+end
+
+Then(/^I should not see "(.*?)" in Prediction Chart$/) do |pagecontent|
+  expect(page).to have_no_content(pagecontent)
+end
+
+Then (/^I should see Remove Patient button$/) do
+     find_button('Remove Patient')
+end
+
+Then(/^I should click on Condition1 button/) do
+	#find(:xpath, './/*[@id="cdsConditionDiv"]/div/div[1]/div[1]/div[2]').click
+	page.choose('Condition_1')
+end
+
+Then(/^I click on CDSNext1 button/) do
+	find(:xpath, './/*[@id="cdsConditionDiv"]/div/div[2]/button[2]').click
+
+end
+
+Then(/^I should select the first option in dropdown/) do
+  find(:xpath, './/*[@id="question_55"][1]').select_option
+end
+
+
+Then(/^I should select "(.*?)" in the Data Entry widget$/) do |pagecontent|
+ page.find(:xpath , '//*[@ng-model="NotifiedProvider"]').set(true)
+end
+
+
+Then(/^I should select "Add Data" button in the Data Entry widget$/) do
+ page.find(:xpath , '//*[@ng-click="addNewData()"]').set(true)
+end
+
+
+Then(/^I should see the "date and time" in the outreach status checklist$/) do
+ #page.find(:xpath , '//*[@id="identifiedprimaryproviderdate"]')
+ page.find(:xpath , './/*[@id="enterWdgtDataForm"]/div/div/div[1]/div[3]/div[4]/label')
+end
+
+Then(/^I should see "(.*?)" in the About Perceptive Reach widget$/) do |pagecontent|
+    page.find(:xpath, '//*[@href="http://vaww.mirecc.va.gov/reachvet/"]')
+end
+
+Then(/^I should see "(.*?)" in the About Perceptive Reach widget content$/) do |pagecontent|
+  expect(page).to have_content(pagecontent)
+end

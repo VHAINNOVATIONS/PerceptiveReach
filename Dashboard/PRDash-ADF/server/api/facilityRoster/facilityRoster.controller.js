@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var validator = require('validator');
 var sql = require('mssql');
+var praudit = require('../../audit');
 
 exports.index = function(req, res) {
 	/*Configure response header */
@@ -47,7 +48,9 @@ exports.index = function(req, res) {
             query = 'SELECT VAMC, Upper, Lower, SA_new FROM staging.FacilityResults WHERE Month_no > 14';
             request.query(query, function(err, prrecordset) {
                 if (err) {
+                    connection.close();
                     console.dir(err);
+                    praudit.auditlog('SQL ERROR',err);
                     res.send(401, 'Query Failed.');
                     return;
                 }
@@ -70,6 +73,7 @@ exports.index = function(req, res) {
                     return r;
                 }, {});
 
+                connection.close();
                 jsonRecordSet.forEach(function(r) {
                     var vamc = r.STA3N;
                     if (vamc && predictionAlert[vamc]) {

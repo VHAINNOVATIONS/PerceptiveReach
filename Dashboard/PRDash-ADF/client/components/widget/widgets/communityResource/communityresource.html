@@ -1,0 +1,22 @@
+<div class="appointment">
+	<table id="tblAppointment" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+        <thead>
+        <tr>
+            <th><a href="" ng-click="predicate = 'Name'; reverse=false">Name</a></th>
+            <th><a href="" ng-click="predicate = 'Address'; reverse=!reverse">Address</a></th>
+            <th><a href="" ng-click="predicate = 'Phone'; reverse=!reverse">Phone</a></th>
+						<th><a href="" ng-click="predicate = 'Website'; reverse=!reverse">Website</a></th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="commResource in data track by $index | orderBy:predicate:reverse">
+            <td>{{ commResource.Name }}</td>
+             <td>{{ commResource.Address }}</td>
+            <td>{{ commResource.Phone }}</td>
+						<td>{{ commResource.Website }}</td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -6,6 +6,7 @@ var auth = require('../auth.service');
 var config = require('../../config/environment');
 var User = require('../../api/user/user.model');
 var forge = require('node-forge');
+var praudit = require('../../audit');
 
 
 var router = express.Router();
@@ -18,8 +19,6 @@ router.post('/', function(req, res, next) {
 
     if(!config.bypassAuth){  
         auth.authenticate(req, res, user, function(error, isAuthenticated){
-            console.log("return error: ", error);
-            console.log("return response: ", isAuthenticated);
             if (!isAuthenticated)
             {
                 User.Update({
@@ -28,6 +27,7 @@ router.post('/', function(req, res, next) {
                      }, function(err, user) {                
                             if (err) return res.json(401,'ERROR:Updating user record after authentication'); 
                     });
+                praudit.auditlog('LOGIN','Login failed for ' + user.data.UserName);
                 return res.json(401, 'This password is not correct.'); 
             }
             else{
@@ -37,8 +37,8 @@ router.post('/', function(req, res, next) {
                      }, function(err, user) {                
                             if (err) return res.json(401,'ERROR:Updating user record after authentication'); 
                     });
+                praudit.auditlog('LOGIN','Login Successful for ' + user.data.UserName);
                 var token = auth.signToken(user.data.UserID, user.data.UserRole);
-                console.log("signedToken: " + token);
                 delete user['tempPass'];
                 var timeStampKey = forge.util.bytesToHex(forge.random.getBytesSync(16));//(new Date().getTime());
                 var lowercasename = user.data.UserName.toLowerCase();
@@ -48,13 +48,12 @@ router.post('/', function(req, res, next) {
                  config.prSessionStore[lowercasename] = {};
                 }
                 config.prSessionStore[lowercasename][timeStampKey] = (new Date()).getTime();
-                //config.prSessionStore[sessionKey] = (new Date()).getTime();
                 res.json({token: token, user: user, prSessionKey:sessionKey });
             }
         }); 
     }
     else{
-
+        praudit.auditlog('LOGIN','Login Successful for ' + user.data.UserName);
         User.Update({
                         UserName: user.data.UserName,
                         Status: 'loginsuccess'
@@ -62,7 +61,6 @@ router.post('/', function(req, res, next) {
                             if (err) return res.json(401,'ERROR:Updating user record after authentication'); 
                     });
         var token = auth.signToken(user.data.UserID, user.data.UserRole);
-        console.log("signedToken: " + token)
         delete user['tempPass'];
         var timeStampKey = forge.util.bytesToHex(forge.random.getBytesSync(16));//(new Date().getTime());
         var lowercasename = user.data.UserName.toLowerCase();
@@ -72,8 +70,6 @@ router.post('/', function(req, res, next) {
          config.prSessionStore[lowercasename] = {};
         }
         config.prSessionStore[lowercasename][timeStampKey] = (new Date()).getTime();
-        console.log("sessionkey:", sessionKey);
-        //config.prSessionStore[sessionKey] = (new Date()).getTime();
         res.json({token: token, user: user, prSessionKey:sessionKey });
     }    
   })(req, res, next)

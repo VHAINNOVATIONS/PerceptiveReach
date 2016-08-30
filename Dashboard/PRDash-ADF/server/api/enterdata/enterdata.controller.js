@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var validator = require('validator');
 var sql = require('mssql');
+var praudit = require('../../audit');
 
 exports.index = function(req, res) {
   var dbc = require('../../config/db_connection/development.js');
@@ -19,6 +20,7 @@ exports.index = function(req, res) {
 
 
         var query = '';
+
         query =   'SELECT * ' +
                   'FROM ClinOutreach_HighRisk_SPANImport ' +
                   'WHERE ReachID =  '+ReachID +
@@ -53,15 +55,22 @@ exports.index = function(req, res) {
               'WHERE ReachID =  '+ReachID +
               'ORDER BY Revision desc; '
 
+//Outreach Status
+            query +=   'SELECT * ' +
+            'FROM PatientOutReachStatus ' +
+            'WHERE ReachID =  '+ReachID +'; '
+
 
         // Query the database
       request.query(query, function(err, recordset) {
-         if (err) {
-             console.dir(err);
-          res.send(401, 'Query Failed.');
-             return;
-       }
-
+      if (err) {
+        connection.close();
+        console.dir(err);
+        praudit.auditlog('SQL ERROR',err);
+        res.send(401, 'Query Failed.');
+        return;
+      }
+      connection.close();
          /*Parse result into JSON object and format the date */
  			var jsonHighRisk_SPANImport = JSON.parse(JSON.stringify(recordset[0]));
  			var jsonHighRisk_UserNotes = JSON.parse(JSON.stringify(recordset[1]));
@@ -69,6 +78,7 @@ exports.index = function(req, res) {
       var jsonSafetyPlan_UserNotes = JSON.parse(JSON.stringify(recordset[3]));
       var jsonPrimaryHealthProvider_UserNotes = JSON.parse(JSON.stringify(recordset[4]));
       var jsonGeneralComments = JSON.parse(JSON.stringify(recordset[5]));
+      var jsonOutreachStatus = JSON.parse(JSON.stringify(recordset[6]));
 
       /*Send the data */
       res.send({HighRisk_SPANImport:jsonHighRisk_SPANImport,
@@ -76,7 +86,8 @@ exports.index = function(req, res) {
         SafetyPlan_SPANImport:jsonSafetyPlan_SPANImport,
         SafetyPlan_UserNotes:jsonSafetyPlan_UserNotes,
         PrimaryHealthProvider_UserNotes:jsonPrimaryHealthProvider_UserNotes,
-        GeneralComments:jsonGeneralComments
+        GeneralComments:jsonGeneralComments,
+        OutreachStatus: jsonOutreachStatus
         });
     });
     });
@@ -93,62 +104,98 @@ exports.index = function(req, res) {
         var UpdatedUserData = req.param("UpdatedUserData");
         var ReachID = req.param("reachID");
         var query = "";
+        
+
         if(UpdatedUserData.hrUserNotes.isNew)
         {
           //insert hrData
-         var param1 = ReachID;
-         var param2 = UpdatedUserData.hrUserNotes.entry;
+         
+         var hrusernotes = UpdatedUserData.hrUserNotes.entry;
 
-         request.input('reachID', sql.Int, param1);
-         request.input('userNotes',sql.NVarChar(sql.MAX),param2);
+         request.input('reachID', sql.Int, ReachID);
+         request.input('hrusernotes',sql.NVarChar(sql.MAX),hrusernotes);
 
-          query += 'INSERT INTO [dbo].[ClinOutreach_HighRisk_UserNotes] ([ReachID],[EntryDate],[UserNotes]) VALUES (@reachID,getdate(),@userNotes);'
+          query += 'INSERT INTO [dbo].[ClinOutreach_HighRisk_UserNotes] ([ReachID],[EntryDate],[UserNotes]) VALUES (@reachID,getdate(),@hrusernotes);'
 
         }
         if(UpdatedUserData.mhUserNotes.isNew)
         {
           //insert hrData
-         var param1 = ReachID;
-         var param2 = UpdatedUserData.mhUserNotes.entry;
+         var mhusernotes = UpdatedUserData.mhUserNotes.entry;
 
-         request.input('reachID', sql.Int, param1);
-         request.input('userNotes',sql.NVarChar(sql.MAX),param2);
+         request.input('reachID', sql.Int, ReachID);
+         request.input('mhusernotes',sql.NVarChar(sql.MAX),mhusernotes);
 
-          query += 'INSERT INTO [dbo].[ClinOutreach_PrimaryHealthProvider_UserNotes] ([ReachID],[EntryDate],[UserNotes]) VALUES (@reachID,getdate(),@userNotes);'
+          query += 'INSERT INTO [dbo].[ClinOutreach_PrimaryHealthProvider_UserNotes] ([ReachID],[EntryDate],[UserNotes]) VALUES (@reachID,getdate(),@mhusernotes);'
 
         }
         if(UpdatedUserData.spUserNotes.isNew)
         {
           //insert spData
-          var param1 = ReachID;
-          var param2 = UpdatedUserData.spUserNotes.entry;
+          var spusernotes = UpdatedUserData.spUserNotes.entry;
 
-          request.input('reachID', sql.Int, param1);
-          request.input('userNotes',sql.NVarChar(sql.MAX),param2);
+          request.input('reachID', sql.Int, ReachID);
+          request.input('spusernotes',sql.NVarChar(sql.MAX),spusernotes);
 
-           query += 'INSERT INTO [dbo].[ClinOutreach_SafetyPlan_UserNotes] ([ReachID],[EntryDate],[UserNotes]) VALUES (@reachID,getdate(),@userNotes);'
+           query += 'INSERT INTO [dbo].[ClinOutreach_SafetyPlan_UserNotes] ([ReachID],[EntryDate],[UserNotes]) VALUES (@reachID,getdate(),@spusernotes);'
 
         }
         if(UpdatedUserData.gcUserNotes.isNew)
         {
           //insert gcData
-          var param1 = ReachID;
-          var param2 = UpdatedUserData.gcUserNotes.entry;
+          var gcusernotes = UpdatedUserData.gcUserNotes.entry;
 
-          request.input('reachID', sql.Int, param1);
-          request.input('Comment',sql.NVarChar(sql.MAX),param2);
+          request.input('reachID', sql.Int, ReachID);
+          request.input('Comment',sql.NVarChar(sql.MAX),gcusernotes);
 
            query += 'INSERT INTO [dbo].[ClinOutreach_GeneralComments] ([ReachID],[EntryDate],[Comment]) VALUES (@reachID,getdate(),@Comment);'
 
         }
 
+        if(Object.keys(UpdatedUserData.outreachStatus).length)
+        {
+          var obj = UpdatedUserData.outreachStatus
+          var innerQuery = '';
+
+          
+          request.input('reachID', sql.Int, ReachID);
+
+          Object.keys(obj).forEach(function(key,idx) {
+            var dateValue = obj[key] == false ? 'null': 'getdate()'
+            if(idx == 0)
+            {
+              innerQuery = 'UPDATE [dbo].[PatientOutReachStatus] SET '
+                           + key + ' = ' + "'" + obj[key] + "'"
+                           + ',' + key+'_date = ' + dateValue
+            }
+            else
+            {
+              innerQuery += ','+ key + ' = ' + "'" + obj[key] +"'"
+                           + ','+ key+'_date = ' + dateValue
+            }
+
+          });
+
+          innerQuery += ' WHERE ReachID = @reachID;';
+
+          query += innerQuery;
+
+          
+        }
+
         request.query(query, function(err, recordset) {
           if (err) {
-              console.dir(err);
-           res.send(401, 'Query Failed.');
-              return;
+            connection.close();
+            console.dir(err);
+            praudit.auditlog('SQL ERROR',err);
+            res.send(401, 'Query Failed.');
+            return;
           }
 
+          var action = 'Enter Data Widget updated for ReachID: ' + ReachID;
+          var message = 'Updated by User ' + req.headers.prsessionkey.split('::')[0];
+          praudit.auditlog(action,message,'info');
+          connection.close();
           res.send('Inserted Successfully');
         });
     });

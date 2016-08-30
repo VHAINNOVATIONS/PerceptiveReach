@@ -1,0 +1,118 @@
+<div id="cdsQuestionnaire" title="CDS Questionnaire">
+   <!--1/26/2016 The below code is left for future use, Delete if not needed -->
+        <!-- <ul class="nav nav-pills" role="tablist" id="cdsTabs" style="margin-top:5px;">
+          <li class="active">
+              <a href="#home" role="tab" data-toggle="tab">
+                   Home
+              </a>
+          </li>
+          <li><a href="#options" role="tab" data-toggle="tab">
+                  Options
+              </a>
+          </li>
+          <li>
+              <a href="#help" role="tab" data-toggle="tab">
+                   Help
+              </a>
+          </li>
+        </ul>
+        <div class="tab-content" id="cdsTabContent" style="margin-top:5px;">
+          <div class="tab-pane fade active in" id="home">
+            
+          </div>
+          <div class="tab-pane fade" id="options">
+              <h2>Options</h2>
+              <img src="https://avatars1.githubusercontent.com/u/1252476?v=3&s=200" alt="Cats"/>
+          </div>
+          <div class="tab-pane fade" id="help">
+              <h2>Help</h2>
+              <img src="https://avatars1.githubusercontent.com/u/1252476?v=3&s=200" alt="Cats"/>
+          </div>
+        
+        </div>
+        <div>
+          <div class="panel panel-default" style="margin-top:5px;">
+            <div class="panel-heading">
+              <h3 class="panel-title">Emergency Contact Information</h3>
+            </div>
+            <div class="panel-body">
+              For emergency assistance please contact: P: (xxx) xxx-xxxx, e: email@email.com
+            </div>
+          </div>
+        </div> -->
+
+      <div id="cdsConditionDiv"  style="margin-top:5px;">
+        <div >
+           <legend>Clinical Decision Support:</legend>
+              <fieldset style="border:1px solid lightgray;border-radius:5px;">
+                Please choose the specific symptoms, diagnoses, or conditions the Veteran is facing.  After all selections have been made please press <strong>‘Next’</strong>.
+              </fieldset>
+              <div class="cdsUIList" style="margin:10px;padding:5px;overflow-y:scroll;">
+                
+              <div ng-repeat="condition in data.conditions">
+                <div ng-if="$index == 0 || $index != 0 && data.conditions[$index].Condition != data.conditions[$index-1].Condition">
+                  <hr style="margin-top:5px;margin-bottom: 0px"/>
+                  <label style="margin:0px">
+                      {{condition.Condition}}
+                  </label>
+                </div>
+                <div>
+                  <input id="Condition_{{condition.Condition_ID}}" ng-click="RadioBtnClicked()" name="{{condition.Condition}}" type="radio" /> {{condition.Condition_SubQuestion}}
+                </div>
+              </div>
+              </div>
+              <div style="height:40px;padding:5px;">
+                <button ng-click="ResetQuestions()" alt="Reset Questions" title="Reset Questions" ng-disabled="!IsChecked"  class="btn btn-primary pull-left">Reset Selection</button>
+                <button ng-click="GotoQuestions()" alt="Next(Questions)" title="Next(Questions)" ng-disabled="!IsChecked" class="btn btn-primary pull-right">Next</button>
+              </div>
+        </div>
+    </div>
+
+    <div id="cdsQuestionDiv" class="hidden">
+      <legend>Question(s):</legend>
+      <div class="cdsUIList" style="margin:10px;padding:5px;overflow-y:scroll;">
+          <div ng-repeat="question in filteredQuestions">
+              <hr style="margin-top:5px;margin-bottom: 0px"/>
+              <label>
+                  {{question.ConditionName}}
+              </label>
+              <div ng-repeat="q in question.Questions">
+                <label style="font-weight: normal;">{{$index+1}}. {{q.Question}}  </label>
+                <div class="dropdown">
+                    <button class="btn btn-default"
+                            data-toggle="dropdown" id="question_{{q.Question_ID}}" name="{{question.ConditionName}}">
+                        <span>Select</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" >
+                        <li ng-click="AnswerSelected($event)"><a href="#">Yes</a></li>
+                        <li ng-click="AnswerSelected($event)"><a href="#">No</a></li>
+                        <li ng-click="AnswerSelected($event)"><a href="#">N/A</a></li>
+                    </ul>
+                </div>
+              </div>
+          </div>
+      </div>
+       <div style="height:40px;padding:5px;">
+          <button ng-click="BacktoConditions()" alt="Back(Conditions)" title="Back(Conditions)" class="btn btn-primary pull-left" >Back</button>
+          <button ng-click="GotoTreatments()" alt="Next(Treatment)" title="Next(Treatment)" class="btn btn-primary pull-right" >Next</button>
+       </div>
+    </div>
+
+    <div id="cdsTreatmentDiv" class="hidden">
+        <legend>Treatment(s):</legend>
+        <div class="cdsUIList" style="margin:10px;padding:5px;overflow-y:scroll;">
+          <div ng-repeat="t in filteredTreatments">
+            <hr style="margin-top:5px;margin-bottom: 0px"/>
+            <label>{{$index+1}}. {{t.ConditionName}}</label>
+            <div ng-repeat="treatment in t.Treatments">
+              <label style="font-weight:normal;">{{treatment.Treatment}}</label>
+            </div>
+          </div>  
+        </div>
+        <div style="height:40px;padding:5px;">
+          <button ng-click="BacktoQuestions()" alt="Back(Questions)" title="Back(Questions)" class="btn btn-primary pull-left">Back</button>
+        </div>
+    </div>
+        
+</div>

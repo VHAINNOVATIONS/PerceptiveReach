@@ -38,13 +38,16 @@ module.exports = function(app) {
   app.use('/api/appointmentData', require('./api/appointmentData'));
   app.use('/api/visnRoster', require('./api/visnRoster'));
   app.use('/api/facilityRoster', require('./api/facilityRoster'));
-  
+  app.use('/api/audit', require('./api/audit'));
+  app.use('/api/communityResource', require('./api/communityResource'));
+  app.use('/api/CDSQuestionnaire', require('./api/CDSQuestionnaire'));
+
   app.use('/api/dashboard', require('./api/dashboard'));
 
   app.use('/auth', require('./auth'));
   app.use('/api/user', require('./api/user'));
   app.use('/encryption', require('./encryption'));
-  
+
   app.route('/login')
     .get(function(req, res) {
       res.sendfile(app.get('appPath') + 'index.html');

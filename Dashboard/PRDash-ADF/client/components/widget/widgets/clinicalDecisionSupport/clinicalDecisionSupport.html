@@ -1,11 +1,13 @@
-<div name="clinicalDecisionSupport" style="overflow:auto; height:auto; width:auto">
+<div name="clinicalDecisionSupport" style="overflow:auto; height:auto; width:auto; padding: 15px">
 	<div ng-repeat="cpg in cpgList">
-		<b>Chronic {{cpg.RiskLevelDesc}} Risk</b>
-		<br><b>Features</b>
-		<div ng-bind-html="cpg.Features"></div>
-		<br><b>Action</b>
-		<br>{{cpg.Action}}
-		<br><br>For more information visit the full Clinical Practice Guide at <a href="{{cpg.GuidelineURL}}" title="Clinical Practice Guide" alt="Clinical Practice Guide">{{cpg.GuidelineURL}}</a>
-		<br><br>For guidance on proactive outreach and intervention strategies visit the Toolkit for Interventions <a href="{{cpg.ToolkitURL}}" title="Toolkit for Interventions" alt="Toolkit for Interventions">{{cpg.ToolkitURL}}</a><br><br>
-	</div>
+<b style="color:rgb(16, 52, 166); text-decoration: underline">Welcome to Perceptive Reach</b>
+    <p>Perceptive Reach uses predictive (statistical) modeling to identify Veterans at risk for suicide and other adverse outcomes. The patients identified by the model are at increased risk for outcomes including suicide attempts, deaths from accidents, overdoses, injuries, all-cause mortality, hospitalizations for mental health conditions, and medical/surgical hospitalizations.</p>
+    <p>As participants in this program, facility coordinators will focus on implementing the program, engaging providers, and ensuring that providers are aware of which of their patients are at risk. Providers for Veterans identified will be asked to review the care Veterans receive and to enhance it as appropriate.</p>
+    <b>Dashboard Outreach & Intervention</b>
+    <p>Facility coordinators should first review their list of “at-risk” Veterans in the Patient Roster by VAMC widget on the Individual view and assign providers for each Veteran. Facility coordinators should then engage the providers and notify them of their “at-risk” patients.
+Detailed outreach and intervention steps for both facility coordinators and providers are located in the “Data Entry Widget” on this Dashboard. 
+	</p>
+    <b>Training & Additional Guidance</b>
+    <p>For additional instructional content and training on the program and Dashboard, please visit: <a href="http://vaww.mirecc.va.gov/reachvet/" style="color:rgb(16, 52, 166)">http://vaww.mirecc.va.gov/reachvet/</a></p>
+</div>
 </div>
