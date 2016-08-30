@@ -700,3 +700,11 @@ end
 Then(/^I should see the "date and time" in the outreach status checklist$/) do
  page.find(:xpath , '//*[@id="identifiedprimaryproviderdate"]')
 end
+
+Then(/^I should see "(.*?)" in the About Perceptive Reach widget$/) do |pagecontent|
+    page.find(:xpath, '//*[@href="http://vaww.mirecc.va.gov/reachvet/"]')
+end
+
+Then(/^I should see "(.*?)" in the About Perceptive Reach widget content$/) do |pagecontent|
+  expect(page).to have_content(pagecontent)
+end
