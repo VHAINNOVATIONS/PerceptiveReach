@@ -3,7 +3,7 @@ Feature: As a Dashboard user, I want to view a widget that shows a summary of ho
 Scenario: PR-4707
 Given I navigate to the http://localhost:7003/
 Then I should see "Perceptive Reach"
-Then I put in "email" field as "Zach_ADM"
+Then I put in "email" field as "TESTER261"
 Then I put in "password" field as "FeAn#011819"
 And I click on check box "checky"
 And I click on "Login" button
