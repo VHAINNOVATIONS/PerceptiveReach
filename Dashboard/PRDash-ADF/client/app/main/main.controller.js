@@ -23,7 +23,7 @@ angular.module('app')
     IdleServ.start(Auth);
     var user = JSON.parse(sessionStorage.user);
     //user.DashboardData = JSON.parse(user.DashboardData);
-    // initialize LayoutOptions depending on role or dashboard data
+    // initialize LayoutOptions depending on role or dashboard data.
     var layouts = [];
     var activeView = null;
     var defaultWidgetsLayout = DefaultWidgetService.getDefaultWidgetsObj(widgetDefinitions,user.UserRole);
@@ -66,7 +66,7 @@ angular.module('app')
         layouts.push(layout);
       }
       if (user.Facility_View_Access){
-        layout = { title: 'Facility View', active: (role.match(/^(CCT)$/)) ? true : false, defaultWidgets: defaultWidgetsLayout.facility, widgetDefinitions: widgetsAllObj.facility};
+        layout = { title: 'Facility View', active: (role.match(/^(CCT|CCS)$/)) ? true : false, defaultWidgets: defaultWidgetsLayout.facility, widgetDefinitions: widgetsAllObj.facility};
         if (layout.active) activeView = "facility";
         layouts.push(layout);  
       }
@@ -83,7 +83,8 @@ angular.module('app')
       defaultWidgets: defaultWidgetsAll,
       explicitSave: false,
       lockDefaultLayouts: true,
-      defaultLayouts: layouts      
+      defaultLayouts: layouts,
+      dataLastUpdated: user.DataLastUpdated    
     };
 
     // initialize common data object and broadcast to widgets
@@ -99,7 +100,7 @@ angular.module('app')
 
     $timeout(function(){
       // Add listener for enter key on layout
-      $('ul li a').keydown(function(event){
+      $('.layout-tabs li a').keydown(function(event){
         if(event.KeyCode == '13' || event.key == 'Enter')
         {
           //tab.click();
@@ -107,7 +108,7 @@ angular.module('app')
         }
       });
       // Add listener for when layout is changed
-      $('ul li a').click(function(e) 
+      $('.layout-tabs li a').click(function(e) 
       {
         $timeout(function(){
           var element = (e.currentTarget.innerText) ? e.currentTarget : e.currentTarget.activeElement;

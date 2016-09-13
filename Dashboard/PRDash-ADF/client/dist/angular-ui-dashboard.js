@@ -87,7 +87,7 @@ angular.module('ui.dashboard')
             minSizeX: 5, // minimum column width of an item
             maxSizeX: null, // maximum column width of an item
             minSizeY: 5, // minumum row height of an item
-            maxSizeY: null, // maximum row height of an item
+            maxSizeY: 14, // maximum row height of an item
             resizable: {
                enabled: true,
                handles: ['n', 'e', 's', 'w', 'ne', 'se', 'sw', 'nw'],
@@ -96,6 +96,7 @@ angular.module('ui.dashboard')
                }, 
                // optional callback fired when item is resized,
                stop: function(event, $element, widget) {
+                scope.$broadcast('gridsterResized');
                 scope.saveDashboard();
                } // optional callback fired when item is finished resizing
             },
@@ -113,12 +114,18 @@ angular.module('ui.dashboard')
             }
         };
 
+        scope.CloseSaveAlert =  function(){
+          $(".unsavedDataAlert").fadeOut();
+        }
+
+
       }],
       link: function (scope) {
 
         // Save default widget config for reset
         scope.defaultWidgets = scope.options.defaultWidgets;
-
+        scope.IsShiftKeyPressed = false;
+        scope.RowIncrement = 0;
         scope.widgetDefs = new WidgetDefCollection(scope.options.widgetDefinitions);
         var count = 1;
 
@@ -139,20 +146,20 @@ angular.module('ui.dashboard')
               scope.PatientName = '';
           }
           else if(data.data.activeView == 'facility'){
-            if(data.data.facilitySelected.facility != null)
-              scope.FacilityName = 'VAMC: ' + data.data.facilitySelected.facility;
+            if(data.data.facilitySelected.facilityName != null)
+              scope.FacilityName = 'VAMC: ' + data.data.facilitySelected.facilityName;
             else
               scope.FacilityName = '';
           }
           else if(data.data.activeView == 'surveillance'){
-            if(data.data.facilitySelected.surveillance == null && data.data.visnSelected.surveillance == null)
+            if(data.data.facilitySelected.surveillanceName == null && data.data.visnSelected.surveillance == null)
               scope.VISN_FacilityName = 'VISN:  VAMC: ';
-            else if (data.data.facilitySelected.surveillance == null)
+            else if (data.data.facilitySelected.surveillanceName == null)
               scope.VISN_FacilityName = 'VISN: ' + data.data.visnSelected.surveillance + ' VAMC: ';
             else if (data.data.visnSelected.surveillance == null)
-              scope.VISN_FacilityName = 'VISN:  VAMC: ' + data.data.facilitySelected.surveillance;
+              scope.VISN_FacilityName = 'VISN:  VAMC: ' + data.data.facilitySelected.surveillanceName;
             else
-              scope.VISN_FacilityName = 'VISN: ' + data.data.visnSelected.surveillance + ' VAMC: ' + data.data.facilitySelected.surveillance;
+              scope.VISN_FacilityName = 'VISN: ' + data.data.visnSelected.surveillance + ' VAMC: ' + data.data.facilitySelected.surveillanceName;
           }        
         }.bind(this));
 		
@@ -164,7 +171,6 @@ angular.module('ui.dashboard')
 
 
         scope.addWidget = function (widgetToInstantiate, doNotSave) {
-
           if (typeof widgetToInstantiate === 'string') {
             widgetToInstantiate = {
               name: widgetToInstantiate
@@ -182,8 +188,14 @@ angular.module('ui.dashboard')
             widgetToInstantiate.title = 'Widget ' + count++;
           }
 
+
           // Instantiation
           var widget = new WidgetModel(defaultWidgetDefinition, widgetToInstantiate);
+
+          if(scope.common)
+          {
+            widget.dataModelOptions.common = scope.common
+          }
 
           // Add to the widgets array
           scope.widgets.push(widget);
@@ -199,9 +211,109 @@ angular.module('ui.dashboard')
          * @param  {Object} widget The widget instance object (not a definition object)
          */
         scope.removeWidget = function (widget) {
-          scope.widgets.splice(_.indexOf(scope.widgets, widget), 1);
-          scope.saveDashboard();
+          if(widget.canClose != false)
+          {
+            scope.widgets.splice(_.indexOf(scope.widgets, widget), 1);
+            scope.saveDashboard();
+          }
         };
+
+        scope.keyDown = function(e)
+        {
+          var sizex = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeX;
+          var sizey = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.sizeY;
+          var col = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.col;
+          var row = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController.row;
+          var gridsterContainer = $($(e)[0].currentTarget).closest('.gridsterContainer').data().$gridsterItemController;
+          var gridsterEle = $($(e)[0].currentTarget).closest('.gridsterContainer');
+          var sizeIncrement = 1;
+          switch(e.which) {
+          case 16:
+              scope.IsShiftKeyPressed = true;
+              return false;
+          case 40:
+              gridsterContainer.sizeY = sizey+sizeIncrement;
+              //scope.saveDashboard();
+              gridsterContainer.gridster.resizable.stop({},gridsterEle,{});
+              return false;
+          case 37:
+              gridsterContainer.sizeX = sizex-sizeIncrement;
+              //scope.saveDashboard();
+              gridsterContainer.gridster.resizable.stop({},gridsterEle,{});
+              return false;
+          case 39:
+              if(col + sizex < 30)
+              {
+                gridsterContainer.sizeX = sizex+sizeIncrement;
+                //scope.saveDashboard();
+                gridsterContainer.gridster.resizable.stop({},gridsterEle,{});
+              }
+              return false;
+          case 38:
+              gridsterContainer.sizeY = sizey-sizeIncrement;
+              //scope.saveDashboard();
+              gridsterContainer.gridster.resizable.stop({},gridsterEle,{});
+              return false;
+          case 65:
+              if(scope.IsShiftKeyPressed)
+              {
+                if(col > 0)
+                {
+                  gridsterContainer.col = col-1;
+                  scope.saveDashboard();
+                }
+                return false;
+              }
+              break;
+          case 68:
+              if(scope.IsShiftKeyPressed)
+              {
+                if(col + sizex < 30)
+                {
+                  gridsterContainer.col = col+1;
+                  scope.saveDashboard();
+                }
+                return false;
+              }
+              break;
+          case 83:
+            if(scope.IsShiftKeyPressed)
+            {
+              scope.RowIncrement += 5;
+              gridsterContainer.row = row + scope.RowIncrement;
+              scope.saveDashboard();
+              return false;
+            }
+            break;
+          case 87:
+            if(scope.IsShiftKeyPressed)
+            {
+              if(row > 0)
+              {
+                gridsterContainer.row = row-1;
+                scope.saveDashboard();
+              }
+              return false;  
+            }
+            break;
+          default:
+              return;
+          } 
+
+        }
+
+        scope.keyUp = function(e)
+        {
+          switch(e.which) {
+            case 16:
+              scope.IsShiftKeyPressed = false;
+              scope.RowIncrement = 0;
+              return;
+            default:
+              return;
+
+          }
+        }
 
         /**
          * Opens a dialog for setting and changing widget properties
@@ -265,6 +377,15 @@ angular.module('ui.dashboard')
          */
         scope.addWidgetInternal = function (event, widgetDef) {
           event.preventDefault();
+          var widgetExists =  jQuery.grep(scope.widgets, function( n, i ) {  return ( n.name == widgetDef.name);});
+          if(widgetExists.length)
+          {
+            $(".snoAlertBox").fadeIn();
+            window.setTimeout(function () {
+              $(".snoAlertBox").fadeOut(300)
+            }, 4000);
+            return false;   
+          }
           scope.addWidget(widgetDef);
           $timeout(function(){
            scope.$broadcast('defaultWidgetsSelected', scope.common);
@@ -483,6 +604,10 @@ angular.module('ui.dashboard')
           };
 
           scope.makeLayoutActive = function(layout) {
+            if(scope.common && scope.common.data && scope.common.data.EnterDataIsUnsaved == true){
+              $(".unsavedDataAlert").fadeIn();
+              return;
+            }
 
             var current = layoutStorage.getActiveLayout();
 
@@ -572,13 +697,6 @@ angular.module('ui.dashboard')
             }
           };
 
-          var sortableDefaults = {
-            stop: function() {
-              scope.options.saveLayouts();
-            },
-            distance: 5
-          };
-          scope.sortableOptions = angular.extend({}, sortableDefaults, scope.options.sortableOptions || {});
         }
       };
     }
@@ -596,7 +714,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "              <button name=\"btnDropdown\" type=\"button\" class=\"btn btn-primary dropdown-toggle\" ng-disabled=\"disabled\">\r" +
     "\n" +
-    "                Button dropdown<span class=\"caret\"></span>\r" +
+    "                Button dropdown <span class=\"caret\"></span>\r" +
     "\n" +
     "              </button>\r" +
     "\n" +
@@ -689,7 +807,17 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/adf/directives/dashboard/dashboard.html",
     "<div>\r" +
     "\n" +
+    "    <div class=\"alert alert-warning unsavedDataAlert\">\r" +
+    "\n" +
+    "          <p>You have Unsaved changes in EnterData widget, Please Save or Undo changes and retry.</p>\r" +
+    "\n" +
+    "          <button name=\"btnSaveAlertOk\" alt=\"Unsaved Changes\" class=\"btn btn-primary\" ng-click=\"CloseSaveAlert()\">OK</button>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
     "    <div offset=\"105\" style=\"z-index:5;background-color:white;\" sticky tabindex=\"-1\">\r" +
+    "\n" +
+    "        <div class=\"alert alert-success snoAlertBox\" data-alert=\"alert\">This widget has already been added to your dashboard. Please select a different widget to add.</div>\r" +
     "\n" +
     "        <div class=\"btn-toolbar\" ng-if=\"!options.hideToolbar\" style=\"padding-bottom:5px;padding-top:5px;border-bottom: 2px solid gray;\">\r" +
     "\n" +
@@ -741,8 +869,6 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "\r" +
     "\n" +
-    "            <button name=\"btnClear\" ng-click=\"clear();\"  alt=\"Clear\" title=\"Clear\"  type=\"button\" class=\"btn btn-info\">Clear</button>\r" +
-    "\n" +
     "            <div style=\"height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;\" ng-show=\" dashboardTitle == 'Individual View'\" title=\"Individual View Layout\">\r" +
     "\n" +
     "                <label alt=\"{{ PatientName }}\" style=\"font-weight:normal\">\r" +
@@ -791,9 +917,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                    <div class=\"panel-title\">\r" +
     "\n" +
-    "                        <span style=\"background-color: transparent;\" class=\"label-primary widget-title nav\">{{widget.title}}</span>\r" +
-    "\n" +
-    "                        <span class=\"label label-primary\" ng-if=\"!options.hideWidgetName\" tabindex=\"-1\">{{widget.name}}</span>\r" +
+    "                        <span style=\"background-color: transparent;margin-right:3px;\" class=\"label-primary widget-title nav pull-left\">{{widget.title}}</span>\r" +
     "\n" +
     "                        <div id=\"widgetSettings\" style=\"display:inline-block; float:right; position:relative;\">\r" +
     "\n" +
@@ -801,7 +925,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                            <!--button ng-click=\"openWidgetSettings(widget);\" style=\"background-color: transparent; float:left;\" class=\"glyphicon glyphicon-cog\" ng-if=\"!options.hideWidgetSeyttings\"></button-->\r" +
     "\n" +
-    "                            <button ng-click=\"removeWidget(widget);\" title=\"Remove Widget\" alt=\"Remove Widget\" style=\"background-color: transparent; float:right;\" class=\"glyphicon glyphicon-remove\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
+    "                            <button ng-click=\"removeWidget(widget);\" ng-keydown=\"keyDown($event)\" ng-keyup=\"keyUp($event)\"  ng-attr-title=\"{{widget.canClose == false? 'Resize/Move Widget':'Remove/Resize/Move Widget'}}\" alt=\"Remove Widget\" style=\"background-color: transparent; float:right;\" ng-class=\"(widget.canClose == false) ? 'glyphicon glyphicon-move' : 'glyphicon glyphicon-remove'\" ng-if=\"!options.hideWidgetClose\"></button>\r" +
     "\n" +
     "                        </div>\r" +
     "\n" +
@@ -809,7 +933,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "\n" +
     "                </div>\r" +
     "\n" +
-    "                <div class=\"widget-content\" style=\"height:75%;\"></div>\r" +
+    "                <div class=\"widget-content\" style=\"height:85%;\"></div>\r" +
     "\n" +
     "                <div class=\"widget-ew-resizer\" ng-mousedown=\"grabResizer($event)\"></div>\r" +
     "\n" +
@@ -905,7 +1029,7 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/adf/directives/dashboardLayouts/dashboardLayouts.html",
-    "<ul ui-sortable=\"sortableOptions\" ng-model=\"layouts\" class=\"nav nav-tabs layout-tabs\" offset=\"59\" style=\"z-index:5;background-color:white;\" sticky>\r" +
+    "<ul ng-model=\"layouts\" class=\"nav nav-tabs layout-tabs\" offset=\"59\" style=\"z-index:5;background-color:white;\" sticky>\r" +
     "\n" +
     "    <li ng-repeat=\"layout in layouts\" ng-class=\"{ active: layout.active }\">\r" +
     "\n" +
@@ -928,6 +1052,8 @@ angular.module("ui.dashboard").run(["$templateCache", function($templateCache) {
     "        </a>\r" +
     "\n" +
     "    </li>\r" +
+    "\n" +
+    "    <label class=\"pull-right\" style=\"padding:5px;font-weight:normal;\">Data Last Updated:{{options.dataLastUpdated | date: \"MM-dd-yyyy\"}}  <a style=\"border-left:1px solid gray;padding-left:5px;font-size:12px;\" href=\"mailto:vaperceptivereachsupport@va.gov?Subject=Perceptive Reach Dashboard Support\">Contact Help Desk</a></label>\r" +
     "\n" +
     "</ul>\r" +
     "\n" +
@@ -1281,7 +1407,13 @@ angular.module('ui.dashboard')
         }
 
         var serialized = _.map(widgets, function (widget) {
-          var w = widget.serialize();
+          var temp = widget.serialize();
+          var w = $.extend( true, {}, temp );
+          if(_.has(w,"dataModelOptions") && _.has(w.dataModelOptions,"common") && _.has(w.dataModelOptions.common,"data") 
+            && _.has(w.dataModelOptions.common.data,"veteranObj") && _.has(w.dataModelOptions.common.data.veteranObj,"OutreachStatus"))
+          {
+            delete w.dataModelOptions.common.data.veteranObj.OutreachStatus;
+          }
           w.col = widget.col;
           w.row = widget.row;
           w.sizeX = widget.sizeX;
@@ -1468,7 +1600,7 @@ angular.module('ui.dashboard')
 
       angular.extend(defaults, options);
       angular.extend(options, defaults);
-
+       
       this.id = options.storageId;
       this.storage = options.storage;
       this.storageHash = options.storageHash;
@@ -1535,6 +1667,14 @@ angular.module('ui.dashboard')
           states: this.states,
           storageHash: this.storageHash
         };
+
+        var sessionStore = JSON.parse(sessionStorage.getItem('user'));
+        
+        if(sessionStore)
+        {
+          sessionStore.DashboardData = state;
+          sessionStorage.setItem("user", JSON.stringify(sessionStore)); 
+        }
 
         if (this.stringifyStorage) {
           state = JSON.stringify(state);

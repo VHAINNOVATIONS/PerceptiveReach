@@ -23,11 +23,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/facilityRoster/facilityRoster.html',
      
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.facilityList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -37,25 +37,35 @@ angular.module('ui.widgets')
               resolve([]);
           });
         })
-        .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [1, 'desc']);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('STA3N').withTitle('VAMC'),
             DTColumnBuilder.newColumn('VAMC_Name').withTitle('VAMC Name'),
             DTColumnBuilder.newColumn('StateAbbr').withTitle('State'),
             DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
             DTColumnBuilder.newColumn('Total').withTitle('Patients'),
-            DTColumnBuilder.newColumn('AtRisk').withTitle('At-Risk Persons')
+            DTColumnBuilder.newColumn('AtRisk').withTitle('At-Risk Persons'),
+            DTColumnBuilder.newColumn('Prediction').withTitle('Prediction Alert'),
           ];
       },
       link: function postLink(scope, element, attr) {
         scope.$on("bindEvents", function (){
+
+          scope.dtInstance.changeData(function() {
+                return new Promise( function(resolve, reject){
+                  if (scope.facilityList)
+                  {
+                    resolve(scope.facilityList);
+                  }
+                  else
+                  {
+                    resolve([]);
+                  }
+                });
+              });
+
           $($('#facilityRosterDiv table')[0]).find('th').each(function(){
             $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+',Down/Up arrows to navigate, Spacebar to select and Tab to Exit rows">'+$(this).text()+'</a>');
             $(this).attr('scope','col');
@@ -91,7 +101,6 @@ angular.module('ui.widgets')
               $($('#tblFacilityRoster>tbody>tr')[0]).addClass('rowAtFocus');
               $($('#tblFacilityRoster>tbody>tr')[0]).css('backgroundColor','#f5f5f5');
             }
-            $('#facilityRosterDiv .dataTables_scrollBody').animate({ scrollTop: $('#tblFacilityRoster').find('tr.rowAtFocus')[0].offsetTop }, 500);
             return false;
           }
 
@@ -108,6 +117,7 @@ angular.module('ui.widgets')
 			
             scope.eventTimer = event.timeStamp;
             var facilityId = null;
+            var facilityName = null;
             var commonData = scope.widget.dataModelOptions.common;
             var activeView = commonData.data.activeView;
             //if(scope.previousSelectedRowIndex == event.currentTarget.rowIndex){
@@ -118,14 +128,13 @@ angular.module('ui.widgets')
                 $(this).removeClass('selected').removeClass('selected');
                 var activeView = commonData.data.activeView;
                 facilityId = '';  
+                facilityName = '';
               } 
               else
                 facilityId = commonData.data.facilitySelected.facility;             
-              //scope.previousSelectedRowIndex = null;
+                facilityName = commonData.data.facilitySelected.facilityName;             
             }
             else{
-              //$('tr.selected').removeClass('selected');
-              //$(this).hasClass('selected').removeClass('selected');
               console.log("tableroster:",$('#tblFacilityRoster'));//.cells().nodes().removeClass('selected');
               console.log("facilityroster has class:",$('#tblFacilityRoster tbody tr').hasClass('selected'));
               console.log("facilityroster tr:",$('#tblFacilityRoster tbody tr'));
@@ -134,6 +143,7 @@ angular.module('ui.widgets')
               // update common data object with new patient object
               console.log("eventClick:", event);
               facilityId = parseInt(event.currentTarget.cells[0].innerText);
+              facilityName = event.currentTarget.cells[1].innerText;
               /*var obj = jQuery.grep(scope.patientList, function( n, i ) {
                 return ( n.ReachID == vetId );
               });*/
@@ -142,15 +152,25 @@ angular.module('ui.widgets')
             }
             
             if(activeView == "surveillance")
+            {
               commonData.data.facilitySelected.surveillance = facilityId;
+              commonData.data.facilitySelected.surveillanceName = facilityName;
+            }
             else if(activeView == "facility")
+            {
+              if(commonData.data.facilitySelected && commonData.data.facilitySelected.facility != facilityId )
+              {
+                commonData.data.veteranObj = '';
+              }
               commonData.data.facilitySelected.facility = facilityId;
-            //console.log("CommonDataAfterClick: ", commonData);
-
+              commonData.data.facilitySelected.facilityName = facilityName;
+            }
             // broadcast message throughout system
             scope.$root.$broadcast('commonDataChanged', commonData);
-            //scope.$apply();
           });
+
+          $('#facilityRosterDiv .dataTables_scrollHeadInner,#facilityRosterDiv table').css({'width':''});
+          var containerHeight = parseInt($('#facilityRosterDiv').parent().css('height'),10);
         });
 		
 
@@ -158,24 +178,13 @@ angular.module('ui.widgets')
           if(data != null && data.length >0){
               scope.data = data;
               scope.facilityList = data;
-              var promise = new Promise( function(resolve, reject){
-                    if (scope.facilityList)
-                      resolve(scope.facilityList);
-                    else
-                      resolve([]);
-                  });
-              if(scope.dtInstance)
-                scope.dtInstance.changeData(promise);
-              else {
-                scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                  dtInstances.tblFacilityRoster._renderer.changeData(promise)              
-                });
-              }
-              $timeout(function(){
-                scope.$emit('bindEvents');
+               scope.$emit('bindEvents');
+
+              $timeout(function(){               
                 $.fn.dataTable.ext.errMode = 'throw';
                 var commonData = scope.widget.dataModelOptions.common;
                 var activeView = commonData.data.activeView;
+                var selectedRow = null; 
                 if(activeView == "facility"){
                   if(commonData.data.facilitySelected.facility == null || commonData.data.facilitySelected.facility.toString().length == 0)
                   {
@@ -183,39 +192,37 @@ angular.module('ui.widgets')
                   }
                   else
                   {
-                    var selectedRow = null; 
                     $('#tblFacilityRoster tbody tr').each(function(){
                         var textcolumn = $(this).find('td').eq(0).text();
                         if($(this).find('td').eq(0).text() == commonData.data.facilitySelected.facility){
-                            selectedRow = $(this)[0];
+                            selectedRow = $(this);
+                            selectedRow.click();
                         }
                     }); 
-                    console.log("FacilityRoster selected:", selectedRow);
-                    console.log("FacilityRoster selected row index:", selectedRow.rowIndex);
-                    selectedRow.click();
-                    $('#tblFacilityRoster_wrapper > div > div.dataTables_scrollBody').animate({
-                      scrollTop: $('#tblFacilityRoster tbody tr').eq(selectedRow.rowIndex-9).offset().top
-                    },500)
                   }  
                 }
                 else if(activeView == "surveillance"){
                   if(commonData.data.facilitySelected.surveillance != null && commonData.data.facilitySelected.surveillance.toString().length > 0)
                   {
-                    var selectedRow = null; 
                     $('#tblFacilityRoster tbody tr').each(function(){
                         var textcolumn = $(this).find('td').eq(0).text();
                         if($(this).find('td').eq(0).text() == commonData.data.facilitySelected.surveillance){
                             selectedRow = $(this);
+                            selectedRow.addClass('selected');
                         }
-                    }); 
-                    console.log("FacilityRoster selected:", selectedRow);
-                    console.log("FacilityRoster selected row index:", selectedRow[0].rowIndex);           
-                    
-                    selectedRow.addClass('selected');//selectedRow.click();
-                    $('#tblFacilityRoster_wrapper > div > div.dataTables_scrollBody').animate({
-                      scrollTop: $('#tblFacilityRoster tbody tr').eq(selectedRow[0].rowIndex-8).offset().top
-                    },500);                                      
+                    });                                
                   }  
+                }
+
+                if(selectedRow)
+                {
+                  var rowPosition = selectedRow[0].rowIndex-8;
+                  if(rowPosition > 0 && $('#facilityRosterDiv').parent().scrollTop() == 0)
+                  {
+                    $('#facilityRosterDiv').parent().animate({  
+                      scrollTop: $('#tblFacilityRoster tbody tr').eq(rowPosition).offset().top
+                    },500);
+                  }
                 }
                 
               },1500)            

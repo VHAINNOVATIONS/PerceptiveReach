@@ -23,11 +23,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/nationalAgeGroups/nationalAgeGroups.html',
      
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.ageGroupsList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -37,14 +37,9 @@ angular.module('ui.widgets')
               resolve([]);
           });
         })
-          .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('AgeRange').withTitle('Age Groups'),
@@ -60,6 +55,12 @@ angular.module('ui.widgets')
       			$(this).attr('scope','col');
       			$(this).attr('tabindex','-1');
           });
+          
+          $timeout(function(){
+            $('#ageGroupDiv .dataTables_scrollHeadInner,#ageGroupDiv table').css({'width':''});
+            var containerHeight = parseInt($('#ageGroupDiv').parent().css('height'),10);
+            $('#ageGroupDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
+          },2500);
     		});
         scope.$watch('widgetData', function (data) {
           $timeout(function(){
@@ -74,16 +75,16 @@ angular.module('ui.widgets')
                     else
                       resolve([]);
                   });
-              if(scope.dtInstance)
-                scope.dtInstance.changeData(promise);
-              else {
-                scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                  dtInstances.tblAgeGroups._renderer.changeData(promise)              
-                });
-              }
+              
+              scope.dtInstance.changeData(function() {
+                  return promise;
+              });
+                
             }
           },1000)
         });
+
+       
       }
     };
   });

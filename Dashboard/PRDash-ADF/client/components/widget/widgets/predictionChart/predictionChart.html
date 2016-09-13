@@ -1,0 +1,26 @@
+<div class="prediction-chart" style="height:90%;width:100%;">
+    <nvd3-line-chart
+            data="data",
+            height="450"
+            forcex="[0.5,17.5]"
+            xAxisTickValues="xAxisTickValuesFunction()"
+            xAxisTickFormat="xAxisTickFormatFunction()"
+            xAxisShowMaxMin="false"
+            xAxisLabel="Month"
+            yAxisTickFormat="yAxisTickFormatFunction()"
+            yAxisLabel="Number of Attempts"
+            yAxisRotateLabels="true"
+            x="xFunction()"
+            y="yFunction()"
+            showXAxis="true"
+            showYAxis="true"
+            reduceXTicks="true"
+            transitionduration="0"
+            useInteractiveGuideline="true"
+            tooltips="true"
+            margin="{left:75, bottom:75}">
+    </nvd3-line-chart>
+    <p style="margin:20px">
+    The Attempt Prediction chart shows the historical number of suicide attempts at a facility based on SPAN data. Using a statistical algorithm, the chart also shows the predicted number of attempts for the next three months. Please see the User Manual for more details. 
+    </p>
+</div>

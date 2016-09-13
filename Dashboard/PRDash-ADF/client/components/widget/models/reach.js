@@ -11,7 +11,7 @@ angular.module('ui.models')
 
       this.dataModelOptions = this.dataModelOptions || {};
       this.dataModelOptions.common = this.dataModelOptions.common  ||  { data: 'default value' };
-     
+
       scope.$on('commonDataChanged', function (event, data) {
         this.setCommon(data);
       }.bind(this));
@@ -56,7 +56,7 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-       
+
         $http.get('/api/patient?sta3N=' + this.sta3N)
         .success(function(rtnVal) {
           var patientsBysta3N = rtnVal.patients;
@@ -69,11 +69,11 @@ angular.module('ui.models')
         }.bind(this));
       },
 
-      saveOutreachData: function (outreachStatus, veteranID) {
+      saveOutreachData: function (outreachStatus, veteranID, facilityID) {
         var user = JSON.parse(sessionStorage.user);
-        $http.put('/api/patient?vetReachID=' + veteranID, {'outreachStatus': outreachStatus, 'UserID':user.UserID})
+        $http.put('/api/patient?vetReachID=' + veteranID, {'outreachStatus': outreachStatus, 'UserID':user.UserID, 'facilityID':facilityID})
         .success(function(data) {
-        });  
+        });
       },
       updatesta3N: function (sta3N) {
         this.dataModelOptions = this.dataModelOptions ? this.dataModelOptions : {};
@@ -105,7 +105,7 @@ angular.module('ui.models')
           if(this.riskLevel != this.currentRiskLevel)
             this.getData();
         }.bind(this));
-        
+
         this.updateScope([]);
         this.getData();
       },
@@ -119,7 +119,7 @@ angular.module('ui.models')
           options += '?guideType=' + this.guidelineType + '&riskLevel=' + this.riskLevel;
         else if(this.riskLevel || this.guidelineType)
           options += (this.riskLevel) ? '?riskLevel=' + this.riskLevel : '?guideType=' + this.guidelineType;
-        
+
         $http.get('/api/clinicalDecisionSupport' + options) // '/api/clinicalDecisionSupport?guideType=%27SRB%27&riskLevel=1'
         .success(function(dataset) {
           //console.log('inside Clinical decision support success');
@@ -147,7 +147,7 @@ angular.module('ui.models')
     });
 
     return ClinicalDecisionSupportDataModel;
-  })      
+  })
   .factory('TotalRisksDataModel', function ($http, WidgetDataModel) {
     function TotalRisksDataModel() {
     }
@@ -385,7 +385,7 @@ angular.module('ui.models')
 
         $http.get('/api/appointmentData?reachID='+ this.reachID)
         .success(function(dataset) {
-                data = dataset; 
+                data = dataset;
                 this.updateScope(data);
             }.bind(this));
       },
@@ -415,7 +415,7 @@ angular.module('ui.models')
           if(this.reachID != this.currentReachID)
             this.getData();
         }.bind(this));
-        
+
         this.updateScope('-');
       },
 
@@ -447,19 +447,19 @@ angular.module('ui.models')
     angular.extend(SuicideStatisticsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		
-        this.updateScope('-');
+
+        this.updateScope([]);
         this.getData();
       },
 
       getData: function () {
         var that = this;
         var data = [];
-        
+
 
       $http.get('/api/suicideData')
         .success(function(dataset) {
-                data = dataset; 
+                data = dataset;
                 this.updateScope(data);
             }.bind(this));
       },
@@ -470,95 +470,6 @@ angular.module('ui.models')
     });
     return SuicideStatisticsDataModel;
   })
-  /*.factory('AgeGroupsMetricsDataModel', function ($http, CommonDataModel) {
-    function AgeGroupsMetricsDataModel() {
-    }
-
-    AgeGroupsMetricsDataModel.prototype = Object.create(CommonDataModel.prototype);
-    AgeGroupsMetricsDataModel.prototype.constructor = CommonDataModel;
-
-    angular.extend(AgeGroupsMetricsDataModel.prototype, {
-       init: function () {
-        var dataModelOptions = this.dataModelOptions;
-        var currentID = null;
-
-        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-          if(dataModelOptions.common.data.facilitySelected.surveillance)
-            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
-          else if(dataModelOptions.common.data.visnSelected.surveillance)
-            currentID = dataModelOptions.common.data.visnSelected.surveillance;
-        }
-        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;   
-        }
-        console.log("AgeGroupsMetricData init - currentID:", currentID);
-        this.widgetScope.$on('commonDataChanged', function (event, data) {
-          
-          this.currentID = this.ID;
-
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            if(dataModelOptions.common.data.facilitySelected.surveillance != null){
-              if (dataModelOptions.common.data.facilitySelected.surveillance.toString().length >0) this.ID = dataModelOptions.common.data.facilitySelected.surveillance;
-              else if(dataModelOptions.common.data.visnSelected.surveillance != null){
-                this.ID = (dataModelOptions.common.data.visnSelected.surveillance.toString().length >0) ? dataModelOptions.common.data.visnSelected.surveillance : null;  
-              }
-            }
-            else if(dataModelOptions.common.data.visnSelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
-          }
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
-            this.ID = (dataModelOptions.common.data.facilitySelected.facility != null) ? dataModelOptions.common.data.facilitySelected.facility : null;  
-          }
-          console.log("AgeGroupsMetricData commonDataChange - this", this);
-          console.log("AgeGroupsMetricData commonDataChange - currentId", this.currentID);
-          console.log("AgeGroupsMetricData commonDataChange - this.Id", this.ID);
-          console.log("AgeGroupsMetricData commonDataChange - facilitySelected.facility", dataModelOptions.common.data.facilitySelected.facility);
-          if(this.ID != this.currentID)
-            this.getData();          
-          
-        }.bind(this));
-
-        this.updateScope([]);
-        this.getData();
-      },
-
-      getData: function () {
-        var that = this;
-        var data = [];
-        var visn_or_facility = '';
-        var activeView = that.dataModelOptions.common.data.activeView;
-
-        //if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
-          //this.updateScope(data);
-        }//
-        //else {
-          if(activeView == "surveillance"){
-            if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
-          }
-          else if(activeView == "facility"){
-            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
-          }
-          
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/ageGroupsMetrics'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        //}
-      },
-
-      destroy: function () {
-        CommonDataModel.prototype.destroy.call(this);
-      }
-    });
-
-    return AgeGroupsMetricsDataModel;
-  }) */
   .factory('AgeGroupsMetricsDataModel', function ($http, CommonDataModel) {
     function AgeGroupsMetricsDataModel() {
     }
@@ -569,28 +480,36 @@ angular.module('ui.models')
     angular.extend(AgeGroupsMetricsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
+        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+          if(dataModelOptions.common.data.facilitySelected.surveillance) {
+            this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+          }
 
-        var currentSta3NID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected && dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
-        var  currentVISNID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected && dataModelOptions.common.data.visnSelected.facility) ? dataModelOptions.common.data.visnSelected.facility : null;
+          if(dataModelOptions.common.data.visnSelected.surveillance) {
+            this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
+          }
+        }
+        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+          this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+        }
 
-        console.log("AgeGroupsMetricData init - current sta3NID:", currentSta3NID);
-        console.log("AgeGroupsMetricData init -  current VISNID:", currentVISNID);
         this.widgetScope.$on('commonDataChanged', function (event, data) {
 
-        this.currentVISNID = this.VISNID;
-        this.currentSta3NID = this.sta3NID;
-        if(dataModelOptions.common.data.facilitySelected.facility != null )
-          this.VISNID = (dataModelOptions.common.data.visnSelected.facility.toString().length >0) ? dataModelOptions.common.data.visnSelected.facility : null;
+          this.currentVISN = this.VISN;
+          this.currentSTA3N = this.STA3N;
 
-        if(dataModelOptions.common.data.visnSelected.facility != null)
-          this.sta3NID = (dataModelOptions.common.data.facilitySelected.facility.toString().length >0) ? dataModelOptions.common.data.facilitySelected.facility : null;
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+            this.VISN = (dataModelOptions.common.data.visnSelected.surveillance) ? dataModelOptions.common.data.visnSelected.surveillance : null;
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
+          }
+          else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+            this.VISN = null;
+          }
 
-          console.log("AgeGroupsMetricData commonDataChange - this", this);
-          console.log("AgeGroupsMetricData commonDataChange - this.sta3NID ", this.sta3NID);
-          console.log("AgeGroupsMetricData commonDataChange - this.VISNID", this.VISNID);
-          
-          if(this.VISNID != this.currentVISNID  || this.sta3NID != this.currentSta3NID )
+          if(this.STA3N != this.currentSTA3N || this.VISN != this.currentVISN) {
             this.getData();
+          }
 
         }.bind(this));
 
@@ -601,23 +520,25 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var visn_or_facility = '';
-        var activeView = that.dataModelOptions.common.data.activeView;
-  
-          var parameter = '';
-          if(this.Sta3NID )
-            parameter = "Sta3NID=" + this.Sta3NID ;
-          if(this.VISNID)
-            parameter = "VISNID="+ this.VISNID;
-          if(this.Sta3NID && this.VISNID)
-            parameter = "Sta3NID=" + this.Sta3NID + " &&VISNID="+ this.VISNID;
 
-          $http.get('/api/ageGroupsMetrics?'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        
+        var parameter = '';
+        if (this.VISN || this.STA3N) {
+            parameter += "?";
+        }
+
+        if (this.VISN) {
+            parameter += "VISN=" + this.VISN;
+        }
+
+        if (this.STA3N) {
+            if (this.VISN) parameter += '&';
+            parameter += "STA3N=" + this.STA3N;
+        }
+        $http.get('/api/ageGroupsMetrics'+ parameter)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
       },
 
       destroy: function () {
@@ -625,9 +546,8 @@ angular.module('ui.models')
       }
     });
 
-   return AgeGroupsMetricsDataModel;
+    return AgeGroupsMetricsDataModel;
   })
-
   /* .factory('NationalCombatEraDataModel', function ($http, WidgetDataModel) {
     function NationalCombatEraDataModel() {
     }
@@ -638,8 +558,8 @@ angular.module('ui.models')
     angular.extend(NationalCombatEraDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
-		
+    //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
         this.updateScope('-');
         this.getData();
       },
@@ -647,11 +567,11 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        
+
 
       $http.get('/api/nationalCombatEra')
         .success(function(dataset) {
-                data = dataset; 
+                data = dataset;
                 this.updateScope(data);
             }.bind(this));
       },
@@ -672,8 +592,8 @@ angular.module('ui.models')
     angular.extend(NationalCurrentSafetyPlanDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
-		
+    //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
         this.updateScope('-');
         this.getData();
       },
@@ -681,11 +601,11 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        
+
 
       $http.get('/api/nationalCurrentSafetyPlan')
         .success(function(dataset) {
-                data = dataset; 
+                data = dataset;
                 this.updateScope(data);
             }.bind(this));
       },
@@ -696,7 +616,7 @@ angular.module('ui.models')
     });
     return NationalCurrentSafetyPlanDataModel;
   })*/
- /* .factory('GenderDistributionMetricsDataModel', function ($http, CommonDataModel) {
+  .factory('GenderDistributionMetricsDataModel', function ($http, CommonDataModel) {
     function GenderDistributionMetricsDataModel() {
     }
 
@@ -706,39 +626,38 @@ angular.module('ui.models')
     angular.extend(GenderDistributionMetricsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentID = null;
 
         if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-          if(dataModelOptions.common.data.facilitySelected.surveillance)
-            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
-          else if(dataModelOptions.common.data.visnSelected.surveillance)
-            currentID = dataModelOptions.common.data.visnSelected.surveillance;
+          if(dataModelOptions.common.data.facilitySelected.surveillance) {
+            this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+          }
+
+          if(dataModelOptions.common.data.visnSelected.surveillance) {
+            this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
+          }
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;   
+          this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          
-          this.currentID = this.ID;
+
+          this.currentVISN = this.VISN;
+          this.currentSTA3N = this.STA3N;
 
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            if(dataModelOptions.common.data.facilitySelected.surveillance != null){
-              if (dataModelOptions.common.data.facilitySelected.surveillance.toString().length >0) this.ID = dataModelOptions.common.data.facilitySelected.surveillance;
-              else if(dataModelOptions.common.data.visnSelected.surveillance != null){
-                this.ID = (dataModelOptions.common.data.visnSelected.surveillance.toString().length >0) ? dataModelOptions.common.data.visnSelected.surveillance : null;  
-              }
-            }
-            else if(dataModelOptions.common.data.visnSelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
+            this.VISN = (dataModelOptions.common.data.visnSelected.surveillance) ? dataModelOptions.common.data.visnSelected.surveillance : null;
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
           }
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
-            this.ID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;  
+          else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+            this.VISN = null;
           }
-          
-          if(this.ID != this.currentID)
-            this.getData();          
-          
+
+          if(this.STA3N != this.currentSTA3N || this.VISN != this.currentVISN) {
+            this.getData();
+          }
+
         }.bind(this));
 
         this.updateScope([]);
@@ -748,31 +667,25 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var visn_or_facility = '';
-        var activeView = that.dataModelOptions.common.data.activeView;
 
-        //if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
-          //this.updateScope(data);
-        //}
-        //else {
-          if(activeView == "surveillance"){
-            if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
-          }
-          else if(activeView == "facility"){
-            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
-          }
-          
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/genderDistributionMetrics'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        //}
+        var parameter = '';
+        if (this.VISN || this.STA3N) {
+            parameter += "?";
+        }
+
+        if (this.VISN) {
+            parameter += "VISN=" + this.VISN;
+        }
+
+        if (this.STA3N) {
+            if (this.VISN) parameter += '&';
+            parameter += "STA3N=" + this.STA3N;
+        }
+        $http.get('/api/genderDistributionMetrics'+ parameter)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
       },
 
       destroy: function () {
@@ -781,66 +694,54 @@ angular.module('ui.models')
     });
 
     return GenderDistributionMetricsDataModel;
-  })*/
-   .factory('GenderDistributionMetricsDataModel', function ($http, CommonDataModel) {
-    function GenderDistributionMetricsDataModel() {
+  })
+  .factory('PredictionChartDataModel', function ($http, CommonDataModel) {
+    function PredictionChartDataModel() {
     }
 
-    GenderDistributionMetricsDataModel.prototype = Object.create(CommonDataModel.prototype);
-    GenderDistributionMetricsDataModel.prototype.constructor = CommonDataModel;
+    PredictionChartDataModel.prototype = Object.create(CommonDataModel.prototype);
+    PredictionChartDataModel.prototype.constructor = CommonDataModel;
 
-    angular.extend(GenderDistributionMetricsDataModel.prototype, {
-       init: function () {
+    angular.extend(PredictionChartDataModel.prototype, {
+      init: function () {
         var dataModelOptions = this.dataModelOptions;
 
-        var currentSta3NID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected && dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
-        var  currentVISNID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected && dataModelOptions.common.data.visnSelected.facility) ? dataModelOptions.common.data.visnSelected.facility : null;
 
-        console.log("GenderDistributionMetricsDataModel init - current sta3NID:", currentSta3NID);
-        console.log("GenderDistributionMetricsDataModel init -  current VISNID:", currentVISNID);
+        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+          if(dataModelOptions.common.data.facilitySelected.surveillance) {
+            this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+          }
+        }
+        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.STA3N = null;
+        }
+
         this.widgetScope.$on('commonDataChanged', function (event, data) {
 
-        this.currentVISNID = this.VISNID;
-        this.currentSta3NID = this.sta3NID;
-        if(dataModelOptions.common.data.facilitySelected.facility != null )
-          this.VISNID = (dataModelOptions.common.data.visnSelected.facility.toString().length >0) ? dataModelOptions.common.data.visnSelected.facility : null;
+          this.currentSTA3N = this.STA3N;
 
-        if(dataModelOptions.common.data.visnSelected.facility != null)
-          this.sta3NID = (dataModelOptions.common.data.facilitySelected.facility.toString().length >0) ? dataModelOptions.common.data.facilitySelected.facility : null;
-
-          console.log("GenderDistributionMetricsDataModel commonDataChange - this", this);
-          console.log("GenderDistributionMetricsDataModel commonDataChange - this.sta3NID ", this.sta3NID);
-          console.log("GenderDistributionMetricsDataModel commonDataChange - this.VISNID", this.VISNID);
-          
-          if(this.VISNID != this.currentVISNID  || this.sta3NID != this.currentSta3NID )
-            this.getData();
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
+            if(this.STA3N != this.currentSTA3N) {
+              this.getData();
+            }
+          }
 
         }.bind(this));
 
-        this.updateScope([]);
         this.getData();
       },
 
       getData: function () {
-        var that = this;
-        var data = [];
-        var visn_or_facility = '';
-        var activeView = that.dataModelOptions.common.data.activeView;
-  
-          var parameter = '';
-          if(this.Sta3NID )
-            parameter = "Sta3NID=" + this.Sta3NID ;
-          if(this.VISNID)
-            parameter = "VISNID="+ this.VISNID;
-          if(this.Sta3NID && this.VISNID)
-            parameter = "Sta3NID=" + this.Sta3NID + " &&VISNID="+ this.VISNID;
 
-          $http.get('/api/genderDistributionMetrics?'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        
+        if (this.STA3N) {
+          var parameter = "?STA3N=" + this.STA3N;
+          $http.get('/api/prediction'+ parameter).success(function(predictionData) {
+            this.updateScope(predictionData);
+          }.bind(this));
+          return;
+        }
+        this.updateScope([]);
       },
 
       destroy: function () {
@@ -848,7 +749,7 @@ angular.module('ui.models')
       }
     });
 
-   return GenderDistributionMetricsDataModel;
+    return PredictionChartDataModel;
   })
   /*  .factory('NationalHighRiskFlagDataModel', function ($http, WidgetDataModel) {
     function NationalHighRiskFlagDataModel() {
@@ -860,7 +761,7 @@ angular.module('ui.models')
     angular.extend(NationalHighRiskFlagDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		
+
         this.updateScope('-');
         this.getData();
       },
@@ -868,11 +769,11 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        
+
 
       $http.get('/api/nationalHighRiskFlag')
         .success(function(dataset) {
-                data = dataset; 
+                data = dataset;
                 this.updateScope(data);
             }.bind(this));
       },
@@ -893,39 +794,37 @@ angular.module('ui.models')
     angular.extend(MilitaryBranchMetricsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentID = null;
-        console.log("MilitaryBranchMetricsData init - inside");
         if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-          if(dataModelOptions.common.data.facilitySelected.surveillance)
-            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
-          else if(dataModelOptions.common.data.visnSelected.surveillance)
-            currentID = dataModelOptions.common.data.visnSelected.surveillance;
+          if(dataModelOptions.common.data.facilitySelected.surveillance) {
+            this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+          }
+
+          if(dataModelOptions.common.data.visnSelected.surveillance) {
+            this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
+          }
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;   
+          this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          
-          this.currentID = this.ID;
+
+          this.currentVISN = this.VISN;
+          this.currentSTA3N = this.STA3N;
 
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            if(dataModelOptions.common.data.facilitySelected.surveillance != null){
-              if (dataModelOptions.common.data.facilitySelected.surveillance.toString().length >0) this.ID = dataModelOptions.common.data.facilitySelected.surveillance;
-              else if(dataModelOptions.common.data.visnSelected.surveillance != null){
-                this.ID = (dataModelOptions.common.data.visnSelected.surveillance.toString().length >0) ? dataModelOptions.common.data.visnSelected.surveillance : null;  
-              }
-            }
-            else if(dataModelOptions.common.data.visnSelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
+            this.VISN = (dataModelOptions.common.data.visnSelected.surveillance) ? dataModelOptions.common.data.visnSelected.surveillance : null;
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
           }
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
-            this.ID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;  
+          else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+            this.VISN = null;
           }
 
-          if(this.ID != this.currentID)
-            this.getData();          
-          
+          if(this.STA3N != this.currentSTA3N || this.VISN != this.currentVISN) {
+            this.getData();
+          }
+
         }.bind(this));
 
         this.updateScope([]);
@@ -935,31 +834,26 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var visn_or_facility = '';
-        var activeView = that.dataModelOptions.common.data.activeView;
 
-        /*if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
-          this.updateScope(data);
+        var parameter = '';
+        if (this.VISN || this.STA3N) {
+            parameter += "?";
         }
-        else {*/
-          if(activeView == "surveillance"){
-            if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
-          }
-          else if(activeView == "facility"){
-            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
-          }
-          
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/militaryBranchMetrics'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        //}
+
+        if (this.VISN) {
+            parameter += "VISN=" + this.VISN;
+        }
+
+        if (this.STA3N) {
+            if (this.VISN) parameter += '&';
+            parameter += "STA3N=" + this.STA3N;
+        }
+
+        $http.get('/api/militaryBranchMetrics'+ parameter)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
       },
 
       destroy: function () {
@@ -979,8 +873,8 @@ angular.module('ui.models')
     angular.extend(NationalPTSDMDDSUDDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
-		
+    //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
         this.updateScope('-');
         this.getData();
       },
@@ -988,11 +882,11 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        
+
 
       $http.get('/api/nationalPTSDMDDSUD')
         .success(function(dataset) {
-                data = dataset; 
+                data = dataset;
                 this.updateScope(data);
             }.bind(this));
       },
@@ -1004,48 +898,46 @@ angular.module('ui.models')
     return NationalPTSDMDDSUDDataModel;
   })*/
   .factory('TopMidRiskMetricsDataModel', function ($http, CommonDataModel) {
-    function TopMidRiskMetricsDataModel() {
-    }
+      function TopMidRiskMetricsDataModel() {
+      }
 
-    TopMidRiskMetricsDataModel.prototype = Object.create(CommonDataModel.prototype);
-    TopMidRiskMetricsDataModel.prototype.constructor = CommonDataModel;
+      TopMidRiskMetricsDataModel.prototype = Object.create(CommonDataModel.prototype);
+      TopMidRiskMetricsDataModel.prototype.constructor = CommonDataModel;
 
-    angular.extend(TopMidRiskMetricsDataModel.prototype, {
-       init: function () {
+      angular.extend(TopMidRiskMetricsDataModel.prototype, {
+        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentID = null;
-
         if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-          if(dataModelOptions.common.data.facilitySelected.surveillance)
-            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
-          else if(dataModelOptions.common.data.visnSelected.surveillance)
-            currentID = dataModelOptions.common.data.visnSelected.surveillance;
+          if(dataModelOptions.common.data.facilitySelected.surveillance) {
+            this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+          }
+
+          if(dataModelOptions.common.data.visnSelected.surveillance) {
+            this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
+          }
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;   
+          this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          
-          this.currentID = this.ID;
+
+          this.currentVISN = this.VISN;
+          this.currentSTA3N = this.STA3N;
 
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            if(dataModelOptions.common.data.facilitySelected.surveillance != null){
-              if (dataModelOptions.common.data.facilitySelected.surveillance.toString().length >0) this.ID = dataModelOptions.common.data.facilitySelected.surveillance;
-              else if(dataModelOptions.common.data.visnSelected.surveillance != null){
-                this.ID = (dataModelOptions.common.data.visnSelected.surveillance.toString().length >0) ? dataModelOptions.common.data.visnSelected.surveillance : null;  
-              }
-            }
-            else if(dataModelOptions.common.data.visnSelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
+            this.VISN = (dataModelOptions.common.data.visnSelected.surveillance) ? dataModelOptions.common.data.visnSelected.surveillance : null;
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
           }
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
-            this.ID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;  
+          else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+            this.VISN = null;
           }
 
-          if(this.ID != this.currentID)
-            this.getData();          
-          
+          if(this.STA3N != this.currentSTA3N || this.VISN != this.currentVISN) {
+            this.getData();
+          }
+
         }.bind(this));
 
         this.updateScope([]);
@@ -1055,48 +947,45 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var visn_or_facility = '';
-        var activeView = that.dataModelOptions.common.data.activeView;
 
-        /*if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
-          this.updateScope(data);
+        var parameter = '';
+        if (this.VISN || this.STA3N) {
+            parameter += "?";
         }
-        else {*/
-          if(activeView == "surveillance"){
-            if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
-          }
-          else if(activeView == "facility"){
-            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
-          }
-          
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/topMidRiskMetrics'+ parameter)
-          .success(function(dataset) {
-                  var data = [];
-                  for (var i = 0; i < dataset.length; i++) {
-                    data.push({key:dataset[i].RiskLevel,
-                               values:[{
-                                        RiskLabel: dataset[i].RiskLevel,
-                                        value: dataset[i].Total
-                                      }]
-                              });
-                  }
-                  this.updateScope(data);
-              }.bind(this));
-        //}
+
+        if (this.VISN) {
+            parameter += "VISN=" + this.VISN;
+        }
+
+        if (this.STA3N) {
+            if (this.VISN) parameter += '&';
+            parameter += "STA3N=" + this.STA3N;
+        }
+
+        $http.get('/api/topMidRiskMetrics'+ parameter)
+        .success(function(dataset) {
+            var data = [];
+            for (var i = 0; i < dataset.length; i++) {
+               data.push({key:dataset[i].RiskLevel,
+                    values:[{
+                              RiskLabel: dataset[i].RiskLevel,
+                              value: dataset[i].Total
+                            }]
+            });
+        }
+        this.updateScope(data);
+       }.bind(this));
+          //}
       },
 
       destroy: function () {
-        CommonDataModel.prototype.destroy.call(this);
-      }
-    });
+         CommonDataModel.prototype.destroy.call(this);
+        }
+      });
 
-    return TopMidRiskMetricsDataModel;
+      return TopMidRiskMetricsDataModel;
   })
+
   /* .factory('NationalVAClinicTwelveMonthsDataModel', function ($http, WidgetDataModel) {
     function NationalVAClinicTwelveMonthsDataModel() {
     }
@@ -1107,8 +996,8 @@ angular.module('ui.models')
     angular.extend(NationalVAClinicTwelveMonthsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
-		
+    //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
         this.updateScope('-');
         this.getData();
       },
@@ -1116,11 +1005,11 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        
+
 
       $http.get('/api/nationalVAClinicTwelveMonths')
         .success(function(dataset) {
-                data = dataset; 
+                data = dataset;
                 this.updateScope(data);
             }.bind(this));
       },
@@ -1142,28 +1031,39 @@ angular.module('ui.models')
        init: function () {
         var dataModelOptions = this.dataModelOptions;
         var currentID = null;
+        var currentVISN = null;
+        var currentSTA3N = null;
+        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+          if(dataModelOptions.common.data.facilitySelected.surveillance) {
+            currentSTA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+          }
 
-        if(dataModelOptions.layout == "stateVISN"){
-          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+          if(dataModelOptions.common.data.visnSelected.surveillance) {
+            currentVISN = dataModelOptions.common.data.visnSelected.surveillance;
+          }
         }
-        if(dataModelOptions.layout == "facility"){
-          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+          currentSTA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          
-          this.currentID = this.ID;
 
-          if(dataModelOptions.layout == "stateVISN"){
-            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+          this.currentVISN = this.VISN;
+          this.currentSTA3N = this.STA3N;
+
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+            this.VISN = (dataModelOptions.common.data.visnSelected.surveillance) ? dataModelOptions.common.data.visnSelected.surveillance : null;
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
           }
-          if(dataModelOptions.layout == "facility"){
-            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+          else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+            this.VISN = null;
           }
-          
-          if(this.ID != this.currentID)
-            this.getData();          
-          
+
+          if(this.STA3N != this.currentSTA3N || this.VISN != this.currentVISN) {
+            this.getData();
+          }
+
         }.bind(this));
 
         this.updateScope([]);
@@ -1173,25 +1073,25 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var visn_or_facility = '';
 
-        if((that.dataModelOptions.layout == "stateVISN" || that.dataModelOptions.layout == "facility") && !this.ID) {
-          this.updateScope(data);
+        var parameter = '';
+        if (this.VISN || this.STA3N) {
+            parameter += "?";
         }
-        else {
-          if(that.dataModelOptions.layout == "stateVISN")
-            visn_or_facility = "-v";
-          else if(that.dataModelOptions.layout == "facility")
-            visn_or_facility = "-f";
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/VAMCMetrics'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
+
+        if (this.VISN) {
+            parameter += "VISN=" + this.VISN;
         }
+
+        if (this.STA3N) {
+            if (this.VISN) parameter += '&';
+            parameter += "STA3N=" + this.STA3N;
+        }
+        $http.get('/api/VAMCMetrics'+ parameter)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
       },
 
       destroy: function () {
@@ -1209,75 +1109,92 @@ angular.module('ui.models')
     OutreachStatusMetricsDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(OutreachStatusMetricsDataModel.prototype, {
-       init: function () {
-        var dataModelOptions = this.dataModelOptions;
-        var currentID = null;
+        init: function () {
+		   var dataModelOptions = this.dataModelOptions;
+		   if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+  			 if(dataModelOptions.common.data.facilitySelected.surveillance) {
+  			   this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+  			 }
 
-        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-          if(dataModelOptions.common.data.facilitySelected.surveillance)
-            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
-          else if(dataModelOptions.common.data.visnSelected.surveillance)
-            currentID = dataModelOptions.common.data.visnSelected.surveillance;
-        }
-        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;   
-        }
+  			 if(dataModelOptions.common.data.visnSelected.surveillance) {
+  			   this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
+			 }
+		   }
+		   else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+			   this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+		   }
 
-        this.widgetScope.$on('commonDataChanged', function (event, data) {
-          
-          this.currentID = this.ID;
+		   this.widgetScope.$on('commonDataChanged', function (event, data) {
 
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            if(dataModelOptions.common.data.facilitySelected.surveillance != null){
-              if (dataModelOptions.common.data.facilitySelected.surveillance.toString().length >0) this.ID = dataModelOptions.common.data.facilitySelected.surveillance;
-              else if(dataModelOptions.common.data.visnSelected.surveillance != null){
-                this.ID = (dataModelOptions.common.data.visnSelected.surveillance.toString().length >0) ? dataModelOptions.common.data.visnSelected.surveillance : null;  
-              }
-            }
-            else if(dataModelOptions.common.data.visnSelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
-          }
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
-            this.ID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;  
-          }
+  			 this.currentVISN = this.VISN;
+  			 this.currentSTA3N = this.STA3N;
 
-          if(this.ID != this.currentID)
-            this.getData();          
-          
-        }.bind(this));
+  			 if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+  			   this.VISN = (dataModelOptions.common.data.visnSelected.surveillance) ? dataModelOptions.common.data.visnSelected.surveillance : null;
+  			   this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
+  			 }
+  			 else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+  			   this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+  			   this.VISN = null;
+  			 }
 
-        this.updateScope([]);
-        this.getData();
-      },
+  			 this.getData();
 
-      getData: function () {
-        var that = this;
-        var data = [];
-        var visn_or_facility = '';
-        var activeView = that.dataModelOptions.common.data.activeView;
+		   }.bind(this));
 
-        /*if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
-          this.updateScope(data);
-        }
-        else {*/
-          if(activeView == "surveillance"){
-            if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
-          }
-          else if(activeView == "facility"){
-            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
-          }
-          
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/outReachStatusMetrics'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        //}
+		   this.updateScope([]);
+       if(this.widgetScope.common.data.activeView == "surveillance")
+       {
+         this.getData();
+       }
+		 },
+
+			getData: function () {
+			var that = this;
+			var data = [];
+
+			var parameter = '';
+			if (this.VISN || this.STA3N) {
+			   parameter += "?";
+			}
+
+			if (this.VISN) {
+			   parameter += "VISN=" + this.VISN;
+			}
+
+			if (this.STA3N) {
+			   if (this.VISN) parameter += '&';
+			   parameter += "STA3N=" + this.STA3N;
+			}
+
+      $http.get('/api/outReachStatusMetrics'+ parameter)
+      .success(function(dataset) {
+              data = dataset;
+
+              var outreachItems=[{statusName:'IdentifiedPrimaryProvider',displayName:'Identified a primary patient provider.'},
+                                 {statusName:'NotifiedProvider',displayName:'Notified provider of the specific patient and program requirements '},
+                                 {statusName:'AskedProviderReview',displayName:'Asked provider to review treatment plans for the patient.'},
+                                 {statusName:'ReceivedNotification',displayName:'Received notification from Site Facilitator about the patient '},
+                                 {statusName:'ReviewedCurrentDiagnosis',displayName:'Reviewed current diagnoses and treatments'},
+                                 {statusName:'EstablishedContact',displayName:'Established contact with the patient to review current diagnoses, symptoms, adherence and problems  '},
+                                 {statusName:'UpdatedPlan',displayName:'Updated the plan for management and treatment as appropriate'},
+                                 {statusName:'EvaluateCaring',displayName:'Evaluate appropriateness of Caring Communications program'},
+                                 {statusName:'EvaluateSafetyPlan',displayName:'Evaluate appropriateness of Safety Planning'},
+                                 {statusName:'Deceased',displayName:'Deceased'},{statusName:'CannotContact',displayName:'Cannot Contact'},
+                                 {statusName:'RefusedServices',displayName:'Refused Services'},{statusName:'CareFromCommunity',displayName:'Care from community'},
+                                 {statusName:'ClinicallyNotAtRisk',displayName:'Clinically not at risk'},{statusName:'Other',displayName:'Other'}];
+
+              var outreachData = [];
+              for (var i = 0; i < outreachItems.length; i++) { 
+                var obj = {};
+                obj.checkListStatus = outreachItems[i].displayName;
+                obj.complete = data[0]['Sum_'+ outreachItems[i].statusName] == null? 0: data[0]['Sum_'+ outreachItems[i].statusName];
+                obj.percent = (data[0]['Percent_'+ outreachItems[i].statusName] == null? 0: data[0]['Percent_'+ outreachItems[i].statusName]) + '%';
+                outreachData.push(obj);
+              }                  
+
+              this.updateScope(outreachData);
+          }.bind(this));
       },
 
       destroy: function () {
@@ -1297,37 +1214,44 @@ angular.module('ui.models')
     angular.extend(FacilityDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentID = null;
+        var currentVISN = null;
 
         if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-          if(dataModelOptions.common.data.facilitySelected.surveillance)
-            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
-          else if(dataModelOptions.common.data.visnSelected.surveillance)
-            currentID = dataModelOptions.common.data.visnSelected.surveillance;
+          if(dataModelOptions.common.data.visnSelected.surveillance)
+            this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;   
+          this.VISN = null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          this.currentID = this.ID; 
-          
+          this.currentVISN = this.VISN;
+
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            /*if(dataModelOptions.common.data.facilitySelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.facilitySelected.surveillance;*/
             if(dataModelOptions.common.data.visnSelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
+              this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
           }
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
-            this.ID = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;  
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.VISN = null;
           }
-          /*console.log("FacilityDataModel commonDataChange - this", this);
-          console.log("FacilityDataModel commonDataChange - currentId", this.currentID);
-          console.log("FacilityDataModel commonDataChange - this.Id", this.ID);
-          console.log("FacilityDataModel commonDataChange - facilitySelected.facility", dataModelOptions.common.data.visnSelected.facility);*/
-          if(this.ID != this.currentID)
-            this.getData();          
-          
+          if(this.VISN != this.currentVISN)
+            this.getData();
+
+        }.bind(this));
+
+        this.widgetScope.$on('defaultWidgetsSelected', function (event, data) {
+          this.dataModelOptions.common = data;
+          this.currentVISN = this.VISN;
+
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+            if(dataModelOptions.common.data.visnSelected.surveillance != null)
+              this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
+          }
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.VISN = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;
+          }
+          if(this.VISN != this.currentVISN)
+            this.getData();
         }.bind(this));
         this.updateScope([]);
         this.getData();
@@ -1336,31 +1260,21 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var visn_or_facility = '';
         var activeView = that.dataModelOptions.common.data.activeView;
-  
-        /*if((activeView == "surveillance" || activeView == "facility") && !this.ID) {
-          this.updateScope(data);
+        var parameter = '';
+
+        if(activeView == "surveillance"){
+          if(this.VISN)
+          parameter = "?VISN=" + this.VISN;
         }
-        else {*/
-          if(activeView == "surveillance"){
-            if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
-            else if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
-          }
-          else if(activeView == "facility"){
-            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
-          }
- 
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/facilityRoster'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        //}
+
+        //if activeView == "facility", then return all facilities
+        
+        $http.get('/api/facilityRoster'+ parameter)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
       },
 
       destroy: function () {
@@ -1382,33 +1296,13 @@ angular.module('ui.models')
         var dataModelOptions = this.dataModelOptions;
         var currentID = null;
 
-        /*if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-          if(dataModelOptions.common.data.facilitySelected)
-            currentID = dataModelOptions.common.data.facilitySelected;
-          else if(dataModelOptions.common.data.visnSelected)
-            currentID = dataModelOptions.common.data.visnSelected;
-        }
-        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = (dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
-        }*/
-
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          
+
           this.currentID = this.ID;
 
-          /*if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            if(dataModelOptions.common.data.facilitySelected)
-              this.ID = dataModelOptions.common.data.facilitySelected;
-            else if(dataModelOptions.common.data.visnSelected)
-              this.ID = dataModelOptions.common.data.visnSelected; 
-          }
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-            this.ID = (dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
-          }*/
-          
           if(this.ID != this.currentID)
-            this.getData();          
-          
+            this.getData();
+
         }.bind(this));
 
         this.updateScope([]);
@@ -1418,26 +1312,12 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var visn_or_facility = '';
-        var activeView = that.dataModelOptions.common.data.activeView;
-
-        /*if((activeView == "surveillance" || activeView == "facility" || activeView === undefined) && !this.ID) {
-          this.updateScope(data);
-        }
-        else {
-          if(that.dataModelOptions.common.data.facilitySelected)
-            visn_or_facility = "-f";
-          else if(that.dataModelOptions.common.data.visnSelected == "facility")
-            visn_or_facility = "-v";*/
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/visnRoster'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        //}
+      
+        $http.get('/api/visnRoster')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
       },
 
       destroy: function () {
@@ -1446,4 +1326,127 @@ angular.module('ui.models')
     });
 
     return VISNDataModel;
+})
+.factory('EnterDataDataModel', function ($http, CommonDataModel) {
+    function EnterDataDataModel() {
+    }
+
+    EnterDataDataModel.prototype = Object.create(CommonDataModel.prototype);
+    EnterDataDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(EnterDataDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
+
+        this.updateScope('-');
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/enterdata?reachID='+ this.reachID)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+      saveNewUserData: function(jsonData){
+        $http.put('/api/enterdata?reachID='+this.reachID,{'UpdatedUserData':jsonData})
+        .success(function(){
+          this.getData();
+        }.bind(this));
+      },
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return EnterDataDataModel;
+  })
+  .factory('CommunityResourceDataModel', function ($http, CommonDataModel) {
+      function CommunityResourceDataModel() {
+      }
+
+      CommunityResourceDataModel.prototype = Object.create(CommonDataModel.prototype);
+      CommunityResourceDataModel.prototype.constructor = CommonDataModel;
+
+      angular.extend(CommunityResourceDataModel.prototype, {
+         init: function () {
+          var dataModelOptions = this.dataModelOptions;
+          var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+          this.widgetScope.$on('commonDataChanged', function (event, data) {
+            this.currentReachID = this.reachID;
+            this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+            if(this.reachID != this.currentReachID)
+              this.getData();
+          }.bind(this));
+
+          this.updateScope('-');
+        },
+
+        getData: function () {
+          var that = this;
+          var data = [];
+
+          $http.get('/api/communityResource')
+          .success(function(dataset) {
+                  data = dataset;
+                  this.updateScope(data);
+              }.bind(this));
+        },
+
+        destroy: function () {
+          CommonDataModel.prototype.destroy.call(this);
+        }
+      });
+
+      return CommunityResourceDataModel;
+    })
+  .factory('CDSQuestionnaireDataModel', function ($http, CommonDataModel) {
+    function CDSQuestionnaireDataModel() {
+    }
+
+    CDSQuestionnaireDataModel.prototype = Object.create(CommonDataModel.prototype);
+    CDSQuestionnaireDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(CDSQuestionnaireDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+
+        this.widgetScope.$on('defaultWidgetsSelected', function (event, data) {
+          this.dataModelOptions.common = data;
+          this.getData();
+        }.bind(this));
+
+        this.updateScope([]);
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+      
+        $http.get('/api/CDSQuestionnaire')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return CDSQuestionnaireDataModel;
   });

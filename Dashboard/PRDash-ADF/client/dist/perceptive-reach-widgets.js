@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-angular.module('ui.widgets', ['datatorrent.mlhrTable', 'nvd3ChartDirectives', 'datatables','datatables.scroller']);
+angular.module('ui.widgets', ['datatorrent.mlhrTable', 'nvd3ChartDirectives', 'datatables','datatables.scroller','datatables.buttons']);
 angular.module('ui.websocket', ['ui.visibility', 'ui.notify']);
 angular.module('ui.models', ['ui.visibility', 'ui.websocket']);
 
@@ -350,7 +350,7 @@ angular.module('ui.models')
 
       this.dataModelOptions = this.dataModelOptions || {};
       this.dataModelOptions.common = this.dataModelOptions.common  ||  { data: 'default value' };
-     
+
       scope.$on('commonDataChanged', function (event, data) {
         this.setCommon(data);
       }.bind(this));
@@ -395,7 +395,7 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-       
+
         $http.get('/api/patient?sta3N=' + this.sta3N)
         .success(function(rtnVal) {
           var patientsBysta3N = rtnVal.patients;
@@ -412,7 +412,7 @@ angular.module('ui.models')
         var user = JSON.parse(sessionStorage.user);
         $http.put('/api/patient?vetReachID=' + veteranID, {'outreachStatus': outreachStatus, 'UserID':user.UserID, 'facilityID':facilityID})
         .success(function(data) {
-        });  
+        });
       },
       updatesta3N: function (sta3N) {
         this.dataModelOptions = this.dataModelOptions ? this.dataModelOptions : {};
@@ -444,7 +444,7 @@ angular.module('ui.models')
           if(this.riskLevel != this.currentRiskLevel)
             this.getData();
         }.bind(this));
-        
+
         this.updateScope([]);
         this.getData();
       },
@@ -458,7 +458,7 @@ angular.module('ui.models')
           options += '?guideType=' + this.guidelineType + '&riskLevel=' + this.riskLevel;
         else if(this.riskLevel || this.guidelineType)
           options += (this.riskLevel) ? '?riskLevel=' + this.riskLevel : '?guideType=' + this.guidelineType;
-        
+
         $http.get('/api/clinicalDecisionSupport' + options) // '/api/clinicalDecisionSupport?guideType=%27SRB%27&riskLevel=1'
         .success(function(dataset) {
           //console.log('inside Clinical decision support success');
@@ -486,7 +486,7 @@ angular.module('ui.models')
     });
 
     return ClinicalDecisionSupportDataModel;
-  })      
+  })
   .factory('TotalRisksDataModel', function ($http, WidgetDataModel) {
     function TotalRisksDataModel() {
     }
@@ -724,7 +724,7 @@ angular.module('ui.models')
 
         $http.get('/api/appointmentData?reachID='+ this.reachID)
         .success(function(dataset) {
-                data = dataset; 
+                data = dataset;
                 this.updateScope(data);
             }.bind(this));
       },
@@ -754,7 +754,7 @@ angular.module('ui.models')
           if(this.reachID != this.currentReachID)
             this.getData();
         }.bind(this));
-        
+
         this.updateScope('-');
       },
 
@@ -786,7 +786,7 @@ angular.module('ui.models')
     angular.extend(SuicideStatisticsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		
+
         this.updateScope([]);
         this.getData();
       },
@@ -794,11 +794,11 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        
+
 
       $http.get('/api/suicideData')
         .success(function(dataset) {
-                data = dataset; 
+                data = dataset;
                 this.updateScope(data);
             }.bind(this));
       },
@@ -819,42 +819,37 @@ angular.module('ui.models')
     angular.extend(AgeGroupsMetricsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentID = null;
-
         if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-          if(dataModelOptions.common.data.facilitySelected.surveillance)
-            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
-          else if(dataModelOptions.common.data.visnSelected.surveillance)
-            currentID = dataModelOptions.common.data.visnSelected.surveillance;
+          if(dataModelOptions.common.data.facilitySelected.surveillance) {
+            this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+          }
+
+          if(dataModelOptions.common.data.visnSelected.surveillance) {
+            this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
+          }
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;   
+          this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
         }
-        console.log("AgeGroupsMetricData init - currentID:", currentID);
+
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          
-          this.currentID = this.ID;
+
+          this.currentVISN = this.VISN;
+          this.currentSTA3N = this.STA3N;
 
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            if(dataModelOptions.common.data.facilitySelected.surveillance != null){
-              if (dataModelOptions.common.data.facilitySelected.surveillance.toString().length >0) this.ID = dataModelOptions.common.data.facilitySelected.surveillance;
-              else if(dataModelOptions.common.data.visnSelected.surveillance != null){
-                this.ID = (dataModelOptions.common.data.visnSelected.surveillance.toString().length >0) ? dataModelOptions.common.data.visnSelected.surveillance : null;  
-              }
-            }
-            else if(dataModelOptions.common.data.visnSelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
+            this.VISN = (dataModelOptions.common.data.visnSelected.surveillance) ? dataModelOptions.common.data.visnSelected.surveillance : null;
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
           }
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
-            this.ID = (dataModelOptions.common.data.facilitySelected.facility != null) ? dataModelOptions.common.data.facilitySelected.facility : null;  
+          else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+            this.VISN = null;
           }
-          console.log("AgeGroupsMetricData commonDataChange - this", this);
-          console.log("AgeGroupsMetricData commonDataChange - currentId", this.currentID);
-          console.log("AgeGroupsMetricData commonDataChange - this.Id", this.ID);
-          console.log("AgeGroupsMetricData commonDataChange - facilitySelected.facility", dataModelOptions.common.data.facilitySelected.facility);
-          if(this.ID != this.currentID)
-            this.getData();          
-          
+
+          if(this.STA3N != this.currentSTA3N || this.VISN != this.currentVISN) {
+            this.getData();
+          }
+
         }.bind(this));
 
         this.updateScope([]);
@@ -864,31 +859,25 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var visn_or_facility = '';
-        var activeView = that.dataModelOptions.common.data.activeView;
 
-        /*if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
-          this.updateScope(data);
+        var parameter = '';
+        if (this.VISN || this.STA3N) {
+            parameter += "?";
         }
-        else {*/
-          if(activeView == "surveillance"){
-            if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
-          }
-          else if(activeView == "facility"){
-            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
-          }
-          
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/ageGroupsMetrics'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        //}
+
+        if (this.VISN) {
+            parameter += "VISN=" + this.VISN;
+        }
+
+        if (this.STA3N) {
+            if (this.VISN) parameter += '&';
+            parameter += "STA3N=" + this.STA3N;
+        }
+        $http.get('/api/ageGroupsMetrics'+ parameter)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
       },
 
       destroy: function () {
@@ -908,8 +897,8 @@ angular.module('ui.models')
     angular.extend(NationalCombatEraDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
-		
+    //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
         this.updateScope('-');
         this.getData();
       },
@@ -917,11 +906,11 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        
+
 
       $http.get('/api/nationalCombatEra')
         .success(function(dataset) {
-                data = dataset; 
+                data = dataset;
                 this.updateScope(data);
             }.bind(this));
       },
@@ -942,8 +931,8 @@ angular.module('ui.models')
     angular.extend(NationalCurrentSafetyPlanDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
-		
+    //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
         this.updateScope('-');
         this.getData();
       },
@@ -951,11 +940,11 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        
+
 
       $http.get('/api/nationalCurrentSafetyPlan')
         .success(function(dataset) {
-                data = dataset; 
+                data = dataset;
                 this.updateScope(data);
             }.bind(this));
       },
@@ -976,39 +965,38 @@ angular.module('ui.models')
     angular.extend(GenderDistributionMetricsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentID = null;
 
         if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-          if(dataModelOptions.common.data.facilitySelected.surveillance)
-            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
-          else if(dataModelOptions.common.data.visnSelected.surveillance)
-            currentID = dataModelOptions.common.data.visnSelected.surveillance;
+          if(dataModelOptions.common.data.facilitySelected.surveillance) {
+            this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+          }
+
+          if(dataModelOptions.common.data.visnSelected.surveillance) {
+            this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
+          }
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;   
+          this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          
-          this.currentID = this.ID;
+
+          this.currentVISN = this.VISN;
+          this.currentSTA3N = this.STA3N;
 
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            if(dataModelOptions.common.data.facilitySelected.surveillance != null){
-              if (dataModelOptions.common.data.facilitySelected.surveillance.toString().length >0) this.ID = dataModelOptions.common.data.facilitySelected.surveillance;
-              else if(dataModelOptions.common.data.visnSelected.surveillance != null){
-                this.ID = (dataModelOptions.common.data.visnSelected.surveillance.toString().length >0) ? dataModelOptions.common.data.visnSelected.surveillance : null;  
-              }
-            }
-            else if(dataModelOptions.common.data.visnSelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
+            this.VISN = (dataModelOptions.common.data.visnSelected.surveillance) ? dataModelOptions.common.data.visnSelected.surveillance : null;
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
           }
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
-            this.ID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;  
+          else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+            this.VISN = null;
           }
-          
-          if(this.ID != this.currentID)
-            this.getData();          
-          
+
+          if(this.STA3N != this.currentSTA3N || this.VISN != this.currentVISN) {
+            this.getData();
+          }
+
         }.bind(this));
 
         this.updateScope([]);
@@ -1018,31 +1006,25 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var visn_or_facility = '';
-        var activeView = that.dataModelOptions.common.data.activeView;
 
-        /*if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
-          this.updateScope(data);
+        var parameter = '';
+        if (this.VISN || this.STA3N) {
+            parameter += "?";
         }
-        else {*/
-          if(activeView == "surveillance"){
-            if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
-          }
-          else if(activeView == "facility"){
-            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
-          }
-          
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/genderDistributionMetrics'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        //}
+
+        if (this.VISN) {
+            parameter += "VISN=" + this.VISN;
+        }
+
+        if (this.STA3N) {
+            if (this.VISN) parameter += '&';
+            parameter += "STA3N=" + this.STA3N;
+        }
+        $http.get('/api/genderDistributionMetrics'+ parameter)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
       },
 
       destroy: function () {
@@ -1051,6 +1033,62 @@ angular.module('ui.models')
     });
 
     return GenderDistributionMetricsDataModel;
+  })
+  .factory('PredictionChartDataModel', function ($http, CommonDataModel) {
+    function PredictionChartDataModel() {
+    }
+
+    PredictionChartDataModel.prototype = Object.create(CommonDataModel.prototype);
+    PredictionChartDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(PredictionChartDataModel.prototype, {
+      init: function () {
+        var dataModelOptions = this.dataModelOptions;
+
+
+        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+          if(dataModelOptions.common.data.facilitySelected.surveillance) {
+            this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+          }
+        }
+        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.STA3N = null;
+        }
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+
+          this.currentSTA3N = this.STA3N;
+
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
+            if(this.STA3N != this.currentSTA3N) {
+              this.getData();
+            }
+          }
+
+        }.bind(this));
+
+        this.getData();
+      },
+
+      getData: function () {
+
+        if (this.STA3N) {
+          var parameter = "?STA3N=" + this.STA3N;
+          $http.get('/api/prediction'+ parameter).success(function(predictionData) {
+            this.updateScope(predictionData);
+          }.bind(this));
+          return;
+        }
+        this.updateScope([]);
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return PredictionChartDataModel;
   })
   /*  .factory('NationalHighRiskFlagDataModel', function ($http, WidgetDataModel) {
     function NationalHighRiskFlagDataModel() {
@@ -1062,7 +1100,7 @@ angular.module('ui.models')
     angular.extend(NationalHighRiskFlagDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		
+
         this.updateScope('-');
         this.getData();
       },
@@ -1070,11 +1108,11 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        
+
 
       $http.get('/api/nationalHighRiskFlag')
         .success(function(dataset) {
-                data = dataset; 
+                data = dataset;
                 this.updateScope(data);
             }.bind(this));
       },
@@ -1095,39 +1133,37 @@ angular.module('ui.models')
     angular.extend(MilitaryBranchMetricsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentID = null;
-        console.log("MilitaryBranchMetricsData init - inside");
         if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-          if(dataModelOptions.common.data.facilitySelected.surveillance)
-            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
-          else if(dataModelOptions.common.data.visnSelected.surveillance)
-            currentID = dataModelOptions.common.data.visnSelected.surveillance;
+          if(dataModelOptions.common.data.facilitySelected.surveillance) {
+            this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+          }
+
+          if(dataModelOptions.common.data.visnSelected.surveillance) {
+            this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
+          }
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;   
+          this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          
-          this.currentID = this.ID;
+
+          this.currentVISN = this.VISN;
+          this.currentSTA3N = this.STA3N;
 
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            if(dataModelOptions.common.data.facilitySelected.surveillance != null){
-              if (dataModelOptions.common.data.facilitySelected.surveillance.toString().length >0) this.ID = dataModelOptions.common.data.facilitySelected.surveillance;
-              else if(dataModelOptions.common.data.visnSelected.surveillance != null){
-                this.ID = (dataModelOptions.common.data.visnSelected.surveillance.toString().length >0) ? dataModelOptions.common.data.visnSelected.surveillance : null;  
-              }
-            }
-            else if(dataModelOptions.common.data.visnSelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
+            this.VISN = (dataModelOptions.common.data.visnSelected.surveillance) ? dataModelOptions.common.data.visnSelected.surveillance : null;
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
           }
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
-            this.ID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;  
+          else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+            this.VISN = null;
           }
 
-          if(this.ID != this.currentID)
-            this.getData();          
-          
+          if(this.STA3N != this.currentSTA3N || this.VISN != this.currentVISN) {
+            this.getData();
+          }
+
         }.bind(this));
 
         this.updateScope([]);
@@ -1137,31 +1173,26 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var visn_or_facility = '';
-        var activeView = that.dataModelOptions.common.data.activeView;
 
-        /*if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
-          this.updateScope(data);
+        var parameter = '';
+        if (this.VISN || this.STA3N) {
+            parameter += "?";
         }
-        else {*/
-          if(activeView == "surveillance"){
-            if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
-          }
-          else if(activeView == "facility"){
-            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
-          }
-          
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/militaryBranchMetrics'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        //}
+
+        if (this.VISN) {
+            parameter += "VISN=" + this.VISN;
+        }
+
+        if (this.STA3N) {
+            if (this.VISN) parameter += '&';
+            parameter += "STA3N=" + this.STA3N;
+        }
+
+        $http.get('/api/militaryBranchMetrics'+ parameter)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
       },
 
       destroy: function () {
@@ -1181,8 +1212,8 @@ angular.module('ui.models')
     angular.extend(NationalPTSDMDDSUDDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
-		
+    //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
         this.updateScope('-');
         this.getData();
       },
@@ -1190,11 +1221,11 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        
+
 
       $http.get('/api/nationalPTSDMDDSUD')
         .success(function(dataset) {
-                data = dataset; 
+                data = dataset;
                 this.updateScope(data);
             }.bind(this));
       },
@@ -1206,48 +1237,46 @@ angular.module('ui.models')
     return NationalPTSDMDDSUDDataModel;
   })*/
   .factory('TopMidRiskMetricsDataModel', function ($http, CommonDataModel) {
-    function TopMidRiskMetricsDataModel() {
-    }
+      function TopMidRiskMetricsDataModel() {
+      }
 
-    TopMidRiskMetricsDataModel.prototype = Object.create(CommonDataModel.prototype);
-    TopMidRiskMetricsDataModel.prototype.constructor = CommonDataModel;
+      TopMidRiskMetricsDataModel.prototype = Object.create(CommonDataModel.prototype);
+      TopMidRiskMetricsDataModel.prototype.constructor = CommonDataModel;
 
-    angular.extend(TopMidRiskMetricsDataModel.prototype, {
-       init: function () {
+      angular.extend(TopMidRiskMetricsDataModel.prototype, {
+        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentID = null;
-
         if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-          if(dataModelOptions.common.data.facilitySelected.surveillance)
-            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
-          else if(dataModelOptions.common.data.visnSelected.surveillance)
-            currentID = dataModelOptions.common.data.visnSelected.surveillance;
+          if(dataModelOptions.common.data.facilitySelected.surveillance) {
+            this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+          }
+
+          if(dataModelOptions.common.data.visnSelected.surveillance) {
+            this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
+          }
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;   
+          this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          
-          this.currentID = this.ID;
+
+          this.currentVISN = this.VISN;
+          this.currentSTA3N = this.STA3N;
 
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            if(dataModelOptions.common.data.facilitySelected.surveillance != null){
-              if (dataModelOptions.common.data.facilitySelected.surveillance.toString().length >0) this.ID = dataModelOptions.common.data.facilitySelected.surveillance;
-              else if(dataModelOptions.common.data.visnSelected.surveillance != null){
-                this.ID = (dataModelOptions.common.data.visnSelected.surveillance.toString().length >0) ? dataModelOptions.common.data.visnSelected.surveillance : null;  
-              }
-            }
-            else if(dataModelOptions.common.data.visnSelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
+            this.VISN = (dataModelOptions.common.data.visnSelected.surveillance) ? dataModelOptions.common.data.visnSelected.surveillance : null;
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
           }
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
-            this.ID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;  
+          else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+            this.VISN = null;
           }
 
-          if(this.ID != this.currentID)
-            this.getData();          
-          
+          if(this.STA3N != this.currentSTA3N || this.VISN != this.currentVISN) {
+            this.getData();
+          }
+
         }.bind(this));
 
         this.updateScope([]);
@@ -1257,48 +1286,45 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var visn_or_facility = '';
-        var activeView = that.dataModelOptions.common.data.activeView;
 
-        /*if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
-          this.updateScope(data);
+        var parameter = '';
+        if (this.VISN || this.STA3N) {
+            parameter += "?";
         }
-        else {*/
-          if(activeView == "surveillance"){
-            if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
-          }
-          else if(activeView == "facility"){
-            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
-          }
-          
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/topMidRiskMetrics'+ parameter)
-          .success(function(dataset) {
-                  var data = [];
-                  for (var i = 0; i < dataset.length; i++) {
-                    data.push({key:dataset[i].RiskLevel,
-                               values:[{
-                                        RiskLabel: dataset[i].RiskLevel,
-                                        value: dataset[i].Total
-                                      }]
-                              });
-                  }
-                  this.updateScope(data);
-              }.bind(this));
-        //}
+
+        if (this.VISN) {
+            parameter += "VISN=" + this.VISN;
+        }
+
+        if (this.STA3N) {
+            if (this.VISN) parameter += '&';
+            parameter += "STA3N=" + this.STA3N;
+        }
+
+        $http.get('/api/topMidRiskMetrics'+ parameter)
+        .success(function(dataset) {
+            var data = [];
+            for (var i = 0; i < dataset.length; i++) {
+               data.push({key:dataset[i].RiskLevel,
+                    values:[{
+                              RiskLabel: dataset[i].RiskLevel,
+                              value: dataset[i].Total
+                            }]
+            });
+        }
+        this.updateScope(data);
+       }.bind(this));
+          //}
       },
 
       destroy: function () {
-        CommonDataModel.prototype.destroy.call(this);
-      }
-    });
+         CommonDataModel.prototype.destroy.call(this);
+        }
+      });
 
-    return TopMidRiskMetricsDataModel;
+      return TopMidRiskMetricsDataModel;
   })
+
   /* .factory('NationalVAClinicTwelveMonthsDataModel', function ($http, WidgetDataModel) {
     function NationalVAClinicTwelveMonthsDataModel() {
     }
@@ -1309,8 +1335,8 @@ angular.module('ui.models')
     angular.extend(NationalVAClinicTwelveMonthsDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-		//this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
-		
+    //this.reachID = (dataModelOptions && dataModelOptions.reachID) ? dataModelOptions.reachID : 12;
+
         this.updateScope('-');
         this.getData();
       },
@@ -1318,11 +1344,11 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        
+
 
       $http.get('/api/nationalVAClinicTwelveMonths')
         .success(function(dataset) {
-                data = dataset; 
+                data = dataset;
                 this.updateScope(data);
             }.bind(this));
       },
@@ -1344,28 +1370,39 @@ angular.module('ui.models')
        init: function () {
         var dataModelOptions = this.dataModelOptions;
         var currentID = null;
+        var currentVISN = null;
+        var currentSTA3N = null;
+        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+          if(dataModelOptions.common.data.facilitySelected.surveillance) {
+            currentSTA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+          }
 
-        if(dataModelOptions.layout == "stateVISN"){
-          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+          if(dataModelOptions.common.data.visnSelected.surveillance) {
+            currentVISN = dataModelOptions.common.data.visnSelected.surveillance;
+          }
         }
-        if(dataModelOptions.layout == "facility"){
-          currentID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+          currentSTA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          
-          this.currentID = this.ID;
 
-          if(dataModelOptions.layout == "stateVISN"){
-            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.visnSelected) ? dataModelOptions.common.data.visnSelected : null;  
+          this.currentVISN = this.VISN;
+          this.currentSTA3N = this.STA3N;
+
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+            this.VISN = (dataModelOptions.common.data.visnSelected.surveillance) ? dataModelOptions.common.data.visnSelected.surveillance : null;
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
           }
-          if(dataModelOptions.layout == "facility"){
-            this.ID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
+          else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+            this.VISN = null;
           }
-          
-          if(this.ID != this.currentID)
-            this.getData();          
-          
+
+          if(this.STA3N != this.currentSTA3N || this.VISN != this.currentVISN) {
+            this.getData();
+          }
+
         }.bind(this));
 
         this.updateScope([]);
@@ -1375,25 +1412,25 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var visn_or_facility = '';
 
-        if((that.dataModelOptions.layout == "stateVISN" || that.dataModelOptions.layout == "facility") && !this.ID) {
-          this.updateScope(data);
+        var parameter = '';
+        if (this.VISN || this.STA3N) {
+            parameter += "?";
         }
-        else {
-          if(that.dataModelOptions.layout == "stateVISN")
-            visn_or_facility = "-v";
-          else if(that.dataModelOptions.layout == "facility")
-            visn_or_facility = "-f";
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/VAMCMetrics'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
+
+        if (this.VISN) {
+            parameter += "VISN=" + this.VISN;
         }
+
+        if (this.STA3N) {
+            if (this.VISN) parameter += '&';
+            parameter += "STA3N=" + this.STA3N;
+        }
+        $http.get('/api/VAMCMetrics'+ parameter)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
       },
 
       destroy: function () {
@@ -1411,75 +1448,92 @@ angular.module('ui.models')
     OutreachStatusMetricsDataModel.prototype.constructor = CommonDataModel;
 
     angular.extend(OutreachStatusMetricsDataModel.prototype, {
-       init: function () {
-        var dataModelOptions = this.dataModelOptions;
-        var currentID = null;
+        init: function () {
+		   var dataModelOptions = this.dataModelOptions;
+		   if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+  			 if(dataModelOptions.common.data.facilitySelected.surveillance) {
+  			   this.STA3N = dataModelOptions.common.data.facilitySelected.surveillance;
+  			 }
 
-        if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-          if(dataModelOptions.common.data.facilitySelected.surveillance)
-            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
-          else if(dataModelOptions.common.data.visnSelected.surveillance)
-            currentID = dataModelOptions.common.data.visnSelected.surveillance;
-        }
-        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;   
-        }
+  			 if(dataModelOptions.common.data.visnSelected.surveillance) {
+  			   this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
+			 }
+		   }
+		   else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+			   this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+		   }
 
-        this.widgetScope.$on('commonDataChanged', function (event, data) {
-          
-          this.currentID = this.ID;
+		   this.widgetScope.$on('commonDataChanged', function (event, data) {
 
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            if(dataModelOptions.common.data.facilitySelected.surveillance != null){
-              if (dataModelOptions.common.data.facilitySelected.surveillance.toString().length >0) this.ID = dataModelOptions.common.data.facilitySelected.surveillance;
-              else if(dataModelOptions.common.data.visnSelected.surveillance != null){
-                this.ID = (dataModelOptions.common.data.visnSelected.surveillance.toString().length >0) ? dataModelOptions.common.data.visnSelected.surveillance : null;  
-              }
-            }
-            else if(dataModelOptions.common.data.visnSelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
-          }
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
-            this.ID = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;  
-          }
+  			 this.currentVISN = this.VISN;
+  			 this.currentSTA3N = this.STA3N;
 
-          if(this.ID != this.currentID)
-            this.getData();          
-          
-        }.bind(this));
+  			 if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
+  			   this.VISN = (dataModelOptions.common.data.visnSelected.surveillance) ? dataModelOptions.common.data.visnSelected.surveillance : null;
+  			   this.STA3N = (dataModelOptions.common.data.facilitySelected.surveillance) ? dataModelOptions.common.data.facilitySelected.surveillance : null;
+  			 }
+  			 else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+  			   this.STA3N = (dataModelOptions.common.data.facilitySelected.facility) ? dataModelOptions.common.data.facilitySelected.facility : null;
+  			   this.VISN = null;
+  			 }
 
-        this.updateScope([]);
-        this.getData();
-      },
+  			 this.getData();
 
-      getData: function () {
-        var that = this;
-        var data = [];
-        var visn_or_facility = '';
-        var activeView = that.dataModelOptions.common.data.activeView;
+		   }.bind(this));
 
-        /*if((activeView == "surveillance" || activeView == "facility" ) && !this.ID) {
-          this.updateScope(data);
-        }
-        else {*/
-          if(activeView == "surveillance"){
-            if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
-          }
-          else if(activeView == "facility"){
-            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
-          }
-          
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/outReachStatusMetrics'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        //}
+		   this.updateScope([]);
+       if(this.widgetScope.common.data.activeView == "surveillance")
+       {
+         this.getData();
+       }
+		 },
+
+			getData: function () {
+			var that = this;
+			var data = [];
+
+			var parameter = '';
+			if (this.VISN || this.STA3N) {
+			   parameter += "?";
+			}
+
+			if (this.VISN) {
+			   parameter += "VISN=" + this.VISN;
+			}
+
+			if (this.STA3N) {
+			   if (this.VISN) parameter += '&';
+			   parameter += "STA3N=" + this.STA3N;
+			}
+
+      $http.get('/api/outReachStatusMetrics'+ parameter)
+      .success(function(dataset) {
+              data = dataset;
+
+              var outreachItems=[{statusName:'IdentifiedPrimaryProvider',displayName:'Identified a primary patient provider.'},
+                                 {statusName:'NotifiedProvider',displayName:'Notified provider of the specific patient and program requirements '},
+                                 {statusName:'AskedProviderReview',displayName:'Asked provider to review treatment plans for the patient.'},
+                                 {statusName:'ReceivedNotification',displayName:'Received notification from Site Facilitator about the patient '},
+                                 {statusName:'ReviewedCurrentDiagnosis',displayName:'Reviewed current diagnoses and treatments'},
+                                 {statusName:'EstablishedContact',displayName:'Established contact with the patient to review current diagnoses, symptoms, adherence and problems  '},
+                                 {statusName:'UpdatedPlan',displayName:'Updated the plan for management and treatment as appropriate'},
+                                 {statusName:'EvaluateCaring',displayName:'Evaluate appropriateness of Caring Communications program'},
+                                 {statusName:'EvaluateSafetyPlan',displayName:'Evaluate appropriateness of Safety Planning'},
+                                 {statusName:'Deceased',displayName:'Deceased'},{statusName:'CannotContact',displayName:'Cannot Contact'},
+                                 {statusName:'RefusedServices',displayName:'Refused Services'},{statusName:'CareFromCommunity',displayName:'Care from community'},
+                                 {statusName:'ClinicallyNotAtRisk',displayName:'Clinically not at risk'},{statusName:'Other',displayName:'Other'}];
+
+              var outreachData = [];
+              for (var i = 0; i < outreachItems.length; i++) { 
+                var obj = {};
+                obj.checkListStatus = outreachItems[i].displayName;
+                obj.complete = data[0]['Sum_'+ outreachItems[i].statusName] == null? 0: data[0]['Sum_'+ outreachItems[i].statusName];
+                obj.percent = (data[0]['Percent_'+ outreachItems[i].statusName] == null? 0: data[0]['Percent_'+ outreachItems[i].statusName]) + '%';
+                outreachData.push(obj);
+              }                  
+
+              this.updateScope(outreachData);
+          }.bind(this));
       },
 
       destroy: function () {
@@ -1499,58 +1553,43 @@ angular.module('ui.models')
     angular.extend(FacilityDataModel.prototype, {
        init: function () {
         var dataModelOptions = this.dataModelOptions;
-        var currentID = null;
+        var currentVISN = null;
 
         if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-          if(dataModelOptions.common.data.facilitySelected.surveillance)
-            currentID = dataModelOptions.common.data.facilitySelected.surveillance;
-          else if(dataModelOptions.common.data.visnSelected.surveillance)
-            currentID = dataModelOptions.common.data.visnSelected.surveillance;
+          if(dataModelOptions.common.data.visnSelected.surveillance)
+            this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
         }
         else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;   
+          this.VISN = null;
         }
 
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          this.currentID = this.ID; 
-          
+          this.currentVISN = this.VISN;
+
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            /*if(dataModelOptions.common.data.facilitySelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.facilitySelected.surveillance;*/
             if(dataModelOptions.common.data.visnSelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
+              this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
           }
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
-            this.ID = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;  
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.VISN = null;
           }
-          /*console.log("FacilityDataModel commonDataChange - this", this);
-          console.log("FacilityDataModel commonDataChange - currentId", this.currentID);
-          console.log("FacilityDataModel commonDataChange - this.Id", this.ID);
-          console.log("FacilityDataModel commonDataChange - facilitySelected.facility", dataModelOptions.common.data.visnSelected.facility);*/
-          if(this.ID != this.currentID)
-            this.getData();          
-          
+          if(this.VISN != this.currentVISN)
+            this.getData();
+
         }.bind(this));
 
         this.widgetScope.$on('defaultWidgetsSelected', function (event, data) {
           this.dataModelOptions.common = data;
-          this.currentID = this.ID;
-          
+          this.currentVISN = this.VISN;
+
           if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            /*if(dataModelOptions.common.data.facilitySelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.facilitySelected.surveillance;*/
             if(dataModelOptions.common.data.visnSelected.surveillance != null)
-              this.ID = dataModelOptions.common.data.visnSelected.surveillance;
+              this.VISN = dataModelOptions.common.data.visnSelected.surveillance;
           }
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){            
-            this.ID = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;  
+          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
+            this.VISN = null;//(dataModelOptions.common.data.visnSelected.facility != null) ? dataModelOptions.common.data.visnSelected.facility : null;
           }
-          /*console.log("FacilityDataModel commonDataChange - this", this);
-          console.log("FacilityDataModel commonDataChange - currentId", this.currentID);
-          console.log("FacilityDataModel commonDataChange - this.Id", this.ID);
-          console.log("FacilityDataModel commonDataChange - facilitySelected.facility", dataModelOptions.common.data.visnSelected.facility);*/ 
-          console.log("defaultWidgetsSelected again!!!!");
-          if(this.ID != this.currentID)
+          if(this.VISN != this.currentVISN)
             this.getData();
         }.bind(this));
         this.updateScope([]);
@@ -1560,31 +1599,21 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var visn_or_facility = '';
         var activeView = that.dataModelOptions.common.data.activeView;
-  
-        /*if((activeView == "surveillance" || activeView == "facility") && !this.ID) {
-          this.updateScope(data);
+        var parameter = '';
+
+        if(activeView == "surveillance"){
+          if(this.VISN)
+          parameter = "?VISN=" + this.VISN;
         }
-        else {*/
-          if(activeView == "surveillance"){
-            if(that.dataModelOptions.common.data.visnSelected.surveillance) visn_or_facility = "-v";
-            else if(that.dataModelOptions.common.data.facilitySelected.surveillance) visn_or_facility = "-f";
-          }
-          else if(activeView == "facility"){
-            if(that.dataModelOptions.common.data.facilitySelected.facility) visn_or_facility = "-f";
-            else if(that.dataModelOptions.common.data.visnSelected.facility) visn_or_facility = "-v";
-          }
- 
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/facilityRoster'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        //}
+
+        //if activeView == "facility", then return all facilities
+        
+        $http.get('/api/facilityRoster'+ parameter)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
       },
 
       destroy: function () {
@@ -1606,38 +1635,135 @@ angular.module('ui.models')
         var dataModelOptions = this.dataModelOptions;
         var currentID = null;
 
-        /*if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-          if(dataModelOptions.common.data.facilitySelected)
-            currentID = dataModelOptions.common.data.facilitySelected;
-          else if(dataModelOptions.common.data.visnSelected)
-            currentID = dataModelOptions.common.data.visnSelected;
-        }
-        else if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-          currentID = (dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
-        }*/
-
         this.widgetScope.$on('commonDataChanged', function (event, data) {
-          
+
           this.currentID = this.ID;
 
-          /*if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "surveillance"){
-            if(dataModelOptions.common.data.facilitySelected)
-              this.ID = dataModelOptions.common.data.facilitySelected;
-            else if(dataModelOptions.common.data.visnSelected)
-              this.ID = dataModelOptions.common.data.visnSelected; 
-          }
-          if(dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.activeView == "facility"){
-            this.ID = (dataModelOptions.common.data.facilitySelected) ? dataModelOptions.common.data.facilitySelected : null;   
-          }*/
-          
           if(this.ID != this.currentID)
-            this.getData();          
-          
+            this.getData();
+
         }.bind(this));
+
+        this.updateScope([]);
+        this.getData();
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+      
+        $http.get('/api/visnRoster')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return VISNDataModel;
+})
+.factory('EnterDataDataModel', function ($http, CommonDataModel) {
+    function EnterDataDataModel() {
+    }
+
+    EnterDataDataModel.prototype = Object.create(CommonDataModel.prototype);
+    EnterDataDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(EnterDataDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
+        var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+        this.widgetScope.$on('commonDataChanged', function (event, data) {
+          this.currentReachID = this.reachID;
+          this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+          if(this.reachID != this.currentReachID)
+            this.getData();
+        }.bind(this));
+
+        this.updateScope('-');
+      },
+
+      getData: function () {
+        var that = this;
+        var data = [];
+
+        $http.get('/api/enterdata?reachID='+ this.reachID)
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
+      },
+      saveNewUserData: function(jsonData){
+        $http.put('/api/enterdata?reachID='+this.reachID,{'UpdatedUserData':jsonData})
+        .success(function(){
+          this.getData();
+        }.bind(this));
+      },
+      destroy: function () {
+        CommonDataModel.prototype.destroy.call(this);
+      }
+    });
+
+    return EnterDataDataModel;
+  })
+  .factory('CommunityResourceDataModel', function ($http, CommonDataModel) {
+      function CommunityResourceDataModel() {
+      }
+
+      CommunityResourceDataModel.prototype = Object.create(CommonDataModel.prototype);
+      CommunityResourceDataModel.prototype.constructor = CommonDataModel;
+
+      angular.extend(CommunityResourceDataModel.prototype, {
+         init: function () {
+          var dataModelOptions = this.dataModelOptions;
+          var currentReachID = (dataModelOptions && dataModelOptions.common && dataModelOptions.common.data && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+
+          this.widgetScope.$on('commonDataChanged', function (event, data) {
+            this.currentReachID = this.reachID;
+            this.reachID = (dataModelOptions && dataModelOptions.common.data.veteranObj && dataModelOptions.common.data.veteranObj.ReachID) ? dataModelOptions.common.data.veteranObj.ReachID : null;
+            if(this.reachID != this.currentReachID)
+              this.getData();
+          }.bind(this));
+
+          this.updateScope('-');
+        },
+
+        getData: function () {
+          var that = this;
+          var data = [];
+
+          $http.get('/api/communityResource')
+          .success(function(dataset) {
+                  data = dataset;
+                  this.updateScope(data);
+              }.bind(this));
+        },
+
+        destroy: function () {
+          CommonDataModel.prototype.destroy.call(this);
+        }
+      });
+
+      return CommunityResourceDataModel;
+    })
+  .factory('CDSQuestionnaireDataModel', function ($http, CommonDataModel) {
+    function CDSQuestionnaireDataModel() {
+    }
+
+    CDSQuestionnaireDataModel.prototype = Object.create(CommonDataModel.prototype);
+    CDSQuestionnaireDataModel.prototype.constructor = CommonDataModel;
+
+    angular.extend(CDSQuestionnaireDataModel.prototype, {
+       init: function () {
+        var dataModelOptions = this.dataModelOptions;
 
         this.widgetScope.$on('defaultWidgetsSelected', function (event, data) {
           this.dataModelOptions.common = data;
-          this.currentID = this.ID;
           this.getData();
         }.bind(this));
 
@@ -1648,26 +1774,12 @@ angular.module('ui.models')
       getData: function () {
         var that = this;
         var data = [];
-        var visn_or_facility = '';
-        var activeView = that.dataModelOptions.common.data.activeView;
-
-        /*if((activeView == "surveillance" || activeView == "facility" || activeView === undefined) && !this.ID) {
-          this.updateScope(data);
-        }
-        else {
-          if(that.dataModelOptions.common.data.facilitySelected)
-            visn_or_facility = "-f";
-          else if(that.dataModelOptions.common.data.visnSelected == "facility")
-            visn_or_facility = "-v";*/
-          var parameter = '';
-          if(this.ID)
-            parameter = "?ID=" + this.ID + visn_or_facility;
-          $http.get('/api/visnRoster'+ parameter)
-          .success(function(dataset) {
-                  data = dataset;
-                  this.updateScope(data);
-              }.bind(this));
-        //}
+      
+        $http.get('/api/CDSQuestionnaire')
+        .success(function(dataset) {
+                data = dataset;
+                this.updateScope(data);
+            }.bind(this));
       },
 
       destroy: function () {
@@ -1675,8 +1787,9 @@ angular.module('ui.models')
       }
     });
 
-    return VISNDataModel;
+    return CDSQuestionnaireDataModel;
   });
+
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -2538,9 +2651,175 @@ function Gauge(element, configuration)
  */
 
 'use strict';
- 
+
 angular.module('ui.widgets')
-  .directive('wtAppointment', function ($timeout) {
+  .directive('wtCdsQuestionnaire', function ($timeout) {
+    return {
+      restrict: 'EAC',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/CDSQuestionnaire/CDSQuestionnaire.html',
+      scope: {
+        data: '=',
+      },
+      controller: function ($scope) {
+        $scope.GotoQuestions =  function () {
+          $scope.filteredQuestions = [];
+          $('#cdsConditionDiv input:radio:checked').each(function(){
+            var conditionId = $(this).attr('id').replace('Condition_','');
+            var conditionName = $(this).attr('name');
+
+            var filteredQs= jQuery.grep($scope.data.questions, function( n, i ) {
+                                  return n.Condition_ID == conditionId ;
+                            });
+            var arrayItem = {ConditionName: conditionName, Questions: filteredQs};
+            $scope.filteredQuestions.push(arrayItem);
+          });
+          $('#cdsConditionDiv').toggleClass('hidden');
+          $('#cdsQuestionDiv').toggleClass('hidden');
+        }
+
+        $scope.GotoTreatments  =  function () {
+          $scope.filteredTreatments = [];
+          $('#cdsQuestionDiv .cdsUIList button').each(function(){
+             var questionId = $(this).attr('id').replace('question_','');
+             var conditionName = $(this).attr('name');
+             var filterTrtmnts = [];
+
+             if($(this).find('span:first').text() == 'Yes')
+             { 
+               filterTrtmnts = jQuery.grep($scope.data.treatments, function( n, i ) {
+                                      return  n.Question_ID == questionId && n.Response_ID == 2;
+                                   });
+             }
+             else if($(this).find('span:first').text() == 'No')
+             { 
+               filterTrtmnts = jQuery.grep($scope.data.treatments, function( n, i ) {
+                                      return n.Question_ID == questionId && n.Response_ID == 3;
+                                });
+             }
+             var arrayItem = {ConditionName: conditionName, Treatments: filterTrtmnts};
+
+             if(filterTrtmnts.length > 0){
+                var ExistingNode = $.grep($scope.filteredTreatments,function(n,i){
+                  if(n.ConditionName == arrayItem.ConditionName)
+                  {
+                    return true;
+                  }
+                  return false;
+                });
+
+                if(ExistingNode.length > 0)
+                {
+                  ExistingNode[0].Treatments.push(filterTrtmnts[0]);
+                }
+                else
+                {
+                $scope.filteredTreatments.push(arrayItem);
+                }
+             }
+          })
+          $('#cdsQuestionDiv').toggleClass('hidden');
+          $('#cdsTreatmentDiv').toggleClass('hidden');
+        }
+
+         $scope.BacktoConditions  =  function () {
+          $('#cdsQuestionDiv').toggleClass('hidden');
+          $('#cdsConditionDiv').toggleClass('hidden');
+        }
+
+        $scope.BacktoQuestions =  function () {
+          $('#cdsTreatmentDiv').toggleClass('hidden');
+          $('#cdsQuestionDiv').toggleClass('hidden');
+        } 
+
+        $scope.resizeConditionList = function(){
+          var containerHeight = parseInt($('#cdsQuestionnaire').parent().css('height'),10);
+          $('#cdsQuestionnaire .cdsUIList').css('height',.65 * containerHeight);
+        }   
+
+        $scope.AnswerSelected = function(e){
+          var selectedText = $(e.currentTarget).text();
+          $(e.currentTarget).parent().parent().find('button>span:first').text(selectedText);
+          return false;
+        } 
+
+        $scope.RadioBtnClicked = function(){
+          if($('#cdsConditionDiv input:radio:checked').length > 0)
+          {
+            $scope.IsChecked = true;
+          }
+          else
+          {
+            $scope.IsChecked = false;
+          }
+        }
+
+        $scope.IsChecked = false;
+
+        $scope.ResetQuestions = function(){
+          $('#cdsConditionDiv input:radio').attr('checked',false);
+          $scope.IsChecked = false;          
+        }
+
+      },
+     link: function postLink(scope, element, attr) {
+
+        scope.$on("gridsterResized", function (){
+            $timeout(function(){
+              scope.resizeConditionList();
+            },1000);
+        });
+
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.data = data;
+            $timeout(function(){
+              scope.resizeConditionList();
+            },2000);
+          }
+         
+        });
+
+        $('#cdsTabs').click(function(e){
+          var tabContentId = $(e.target).attr('href');
+          if(tabContentId)
+          {
+            $('#cdsTabs>li').removeClass('active');
+            $(e.target).parent().addClass('active');
+            $('#cdsTabContent>div').removeClass('in').removeClass('active')
+            $(tabContentId).addClass('in').addClass('active');
+          }
+          return false;
+        });
+
+        $("#dropdownMenu2").on("click", "li a", function() {
+            var platform = $(this).text();
+            $("#dropdown_title2").html(platform);
+            $('#printPlatform').html(platform);
+        });  
+      }
+    };
+  });
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtAppointment', function () {
     return {
       restrict: 'A',
       replace: true,
@@ -2550,37 +2829,23 @@ angular.module('ui.widgets')
       },
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scorllY option!!!
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
             .withOption('paging',false)
-            .withOption('bDestroy',true)
             .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
             DTColumnDefBuilder.newColumnDef(0),
-            DTColumnDefBuilder.newColumnDef(1)
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2)
         ];
         /*$resource('data.json').query().$promise.then(function(persons) {
             vm.persons = persons;
         });*/
       },
-	link: function postLink(scope, element) {
-    		scope.$on("bindEvents", function (){
-    			$($('#appointmentDiv table')[0]).find('th').each(function(){
-    			  $(this).attr('tabindex','-1');
-    			});
-    		});
-
-        $timeout(function(){
-            scope.$emit('bindEvents');
-        },1500)
-
+      link: function postLink(scope) {
         scope.$watch('data', function (data) {
-          $.fn.dataTable.ext.errMode = 'throw';
           if (data) {
-            scope.data = data;   
+            scope.data = data;
           }
         });
       }
@@ -2724,6 +2989,59 @@ angular.module('ui.widgets')
 'use strict';
 
 angular.module('ui.widgets')
+  .directive('wtCommunityresource', function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/communityResource/communityresource.html',
+      scope: {
+        data: '=',
+      },
+      controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
+            .withOption('paging',false)
+            .withOption('order', [1, 'desc']);
+        //.withPaginationType('full_numbers').withDisplayLength(5);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2),
+            DTColumnDefBuilder.newColumnDef(3)
+        ];
+        /*$resource('data.json').query().$promise.then(function(persons) {
+            vm.persons = persons;
+        });*/
+      },
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.data = data;
+          }
+        });
+      }
+    };
+  });
+
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
   .directive('wtContact', function () {
     return {
       restrict: 'A',
@@ -2763,11 +3081,7 @@ angular.module('ui.widgets')
       },
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scorllY option!!!
-            .withOption('scrollY', 200)
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
             .withOption('paging',false)
             .withOption('bDestroy',true)
             .withOption('order', [1, 'desc']);
@@ -2786,18 +3100,27 @@ angular.module('ui.widgets')
           $($('#diagnosisDiv table')[0]).find('th').each(function(){
             $(this).attr('tabindex','-1');
           });
+         
+          $timeout(function(){
+            $('#diagnosisDiv .dataTables_scrollHeadInner,#diagnosisDiv table').css({'width':''});  
+            var containerHeight = parseInt($('#diagnosisDiv').parent().css('height'),10);
+            $('#diagnosisDiv .dataTables_scrollBody').css('height',.78 * containerHeight);  
+          },2500);
         });
 
         $timeout(function(){
             scope.$emit('bindEvents');
+            
         },1500);
+
+       
+        
 
         scope.$watch('data', function (data) {
           $.fn.dataTable.ext.errMode = 'throw';
           if (data) {
              scope.data = data;  
         }
-
         });
       }
     };
@@ -2847,6 +3170,448 @@ angular.module('ui.widgets')
  * limitations under the License.
  */
 
+
+
+'use strict';
+
+angular.module('ui.widgets')
+  .directive('wtEnterData', function ($timeout) {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'client/components/widget/widgets/enterdata/enterdata.html',
+      controller: function ($scope) {
+
+        $scope.noDataFound = '--No Data Available--'
+
+        $scope.jumpTo = function(keyPress,section){
+          if (keyPress.which === 13)
+          {
+            switch(section){
+              case "hr":
+                  $scope.hrIndex = parseInt($scope.hrIndex, 10); 
+                  $scope.enterWdgtForm.highRiskTxt.$setPristine();
+                  if ($scope.hrIndex > $scope.data.HighRisk_UserNotes.length-1) {
+                    $scope.hrIndex = $scope.data.HighRisk_UserNotes.length-1;
+                  } else if ($scope.hrIndex < 0 || isNaN($scope.hrIndex)) {
+                    $scope.hrIndex = 0;
+                  }
+                  $scope.hrText = $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes;
+                  break;
+              case "hrspan":
+                  $scope.hrSpanIndex = parseInt($scope.hrSpanIndex, 10);
+                  if ($scope.hrSpanIndex > $scope.data.HighRisk_SPANImport.length-1) {
+                    $scope.hrSpanIndex = $scope.data.HighRisk_SPANImport.length-1;
+                  } else if ($scope.hrSpanIndex < 0 || isNaN($scope.hrSpanIndex)) {
+                    $scope.hrSpanIndex = 0;
+                  }
+                  break;
+              case "mh":
+                  $scope.mhIndex = parseInt($scope.mhIndex, 10); 
+                  $scope.enterWdgtForm.mentalProviderTxt.$setPristine();
+                  if ($scope.mhIndex > $scope.data.PrimaryHealthProvider_UserNotes.length-1) {
+                    $scope.mhIndex = $scope.data.PrimaryHealthProvider_UserNotes.length-1;
+                  } else if ($scope.mhIndex < 0 || isNaN($scope.mhIndex)) {
+                    $scope.mhIndex = 0;
+                  }
+                  $scope.mhText = $scope.data.PrimaryHealthProvider_UserNotes[$scope.mhIndex].UserNotes;
+                  break;
+              case "sp":
+                  $scope.spIndex = parseInt($scope.spIndex, 10); 
+                  $scope.enterWdgtForm.safetyPlanTxt.$setPristine();
+                  if ($scope.spIndex > $scope.data.SafetyPlan_UserNotes.length-1) {
+                    $scope.spIndex = $scope.data.SafetyPlan_UserNotes.length-1;
+                  } else if ($scope.spIndex < 0 || isNaN($scope.spIndex)) {
+                    $scope.spIndex = 0;
+                  }
+                  $scope.spText = $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes;
+                  break;
+              case "spspan":
+                  $scope.spSpanIndex = parseInt($scope.spSpanIndex, 10);
+                  if ($scope.spSpanIndex > $scope.data.SafetyPlan_SPANImport.length-1) {
+                    $scope.spSpanIndex = $scope.data.SafetyPlan_SPANImport.length-1;
+                  } else if ($scope.spSpanIndex < 0 || isNaN($scope.spSpanIndex)) {
+                    $scope.spSpanIndex = 0;
+                  }
+                  break;
+              case "comment":
+                  $scope.commentIndex = parseInt($scope.commentIndex, 10); 
+                  $scope.enterWdgtForm.commentTxt.$setPristine();
+                  if ($scope.commentIndex > $scope.data.GeneralComments.length-1) {
+                    $scope.commentIndex = $scope.data.GeneralComments.length-1;
+                  } else if ($scope.commentIndex < 0 || isNaN($scope.commentIndex)) {
+                    $scope.commentIndex = 0;
+                  }
+                  $scope.commentText = $scope.data.GeneralComments[$scope.commentIndex].Comment;
+                  break;
+            }
+          }
+        };
+
+        //HIGH RISK SECTION
+
+        $scope.hrIndex = 0;
+        $scope.hrSpanIndex = 0;
+        $scope.hrText = '';
+
+        $scope.goHrBack = function() {
+          if ($scope.hrIndex < $scope.data.HighRisk_UserNotes.length-1) {
+            $scope.enterWdgtForm.highRiskTxt.$setPristine();
+            $scope.hrIndex+=1;
+            $scope.hrText = $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes;
+          }
+        };
+        $scope.goHrForward = function() {
+          if ($scope.hrIndex !== 0) {
+            $scope.enterWdgtForm.highRiskTxt.$setPristine();
+            $scope.hrIndex-=1;
+            $scope.hrText = $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes;           
+          }
+        };
+
+        $scope.goHrSpanBack = function() {
+          if ($scope.hrSpanIndex < $scope.data.HighRisk_SPANImport.length-1) {
+            $scope.hrSpanIndex+=1;
+          }
+        };
+
+        $scope.goHrSpanForward = function() {
+          if ($scope.hrSpanIndex !== 0) {
+            $scope.hrSpanIndex-=1;
+          }
+        };
+
+        //MENTAL HEALTH PROVIDER SECTION
+
+        $scope.mhIndex = 0;
+        $scope.mhText = '';
+
+        $scope.mhIndexChange = function(value) {
+          //TODO
+        }
+
+        $scope.goMhBack = function() {
+          if ($scope.mhIndex < $scope.data.PrimaryHealthProvider_UserNotes.length-1) {
+            $scope.enterWdgtForm.mentalProviderTxt.$setPristine();
+            $scope.mhIndex+=1;
+            $scope.mhText = $scope.data.PrimaryHealthProvider_UserNotes[$scope.mhIndex].UserNotes;
+          }
+        };
+        $scope.goMhForward = function() {
+          if ($scope.mhIndex !== 0) {
+            $scope.enterWdgtForm.mentalProviderTxt.$setPristine();
+            $scope.mhIndex-=1;
+            $scope.mhText = $scope.data.PrimaryHealthProvider_UserNotes[$scope.mhIndex].UserNotes;           
+          }
+        };
+
+        //SYSTEM PLAN SECTION
+        $scope.spIndex = 0;
+        $scope.spSpanIndex = 0;
+        $scope.spText = '';
+
+        $scope.spIndexChange = function(value) {
+
+        }
+
+        $scope.goSpBack = function() {
+          if ($scope.spIndex < $scope.data.SafetyPlan_UserNotes.length-1) {
+            $scope.enterWdgtForm.safetyPlanTxt.$setPristine();
+            $scope.spIndex+=1;
+            $scope.spText = $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes;
+          }
+        };
+
+        $scope.goSpForward = function() {
+          if ($scope.spIndex !== 0) {
+            $scope.enterWdgtForm.safetyPlanTxt.$setPristine();
+            $scope.spIndex-=1;
+            $scope.spText = $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes;           
+          }
+        };
+
+         $scope.goSpSpanBack = function() {
+          if ($scope.spSpanIndex < $scope.data.SafetyPlan_SPANImport.length-1) {
+            $scope.spSpanIndex+=1;
+          }
+        };
+
+        $scope.goSpSpanForward = function() {
+          if ($scope.spSpanIndex !== 0) {
+            $scope.spSpanIndex-=1;
+          }
+        };
+
+        //GENERAL COMMENTS SECTION
+
+        $scope.commentIndex = 0;
+        $scope.commentText = '';
+
+        $scope.goCommentBack = function() {
+          if ($scope.commentIndex < $scope.data.GeneralComments.length-1) {
+            $scope.enterWdgtForm.commentTxt.$setPristine();
+            $scope.commentIndex+=1;
+            $scope.commentText = $scope.data.GeneralComments[$scope.commentIndex].Comment;
+          }
+        };
+
+        $scope.goCommentForward = function() {
+          if ($scope.commentIndex !== 0) {
+            $scope.enterWdgtForm.commentTxt.$setPristine();
+            $scope.commentIndex-=1;
+            $scope.commentText = $scope.data.GeneralComments[$scope.spIndex].Comment;           
+          }
+        };
+
+        $scope.clearEdits = function(){
+          $scope.SetWidgetData();
+          $scope.common.data.EnterDataIsUnsaved = false;
+        };
+
+        $scope.SetWidgetData = function(data){
+          if(data)
+          {
+            $scope.data = data;
+          }
+
+          $scope.enterWdgtForm.highRiskTxt.$setPristine();
+          $scope.enterWdgtForm.mentalProviderTxt.$setPristine();
+          $scope.enterWdgtForm.safetyPlanTxt.$setPristine();
+          $scope.enterWdgtForm.commentTxt.$setPristine();
+
+          $scope.hrIndex = 0;
+          $scope.hrSpanIndex = 0;
+          $scope.mhIndex = 0;
+          $scope.spIndex = 0;
+          $scope.spSpanIndex = 0;
+          $scope.commentIndex = 0;
+
+          $scope.hrText = $scope.noDataFound;
+          $scope.mhText = $scope.noDataFound;
+          $scope.spText = $scope.noDataFound;
+          $scope.commentText = $scope.noDataFound;
+
+          //Initialize control values
+          if($scope.data.HighRisk_UserNotes && $scope.data.HighRisk_UserNotes.length > 0)
+          {
+            $scope.hrText = $scope.data.HighRisk_UserNotes[0].UserNotes;
+          }
+          
+          if($scope.data.PrimaryHealthProvider_UserNotes && $scope.data.PrimaryHealthProvider_UserNotes.length > 0)
+          {
+            $scope.mhText = $scope.data.PrimaryHealthProvider_UserNotes[0].UserNotes;
+          }
+
+          if($scope.data.SafetyPlan_UserNotes && $scope.data.SafetyPlan_UserNotes.length > 0)
+          {
+            $scope.spText = $scope.data.SafetyPlan_UserNotes[0].UserNotes;
+          }
+
+          if($scope.data.GeneralComments && $scope.data.GeneralComments.length > 0)
+          {
+            $scope.commentText = $scope.data.GeneralComments[0].Comment;
+          }
+
+          if($scope.data.OutreachStatus && $scope.data.OutreachStatus.length > 0 )
+          {
+            $scope.IdentifiedPrimaryProvider = $scope.data.OutreachStatus[0].IdentifiedPrimaryProvider;
+            $scope.NotifiedProvider = $scope.data.OutreachStatus[0].NotifiedProvider;
+            $scope.AskedProviderReview = $scope.data.OutreachStatus[0].AskedProviderReview;
+            $scope.ReceivedNotification = $scope.data.OutreachStatus[0].ReceivedNotification;
+            $scope.ReviewedCurrentDiagnosis = $scope.data.OutreachStatus[0].ReviewedCurrentDiagnosis;
+            $scope.EstablishedContact = $scope.data.OutreachStatus[0].EstablishedContact;
+            $scope.UpdatedPlan = $scope.data.OutreachStatus[0].UpdatedPlan;
+            $scope.EvaluateCaring = $scope.data.OutreachStatus[0].EvaluateCaring;
+            $scope.EvaluateSafetyPlan = $scope.data.OutreachStatus[0].EvaluateSafetyPlan;
+            $scope.Deceased = $scope.data.OutreachStatus[0].Deceased;
+            $scope.CannotContact = $scope.data.OutreachStatus[0].CannotContact;
+            $scope.RefusedServices = $scope.data.OutreachStatus[0].RefusedServices;
+            $scope.CareFromCommunity = $scope.data.OutreachStatus[0].CareFromCommunity;
+            $scope.ClinicallyNotAtRisk = $scope.data.OutreachStatus[0].ClinicallyNotAtRisk;
+            $scope.Other = $scope.data.OutreachStatus[0].Other;
+            
+            $scope.outreachStatus = $scope.data.OutreachStatus[0];
+          }
+          
+        };
+
+        // ADD DATA SECTION
+       
+        $scope.addNewData = function() {
+          $scope.common.data.EnterDataIsUnsaved = false;
+          var UpdatedHR_UserNotes = {isNew: false};
+          var UpdatedMH_UserNotes = {isNew:  false};
+          var UpdatedSP_UserNotes = {isNew: false};
+          var UpdatedGC_UserNotes = {isNew: false};
+          var addDate = new Date().toLocaleDateString();
+
+          if ($scope.enterWdgtForm.highRiskTxt.$valid &&(($scope.data.HighRisk_UserNotes.length == 0 && $scope.hrText != $scope.noDataFound) || 
+               ($scope.data.HighRisk_UserNotes.length > 0 && $scope.hrText != $scope.data.HighRisk_UserNotes[$scope.hrIndex].UserNotes)))
+          {
+             UpdatedHR_UserNotes = {
+                entry: $scope.hrText,
+                date: addDate,
+                isNew: true
+              }
+          }
+
+          if ($scope.enterWdgtForm.mentalProviderTxt.$valid && (($scope.data.PrimaryHealthProvider_UserNotes.length == 0 && $scope.mhText != $scope.noDataFound) || 
+               ($scope.data.PrimaryHealthProvider_UserNotes.length > 0 && $scope.mhText != $scope.data.PrimaryHealthProvider_UserNotes[$scope.mhIndex].UserNotes)))
+          {
+             UpdatedMH_UserNotes = {
+                entry: $scope.mhText,
+                date: addDate,
+                isNew: true
+              }
+          }
+
+          if ($scope.enterWdgtForm.safetyPlanTxt.$valid && (($scope.data.SafetyPlan_UserNotes.length == 0 && $scope.spText != $scope.noDataFound) || 
+               ($scope.data.SafetyPlan_UserNotes.length > 0 && $scope.spText != $scope.data.SafetyPlan_UserNotes[$scope.spIndex].UserNotes)))
+          {
+             UpdatedSP_UserNotes = {
+                entry: $scope.spText,
+                date: addDate,
+                isNew: true
+              }
+          }
+
+          if ($scope.enterWdgtForm.commentTxt.$valid && (($scope.data.GeneralComments.length == 0 && $scope.commentText != $scope.noDataFound) || 
+               ($scope.data.GeneralComments.length > 0 && $scope.commentText != $scope.data.GeneralComments[$scope.commentIndex].Comment)))
+          {
+             UpdatedGC_UserNotes = {
+                entry: $scope.commentText,
+                date: addDate,
+                isNew: true
+              }
+          }
+
+            Updated_OutreachStatus = {};
+            if($scope.IdentifiedPrimaryProvider != $scope.data.OutreachStatus[0].IdentifiedPrimaryProvider)
+            {
+              Updated_OutreachStatus.IdentifiedPrimaryProvider = $scope.IdentifiedPrimaryProvider;
+            }
+
+            if($scope.NotifiedProvider != $scope.data.OutreachStatus[0].NotifiedProvider)
+            {
+              Updated_OutreachStatus.NotifiedProvider = $scope.NotifiedProvider;
+            }
+
+            if($scope.AskedProviderReview != $scope.data.OutreachStatus[0].AskedProviderReview)
+            {
+              Updated_OutreachStatus.AskedProviderReview = $scope.AskedProviderReview;
+            }
+
+            if($scope.ReceivedNotification != $scope.data.OutreachStatus[0].ReceivedNotification)
+            {
+              Updated_OutreachStatus.ReceivedNotification = $scope.ReceivedNotification;
+            }
+
+            if($scope.ReviewedCurrentDiagnosis != $scope.data.OutreachStatus[0].ReviewedCurrentDiagnosis)
+            {
+              Updated_OutreachStatus.ReviewedCurrentDiagnosis = $scope.ReviewedCurrentDiagnosis;
+            }
+            
+            if($scope.EstablishedContact != $scope.data.OutreachStatus[0].EstablishedContact)
+            {
+              Updated_OutreachStatus.EstablishedContact = $scope.EstablishedContact;
+            }
+            
+            if($scope.UpdatedPlan != $scope.data.OutreachStatus[0].UpdatedPlan)
+            {
+              Updated_OutreachStatus.UpdatedPlan = $scope.UpdatedPlan;
+            }
+            
+            if($scope.EvaluateCaring != $scope.data.OutreachStatus[0].EvaluateCaring)
+            {
+              Updated_OutreachStatus.EvaluateCaring = $scope.EvaluateCaring;
+            }
+
+            if($scope.EvaluateSafetyPlan != $scope.data.OutreachStatus[0].EvaluateSafetyPlan)
+            {
+              Updated_OutreachStatus.EvaluateSafetyPlan = $scope.EvaluateSafetyPlan;
+            }
+            
+            if($scope.Deceased != $scope.data.OutreachStatus[0].Deceased)
+            {
+              Updated_OutreachStatus.Deceased = $scope.Deceased;
+            }
+            
+            if($scope.CannotContact != $scope.data.OutreachStatus[0].CannotContact)
+            {
+              Updated_OutreachStatus.CannotContact = $scope.CannotContact;
+            }
+
+            if($scope.RefusedServices != $scope.data.OutreachStatus[0].RefusedServices)
+            {
+              Updated_OutreachStatus.RefusedServices = $scope.RefusedServices;
+            }
+
+            if($scope.CareFromCommunity != $scope.data.OutreachStatus[0].CareFromCommunity)
+            {
+              Updated_OutreachStatus.CareFromCommunity = $scope.CareFromCommunity;
+            }
+
+            if($scope.ClinicallyNotAtRisk != $scope.data.OutreachStatus[0].ClinicallyNotAtRisk)
+            {
+              Updated_OutreachStatus.ClinicallyNotAtRisk = $scope.ClinicallyNotAtRisk;
+            }
+
+            if($scope.Other != $scope.data.OutreachStatus[0].Other)
+            {
+              Updated_OutreachStatus.Other = $scope.Other;
+            }
+
+          $scope.widget.dataModel.saveNewUserData({
+                                                    hrUserNotes: UpdatedHR_UserNotes,
+                                                    mhUserNotes: UpdatedMH_UserNotes,
+                                                    spUserNotes: UpdatedSP_UserNotes,
+                                                    gcUserNotes: UpdatedGC_UserNotes,
+                                                    outreachStatus: Updated_OutreachStatus
+                                                  });
+          };
+
+          $scope.enterDataChanged = function(){
+            $scope.common.data.EnterDataIsUnsaved = true
+          };
+
+          $scope.resizeWidgetDataArea = function(){
+            var containerHeight = parseInt($('#enterWdgtDataForm').parent().css('height'),10);
+            $('.enterWdgtDataDiv').css('height',.80 * containerHeight);
+          } 
+
+      },
+      link: function postLink(scope, element, attr) {
+        scope.$on("gridsterResized", function (){
+            $timeout(function(){
+              scope.resizeWidgetDataArea();
+            },1000);
+        });
+        scope.$watch('widgetData', function(data){
+          scope.SetWidgetData(data);
+          $timeout(function(){
+              scope.resizeWidgetDataArea();
+            },2000);
+        });
+      }
+    }
+  });
+
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 'use strict';
 
 angular.module('ui.widgets')
@@ -2856,11 +3621,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/facilityRoster/facilityRoster.html',
      
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.facilityList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -2870,25 +3635,35 @@ angular.module('ui.widgets')
               resolve([]);
           });
         })
-        .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [1, 'desc']);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('STA3N').withTitle('VAMC'),
             DTColumnBuilder.newColumn('VAMC_Name').withTitle('VAMC Name'),
             DTColumnBuilder.newColumn('StateAbbr').withTitle('State'),
             DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
             DTColumnBuilder.newColumn('Total').withTitle('Patients'),
-            DTColumnBuilder.newColumn('AtRisk').withTitle('At-Risk Persons')
+            DTColumnBuilder.newColumn('AtRisk').withTitle('At-Risk Persons'),
+            DTColumnBuilder.newColumn('Prediction').withTitle('Prediction Alert'),
           ];
       },
       link: function postLink(scope, element, attr) {
         scope.$on("bindEvents", function (){
+
+          scope.dtInstance.changeData(function() {
+                return new Promise( function(resolve, reject){
+                  if (scope.facilityList)
+                  {
+                    resolve(scope.facilityList);
+                  }
+                  else
+                  {
+                    resolve([]);
+                  }
+                });
+              });
+
           $($('#facilityRosterDiv table')[0]).find('th').each(function(){
             $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+',Down/Up arrows to navigate, Spacebar to select and Tab to Exit rows">'+$(this).text()+'</a>');
             $(this).attr('scope','col');
@@ -2924,7 +3699,6 @@ angular.module('ui.widgets')
               $($('#tblFacilityRoster>tbody>tr')[0]).addClass('rowAtFocus');
               $($('#tblFacilityRoster>tbody>tr')[0]).css('backgroundColor','#f5f5f5');
             }
-            $('#facilityRosterDiv .dataTables_scrollBody').animate({ scrollTop: $('#tblFacilityRoster').find('tr.rowAtFocus')[0].offsetTop }, 500);
             return false;
           }
 
@@ -2941,6 +3715,7 @@ angular.module('ui.widgets')
 			
             scope.eventTimer = event.timeStamp;
             var facilityId = null;
+            var facilityName = null;
             var commonData = scope.widget.dataModelOptions.common;
             var activeView = commonData.data.activeView;
             //if(scope.previousSelectedRowIndex == event.currentTarget.rowIndex){
@@ -2951,14 +3726,13 @@ angular.module('ui.widgets')
                 $(this).removeClass('selected').removeClass('selected');
                 var activeView = commonData.data.activeView;
                 facilityId = '';  
+                facilityName = '';
               } 
               else
                 facilityId = commonData.data.facilitySelected.facility;             
-              //scope.previousSelectedRowIndex = null;
+                facilityName = commonData.data.facilitySelected.facilityName;             
             }
             else{
-              //$('tr.selected').removeClass('selected');
-              //$(this).hasClass('selected').removeClass('selected');
               console.log("tableroster:",$('#tblFacilityRoster'));//.cells().nodes().removeClass('selected');
               console.log("facilityroster has class:",$('#tblFacilityRoster tbody tr').hasClass('selected'));
               console.log("facilityroster tr:",$('#tblFacilityRoster tbody tr'));
@@ -2967,6 +3741,7 @@ angular.module('ui.widgets')
               // update common data object with new patient object
               console.log("eventClick:", event);
               facilityId = parseInt(event.currentTarget.cells[0].innerText);
+              facilityName = event.currentTarget.cells[1].innerText;
               /*var obj = jQuery.grep(scope.patientList, function( n, i ) {
                 return ( n.ReachID == vetId );
               });*/
@@ -2975,15 +3750,25 @@ angular.module('ui.widgets')
             }
             
             if(activeView == "surveillance")
+            {
               commonData.data.facilitySelected.surveillance = facilityId;
+              commonData.data.facilitySelected.surveillanceName = facilityName;
+            }
             else if(activeView == "facility")
+            {
+              if(commonData.data.facilitySelected && commonData.data.facilitySelected.facility != facilityId )
+              {
+                commonData.data.veteranObj = '';
+              }
               commonData.data.facilitySelected.facility = facilityId;
-            //console.log("CommonDataAfterClick: ", commonData);
-
+              commonData.data.facilitySelected.facilityName = facilityName;
+            }
             // broadcast message throughout system
             scope.$root.$broadcast('commonDataChanged', commonData);
-            //scope.$apply();
           });
+
+          $('#facilityRosterDiv .dataTables_scrollHeadInner,#facilityRosterDiv table').css({'width':''});
+          var containerHeight = parseInt($('#facilityRosterDiv').parent().css('height'),10);
         });
 		
 
@@ -2991,24 +3776,13 @@ angular.module('ui.widgets')
           if(data != null && data.length >0){
               scope.data = data;
               scope.facilityList = data;
-              var promise = new Promise( function(resolve, reject){
-                    if (scope.facilityList)
-                      resolve(scope.facilityList);
-                    else
-                      resolve([]);
-                  });
-              if(scope.dtInstance)
-                scope.dtInstance.changeData(promise);
-              else {
-                scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                  dtInstances.tblFacilityRoster._renderer.changeData(promise)              
-                });
-              }
-              $timeout(function(){
-                scope.$emit('bindEvents');
+               scope.$emit('bindEvents');
+
+              $timeout(function(){               
                 $.fn.dataTable.ext.errMode = 'throw';
                 var commonData = scope.widget.dataModelOptions.common;
                 var activeView = commonData.data.activeView;
+                var selectedRow = null; 
                 if(activeView == "facility"){
                   if(commonData.data.facilitySelected.facility == null || commonData.data.facilitySelected.facility.toString().length == 0)
                   {
@@ -3016,39 +3790,37 @@ angular.module('ui.widgets')
                   }
                   else
                   {
-                    var selectedRow = null; 
                     $('#tblFacilityRoster tbody tr').each(function(){
                         var textcolumn = $(this).find('td').eq(0).text();
                         if($(this).find('td').eq(0).text() == commonData.data.facilitySelected.facility){
-                            selectedRow = $(this)[0];
+                            selectedRow = $(this);
+                            selectedRow.click();
                         }
                     }); 
-                    console.log("FacilityRoster selected:", selectedRow);
-                    console.log("FacilityRoster selected row index:", selectedRow.rowIndex);
-                    selectedRow.click();
-                    $('#tblFacilityRoster_wrapper > div > div.dataTables_scrollBody').animate({
-                      scrollTop: $('#tblFacilityRoster tbody tr').eq(selectedRow.rowIndex-9).offset().top
-                    },500)
                   }  
                 }
                 else if(activeView == "surveillance"){
                   if(commonData.data.facilitySelected.surveillance != null && commonData.data.facilitySelected.surveillance.toString().length > 0)
                   {
-                    var selectedRow = null; 
                     $('#tblFacilityRoster tbody tr').each(function(){
                         var textcolumn = $(this).find('td').eq(0).text();
                         if($(this).find('td').eq(0).text() == commonData.data.facilitySelected.surveillance){
                             selectedRow = $(this);
+                            selectedRow.addClass('selected');
                         }
-                    }); 
-                    console.log("FacilityRoster selected:", selectedRow);
-                    console.log("FacilityRoster selected row index:", selectedRow[0].rowIndex);           
-                    
-                    selectedRow.addClass('selected');//selectedRow.click();
-                    $('#tblFacilityRoster_wrapper > div > div.dataTables_scrollBody').animate({
-                      scrollTop: $('#tblFacilityRoster tbody tr').eq(selectedRow[0].rowIndex-8).offset().top
-                    },500);                                      
+                    });                                
                   }  
+                }
+
+                if(selectedRow)
+                {
+                  var rowPosition = selectedRow[0].rowIndex-8;
+                  if(rowPosition > 0 && $('#facilityRosterDiv').parent().scrollTop() == 0)
+                  {
+                    $('#facilityRosterDiv').parent().animate({  
+                      scrollTop: $('#tblFacilityRoster tbody tr').eq(rowPosition).offset().top
+                    },500);
+                  }
                 }
                 
               },1500)            
@@ -3319,12 +4091,7 @@ angular.module('ui.widgets')
       }, 
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scorllY option!!!
-            .withOption('scrollY', 200)
-            .withOption('bDestroy',true)
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
             .withOption('paging',false);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumnDefs = [
@@ -3343,6 +4110,12 @@ angular.module('ui.widgets')
         $timeout(function(){
           scope.$emit('bindEvents');      
         },1500);          
+
+        $timeout(function(){
+          $('#medicationDiv .dataTables_scrollHeadInner,#medicationDiv table').css({'width':''});
+          var containerHeight = parseInt($('#medicationDiv').parent().css('height'),10);
+          $('#medicationDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
+        },2500);
 
         scope.$watch('data', function (data) {
           if (data) {
@@ -3518,29 +4291,6 @@ angular.module('ui.widgets')
           this.series[index].values = values;
         }.bind(this));
 
-        /*
-         //TODO this is workaround to have fixed x axis scale when no enough date is available
-         chart.push({
-         key: 'Left Value',
-         values: [
-         {timestamp: startTime, value: 0}
-         ]
-         });
-         */
-
-        /*
-         var max = _.max(history, function (historyPoint) { //TODO optimize
-         return historyPoint.stats.tuplesEmittedPSMA; //TODO
-         });
-
-         chart.push({
-         key: 'Upper Value',
-         values: [
-         {timestamp: now - 30 * 1000, value: Math.round(max.value * 1.2)}
-         ]
-         });
-         */
-
         if (history.length > 1) {
           this.scope.data = _.clone(this.series);
           this.scope.start = Math.min(startTime, _.first(history).timestamp);
@@ -3583,11 +4333,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/nationalAgeGroups/nationalAgeGroups.html',
      
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.ageGroupsList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -3597,14 +4347,9 @@ angular.module('ui.widgets')
               resolve([]);
           });
         })
-          .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('AgeRange').withTitle('Age Groups'),
@@ -3620,6 +4365,12 @@ angular.module('ui.widgets')
       			$(this).attr('scope','col');
       			$(this).attr('tabindex','-1');
           });
+          
+          $timeout(function(){
+            $('#ageGroupDiv .dataTables_scrollHeadInner,#ageGroupDiv table').css({'width':''});
+            var containerHeight = parseInt($('#ageGroupDiv').parent().css('height'),10);
+            $('#ageGroupDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
+          },2500);
     		});
         scope.$watch('widgetData', function (data) {
           $timeout(function(){
@@ -3634,16 +4385,16 @@ angular.module('ui.widgets')
                     else
                       resolve([]);
                   });
-              if(scope.dtInstance)
-                scope.dtInstance.changeData(promise);
-              else {
-                scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                  dtInstances.tblAgeGroups._renderer.changeData(promise)              
-                });
-              }
+              
+              scope.dtInstance.changeData(function() {
+                  return promise;
+              });
+                
             }
           },1000)
         });
+
+       
       }
     };
   });
@@ -3730,11 +4481,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/nationalGenderDistribution/nationalGenderDistribution.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.genderDistributionList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -3780,13 +4531,9 @@ angular.module('ui.widgets')
                     else
                       resolve([]);
                   });
-              if(scope.dtInstance)
-                scope.dtInstance.changeData(promise);
-              else {
-                scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                  dtInstances.tblGenderDistribution._renderer.changeData(promise)              
-                });
-              }
+             scope.dtInstance.changeData(function() {
+                  return promise;
+              });
             }
           },1000)
         });
@@ -3847,26 +4594,23 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/nationalMilitaryBranch/nationalMilitaryBranch.html',
        
-	controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+	controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
 	//$scope.dtOptions = DTOptionsBuilder.newOptions()
-	$scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
-        $scope.militaryBranchList = $scope.widgetData;
-        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
-          return new Promise( function(resolve, reject){
-            if ($scope.widgetData)
-              resolve($scope.widgetData);
-            else
-              resolve([]);
-          });
-        })
-		.withDOM('lfrti')
-		.withScroller()
-		.withOption('deferRender', true)
-		.withOption('paging',false)
-    .withOption('bDestroy',true)
-		.withOption('order', [1, 'desc']);
+  //$scope.dtInstanceAbstract = {};
+  $scope.dtInstance = {};
+  $scope.militaryBranchList = $scope.widgetData;
+  $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+    return new Promise( function(resolve, reject){
+      if ($scope.widgetData)
+        resolve($scope.widgetData);
+      else
+        resolve([]);
+    });
+  })
+	.withOption('paging',false)
+  .withOption('bDestroy',true)
+	.withOption('order', [1, 'desc']);
 	//.withPaginationType('full_numbers').withDisplayLength(5);
 	$scope.dtColumns = [
         DTColumnBuilder.newColumn('BranchDesc').withTitle('Branch'),
@@ -3881,6 +4625,11 @@ link: function postLink(scope, element, attr) {
   			$(this).attr('scope','col');
   			$(this).attr('tabindex','-1');
       });
+      $timeout(function(){
+        $('#militaryBranchDiv .dataTables_scrollHeadInner,#militaryBranchDiv table').css({'width':''}); 
+        var containerHeight = parseInt($('#militaryBranchDiv').parent().css('height'),10);
+        $('#militaryBranchDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
+      },1000)
 		});
 	scope.$watch('widgetData', function (data) {
     $timeout(function(){
@@ -3895,44 +4644,16 @@ link: function postLink(scope, element, attr) {
               else
                 resolve([]);
             });
-        if(scope.dtInstance)
-          scope.dtInstance.changeData(promise);
-        else {
-          scope.dtInstanceAbstract.getList().then(function(dtInstances){
-            dtInstances.tblMilitaryBranch._renderer.changeData(promise)              
-          });
-        }
+        scope.dtInstance.changeData(function() {
+                  return promise;
+              });
   	  }
      },1000)
 	});
 }
 }
 });
-	 /* controller: function ($scope) {
-		console.log("First log stmt:", $scope.data);
-		$scope.toolTipContentFunction = function(){
-		return function(key, x, y, e, graph) {
-			return  'Super New Tooltip' +
-				'<h1>' + key + '</h1>' +
-				'<p>' +  y + ' at ' + x + '</p>'
-			};
-		};
 
-        $scope.xFunction = function(){
-          return function(d) {
-			console.log("Label console stmt:",d.Label);
-            return d.Label;
-          };
-        };
-        $scope.yFunction = function(){
-          return function(d) {
-			console.log("Value console stmt:", d.Value);
-            return d.Value;
-          };
-        };
-      }
-    };
-  });*/
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -3958,11 +4679,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/nationalOutReachStatus/nationalOutReachStatus.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.outreachStatusList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -3972,19 +4693,14 @@ angular.module('ui.widgets')
               resolve([]);
           });
         })
-          .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [1, 'desc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [1, 'desc']);
         //.withPaginationType('full_numbers').withDisplayLength(5);
         $scope.dtColumns = [
-            DTColumnBuilder.newColumn('Status').withTitle('Outreach Status'),
-            DTColumnBuilder.newColumn('RiskLevelDesc').withTitle('Risk Level Group'),
-            DTColumnBuilder.newColumn('Total').withTitle('At-Risk Persons')
+            DTColumnBuilder.newColumn('checkListStatus').withTitle('Outreach Status'),
+            DTColumnBuilder.newColumn('complete').withTitle('Total Complete'),
+            DTColumnBuilder.newColumn('percent').withTitle('Percent Complete')
         ];
       },
      link: function postLink(scope, element, attr) {	
@@ -3994,6 +4710,13 @@ angular.module('ui.widgets')
       			$(this).attr('scope','col');
       			$(this).attr('tabindex','-1');
           });
+
+          $timeout(function(){
+            $('#outReachDiv .dataTables_scrollHeadInner,#outReachDiv table').css({'width':''});
+            var containerHeight = parseInt($('#outReachDiv').parent().css('height'),10);
+            $('#outReachDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
+          },2500);
+
 		    });
         scope.$watch('widgetData', function (data) {  
           $timeout(function(){
@@ -4009,16 +4732,14 @@ angular.module('ui.widgets')
                     else
                       resolve([]);
                   });
-              if(scope.dtInstance)
-                scope.dtInstance.changeData(promise);
-              else {
-                scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                  dtInstances.tblNationalOutReachStatus._renderer.changeData(promise)              
-                });
-              }
+              scope.dtInstance.changeData(function() {
+                  return promise;
+              });
             }
           },1000)
         });
+
+
       }
     };
   });
@@ -4362,10 +5083,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/patientTable/patientTable.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+      controller: function ($scope, $compile, $filter, $http, $modal, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder,FileSaver) {
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.patientList = $scope.widgetData;
+        $scope.OutreachMap = {};
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
               return new Promise( function(resolve, reject){
                 if ($scope.widgetData)
@@ -4375,130 +5097,222 @@ angular.module('ui.widgets')
               });
  
           })//.fromSource($scope.widgetData) newOptions().
-            .withDOM('lfrti')
+            .withOption('createdRow', function(row, data, dataIndex) {
+                // Recompiling so we can bind Angular directive to the DT
+                $compile(angular.element(row).contents())($scope);
+            })
+            .withOption('rowCallback', rowCallback)
+            .withDOM('frtip')
+            .withButtons([
+                {
+                  text: '<a name="PatientExport" class="glyphicon glyphicon-export"></a>',
+                  action: function (e, dt, node, config) {
+                      JSONToCSVConvertor($scope.patientList,'PatientRoster');
+                  }
+                }
+            ])
             .withScroller()
             .withOption('deferRender', true)
-            // Do not forget to add the scorllY option!!!
+            // Do not forget to add the scrollY option!!!
             .withOption('scrollY', 200)
+            .withOption('scrollX', '100%')
             .withOption('bDestroy',true)
-            .withOption('paging',false);
+            .withOption('aaSorting', [
+                [3, 'desc']
+            ])
+            .withLanguage({
+              "sInfo": "Total Records: _TOTAL_"
+            });
+
+         function JSONToCSVConvertor(JSONData,title) {
+            var exportHeaders = ['ReachID','FirstName','LastName','SSN','HomePhone','DateIdentifiedAsAtRisk','RiskLevel','CurrentStatus']
+            var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+            var d = new Date();
+
+            var month = d.getMonth()+1;
+            var day = d.getDate();
+            var time = d.getHours() + "_" + d.getMinutes() + "_" + d.getSeconds();
+            var fileDateTime = d.getFullYear() +
+            (month<10 ? '0' : '') + month +
+            (day<10 ? '0' : '') + day + "_" + time;
+            var CSV = '';
+            
+            //Headers
+            var row = "";
+            for (var index in arrData[0]) {
+              if($.inArray(index, exportHeaders) > 0)
+              {
+                row += index + ',';
+              }
+            }
+            row = row.slice(0, -1);
+            CSV += row + '\r\n';
+            
+            //Rows-Data
+            for (var i = 0; i < arrData.length; i++) {
+                var row = "";
+                for (var index in arrData[i]) {
+                    if($.inArray(index, exportHeaders) > 0)
+                    {
+                      if(index === 'OutreachStatus')
+                      {
+                        var arrValue = arrData[i][index] == null ? "" : $filter('filter')($scope.outreachStatusList, {OutReachStatusID: 
+                                                                                          parseInt(arrData[i][index]) })[0].StatusDesc;  
+                      }
+                      else
+                      {
+                        var arrValue = arrData[i][index] == null ? "" : arrData[i][index];  
+                      }
+                      row += arrValue + ',';
+                    }
+                }
+                row.slice(0, row.length - 1);
+                CSV += row + '\r\n';
+            }
+            
+            var blob = new Blob([CSV], { type: "text/csv;charset=utf-8" });
+            var user = JSON.parse(sessionStorage.user);
+            var logMessage = 'User - ' + user.UserName;
+            var params = {
+              action:'Patient Roster Export'
+            }
+
+            $http.post('/api/audit',params)
+            .success(function(data) {
+               FileSaver.saveAs(blob, "PatientRoster_" + fileDateTime + ".csv");
+            });
+           
+        };
+
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('Name').withTitle('Name'),
             DTColumnBuilder.newColumn('SSN').withTitle('SSN'),
             DTColumnBuilder.newColumn('HomePhone').withTitle('Phone'),
             DTColumnBuilder.newColumn('DateIdentifiedAsAtRisk').withTitle('Date First Identified'),
             DTColumnBuilder.newColumn('RiskLevel').withTitle('Statistical Risk Level'),
-            DTColumnBuilder.newColumn('OutreachStatusSelect').withTitle('Outreach Status')
+            DTColumnBuilder.newColumn('CurrentStatus').withTitle('Outreach Status').withOption('width', '10%').notSortable().renderWith(function(data, type, full, meta) {
+               var data1 = data.split('|')[0]
+               var data2 = data.split('|')[1]
+               var template = '<div>' + data1 + '</div><br/><div>'+data2+'</div>';
+               return  template;
+            })
         ];
-        $scope.columns = [
-          {"Name" : "Name"},
-          {"Name" : "SSN"},
-          {"Name" : "Phone"},
-          {"Name" : "Date First Identified"},
-          {"Name" : "Statistical Risk Level"},
-          {"Name" : "Outreach Status"}
-        ];
-		
+
+        $scope.rowClickHandler= function(info) {
+          if($scope.common.data.EnterDataIsUnsaved == true){
+              $(".unsavedDataAlert").fadeIn();
+              return;
+          }
+
+          var selectedRow = $("#tblPatient tr:contains('"+info.SSN+"')");
+          if(selectedRow.hasClass('selected'))
+          {
+            return;
+          } 
+          else
+          {
+            $('#tblPatient tr.selected').removeClass('selected');
+            selectedRow.addClass('selected');
+            var commonData = $scope.widget.dataModelOptions.common;
+            var vetId = info.ReachID;
+            var obj = jQuery.grep($scope.patientList, function( n, i ) {
+              return ( n.ReachID == vetId );
+            });
+            commonData.data.veteranObj = obj[0];
+            commonData.data.patientRosterScrollPos = $('#patientRosterDiv .dataTables_scrollBody').scrollTop();;
+            console.log("CommonDataAfterClick: ", commonData);
+            // broadcast message throughout system
+            $scope.$parent.$parent.$parent.$broadcast('commonDataChanged', commonData);
+
+          }
+
+        }
+
+        function rowCallback(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+          $('td', nRow).unbind('click');
+          $('td', nRow).bind('click', function() {
+              $scope.$apply(function() {
+                  $scope.rowClickHandler(aData);
+              });
+          });
+          return nRow;
+        }
+
+        $scope.removePatient =  function(){
+          $modal.open({
+            scope: $scope,
+            templateUrl: 'client/components/widget/widgets/patientTable/removePatientModal.html',
+            controller: 'RemovePatientCtrl',
+            backdrop  : 'static',
+            keyboard  : false,
+            resolve: {
+                params: function() {
+                    return {
+                      veteranObj: $scope.widget.dataModelOptions.common.data.veteranObj
+                    };
+                }
+            }
+          });
+        }
+
+        $scope.resizeWidgetDataArea = function(){
+          var containerHeight = parseInt($('#patientRosterDiv').parent().css('height'),10);
+          $('#patientRosterDiv').find('.dataTables_scrollBody').css('height',.5 * containerHeight);
+        } 
+
       },
       link: function postLink(scope, element, attr) {
+        scope.$on("gridsterResized", function (){
+            $timeout(function(){
+              scope.resizeWidgetDataArea();
+            },1000);
+        });
+
         scope.$on("updateSelectMenu", function (){
           var datamodelList = {};
-          var patientList = scope.widgetData[1];          
-          $( "select[id^='vet_']" ).on("change",function(e,ui){
-            var selectedIndex = this.value;
-            var selectedreachId = $(e.currentTarget).attr('id').replace("vet_","");
-            var commonData = scope.widget.dataModelOptions.common;
-            scope.widget.dataModel.saveOutreachData(parseInt(selectedIndex),selectedreachId,commonData.data.facilitySelected.facility);
-          } );
-		  		 	  
-		  $($('#patientRosterDiv table')[0]).find('th').each(function(){
-                $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
-				$(this).attr('scope','col');
-        $(this).attr('tabindex','-1');
-            });
-			
-		$('#tblPatient_info').attr('title','Patient Table: Tab to move to the next control');
-             
-		  
-		  $('#tblPatient tbody>tr select').keydown(function(event){ 
-            if (event.keyCode == '13' || event.key == 'Enter') {
-				$(this).closest('tr').click();
-				return false; 
-			} 
-			if (event.keyCode == '27' || event.key == 'Cancel') {
-				$('#tblPatient_info').focus();
-				$('#tblPatient_info').tooltip().mouseover();
-				return false; 
-			} 		  
+          var patientList = scope.widgetData[1];          	 	  
+    		  $($('#patientRosterDiv table')[0]).find('th').each(function(){
+            $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+    				$(this).attr('scope','col');
+            $(this).attr('tabindex','-1');
           });
 
-          $('#tblPatient tbody').on( 'click', 'tr', function (event) {
-            if($(this).hasClass('selected')){
-            }
-            else{
-              $('tr.selected').removeClass('selected');
-              $(this).addClass('selected');
-              // get common data object
-              var commonData = scope.widget.dataModelOptions.common;
-              // update common data object with new patient object
-              var vetId = event.currentTarget.cells[5].children[0].id.replace("vet_","");
-              var obj = jQuery.grep(scope.patientList, function( n, i ) {
-                return ( n.ReachID == vetId );
-              });
-              console.log("ReachID Vet Selected: ",vetId);
-              delete obj[0].OutreachStatusSelect;
-              commonData.data.veteranObj = obj[0];
-              console.log("CommonDataAfterClick: ", commonData);
-              // broadcast message throughout system
-              scope.$parent.$parent.$parent.$broadcast('commonDataChanged', commonData);
-            }
-            scope.$apply();
-          });  
+          $('#patientRosterDiv .dt-buttons').attr('title','Patient Roster-Export to Excel')
+			
+		      $('#tblPatient_info').attr('title','Patient Table: Tab to move to the next control');
+    
+          $('#patientRosterDiv .dataTables_scrollHeadInner,#patientRosterDiv .dataTables_scrollHeadInner table').css({'width':''});   
+          var containerHeight = parseInt($('#patientRosterDiv').parent().css('height'),10);
+          $('#patientRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);    
+		  
+    		  $('#tblPatient tbody>tr select').keydown(function(event){ 
+            if (event.keyCode == '13' || event.key == 'Enter') {
+              $(this).closest('tr').click();
+              return false; 
+            } 
+            if (event.keyCode == '27' || event.key == 'Cancel') {
+              $('#tblPatient_info').focus();
+              $('#tblPatient_info').tooltip().mouseover();
+              return false; 
+            } 		  
+          });
+
         });
-        //scope.dtrender.showLoading();
-        scope.$watch('widgetData', function(v){
-          var opts = {
-          lines: 13, // The number of lines to draw
-          length: 20, // The length of each line
-          width: 10, // The line thickness
-          radius: 30, // The radius of the inner circle
-          corners: 1, // Corner roundness (0..1)
-          rotate: 0, // The rotation offset
-          direction: 1, // 1: clockwise, -1: counterclockwise
-          color: '#000', // #rgb or #rrggbb or array of colors
-          speed: 1, // Rounds per second
-          trail: 60, // Afterglow percentage
-          shadow: false, // Whether to render a shadow
-          hwaccel: false, // Whether to use hardware acceleration
-          className: 'spinner', // The CSS class to assign to the spinner
-          zIndex: 2e9, // The z-index (defaults to 2000000000)
-          top: '50%', // Top position relative to parent
-          left: '50%' // Left position relative to parent
-        };
-          
-        if(v != null && v.length >0){
+        scope.$watch('widgetData', function(v){  
+          if(v != null && v.length >0){
             scope.outreachStatusList = scope.widgetData[2];
             scope.patientList = scope.widgetData[1];
+
             var outreachStatus = scope.outreachStatusList;
             var patientsBysta3N = scope.patientList;
 
-            for(var patient in patientsBysta3N){
-              var selected = ' selected="selected"';
-              var options = "";
-              var temp = "";
-              for(var outreachStat in outreachStatus){
-                if(patientsBysta3N[patient].OutreachStatus == outreachStatus[outreachStat].OutReachStatusID)
-                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + selected + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
-                else{
-                  temp = "<option value=" + outreachStatus[outreachStat].OutReachStatusID + ">" + outreachStatus[outreachStat].StatusDesc + "</option>";
-                  //console.log("outreachStatusString: ",  temp);
-                }
-                options += temp;                
-              }
-              var select = "<select class='form-control' style='width: 180px;' id='vet_" + patientsBysta3N[patient].ReachID + "'><option value=''></option>"+ options+ "</select>";
-              patientsBysta3N[patient].OutreachStatusSelect = select;
-            }
-            
+            scope.patientList.map(function(obj){
+              scope.OutreachMap[obj.ReachID] = obj.OutreachStatus != null ?  $.grep(scope.outreachStatusList,function(e){
+                                                                                      return e.OutReachStatusID == obj.OutreachStatus
+                                                                                    })[0] : null;
+
+          });
+  
             scope.patientList = patientsBysta3N;
             var promise = new Promise( function(resolve, reject){
                   if (scope.patientList)
@@ -4506,13 +5320,9 @@ angular.module('ui.widgets')
                   else
                     resolve([]);
                 });
-            if(scope.dtInstance)
-              scope.dtInstance.changeData(promise);
-            else {
-              scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                dtInstances.tblPatient._renderer.changeData(promise)              
+            scope.dtInstance.changeData(function() {
+                  return promise;
               });
-            }
             
             $timeout(function(){
               $.fn.dataTable.ext.errMode = 'throw';
@@ -4520,18 +5330,39 @@ angular.module('ui.widgets')
               var commonData = scope.widget.dataModelOptions.common;
               if(!commonData.data.veteranObj)
               {
-                $('#tblPatient').find( "tbody>tr:first" ).click();
+                $($('#tblPatient').find( "td" )[1]).click()
               }
               else
               {
-                $('#tblPatient').find( "tbody>tr td:contains('"+commonData.data.veteranObj.Name+"')" ).parent().click();
+                $('#patientRosterDiv .dataTables_scrollBody').scrollTop(commonData.data.patientRosterScrollPos);
+                $timeout(function() {
+                  $('#tblPatient').find( "tbody>tr td:contains('"+commonData.data.veteranObj.Name+"')" ).click();
+                }, 500);
               }
+
+              scope.resizeWidgetDataArea();
+               
             },500)            
           }
         });
       }
     };
   });
+'use strict';
+
+angular.module('ui.widgets')
+	.controller('RemovePatientCtrl', ['$scope', '$modalInstance', 'params',
+        function($scope, $modalInstance, params) {
+        	$scope.name = params.veteranObj.Name;
+        	$scope.ok = function(){
+        		$modalInstance.dismiss('cancel');
+        	}
+
+        	$scope.cancel = function(){
+        		$modalInstance.dismiss('cancel');
+        	}
+        }
+]);
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -4579,6 +5410,47 @@ angular.module('ui.widgets')
       }
     };
   });
+/* globals d3 */
+'use strict';
+
+angular.module('ui.widgets').directive('predictionChart', function () {
+return {
+    restrict: 'A',
+    replace: true,
+    templateUrl: 'client/components/widget/widgets/predictionChart/predictionChart.html',
+    scope: {
+      data: '=data'
+    },
+    controller: function ($scope) {
+      $scope.xAxisTickFormatFunction = function () {
+        return function (d) {
+          return d;
+        };
+      };
+      $scope.yAxisTickFormatFunction = function () {
+        return function (d) {
+          return d;
+        };
+      };
+      $scope.xFunction = function () {
+        return function (d) {
+          return d.x;
+        };
+      };
+      $scope.yFunction = function () {
+        return function (d) {
+          return d.y;
+        };
+      };
+      $scope.xAxisTickValuesFunction = function () {
+        return function () {
+          return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 15, 16, 17];
+         };
+      }; 
+    },
+  };
+});
+
 /*
  * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
  *
@@ -4715,11 +5587,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/suicideStatistics/suicideStatistics.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+        //$scope.dtInstanceAbstract = DTInstances;
+        $scope.dtInstance = {};
         $scope.suicideStatusList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -4729,14 +5601,9 @@ angular.module('ui.widgets')
               resolve([]);
           });
         })
-          .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [0, 'asc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [0, 'asc']);
             //.withPaginationType('full_numbers').withDisplayLength(100);
 			
         $scope.dtColumns = [
@@ -4769,16 +5636,19 @@ angular.module('ui.widgets')
               else
                 resolve([]);
             });
-            if(scope.dtInstance)
-              scope.dtInstance.changeData(promise);
-            else {
-              scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                dtInstances.tblSuicideStatistics._renderer.changeData(promise)              
+           scope.dtInstance.changeData(function() {
+                  return promise;
               });
-            }
+
           }
-		  },1000)
+		      },1000)
         });
+
+        $timeout(function(){
+          $('#suicideStatisticsDiv .dataTables_scrollHeadInner,#suicideStatisticsDiv table').css({'width':''});
+          var containerHeight = parseInt($('#suicideStatisticsDiv').parent().css('height'),10);
+          $('#suicideStatisticsDiv .dataTables_scrollBody').css('height',.78 * containerHeight);  
+        },2500);
       }
     };
   });
@@ -4891,11 +5761,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/vismRoster/vismRoster.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.visnList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -4906,14 +5776,10 @@ angular.module('ui.widgets')
           });
 
         })
-        .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [0, 'asc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [0, 'asc']);
+            
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
             DTColumnBuilder.newColumn('NetworkName').withTitle('Network Name'),
@@ -4924,12 +5790,23 @@ angular.module('ui.widgets')
         $scope.eventTimer = null;
       },
       link: function postLink(scope, element, attr) {
-        scope.$on("bindEvents", function (){
-        $($('#VISNRosterDiv table')[0]).find('th').each(function(){
-          $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
-          $(this).attr('scope','col');
-          $(this).attr('tabindex','-1');
-        });
+          scope.$on("bindEvents", function (){
+      
+          scope.dtInstance.changeData(function() {
+              return new Promise( function(resolve, reject){
+                if (scope.visnList)
+                  resolve(scope.visnList);
+                else
+                  resolve([]);
+              });
+          });
+
+
+          $($('#VISNRosterDiv table')[0]).find('th').each(function(){
+            $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+            $(this).attr('scope','col');
+            $(this).attr('tabindex','-1');
+          });
 
         $($('#VISNRosterDiv table')[0]).find('th').keydown(function(event){ 
           if (event.keyCode == 40 || event.key == 'Down' || event.keyCode == 38 || event.key == 'Up') {
@@ -5006,6 +5883,7 @@ angular.module('ui.widgets')
             var activeView = commonData.data.activeView;
             if(activeView == "surveillance"){
               commonData.data.visnSelected.surveillance = visnId;
+              commonData.data.facilitySelected.surveillanceName = null; 
               commonData.data.facilitySelected.surveillance = null; 
             }
               
@@ -5017,26 +5895,17 @@ angular.module('ui.widgets')
             scope.$root.$broadcast('commonDataChanged', commonData);
             //scope.$apply();
           });
+
+          $('#VISNRosterDiv .dataTables_scrollHeadInner,#VISNRosterDiv table').css({'width':''}); 
+          var containerHeight = parseInt($('#VISNRosterDiv').parent().css('height'),10);
+          $('#VISNRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
         });
         scope.$watch('widgetData', function(data){
           if(data != null && data.length >0){
               scope.data = data;
               scope.visnList = data;
-              var promise = new Promise( function(resolve, reject){
-                    if (scope.visnList)
-                      resolve(scope.visnList);
-                    else
-                      resolve([]);
-                  });
-              if(scope.dtInstance)
-                scope.dtInstance.changeData(promise);
-              else {
-                scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                  dtInstances.tblVismRoster._renderer.changeData(promise)              
-                });
-              }
+              scope.$emit('bindEvents');                           
               $timeout(function(){
-                scope.$emit('bindEvents');
                 $.fn.dataTable.ext.errMode = 'throw';
                 var commonData = scope.widget.dataModelOptions.common;
                 var activeView = commonData.data.activeView;
@@ -5048,15 +5917,17 @@ angular.module('ui.widgets')
                         var textcolumn = $(this).find('td').eq(0).text();
                         if($(this).find('td').eq(0).text() == commonData.data.visnSelected.surveillance){
                             selectedRow = $(this);
+                            selectedRow.addClass('selected');//click();
+                            //selectedRow[0].click();//.dataTables_scrollBody
+                            var rowPosition = selectedRow[0].rowIndex - 6;
+                            if(rowPosition > 0)
+                            {
+                              $('#VISNRosterDiv').parent().animate({
+                                scrollTop: $('#tblVismRoster tbody tr').eq(rowPosition).offset().top
+                              },500)
+                            }
                         }
-                    }); 
-                    console.log("VISN Roster selected:", selectedRow);
-                    console.log("VISNRoster selected row index:", selectedRow[0].rowIndex);
-                    selectedRow.addClass('selected');//click();
-                    //selectedRow[0].click();//.dataTables_scrollBody
-                    $('#tblVismRoster_wrapper > div > div.dataTables_scrollBody').animate({
-                      scrollTop: $('#tblVismRoster tbody tr').eq(selectedRow[0].rowIndex).offset().top
-                    },500)
+                    });  
                   }    
                 }                
               },1500)            
@@ -5067,22 +5938,265 @@ angular.module('ui.widgets')
   });
 angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
 
+  $templateCache.put("client/components/widget/widgets/CDSQuestionnaire/CDSQuestionnaire.html",
+    "<div id=\"cdsQuestionnaire\" title=\"CDS Questionnaire\">\r" +
+    "\n" +
+    "   <!--1/26/2016 The below code is left for future use, Delete if not needed -->\r" +
+    "\n" +
+    "        <!-- <ul class=\"nav nav-pills\" role=\"tablist\" id=\"cdsTabs\" style=\"margin-top:5px;\">\r" +
+    "\n" +
+    "          <li class=\"active\">\r" +
+    "\n" +
+    "              <a href=\"#home\" role=\"tab\" data-toggle=\"tab\">\r" +
+    "\n" +
+    "                   Home\r" +
+    "\n" +
+    "              </a>\r" +
+    "\n" +
+    "          </li>\r" +
+    "\n" +
+    "          <li><a href=\"#options\" role=\"tab\" data-toggle=\"tab\">\r" +
+    "\n" +
+    "                  Options\r" +
+    "\n" +
+    "              </a>\r" +
+    "\n" +
+    "          </li>\r" +
+    "\n" +
+    "          <li>\r" +
+    "\n" +
+    "              <a href=\"#help\" role=\"tab\" data-toggle=\"tab\">\r" +
+    "\n" +
+    "                   Help\r" +
+    "\n" +
+    "              </a>\r" +
+    "\n" +
+    "          </li>\r" +
+    "\n" +
+    "        </ul>\r" +
+    "\n" +
+    "        <div class=\"tab-content\" id=\"cdsTabContent\" style=\"margin-top:5px;\">\r" +
+    "\n" +
+    "          <div class=\"tab-pane fade active in\" id=\"home\">\r" +
+    "\n" +
+    "            \r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"tab-pane fade\" id=\"options\">\r" +
+    "\n" +
+    "              <h2>Options</h2>\r" +
+    "\n" +
+    "              <img src=\"https://avatars1.githubusercontent.com/u/1252476?v=3&s=200\" alt=\"Cats\"/>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"tab-pane fade\" id=\"help\">\r" +
+    "\n" +
+    "              <h2>Help</h2>\r" +
+    "\n" +
+    "              <img src=\"https://avatars1.githubusercontent.com/u/1252476?v=3&s=200\" alt=\"Cats\"/>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "        \r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div>\r" +
+    "\n" +
+    "          <div class=\"panel panel-default\" style=\"margin-top:5px;\">\r" +
+    "\n" +
+    "            <div class=\"panel-heading\">\r" +
+    "\n" +
+    "              <h3 class=\"panel-title\">Emergency Contact Information</h3>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <div class=\"panel-body\">\r" +
+    "\n" +
+    "              For emergency assistance please contact: P: (xxx) xxx-xxxx, e: email@email.com\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "        </div> -->\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "      <div id=\"cdsConditionDiv\"  style=\"margin-top:5px;\">\r" +
+    "\n" +
+    "        <div >\r" +
+    "\n" +
+    "           <legend>Clinical Decision Support:</legend>\r" +
+    "\n" +
+    "              <fieldset style=\"border:1px solid lightgray;border-radius:5px;\">\r" +
+    "\n" +
+    "                Please choose the specific symptoms, diagnoses, or conditions the Veteran is facing.  After all selections have been made please press <strong>‘Next’</strong>.\r" +
+    "\n" +
+    "              </fieldset>\r" +
+    "\n" +
+    "              <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
+    "\n" +
+    "                \r" +
+    "\n" +
+    "              <div ng-repeat=\"condition in data.conditions\">\r" +
+    "\n" +
+    "                <div ng-if=\"$index == 0 || $index != 0 && data.conditions[$index].Condition != data.conditions[$index-1].Condition\">\r" +
+    "\n" +
+    "                  <hr style=\"margin-top:5px;margin-bottom: 0px\"/>\r" +
+    "\n" +
+    "                  <label style=\"margin:0px\">\r" +
+    "\n" +
+    "                      {{condition.Condition}}\r" +
+    "\n" +
+    "                  </label>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div>\r" +
+    "\n" +
+    "                  <input id=\"Condition_{{condition.Condition_ID}}\" ng-click=\"RadioBtnClicked()\" name=\"{{condition.Condition}}\" type=\"radio\" /> {{condition.Condition_SubQuestion}}\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "              <div style=\"height:40px;padding:5px;\">\r" +
+    "\n" +
+    "                <button ng-click=\"ResetQuestions()\" alt=\"Reset Questions\" title=\"Reset Questions\" ng-disabled=\"!IsChecked\"  class=\"btn btn-primary pull-left\">Reset Selection</button>\r" +
+    "\n" +
+    "                <button ng-click=\"GotoQuestions()\" alt=\"Next(Questions)\" title=\"Next(Questions)\" ng-disabled=\"!IsChecked\" class=\"btn btn-primary pull-right\">Next</button>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "    <div id=\"cdsQuestionDiv\" class=\"hidden\">\r" +
+    "\n" +
+    "      <legend>Question(s):</legend>\r" +
+    "\n" +
+    "      <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
+    "\n" +
+    "          <div ng-repeat=\"question in filteredQuestions\">\r" +
+    "\n" +
+    "              <hr style=\"margin-top:5px;margin-bottom: 0px\"/>\r" +
+    "\n" +
+    "              <label>\r" +
+    "\n" +
+    "                  {{question.ConditionName}}\r" +
+    "\n" +
+    "              </label>\r" +
+    "\n" +
+    "              <div ng-repeat=\"q in question.Questions\">\r" +
+    "\n" +
+    "                <label style=\"font-weight: normal;\">{{$index+1}}. {{q.Question}}  </label>\r" +
+    "\n" +
+    "                <div class=\"dropdown\">\r" +
+    "\n" +
+    "                    <button class=\"btn btn-default\"\r" +
+    "\n" +
+    "                            data-toggle=\"dropdown\" id=\"question_{{q.Question_ID}}\" name=\"{{question.ConditionName}}\">\r" +
+    "\n" +
+    "                        <span>Select</span>\r" +
+    "\n" +
+    "                        <span class=\"caret\"></span>\r" +
+    "\n" +
+    "                    </button>\r" +
+    "\n" +
+    "                    <ul class=\"dropdown-menu\" >\r" +
+    "\n" +
+    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">Yes</a></li>\r" +
+    "\n" +
+    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">No</a></li>\r" +
+    "\n" +
+    "                        <li ng-click=\"AnswerSelected($event)\"><a href=\"#\">N/A</a></li>\r" +
+    "\n" +
+    "                    </ul>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "       <div style=\"height:40px;padding:5px;\">\r" +
+    "\n" +
+    "          <button ng-click=\"BacktoConditions()\" alt=\"Back(Conditions)\" title=\"Back(Conditions)\" class=\"btn btn-primary pull-left\" >Back</button>\r" +
+    "\n" +
+    "          <button ng-click=\"GotoTreatments()\" alt=\"Next(Treatment)\" title=\"Next(Treatment)\" class=\"btn btn-primary pull-right\" >Next</button>\r" +
+    "\n" +
+    "       </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "    <div id=\"cdsTreatmentDiv\" class=\"hidden\">\r" +
+    "\n" +
+    "        <legend>Treatment(s):</legend>\r" +
+    "\n" +
+    "        <div class=\"cdsUIList\" style=\"margin:10px;padding:5px;overflow-y:scroll;\">\r" +
+    "\n" +
+    "          <div ng-repeat=\"t in filteredTreatments\">\r" +
+    "\n" +
+    "            <hr style=\"margin-top:5px;margin-bottom: 0px\"/>\r" +
+    "\n" +
+    "            <label>{{$index+1}}. {{t.ConditionName}}</label>\r" +
+    "\n" +
+    "            <div ng-repeat=\"treatment in t.Treatments\">\r" +
+    "\n" +
+    "              <label style=\"font-weight:normal;\">{{treatment.Treatment}}</label>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>  \r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div style=\"height:40px;padding:5px;\">\r" +
+    "\n" +
+    "          <button ng-click=\"BacktoQuestions()\" alt=\"Back(Questions)\" title=\"Back(Questions)\" class=\"btn btn-primary pull-left\">Back</button>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "        \r" +
+    "\n" +
+    "</div>\r" +
+    "\n"
+  );
+
   $templateCache.put("client/components/widget/widgets/appointment/appointment.html",
-    "<div id=\"appointmentDiv\" class=\"appointment\" title=\"Appointment Widget\">\r" +
+    "<div class=\"appointment\">\r" +
     "\n" +
     "\t<table id=\"tblAppointment\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "        <thead> \r" +
+    "        <thead>\r" +
     "\n" +
     "        <tr>\r" +
     "\n" +
-    "            <th scope=\"col\" tabindex=\"-1\"><a alt=\"Date\" title=\"Sort by Date\" href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Date'; reverse=false\">Date</a></th>\r" +
     "\n" +
-    "            <th scope=\"col\" tabindex=\"-1\"><a alt=\"Cancellation Status\" title=\"Sort by Cancellation Status\" href=\"\" ng-click=\"predicate = 'Cancelled'; reverse=!reverse\">Cancelled</a></th>\r" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Type'; reverse=!reverse\">Type</a></th>\r" +
+    "\n" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Cancelled'; reverse=!reverse\">Cancelled</a></th>\r" +
+    "\n" +
+    "            \r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
-    "        </thead> \r" +
+    "        </thead>\r" +
     "\n" +
     "        <tbody>\r" +
     "\n" +
@@ -5090,7 +6204,11 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <td>{{ appt.ApptDate }}</td>\r" +
     "\n" +
+    "             <td>{{ appt.PrimarySecondaryStopCodeName }}</td>\r" +
+    "\n" +
     "            <td>{{ appt.CancelNoShowCodeDesc }}</td>\r" +
+    "\n" +
+    "\r" +
     "\n" +
     "        </tr>\r" +
     "\n" +
@@ -5134,27 +6252,78 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("client/components/widget/widgets/clinicalDecisionSupport/clinicalDecisionSupport.html",
-    "<div name=\"clinicalDecisionSupport\" style=\"overflow:auto; height:auto; width:auto\">\r" +
+    "<div name=\"clinicalDecisionSupport\" style=\"overflow:auto; height:auto; width:auto; padding: 15px\">\r" +
     "\n" +
     "\t<div ng-repeat=\"cpg in cpgList\">\r" +
     "\n" +
-    "\t\t<b>Chronic {{cpg.RiskLevelDesc}} Risk</b>\r" +
+    "<b style=\"color:rgb(16, 52, 166); text-decoration: underline\">Welcome to Perceptive Reach</b>\r" +
     "\n" +
-    "\t\t<br><b>Features</b>\r" +
+    "    <p>Perceptive Reach uses predictive (statistical) modeling to identify Veterans at risk for suicide and other adverse outcomes. The patients identified by the model are at increased risk for outcomes including suicide attempts, deaths from accidents, overdoses, injuries, all-cause mortality, hospitalizations for mental health conditions, and medical/surgical hospitalizations.</p>\r" +
     "\n" +
-    "\t\t<div ng-bind-html=\"cpg.Features\"></div>\r" +
+    "    <p>As participants in this program, facility coordinators will focus on implementing the program, engaging providers, and ensuring that providers are aware of which of their patients are at risk. Providers for Veterans identified will be asked to review the care Veterans receive and to enhance it as appropriate.</p>\r" +
     "\n" +
-    "\t\t<br><b>Action</b>\r" +
+    "    <b>Dashboard Outreach & Intervention</b>\r" +
     "\n" +
-    "\t\t<br>{{cpg.Action}}\r" +
+    "    <p>Facility coordinators should first review their list of “at-risk” Veterans in the Patient Roster by VAMC widget on the Individual view and assign providers for each Veteran. Facility coordinators should then engage the providers and notify them of their “at-risk” patients.\r" +
     "\n" +
-    "\t\t<br><br>For more information visit the full Clinical Practice Guide at <a href=\"{{cpg.GuidelineURL}}\" title=\"Clinical Practice Guide\" alt=\"Clinical Practice Guide\">{{cpg.GuidelineURL}}</a>\r" +
+    "Detailed outreach and intervention steps for both facility coordinators and providers are located in the “Data Entry Widget” on this Dashboard. \r" +
     "\n" +
-    "\t\t<br><br>For guidance on proactive outreach and intervention strategies visit the Toolkit for Interventions <a href=\"{{cpg.ToolkitURL}}\" title=\"Toolkit for Interventions\" alt=\"Toolkit for Interventions\">{{cpg.ToolkitURL}}</a><br><br>\r" +
+    "\t</p>\r" +
     "\n" +
-    "\t</div>\r" +
+    "    <b>Training & Additional Guidance</b>\r" +
+    "\n" +
+    "    <p>For additional instructional content and training on the program and Dashboard, please visit: <a href=\"http://vaww.mirecc.va.gov/reachvet/\" style=\"color:rgb(16, 52, 166)\">http://vaww.mirecc.va.gov/reachvet/</a></p>\r" +
+    "\n" +
+    "</div>\r" +
     "\n" +
     "</div>"
+  );
+
+  $templateCache.put("client/components/widget/widgets/communityResource/communityresource.html",
+    "<div class=\"appointment\">\r" +
+    "\n" +
+    "\t<table id=\"tblAppointment\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
+    "\n" +
+    "        <thead>\r" +
+    "\n" +
+    "        <tr>\r" +
+    "\n" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Name'; reverse=false\">Name</a></th>\r" +
+    "\n" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Address'; reverse=!reverse\">Address</a></th>\r" +
+    "\n" +
+    "            <th><a href=\"\" ng-click=\"predicate = 'Phone'; reverse=!reverse\">Phone</a></th>\r" +
+    "\n" +
+    "\t\t\t\t\t\t<th><a href=\"\" ng-click=\"predicate = 'Website'; reverse=!reverse\">Website</a></th>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </thead>\r" +
+    "\n" +
+    "        <tbody>\r" +
+    "\n" +
+    "        <tr ng-repeat=\"commResource in data track by $index | orderBy:predicate:reverse\">\r" +
+    "\n" +
+    "            <td>{{ commResource.Name }}</td>\r" +
+    "\n" +
+    "             <td>{{ commResource.Address }}</td>\r" +
+    "\n" +
+    "            <td>{{ commResource.Phone }}</td>\r" +
+    "\n" +
+    "\t\t\t\t\t\t<td>{{ commResource.Website }}</td>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "        </tr>\r" +
+    "\n" +
+    "        </tbody>\r" +
+    "\n" +
+    "    </table>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n"
   );
 
   $templateCache.put("client/components/widget/widgets/contact/contact.html",
@@ -5196,7 +6365,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "\t<table id=\"tblDiagnoses\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "        <thead> \r" +
+    "        <thead>\r" +
     "\n" +
     "        <tr>\r" +
     "\n" +
@@ -5226,7 +6395,8 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    </table>\r" +
     "\n" +
-    "</div> "
+    "</div> \r" +
+    "\n"
   );
 
   $templateCache.put("client/components/widget/widgets/emergencyContact/emergencyContact.html",
@@ -5259,6 +6429,503 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "        <p font-size=\"12\"><br>No Data Found</b></p>\r" +
     "\n" +
     "    </div>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n"
+  );
+
+  $templateCache.put("client/components/widget/widgets/enterdata/enterdata.html",
+    "<div ng-form=\"enterWdgtForm\" id=\"enterWdgtDataForm\">\r" +
+    "\n" +
+    "  <div class=\"panel panel-default\">\r" +
+    "\n" +
+    "    <div class=\"panel-body\" style=\"padding-left:40px\">\r" +
+    "\n" +
+    "    <div class=\"enterWdgtDataDiv\" style=\"overflow-y:auto;overflow-x:hidden;\">\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-12\">\r" +
+    "\n" +
+    "        <label>Outreach Status</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div style=\"padding-bottom:10px;\">Initiation Checklist- To be completed by site facilitator(s)</div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"IdentifiedPrimaryProvider\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          1. Identified a primary patient provider. <label class=\"enterDataDateFont\">{{outreachStatus.IdentifiedPrimaryProvider_Date | date:'MM/dd/yyyy' }}</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"NotifiedProvider\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          2. Notified provider of the specific patient and program requirements <label class=\"enterDataDateFont\">{{outreachStatus.NotifiedProvider_Date | date:'MM/dd/yyyy' }}</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"AskedProviderReview\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          3. Asked provider to review treatment plans for the patient. <label class=\"enterDataDateFont\">{{outreachStatus.AskedProviderReview_Date | date:'MM/dd/yyyy' }}</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div style=\"padding-bottom:10px;padding-top:10px\">Outreach Checklist- To be completed by patient provider(or facilitator with provider approval)</div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"ReceivedNotification\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          4.Received notification from Site Facilitator about the patient <label class=\"enterDataDateFont\">{{outreachStatus.ReceivedNotification_Date | date:'MM/dd/yyyy' }}</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"ReviewedCurrentDiagnosis\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          5. Reviewed current diagnoses and treatments <label class=\"enterDataDateFont\">{{outreachStatus.ReviewedCurrentDiagnosis_Date | date:'MM/dd/yyyy' }}</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"EstablishedContact\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          6. Established contact with the patient to review current diagnoses, symptoms, adherence and problems <label class=\"enterDataDateFont\">{{outreachStatus.EstablishedContact_Date | date:'MM/dd/yyyy' }}</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div style=\"padding-bottom:10px;padding-top:10px\">Care Evaluation Checklist – To Be Completed by Patient Provider (or Facilitator with Provider Approval)</div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"UpdatedPlan\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          7.Updated the plan for management and treatment as appropriate <label class=\"enterDataDateFont\">{{outreachStatus.UpdatedPlan_Date | date:'MM/dd/yyyy' }}</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"EvaluateCaring\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          8. Evaluate appropriateness of Caring Communications program <label class=\"enterDataDateFont\">{{outreachStatus.EvaluateCaring_Date | date:'MM/dd/yyyy' }}</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"EvaluateSafetyPlan\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          9. Evaluate appropriateness of Safety Planning <label class=\"enterDataDateFont\">{{outreachStatus.EvaluateSafetyPlan_Date | date:'MM/dd/yyyy' }}</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div style=\"padding-bottom:10px;padding-top:10px\">Reasons for not Receiving VA Services– To Be Completed by Patient Provider (or Facilitator with Provider Approval)</div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"Deceased\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          10. Deceased <label class=\"enterDataDateFont\">{{outreachStatus.Deceased_Date | date:'MM/dd/yyyy' }}</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"CannotContact\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          11. Cannot Contact <label class=\"enterDataDateFont\">{{outreachStatus.CannotContact_Date | date:'MM/dd/yyyy' }}</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"RefusedServices\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          12. Refused Services <label class=\"enterDataDateFont\">{{outreachStatus.RefusedServices_Date | date:'MM/dd/yyyy' }}</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"CareFromCommunity\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "         13. Care from community provider <label class=\"enterDataDateFont\">{{outreachStatus.CareFromCommunity_Date | date:'MM/dd/yyyy' }}</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"ClinicallyNotAtRisk\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          14. Clinically not at risk <label class=\"enterDataDateFont\">{{outreachStatus.ClinicallyNotAtRisk_Date | date:'MM/dd/yyyy' }}</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-1 text-right\">\r" +
+    "\n" +
+    "          <input type=\"checkbox\" ng-model=\"Other\">\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"col-md-3 text-left\">\r" +
+    "\n" +
+    "          15. Other <label class=\"enterDataDateFont\">{{outreachStatus.Other_Date | date:'MM/dd/yyyy' }}</label>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-12 bs-example hr-text\">\r" +
+    "\n" +
+    "        <label style=\"margin-left:32px;\">High Risk Flag Information</label>\r" +
+    "\n" +
+    "          <div class=\"panel-body\">\r" +
+    "\n" +
+    "            <div class=\"col-md-6\" ng-attr-title=\"{{data.HighRisk_UserNotes[hrIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
+    "\n" +
+    "              <label style=\"font-weight:normal\">User Notes:</label>\r" +
+    "\n" +
+    "              <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                <button type=\"button\" name=\"hrBack\" title=\"Previous High Risk Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex >= data.HighRisk_UserNotes.length-1\" ng-click=\"goHrBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>Previous High Risk Info.\r" +
+    "\n" +
+    "                </button>\r" +
+    "\n" +
+    "                <div class=\"pull-left\">\r" +
+    "\n" +
+    "                  <input type=\"text\" ng-keypress=\"jumpTo($event,'hr')\" class=\"enterDataNumInput\" ng-model=\"hrIndex\" title=\"High Risk: Jump To Record\"></input>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <button type=\"button\" name=\"hrFwd\" title=\"Next High Risk Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"hrIndex === 0\" ng-click=\"goHrForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
+    "\n" +
+    "                  style=\"font-size:13px;width: 18px;\"></i>Next High Risk Info.\r" +
+    "\n" +
+    "                </button>\r" +
+    "\n" +
+    "              </div><br/>\r" +
+    "\n" +
+    "              <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"hrText\" name=\"highRiskTxt\" ng-change=\"enterDataChanged()\" ng-class=\"{enterDataDirty: enterWdgtForm.highRiskTxt.$dirty && enterWdgtForm.highRiskTxt.$valid}\" id=\"hrText\" maxlength=\"128\" title=\"High Risk Flag Information\"></textarea>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <div class=\"col-md-6\" ng-attr-title=\"{{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
+    "\n" +
+    "              <label style=\"font-weight:normal\">SPAN Records:</label>\r" +
+    "\n" +
+    "              <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                <button type=\"button\" name=\"hrSpanBack\" title=\"Previous High Risk Span Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex >= data.HighRisk_SPANImport.length-1\" ng-click=\"goHrSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>Previous High Risk Span Info.\r" +
+    "\n" +
+    "                </button>\r" +
+    "\n" +
+    "                <div class=\"pull-left\">\r" +
+    "\n" +
+    "                  <input title=\"High Risk Span: Jump To Record\" type=\"text\" ng-keypress=\"jumpTo($event,'hrspan')\" class=\"enterDataNumInput\" ng-model=\"hrSpanIndex\"></input>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <button type=\"button\" name=\"hrSpanFwd\" title=\"Next High Risk Span Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"hrSpanIndex === 0\" ng-click=\"goHrSpanForward()\"><i class=\"glyphicon glyphicon-arrow-right\"\r" +
+    "\n" +
+    "                  style=\"font-size:13px;width: 18px;\"></i>Next High Risk Span Info.\r" +
+    "\n" +
+    "                </button>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "              <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
+    "\n" +
+    "                <label style=\"font-weight:normal\">High Risk: {{data.HighRisk_SPANImport[hrSpanIndex].HighRisk}}</label><br/>\r" +
+    "\n" +
+    "                <label style=\"font-weight:normal\">Date First Identified: {{data.HighRisk_SPANImport[hrSpanIndex].DateFirstIdentifiedAsHighRisk | date: 'dd-MM-yyyy HH:mma'}}</label><br/>\r" +
+    "\n" +
+    "                <label style=\"font-weight:normal\">Date Last Updated: {{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated | date: 'dd-MM-yyyy HH:mma'}}</label>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "      <div class=\"row\">\r" +
+    "\n" +
+    "        <div class=\"col-md-12 bs-example mh-text\">\r" +
+    "\n" +
+    "        <label style=\"margin-left:32px;\">Mental Health Provider Information</label>\r" +
+    "\n" +
+    "          <div class=\"panel-body\">\r" +
+    "\n" +
+    "            <div class=\"col-md-6\" ng-attr-title=\"{{data.PrimaryHealthProvider_UserNotes[mhIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
+    "\n" +
+    "              <label style=\"font-weight:normal\">User Notes:</label>\r" +
+    "\n" +
+    "              <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "                <button type=\"button\" name=\"mhBack\" title=\"Previous Mental Health Provider Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"mhIndex >= data.PrimaryHealthProvider_UserNotes.length-1\" ng-click=\"goMhBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>Previous Mental Health Provider Info.\r" +
+    "\n" +
+    "                </button>\r" +
+    "\n" +
+    "                <div class=\"pull-left\">\r" +
+    "\n" +
+    "                  <input title=\"Mental Health Prov.: Jump To Record\" class=\"enterDataNumInput\" type=\"text\" ng-keypress=\"jumpTo($event,'mh')\" ng-change=\"mhIndexChange(mhIndex)\" ng-model=\"mhIndex\"></input>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <button type=\"button\" name=\"mhFwd\" title=\"Next Mental Health Provider Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"mhIndex === 0\" ng-click=\"goMhForward()\"><i class=\"glyphicon glyphicon-arrow-right\"  style=\"font-size:13px;width: 18px;\"></i>Next Mental Health Provider Info.\r" +
+    "\n" +
+    "                </button>\r" +
+    "\n" +
+    "              </div><br/>\r" +
+    "\n" +
+    "              <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"mhText\" name=\"mentalProviderTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.mentalProviderTxt.$dirty && enterWdgtForm.mentalProviderTxt.$valid}\" id=\"mhText\" ng-change=\"enterDataChanged()\" maxlength=\"128\" title=\"Mental Health Provider Information\"></textarea>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <div class=\"col-md-6\"> \r" +
+    "\n" +
+    "              <label style=\"font-weight:normal\">VistA Records:</label>\r" +
+    "\n" +
+    "              \r" +
+    "\n" +
+    "              <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
+    "\n" +
+    "               <label style=\"font-weight:normal\">{{noDataFound}}</label>\r" +
+    "\n" +
+    "             </div>\r" +
+    "\n" +
+    "           </div>\r" +
+    "\n" +
+    "         </div>\r" +
+    "\n" +
+    "       </div>\r" +
+    "\n" +
+    "     </div>\r" +
+    "\n" +
+    "     <div class=\"row\">\r" +
+    "\n" +
+    "      <div class=\"col-md-12 bs-example sp-text\">\r" +
+    "\n" +
+    "      <label style=\"margin-left:32px;\">Safety Plan Information</label>\r" +
+    "\n" +
+    "        <div class=\"panel-body\">\r" +
+    "\n" +
+    "          <div class=\"col-md-6\" ng-attr-title=\"{{data.SafetyPlan_UserNotes[spIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
+    "\n" +
+    "            <label style=\"font-weight:normal\">User Notes:</label>\r" +
+    "\n" +
+    "            <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "              <button type=\"button\" name=\"spBack\" title=\"Previous Safety Plan Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"spIndex >= data.SafetyPlan_UserNotes.length-1\" ng-click=\"goSpBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>Previous Safety Plan Info.\r" +
+    "\n" +
+    "              </button>\r" +
+    "\n" +
+    "              <div class=\"pull-left\">\r" +
+    "\n" +
+    "                <input title=\"Safety Plan: Jump To Record\" type=\"text\" ng-keypress=\"jumpTo($event,'sp')\" class=\"enterDataNumInput\" ng-model=\"spIndex\"></input>\r" +
+    "\n" +
+    "              </div>\r" +
+    "\n" +
+    "              <button type=\"button\" name=\"spFwd\" title=\"Next Safety Plan Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"spIndex === 0\" ng-click=\"goSpForward()\"><i class=\"glyphicon glyphicon-arrow-right\" \r" +
+    "\n" +
+    "                style=\"font-size:13px;width: 18px;\"></i>Next Safety Plan Info.\r" +
+    "\n" +
+    "              </button>\r" +
+    "\n" +
+    "            </div><br>\r" +
+    "\n" +
+    "            <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"spText\" name=\"safetyPlanTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.safetyPlanTxt.$dirty && enterWdgtForm.safetyPlanTxt.$valid}\" ng-change=\"enterDataChanged()\" id=\"spText\" maxlength=\"128\" title=\"Safety Plan Information\"></textarea>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"col-md-6\" \r" +
+    "\n" +
+    "          ng-attr-title=\"{{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
+    "\n" +
+    "          <label style=\"font-weight:normal\">VistA Records:</label>\r" +
+    "\n" +
+    "          <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "            <button type=\"button\" name=\"spSpanBack\" title=\"Previous Safety Plan VistA Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"spSpanIndex >= data.SafetyPlan_SPANImport.length-1\" ng-click=\"goSpSpanBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>Previous Safety Plan VistA Info.\r" +
+    "\n" +
+    "            </button>\r" +
+    "\n" +
+    "            <div class=\"pull-left\">\r" +
+    "\n" +
+    "              <input title=\"Safety Plan VistA: Jump To Record\" type=\"text\" ng-keypress=\"jumpTo($event,'spspan')\" class=\"enterDataNumInput\" ng-model=\"spSpanIndex\"></input>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <button type=\"button\" name=\"spSpanFwd\" title=\"Next Safety Plan VistA Info.\" class=\"btn btn-default pull-left\" ng-disabled=\"spSpanIndex === 0\" ng-click=\"goSpSpanForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i>Next Safety Plan VistA Info.\r" +
+    "\n" +
+    "            </button>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <div class=\"col-md-12 enterDataBox\" style=\"background-color:#e6e6e6;\">\r" +
+    "\n" +
+    "            <label style=\"font-weight:normal\">Safety Plan Current: {{data.SafetyPlan_SPANImport[spSpanIndex].SafetyPlanCurrent}}</label><br/>    \r" +
+    "\n" +
+    "            <label style=\"font-weight:normal\">Date Completed/Updated: {{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated | date: 'dd-MM-yyyy HH:mma'}}</label>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "  </div>\r" +
+    "\n" +
+    "  <div class=\"row\">\r" +
+    "\n" +
+    "    <div class=\"col-md-12 bs-example comment-text\">\r" +
+    "\n" +
+    "    <label style=\"margin-left:32px;\">General Notes</label>\r" +
+    "\n" +
+    "     <div class=\"panel-body\">\r" +
+    "\n" +
+    "       <div class=\"col-md-12\" ng-attr-title=\"{{data.GeneralComments[commentIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}\">\r" +
+    "\n" +
+    "         <div class=\"btn-group btn-group-xs pull-right\" role=\"group\" aria-label=\"Buttons\">\r" +
+    "\n" +
+    "          <button type=\"button\" name=\"commentBack\" title=\"Previous Comments\" class=\"btn btn-default pull-left\" ng-disabled=\"commentIndex >= data.GeneralComments.length-1\" ng-click=\"goCommentBack()\"><i class=\"glyphicon glyphicon-arrow-left\" style=\"font-size:13px;width: 18px;\"></i>Previous Comments\r" +
+    "\n" +
+    "          </button>\r" +
+    "\n" +
+    "          <div class=\"pull-left\">\r" +
+    "\n" +
+    "            <input title=\"Comments: Jump To Record\" type=\"text\" ng-keypress=\"jumpTo($event,'comment')\" class=\"enterDataNumInput\" ng-model=\"commentIndex\"></input>\r" +
+    "\n" +
+    "          </div>\r" +
+    "\n" +
+    "          <button type=\"button\" name=\"commentFwd\" title=\"Next Comments\" class=\"btn btn-default pull-left\" ng-disabled=\"commentIndex === 0\" ng-click=\"goCommentForward()\"><i class=\"glyphicon glyphicon-arrow-right\" style=\"font-size:13px;width: 18px;\"></i>Next Comments\r" +
+    "\n" +
+    "          </button>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <textarea class=\"col-md-12 enterDataBox\" rows=\"4\" style=\"font-weight:normal;\" type=\"text\" ng-required=\"true\" ng-model=\"commentText\" name=\"commentTxt\" ng-class=\"{enterDataDirty: enterWdgtForm.commentTxt.$dirty && enterWdgtForm.commentTxt.$valid}\" ng-change=\"enterDataChanged()\" id=\"commentText\" title=\"General Notes\"></textarea>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "  </div>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "<div class=\"row\">\r" +
+    "\n" +
+    "  <div class=\"col-md-6\" style=\"float:right;\">\r" +
+    "\n" +
+    "    <button type=\"button\" class=\"btn btn-primary btn-sm\" ng-click=\"addNewData()\" style=\"float:right;margin:5px;\">Add Data</button>\r" +
+    "\n" +
+    "    <button type=\"button\" class=\"btn btn-primary btn-sm\" ng-click=\"clearEdits()\" style=\"float:right;margin:5px;\">Clear Edits</button>\r" +
+    "\n" +
+    "  </div>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "</div>\r" +
     "\n" +
     "</div>\r" +
     "\n"
@@ -5304,7 +6971,9 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "            <button name=\"btnChangeMin\" type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"changeMode('MINUTES')\"\r" +
     "\n" +
-    "                    ng-class=\"{active: mode === 'MINUTES'}\">Minutes </button>\r" +
+    "                    ng-class=\"{active: mode === 'MINUTES'}\">Minutes</button>\r" +
+    "\n" +
+    "\r" +
     "\n" +
     "            <button name=\"btnChangeMode\" type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"changeMode('HOURS')\"\r" +
     "\n" +
@@ -5720,7 +7389,7 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "    <table id=\"tblPatientFlags\" datatable=\"ng\" dt-options=\"dtOptions\" dt-column-defs=\"dtColumnDefs\" class=\"row-border hover\">\r" +
     "\n" +
-    "        <thead> \r" +
+    "        <thead>\r" +
     "\n" +
     "        <tr>\r" +
     "\n" +
@@ -5752,12 +7421,158 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
   $templateCache.put("client/components/widget/widgets/patientTable/patientTable.html",
     "<div id=\"patientRosterDiv\" title=\"Navigate to header and click tab arrow to enter table, esc to leave table rows\">\r" +
     "\n" +
-    "    <table id=\"tblPatient\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" width=\"100%\">\r" +
+    "    <table id=\"tblPatient\" datatable=\"\" dt-options=\"dtOptions\" dt-columns=\"dtColumns\" dt-instance=\"dtInstance\" class=\"row-border hover\" style=\"width:100%\">\r" +
     "\n" +
     "    </table>\r" +
     "\n" +
     "</div> \r" +
     "\n"
+  );
+
+  $templateCache.put("client/components/widget/widgets/patientTable/removePatientModal.html",
+    "<div>\r" +
+    "\n" +
+    "    <div class=\"modal-header\">\r" +
+    "\n" +
+    "        <h2 class=\"modal-title\">Are you sure you want to remove {{name}} from the Dashboard?</h2>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div class=\"modal-body\">\r" +
+    "\n" +
+    "\t    <div class=\"row\">\r" +
+    "\n" +
+    "\t\t    <div class=\"col-md-12\">\r" +
+    "\n" +
+    "\t\t    \t<div>\r" +
+    "\n" +
+    "\t\t    \t\tAre you sure you want to remove Veteran XYZ from your Dashboard? \r" +
+    "\n" +
+    "\t\t\t\t\t<br/>\r" +
+    "\n" +
+    "\t\t\t\t\t<br/>\r" +
+    "\n" +
+    "\t\t    \t\tIf so, please leave a comment below explaining why the individual no longer needs outreach services. Selecting the ‘Save’ button below will add your comment to the Data Entry Widget and remove this Veteran from your Dashboard.\r" +
+    "\n" +
+    "\t\t\t\t\t<hr>\r" +
+    "\n" +
+    "\t\t    \t</div>\r" +
+    "\n" +
+    "\t\t    </div>\r" +
+    "\n" +
+    "\t    </div>\r" +
+    "\n" +
+    "        <div class=\"row\">\r" +
+    "\n" +
+    "        \t<div class=\"col-md-1\">\r" +
+    "\n" +
+    "        \t\t<input type=\"checkbox\" />\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-5\">\r" +
+    "\n" +
+    "        \t\t<label>Deceased</label>\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-1\">\r" +
+    "\n" +
+    "        \t\t<input type=\"checkbox\" />\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-5\">\r" +
+    "\n" +
+    "        \t\t<label>Refused Services</label>\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"row\">\r" +
+    "\n" +
+    "        \t<div class=\"col-md-1\">\r" +
+    "\n" +
+    "        \t\t<input type=\"checkbox\" />\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-5\">\r" +
+    "\n" +
+    "        \t\t<label>Clinically not at risk</label>\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-1\">\r" +
+    "\n" +
+    "        \t\t<input type=\"checkbox\" />\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-5\">\r" +
+    "\n" +
+    "        \t\t<label>Cannot contact</label>\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"row\">\r" +
+    "\n" +
+    "        \t<div class=\"col-md-1\">\r" +
+    "\n" +
+    "        \t\t<input type=\"checkbox\" />\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-5\">\r" +
+    "\n" +
+    "        \t\t<label>Care from community provider</label>\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-1\">\r" +
+    "\n" +
+    "        \t\t<input type=\"checkbox\" />\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        \t<div class=\"col-md-5\">\r" +
+    "\n" +
+    "        \t\t<label>Other(Please Explain)</label>\r" +
+    "\n" +
+    "        \t</div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"row\">\r" +
+    "\n" +
+    "            <div class=\"col-md-12\">\r" +
+    "\n" +
+    "                <label>Comments:</label>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <div class=\"col-md-11\">\r" +
+    "\n" +
+    "                <textarea rows=\"4\" style=\"width:100%;\"></textarea>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "    <div class=\"modal-footer\">\r" +
+    "\n" +
+    "        <button class=\"btn btn-primary\" ng-click=\"ok()\">OK</button>\r" +
+    "\n" +
+    "        <button class=\"btn btn-warning\" ng-click=\"cancel()\">Cancel</button>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</div>"
   );
 
   $templateCache.put("client/components/widget/widgets/pieChart/pieChart.html",
@@ -5787,6 +7602,60 @@ angular.module("ui.widgets").run(["$templateCache", function($templateCache) {
     "\n" +
     "</div>\r" +
     "\n"
+  );
+
+  $templateCache.put("client/components/widget/widgets/predictionChart/predictionChart.html",
+    "<div class=\"prediction-chart\" style=\"height:90%;width:100%;\">\r" +
+    "\n" +
+    "    <nvd3-line-chart\r" +
+    "\n" +
+    "            data=\"data\",\r" +
+    "\n" +
+    "            height=\"450\"\r" +
+    "\n" +
+    "            forcex=\"[0.5,17.5]\"\r" +
+    "\n" +
+    "            xAxisTickValues=\"xAxisTickValuesFunction()\"\r" +
+    "\n" +
+    "            xAxisTickFormat=\"xAxisTickFormatFunction()\"\r" +
+    "\n" +
+    "            xAxisShowMaxMin=\"false\"\r" +
+    "\n" +
+    "            xAxisLabel=\"Month\"\r" +
+    "\n" +
+    "            yAxisTickFormat=\"yAxisTickFormatFunction()\"\r" +
+    "\n" +
+    "            yAxisLabel=\"Number of Attempts\"\r" +
+    "\n" +
+    "            yAxisRotateLabels=\"true\"\r" +
+    "\n" +
+    "            x=\"xFunction()\"\r" +
+    "\n" +
+    "            y=\"yFunction()\"\r" +
+    "\n" +
+    "            showXAxis=\"true\"\r" +
+    "\n" +
+    "            showYAxis=\"true\"\r" +
+    "\n" +
+    "            reduceXTicks=\"true\"\r" +
+    "\n" +
+    "            transitionduration=\"0\"\r" +
+    "\n" +
+    "            useInteractiveGuideline=\"true\"\r" +
+    "\n" +
+    "            tooltips=\"true\"\r" +
+    "\n" +
+    "            margin=\"{left:75, bottom:75}\">\r" +
+    "\n" +
+    "    </nvd3-line-chart>\r" +
+    "\n" +
+    "    <p style=\"margin:20px\">\r" +
+    "\n" +
+    "    The Attempt Prediction chart shows the historical number of suicide attempts at a facility based on SPAN data. Using a statistical algorithm, the chart also shows the predicted number of attempts for the next three months. Please see the User Manual for more details. \r" +
+    "\n" +
+    "    </p>\r" +
+    "\n" +
+    "</div>"
   );
 
   $templateCache.put("client/components/widget/widgets/random/random.html",

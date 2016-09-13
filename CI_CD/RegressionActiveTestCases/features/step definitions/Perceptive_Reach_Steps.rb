@@ -26,8 +26,9 @@ When(/^I select middle risk veteran row in the widget$/) do
   #find(:xpath, '//*[@id="sampleVet"]/tbody/tr["+row+"]').click
    #find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[2]').click
       #find(:xpath, '//*[@id="sampleVet"]/tbody/tr[9]').click 
-	expect(page).to have_content '3799'
-	find(:xpath, '//td[contains(text(),"1966")]').click 
+	#expect(page).to have_content '3799'
+	#find(:xpath, '//td[contains(text(),"1966")]').click 
+  find(:xpath, '(//tr/td[contains(text(),\'MIDDLE\')])[1]').click 
 	 #click_link('vet_566384')
 end
 
@@ -53,8 +54,8 @@ When(/^I select top risk veteran row in the widget$/) do
   #find(:xpath, '//*[@id="sampleVet"]/tbody/tr["+row+"]').click
    #find(:xpath, '//select[@ng-model="result.dataModel.vamc"]/option[2]').click
      # find(:xpath, '//*[@id="sampleVet"]/tbody/tr[9]').click 
-	  find(:xpath, '//td[contains(text(),"4669")]').click 
-	  # click_link('vet_652427')
+	 find(:xpath, '(//tr/td[contains(text(),\'TOP\')])[1]').click 
+	
 end
 
 
@@ -98,9 +99,15 @@ end
 When(/^I click on close on the "(.*?)" widget$/) do |widgetname|
   title = widgetname
 #page.find(:xpath, "//span[normalize-space(text())='emergency']/following::button[3]",:match => :prefer_exact).click
-all(:xpath, "//span[normalize-space(text())='#{title}']/following::button[1]")[1].click
-
+#all(:xpath, "//span[normalize-space(text())='#{title}']/following::button[1]")[1].click
+#page.find(:xpath, ".//span[text()='Emergency Contact Information']/following-sibling::div/child::button").click
+#el = page.find(:xpath, ".//span[text()='Emergency Contact Information']/following-sibling::div/child::button")
+#jScript = "$($('.panel-title>span:contains(\""+ widgetname +"\")').siblings()[1]).find('button').click()"
+#page.execute_script(jScript)
+page.find(:xpath, ".//span[text()='#{title}']/following-sibling::div/child::button").click
 end
+
+
 
 When(/^I select VISN Roster "(.*?)" veteran row in the widget$/) do |arg1|
   #pending # express the regexp above with the code you wish you had
@@ -153,7 +160,13 @@ Then(/^I should see "(.*?)" widget$/) do |pagecontent|
   expect(page).to have_content(pagecontent)
 end
 
-Then(/^I should not see the "(.*?)" widget$/) do |pagecontent|
+Then(/^I should not see the "(.*?)" widget$/) do |arg1|
+  title = arg1
+  expect(page).to have_no_xpath("//span[contains(text(),'#{title}')]")
+  #expect(page).to have_no_content(pagecontent)
+end
+
+Then(/^I should not be able to see the "(.*?)" widget$/) do |arg1|
   expect(page).to have_no_content(pagecontent)
 end
 
@@ -470,6 +483,229 @@ When(/^I click on save button$/) do
   pending # express the regexp above with the code you wish you had
 end
 
+When(/^I click on Add Data$/) do
+  pending # express the regexp above with the code you wish you had
+  find_button('Add Data').click
+end
+
+
 Then(/^I should see the widget (\d+) title change to "(.*?)"$/) do |arg1, arg2|
   pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I click on the Default Widgets button$/) do
+  #pending # express the regexp above with the code you wish you had
+  #find_button('Add a Widget').click
+  find_button('Default Widgets').click
+end
+
+Then(/^I should wait$/) do
+  # pending # express the regexp above with the code you wish you had
+  sleep(30)
+end
+
+Then (/^I send an email following the link$/) do 
+	click_link('Contact Help Desk')
+	open_email('vaperceptivereachsupport@va.gov')
+	expect(current_email).to eq "vaperceptivereachsupport@va.gov"
+	expect(current_email).subject eq "Perceptive Reach Dashboard Support"
+	clear_emails
+end 
+
+Then(/^I select the 3rd row from Patient Roster Widget$/) do
+  find(:xpath, './/*[@id=\'tblPatient\']/tbody/tr[3]').click
+end
+
+Then(/^I should see the SSN in patient contact equal to SSN in 3rd row of Patient Roster$/) do
+  ssn = find(:xpath, './/*[@id=\'tblPatient\']/tbody/tr[3]/td[2]').text
+  expect(find(:xpath,'.//div[@wt-contact=\'\']/div[@class=\'ng-binding\']')).to have_content(ssn)
+end
+
+Then(/^I should wait for inactivity$/) do
+  # pending # express the regexp above with the code you wish you had
+  sleep(1020)
+end
+
+Then (/^I should see "(.*?)" in "(.*?)" $/) do |arg1,arg2|
+	#find(:xpath, '//*[@id=/'hrText/']')
+  	fill_in('hrText', :with => 'The patient has coronary artery disease, hypertension, hypercholesterolemia, COPD and tobacco abuse. He reports that doing well. He did have some more knee pain for a few weeks, but this has resolved.')
+end
+
+Then(/^I see only max length in "(.*?)" $/) do |arg1|
+	find(:xpath, arg1).value.length.should_be 128
+end
+
+Then(/^I click on Add Data button$/) do
+  #find_button('Add Data').click 
+  page.execute_script("$(\"button:contains('Add Data')\")[0].scrollIntoView( true );")
+  page.execute_script("$(window).scrollTop( 600 );")
+  #find_button('Add Data').trigger('click')
+   find_button('Add Data').click 
+end
+
+Then(/^I should not see "(.*?)"$/) do |arg1|
+	expect(page).to_not have_content(arg1)
+end
+
+Then(/^I should see Facility "(.*?)"$/) do |arg1|
+	expect(page).to have_content(arg1)
+end
+
+Then(/^I select first Veteran$/) do 
+ find(:xpath, '//*[@id="tblPatient"]/tbody/tr[1]/td[1]').click
+end 
+
+Then(/^I see the same SSN and VeteranID displayed on top of page for first veteran$/) do
+ #pending # express the regexp above with the code you wish you had
+  veteranID = find(:xpath, './/*[@id=\'tblPatient\']/tbody/tr[1]/td[1]').text
+  ssn = find(:xpath, './/*[@id=\'tblPatient\']/tbody/tr[1]/td[2]').text
+ expect(find(:xpath, '/html/body/div[1]/div/div/div/div[2]/div[2]/div[2]/label/span')).to have_content(ssn)
+ expect(find(:xpath, '/html/body/div[1]/div/div/div/div[2]/div[2]/div[2]/label/span')).to have_content(veteranID)
+end
+
+Then(/^I see the same SSN and VeteranID displayed on top of page for another veteran$/) do
+ #pending # express the regexp above with the code you wish you had
+  veteranID = find(:xpath, './/*[@id=\'tblPatient\']/tbody/tr[4]/td[1]').text
+  ssn = find(:xpath, './/*[@id=\'tblPatient\']/tbody/tr[4]/td[2]').text
+ expect(find(:xpath, '/html/body/div[1]/div/div/div/div[2]/div[2]/div[2]/label/span')).to have_content(ssn)
+ expect(find(:xpath, '/html/body/div[1]/div/div/div/div[2]/div[2]/div[2]/label/span')).to have_content(veteranID)
+end
+
+Then(/^I click on the Clear button$/) do
+  #pending # express the regexp above with the code you wish you had
+   find_button('Clear').click
+end
+
+Then(/^I should not see any widgets$/) do
+   expect(page).to have_no_xpath("//span[contains(text(),'Patient Roster by VAMC')]")
+   expect(page).to have_no_xpath("//span[contains(text(),'Clinical Decision Support')]")
+   expect(page).to have_no_xpath("//span[contains(text(),'Patient Contact')]")
+   expect(page).to have_no_xpath("//span[contains(text(),'Data Entry')]")
+   expect(page).to have_no_xpath("//span[contains(text(),'Diagnoses')]")
+   expect(page).to have_no_xpath("//span[contains(text(),'Medication')]")
+   expect(page).to have_no_xpath("//span[contains(text(),'Appointment')]")
+   expect(page).to have_no_xpath("//span[contains(text(),'CDS Questionnaire')]")
+   expect(page).to have_no_xpath("//span[contains(text(),'Emergency Contact Information')]")
+end
+
+Then(/^I should see all the  widgets$/) do
+   expect(page).to have_xpath("//span[contains(text(),'Patient Roster by VAMC')]")
+   expect(page).to have_xpath("//span[contains(text(),'Clinical Decision Support')]")
+   expect(page).to have_xpath("//span[contains(text(),'Patient Contact')]")
+   expect(page).to have_xpath("//span[contains(text(),'Data Entry')]")
+   expect(page).to have_xpath("//span[contains(text(),'Diagnoses')]")
+   expect(page).to have_xpath("//span[contains(text(),'Medication')]")
+   expect(page).to have_xpath("//span[contains(text(),'Appointment')]")
+   expect(page).to have_xpath("//span[contains(text(),'CDS Questionnaire')]")
+   expect(page).to have_xpath("//span[contains(text(),'Emergency Contact Information')]")
+end
+
+Then(/^I select Another Veteran$/) do 
+ find(:xpath, '//*[@id="tblPatient"]/tbody/tr[1]/td[4]').click
+end 
+
+Then(/^I should wait for twenty seconds$/) do  
+  # pending # express the regexp above with the code you wish you had
+  sleep(20)
+end    
+
+Then(/^I click on link "(.*?)"$/) do |arg1|
+  #pending # express the regexp above with the code you wish you had
+# find_link(arg1).click
+find(:xpath, '//*[@id="tblPatient_wrapper"]/div[1]/a/span/a').click
+end
+
+When(/^I click on "(.*?)" button multiple times$/) do |arg1|
+i = 0 
+count = 10
+  while i < count do
+  find_button(arg1).click 
+  i = i+1
+  end
+end
+
+Then(/^I see "(.*?)" in field "(.*?)"$/) do |arg1,arg2|
+	#assert page.has_field?(arg2, :with => arg1) 
+	 textValue = find(:xpath, './/*[@id="hrText"]').text
+	 #expect(arg1).to equal(textValue)
+end
+
+Then(/^I should not see "(.*?)" in the Outreach Status column$/) do |pagecontent|
+    expect(page).to have_no_content(pagecontent)
+end
+
+And(/^I should see "Remove Widget" button$/) do
+        #sql query get the default widgets for the user profile
+        page.find(:xpath,"/html/body/div/div/div/div/div[3]/ul/li[3]/div[1]/div[1]/div/div/button").click
+end
+
+
+
+
+And(/^I select first VISN Roster in the widget$/) do
+          #pending # express the regexp above with the code you wish you had
+        page.find(:xpath,"/html/body/div/div/div/div/div[3]/ul/li[1]/div[1]/div[2]/div/div/table/tbody/tr[1]/td[1]").click
+end
+
+And(/^I Select first VAMC facility in facility roster widget$/) do
+          #pending # express the regexp above with the code you wish you had
+        page.find(:xpath,"/html/body/div/div/div/div/div[3]/ul/li[2]/div[1]/div[2]/div/div/table/tbody/tr[1]/td[1]").click
+end
+
+
+
+And(/^I click X in upper right of Prediction Chart widget$/) do
+        #find_button('Individualididual view').click
+        page.find(:xpath,"/html/body/div/div/div/div/div[3]/ul/li[3]/div[1]/div[1]/div/div/button").click
+end
+
+And(/^I click the "Add a Widget" button$/) do
+  #find_button('Add a Widget').click
+  find_button('Add a Widget').click
+end
+
+Then(/^I should not see "(.*?)" in Prediction Chart$/) do |pagecontent|
+  expect(page).to have_no_content(pagecontent)
+end
+
+Then (/^I should see Remove Patient button$/) do
+     find_button('Remove Patient')
+end
+
+Then(/^I should click on Condition1 button/) do
+	#find(:xpath, './/*[@id="cdsConditionDiv"]/div/div[1]/div[1]/div[2]').click
+	page.choose('Condition_1')
+end
+
+Then(/^I click on CDSNext1 button/) do
+	find(:xpath, './/*[@id="cdsConditionDiv"]/div/div[2]/button[2]').click
+
+end
+
+Then(/^I should select the first option in dropdown/) do
+  find(:xpath, './/*[@id="question_55"][1]').select_option
+end
+
+
+Then(/^I should select "(.*?)" in the Data Entry widget$/) do |pagecontent|
+ page.find(:xpath , '//*[@ng-model="NotifiedProvider"]').set(true)
+end
+
+
+Then(/^I should select "Add Data" button in the Data Entry widget$/) do
+ page.find(:xpath , '//*[@ng-click="addNewData()"]').set(true)
+end
+
+
+Then(/^I should see the "date and time" in the outreach status checklist$/) do
+ #page.find(:xpath , '//*[@id="identifiedprimaryproviderdate"]')
+ page.find(:xpath , './/*[@id="enterWdgtDataForm"]/div/div/div[1]/div[3]/div[4]/label')
+end
+
+Then(/^I should see "(.*?)" in the About Perceptive Reach widget$/) do |pagecontent|
+    page.find(:xpath, '//*[@href="http://vaww.mirecc.va.gov/reachvet/"]')
+end
+
+Then(/^I should see "(.*?)" in the About Perceptive Reach widget content$/) do |pagecontent|
+  expect(page).to have_content(pagecontent)
 end

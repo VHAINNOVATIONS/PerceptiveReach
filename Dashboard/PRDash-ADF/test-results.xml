@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <testsuites>
-  <testsuite name="PhantomJS 1.9.8 (Windows 8 0.0.0)" package="" timestamp="2015-09-09T14:42:20" id="0" hostname="VarunDev" tests="232" errors="0" failures="0" time="3.447">
+  <testsuite name="PhantomJS 1.9.8 (Windows 8 0.0.0)" package="" timestamp="2016-04-06T14:51:36" id="0" hostname="VarunDev" tests="232" errors="0" failures="0" time="3.596">
     <properties>
       <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.8 Safari/534.34"/>
     </properties>
-    <testcase name="should return a string" time="0.014" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: DashboardWidgetCtrl the makeTemplateString method"/>
+    <testcase name="should return a string" time="0.015" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: DashboardWidgetCtrl the makeTemplateString method"/>
     <testcase name="should use ng-include if templateUrl is specified on widget, despite any other options" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: DashboardWidgetCtrl the makeTemplateString method"/>
     <testcase name="should return widget.template if specified, regardless of presence of directive or attrs" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: DashboardWidgetCtrl the makeTemplateString method"/>
     <testcase name="should use widget.directive as attribute directive" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: DashboardWidgetCtrl the makeTemplateString method"/>
@@ -13,229 +13,229 @@
     <testcase name="should add attrs to the widget object if it does not exist and dataAttrName is specified" time="0.008" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: DashboardWidgetCtrl the makeTemplateString method"/>
     <testcase name="should do nothing if event.which is not 1 (left click)" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: DashboardWidgetCtrl the grabResizer method"/>
     <testcase name="should call stopPropagation and preventDefault" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: DashboardWidgetCtrl the grabResizer method"/>
-    <testcase name="should add a .widget-resizer-marquee element to the .widget element" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: DashboardWidgetCtrl the grabResizer method"/>
+    <testcase name="should add a .widget-resizer-marquee element to the .widget element" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: DashboardWidgetCtrl the grabResizer method"/>
     <testcase name="should set editingTitle=true on the widget object" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: DashboardWidgetCtrl the editTitle method"/>
-    <testcase name="should call $timeout" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: DashboardWidgetCtrl the editTitle method"/>
+    <testcase name="should call $timeout" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: DashboardWidgetCtrl the editTitle method"/>
     <testcase name="should set editingTitle=false" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: DashboardWidgetCtrl the saveTitleEdit method"/>
-    <testcase name="should have toolbar" time="0.043" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
-    <testcase name="should have UI.Sortable directive" time="0.033" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
-    <testcase name="should render widgets" time="0.018" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
+    <testcase name="should have toolbar" time="0.041" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
+    <testcase name="should have UI.Sortable directive" time="0.031" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
+    <testcase name="should render widgets" time="0.02" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
     <testcase name="should evaluate widget expressions" time="0.018" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
-    <testcase name="should evaluate scope expressions" time="0.016" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
-    <testcase name="should fill options with defaults" time="0.03" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
-    <testcase name="should not overwrite specified options with defaults" time="0.044" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
+    <testcase name="should evaluate scope expressions" time="0.032" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
+    <testcase name="should fill options with defaults" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
+    <testcase name="should not overwrite specified options with defaults" time="0.047" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
     <testcase name="should be able to use a different dashboard template" time="0.03" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
-    <testcase name="should set scope.widgets to an empty array if no defaultWidgets are specified" time="0.023" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
-    <testcase name="should set options.unsavedChangeCount to 0 upon load" time="0.036" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
-    <testcase name="should not call saveDashboard on load" time="0.034" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
-    <testcase name="should exist" time="0.019" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the sortableOptions"/>
-    <testcase name="should be possible to be extendable from the dashboardOptions" time="0.018" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the sortableOptions"/>
-    <testcase name="should have a stop function that calls $scope.saveDashboard" time="0.017" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the sortableOptions"/>
-    <testcase name="should be a function" time="0.017" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function"/>
-    <testcase name="should throw if no default widgetDefinition was found" time="0.019" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function"/>
-    <testcase name="should look to the passed widgetToInstantiate object for the title before anything else" time="0.043" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function"/>
-    <testcase name="should use the defaultWidget&apos;s title second" time="0.019" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function"/>
-    <testcase name="should call the saveDashboard method (internal)" time="0.019" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function"/>
-    <testcase name="should support passing just the widget name as a string" time="0.023" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function"/>
-    <testcase name="should keep overrides from widgetPassed" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function @awashbrook Test Case"/>
-    <testcase name="should fill in default attrs" time="0.024" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function @awashbrook Test Case"/>
+    <testcase name="should set scope.widgets to an empty array if no defaultWidgets are specified" time="0.053" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
+    <testcase name="should set options.unsavedChangeCount to 0 upon load" time="0.028" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
+    <testcase name="should not call saveDashboard on load" time="0.039" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard"/>
+    <testcase name="should exist" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the sortableOptions"/>
+    <testcase name="should be possible to be extendable from the dashboardOptions" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the sortableOptions"/>
+    <testcase name="should have a stop function that calls $scope.saveDashboard" time="0.044" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the sortableOptions"/>
+    <testcase name="should be a function" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function"/>
+    <testcase name="should throw if no default widgetDefinition was found" time="0.022" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function"/>
+    <testcase name="should look to the passed widgetToInstantiate object for the title before anything else" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function"/>
+    <testcase name="should use the defaultWidget&apos;s title second" time="0.02" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function"/>
+    <testcase name="should call the saveDashboard method (internal)" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function"/>
+    <testcase name="should support passing just the widget name as a string" time="0.022" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function"/>
+    <testcase name="should keep overrides from widgetPassed" time="0.023" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function @awashbrook Test Case"/>
+    <testcase name="should fill in default attrs" time="0.062" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function @awashbrook Test Case"/>
     <testcase name="should override deep options in dataModelOptions" time="0.023" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function @awashbrook Test Case"/>
-    <testcase name="should fill in deep default attrs" time="0.017" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function @awashbrook Test Case"/>
-    <testcase name="should prevent save from being called if set to true" time="0.017" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function the doNotSave parameter"/>
-    <testcase name="should be a function" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the removeWidget function"/>
-    <testcase name="should remove the provided widget from childScope.widgets array" time="0.049" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the removeWidget function"/>
-    <testcase name="should call saveDashboard" time="0.022" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the removeWidget function"/>
-    <testcase name="should be attached to the options object after initialization" time="0.02" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the saveDashboard function"/>
-    <testcase name="should call scope.dashboardState.save when called internally if explicitSave is falsey" time="0.019" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the saveDashboard function"/>
+    <testcase name="should fill in deep default attrs" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function @awashbrook Test Case"/>
+    <testcase name="should prevent save from being called if set to true" time="0.02" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the addWidget function the doNotSave parameter"/>
+    <testcase name="should be a function" time="0.02" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the removeWidget function"/>
+    <testcase name="should remove the provided widget from childScope.widgets array" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the removeWidget function"/>
+    <testcase name="should call saveDashboard" time="0.02" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the removeWidget function"/>
+    <testcase name="should be attached to the options object after initialization" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the saveDashboard function"/>
+    <testcase name="should call scope.dashboardState.save when called internally if explicitSave is falsey" time="0.02" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the saveDashboard function"/>
     <testcase name="should not call scope.dashboardState.save when called internally if explicitSave is truthy" time="0.022" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the saveDashboard function"/>
-    <testcase name="should call scope.dashboardState.save when called externally, no matter what explicitSave value is" time="0.023" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the saveDashboard function"/>
-    <testcase name="should keep a count of unsaved changes as unsavedChangeCount" time="0.023" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the saveDashboard function"/>
-    <testcase name="should reset the cound of unsaved changes if a successful force save occurs" time="0.017" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the saveDashboard function"/>
-    <testcase name="should be a function" time="0.017" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the loadWidgets function"/>
-    <testcase name="should set savedWidgetDefs on scope as passed array" time="0.018" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the loadWidgets function"/>
-    <testcase name="should call clear on the scope with true as the only argument" time="0.025" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the loadWidgets function"/>
-    <testcase name="should call addWidget for each widget in the array" time="0.023" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the loadWidgets function"/>
+    <testcase name="should call scope.dashboardState.save when called externally, no matter what explicitSave value is" time="0.059" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the saveDashboard function"/>
+    <testcase name="should keep a count of unsaved changes as unsavedChangeCount" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the saveDashboard function"/>
+    <testcase name="should reset the cound of unsaved changes if a successful force save occurs" time="0.022" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the saveDashboard function"/>
+    <testcase name="should be a function" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the loadWidgets function"/>
+    <testcase name="should set savedWidgetDefs on scope as passed array" time="0.022" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the loadWidgets function"/>
+    <testcase name="should call clear on the scope with true as the only argument" time="0.023" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the loadWidgets function"/>
+    <testcase name="should call addWidget for each widget in the array" time="0.02" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the loadWidgets function"/>
     <testcase name="should call addWidget for each widget with true as the second parameter (doNotSave)" time="0.02" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the loadWidgets function"/>
-    <testcase name="should set the scope to an empty array" time="0.063" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the clear function"/>
-    <testcase name="should not call saveDashboard if first arg is true" time="0.02" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the clear function"/>
-    <testcase name="should call saveDashboard if first arg is not true" time="0.018" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the clear function"/>
+    <testcase name="should set the scope to an empty array" time="0.022" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the clear function"/>
+    <testcase name="should not call saveDashboard if first arg is true" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the clear function"/>
+    <testcase name="should call saveDashboard if first arg is not true" time="0.022" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the clear function"/>
     <testcase name="should be a function" time="0.023" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
-    <testcase name="should call $modal.open with default options" time="0.024" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
-    <testcase name="should have widget in the resolve object" time="0.019" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
-    <testcase name="should set the templateUrl in modal options to the default (&quot;client/components/adf/directives/dashboard/widget-settings-template.html&quot;)" time="0.016" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
+    <testcase name="should call $modal.open with default options" time="0.022" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
+    <testcase name="should have widget in the resolve object" time="0.075" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
+    <testcase name="should set the templateUrl in modal options to the default (&quot;client/components/adf/directives/dashboard/widget-settings-template.html&quot;)" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
     <testcase name="should set the templateUrl in modal options to scope.options.settingsModalOptions.templateUrl" time="0.022" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
-    <testcase name="should set the templateUrl in modal options to widget.settingsModalOptions.templateUrl, if present" time="0.018" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
-    <testcase name="should set the controller in modal options to the default (&quot;WidgetSettingsCtrl&quot;)" time="0.017" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
-    <testcase name="should set the controller in modal options to the default (&quot;WidgetSettingsCtrl&quot;), even when settingsModalOptions is supplied in options" time="0.039" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
-    <testcase name="should set the controller in modal options to the default (&quot;WidgetSettingsCtrl&quot;), even when settingsModalOptions is supplied in widget" time="0.031" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
-    <testcase name="should set the controller to scope.options.settingsModalOptions.controller if provided" time="0.026" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
-    <testcase name="should set the controller to widget.settingsModalOptions.controller if provided" time="0.019" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
+    <testcase name="should set the templateUrl in modal options to widget.settingsModalOptions.templateUrl, if present" time="0.022" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
+    <testcase name="should set the controller in modal options to the default (&quot;WidgetSettingsCtrl&quot;)" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
+    <testcase name="should set the controller in modal options to the default (&quot;WidgetSettingsCtrl&quot;), even when settingsModalOptions is supplied in options" time="0.036" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
+    <testcase name="should set the controller in modal options to the default (&quot;WidgetSettingsCtrl&quot;), even when settingsModalOptions is supplied in widget" time="0.037" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
+    <testcase name="should set the controller to scope.options.settingsModalOptions.controller if provided" time="0.02" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
+    <testcase name="should set the controller to widget.settingsModalOptions.controller if provided" time="0.022" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
     <testcase name="should pass in other modal options set in scope.options.settingsModalOptions" time="0.023" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
-    <testcase name="should pass in other modal options set in widget.settingsModalOptions" time="0.083" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
-    <testcase name="should emit a &quot;widgetChanged&quot; event on the childScope when the modal promise is called" time="0.018" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
-    <testcase name="should call scope.options.onSettingsClose when the modal promise is resolved by default" time="0.019" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
-    <testcase name="should call scope.options.onSettingsDismiss when the modal promise is rejected by default" time="0.023" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
-    <testcase name="should call widget.onSettingsClose if provided when the modal promise is resolved" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
-    <testcase name="should call widget.onSettingsDismiss if provided when the modal promise is rejected" time="0.018" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
-    <testcase name="should exist" time="0.023" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the default onSettingsClose callback"/>
-    <testcase name="should deep extend widget with result" time="0.019" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the default onSettingsClose callback"/>
+    <testcase name="should pass in other modal options set in widget.settingsModalOptions" time="0.025" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
+    <testcase name="should emit a &quot;widgetChanged&quot; event on the childScope when the modal promise is called" time="0.024" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
+    <testcase name="should call scope.options.onSettingsClose when the modal promise is resolved by default" time="0.026" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
+    <testcase name="should call scope.options.onSettingsDismiss when the modal promise is rejected by default" time="0.025" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
+    <testcase name="should call widget.onSettingsClose if provided when the modal promise is resolved" time="0.025" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
+    <testcase name="should call widget.onSettingsDismiss if provided when the modal promise is rejected" time="0.092" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the openWidgetSettings function"/>
+    <testcase name="should exist" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the default onSettingsClose callback"/>
+    <testcase name="should deep extend widget with result" time="0.022" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the default onSettingsClose callback"/>
     <testcase name="should exist" time="0.021" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the default onSettingsDismiss callback"/>
-    <testcase name="should call $log.info with the reason" time="0.02" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the default onSettingsDismiss callback"/>
+    <testcase name="should call $log.info with the reason" time="0.022" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard the default onSettingsDismiss callback"/>
     <testcase name="should not require storage" time="0.061" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts"/>
     <testcase name="should be able to use a different dashboard-layouts template" time="0.05" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts"/>
     <testcase name="should set the first dashboard to active if there is not one already active" time="0.052" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts"/>
-    <testcase name="should call the add and save methods of LayoutStorage" time="0.036" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the createNewLayout method"/>
+    <testcase name="should call the add and save methods of LayoutStorage" time="0.033" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the createNewLayout method"/>
     <testcase name="should return the newly created layout object" time="0.034" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the createNewLayout method"/>
-    <testcase name="should set active=true on the newly created layout" time="0.041" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the createNewLayout method"/>
-    <testcase name="should set defaultWidgets to dashboardOptions.defaultWidgets if it is present" time="0.106" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the createNewLayout method"/>
-    <testcase name="should set defaultWidgets to an empty array if dashboardOptions.defaultWidgets is not present" time="0.047" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the createNewLayout method"/>
-    <testcase name="should call the remove and save methods of LayoutStorage" time="0.026" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the removeLayout method"/>
-    <testcase name="should call remove with the layout it was passed" time="0.032" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the removeLayout method"/>
-    <testcase name="should call _makeLayoutActive if there is not a currently active dashboard with unsaved changes" time="0.028" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the makeLayoutActive method"/>
-    <testcase name="should create a modal" time="0.024" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the makeLayoutActive method when there are unsaved changes on the current dashboard"/>
-    <testcase name="should resolve layout to the layout to be made active" time="0.03" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the makeLayoutActive method when there are unsaved changes on the current dashboard"/>
-    <testcase name="should provide a success callback that saves the current dashboard and then calls _makeLayoutActive" time="0.025" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the makeLayoutActive method when there are unsaved changes on the current dashboard"/>
-    <testcase name="should provide an error callback that only calls _makeLayoutActive" time="0.033" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the makeLayoutActive method when there are unsaved changes on the current dashboard"/>
-    <testcase name="should set the editingTitle attribute to true on the layout it is passed" time="0.027" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the editTitle method"/>
-    <testcase name="should set editingTitle to false" time="0.035" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the saveTitleEdit method"/>
-    <testcase name="should call layoutStorage.save" time="0.028" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the saveTitleEdit method"/>
-    <testcase name="should call LayoutStorage.save" time="0.036" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the saveLayouts method"/>
-    <testcase name="should call LayoutStorage.save with true as the first arg" time="0.04" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the saveLayouts method"/>
-    <testcase name="should call dashboard.addWidget method of the active layout" time="0.034" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the proxy methods to active layout the addWidget method"/>
-    <testcase name="should do nothing if there is no active layout" time="0.038" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the proxy methods to active layout the addWidget method"/>
-    <testcase name="should call dashboard.loadWidgets of the current layout" time="0.032" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the proxy methods to active layout the loadWidgets method"/>
-    <testcase name="should do nothing if there is no active layout" time="0.027" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the proxy methods to active layout the loadWidgets method"/>
-    <testcase name="should call dashboard.saveDashboard of the current layout" time="0.044" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the proxy methods to active layout the saveDashboard method"/>
-    <testcase name="should do nothing if there is no active layout" time="0.13" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the proxy methods to active layout the saveDashboard method"/>
-    <testcase name="should create a new instance of dataModelType if provided in scope.widget" time="0.006" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: widget"/>
-    <testcase name="should call setup and init on the new dataModel" time="0.007" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: widget"/>
+    <testcase name="should set active=true on the newly created layout" time="0.043" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the createNewLayout method"/>
+    <testcase name="should set defaultWidgets to dashboardOptions.defaultWidgets if it is present" time="0.037" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the createNewLayout method"/>
+    <testcase name="should set defaultWidgets to an empty array if dashboardOptions.defaultWidgets is not present" time="0.061" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the createNewLayout method"/>
+    <testcase name="should call the remove and save methods of LayoutStorage" time="0.035" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the removeLayout method"/>
+    <testcase name="should call remove with the layout it was passed" time="0.12" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the removeLayout method"/>
+    <testcase name="should call _makeLayoutActive if there is not a currently active dashboard with unsaved changes" time="0.03" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the makeLayoutActive method"/>
+    <testcase name="should create a modal" time="0.03" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the makeLayoutActive method when there are unsaved changes on the current dashboard"/>
+    <testcase name="should resolve layout to the layout to be made active" time="0.031" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the makeLayoutActive method when there are unsaved changes on the current dashboard"/>
+    <testcase name="should provide a success callback that saves the current dashboard and then calls _makeLayoutActive" time="0.031" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the makeLayoutActive method when there are unsaved changes on the current dashboard"/>
+    <testcase name="should provide an error callback that only calls _makeLayoutActive" time="0.031" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the makeLayoutActive method when there are unsaved changes on the current dashboard"/>
+    <testcase name="should set the editingTitle attribute to true on the layout it is passed" time="0.032" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the editTitle method"/>
+    <testcase name="should set editingTitle to false" time="0.03" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the saveTitleEdit method"/>
+    <testcase name="should call layoutStorage.save" time="0.03" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the saveTitleEdit method"/>
+    <testcase name="should call LayoutStorage.save" time="0.03" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the saveLayouts method"/>
+    <testcase name="should call LayoutStorage.save with true as the first arg" time="0.041" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the saveLayouts method"/>
+    <testcase name="should call dashboard.addWidget method of the active layout" time="0.036" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the proxy methods to active layout the addWidget method"/>
+    <testcase name="should do nothing if there is no active layout" time="0.034" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the proxy methods to active layout the addWidget method"/>
+    <testcase name="should call dashboard.loadWidgets of the current layout" time="0.036" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the proxy methods to active layout the loadWidgets method"/>
+    <testcase name="should do nothing if there is no active layout" time="0.035" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the proxy methods to active layout the loadWidgets method"/>
+    <testcase name="should call dashboard.saveDashboard of the current layout" time="0.035" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the proxy methods to active layout the saveDashboard method"/>
+    <testcase name="should do nothing if there is no active layout" time="0.035" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: dashboard-layouts the proxy methods to active layout the saveDashboard method"/>
+    <testcase name="should create a new instance of dataModelType if provided in scope.widget" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: widget"/>
+    <testcase name="should call setup and init on the new dataModel" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: widget"/>
     <testcase name="should call compile template" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: widget"/>
     <testcase name="should create a new instance of dataModelType from string name" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: widget"/>
     <testcase name="should validate data model type" time="0.006" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Directive: widget"/>
     <testcase name="should provide an empty implementation of storage if it is not provided" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the constructor"/>
-    <testcase name="should set a subset of the options directly on the LayoutStorage instance itself" time="0.016" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the constructor"/>
-    <testcase name="should set stringify as true by default" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the constructor"/>
-    <testcase name="should allow stringify to be overridden by option" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the constructor"/>
+    <testcase name="should set a subset of the options directly on the LayoutStorage instance itself" time="0.015" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the constructor"/>
+    <testcase name="should set stringify as true by default" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the constructor"/>
+    <testcase name="should allow stringify to be overridden by option" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the constructor"/>
     <testcase name="should create a layouts array and states object" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the constructor"/>
-    <testcase name="should call load" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the constructor"/>
+    <testcase name="should call load" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the constructor"/>
     <testcase name="should use the default layouts if no stored info was found" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the load method"/>
-    <testcase name="should clone default layouts rather than use them directly" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the load method"/>
+    <testcase name="should clone default layouts rather than use them directly" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the load method"/>
     <testcase name="should use the result from getItem for layouts." time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the load method"/>
-    <testcase name="should NOT use result from getItem for layouts if the storageHash doesnt match" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the load method"/>
-    <testcase name="should be able to handle async loading via promise" time="0.01" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the load method"/>
-    <testcase name="should load defaults if the deferred is rejected" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the load method"/>
+    <testcase name="should NOT use result from getItem for layouts if the storageHash doesnt match" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the load method"/>
+    <testcase name="should be able to handle async loading via promise" time="0.118" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the load method"/>
+    <testcase name="should load defaults if the deferred is rejected" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the load method"/>
     <testcase name="should load defaults if the json is malformed" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the load method"/>
-    <testcase name="should not try to JSON.parse the result if stringifyStorage is false." time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the load method"/>
-    <testcase name="should add to storage.layouts" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the add method"/>
+    <testcase name="should not try to JSON.parse the result if stringifyStorage is false." time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the load method"/>
+    <testcase name="should add to storage.layouts" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the add method"/>
     <testcase name="should be able to take an array of new layouts" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the add method"/>
     <testcase name="should look for defaultWidgets on storage options if not supplied on layout definition" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the add method"/>
     <testcase name="should use defaultWidgets if supplied in the layout definition" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the add method"/>
-    <testcase name="should look for widgetDefinitions on storage options if not supplied on layout definition" time="0.008" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the add method"/>
-    <testcase name="should use widgetDefinitions if supplied in the layout definition" time="0.016" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the add method"/>
-    <testcase name="should remove the supplied layout" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the remove method"/>
+    <testcase name="should look for widgetDefinitions on storage options if not supplied on layout definition" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the add method"/>
+    <testcase name="should use widgetDefinitions if supplied in the layout definition" time="0.014" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the add method"/>
+    <testcase name="should remove the supplied layout" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the remove method"/>
     <testcase name="should delete the state" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the remove method"/>
     <testcase name="should do nothing if layout is not in layouts" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the remove method"/>
-    <testcase name="should set another dashboard to active if the layout removed was active" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the remove method"/>
-    <testcase name="should set the layout at index 0 to active if the removed layout was 0" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the remove method"/>
+    <testcase name="should set another dashboard to active if the layout removed was active" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the remove method"/>
+    <testcase name="should set the layout at index 0 to active if the removed layout was 0" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the remove method"/>
     <testcase name="should not change the active layout if it was not the one that got removed" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the remove method"/>
     <testcase name="should call options.storage.setItem with a stringified object" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the save method"/>
     <testcase name="should save an object that has layouts, states, and storageHash" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the save method"/>
     <testcase name="should call options.storage.setItem with an object when stringifyStorage is false" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the save method"/>
-    <testcase name="should set storage.states[id] to the second argument" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the setItem method"/>
+    <testcase name="should set storage.states[id] to the second argument" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the setItem method"/>
     <testcase name="should call save" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the setItem method"/>
     <testcase name="should return states[id]" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the getItem method"/>
     <testcase name="should return the layout with active:true" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the getActiveLayout method"/>
     <testcase name="should return false if no layout is active" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the getActiveLayout method"/>
-    <testcase name="should remove states[id]" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the removeItem"/>
-    <testcase name="should call save" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the removeItem"/>
-    <testcase name="should be a function" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel"/>
-    <testcase name="should copy class defaults, so that changes on an instance do not change the Class" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
-    <testcase name="should call setWidth" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
-    <testcase name="should take overrides as precedent over Class defaults" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
-    <testcase name="should copy arbitrary data from the widget definition" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
-    <testcase name="should set templateUrl if and only if it is present on Class" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
+    <testcase name="should remove states[id]" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the removeItem"/>
+    <testcase name="should call save" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: LayoutStorage the removeItem"/>
+    <testcase name="should be a function" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel"/>
+    <testcase name="should copy class defaults, so that changes on an instance do not change the Class" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
+    <testcase name="should call setWidth" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
+    <testcase name="should take overrides as precedent over Class defaults" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
+    <testcase name="should copy arbitrary data from the widget definition" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
+    <testcase name="should set templateUrl if and only if it is present on Class" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
     <testcase name="should set template if and only if it is present on Class" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
-    <testcase name="should look for directive if neither templateUrl nor template is found on Class" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
-    <testcase name="should set the name as directive if templateUrl, template, and directive are not defined" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
-    <testcase name="should not require overrides" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
+    <testcase name="should look for directive if neither templateUrl nor template is found on Class" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
+    <testcase name="should set the name as directive if templateUrl, template, and directive are not defined" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
+    <testcase name="should not require overrides" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
     <testcase name="should copy references to settingsModalOptions, onSettingsClose, onSettingsDismiss" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel the constructor"/>
     <testcase name="should take one argument as a string with units" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel setWidth method"/>
-    <testcase name="should take two args as a number and string as units" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel setWidth method"/>
-    <testcase name="should return false and not set anything if width is less than 0" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel setWidth method"/>
-    <testcase name="should assume % if no unit is given" time="0.012" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel setWidth method"/>
+    <testcase name="should take two args as a number and string as units" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel setWidth method"/>
+    <testcase name="should return false and not set anything if width is less than 0" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel setWidth method"/>
+    <testcase name="should assume % if no unit is given" time="0.013" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel setWidth method"/>
     <testcase name="should force greater than 0% and less than or equal 100%" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetModel setWidth method"/>
-    <testcase name="should set the injected layout to scope.layout" time="0.008" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: SaveChangesModalCtrl"/>
-    <testcase name="should be a function" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: SaveChangesModalCtrl the ok method"/>
+    <testcase name="should set the injected layout to scope.layout" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: SaveChangesModalCtrl"/>
+    <testcase name="should be a function" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: SaveChangesModalCtrl the ok method"/>
     <testcase name="should call close" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: SaveChangesModalCtrl the ok method"/>
-    <testcase name="should be a function" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: SaveChangesModalCtrl the cancel function"/>
+    <testcase name="should be a function" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: SaveChangesModalCtrl the cancel function"/>
     <testcase name="should call dismiss" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: SaveChangesModalCtrl the cancel function"/>
     <testcase name="should have save and load methods" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState"/>
     <testcase name="should set the arguments passed to it in the constructor on the state instance" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState"/>
-    <testcase name="should return true if storage is not defined" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the save function"/>
+    <testcase name="should return true if storage is not defined" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the save function"/>
     <testcase name="should serialize and store widgets passed to it" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the save function"/>
-    <testcase name="should not use JSON.stringify if options.stringifyStorage is false" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the save function"/>
-    <testcase name="should return null if storage is disabled" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
-    <testcase name="should return null if storage is enabled but no value was found" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
-    <testcase name="should return null and log a warning if the stored string is invalid JSON" time="0.014" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
+    <testcase name="should not use JSON.stringify if options.stringifyStorage is false" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the save function"/>
+    <testcase name="should return null if storage is disabled" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
+    <testcase name="should return null if storage is enabled but no value was found" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
+    <testcase name="should return null and log a warning if the stored string is invalid JSON" time="0.013" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
     <testcase name="should return an array of widgets if getItem returns valid serialized dashboard state" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
     <testcase name="should return null if getItem returned a falsey value" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
-    <testcase name="should return a promise if getItem returns a promise" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
-    <testcase name="should return null if the stored hash is different from current hash" time="0.006" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
-    <testcase name="should not include widgets that have no corresponding WDO" time="0.006" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
-    <testcase name="should not include widgets who have a stale hash" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
+    <testcase name="should return a promise if getItem returns a promise" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
+    <testcase name="should return null if the stored hash is different from current hash" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
+    <testcase name="should not include widgets that have no corresponding WDO" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
+    <testcase name="should not include widgets who have a stale hash" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
     <testcase name="should resolve when the getItem promise resolves with a value" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function the loadPromise (returned from load method)"/>
-    <testcase name="should reject when the getItemPromise rejects" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function the loadPromise (returned from load method)"/>
-    <testcase name="should reject when the getItem promise resolves with a falsey (or no) value" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function the loadPromise (returned from load method)"/>
+    <testcase name="should reject when the getItemPromise rejects" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function the loadPromise (returned from load method)"/>
+    <testcase name="should reject when the getItem promise resolves with a falsey (or no) value" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function the loadPromise (returned from load method)"/>
     <testcase name="should use JSON.parse if options.stringifyStorage is true" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
-    <testcase name="should not use JSON.parse if options.stringifyStorage is false" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
+    <testcase name="should not use JSON.parse if options.stringifyStorage is false" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: DashboardState the load function"/>
     <testcase name="should set dataModelOptions and widgetScope from args" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach MedicationDataModel setup method"/>
-    <testcase name="check the existence of getData method" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach MedicationDataModel getData method"/>
-    <testcase name="check the existence of init method" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach MedicationDataModel init method"/>
-    <testcase name="check the existence of init method" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach MedicationDataModel destroy method"/>
-    <testcase name="should set dataModelOptions and widgetScope from args" time="0.012" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach PatientFlagDataModel setup method"/>
-    <testcase name="check the existence of getData method" time="0.006" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach PatientFlagDataModel getData method"/>
-    <testcase name="check the existence of init method" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach PatientFlagDataModel init method"/>
+    <testcase name="check the existence of getData method" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach MedicationDataModel getData method"/>
+    <testcase name="check the existence of init method" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach MedicationDataModel init method"/>
+    <testcase name="check the existence of init method" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach MedicationDataModel destroy method"/>
+    <testcase name="should set dataModelOptions and widgetScope from args" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach PatientFlagDataModel setup method"/>
+    <testcase name="check the existence of getData method" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach PatientFlagDataModel getData method"/>
+    <testcase name="check the existence of init method" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach PatientFlagDataModel init method"/>
     <testcase name="check the existence of init method" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach PatientFlagDataModel destroy method"/>
-    <testcase name="check the existence of getData method" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach AppointmentDataModel getData method"/>
+    <testcase name="check the existence of getData method" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach AppointmentDataModel getData method"/>
     <testcase name="check the existence of init method" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach AppointmentDataModel init method"/>
-    <testcase name="check the existence of init method" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach AppointmentDataModel destroy method"/>
+    <testcase name="check the existence of init method" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).PerceptiveReach DataModels PerceptiveReach AppointmentDataModel destroy method"/>
     <testcase name="should instantiate a WebSocket immediately with the url set with provider.setWebSocketURL" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket when explicitConnection is disabled when url is provided by calling provider_setWebSocketURL"/>
-    <testcase name="should throw if a URL was not set with provider.setWebSocketURL" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket when explicitConnection is disabled when the url is not provided by calling provider_setWebSocketURL"/>
+    <testcase name="should throw if a URL was not set with provider.setWebSocketURL" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket when explicitConnection is disabled when the url is not provided by calling provider_setWebSocketURL"/>
     <testcase name="should not call WebSocket immediately" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket when explicitConnection is enabled when url is provided by calling provider_setWebSocketURL"/>
     <testcase name="should instantiate a WebSocket with the url set with provider.setWebSocketURL if no url arg is passed to it" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket when explicitConnection is enabled when url is provided by calling provider_setWebSocketURL"/>
     <testcase name="should not call WebSocket immediately" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket when explicitConnection is enabled when the url is not provided by calling provider_setWebSocketURL"/>
     <testcase name="should instantiate a WebSocket with the provided url" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket when explicitConnection is enabled when the url is not provided by calling provider_setWebSocketURL"/>
-    <testcase name="should throw if no url is passed and no url was set with provider.setWebSocketURL" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket when explicitConnection is enabled when the url is not provided by calling provider_setWebSocketURL"/>
-    <testcase name="should send message when WebSocket connection is opened" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the send method"/>
-    <testcase name="should notify subscribers" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the send method"/>
+    <testcase name="should throw if no url is passed and no url was set with provider.setWebSocketURL" time="0.001" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket when explicitConnection is enabled when the url is not provided by calling provider_setWebSocketURL"/>
+    <testcase name="should send message when WebSocket connection is opened" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the send method"/>
+    <testcase name="should notify subscribers" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the send method"/>
     <testcase name="should send a subscribe message" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the send method"/>
-    <testcase name="should unsubscribe" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the send method"/>
-    <testcase name="should call unsubscribe on scope destroy" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the send method"/>
+    <testcase name="should unsubscribe" time="0.001" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the send method"/>
+    <testcase name="should call unsubscribe on scope destroy" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the send method"/>
     <testcase name="should send an unsubscribe message when there are no more listeners for a given topic" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the send method"/>
-    <testcase name="should send a subscribe message again if a topic has previously been unsubscribed to" time="0.014" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the send method"/>
-    <testcase name="should not throw" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the connect method"/>
+    <testcase name="should send a subscribe message again if a topic has previously been unsubscribed to" time="0.012" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the send method"/>
+    <testcase name="should not throw" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the connect method"/>
     <testcase name="should do nothing if an open WebSocket instance is already there" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the connect method"/>
-    <testcase name="should call the close method of the WebSocket" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the disconnect method when the webSocket has been connected"/>
-    <testcase name="should not try to re-establish connection after connectionAttemptInterval" time="0.011" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the disconnect method when the webSocket has been connected"/>
-    <testcase name="should not throw" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the disconnect method when the webSocket has not connected"/>
+    <testcase name="should call the close method of the WebSocket" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the disconnect method when the webSocket has been connected"/>
+    <testcase name="should not try to re-establish connection after connectionAttemptInterval" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the disconnect method when the webSocket has been connected"/>
+    <testcase name="should not throw" time="0.002" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket the disconnect method when the webSocket has not connected"/>
     <testcase name="should try to re-establish connection" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket when the connection gets unexpectedly closed"/>
-    <testcase name="should try maxConnectionAttempts times" time="0.017" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket when the connection gets unexpectedly closed"/>
+    <testcase name="should try maxConnectionAttempts times" time="0.015" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket when the connection gets unexpectedly closed"/>
     <testcase name="should start queuing up send messages again, then send those messages once connection has been re-established" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Service: webSocket when the connection gets unexpectedly closed"/>
-    <testcase name="should be a function" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetDataModel"/>
-    <testcase name="should set dataAttrName, dataModelOptions, and widgetScope from args" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetDataModel setup method"/>
+    <testcase name="should be a function" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetDataModel"/>
+    <testcase name="should set dataAttrName, dataModelOptions, and widgetScope from args" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetDataModel setup method"/>
     <testcase name="should set scope.widgetData to passed data" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetDataModel updateScope method"/>
-    <testcase name="should be an empty (noop) implementation" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetDataModel init method"/>
-    <testcase name="should be an empty (noop) implementation" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetDataModel destroy method"/>
+    <testcase name="should be an empty (noop) implementation" time="0.005" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetDataModel init method"/>
+    <testcase name="should be an empty (noop) implementation" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Factory: WidgetDataModel destroy method"/>
     <testcase name="should add widget to the dialog scope" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: WidgetSettingsCtrl"/>
-    <testcase name="should call close with $scope.result and $scope.widget" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: WidgetSettingsCtrl the ok method"/>
-    <testcase name="should call dismiss" time="0.006" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: WidgetSettingsCtrl the cancel method"/>
-    <testcase name="should have topN directive" time="0.044" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).main test"/>
+    <testcase name="should call close with $scope.result and $scope.widget" time="0.003" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: WidgetSettingsCtrl the ok method"/>
+    <testcase name="should call dismiss" time="0.004" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).Controller: WidgetSettingsCtrl the cancel method"/>
+    <testcase name="should have topN directive" time="0.04" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).main test"/>
     <testcase name="should have veteran roster table directive" time="0.025" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).main test"/>
-    <testcase name="should have clinical decision support directive" time="0.01" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).main test"/>
-    <testcase name="should have medication directive" time="0.016" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).main test"/>
-    <testcase name="should have patient flag directive" time="0.025" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).main test"/>
-    <testcase name="should have appointment directive" time="0.018" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).main test"/>
-    <testcase name="should have diagnoses directive" time="0.016" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).main test"/>
+    <testcase name="should have clinical decision support directive" time="0.012" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).main test"/>
+    <testcase name="should have medication directive" time="0.017" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).main test"/>
+    <testcase name="should have patient flag directive" time="0.017" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).main test"/>
+    <testcase name="should have appointment directive" time="0.016" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).main test"/>
+    <testcase name="should have diagnoses directive" time="0.017" classname="PhantomJS 1.9.8 (Windows 8 0.0.0).main test"/>
     <system-out><![CDATA[PhantomJS 1.9.8 (Windows 8 0.0.0) LOG: 'expect storage setItem to be called'
 
 ]]></system-out>

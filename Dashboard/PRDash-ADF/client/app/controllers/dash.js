@@ -2,13 +2,15 @@
 
 angular.module('app')
   .factory('widgetDefinitions', function(RandomDataModel,RandomTopNDataModel, RandomTimeSeriesDataModel,
-                                    RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel, 
+                                    RandomMinutesDataModel, RandomNVD3TimeSeriesDataModel,
                                     RandomMetricsTimeSeriesDataModel, TotalRisksDataModel,
                                     ContactBaseDataModel, EmergencyContactDataModel, PatientDataModel,
                                     MedicationDataModel, ClinicalDecisionSupportDataModel,
-                                    AppointmentDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,AgeGroupsMetricsDataModel, 
-                                    GenderDistributionMetricsDataModel,MilitaryBranchMetricsDataModel, OutreachStatusMetricsDataModel,
-                                    TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel 
+                                    AppointmentDataModel, EnterDataDataModel, DiagnosesDataModel, SuicideStatisticsDataModel,
+                                    AgeGroupsMetricsDataModel,GenderDistributionMetricsDataModel, PredictionChartDataModel,
+                                    MilitaryBranchMetricsDataModel, OutreachStatusMetricsDataModel,
+                                    TopMidRiskMetricsDataModel, VAMCMetricsDataModel, FacilityDataModel,VISNDataModel,
+                                    CommunityResourceDataModel,CDSQuestionnaireDataModel
 					) {
     return [
       {
@@ -41,18 +43,18 @@ angular.module('app')
           width: '34%'
         }
       },*/
-      
+
       {
         name: 'ClinicalDecisionSupport',
         directive: 'wt-clinical-decision-support',
         dataAttrName: 'data',
         dataModelType: ClinicalDecisionSupportDataModel,
-        title: 'Clinical Decision Support',
+        title: 'What is Perceptive Reach',
         dataModelOptions: {
           //riskLevel: 1,
           defaultWidget: true,
           layout: 'individual',
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           guidelineType: 'SRB'
         },
         sizeX:12,
@@ -67,15 +69,33 @@ angular.module('app')
         dataModelOptions: {
           defaultWidget: true,
           layout: 'individual',
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           vamc: 1
         },
         style: {
           width: '55%'
         },
+        canClose:false,
         sizeX:18,
         sizeY:10
       },
+        {
+        name: 'enterdata',
+        directive: 'wt-enter-data',
+        dataAttrName: 'data',
+        dataModelType: EnterDataDataModel,
+        title: 'Data Entry',
+        dataModelOptions: {
+          defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
+          layout: 'individual'
+        },
+        sizeX:14,
+        sizeY:10,
+        minSizeX: 14,
+        minSizeY: 6
+      },
+
       {
         name: 'contact',
         directive: 'wt-contact',
@@ -83,7 +103,7 @@ angular.module('app')
         dataModelType: ContactBaseDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'individual'
         },
         title: 'Patient Contact',
@@ -100,7 +120,7 @@ angular.module('app')
         title: 'Emergency Contact Information',
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'individual',
           reachID: 16
         },
@@ -117,7 +137,7 @@ angular.module('app')
         dataModelType: MedicationDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'individual'
         },
         sizeY:9
@@ -130,7 +150,7 @@ angular.module('app')
         dataModelType: AppointmentDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'individual'
         },
         size: {
@@ -146,7 +166,7 @@ angular.module('app')
         dataModelType: DiagnosesDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'individual'
         },
         sizeY:9
@@ -164,7 +184,8 @@ angular.module('app')
           vamc: 1
         },
         sizeX:15,
-        sizeY:9
+        sizeY:9,
+        canClose:false
       },
       {
         name: 'FacilityTable',
@@ -174,13 +195,14 @@ angular.module('app')
         title: 'Facility Roster',
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM',
+          roleAccess: 'SUP,REP,ADM,CCS',
           layout: 'surveillance,facility',
           vamc: 1
         },
         sizeX:15,
-        sizeY:9
-      },  
+        sizeY:9,
+        canClose:false
+      },
 
 	   {
         name: 'AgeGroups',
@@ -191,11 +213,11 @@ angular.module('app')
         sizeY:10,
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'surveillance,facility'
         }
         //}
-      },     
+      },
 	   {
         name: 'GenderDistribution',
         directive: 'wt-national-gender-distribution',
@@ -204,10 +226,33 @@ angular.module('app')
         dataModelType: GenderDistributionMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'surveillance,facility'
         },
         sizeY:9
+      }, {
+        name: 'PredictionChart',
+        directive: 'prediction-chart',
+        dataAttrName: 'data',
+        dataModelType: PredictionChartDataModel,
+        title: 'Attempt Prediction Chart',
+        dataModelOptions: {
+          defaultWidget: true,
+          roleAccess: 'SUP,REP,ADM',
+          layout: 'surveillance'
+        },
+        dataModelArgs: {
+          rate: 40
+        },
+        attrs: {
+          'show-time-range': true
+        },
+        style: {
+          width: '100%',
+          height: '100%'
+        },
+        sizeX:15,
+        sizeY:12
       },
 	   {
         name: 'MilitaryBranch',
@@ -217,7 +262,7 @@ angular.module('app')
         dataModelType: MilitaryBranchMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'surveillance,facility'
         }
       },
@@ -229,37 +274,21 @@ angular.module('app')
         dataModelType: OutreachStatusMetricsDataModel,
         dataModelOptions: {
           defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
+          roleAccess: 'SUP,REP,ADM,CCT,CCS',
           layout: 'surveillance,facility'
         },
         sizeY:10
       },
-	   {
-        name: 'TopMidRisk',
-        directive: 'wt-national-top-mid-risk',
-        dataAttrName: 'data',
-        title: 'Top Mid Risk Data',
-        dataModelType: TopMidRiskMetricsDataModel,
-        dataModelOptions: {
-          defaultWidget: true,
-          roleAccess: 'SUP,REP,ADM,CCT',
-          layout: 'surveillance,facility'
-        },
-        size: {
-          width: '35%',
-          height: '200px'
-        }
-      },
       {
-        name: 'ExternalSuicideStatistics',
-        directive: 'wt-external-suicide-statistics',
+        name: 'CDSQuestionnaire',
+        directive: 'wt-cds-questionnaire',
         dataAttrName: 'data',
-        title: 'External Data HealthIndicators.gov Suicide Statistics',
-        dataModelType: SuicideStatisticsDataModel,
+        title: 'CDS Questionnaire',
+        dataModelType: CDSQuestionnaireDataModel,
         dataModelOptions: {
           defaultWidget: true,
           roleAccess: 'SUP,REP,ADM',
-          layout: 'surveillance'
+          layout: 'individual'
         },
         size: {
           width: '45%',
@@ -356,7 +385,7 @@ angular.module('app')
           height: '350px'
         }
       },*/
-	   
+
       /*{
         name: 'Metrics Chart',
         directive: 'wt-metrics-chart',
@@ -422,7 +451,7 @@ angular.module('app')
         style: {
           width: '250px'
         }
-      }, 
+      },
       {
         name: 'fluid',
         directive: 'wt-fluid',
@@ -439,7 +468,7 @@ angular.module('app')
     ];
   })
   .value('defaultWidgets', [
-      { name: 'RosterTable' }, 
+      { name: 'RosterTable' },
       { name: 'contact' },
       { name: 'emergency' },
       {name: 'diagnoses'},
@@ -453,7 +482,7 @@ angular.module('app')
       { name: 'Bar Chart' },
       { name: 'topN' },
       { name: 'gauge' },
-      { name: 'fluid' } 
+      { name: 'fluid' }
     { name: 'random' },
     { name: 'time' },
     { name: 'datamodel' },
@@ -479,7 +508,7 @@ angular.module('app')
         var surveillanceViewDefault = [];
         var facilityViewDefault = [];
         var individualViewDefault = [];
-        
+
         var widget = null;
         for(var widgetIdx in widgetDefinitions){
           widget = widgetDefinitions[widgetIdx];
@@ -492,11 +521,11 @@ angular.module('app')
             }
             if(widget.dataModelOptions.layout.indexOf("individual") != -1 && widget.dataModelOptions.roleAccess.indexOf(userRole) != -1){
               individualViewDefault.push({name: widget.name});
-            }            
+            }
         }
         defaultWidgetsObj.surveillance = surveillanceViewDefault;
         defaultWidgetsObj.facility = facilityViewDefault;
-        defaultWidgetsObj.individual = individualViewDefault;         
+        defaultWidgetsObj.individual = individualViewDefault;
 
         return defaultWidgetsObj;
     },
@@ -508,7 +537,7 @@ angular.module('app')
         var facilityView = [];
         var individualView = [];
         var allViews = widgetDefinitions;
-        
+
         var widget = null;
         for(var widgetIdx in widgetDefinitions){
           widget = widgetDefinitions[widgetIdx];
@@ -525,31 +554,31 @@ angular.module('app')
             surveillanceView.push(widget);
             facilityView.push(widget);
             individualView.push(widget);
-          }            
+          }
         }
         widgetsObj.surveillance = surveillanceView;
         widgetsObj.facility = facilityView;
-        widgetsObj.individual = individualView; 
-        widgetsObj.allViews = allViews;        
+        widgetsObj.individual = individualView;
+        widgetsObj.allViews = allViews;
 
         return widgetsObj;
     },
 
     getAllDefaultWidgets: function(widgetDefinitions, userRole)
     {
-        var defaultWidgets = [];        
+        var defaultWidgets = [];
         var widget = null;
         for(var widgetIdx in widgetDefinitions){
           widget = widgetDefinitions[widgetIdx];
           if(widget.dataModelOptions.defaultWidget && widget.dataModelOptions.roleAccess.indexOf(userRole) != -1){
-             defaultWidgets.push({name: widget.name}); 
+             defaultWidgets.push({name: widget.name});
           }
         }
         return defaultWidgets;
     }
   }})
   .controller('DemoCtrl', function ($scope, $interval, $window, widgetDefinitions, defaultWidgets) {
-    
+
     $scope.dashboardOptions = {
       widgetButtons: true,
       widgetDefinitions: widgetDefinitions,
@@ -566,4 +595,3 @@ angular.module('app')
     }, 1000);
 
   });
-

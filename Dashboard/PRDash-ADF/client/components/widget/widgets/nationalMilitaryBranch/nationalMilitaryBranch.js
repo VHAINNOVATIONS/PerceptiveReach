@@ -23,26 +23,23 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/nationalMilitaryBranch/nationalMilitaryBranch.html',
        
-	controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+	controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
 	//$scope.dtOptions = DTOptionsBuilder.newOptions()
-	$scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
-        $scope.militaryBranchList = $scope.widgetData;
-        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
-          return new Promise( function(resolve, reject){
-            if ($scope.widgetData)
-              resolve($scope.widgetData);
-            else
-              resolve([]);
-          });
-        })
-		.withDOM('lfrti')
-		.withScroller()
-		.withOption('deferRender', true)
-		.withOption('paging',false)
-    .withOption('bDestroy',true)
-		.withOption('order', [1, 'desc']);
+  //$scope.dtInstanceAbstract = {};
+  $scope.dtInstance = {};
+  $scope.militaryBranchList = $scope.widgetData;
+  $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+    return new Promise( function(resolve, reject){
+      if ($scope.widgetData)
+        resolve($scope.widgetData);
+      else
+        resolve([]);
+    });
+  })
+	.withOption('paging',false)
+  .withOption('bDestroy',true)
+	.withOption('order', [1, 'desc']);
 	//.withPaginationType('full_numbers').withDisplayLength(5);
 	$scope.dtColumns = [
         DTColumnBuilder.newColumn('BranchDesc').withTitle('Branch'),
@@ -57,6 +54,11 @@ link: function postLink(scope, element, attr) {
   			$(this).attr('scope','col');
   			$(this).attr('tabindex','-1');
       });
+      $timeout(function(){
+        $('#militaryBranchDiv .dataTables_scrollHeadInner,#militaryBranchDiv table').css({'width':''}); 
+        var containerHeight = parseInt($('#militaryBranchDiv').parent().css('height'),10);
+        $('#militaryBranchDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
+      },1000)
 		});
 	scope.$watch('widgetData', function (data) {
     $timeout(function(){
@@ -71,41 +73,12 @@ link: function postLink(scope, element, attr) {
               else
                 resolve([]);
             });
-        if(scope.dtInstance)
-          scope.dtInstance.changeData(promise);
-        else {
-          scope.dtInstanceAbstract.getList().then(function(dtInstances){
-            dtInstances.tblMilitaryBranch._renderer.changeData(promise)              
-          });
-        }
+        scope.dtInstance.changeData(function() {
+                  return promise;
+              });
   	  }
      },1000)
 	});
 }
 }
 });
-	 /* controller: function ($scope) {
-		console.log("First log stmt:", $scope.data);
-		$scope.toolTipContentFunction = function(){
-		return function(key, x, y, e, graph) {
-			return  'Super New Tooltip' +
-				'<h1>' + key + '</h1>' +
-				'<p>' +  y + ' at ' + x + '</p>'
-			};
-		};
-
-        $scope.xFunction = function(){
-          return function(d) {
-			console.log("Label console stmt:",d.Label);
-            return d.Label;
-          };
-        };
-        $scope.yFunction = function(){
-          return function(d) {
-			console.log("Value console stmt:", d.Value);
-            return d.Value;
-          };
-        };
-      }
-    };
-  });*/

@@ -5,18 +5,16 @@ var app = require('../../app');
 var request = require('supertest');
 
 describe('GET /api/clinicalDecisionSupport', function() {
-  
-  /*it('should respond with JSON array', function(done) {
+
+  it('should respond with JSON array', function(done) {
     request(app)
-      .get('/api/clinicalDecisionSupport?guideType=SRB&riskLevel=1') //'/api/facilitiesByState?id=AL'  '/api/clinicalDecisionSupport?guideType=SRB&riskLevel=1'
+      .get('/api/clinicalDecisionSupport')
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
-        //console.log(res);
-        //console.log(err);
-        if (err) return done(err);        
-        res.body.should.be.instanceof(Array);
+        if (err) return done(err);
+        res.should.be.json;
         done();
       });
-  });*/
+  });
 });

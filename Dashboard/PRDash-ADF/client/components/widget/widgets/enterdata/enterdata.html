@@ -1,0 +1,247 @@
+<div ng-form="enterWdgtForm" id="enterWdgtDataForm">
+  <div class="panel panel-default">
+    <div class="panel-body" style="padding-left:40px">
+    <div class="enterWdgtDataDiv" style="overflow-y:auto;overflow-x:hidden;">
+      <div class="row">
+        <div class="col-md-12">
+        <label>Outreach Status</label>
+        </div>
+      </div>
+      <div style="padding-bottom:10px;">Initiation Checklist- To be completed by site facilitator(s)</div>
+      <div class="row">
+        <div class="col-md-1 text-right">
+          <input type="checkbox" ng-model="IdentifiedPrimaryProvider">
+        </div>
+        <div class="col-md-3 text-left">
+          1. Identified a primary patient provider. <label class="enterDataDateFont">{{outreachStatus.IdentifiedPrimaryProvider_Date | date:'MM/dd/yyyy' }}</label>
+        </div>
+        <div class="col-md-1 text-right">
+          <input type="checkbox" ng-model="NotifiedProvider">
+        </div>
+        <div class="col-md-3 text-left">
+          2. Notified provider of the specific patient and program requirements <label class="enterDataDateFont">{{outreachStatus.NotifiedProvider_Date | date:'MM/dd/yyyy' }}</label>
+        </div>
+        <div class="col-md-1 text-right">
+          <input type="checkbox" ng-model="AskedProviderReview">
+        </div>
+        <div class="col-md-3 text-left">
+          3. Asked provider to review treatment plans for the patient. <label class="enterDataDateFont">{{outreachStatus.AskedProviderReview_Date | date:'MM/dd/yyyy' }}</label>
+        </div>
+      </div>
+      <div style="padding-bottom:10px;padding-top:10px">Outreach Checklist- To be completed by patient provider(or facilitator with provider approval)</div>
+      <div class="row">
+        <div class="col-md-1 text-right">
+          <input type="checkbox" ng-model="ReceivedNotification">
+        </div>
+        <div class="col-md-3 text-left">
+          4.Received notification from Site Facilitator about the patient <label class="enterDataDateFont">{{outreachStatus.ReceivedNotification_Date | date:'MM/dd/yyyy' }}</label>
+        </div>
+        <div class="col-md-1 text-right">
+          <input type="checkbox" ng-model="ReviewedCurrentDiagnosis">
+        </div>
+        <div class="col-md-3 text-left">
+          5. Reviewed current diagnoses and treatments <label class="enterDataDateFont">{{outreachStatus.ReviewedCurrentDiagnosis_Date | date:'MM/dd/yyyy' }}</label>
+        </div>
+        <div class="col-md-1 text-right">
+          <input type="checkbox" ng-model="EstablishedContact">
+        </div>
+        <div class="col-md-3 text-left">
+          6. Established contact with the patient to review current diagnoses, symptoms, adherence and problems <label class="enterDataDateFont">{{outreachStatus.EstablishedContact_Date | date:'MM/dd/yyyy' }}</label>
+        </div>
+      </div>
+      <div style="padding-bottom:10px;padding-top:10px">Care Evaluation Checklist – To Be Completed by Patient Provider (or Facilitator with Provider Approval)</div>
+      <div class="row">
+        <div class="col-md-1 text-right">
+          <input type="checkbox" ng-model="UpdatedPlan">
+        </div>
+        <div class="col-md-3 text-left">
+          7.Updated the plan for management and treatment as appropriate <label class="enterDataDateFont">{{outreachStatus.UpdatedPlan_Date | date:'MM/dd/yyyy' }}</label>
+        </div>
+        <div class="col-md-1 text-right">
+          <input type="checkbox" ng-model="EvaluateCaring">
+        </div>
+        <div class="col-md-3 text-left">
+          8. Evaluate appropriateness of Caring Communications program <label class="enterDataDateFont">{{outreachStatus.EvaluateCaring_Date | date:'MM/dd/yyyy' }}</label>
+        </div>
+        <div class="col-md-1 text-right">
+          <input type="checkbox" ng-model="EvaluateSafetyPlan">
+        </div>
+        <div class="col-md-3 text-left">
+          9. Evaluate appropriateness of Safety Planning <label class="enterDataDateFont">{{outreachStatus.EvaluateSafetyPlan_Date | date:'MM/dd/yyyy' }}</label>
+        </div>
+      </div>
+      <div style="padding-bottom:10px;padding-top:10px">Reasons for not Receiving VA Services– To Be Completed by Patient Provider (or Facilitator with Provider Approval)</div>
+      <div class="row">
+        <div class="col-md-1 text-right">
+          <input type="checkbox" ng-model="Deceased">
+        </div>
+        <div class="col-md-3 text-left">
+          10. Deceased <label class="enterDataDateFont">{{outreachStatus.Deceased_Date | date:'MM/dd/yyyy' }}</label>
+        </div>
+        <div class="col-md-1 text-right">
+          <input type="checkbox" ng-model="CannotContact">
+        </div>
+        <div class="col-md-3 text-left">
+          11. Cannot Contact <label class="enterDataDateFont">{{outreachStatus.CannotContact_Date | date:'MM/dd/yyyy' }}</label>
+        </div>
+        <div class="col-md-1 text-right">
+          <input type="checkbox" ng-model="RefusedServices">
+        </div>
+        <div class="col-md-3 text-left">
+          12. Refused Services <label class="enterDataDateFont">{{outreachStatus.RefusedServices_Date | date:'MM/dd/yyyy' }}</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1 text-right">
+          <input type="checkbox" ng-model="CareFromCommunity">
+        </div>
+        <div class="col-md-3 text-left">
+         13. Care from community provider <label class="enterDataDateFont">{{outreachStatus.CareFromCommunity_Date | date:'MM/dd/yyyy' }}</label>
+        </div>
+        <div class="col-md-1 text-right">
+          <input type="checkbox" ng-model="ClinicallyNotAtRisk">
+        </div>
+        <div class="col-md-3 text-left">
+          14. Clinically not at risk <label class="enterDataDateFont">{{outreachStatus.ClinicallyNotAtRisk_Date | date:'MM/dd/yyyy' }}</label>
+        </div>
+        <div class="col-md-1 text-right">
+          <input type="checkbox" ng-model="Other">
+        </div>
+        <div class="col-md-3 text-left">
+          15. Other <label class="enterDataDateFont">{{outreachStatus.Other_Date | date:'MM/dd/yyyy' }}</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 bs-example hr-text">
+        <label style="margin-left:32px;">High Risk Flag Information</label>
+          <div class="panel-body">
+            <div class="col-md-6" ng-attr-title="{{data.HighRisk_UserNotes[hrIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}">
+              <label style="font-weight:normal">User Notes:</label>
+              <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
+                <button type="button" name="hrBack" title="Previous High Risk Info." class="btn btn-default pull-left" ng-disabled="hrIndex >= data.HighRisk_UserNotes.length-1" ng-click="goHrBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>Previous High Risk Info.
+                </button>
+                <div class="pull-left">
+                  <input type="text" ng-keypress="jumpTo($event,'hr')" class="enterDataNumInput" ng-model="hrIndex" title="High Risk: Jump To Record"></input>
+                </div>
+                <button type="button" name="hrFwd" title="Next High Risk Info." class="btn btn-default pull-left" ng-disabled="hrIndex === 0" ng-click="goHrForward()"><i class="glyphicon glyphicon-arrow-right" 
+                  style="font-size:13px;width: 18px;"></i>Next High Risk Info.
+                </button>
+              </div><br/>
+              <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="hrText" name="highRiskTxt" ng-change="enterDataChanged()" ng-class="{enterDataDirty: enterWdgtForm.highRiskTxt.$dirty && enterWdgtForm.highRiskTxt.$valid}" id="hrText" maxlength="128" title="High Risk Flag Information"></textarea>
+            </div>
+            <div class="col-md-6" ng-attr-title="{{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated | date:'MM/dd/yyyy @ h:mma'}}">
+              <label style="font-weight:normal">SPAN Records:</label>
+              <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
+                <button type="button" name="hrSpanBack" title="Previous High Risk Span Info." class="btn btn-default pull-left" ng-disabled="hrSpanIndex >= data.HighRisk_SPANImport.length-1" ng-click="goHrSpanBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>Previous High Risk Span Info.
+                </button>
+                <div class="pull-left">
+                  <input title="High Risk Span: Jump To Record" type="text" ng-keypress="jumpTo($event,'hrspan')" class="enterDataNumInput" ng-model="hrSpanIndex"></input>
+                </div>
+                <button type="button" name="hrSpanFwd" title="Next High Risk Span Info." class="btn btn-default pull-left" ng-disabled="hrSpanIndex === 0" ng-click="goHrSpanForward()"><i class="glyphicon glyphicon-arrow-right"
+                  style="font-size:13px;width: 18px;"></i>Next High Risk Span Info.
+                </button>
+              </div>
+              <div class="col-md-12 enterDataBox" style="background-color:#e6e6e6;">
+                <label style="font-weight:normal">High Risk: {{data.HighRisk_SPANImport[hrSpanIndex].HighRisk}}</label><br/>
+                <label style="font-weight:normal">Date First Identified: {{data.HighRisk_SPANImport[hrSpanIndex].DateFirstIdentifiedAsHighRisk | date: 'dd-MM-yyyy HH:mma'}}</label><br/>
+                <label style="font-weight:normal">Date Last Updated: {{data.HighRisk_SPANImport[hrSpanIndex].DateHighRiskLastUpdated | date: 'dd-MM-yyyy HH:mma'}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 bs-example mh-text">
+        <label style="margin-left:32px;">Mental Health Provider Information</label>
+          <div class="panel-body">
+            <div class="col-md-6" ng-attr-title="{{data.PrimaryHealthProvider_UserNotes[mhIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}">
+              <label style="font-weight:normal">User Notes:</label>
+              <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
+                <button type="button" name="mhBack" title="Previous Mental Health Provider Info." class="btn btn-default pull-left" ng-disabled="mhIndex >= data.PrimaryHealthProvider_UserNotes.length-1" ng-click="goMhBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>Previous Mental Health Provider Info.
+                </button>
+                <div class="pull-left">
+                  <input title="Mental Health Prov.: Jump To Record" class="enterDataNumInput" type="text" ng-keypress="jumpTo($event,'mh')" ng-change="mhIndexChange(mhIndex)" ng-model="mhIndex"></input>
+                </div>
+                <button type="button" name="mhFwd" title="Next Mental Health Provider Info." class="btn btn-default pull-left" ng-disabled="mhIndex === 0" ng-click="goMhForward()"><i class="glyphicon glyphicon-arrow-right"  style="font-size:13px;width: 18px;"></i>Next Mental Health Provider Info.
+                </button>
+              </div><br/>
+              <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="mhText" name="mentalProviderTxt" ng-class="{enterDataDirty: enterWdgtForm.mentalProviderTxt.$dirty && enterWdgtForm.mentalProviderTxt.$valid}" id="mhText" ng-change="enterDataChanged()" maxlength="128" title="Mental Health Provider Information"></textarea>
+            </div>
+            <div class="col-md-6"> 
+              <label style="font-weight:normal">VistA Records:</label>
+              
+              <div class="col-md-12 enterDataBox" style="background-color:#e6e6e6;">
+               <label style="font-weight:normal">{{noDataFound}}</label>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+     <div class="row">
+      <div class="col-md-12 bs-example sp-text">
+      <label style="margin-left:32px;">Safety Plan Information</label>
+        <div class="panel-body">
+          <div class="col-md-6" ng-attr-title="{{data.SafetyPlan_UserNotes[spIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}">
+            <label style="font-weight:normal">User Notes:</label>
+            <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
+              <button type="button" name="spBack" title="Previous Safety Plan Info." class="btn btn-default pull-left" ng-disabled="spIndex >= data.SafetyPlan_UserNotes.length-1" ng-click="goSpBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>Previous Safety Plan Info.
+              </button>
+              <div class="pull-left">
+                <input title="Safety Plan: Jump To Record" type="text" ng-keypress="jumpTo($event,'sp')" class="enterDataNumInput" ng-model="spIndex"></input>
+              </div>
+              <button type="button" name="spFwd" title="Next Safety Plan Info." class="btn btn-default pull-left" ng-disabled="spIndex === 0" ng-click="goSpForward()"><i class="glyphicon glyphicon-arrow-right" 
+                style="font-size:13px;width: 18px;"></i>Next Safety Plan Info.
+              </button>
+            </div><br>
+            <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="spText" name="safetyPlanTxt" ng-class="{enterDataDirty: enterWdgtForm.safetyPlanTxt.$dirty && enterWdgtForm.safetyPlanTxt.$valid}" ng-change="enterDataChanged()" id="spText" maxlength="128" title="Safety Plan Information"></textarea>
+          </div>
+          <div class="col-md-6" 
+          ng-attr-title="{{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated | date:'MM/dd/yyyy @ h:mma'}}">
+          <label style="font-weight:normal">VistA Records:</label>
+          <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
+            <button type="button" name="spSpanBack" title="Previous Safety Plan VistA Info." class="btn btn-default pull-left" ng-disabled="spSpanIndex >= data.SafetyPlan_SPANImport.length-1" ng-click="goSpSpanBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>Previous Safety Plan VistA Info.
+            </button>
+            <div class="pull-left">
+              <input title="Safety Plan VistA: Jump To Record" type="text" ng-keypress="jumpTo($event,'spspan')" class="enterDataNumInput" ng-model="spSpanIndex"></input>
+            </div>
+            <button type="button" name="spSpanFwd" title="Next Safety Plan VistA Info." class="btn btn-default pull-left" ng-disabled="spSpanIndex === 0" ng-click="goSpSpanForward()"><i class="glyphicon glyphicon-arrow-right" style="font-size:13px;width: 18px;"></i>Next Safety Plan VistA Info.
+            </button>
+          </div>
+          <div class="col-md-12 enterDataBox" style="background-color:#e6e6e6;">
+            <label style="font-weight:normal">Safety Plan Current: {{data.SafetyPlan_SPANImport[spSpanIndex].SafetyPlanCurrent}}</label><br/>    
+            <label style="font-weight:normal">Date Completed/Updated: {{data.SafetyPlan_SPANImport[spSpanIndex].DateSafetyPlanCompletedOrUpdated | date: 'dd-MM-yyyy HH:mma'}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 bs-example comment-text">
+    <label style="margin-left:32px;">General Notes</label>
+     <div class="panel-body">
+       <div class="col-md-12" ng-attr-title="{{data.GeneralComments[commentIndex].EntryDate | date:'MM/dd/yyyy @ h:mma'}}">
+         <div class="btn-group btn-group-xs pull-right" role="group" aria-label="Buttons">
+          <button type="button" name="commentBack" title="Previous Comments" class="btn btn-default pull-left" ng-disabled="commentIndex >= data.GeneralComments.length-1" ng-click="goCommentBack()"><i class="glyphicon glyphicon-arrow-left" style="font-size:13px;width: 18px;"></i>Previous Comments
+          </button>
+          <div class="pull-left">
+            <input title="Comments: Jump To Record" type="text" ng-keypress="jumpTo($event,'comment')" class="enterDataNumInput" ng-model="commentIndex"></input>
+          </div>
+          <button type="button" name="commentFwd" title="Next Comments" class="btn btn-default pull-left" ng-disabled="commentIndex === 0" ng-click="goCommentForward()"><i class="glyphicon glyphicon-arrow-right" style="font-size:13px;width: 18px;"></i>Next Comments
+          </button>
+        </div>
+        <textarea class="col-md-12 enterDataBox" rows="4" style="font-weight:normal;" type="text" ng-required="true" ng-model="commentText" name="commentTxt" ng-class="{enterDataDirty: enterWdgtForm.commentTxt.$dirty && enterWdgtForm.commentTxt.$valid}" ng-change="enterDataChanged()" id="commentText" title="General Notes"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="row">
+  <div class="col-md-6" style="float:right;">
+    <button type="button" class="btn btn-primary btn-sm" ng-click="addNewData()" style="float:right;margin:5px;">Add Data</button>
+    <button type="button" class="btn btn-primary btn-sm" ng-click="clearEdits()" style="float:right;margin:5px;">Clear Edits</button>
+  </div>
+</div>
+</div>
+
+</div>
+</div>

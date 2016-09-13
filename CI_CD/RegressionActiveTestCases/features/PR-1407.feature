@@ -6,7 +6,7 @@ Feature: As a Dashboard User, I want to view a Veteran's medical appointments fr
 Scenario: I open a web browser and see the medical appointments widget 
 Given I navigate to the http://localhost:7003/
 Then I should see "Perceptive Reach"
-Then I put in "email" field as "vaphsgattuc"
+Then I put in "email" field as "TESTER254"
 Then I put in "password" field as "FeAn#011819"
 And I click on check box "checky"
 And I click on "Login" button

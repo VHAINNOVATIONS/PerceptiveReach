@@ -1,5 +1,10 @@
 <div>
+    <div class="alert alert-warning unsavedDataAlert">
+          <p>You have Unsaved changes in EnterData widget, Please Save or Undo changes and retry.</p>
+          <button name="btnSaveAlertOk" alt="Unsaved Changes" class="btn btn-primary" ng-click="CloseSaveAlert()">OK</button>
+    </div>
     <div offset="105" style="z-index:5;background-color:white;" sticky tabindex="-1">
+        <div class="alert alert-success snoAlertBox" data-alert="alert">This widget has already been added to your dashboard. Please select a different widget to add.</div>
         <div class="btn-toolbar" ng-if="!options.hideToolbar" style="padding-bottom:5px;padding-top:5px;border-bottom: 2px solid gray;">
 		<!--ul class="inline"><li-->
             <div class="btn-group" ng-if="!options.widgetButtons" data-ng-class="{open: open}" tabindex="-1">
@@ -25,7 +30,6 @@
 
             <button name="btnSave" title="Save" alt="Save"  ng-if="options.storage && options.explicitSave" ng-click="options.saveDashboard()" class="btn btn-success" ng-disabled="!options.unsavedChangeCount">{{ !options.unsavedChangeCount ? "all saved" : "save changes (" + options.unsavedChangeCount + ")" }}</button>
 
-            <button name="btnClear" ng-click="clear();"  alt="Clear" title="Clear"  type="button" class="btn btn-info">Clear</button>
             <div style="height:100%;float:right;margin:10px 10px 0 5px;vertical-align:middle;" ng-show=" dashboardTitle == 'Individual View'" title="Individual View Layout">
                 <label alt="{{ PatientName }}" style="font-weight:normal">
                     <span> {{ PatientName }}</span>
@@ -50,16 +54,15 @@
               <div class="widget panel panel-default" style="height:98%">
                 <div class="widget-header panel-heading" tabindex="-1" style="height:45px;">
                     <div class="panel-title">
-                        <span style="background-color: transparent;" class="label-primary widget-title nav">{{widget.title}}</span>
-                        <span class="label label-primary" ng-if="!options.hideWidgetName" tabindex="-1">{{widget.name}}</span>
+                        <span style="background-color: transparent;margin-right:3px;" class="label-primary widget-title nav pull-left">{{widget.title}}</span>
                         <div id="widgetSettings" style="display:inline-block; float:right; position:relative;">
                             <!--button ng-click="widget.contentStyle.display = widget.contentStyle.display === 'none' ? 'block' : 'none'" style="background-color: transparent; float:left;" class="glyphicon" ng-class="{'glyphicon-plus': widget.contentStyle.display === 'none','glyphicon-minus': widget.contentStyle.display !== 'none'}"></button-->
                             <!--button ng-click="openWidgetSettings(widget);" style="background-color: transparent; float:left;" class="glyphicon glyphicon-cog" ng-if="!options.hideWidgetSeyttings"></button-->
-                            <button ng-click="removeWidget(widget);" title="Remove Widget" alt="Remove Widget" style="background-color: transparent; float:right;" class="glyphicon glyphicon-remove" ng-if="!options.hideWidgetClose"></button>
+                            <button ng-click="removeWidget(widget);" ng-keydown="keyDown($event)" ng-keyup="keyUp($event)"  ng-attr-title="{{widget.canClose == false? 'Resize/Move Widget':'Remove/Resize/Move Widget'}}" alt="Remove Widget" style="background-color: transparent; float:right;" ng-class="(widget.canClose == false) ? 'glyphicon glyphicon-move' : 'glyphicon glyphicon-remove'" ng-if="!options.hideWidgetClose"></button>
                         </div>
                     </div>
                 </div>
-                <div class="widget-content" style="height:75%;"></div>
+                <div class="widget-content" style="height:85%;"></div>
                 <div class="widget-ew-resizer" ng-mousedown="grabResizer($event)"></div>
                 <div ng-if="widget.enableVerticalResize" class="widget-s-resizer" ng-mousedown="grabSouthResizer($event)"></div>
             </div>

@@ -27,11 +27,7 @@ angular.module('ui.widgets')
       },
       controller: function ($scope, DTOptionsBuilder, DTColumnDefBuilder) {
 
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scorllY option!!!
-            .withOption('scrollY', 200)
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
             .withOption('paging',false)
             .withOption('bDestroy',true)
             .withOption('order', [1, 'desc']);
@@ -50,18 +46,27 @@ angular.module('ui.widgets')
           $($('#diagnosisDiv table')[0]).find('th').each(function(){
             $(this).attr('tabindex','-1');
           });
+         
+          $timeout(function(){
+            $('#diagnosisDiv .dataTables_scrollHeadInner,#diagnosisDiv table').css({'width':''});  
+            var containerHeight = parseInt($('#diagnosisDiv').parent().css('height'),10);
+            $('#diagnosisDiv .dataTables_scrollBody').css('height',.78 * containerHeight);  
+          },2500);
         });
 
         $timeout(function(){
             scope.$emit('bindEvents');
+            
         },1500);
+
+       
+        
 
         scope.$watch('data', function (data) {
           $.fn.dataTable.ext.errMode = 'throw';
           if (data) {
              scope.data = data;  
         }
-
         });
       }
     };

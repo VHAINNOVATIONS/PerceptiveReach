@@ -17,39 +17,39 @@ exports.index = function(req, res) {
             return; 
         }
         var request = new sql.Request(connection);
-        var ID = req.param("ID");
+        var VISN = req.param("VISN");
+        var STA3N = req.param("STA3N");
+        var andClause = '';
+        var and = ' AND';
 
-        // Configure WHERE clause if needed
-        var whereClause = '';
-        var trueID = '';
-        if(ID != null && ID.indexOf("-v") != -1){
-            trueID = ID.split("-v")[0];
-            whereClause = " WHERE v.VISN = @trueID";
+        if (VISN && validator.isInt(VISN)) {
+            request.input('VISN', sql.Int, VISN);
+            andClause += and + ' v.VISN = @VISN';
         }
-        else if(ID != null && ID.indexOf("-f") != -1){
-            trueID = ID.split("-f")[0];
-            whereClause = " WHERE s.sta3N = @trueID";
-        }
+
+        if (STA3N && validator.isInt(STA3N)) {
+            request.input('STA3N', sql.Int, STA3N);
+            andClause += and + ' s.sta3N = @STA3N';
+        } 
 
         // Configure Database Query
         var query = '';
-        if (trueID && validator.isInt(trueID)) {
-            request.input('trueID', sql.Int, trueID);                        
-        }
-
         query += "SELECT v.VAMC_Name as VAMCName, v.StateAbbr as StateID, v.VISN as VISN, COUNT(v.VAMC_Name) as Total"; 
         query += " FROM dbo.Patient p JOIN dbo.PatientStation ps ON p.ReachID = ps.ReachID JOIN dbo.Ref_VAMC v ON ps.STA3N = v.STA3N";
-        query += whereClause;
-        query += " AND p.RiskLevel IS NOT NULL GROUP BY v.VAMC_Name, v.StateAbbr, v.VISN ORDER BY Total desc";
+        query += " WHERE p.RiskLevel IS NOT NULL"
+        query += andClause;
+        query += " GROUP BY v.VAMC_Name, v.StateAbbr, v.VISN ORDER BY Total desc";
         
         // Query the database
         request.query(query, function(err, recordset) {
             if (err) { 
+                connection.close();
                 console.dir(err);
                 res.send(401, 'Query Failed.');
                 return; 
             }
 
+            connection.close();
             var jsonRecordSet = JSON.parse(JSON.stringify(recordset));
             res.send(jsonRecordSet);
         });

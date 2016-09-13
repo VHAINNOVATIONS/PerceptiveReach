@@ -23,11 +23,11 @@ angular.module('ui.widgets')
       replace: true,
       templateUrl: 'client/components/widget/widgets/vismRoster/vismRoster.html',
       
-      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTInstances) {
+      controller: function ($scope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
         //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        $scope.dtInstanceAbstract = DTInstances;
-        $scope.dtInstance = null;
+        //$scope.dtInstanceAbstract = {};
+        $scope.dtInstance = {};
         $scope.visnList = $scope.widgetData;
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
           return new Promise( function(resolve, reject){
@@ -38,14 +38,10 @@ angular.module('ui.widgets')
           });
 
         })
-        .withDOM('lfrti')
-            .withScroller()
-            .withOption('deferRender', true)
-            // Do not forget to add the scrollY option!!!
-            .withOption('scrollY', 200)
-            .withOption('paging',false)
-            .withOption('bDestroy',true)
-            .withOption('order', [0, 'asc']);
+        .withOption('paging',false)
+        .withOption('bDestroy',true)
+        .withOption('order', [0, 'asc']);
+            
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('VISN').withTitle('VISN'),
             DTColumnBuilder.newColumn('NetworkName').withTitle('Network Name'),
@@ -56,12 +52,23 @@ angular.module('ui.widgets')
         $scope.eventTimer = null;
       },
       link: function postLink(scope, element, attr) {
-        scope.$on("bindEvents", function (){
-        $($('#VISNRosterDiv table')[0]).find('th').each(function(){
-          $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
-          $(this).attr('scope','col');
-          $(this).attr('tabindex','-1');
-        });
+          scope.$on("bindEvents", function (){
+      
+          scope.dtInstance.changeData(function() {
+              return new Promise( function(resolve, reject){
+                if (scope.visnList)
+                  resolve(scope.visnList);
+                else
+                  resolve([]);
+              });
+          });
+
+
+          $($('#VISNRosterDiv table')[0]).find('th').each(function(){
+            $(this).html('<a href="" alt='+$(this).text()+' title="Click enter to sort by '+ $(this).text()+'">'+$(this).text()+'</a>');
+            $(this).attr('scope','col');
+            $(this).attr('tabindex','-1');
+          });
 
         $($('#VISNRosterDiv table')[0]).find('th').keydown(function(event){ 
           if (event.keyCode == 40 || event.key == 'Down' || event.keyCode == 38 || event.key == 'Up') {
@@ -138,6 +145,7 @@ angular.module('ui.widgets')
             var activeView = commonData.data.activeView;
             if(activeView == "surveillance"){
               commonData.data.visnSelected.surveillance = visnId;
+              commonData.data.facilitySelected.surveillanceName = null; 
               commonData.data.facilitySelected.surveillance = null; 
             }
               
@@ -149,26 +157,17 @@ angular.module('ui.widgets')
             scope.$root.$broadcast('commonDataChanged', commonData);
             //scope.$apply();
           });
+
+          $('#VISNRosterDiv .dataTables_scrollHeadInner,#VISNRosterDiv table').css({'width':''}); 
+          var containerHeight = parseInt($('#VISNRosterDiv').parent().css('height'),10);
+          $('#VISNRosterDiv .dataTables_scrollBody').css('height',.78 * containerHeight);
         });
         scope.$watch('widgetData', function(data){
           if(data != null && data.length >0){
               scope.data = data;
               scope.visnList = data;
-              var promise = new Promise( function(resolve, reject){
-                    if (scope.visnList)
-                      resolve(scope.visnList);
-                    else
-                      resolve([]);
-                  });
-              if(scope.dtInstance)
-                scope.dtInstance.changeData(promise);
-              else {
-                scope.dtInstanceAbstract.getList().then(function(dtInstances){
-                  dtInstances.tblVismRoster._renderer.changeData(promise)              
-                });
-              }
+              scope.$emit('bindEvents');                           
               $timeout(function(){
-                scope.$emit('bindEvents');
                 $.fn.dataTable.ext.errMode = 'throw';
                 var commonData = scope.widget.dataModelOptions.common;
                 var activeView = commonData.data.activeView;
@@ -180,15 +179,17 @@ angular.module('ui.widgets')
                         var textcolumn = $(this).find('td').eq(0).text();
                         if($(this).find('td').eq(0).text() == commonData.data.visnSelected.surveillance){
                             selectedRow = $(this);
+                            selectedRow.addClass('selected');//click();
+                            //selectedRow[0].click();//.dataTables_scrollBody
+                            var rowPosition = selectedRow[0].rowIndex - 6;
+                            if(rowPosition > 0)
+                            {
+                              $('#VISNRosterDiv').parent().animate({
+                                scrollTop: $('#tblVismRoster tbody tr').eq(rowPosition).offset().top
+                              },500)
+                            }
                         }
-                    }); 
-                    console.log("VISN Roster selected:", selectedRow);
-                    console.log("VISNRoster selected row index:", selectedRow[0].rowIndex);
-                    selectedRow.addClass('selected');//click();
-                    //selectedRow[0].click();//.dataTables_scrollBody
-                    $('#tblVismRoster_wrapper > div > div.dataTables_scrollBody').animate({
-                      scrollTop: $('#tblVismRoster tbody tr').eq(selectedRow[0].rowIndex).offset().top
-                    },500)
+                    });  
                   }    
                 }                
               },1500)            

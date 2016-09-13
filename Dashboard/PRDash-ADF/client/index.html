@@ -19,6 +19,9 @@
       <link rel="stylesheet" href="bower_components/pines-notify/pnotify.buttons.css" />
       <link rel="stylesheet" href="bower_components/pines-notify/pnotify.history.css" />
       <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+      <link rel="stylesheet" href="bower_components/angular-gridster/dist/angular-gridster.css" />
+      <link rel="stylesheet" href="bower_components/datatables.net-buttons-dt/css/buttons.dataTables.css" />
+      <link rel="stylesheet" href="bower_components/datatables.net-scroller-dt/css/scroller.dataTables.css" />
       <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
       <!-- endbower -->
       <link rel="stylesheet" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css" />
@@ -31,6 +34,7 @@
       <link rel="stylesheet" href="dist/angular-ui-dashboard.css">
       <!-- endinjector -->
     <!-- endbuild -->
+    <link rel="stylesheet" href="nvd3_local/nv.d3.css" />
      <link rel="stylesheet" href="app/app.css">
 </head>
 <body ng-app="app">
@@ -83,10 +87,13 @@
       <script src="bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js"></script>
       <script src="bower_components/angular-datatables/dist/plugins/colreorder/angular-datatables.colreorder.js"></script>
       <script src="bower_components/angular-datatables/dist/plugins/columnfilter/angular-datatables.columnfilter.js"></script>
+      <script src="bower_components/angular-datatables/dist/plugins/light-columnfilter/angular-datatables.light-columnfilter.js"></script>
       <script src="bower_components/angular-datatables/dist/plugins/colvis/angular-datatables.colvis.js"></script>
       <script src="bower_components/angular-datatables/dist/plugins/fixedcolumns/angular-datatables.fixedcolumns.js"></script>
       <script src="bower_components/angular-datatables/dist/plugins/fixedheader/angular-datatables.fixedheader.js"></script>
       <script src="bower_components/angular-datatables/dist/plugins/tabletools/angular-datatables.tabletools.js"></script>
+      <script src="bower_components/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.js"></script>
+      <script src="bower_components/angular-datatables/dist/plugins/select/angular-datatables.select.js"></script>
       <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <script src="bower_components/angular-ui-sortable/sortable.js"></script>
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
@@ -113,11 +120,23 @@
       <script src="bower_components/matchmedia/matchMedia.js"></script>
       <script src="bower_components/javascript-detect-element-resize/detect-element-resize.js"></script>
       <script src="bower_components/angular-gridster/src/angular-gridster.js"></script>
+      <script src="bower_components/datatables.net/js/jquery.dataTables.js"></script>
+      <script src="bower_components/datatables.net-buttons/js/dataTables.buttons.js"></script>
+      <script src="bower_components/datatables.net-buttons/js/buttons.colVis.js"></script>
+      <script src="bower_components/datatables.net-buttons/js/buttons.flash.js"></script>
+      <script src="bower_components/datatables.net-buttons/js/buttons.html5.js"></script>
+      <script src="bower_components/datatables.net-buttons/js/buttons.print.js"></script>
+      <script src="bower_components/datatables.net-scroller/js/dataTables.scroller.js"></script>
+      <script src="bower_components/blob-polyfill/Blob.js"></script>
+      <script src="bower_components/file-saver.js/FileSaver.js"></script>
+      <script src="bower_components/angular-file-saver/dist/angular-file-saver.bundle.js"></script>
       <script src="bower_components/angular-mocks/angular-mocks.js"></script>
       <script src="bower_components/showdown/src/showdown.js"></script>
       <script src="bower_components/angular-markdown-directive/markdown.js"></script>
       <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
       <!-- endbower -->
+      <script src="nvd3_local/nv.d3.js"></script>
+      <script src="nvd3_local/angularjs-nvd3-directives.js"></script>
       <script src="bower_components/ngSticky/lib/sticky.js"></script>
       <script src="bower_components/spin.js/spin.js"></script>
       <script src="bower_components/angular-datatables/dist/plugins/scroller/angular-datatables.scroller.js"></script>
